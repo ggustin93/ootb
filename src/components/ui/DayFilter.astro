@@ -1,0 +1,258 @@
+---
+import { dates, eventTypes } from '~/data/festival';
+import type { Event } from '~/data/festival';
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+
+interface Props {
+  events: Record<string, Event[]>;
+}
+
+const { events } = Astro.props;
+---
+
+<div class="space-y-12">
+  <!-- Filtres -->
+  <div class="space-y-6">
+    <!-- Filtre par jour -->
+    <div class="flex overflow-x-auto gap-3 p-1" id="days-container">
+      <!-- Option "Tous les jours" -->
+      <button
+        class:list={[
+          "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
+          "flex flex-col items-center justify-center border border-gray-200",
+          "active bg-[#6ab29e]/10 border-[#6ab29e] text-[#6ab29e] shadow-md"
+        ]}
+        data-day="all"
+        type="button"
+      >
+        <span class="text-sm text-current opacity-75">Vue globale</span>
+        <span class="text-lg mt-1 font-semibold text-current">Tous les jours</span>
+      </button>
+
+      {dates.map((date, index) => (
+        <button
+          class:list={[
+            "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
+            "flex flex-col items-center justify-center border border-gray-200",
+            {
+              "bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm": true
+            }
+          ]}
+          data-day={date}
+          type="button"
+        >
+          <span class="text-sm text-current opacity-75">Jour {index + 1}</span>
+          <span class="text-lg mt-1 font-semibold text-current">{date}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Filtre par type -->
+    <div class="flex flex-wrap gap-3" id="types-container">
+      {eventTypes.map(type => (
+        <button
+          class:list={[
+            "type-filter-button px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
+            "flex items-center gap-2",
+            "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50",
+            "data-[state=active]:bg-[#e4451e]/10 data-[state=active]:border-[#e4451e] data-[state=active]:text-[#e4451e]"
+          ]}
+          data-type={type}
+          data-state={type === eventTypes[0] ? 'active' : 'inactive'}
+          type="button"
+        >
+          <Icon name={
+            type === 'Conférences' ? 'tabler:presentation' :
+            type === 'Ateliers' ? 'tabler:hammer' : 'tabler:building-store'
+          } class="w-5 h-5" />
+          <span>{type}</span>
+          <span class="ml-2 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600">
+            {Object.values(events).flat().filter(event => event.type === type).length}
+          </span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Contenu des événements -->
+  {Object.entries(events).map(([day, dayEvents]) => (
+    <div class="events-container space-y-6" data-day={day} style={day === dates[0] ? 'display: block;' : 'display: none;'}>
+      <div class="space-y-6">
+        {dayEvents.map(event => (
+          <div 
+            class="event-card group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300"
+            data-type={event.type}
+            style={event.type === eventTypes[0] ? 'display: block;' : 'display: none;'}
+          >
+            <div class="md:flex h-full">
+              <!-- Image à gauche -->
+              <div class="md:w-1/3 relative">
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  width={400}
+                  height={300}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <!-- Contenu à droite -->
+              <div class="md:w-2/3 p-6 flex flex-col">
+                <div class="flex-grow">
+                  <!-- En-tête avec heure et lieu -->
+                  <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                    <div class="flex items-center">
+                      <Icon name="tabler:clock" class="w-4 h-4 mr-1" />
+                      <span>{event.time}</span>
+                    </div>
+                    <div class="flex items-center">
+                      <Icon name="tabler:map-pin" class="w-4 h-4 mr-1" />
+                      <span>{event.location}</span>
+                    </div>
+                  </div>
+
+                  <!-- Titre -->
+                  <h3 class="text-xl font-semibold text-gray-900 group-hover:text-[#e4451e] transition-colors mb-3">
+                    {event.title}
+                  </h3>
+
+                  <!-- Description -->
+                  <p class="text-gray-600 mb-4">{event.description}</p>
+                </div>
+
+                <div class="mt-auto">
+                  <!-- Intervenant si présent -->
+                  {event.speaker && (
+                    <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+                      <Icon name="tabler:user" class="w-4 h-4" />
+                      <span class="font-medium text-[#6ab29e]">{event.speaker}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .day-filter-button:hover {
+    @apply transform -translate-y-0.5;
+  }
+
+  .day-filter-button.active {
+    @apply transform -translate-y-1;
+  }
+
+  .type-filter-button[data-state="active"] {
+    @apply shadow-sm;
+  }
+
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+
+  .accordion-content {
+    transition: max-height 0.3s ease-out;
+  }
+
+  .accordion-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .accordion-trigger[aria-expanded="true"] .accordion-icon {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  function initFilters() {
+    const dayButtons = document.querySelectorAll('.day-filter-button');
+    const typeButtons = document.querySelectorAll('.type-filter-button');
+    const eventCards = document.querySelectorAll('.event-card');
+    const eventContainers = document.querySelectorAll('.events-container');
+
+    function updateVisibility() {
+      const activeDay = document.querySelector('.day-filter-button.active')?.getAttribute('data-day');
+      const activeType = document.querySelector('.type-filter-button[data-state="active"]')?.getAttribute('data-type');
+
+      if (!activeDay || !activeType) return;
+
+      // Afficher tous les conteneurs si "all" est sélectionné
+      eventContainers.forEach(container => {
+        container.style.display = (activeDay === 'all' || container.getAttribute('data-day') === activeDay) ? 'block' : 'none';
+      });
+
+      // Filtrer les événements par type
+      eventCards.forEach(card => {
+        const container = card.closest('.events-container');
+        if (activeDay === 'all' || container?.getAttribute('data-day') === activeDay) {
+          card.style.display = card.getAttribute('data-type') === activeType ? 'block' : 'none';
+        }
+      });
+    }
+
+    // Gestionnaire pour les jours
+    dayButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        dayButtons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.classList.remove('bg-[#6ab29e]/10', 'border-[#6ab29e]', 'text-[#6ab29e]', 'shadow-md');
+          btn.classList.add('text-gray-600');
+        });
+        button.classList.add('active', 'bg-[#6ab29e]/10', 'border-[#6ab29e]', 'text-[#6ab29e]', 'shadow-md');
+        button.classList.remove('text-gray-600');
+        updateVisibility();
+      });
+    });
+
+    // Gestionnaire pour les types
+    typeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        typeButtons.forEach(btn => btn.setAttribute('data-state', 'inactive'));
+        button.setAttribute('data-state', 'active');
+        updateVisibility();
+      });
+    });
+
+    // Initialisation des accordéons
+    function initAccordions() {
+      const accordionTriggers = document.querySelectorAll('.accordion-trigger');
+      
+      accordionTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+          const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+          const content = trigger.nextElementSibling as HTMLElement;
+          const text = trigger.querySelector('.accordion-text');
+          
+          // Mettre à jour l'état
+          trigger.setAttribute('aria-expanded', (!isExpanded).toString());
+          
+          // Calculer et appliquer la hauteur
+          if (isExpanded) {
+            content.style.maxHeight = '0';
+            if (text) text.textContent = 'Voir plus';
+          } else {
+            const height = content.querySelector('div')?.scrollHeight;
+            content.style.maxHeight = height ? `${height}px` : 'none';
+            if (text) text.textContent = 'Voir moins';
+          }
+        });
+      });
+    }
+
+    initAccordions();
+  }
+
+  document.addEventListener('DOMContentLoaded', initFilters);
+  document.addEventListener('astro:page-load', initFilters);
+</script>

@@ -1,0 +1,40 @@
+---
+import { SITE } from '~/config';
+import '@fontsource/bebas-neue';
+---
+
+<span class="flex items-center">
+  <span class="flex items-center">
+    <span class="font-bebas-neue text-[52px] leading-none tracking-[-0.02em] gradient-text">OUT</span>
+    <span class="font-bebas-neue text-[32px] mx-1 opacity-80 italic leading-none text-slate-600">of</span>
+    <span class="font-bebas-neue text-[52px] leading-none tracking-[-0.02em] gradient-text">THE</span>
+    <span class="font-bebas-neue text-[52px] leading-none tracking-[-0.01em] ml-0.5 text-blue-600">BOOKS</span>
+  </span>
+</span>
+
+<style>
+  :root {
+    --color-primary: rgb(37 99 235);
+  }
+  
+  /* Optimisations typographiques */
+  .font-bebas-neue {
+    font-feature-settings: "kern", "liga" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Gradient moderne et dynamique */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-500;
+  }
+
+  /* Animation subtile au hover */
+  @media (hover: hover) {
+    .gradient-text {
+      transition: all 0.3s ease;
+    }
+    .gradient-text:hover {
+      @apply bg-gradient-to-r from-blue-500 to-blue-600;
+    }
+  }
+</style>

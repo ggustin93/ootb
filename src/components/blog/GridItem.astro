@@ -1,0 +1,57 @@
+---
+import { APP_BLOG } from 'astrowind:config';
+import type { Post } from '~/types';
+import Card from '~/components/ui/Card.astro';
+
+import { findImage } from '~/utils/images';
+import { getPermalink } from '~/utils/permalinks';
+
+export interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const image = await findImage(post.image);
+const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : '';
+
+// Déterminer le type de carte en fonction de la catégorie
+const getCardType = (category?: { slug?: string; title?: string }) => {
+  if (!category?.title) return 'default';
+  
+  switch (category.title.toLowerCase()) {
+    case 'podcast':
+      return 'podcast';
+    case 'premium':
+      return 'premium';
+    default:
+      return 'default';
+  }
+};
+
+// Formater les métadonnées pour le composant Card
+const formatMeta = (post: Post) => {
+  if (post.category?.title?.toLowerCase() === 'podcast') {
+    return {
+      episode: post.episode,
+      duration: post.readingTime,
+      expert: post.author
+    };
+  }
+  return {
+    duration: post.readingTime,
+    expert: post.author,
+    contributors: post.contributors
+  };
+};
+---
+
+<Card
+  title={post.title}
+  description={post.excerpt || post.description}
+  image={image || ''}
+  href={link}
+  type={getCardType(post.category)}
+  badge={post.category?.title}
+  meta={formatMeta(post)}
+  class="mb-6 transition"
+/>

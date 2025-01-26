@@ -1,0 +1,91 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { Icon } from 'astro-icon/components';
+
+import type { MetaData } from '~/types';
+
+export interface Props {
+  frontmatter: {
+    title?: string;
+    category?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+const metadata: MetaData = {
+  title: frontmatter?.title,
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
+    <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter">{frontmatter.title}</h1>
+    <div
+      class:list={[
+        "mx-auto prose prose-lg max-w-4xl dark:prose-invert dark:prose-headings:text-slate-300",
+        "prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter",
+        "prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400",
+        "prose-img:rounded-md prose-img:shadow-lg mt-8",
+        // Désactive la stylisation Prose pour les éléments personnalisés dans les articles de type podcast
+        frontmatter.category === 'podcast' && 'prose-custom'
+      ]}
+    >
+      <slot />
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  /* Permet aux classes Tailwind de fonctionner dans le contenu Markdown pour les podcasts */
+  .prose-custom .mt-6 {
+    margin-top: 1.5rem;
+  }
+  .prose-custom .flex {
+    display: flex;
+  }
+  .prose-custom .justify-center {
+    justify-content: center;
+  }
+  .prose-custom .items-center {
+    align-items: center;
+  }
+  .prose-custom .gap-2 {
+    gap: 0.5rem;
+  }
+  .prose-custom .rounded-full {
+    border-radius: 9999px;
+  }
+  .prose-custom .inline-flex {
+    display: inline-flex;
+  }
+  .prose-custom .px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .prose-custom .py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  .prose-custom .text-white {
+    color: white;
+  }
+  .prose-custom .font-medium {
+    font-weight: 500;
+  }
+  .prose-custom .w-5 {
+    width: 1.25rem;
+  }
+  .prose-custom .h-5 {
+    height: 1.25rem;
+  }
+  .prose-custom .transition-all {
+    transition-property: all;
+  }
+  .prose-custom .duration-300 {
+    transition-duration: 300ms;
+  }
+  .prose-custom a:hover {
+    transform: scale(1.05);
+  }
+</style>

@@ -1,0 +1,407 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { Icon } from 'astro-icon/components';
+import DayFilter from '~/components/ui/DayFilter.astro';
+import { events } from '~/data/festival';
+import Image from '~/components/common/Image.astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
+import VideoPlayer from '~/components/common/VideoPlayer.astro';
+import banniereFestival from '~/assets/images/banniere_festival.jpeg';
+import ootbLogo from '~/assets/images/ootb-logo.svg';
+import ActionBadge from '~/components/ui/ActionBadge.astro';
+
+const metadata = {
+  title: 'Festival Out of the Books 2025 | La Sucrerie - Wavre',
+  description: 'Découvrez le Festival Out of the Books 2025, l\'événement incontournable de l\'éducation innovante.',
+  canonical: 'https://outofthebooks.org/festival',
+  image: {
+    src: banniereFestival,
+    alt: 'Festival Out of the Books 2025'
+  },
+  openGraph: {
+    title: 'Festival Out of the Books 2025 | Innovation en Éducation',
+    description: 'Trois jours dédiés à l\'innovation pédagogique',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070',
+    type: 'website',
+    site_name: 'Festival Out of the Books'
+  }
+};
+
+const themes = [
+  {
+    title: 'Pédagogies actives',
+    description: 'Faire découvrir des écoles, des structures d\'aide et d\'accompagnement moins « traditionnelles » et répondant aux besoins de tous.',
+    icon: 'tabler:school'
+  },
+  {
+    title: 'La classe autrement & les besoins spécifiques',
+    description: 'Faire découvrir de nouvelles approches méthodologiques à l\'aide des intelligences multiples, de la gestion mentale, de la PNL d\'apprentissage, du jeu...',
+    icon: 'tabler:brain'
+  },
+  {
+    title: 'La ludopédagogie en classe & à la maison',
+    description: 'Faire découvrir des techniques d\'apprentage par le jeu. Démontrer qu\'il est possible d\'apprendre tout en jouant.',
+    icon: 'tabler:puzzle'
+  },
+  {
+    title: 'Les nouvelles technologies',
+    description: 'Faire découvrir des approches innovantes pour apprendre autrement à l\'aide des nouvelles technologies.',
+    icon: 'tabler:device-laptop'
+  },
+  {
+    title: 'L\'éducation positive & le bien-être',
+    description: 'Faire découvrir des outils de communication positive et de gestion efficace du stress et du harcèlement.',
+    icon: 'tabler:heart'
+  }
+];
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Section -->
+  <section class="relative min-h-[75vh] flex items-start pt-24 justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] via-[#7ec3af] to-[#fbfcfb]">
+    <!-- Éléments décoratifs flottants -->
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- Livres flottants -->
+      <div class="absolute w-24 h-32 -rotate-12 top-[15%] left-[40%] opacity-30 transition-transform hover:-translate-y-2 duration-1000">
+        <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
+      </div>
+      <div class="absolute w-20 h-28 rotate-45 top-[35%] right-[12%] opacity-30 transition-transform hover:translate-y-2 duration-1000">
+        <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
+      </div>
+      <!-- Icônes flottantes supplémentaires -->
+      <div class="absolute w-16 h-16 top-[25%] left-[15%] opacity-20 animate-float">
+        <Icon name="tabler:school" class="w-full h-full text-white filter drop-shadow-lg" />
+      </div>
+      <div class="absolute w-16 h-16 top-[45%] right-[20%] opacity-20 animate-float-delayed">
+        <Icon name="tabler:bulb" class="w-full h-full text-white filter drop-shadow-lg" />
+      </div>
+    </div>
+
+    <div class="relative z-10 container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <!-- Contenu textuel -->
+          <div class="text-left">
+            <h1 class="text-left">
+              <ActionBadge variant="festival" class="inline-block sm:text-xl md:text-1xl lg:text-2xl tracking-wide mb-4 max-w-[200px]">Festival</ActionBadge>
+              <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-yellow-400 italic mb-2 tracking-tight">Out of the Books</span>
+              <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">2025</span>
+            </h1>
+
+            <div class="mt-6 space-y-2">
+              <p class="text-base sm:text-lg md:text-xl text-white font-light tracking-wide">
+                1, 2 et 3 octobre 2025 | La Sucrerie - Wavre
+              </p>
+              <p class="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl leading-relaxed">
+                3 jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes.
+              </p>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="mt-10 flex flex-col sm:flex-row gap-6">
+              <a href="#programme" class="inline-flex items-center gap-3 bg-white text-[#6ab29e] px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[#6ab29e] hover:text-white border-2 border-white transition-all duration-300 shadow-lg hover:shadow-xl group text-base sm:text-lg">
+                <Icon name="tabler:calendar" class="w-5 h-5 sm:w-6 sm:h-6" />
+                <span class="font-medium">Voir le programme</span>
+              </a>
+              <a href="#tickets" class="inline-flex items-center gap-3 bg-[#e4451e] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[#e4451e]/90 transition-all duration-300 shadow-lg hover:shadow-xl group text-base sm:text-lg">
+                <Icon name="tabler:ticket" class="w-5 h-5 sm:w-6 sm:h-6" />
+                <span class="font-medium">Réserver mes tickets</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Image/Logo -->
+          <div class="relative hidden md:block">
+            <div class="relative w-full max-w-[450px] mx-auto aspect-square transform hover:scale-105 transition-transform duration-300">
+              <Image
+                src={ootbLogo}
+                alt="Logo Out of the Books"
+                class="w-full h-full object-contain drop-shadow-2xl"
+                widths={[400, 450]}
+                sizes="(max-width: 768px) 400px, 450px"
+                loading="eager"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vague décorative -->
+    <div class="absolute -bottom-1 left-0 right-0">
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 1440 320" 
+        class="w-full h-[120px] md:h-[180px] text-white"
+        preserveAspectRatio="none"
+      >
+        <path 
+          fill="currentColor" 
+          fill-opacity="1" 
+          d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+        ></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Section Introduction -->
+  <section class="py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+          <SectionDivider variant="orange" class="mb-6">
+            <Icon name="tabler:flame" class="w-4 h-4" />
+            À propos
+          </SectionDivider>
+          <h2 class="text-4xl md:text-5xl font-bold mb-6 text-sky-900">
+            Le festival des pédagogies innovantes
+          </h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
+            3 jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes
+          </p>
+        </div>
+
+        <!-- Cartes d'activités -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+          <!-- Conférences -->
+          <div class="festival-card group">
+            <div class="relative p-8">
+              <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#e4451e]/10 to-transparent rounded-bl-full transition-all duration-300 group-hover:scale-110"></div>
+              <Icon name="tabler:presentation" class="w-12 h-12 text-[#e4451e] mb-6 transition-transform duration-300 group-hover:scale-110" />
+              <h3 class="text-2xl font-bold mb-4 text-gray-900">Conférences</h3>
+              <p class="text-gray-600 mb-6">40+ conférences inspirantes sur l'innovation pédagogique</p>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3 text-gray-600">
+                  <Icon name="tabler:point" class="w-5 h-5 text-[#e4451e] flex-shrink-0" />
+                  <span>Experts internationaux</span>
+                </li>
+                <li class="flex items-center gap-3 text-gray-600">
+                  <Icon name="tabler:point" class="w-5 h-5 text-[#e4451e] flex-shrink-0" />
+                  <span>Retours d'expérience</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Ateliers -->
+          <div class="festival-card group">
+            <div class="relative p-8">
+              <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-full transition-all duration-300 group-hover:scale-110"></div>
+              <Icon name="tabler:tool" class="w-12 h-12 text-[#6ab29e] mb-6 transition-transform duration-300 group-hover:scale-110" />
+              <h3 class="text-2xl font-bold mb-4 text-gray-900">Ateliers</h3>
+              <p class="text-gray-600 mb-6">20+ ateliers pratiques pour expérimenter et apprendre</p>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3 text-gray-600">
+                  <Icon name="tabler:point" class="w-5 h-5 text-[#6ab29e] flex-shrink-0" />
+                  <span>Hands-on workshops</span>
+                </li>
+                <li class="flex items-center gap-3 text-gray-600">
+                  <Icon name="tabler:point" class="w-5 h-5 text-[#6ab29e] flex-shrink-0" />
+                  <span>Outils innovants</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Stands -->
+          <div class="festival-card group">
+            <div class="relative p-8">
+              <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#e4451e]/10 to-transparent rounded-bl-full transition-all duration-300 group-hover:scale-110"></div>
+              <Icon name="tabler:building-store" class="w-12 h-12 text-[#e4451e] mb-6 transition-transform duration-300 group-hover:scale-110" />
+              <h3 class="text-2xl font-bold mb-4 text-gray-900">Stands</h3>
+              <p class="text-gray-600 mb-6">30+ exposants et démos de solutions pédagogiques</p>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3 text-gray-600">
+                  <Icon name="tabler:point" class="w-5 h-5 text-[#e4451e] flex-shrink-0" />
+                  <span>Solutions EdTech</span>
+                </li>
+                <li class="flex items-center gap-3 text-gray-600">
+                  <Icon name="tabler:point" class="w-5 h-5 text-[#e4451e] flex-shrink-0" />
+                  <span>Ressources pédagogiques</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Texte descriptif -->
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <p class="text-lg text-gray-600 mb-4">
+            Le Festival Out of the Books est né d'une volonté de rassembler tous les acteurs de l'éducation autour d'un objectif commun : 
+            <span class="text-[#e4451e] font-semibold">repenser l'apprentissage pour le rendre plus efficace, inclusif et épanouissant</span>.
+          </p>
+          <p class="text-lg text-gray-600">
+            Pendant trois jours, enseignants, professionnels de l'éducation, parents et élèves se réunissent pour partager leurs expériences,
+            découvrir de nouvelles approches pédagogiques et s'inspirer mutuellement.
+          </p>
+        </div>
+
+        <!-- Vidéo avec effet 3D -->
+        <div class="relative mb-24">
+          <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform-gpu hover:scale-[1.02] transition-transform duration-500">
+            <VideoPlayer
+              url="https://youtu.be/lZqHW0GtwG0"
+              title="Festival Out of the Books 2025"
+              platform="youtube"
+              className="w-full aspect-video"
+            />
+            <!-- Effet de reflet -->
+            <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-20 bg-gradient-to-t from-white/20 to-transparent blur-lg transform-gpu"></div>
+          </div>
+        </div>
+
+        <!-- Stats sur une ligne avec style amélioré -->
+        <div class="relative py-16 bg-gradient-to-br from-[#6ab29e]/5 to-[#e4451e]/5 rounded-3xl">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            {[
+              { number: '40+', label: 'conférences', color: 'text-[#e4451e]' },
+              { number: '20+', label: 'ateliers pratiques', color: 'text-[#6ab29e]' },
+              { number: '50+', label: 'intervenants', color: 'text-[#e4451e]' },
+              { number: '1000+', label: 'participants', color: 'text-[#6ab29e]' }
+            ].map(({ number, label, color }) => (
+              <div class="text-center transform hover:-translate-y-1 transition-all duration-300">
+                <div class={`text-4xl md:text-5xl font-bold ${color} mb-2`}>
+                  {number}
+                </div>
+                <div class="text-base md:text-lg text-gray-600 font-medium capitalize">
+                  {label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programme du festival -->
+  <section id="programme" class="py-24 bg-sky-100/30">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <SectionDivider variant="orange" class="mb-6">
+          <Icon name="tabler:calendar" class="w-4 h-4" />
+          Programme
+        </SectionDivider>
+        <h2 class="text-4xl font-bold mb-4 text-sky-900">Programme du festival</h2>
+        <p class="text-xl text-gray-600">
+          Découvrez toutes les conférences, ateliers et stands sur les 3 jours
+        </p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-8">
+        <DayFilter events={events} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Thèmes avec animation au scroll -->
+  <section class="py-20 bg-gradient-to-b from-white to-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <SectionDivider variant="orange" class="mb-6">
+          <Icon name="tabler:bulb" class="w-4 h-4" />
+          Thématiques
+        </SectionDivider>
+        <h2 class="text-4xl font-bold mb-6 text-sky-900">Les grands thèmes du Festival</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+          Découvrez les 5 axes principaux qui seront abordés lors du festival
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {themes.map((theme, index) => (
+          <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+            <div class="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+              <div class={`w-14 h-14 ${index % 2 === 0 ? 'bg-[#e4451e]' : 'bg-[#6ab29e]'} rounded-xl flex items-center justify-center`}>
+                <Icon name={theme.icon} class="w-7 h-7 text-white" />
+              </div>
+            </div>
+            <h3 class={`text-xl font-bold ${index % 2 === 0 ? 'text-[#e4451e]' : 'text-[#6ab29e]'} mb-4`}>{theme.title}</h3>
+            <p class="text-gray-600 leading-relaxed">{theme.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action avec effet glassmorphism -->
+  <section class="relative py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-[#e4451e]/20 to-[#e4451e]/10 opacity-90"></div>
+    <div class="absolute inset-0">
+      <Image
+        src="https://images.unsplash.com/photo-1604147706283-d7119b5b822c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+        alt="Background image"
+        class="w-full h-full object-cover opacity-5"
+        widths={[400, 900]}
+        sizes="(max-width: 900px) 400px, 900px"
+        aspectRatio="16:9"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="relative container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <SectionDivider variant="turquoise" class="mb-6">
+          <Icon name="tabler:sparkles" class="w-4 h-4" />
+          Les enseignants ont du talent
+        </SectionDivider>
+        <h2 class="text-4xl font-bold text-[#e4451e] mb-6">Présentez votre projet</h2>
+        <p class="text-xl text-gray-800 mb-8">
+          Partagez votre expérience et inspirez vos pairs lors d'une conférence ou d'un atelier. Nous recherchons des enseignants passionnés pour partager leurs pratiques innovantes, leurs succès et leurs apprentissages.
+        </p>
+        <a 
+          href="#submit" 
+          class="inline-flex items-center px-8 py-4 bg-[#6ab29e] text-white rounded-full font-semibold hover:bg-[#6ab29e]/90 transition-all duration-300 shadow-lg hover:shadow-xl group"
+        >
+          <Icon name="tabler:send" class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:translate-x-1" />
+          Soumettre un projet
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+</Layout>
+
+<style>
+  .festival-card {
+    @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+    backdrop-filter: blur(10px);
+  }
+
+  /* Les autres styles peuvent être supprimés car remplacés par les classes directes */
+</style>
+
+<script>
+  // Animation au scroll pour les sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-fade-in-up');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+  });
+
+  // Type declaration for the custom event
+  interface DayChangeEvent extends CustomEvent {
+    detail: string;
+  }
+
+  document.addEventListener('dayChange', ((event: DayChangeEvent) => {
+    const selectedDay = event.detail;
+    const items = document.querySelectorAll('[data-day]');
+    
+    items.forEach(item => {
+      if (item.getAttribute('data-day') === selectedDay) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+  }) as EventListener);
+</script> 

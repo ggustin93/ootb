@@ -1,0 +1,65 @@
+---
+import { getPermalink } from '~/utils/permalinks';
+import { APP_BLOG } from 'astrowind:config';
+import { Icon } from 'astro-icon/components';
+import type { Post } from '~/types';
+
+export interface Props {
+  tags: Post['tags'];
+  class?: string;
+  title?: string | undefined;
+  isCategory?: boolean;
+  showIcon?: boolean;
+  variant?: 'primary' | 'secondary' | 'filter';
+}
+
+const { 
+  tags, 
+  class: className = 'text-sm', 
+  title = undefined, 
+  isCategory = false, 
+  showIcon = false,
+  variant = 'secondary'
+} = Astro.props;
+
+const baseStyles = "inline-flex items-center gap-1.5 transition-all duration-300";
+const variants = {
+  primary: "bg-gray-100 hover:bg-gray-200 text-gray-800",
+  secondary: "bg-white hover:bg-gray-50 text-gray-600 border border-gray-100 hover:shadow hover:-translate-y-0.5",
+  filter: "bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-100/80 hover:border-gray-200 hover:shadow-sm"
+};
+---
+
+{
+  tags && Array.isArray(tags) && (
+    <>
+      {title !== undefined && (
+        <span class="text-sm font-medium text-gray-600">
+          {title}
+        </span>
+      )}
+      <ul class="flex flex-wrap items-center justify-center gap-2 p-3 bg-white rounded-xl border border-gray-100/80 shadow-sm">
+        {tags.map((tag) => (
+          <li>
+            {!APP_BLOG?.tag?.isEnabled ? (
+              tag.title
+            ) : (
+              <a
+                href={`/${isCategory ? 'category' : 'tag'}/${tag.slug}`}
+                class:list={[
+                  baseStyles,
+                  variants[variant],
+                  "px-3 py-1.5 rounded-full text-sm font-medium",
+                  className
+                ]}
+              >
+                {showIcon && <Icon name="tabler:tag" class="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-500" />}
+                {tag.title}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}

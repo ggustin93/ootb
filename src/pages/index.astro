@@ -1,0 +1,447 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroSection from '~/components/sections/HeroSection.astro';
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+import Card from '~/components/ui/Card.astro';
+import Image from '~/components/common/Image.astro';
+import EventCard from '~/components/ui/EventCard.astro';
+import NewsletterSection from '~/components/sections/NewsletterSection.astro';
+import festivalBanner from '~//assets/images/festival_banner.png';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
+
+import {
+  metadata,
+  heroContent,
+  stats,
+  upcomingEvents,
+  featuredPodcasts,
+  featuredCards,
+  images,
+  aboutFeatures,
+  premiumFeatures
+} from '~/data/education';
+
+// Utilisons aboutFeatures qui existe déjà dans education.ts
+const features = aboutFeatures.map(feature => ({
+  icon: 'tabler:circle-check-filled',
+  title: feature,
+  description: feature
+}));
+---
+
+<Layout {metadata}>
+  <HeroSection {...heroContent} />
+
+  <!-- Section À propos -->
+  <section class="md:pb-16 pb-12 md:pb-32 px-4 md:px-8 bg-white relative overflow-hidden">
+    <!-- Effets de fond -->
+    <div class="absolute inset-0 bg-gradient-to-br from-[--ootb-turquoise]/3 via-transparent to-[--ootb-violet]/3"></div>
+    
+    <div class="max-w-6xl mx-auto relative">
+      <!-- Contenu principal -->
+      <div class="flex flex-col md:grid md:grid-cols-5 gap-8 md:gap-16 lg:gap-24 items-start">
+        <!-- En-tête mobile -->
+        <div class="md:hidden mb-8">
+          <SectionDivider variant="turquoise" class="mb-3 inline-flex">
+            <Icon name="tabler:target" class="w-4 h-4 mr-1" />
+            Notre mission
+          </SectionDivider>
+          <h2 class="font-display text-3xl font-bold leading-tight text-[--ootb-blue] tracking-tight">
+            Innover pour l'éducation de demain
+          </h2>
+        </div>
+
+        <!-- Image (à gauche - 2/5) -->
+        <div class="relative group w-full md:col-span-2">
+          <!-- Effet de relief pour l'image -->
+          <div class="absolute inset-0 bg-gradient-to-r from-[--ootb-turquoise]/8 to-[--ootb-violet]/8 rounded-xl md:rounded-2xl transform rotate-2 scale-[1.02] blur-[2px] transition-transform group-hover:rotate-1"></div>
+          <div class="absolute -inset-1 bg-gradient-to-r from-[--ootb-turquoise]/15 to-[--ootb-violet]/15 rounded-xl md:rounded-2xl transform -rotate-1 opacity-75"></div>
+          <Image 
+            src={images.about}
+            alt="L'équipe Out of the Books en action"
+            class="relative z-10 rounded-xl md:rounded-2xl shadow-xl transform transition-all duration-300 group-hover:scale-[1.02] w-full h-full object-cover"
+            widths={[400, 900]}
+            sizes="(max-width: 768px) 100vw, 33vw"
+            aspectRatio="4:5"
+            loading="lazy"
+            decoding="async"
+            formats={['avif', 'webp', 'jpg']}
+          />
+        </div>
+
+        <!-- Texte (3/5) -->
+        <div class="md:col-span-3 space-y-6 md:space-y-8">
+          <!-- En-tête desktop -->
+          <div class="hidden md:block">
+            <SectionDivider variant="turquoise" class="mb-3 inline-flex">
+              <Icon name="tabler:target" class="w-4 h-4 mr-1" />
+              Notre mission
+            </SectionDivider>
+            <h2 class="font-display text-4xl font-bold leading-tight text-[--ootb-blue] tracking-tight mb-8">
+              Innover pour l'éducation de demain
+            </h2>
+          </div>
+
+          <p class="text-base md:text-lg text-gray-600 leading-relaxed">
+            La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.
+          </p>
+
+          <div class="space-y-3 md:space-y-6">
+            {aboutFeatures.map(feature => (
+              <li class="flex items-start gap-3 md:gap-5 group">
+                <span class="flex-shrink-0 w-5 h-5 md:w-6 md:h-6 mt-1 rounded-full bg-[--ootb-turquoise]/8 flex items-center justify-center">
+                  <Icon name="tabler:circle-check-filled" class="w-6 h-6 md:w-5 md:h-6 text-[--ootb-turquoise]" />
+                </span>
+                <span class="text-sm md:text-base text-gray-700">{feature}</span>
+              </li>
+            ))}
+          </div>
+
+          <!-- Bouton amélioré -->
+          <div class="pt-4 md:pt-6">
+            <Button
+              variant="primary"
+              href="/about"
+              text="En savoir plus sur notre mission"
+              icon="tabler:arrow-right"
+              class="w-full md:w-auto shadow-xl shadow-[--ootb-turquoise]/15 hover:shadow-2xl hover:shadow-[--ootb-turquoise]/20 transition-shadow duration-300 text-base"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats avec glassmorphism et bordure subtile -->
+      <div class="mt-12 md:mt-24 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+          {[
+            { 
+              number: "9000", 
+              label: "Membres actifs", 
+              sublabel: "dans la communauté",
+              icon: "tabler:users-group"
+            },
+            { 
+              number: "3000", 
+              label: "Participants", 
+              sublabel: "au festival annuel",
+              icon: "tabler:ticket"
+            },
+            { 
+              number: "80+", 
+              label: "Contenus", 
+              sublabel: "pédagogiques",
+              icon: "tabler:device-tv"
+            }
+          ].map(({ number, label, sublabel, icon }) => (
+            <div class="group relative">
+              <div class="relative p-6 md:p-8 text-center rounded-2xl transition-all duration-300 bg-white/10 backdrop-blur-sm border border-[--ootb-turquoise]/10 hover:border-[--ootb-turquoise]/20">
+                <Icon 
+                  name={icon} 
+                  class="w-8 h-8 md:w-10 md:h-10 mx-auto mb-3 md:mb-4 text-[--ootb-turquoise] opacity-40 group-hover:opacity-100 transition-opacity duration-300" 
+                />
+                <div class="text-3xl md:text-5xl font-bold text-[--ootb-turquoise] mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300" style="text-shadow: none;">{number}</div>
+                <div class="text-sm md:text-base font-medium text-gray-800">{label}</div>
+                <div class="text-xs md:text-sm text-gray-600 mt-1">{sublabel}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenus à l'affiche -->
+  <section class="px-4 bg-gradient-to-b from-white to-gray-50 py-16">
+    <div class="max-w-7xl mx-auto">
+      <!-- En-tête de section -->
+      <div class="flex justify-between items-end mb-12">
+        <div>
+          <SectionDivider variant="turquoise" class="mb-4 inline-flex items-center gap-2">
+            <Icon name="tabler:flame" class="w-4 h-4" />
+            <span>A l'affiche</span>
+          </SectionDivider>
+          <h2 class="text-4xl font-bold text-[--ootb-blue] mb-4">
+            Actualités du moment        
+          </h2>
+          <p class="text-gray-600 text-lg max-w-2xl">
+            Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.
+          </p>
+        </div>
+
+        <a 
+          href="/contenus" 
+          class="group hidden md:inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 bg-white/50 backdrop-blur-sm px-6 py-3 rounded-full hover:bg-white transition-all shadow-sm hover:shadow-md"
+        >
+          Voir tout
+          <Icon 
+            name="tabler:arrow-right" 
+            class="w-5 h-5 group-hover:translate-x-1 transition-transform" 
+          />
+        </a>
+      </div>
+      
+      <!-- Grille de contenu en ligne -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+     
+
+        <!-- Podcast Card -->
+        <Card
+          href="/podcast/ep45"
+          title="L'intelligence émotionnelle à l'école"
+          description="Comment développer l'intelligence émotionnelle des élèves ?"
+          image="https://images.unsplash.com/photo-1544717305-2782549b5136"
+          badge="Podcast"
+          type="podcast"
+          meta={{
+            episode: "EP. 45",
+            duration: "38 min",
+            expert: "Dr. Sophie Martin"
+          }}
+        />
+
+        <!-- TV Card -->
+        <Card
+          href="/tv/neurosciences"
+          title="Les neurosciences en classe"
+          description="Reportage exclusif dans une classe laboratoire"
+          image="https://images.unsplash.com/photo-1559757175-5700dde675bc"
+          badge="TV"
+          type="tv"
+          meta={{
+            duration: "26 min",
+            expert: "Pédagoscope"
+          }}
+        />
+
+           <!-- Article -->
+           <Card
+           href="/premium/learning-game"
+           title="L'apprentissage par le jeu"
+           description="Une analyse approfondie avec les meilleurs experts du domaine"
+           image="https://images.unsplash.com/photo-1632571401005-458e9d244591"
+           badge="Article"
+           type="default"
+           meta={{
+             expert: "Dr. Marie Lambert",
+             duration: "45 min de lecture",
+             contributors: "12 contributeurs"
+           }}
+         />
+      </div>
+
+      <!-- Bouton mobile -->
+      <div class="mt-8 md:hidden">
+        <a 
+          href="/contenus" 
+          class="group flex items-center justify-center gap-2 w-full text-sky-600 hover:text-sky-700 bg-white/50 backdrop-blur-sm px-6 py-3 rounded-full hover:bg-white transition-all shadow-sm hover:shadow-md"
+        >
+          Voir tout
+          <Icon 
+            name="tabler:arrow-right" 
+            class="w-5 h-5 group-hover:translate-x-1 transition-transform" 
+          />
+        </a>
+      </div>
+    </div>
+  </section>
+
+ 
+  <!-- Section Premium épurée -->
+  <section class="py-16 px-4 bg-[#45b3a4] text-white relative overflow-hidden">
+    <!-- Éléments décoratifs flottants -->
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- Logo garçon en miroir (depuis education.ts) -->
+      <div class="absolute top-0 right-0 w-[200px] h-[200px]  z-20">
+        <Image
+          src={heroContent.image}
+          alt=""
+          class="w-full h-full object-contain transform scale-x-[-1] rotate-[-15deg]"
+          widths={[200]}
+          sizes="200px"
+          aspectRatio="1:1"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <!-- Premier livre -->
+      <div class="absolute w-20 h-24 -rotate-12 top-[15%] left-[15%] opacity-20 transition-transform hover:-translate-y-2 duration-1000">
+        <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
+      </div>
+      
+      <!-- Second livre -->
+      <div class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000">
+        <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+      <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="relative z-10">
+          <!-- Badge Premium -->
+          <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Icon name="tabler:sparkles" class="w-4 h-4 text-[#ffd875]" />
+            <span class="font-medium">PREMIUM</span>
+          </div>
+          
+          <!-- Titre -->
+          <h2 class="font-heading text-4xl md:text-5xl font-bold leading-tight mb-6">
+            <span class="text-white">Passez au niveau</span>
+            <span class="text-[#ffd875] italic">premium</span>
+          </h2>
+          
+          <p class="text-lg text-white mb-8 max-w-xl">
+            Accédez à nos contenus experts et analyses approfondies pour transformer votre approche pédagogique
+          </p>
+          
+          <!-- Features -->
+          <div class="space-y-4 mb-8">
+            {[
+              "Hors-séries exclusifs mensuels",
+              "Analyses approfondies des experts",
+              "Ressources pédagogiques premium"
+            ].map(feature => (
+              <div class="flex items-center gap-3 group">
+                <span class="flex-shrink-0 w-5 h-5 rounded-full bg-[#ffd875]/20 flex items-center justify-center">
+                  <Icon name="tabler:check" class="w-4 h-4 text-[#ffd875]" />
+                </span>
+                <span class="text-base text-white group-hover:text-[#ffd875] transition-colors">{feature}</span>
+              </div>
+            ))}
+          </div>
+
+          <!-- Boutons -->
+          <div class="flex flex-wrap gap-4">
+            <a href="/premium" class="inline-flex items-center gap-2 bg-[#ffd875] hover:bg-[#ffc875] text-[#45b3a4] px-6 py-3 rounded-full font-medium transition-all hover:scale-105">
+              <Icon name="tabler:crown" class="w-5 h-5" />
+              Découvrir l'offre Premium
+            </a>
+            <a href="/podcast" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 px-6 py-3 rounded-full font-medium transition-all hover:scale-105">
+              <Icon name="tabler:player-play" class="w-5 h-5" />
+              Écouter un extrait
+            </a>
+          </div>
+        </div>
+
+        <!-- Cards avec badges ajustés -->
+        <div class="space-y-3 relative">
+          {[
+            {
+              title: "Les neurosciences en classe",
+              description: "Découvrez les dernières avancées en neurosciences appliquées à l'éducation",
+              image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800",
+              duration: "1h 12min"
+            },
+            {
+              title: "La pédagogie active",
+              description: "Guide complet et pratique pour une classe dynamique",
+              image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
+              duration: "58min"
+            }
+          ].map(podcast => (
+            <div class="group relative bg-white/15 backdrop-blur-sm rounded-xl p-4 hover:bg-white/25 transition-all border border-white/20">
+              <div class="flex gap-4">
+                <div class="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                  <img 
+                    src={podcast.image}
+                    alt=""
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Icon name="tabler:player-play" class="w-8 h-8 text-[#ffd875]" />
+                  </div>
+                </div>
+                <div>
+                  <div class="inline-flex items-center gap-1 bg-#8d216d-400 px-2 py-1 rounded-full text-xs font-medium mb-2 text-white backdrop-blur-sm">
+                    Hors-série
+                  </div>
+                  <h3 class="text-lg font-bold mb-1 line-clamp-1">{podcast.title}</h3>
+                  <p class="text-white/90 text-sm mb-2 line-clamp-2">{podcast.description}</p>
+                  <div class="flex items-center gap-1 text-xs text-[#ffd875]">
+                    <Icon name="tabler:clock" class="w-4 h-4" />
+                    <span>{podcast.duration}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <!-- Badge "Nouveau" -->
+          {/* <div class="absolute -top-3 -right-3 bg-[#ffd875] text-[#45b3a4] px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+            ✨ Nouveau
+          </div> */}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+    <!-- Événements à venir
+    <section class="py-24 px-4 md:px-8 bg-gradient-to-br from-gray-50 to-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+          <div>
+            <SectionDivider variant="orange" class="mb-4">
+              <Icon name="tabler:calendar" class="w-4 h-4" />
+              Agenda 2025
+            </SectionDivider>
+            <h2 class="text-3xl md:text-4xl font-bold text-sky-900 tracking-tight">
+              Événements à venir
+            </h2>
+          </div>
+          <a
+            href="/events" 
+            class="group flex items-center gap-2 text-sky-600 hover:text-sky-700 bg-white px-6 py-3 rounded-full hover:shadow-md transition-all duration-300"
+          >
+            Voir tout
+            <Icon 
+              name="tabler:arrow-right" 
+              class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" 
+            />
+          </a>
+        </div>
+  
+        <div class="grid md:grid-cols-3 gap-8">
+          {upcomingEvents.map((event) => (
+            <EventCard
+              title={event.title}
+              description={event.description}
+              date={event.date}
+              image={
+                event.badge === 'Festival 2025'
+                  ? festivalBanner
+                  : 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80'
+              }
+              badge={event.badge}
+              badgeColor={event.badgeColor as 'purple' | 'blue'}
+              link={event.link}
+              cols={event.cols}
+            />
+          ))}
+        </div>
+      </div>
+    </section> -->
+  <!-- Newsletter -->
+  <NewsletterSection />
+
+  {/* Section Innovation */}
+  {/* <section class="py-24 px-4 md:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="bg-gradient-to-br from-white to-sky-50/50 rounded-3xl p-8 md:p-16 shadow-xl shadow-sky-100/20 border border-sky-100/20">
+        <SectionDivider variant="sky" class="mb-6">Innovation</SectionDivider>
+        <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-8">
+          Innover pour l'éducation de demain
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          {features.map(feature => (
+            <div class="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-sky-50 hover:border-sky-100 transition-colors">
+              <Icon name={feature.icon} class="w-12 h-12 text-sky-500 mb-4" />
+              <h3 class="text-xl font-semibold mb-2">{feature.title}</h3>
+              <p class="text-gray-600">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section> */}
+</Layout> 

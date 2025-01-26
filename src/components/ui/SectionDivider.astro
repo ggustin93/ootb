@@ -1,0 +1,59 @@
+---
+interface Props {
+    variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow';
+    class?: string;
+}
+
+const { variant = 'primary', class: className } = Astro.props;
+
+// Variantes utilisant les variables CSS personnalisées
+const variants = {
+  primary: `
+    text-[--ootb-violet]
+    border-[--ootb-violet]
+  `,
+  turquoise: `
+    text-[--ootb-turquoise]
+    border-[--ootb-turquoise]
+  `,
+  success: `
+    text-[--ootb-green]
+    border-[--ootb-green]
+  `,
+  sky: `
+    text-[--ootb-blue]
+    border-[--ootb-blue]
+  `,
+  orange: `
+    text-[--ootb-orange]
+    border-[--ootb-orange]
+  `,
+  yellow: `
+    text-yellow-500
+    border-yellow-500
+  `
+} as const;
+---
+
+<div class:list={[
+  'relative inline-flex items-center',
+  'group',
+  className
+]}>
+  <span 
+    class:list={[
+      'relative px-8 py-3',
+      'text-sm tracking-wide uppercase',
+      'font-heading',
+      'flex items-center gap-3',
+      'border-l border-b',
+      'border-opacity-60',
+      'rounded-bl-2xl',
+      'transition-all duration-300',
+      'hover:border-opacity-100 hover:px-10',
+      variants[variant]
+    ]}
+  >
+    <slot />
+  </span>
+</div>

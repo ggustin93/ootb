@@ -1,0 +1,54 @@
+---
+interface Props {
+  url: string;
+  title: string;
+  platform?: 'youtube' | 'facebook';
+  className?: string;
+}
+
+const { url, title, platform = 'youtube', className = '' } = Astro.props;
+
+// Fonction pour extraire l'ID de la vidéo
+function getVideoId(url: string, platform: string): string {
+  if (platform === 'youtube') {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+    return match ? match[1] : '';
+  }
+  // Ajouter d'autres plateformes si nécessaire
+  return '';
+}
+
+// Fonction pour construire l'URL d'intégration
+function getEmbedUrl(videoId: string, platform: string): string {
+  if (platform === 'youtube') {
+    return `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0`;
+  }
+  // Ajouter d'autres plateformes si nécessaire
+  return '';
+}
+
+const videoId = getVideoId(url, platform);
+const embedUrl = getEmbedUrl(videoId, platform);
+---
+
+<div class={`relative w-full ${className}`}>
+  <iframe
+    src={embedUrl}
+    title={title}
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    class="absolute top-0 left-0 w-full h-full rounded-xl"
+  ></iframe>
+</div>
+
+<style>
+  .video-container {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    transform: perspective(1000px) rotateX(0deg);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .video-container:hover {
+    transform: perspective(1000px) rotateX(2deg);
+  }
+</style> 

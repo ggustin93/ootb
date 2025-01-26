@@ -1,0 +1,141 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { findImage } from '~/utils/images';
+import {
+  getImagesOptimized,
+  astroAsseetsOptimizer,
+  unpicOptimizer,
+  isUnpicCompatible,
+  type ImageProps,
+} from '~/utils/images-optimization';
+
+type Props = ImageProps;
+type ImageType = {
+  src: string;
+  attributes: HTMLAttributes<'img'>;
+};
+
+interface UnsplashOptions {
+  quality?: number;
+  fit?: 'crop' | 'clamp' | 'clip' | 'scale';
+  format?: 'auto' | 'webp' | 'jpg';
+  dpr?: 1 | 2 | 3;
+}
+
+const defaultUnsplashOptions: UnsplashOptions = {
+  quality: 80,
+  fit: 'crop',
+  format: 'auto',
+  dpr: 1
+};
+
+const props = Astro.props;
+
+if (props.alt === undefined || props.alt === null) {
+  throw new Error('Alt attribute is required for accessibility');
+}
+
+if (typeof props.width === 'string') {
+  props.width = parseInt(props.width);
+}
+
+if (typeof props.height === 'string') {
+  props.height = parseInt(props.height);
+}
+
+if (!props.loading) {
+  props.loading = 'lazy';
+}
+
+if (!props.decoding) {
+  props.decoding = 'async';
+}
+
+const _image = await findImage(props.src);
+
+let image: ImageType | undefined = undefined;
+
+if (typeof _image === 'string' && _image.includes('unsplash.com')) {
+  const photoIdMatch = _image.match(/unsplash\.com\/(photos|a)\/([a-zA-Z0-9-_]+)/)?.[2] || 
+                      _image.match(/images\.unsplash\.com\/photo-([a-zA-Z0-9-_]+)/)?.[1];
+                      
+  if (photoIdMatch) {
+    if (props.width && props.height) {
+      image = {
+        src: `https://images.unsplash.com/photo-${photoIdMatch}?w=${props.width}&h=${props.height}&fit=crop&auto=format`,
+        attributes: {
+          ...props,
+          loading: props.loading,
+          decoding: props.decoding,
+          alt: props.alt,
+          width: props.width,
+          height: props.height,
+        },
+      };
+    } else {
+      const options: UnsplashOptions = {
+        ...defaultUnsplashOptions,
+        ...(props.unsplashOptions || {}),
+      };
+      
+      const params = new URLSearchParams({
+        w: (props.width || 800).toString(),
+        q: options.quality.toString(),
+        fit: options.fit,
+        auto: 'format,compress',
+      });
+
+      const optimizedSrc = `https://images.unsplash.com/photo-${photoIdMatch}?${params}`;
+      
+      image = {
+        src: optimizedSrc,
+        attributes: {
+          ...props,
+          loading: props.loading,
+          decoding: props.decoding,
+          alt: props.alt,
+          sizes: props.sizes || '(max-width: 800px) 100vw, 800px',
+          srcset: generateSrcSet(photoIdMatch, props.width || 800, options),
+        },
+      };
+    }
+  }
+} else if (
+  typeof _image === 'string' &&
+  (_image.startsWith('http://') || _image.startsWith('https://')) &&
+  isUnpicCompatible(_image)
+) {
+  image = await getImagesOptimized(_image, props, unpicOptimizer);
+} else if (_image) {
+  image = await getImagesOptimized(_image, props, astroAsseetsOptimizer);
+}
+
+function generateSrcSet(id: string, baseWidth: number, options: UnsplashOptions): string {
+  const widths = [baseWidth / 2, baseWidth, baseWidth * 2];
+  return widths
+    .map(w => {
+      const params = new URLSearchParams({
+        w: w.toString(),
+        q: options.quality.toString(),
+        fit: options.fit,
+        auto: 'format,compress',
+      });
+      return `https://images.unsplash.com/photo-${id}?${params} ${w}w`;
+    })
+    .join(', ');
+}
+---
+
+{
+  !image ? (
+    <Fragment />
+  ) : (
+    <img 
+      src={image.src} 
+      {...image.attributes}
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer"
+      fetchpriority={props.loading === 'eager' ? 'high' : 'auto'}
+    />
+  )
+}

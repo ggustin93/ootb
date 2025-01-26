@@ -1,0 +1,285 @@
+---
+import Image from '~/components/common/Image.astro';
+import { Icon } from 'astro-icon/components';
+import { getPermalink } from '~/utils/permalinks';
+
+interface Meta {
+  author?: string;
+  episode?: string;
+  duration?: string;
+  expert?: string;
+  contributors?: string;
+  publishDate?: string;
+}
+
+interface Category {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  badge?: string;
+  href: string;
+  type?: 'default' | 'actualite' | 'fiche' | 'live' | 'podcast' | 'tv' | 'premium';
+  category?: Category;
+  tags?: string[];
+  meta?: Meta;
+  class?: string;
+}
+
+const { 
+  title, 
+  description, 
+  image, 
+  badge,
+  href,
+  type = 'default',
+  category,
+  tags,
+  meta,
+  class: className = ''
+} = Astro.props;
+
+const displayedTags = tags || [];
+
+// Configuration des types de cartes avec les couleurs exactes des filtres
+const typeConfig = {
+  actualite: {
+    icon: 'tabler:news',
+    label: 'Lire l\'actualité',
+    badgeColor: 'bg-gray-600', // Couleur neutre pour les actualités
+    badgeIcon: 'tabler:news',
+    hoverColor: 'text-gray-600',
+    buttonBg: 'bg-gray-600/10'
+  },
+  fiche: {
+    icon: 'tabler:file-text',
+    label: 'Consulter la fiche',
+    badgeColor: 'bg-[#2091bc]', // Bleu des fiches pédagogiques
+    badgeIcon: 'tabler:file-text',
+    hoverColor: 'text-[#2091bc]',
+    buttonBg: 'bg-[#2091bc]/10'
+  },
+  live: {
+    icon: 'tabler:broadcast',
+    label: 'Voir le live Facebook',
+    badgeColor: 'bg-[#1877F2]', // Bleu Facebook
+    badgeIcon: 'tabler:brand-facebook',
+    hoverColor: 'text-[#1877F2]',
+    buttonBg: 'bg-[#1877F2]/10'
+  },
+  podcast: {
+    icon: 'tabler:brand-spotify', 
+    label: 'Écouter l\'épisode',
+    badgeColor: 'bg-[#8d216d]', // Violet des podcasts
+    badgeIcon: 'tabler:microphone',
+    hoverColor: 'text-[#8d216d]',
+    buttonBg: 'bg-[#8d216d]/10'
+  },
+  tv: {
+    icon: 'tabler:player-play',
+    label: 'Regarder l\'émission', 
+    badgeColor: 'bg-[#2ebf4d]', // Vert des émissions TV
+    badgeIcon: 'tabler:video',
+    hoverColor: 'text-[#2ebf4d]',
+    buttonBg: 'bg-[#2ebf4d]/10'
+  },
+  premium: {
+    icon: 'tabler:crown',
+    label: 'Accéder au contenu premium',
+    badgeColor: 'bg-[#e4451e]', // Orange des contenus premium
+    badgeIcon: 'tabler:crown',
+    hoverColor: 'text-[#e4451e]',
+    buttonBg: 'bg-[#e4451e]/10'
+  },
+  default: {
+    icon: 'tabler:article',
+    label: 'Lire l\'article',
+    badgeColor: 'bg-gray-600',
+    badgeIcon: 'tabler:article',
+    hoverColor: 'text-gray-600',
+    buttonBg: 'bg-gray-600/10'
+  }
+} as const;
+
+const finalType = category?.slug?.toLowerCase() === 'podcast' ? 'podcast' 
+  : category?.slug?.toLowerCase() === 'tv' ? 'tv'
+  : category?.slug?.toLowerCase() === 'premium' ? 'premium'
+  : category?.slug?.toLowerCase() === 'actualite' ? 'actualite'
+  : category?.slug?.toLowerCase() === 'fiche' ? 'fiche'
+  : category?.slug?.toLowerCase() === 'live' ? 'live'
+  : type;
+
+const config = typeConfig[finalType];
+
+const badgeClasses = [
+  'inline-flex items-center gap-1.5 px-3 py-1.5',
+  'text-sm font-medium text-white',
+  'transform skew-x-[-12deg]',
+  'shadow-md',
+  config.badgeColor
+];
+---
+
+<article class:list={[
+  'group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden transition-all duration-300',
+  'hover:shadow-xl hover:-translate-y-1',
+  'border border-gray-100/50 dark:border-gray-700/50',
+  'flex flex-col h-full',
+  className
+]}>
+  <div class="relative aspect-[16/9] overflow-hidden">
+    <Image 
+      src={image}
+      alt={title}
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      widths={[400, 800]}
+      sizes="(max-width: 768px) 100vw, 400px"
+      loading="lazy"
+      decoding="async"
+    />
+    {(badge || category) && (
+      <div class="absolute top-4 left-4 z-10">
+        <span class:list={[
+          badgeClasses,
+          'transition-transform duration-300 group-hover:scale-105'
+        ]}>
+          <span class="transform skew-x-[12deg] flex items-center gap-1.5">
+            <Icon name={config.badgeIcon} class="w-4 h-4" />
+            {badge || category?.title || category}
+          </span>
+        </span>
+      </div>
+    )}
+    
+    <!-- Overlay au survol avec dégradé subtil -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+  </div>
+
+  <div class="p-6 flex flex-col flex-grow">
+    <a 
+      href={getPermalink(href, 'post')} 
+      class:list={[
+        'text-xl font-bold mb-2 line-clamp-2',
+        'text-gray-900',
+        'italic',
+        'transition-colors duration-300',
+        finalType === 'podcast' && 'group-hover:text-[#8d216d]',
+        finalType === 'tv' && 'group-hover:text-[#2ebf4d]',
+        finalType === 'default' && 'group-hover:text-[#2091bc]',
+        finalType === 'premium' && 'group-hover:text-[#e4451e]'
+      ]}
+    >
+      {title}
+    </a>
+    
+    <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 text-sm leading-relaxed">
+      {description}
+    </p>
+
+    {displayedTags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-4">
+        {displayedTags.map((tag) => (
+          <span class:list={[
+            'inline-flex items-center px-3 py-1',
+            'text-xs font-medium rounded-full',
+            'bg-gray-100 text-gray-800',
+            'dark:bg-gray-700 dark:text-gray-200',
+            'transition-all duration-300',
+            'hover:bg-gray-200 dark:hover:bg-gray-600',
+            'cursor-pointer'
+          ]}>
+            <Icon name="tabler:tag" class="w-3 h-3 mr-1" />
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    {meta && (
+      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+        {meta.author && (
+          <div class="flex items-center gap-1">
+            <Icon name="tabler:pencil" class="w-4 h-4" />
+            <span>{meta.author}</span>
+          </div>
+        )}
+        {meta.publishDate && (
+          <div class="flex items-center gap-1">
+            <Icon name="tabler:calendar" class="w-4 h-4" />
+            <span>{meta.publishDate}</span>
+          </div>
+        )}
+        {meta.expert && (
+          <div class="flex items-center gap-1">
+            <Icon name="tabler:user" class="w-4 h-4" />
+            <span>{meta.expert}</span>
+          </div>
+        )}
+        {meta.duration && (
+          <div class="flex items-center gap-1">
+            <Icon name="tabler:clock" class="w-4 h-4" />
+            <span>{meta.duration}</span>
+          </div>
+        )}
+        {meta.contributors && (
+          <div class="flex items-center gap-1">
+            <Icon name="tabler:users" class="w-4 h-4" />
+            <span>{meta.contributors}</span>
+          </div>
+        )}
+      </div>
+    )}
+
+    <div class="mt-auto">
+      <a 
+        href={getPermalink(href, 'post')}
+        class:list={[
+          'w-full inline-flex items-center justify-center gap-2',
+          'px-4 py-3 rounded-lg transition-all duration-300',
+          config.buttonBg,
+          config.hoverColor,
+          'hover:bg-opacity-20',
+          'group/button'
+        ]}
+      >
+        <Icon name={config.icon} class="w-5 h-5" />
+        <span class="font-medium">{config.label}</span>
+        <Icon 
+          name="tabler:chevron-right" 
+          class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5" 
+        />
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  /* Effet de transition subtil au hover */
+  article {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  article:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Effet de profondeur au hover */
+  article::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  article:hover::after {
+    opacity: 1;
+  }
+</style>

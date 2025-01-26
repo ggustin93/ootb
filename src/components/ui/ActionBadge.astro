@@ -1,0 +1,40 @@
+---
+interface Props {
+  variant?: 'festival' | 'podcast' | 'emission' | 'appel';
+  class?: string;
+}
+
+const { variant = 'festival', class: className } = Astro.props;
+
+const variants = {
+  festival: 'bg-[#e4451e] text-white hover:bg-[#cc3e1b]',
+  podcast: 'bg-[#8d216d] text-white hover:bg-[#7a1c5e]',
+  emission: 'bg-[#2ebf4d] text-white hover:bg-[#29ab44]',
+  appel: 'bg-[#2091bc] text-white hover:bg-[#1b7da3]'
+};
+
+// Ajustement automatique du padding en fonction du texte
+const paddings = {
+  festival: 'px-6',
+  podcast: 'px-6',
+  emission: 'px-6',
+  appel: 'px-8' // Plus large pour "Appel à projets"
+};
+---
+
+<span
+  class:list={[
+    'inline-flex items-center justify-center',
+    'text-sm font-medium',
+    'transform skew-x-[-12deg]',
+    'shadow-sm hover:shadow-md',
+    'transition-all duration-300',
+    'w-full whitespace-nowrap',
+    variants[variant],
+    className
+  ]}
+>
+  <span class="transform skew-x-[12deg] font-bebas-neue italic font-extrabold uppercase tracking-wide px-6 py-2.5">
+    <slot />
+  </span>
+</span> 

@@ -1,0 +1,330 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+
+import Layout from '~/layouts/PageLayout.astro';
+import BlogList from '~/components/blog/List.astro';
+import Pagination from '~/components/blog/Pagination.astro';
+import { Icon } from 'astro-icon/components';
+import { findTags } from '~/utils/blog';
+
+import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
+import { CONTENT_TYPES } from '~/config/content-types';
+import { Image } from 'astro:assets';
+
+export const prerender = true;
+
+export const getStaticPaths = (async ({ paginate }) => {
+  return await getStaticPathsBlogList({ paginate });
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { page } = Astro.props as Props;
+const currentPage = page.currentPage ?? 1;
+
+const allTags = await findTags().then(tags => {
+  const uniqueTags = new Map();
+  tags.forEach(tag => {
+    if (!uniqueTags.has(tag.slug)) {
+      uniqueTags.set(tag.slug, tag);
+    }
+  });
+  return Array.from(uniqueTags.values());
+});
+
+// Limiter le nombre de tags affichés initialement
+const initialTags = allTags.slice(0, 15);
+
+// Configuration des filtres
+const FILTER_TYPES = {
+  actualite: {
+    ...CONTENT_TYPES.actualite,
+    label: 'ACTUALITÉS',
+  },
+  fiche: {
+    ...CONTENT_TYPES.fiche,
+    label: 'FICHES PÉDAGOGIQUES',
+  },
+  live: {
+    ...CONTENT_TYPES.live,
+    label: 'LIVES FACEBOOK',
+  },
+  podcast: {
+    ...CONTENT_TYPES.podcast,
+    label: 'PODCASTS',
+  },
+  tv: {
+    ...CONTENT_TYPES.tv,
+    label: 'ÉMISSIONS TV',
+  },
+  premium: {
+    ...CONTENT_TYPES.premium,
+    label: 'CONTENUS PREMIUM',
+  }
+} as const;
+
+const metadata = {
+  title: `Blog${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  robots: {
+    index: blogListRobots?.index && currentPage === 1,
+    follow: blogListRobots?.follow,
+  },
+  openGraph: {
+    type: 'blog',
+  },
+};
+
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Section avec fond turquoise -->
+  <section class="relative min-h-[70vh] flex items-start justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] from-0% via-[#7ec3af] via-60% to-white to-100%">
+    <!-- Éléments décoratifs flottants -->
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- Formes géométriques subtiles -->
+      <div class="absolute w-32 h-32 rounded-full bg-white/10 blur-2xl -top-8 -left-8 animate-float"></div>
+      <div class="absolute w-48 h-48 rounded-full bg-white/10 blur-3xl bottom-32 right-16 animate-float-delayed"></div>
+    </div>
+
+    <div class="relative z-10 container mx-auto px-4 pt-24 pb-16">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-12 gap-12 items-center">
+          <!-- Mascotte (1/3 de l'espace) -->
+          <div class="relative hidden md:block order-1 md:col-span-4">
+            <div class="relative w-full max-w-[400px] transform hover:-rotate-2 transition-transform duration-300">
+              <Image
+                src={import('~/assets/images/ootb-logo.svg')}
+                alt="Out of the Books Mascotte"
+                class="w-full h-full object-contain drop-shadow-xl"
+                widths={[400]}
+                sizes="400px"
+                loading="eager"
+              />
+            </div>
+          </div>
+
+          <!-- Contenu textuel (2/3 de l'espace) -->
+          <div class="text-center md:text-left order-2 md:col-span-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+              Nos contenus
+            </h1>
+            <p class="text-xl text-white/90 font-light mb-12 max-w-xl">
+              Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation
+            </p>
+
+            <!-- Barre de recherche intelligente -->
+            <div class="relative mb-12">
+              <div class="relative">
+                <input
+                  type="search"
+                  id="tag-search"
+                  placeholder="Rechercher un contenu par thématique..."
+                  class="w-full px-5 py-4 pl-12 text-gray-700 bg-white/95 backdrop-blur-sm border border-white/20 rounded-full focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300"
+                />
+                <Icon 
+                  name="tabler:search" 
+                  class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
+                />
+              </div>
+              <!-- Suggestions de recherche -->
+              <div id="search-suggestions" class="absolute w-full mt-2 bg-white rounded-xl shadow-lg overflow-hidden hidden z-50">
+                <div class="max-h-64 overflow-y-auto">
+                  {initialTags.map((tag) => (
+                    <button
+                      class="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-gray-700"
+                      data-tag-name={tag.title.toLowerCase()}
+                    >
+                      <Icon name="tabler:tag" class="w-4 h-4 text-gray-400" />
+                      <span>{tag.title}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <!-- Label pour les filtres -->
+            <div class="text-white/90 text-sm uppercase tracking-wider mb-4 font-medium">Filtrer par type de contenu :</div>
+
+            <!-- Filtres principaux -->
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+              {Object.entries(FILTER_TYPES).map(([key, config]) => (
+                <a
+                  href={`/category/${key}`}
+                  class:list={[
+                    'group relative inline-flex items-center gap-2',
+                    'transform skew-x-[-12deg]',
+                    'transition-all duration-300',
+                    'hover:-translate-y-1',
+                    'px-6 py-2.5',
+                    {
+                      'bg-gray-700/90 text-white hover:bg-gray-800/90': key === 'actualite',
+                      'bg-[#0EA5E9]/90 text-white hover:bg-[#0EA5E9]': key === 'fiche',
+                      'bg-[#1877F2]/90 text-white hover:bg-[#1877F2]': key === 'live',
+                      'bg-[#8d216d]/90 text-white hover:bg-[#8d216d]': key === 'podcast',
+                      'bg-[#22C55E]/90 text-white hover:bg-[#22C55E]': key === 'tv',
+                      'bg-[#F43F5E]/90 text-white hover:bg-[#F43F5E]': key === 'premium',
+                    }
+                  ]}
+                >
+                  <span class="transform skew-x-[12deg] flex items-center gap-2.5">
+                    <Icon 
+                      name={config.icon} 
+                      class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
+                    />
+                    <span class="text-sm font-bold uppercase tracking-wide">{config.label}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section contenu -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-7xl mx-auto">
+        <BlogList posts={page.data} />
+        <div class="mt-12">
+          <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Logique de recherche avec autocomplétion
+  const searchInput = document.getElementById('tag-search') as HTMLInputElement;
+  const searchSuggestions = document.getElementById('search-suggestions');
+  const suggestionButtons = searchSuggestions?.getElementsByTagName('button');
+
+  // Afficher/masquer les suggestions
+  searchInput?.addEventListener('focus', () => {
+    searchSuggestions?.classList.remove('hidden');
+  });
+
+  // Gérer la recherche et le filtrage des suggestions
+  searchInput?.addEventListener('input', (e) => {
+    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+    
+    if (suggestionButtons) {
+      Array.from(suggestionButtons).forEach(button => {
+        const tagName = button.getAttribute('data-tag-name');
+        if (tagName?.includes(searchTerm)) {
+          button.style.display = '';
+        } else {
+          button.style.display = 'none';
+        }
+      });
+    }
+  });
+
+  // Gérer la sélection d'une suggestion
+  if (suggestionButtons) {
+    Array.from(suggestionButtons).forEach(button => {
+      button.addEventListener('click', () => {
+        if (searchInput) {
+          searchInput.value = button.textContent?.trim() || '';
+          searchSuggestions?.classList.add('hidden');
+          // Rediriger vers la page du tag
+          const tagSlug = button.getAttribute('data-tag-name');
+          if (tagSlug) {
+            window.location.href = `/tag/${tagSlug}`;
+          }
+        }
+      });
+    });
+  }
+
+  // Masquer les suggestions lors d'un clic en dehors
+  document.addEventListener('click', (e) => {
+    if (!searchInput?.contains(e.target as Node) && !searchSuggestions?.contains(e.target as Node)) {
+      searchSuggestions?.classList.add('hidden');
+    }
+  });
+</script>
+
+<style>
+  /* Animations raffinées */
+  details[open] > div {
+    animation: slideDown 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 8s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+
+  /* Transitions douces */
+  a, button, input {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Style pour la barre de défilement des suggestions */
+  #search-suggestions .max-h-64 {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  }
+
+  #search-suggestions .max-h-64::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #search-suggestions .max-h-64::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #search-suggestions .max-h-64::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 3px;
+  }
+</style>

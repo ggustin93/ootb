@@ -1,0 +1,18 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "compilerOptions": {
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

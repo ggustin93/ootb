@@ -1,0 +1,119 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+import type { ImageMetadata } from 'astro';
+import ActionBadge from '~/components/ui/ActionBadge.astro';
+
+interface Props {
+  title: {
+    line1: string;
+    line2: string;
+    line3: string;
+  };
+  subtitle: string;
+  image: ImageMetadata;
+}
+
+const {
+  title = {
+    line1: "La plateforme",
+    line2: "des pédagogies",
+    line3: "innovantes !"
+  },
+  subtitle = "Out of the Books est une ASBL qui connecte les acteurs éducatifs à travers contenus experts et événements inspirants. Ensemble, nous créons des espaces d'échange et d'innovation pour l'éducation.",
+  image,
+} = Astro.props;
+---
+
+<section class="relative min-h-[85vh] flex items-start justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] via-[#7ec3af] to-[#fbfcfb]">
+  <!-- Éléments décoratifs flottants -->
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Premier livre - Repositionné au milieu gauche -->
+    <div class="absolute w-24 h-32 -rotate-12 top-[10%] left-[40%] opacity-30 transition-transform hover:-translate-y-2 duration-1000">
+      <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
+    </div>
+    
+    <!-- Second livre - Position ajustée en miroir -->
+    <div class="absolute w-20 h-28 rotate-45 top-[40%] right-[12%] opacity-30 transition-transform hover:translate-y-2 duration-1000">
+      <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
+    </div>
+  </div>
+
+  <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto px-4 pt-32">
+    <div class="text-center md:text-left">
+      <h1 class="font-heading text-6xl font-bold leading-none tracking-tight mb-6">
+        <span class="text-white">{title.line1}</span><br/>
+        <span class="text-yellow-400 relative ml-4 after:absolute after:bottom-1 after:left-0 after:w-full after:h-1 after:bg-gradient-to-r after:from-yellow-400/50 after:to-yellow-400/10 italic after:skew-x-[-12deg] after:transform after:blur-sm after:transition-all after:duration-300 hover:after:h-2 hover:after:blur-md">{title.line2}</span><br/>
+        <span class="text-white">{title.line3}</span>
+      </h1>
+      <p class="font-sans text-xl text-white/90 font-light mb-12 max-w-lg">
+        {subtitle}
+      </p>
+
+      <!-- Section des badges sur une seule ligne -->
+      <div class="flex flex-row gap-4 justify-between">
+        <a href="/festival" class="transform hover:scale-105 transition-all duration-300 flex-1">
+          <ActionBadge variant="festival">
+            Festival
+          </ActionBadge>
+        </a>
+        
+        <a href="/category/podcast" class="transform hover:scale-105 transition-all duration-300 flex-1">
+          <ActionBadge variant="podcast">
+            Podcast
+          </ActionBadge>
+        </a>
+        
+        <a href="/category/tv" class="transform hover:scale-105 transition-all duration-300 flex-1">
+          <ActionBadge variant="emission">
+            Émission
+          </ActionBadge>
+        </a>
+        
+        <a href="/appel-a-projets" class="transform hover:scale-105 transition-all duration-300 flex-1">
+          <ActionBadge variant="appel">
+            Appel à projets
+          </ActionBadge>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="relative hidden md:block">
+      <!-- Image principale -->
+      <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+        <Image
+          src={image}
+          alt="Illustration principale"
+          class="w-full max-w-md mx-auto"
+          widths={[400, 500]}
+          sizes="(max-width: 500px) 400px, 500px"
+          aspectRatio="1:1"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+      <!-- Cercles décoratifs -->
+      <div class="absolute inset-0 z-0">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-white/10 blur-2xl"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-yellow-400/20 blur-xl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vague décorative en bas -->
+  <div class="absolute -bottom-1 left-0 right-0">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 1440 320" 
+      class="w-full h-[120px] md:h-[180px] lg:h-[240px] text-white"
+      preserveAspectRatio="none"
+    >
+      <path 
+        fill="currentColor" 
+        fill-opacity="1" 
+        d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+      ></path>
+    </svg>
+  </div>
+</section> 

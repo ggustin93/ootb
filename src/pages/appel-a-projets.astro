@@ -1,0 +1,328 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { Icon } from 'astro-icon/components';
+import ProjectSubmissionForm from '~/components/forms/ProjectSubmissionForm.astro';
+import Image from '~/components/common/Image.astro';
+import logoTalent from '~/assets/images/logo_talent.avif';
+import ActionBadge from '~/components/ui/ActionBadge.astro';
+
+const metadata = {
+  title: 'Appel à projets | Out of the Books',
+  description: 'Partagez votre expérience pédagogique innovante et inspirez vos pairs lors du Festival Out of the Books 2024.',
+  canonical: 'https://outofthebooks.org/appel-a-projets',
+};
+
+const processSteps = [
+  {
+    icon: 'tabler:bulb',
+    title: 'Soumission',
+    description: 'Partagez votre projet innovant via notre formulaire en ligne'
+  },
+  {
+    icon: 'tabler:messages',
+    title: 'Évaluation',
+    description: 'Notre comité évalue les projets selon leur pertinence et impact'
+  },
+  {
+    icon: 'tabler:check',
+    title: 'Sélection',
+    description: 'Les projets retenus seront publiés et partagés avec la communauté'
+  }
+];
+
+const criteria = [
+  {
+    icon: "tabler:bulb-filled",
+    title: "Innovation pédagogique",
+    description: "Une approche originale qui transforme l'expérience d'apprentissage"
+  },
+  {
+    icon: "tabler:chart-dots",
+    title: "Impact mesurable",
+    description: "Des résultats concrets sur la progression des élèves"
+  },
+  {
+    icon: "tabler:repeat",
+    title: "Facilement reproductible",
+    description: "Un projet adaptable par d'autres enseignants"
+  },
+  {
+    icon: "tabler:users",
+    title: "Pertinent pour tous",
+    description: "Une valeur ajoutée pour la communauté éducative"
+  }
+];
+---
+
+<Layout {metadata}>
+  <section class="relative min-h-[65vh] flex items-start justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] from-30% via-[#7ec3af] via-50% to-white to-100% pt-12 md:pt-16">
+    <!-- Mascotte ><div class="absolute top-8 right-8 w-48 h-48 md:w-60 md:h-60 opacity-90 hidden md:block">
+      <Image
+        src={ootbLogo}
+        alt="Mascotte Out of the Books" 
+        class="w-full h-full object-contain drop-shadow-lg animate-float"
+        widths={[192, 240]} 
+        sizes="(max-width: 768px) 192px, 240px"
+      /> 
+    </div> -->
+
+    <!-- Éléments décoratifs flottants -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <!-- Formes géométriques subtiles -->
+      <div class="absolute w-72 h-72 rounded-full bg-white/5 blur-3xl -top-20 -left-20 animate-float"></div>
+      <div class="absolute w-96 h-96 rounded-full bg-white/5 blur-3xl bottom-20 right-0 animate-float-delayed"></div>
+      
+      <!-- Motifs géométriques plus resserrés -->
+      <div class="absolute top-1/3 right-[20%] w-20 h-20 opacity-10">
+        <Icon name="tabler:book-2" class="w-full h-full text-white transform rotate-12 animate-float" />
+      </div>
+      <div class="absolute bottom-1/3 left-[15%] w-16 h-16 opacity-10">
+        <Icon name="tabler:pencil" class="w-full h-full text-white transform -rotate-12 animate-float-delayed" />
+      </div>
+      <div class="absolute top-1/2 left-[30%] w-12 h-12 opacity-10">
+        <Icon name="tabler:star" class="w-full h-full text-white transform rotate-45 animate-float-slow" />
+      </div>
+      <!-- Nouvelle étoile -->
+      <div class="absolute top-1/4 right-[35%] w-10 h-10 opacity-10">
+        <Icon name="tabler:star-filled" class="w-full h-full text-white transform -rotate-12 animate-float-slower" />
+      </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="relative z-10 container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="grid md:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <!-- Image à gauche (1/3) -->
+          <div class="relative hidden md:block order-1 md:col-span-4">
+            <div class="relative w-full">
+              <div class="absolute inset-0 bg-white/10 rounded-3xl blur-2xl transform scale-95"></div>
+              <div class="mr-6 relative transform hover:-rotate-2 transition-transform duration-500">
+                <Image
+                  src={logoTalent}
+                  alt="Les enseignants ont du talent"
+                  class="w-full h-full object-contain drop-shadow-2xl relative z-10"
+                  widths={[400]}
+                  sizes="400px"
+                  loading="eager"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Contenu textuel (2/3) -->
+          <div class="text-center md:text-left order-2 md:col-span-8">
+            <!-- Badge repositionné au-dessus du titre avec largeur max -->
+            <div class="mb-6">
+              <ActionBadge 
+                variant="appel" 
+                class="inline-block text-lg sm:text-xl tracking-wide transform -skew-x-12 shadow-lg max-w-[260px] truncate"
+              >
+                Appel à projets
+              </ActionBadge>
+            </div>
+
+            <h1 class="text-6xl md:text-7xl font-extrabold text-white mb-4">
+              <span class="block text-4xl md:text-5xl font-bold mt-2 text-white/90">Les enseignants ont du talent</span>
+            </h1>
+            
+            <p class="text-base md:text-lg text-white/90 font-light mb-6 max-w-xl leading-relaxed">
+              Vous avez mis en place un projet innovant dans votre classe ? Participez à l'appel à projets "Les enseignants ont du talent" et 
+              <span class="text-white font-medium">inspirez vos pairs</span>. Découvrez les <a href="/category/fiche" class="text-white hover:text-white/90 underline decoration-2 underline-offset-4">ressources pédagogiques</a> déjà partagées par la communauté.
+            </p>
+
+            <!-- Boutons plus compacts -->
+            <div class="flex flex-wrap gap-6 justify-center md:justify-start">
+              <a 
+                href="#soumettre"
+                class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-[#6ab29e] rounded-full hover:bg-white/95 hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-black/5"
+              >
+                <Icon name="tabler:send" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                <span class="font-semibold">Soumettre un projet</span>
+              </a>
+              
+              <a
+                href="#criteres"
+                class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white/10 text-white rounded-full hover:bg-white/20 hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm"
+              >
+                <span class="font-semibold">Voir les critères</span>
+                <Icon name="tabler:arrow-right" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vague décorative améliorée -->
+    <div class="absolute bottom-0 left-0 right-0 h-48 overflow-hidden">
+      <svg class="absolute bottom-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path 
+          fill="#ffffff" 
+          fill-opacity="1" 
+          d="M0,160L48,144C96,128,192,96,288,90.7C384,85,480,107,576,128C672,149,768,171,864,165.3C960,160,1056,128,1152,122.7C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+        ></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Processus avec fond subtil -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Comment participer ?
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Un processus simple en trois étapes pour partager votre projet
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          {processSteps.map((step) => (
+            <div class="relative group bg-white rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+              <div class="absolute inset-0 bg-gradient-to-br from-[#6ab29e]/5 to-transparent rounded-2xl transition-opacity duration-300 opacity-0 group-hover:opacity-100"></div>
+              
+              <div class="relative">
+                <!-- Icône avec fond et effet au hover -->
+                <div class="inline-flex items-center justify-center w-14 h-14 mb-4 bg-[#6ab29e]/10 text-[#6ab29e] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <Icon name={step.icon} class="w-7 h-7" />
+                </div>
+                
+                <!-- Titre et description -->
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                  {step.title}
+                </h3>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Critères -->
+  <section id="criteres" class="py-24 md:py-32 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Ce que nous recherchons
+          </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          {criteria.map((item) => (
+            <div class="group bg-white rounded-2xl p-6 border border-gray-100/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div class="flex items-start gap-4">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-[#6ab29e]/10 text-[#6ab29e] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <Icon name={item.icon} class="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-1">
+                    {item.title}
+                  </h3>
+                  <p class="text-sm text-gray-600">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formulaire -->
+  <section id="soumettre" class="py-24 md:py-32 bg-gradient-to-b from-[#6ab29e] from-0% via-[#7ec3af] via-60% to-[#6ab29e] to-100%">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+          Prêt à partager votre projet ?
+        </h2>
+        <p class="text-xl text-white/90">
+          Rejoignez la communauté des enseignants innovants
+        </p>
+      </div>
+      
+      <div class="relative z-10">
+        <ProjectSubmissionForm />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Animations raffinées */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+    }
+    50% {
+      transform: translateY(-15px) rotate(-5deg);
+    }
+  }
+
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+    }
+    50% {
+      transform: translateY(-10px) rotate(10deg);
+    }
+  }
+
+  @keyframes float-slower {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+    }
+    50% {
+      transform: translateY(-8px) rotate(-8deg);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 8s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 10s ease-in-out infinite;
+    animation-delay: -4s;
+  }
+
+  .animate-float-slower {
+    animation: float-slower 12s ease-in-out infinite;
+    animation-delay: -6s;
+  }
+
+  .process-step {
+    @apply relative overflow-hidden;
+  }
+  
+  .process-step::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-[#6ab29e]/5 to-transparent opacity-0 transition-opacity duration-300 rounded-2xl;
+  }
+  
+  .process-step:hover::before {
+    @apply opacity-100;
+  }
+</style> 

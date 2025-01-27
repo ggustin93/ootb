@@ -56,7 +56,7 @@ const criteria = [
 ---
 
 <Layout {metadata}>
-  <section class="relative min-h-[65vh] flex items-start justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] from-30% via-[#7ec3af] via-50% to-white to-100% pt-12 md:pt-16">
+  <section class="relative min-h-[65vh] flex items-start justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] from-40% via-[#7ec3af] via-60% to-white to-100% pt-12 md:pt-16">
     <!-- Mascotte ><div class="absolute top-8 right-8 w-48 h-48 md:w-60 md:h-60 opacity-90 hidden md:block">
       <Image
         src={ootbLogo}
@@ -69,23 +69,16 @@ const criteria = [
 
     <!-- Éléments décoratifs flottants -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <!-- Formes géométriques subtiles -->
-      <div class="absolute w-72 h-72 rounded-full bg-white/5 blur-3xl -top-20 -left-20 animate-float"></div>
-      <div class="absolute w-96 h-96 rounded-full bg-white/5 blur-3xl bottom-20 right-0 animate-float-delayed"></div>
+      <!-- Cercles avec effet glassmorphism -->
+      <div class="absolute w-96 h-96 rounded-full bg-white/10 backdrop-blur-sm -top-20 -right-20 animate-float"></div>
+      <div class="absolute w-72 h-72 rounded-full bg-white/5 backdrop-blur-sm bottom-10 left-10 animate-float-delayed"></div>
       
-      <!-- Motifs géométriques plus resserrés -->
-      <div class="absolute top-1/3 right-[20%] w-20 h-20 opacity-10">
+      <!-- Motifs géométriques -->
+      <div class="absolute top-1/4 right-[25%] w-16 h-16 opacity-20">
         <Icon name="tabler:book-2" class="w-full h-full text-white transform rotate-12 animate-float" />
       </div>
-      <div class="absolute bottom-1/3 left-[15%] w-16 h-16 opacity-10">
+      <div class="absolute bottom-1/3 left-[20%] w-14 h-14 opacity-15">
         <Icon name="tabler:pencil" class="w-full h-full text-white transform -rotate-12 animate-float-delayed" />
-      </div>
-      <div class="absolute top-1/2 left-[30%] w-12 h-12 opacity-10">
-        <Icon name="tabler:star" class="w-full h-full text-white transform rotate-45 animate-float-slow" />
-      </div>
-      <!-- Nouvelle étoile -->
-      <div class="absolute top-1/4 right-[35%] w-10 h-10 opacity-10">
-        <Icon name="tabler:star-filled" class="w-full h-full text-white transform -rotate-12 animate-float-slower" />
       </div>
     </div>
 
@@ -141,13 +134,13 @@ const criteria = [
                 <span class="font-semibold">Soumettre un projet</span>
               </a>
               
-              <a
+              {/* <a
                 href="#criteres"
                 class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white/10 text-white rounded-full hover:bg-white/20 hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm"
               >
                 <span class="font-semibold">Voir les critères</span>
                 <Icon name="tabler:arrow-right" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
@@ -167,7 +160,7 @@ const criteria = [
   </section>
 
   <!-- Processus avec fond subtil -->
-  <section class="pb-18 md:pb-24 bg-gradient-to-br from-white via-white to-[#6ab29e]/5">
+  <section class="pb-18 md:pb-24 bg-gradient-to-br from-white via-white to-[--ootb-blue]/5">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-16">
@@ -208,7 +201,7 @@ const criteria = [
   </section>
 
   <!-- Critères -->
-  <section id="criteres" class="py-24 md:py-32 bg-gradient-to-br from-[#6ab29e]/10 via-white to-white">
+  <section id="criteres" class="py-24 md:py-32 bg-gradient-to-br from-[--ootb-blue]/10 via-white to-white">
     <div class="container mx-auto px-4">
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-12">
@@ -245,7 +238,7 @@ const criteria = [
   </section>
 
   <!-- Formulaire -->
-  <section id="soumettre" class="py-24 md:py-32 bg-gradient-to-b from-[#6ab29e] from-0% via-[#7ec3af] via-60% to-[#6ab29e] to-100%">
+  <section id="soumettre" class="py-24 md:py-32 bg-gradient-to-b from-[--ootb-blue] from-0% via-[#4a90c9] via-60% to-[--ootb-blue] to-100%">
     <div class="container mx-auto px-4">
       <div class="max-w-3xl mx-auto text-center mb-16">
         <SectionDivider variant="sky" class="mb-6 bg-white/10 backdrop-blur-sm">
@@ -272,36 +265,22 @@ const criteria = [
   @keyframes float {
     0%, 100% {
       transform: translateY(0) rotate(0);
+      opacity: 0.2;
     }
     50% {
       transform: translateY(-20px) rotate(5deg);
+      opacity: 0.3;
     }
   }
 
   @keyframes float-delayed {
     0%, 100% {
       transform: translateY(0) rotate(0);
+      opacity: 0.15;
     }
     50% {
       transform: translateY(-15px) rotate(-5deg);
-    }
-  }
-
-  @keyframes float-slow {
-    0%, 100% {
-      transform: translateY(0) rotate(0);
-    }
-    50% {
-      transform: translateY(-10px) rotate(10deg);
-    }
-  }
-
-  @keyframes float-slower {
-    0%, 100% {
-      transform: translateY(0) rotate(0);
-    }
-    50% {
-      transform: translateY(-8px) rotate(-8deg);
+      opacity: 0.25;
     }
   }
 
@@ -312,16 +291,6 @@ const criteria = [
   .animate-float-delayed {
     animation: float-delayed 8s ease-in-out infinite;
     animation-delay: -2s;
-  }
-
-  .animate-float-slow {
-    animation: float-slow 10s ease-in-out infinite;
-    animation-delay: -4s;
-  }
-
-  .animate-float-slower {
-    animation: float-slower 12s ease-in-out infinite;
-    animation-delay: -6s;
   }
 
   .process-step {
@@ -335,5 +304,15 @@ const criteria = [
   
   .process-step:hover::before {
     @apply opacity-100;
+  }
+
+  /* Ajout d'effets de hover plus sophistiqués */
+  .process-step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(var(--ootb-blue-rgb), 0.1);
+  }
+
+  .criteria-card:hover {
+    background: linear-gradient(135deg, white, rgba(var(--ootb-blue-rgb), 0.05));
   }
 </style> 

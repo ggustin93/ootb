@@ -5,6 +5,7 @@ import ProjectSubmissionForm from '~/components/forms/ProjectSubmissionForm.astr
 import Image from '~/components/common/Image.astro';
 import logoTalent from '~/assets/images/logo_talent.avif';
 import ActionBadge from '~/components/ui/ActionBadge.astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
 
 const metadata = {
   title: 'Appel à projets | Out of the Books',
@@ -166,11 +167,15 @@ const criteria = [
   </section>
 
   <!-- Processus avec fond subtil -->
-  <section class="py-24 md:py-32 bg-white">
+  <section class="pb-18 md:pb-24 bg-gradient-to-br from-white via-white to-[#6ab29e]/5">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <SectionDivider variant="sky" class="mb-6">
+            <Icon name="tabler:bulb" class="w-5 h-5" />
+            Processus
+          </SectionDivider>
+          <h2 class="text-4xl md:text-5xl font-bold text-sky-900 mb-6">
             Comment participer ?
           </h2>
           <p class="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -180,17 +185,15 @@ const criteria = [
 
         <div class="grid md:grid-cols-3 gap-8">
           {processSteps.map((step) => (
-            <div class="relative group bg-white rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+            <div class="relative group bg-white/80 backdrop-blur-sm rounded-2xl p-6 hover:shadow-lg transition-all duration-300 border border-white/60">
               <div class="absolute inset-0 bg-gradient-to-br from-[#6ab29e]/5 to-transparent rounded-2xl transition-opacity duration-300 opacity-0 group-hover:opacity-100"></div>
               
               <div class="relative">
-                <!-- Icône avec fond et effet au hover -->
-                <div class="inline-flex items-center justify-center w-14 h-14 mb-4 bg-[#6ab29e]/10 text-[#6ab29e] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div class="inline-flex items-center justify-center w-14 h-14 mb-4 bg-[#6ab29e]/10 text-[--ootb-blue] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <Icon name={step.icon} class="w-7 h-7" />
                 </div>
                 
-                <!-- Titre et description -->
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                <h3 class="text-xl font-semibold text-sky-900 mb-2">
                   {step.title}
                 </h3>
                 <p class="text-gray-600 text-sm leading-relaxed">
@@ -205,24 +208,28 @@ const criteria = [
   </section>
 
   <!-- Critères -->
-  <section id="criteres" class="py-24 md:py-32 bg-gray-50">
+  <section id="criteres" class="py-24 md:py-32 bg-gradient-to-br from-[#6ab29e]/10 via-white to-white">
     <div class="container mx-auto px-4">
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <SectionDivider variant="sky" class="mb-6">
+            <Icon name="tabler:target" class="w-5 h-5" />
+            Critères
+          </SectionDivider>
+          <h2 class="text-4xl md:text-5xl font-bold text-sky-900 mb-4">
             Ce que nous recherchons
           </h2>
         </div>
 
         <div class="grid sm:grid-cols-2 gap-6">
           {criteria.map((item) => (
-            <div class="group bg-white rounded-2xl p-6 border border-gray-100/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div class="group bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-white/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div class="flex items-start gap-4">
-                <div class="inline-flex items-center justify-center w-12 h-12 bg-[#6ab29e]/10 text-[#6ab29e] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-[#6ab29e]/10 text-[--ootb-blue] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <Icon name={item.icon} class="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 class="text-lg font-semibold text-gray-900 mb-1">
+                  <h3 class="text-lg font-semibold text-sky-900 mb-1">
                     {item.title}
                   </h3>
                   <p class="text-sm text-gray-600">
@@ -241,7 +248,11 @@ const criteria = [
   <section id="soumettre" class="py-24 md:py-32 bg-gradient-to-b from-[#6ab29e] from-0% via-[#7ec3af] via-60% to-[#6ab29e] to-100%">
     <div class="container mx-auto px-4">
       <div class="max-w-3xl mx-auto text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+        <SectionDivider variant="sky" class="mb-6 bg-white/10 backdrop-blur-sm">
+          <Icon name="tabler:send" class="w-5 h-5 text-white" />
+          <span class="text-white">Soumission</span>
+        </SectionDivider>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
           Prêt à partager votre projet ?
         </h2>
         <p class="text-xl text-white/90">

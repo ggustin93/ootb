@@ -14,15 +14,15 @@ const sections = [
 ];
 ---
 
-<form class="space-y-8 max-w-4xl mx-auto mb-12">
+<form class="space-y-8 max-w-4xl mx-auto -mt-12">
   <!-- Informations personnelles -->
-  <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:border-sky-100 transition-colors">
+  <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/60 hover:shadow-xl transition-all duration-300">
     <div class="flex items-center gap-4 mb-8">
-      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-100 to-blue-50 flex items-center justify-center">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-100 to-sky-50 flex items-center justify-center">
         <Icon name="tabler:user" class="w-6 h-6 text-sky-600" />
       </div>
       <div>
-        <h3 class="text-xl font-bold text-gray-900">À propos de vous</h3>
+        <h3 class="text-xl font-bold text-sky-900">À propos de vous</h3>
         <p class="text-gray-500 text-sm">Informations de contact</p>
       </div>
     </div>
@@ -30,7 +30,7 @@ const sections = [
     <div class="grid md:grid-cols-2 gap-8">
       <div class="space-y-2">
         <label for="prenom" class="text-sm font-medium text-gray-700 flex items-center gap-2">
-          <Icon name="tabler:id" class="w-4 h-4 text-gray-400" />
+          <Icon name="tabler:id" class="w-4 h-4 text-sky-600/70" />
           Prénom *
         </label>
         <input 
@@ -44,7 +44,7 @@ const sections = [
 
       <div class="space-y-2">
         <label for="nom" class="text-sm font-medium text-gray-700 flex items-center gap-2">
-          <Icon name="tabler:id" class="w-4 h-4 text-gray-400" />
+          <Icon name="tabler:id" class="w-4 h-4 text-sky-600/70" />
           Nom *
         </label>
         <input 
@@ -58,7 +58,7 @@ const sections = [
 
       <div class="space-y-2">
         <label for="email" class="text-sm font-medium text-gray-700 flex items-center gap-2">
-          <Icon name="tabler:mail" class="w-4 h-4 text-gray-400" />
+          <Icon name="tabler:mail" class="w-4 h-4 text-sky-600/70" />
           Email *
         </label>
         <input 
@@ -72,7 +72,7 @@ const sections = [
 
       <div class="space-y-2">
         <label for="telephone" class="text-sm font-medium text-gray-700 flex items-center gap-2">
-          <Icon name="tabler:phone" class="w-4 h-4 text-gray-400" />
+          <Icon name="tabler:phone" class="w-4 h-4 text-sky-600/70" />
           Téléphone
         </label>
         <input 
@@ -86,13 +86,13 @@ const sections = [
   </div>
 
   <!-- Informations du projet -->
-  <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:border-sky-100 transition-colors">
+  <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/60 hover:shadow-xl transition-all duration-300">
     <div class="flex items-center gap-4 mb-8">
-      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-100 to-sky-50 flex items-center justify-center">
-        <Icon name="tabler:bulb" class="w-6 h-6 text-purple-600" />
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-100 to-sky-50 flex items-center justify-center">
+        <Icon name="tabler:bulb" class="w-6 h-6 text-sky-600" />
       </div>
       <div>
-        <h3 class="text-xl font-bold text-gray-900">Votre projet</h3>
+        <h3 class="text-xl font-bold text-sky-900">Votre projet</h3>
         <p class="text-gray-500 text-sm">Détails de votre innovation pédagogique</p>
       </div>
     </div>
@@ -100,7 +100,7 @@ const sections = [
     <div class="space-y-8">
       <div class="space-y-2">
         <label for="titre" class="text-sm font-medium text-gray-700 flex items-center gap-2">
-          <Icon name="tabler:writing" class="w-4 h-4 text-gray-400" />
+          <Icon name="tabler:writing" class="w-4 h-4 text-sky-600/70" />
           Titre du projet *
         </label>
         <input 
@@ -126,7 +126,7 @@ const sections = [
                 required
                 class="peer sr-only"
               />
-              <div class="w-full p-4 rounded-xl border-2 border-gray-200 bg-white hover:border-sky-200 peer-checked:border-sky-500 peer-checked:bg-sky-50 transition-all flex items-center gap-3">
+              <div class="w-full p-4 rounded-xl border-2 border-gray-200 bg-white hover:border-[#6ab29e]/20 peer-checked:border-[#6ab29e] peer-checked:bg-[#6ab29e]/5 transition-all flex items-center gap-3">
                 <Icon name={type.icon} class="w-5 h-5 text-sky-600" />
                 <span class="text-gray-700 font-medium">{type.label}</span>
               </div>
@@ -148,7 +148,7 @@ const sections = [
                 required
                 class="peer sr-only"
               />
-              <div class="w-full p-4 rounded-xl border-2 border-gray-200 bg-white hover:border-sky-200 peer-checked:border-sky-500 peer-checked:bg-sky-50 transition-all flex items-center gap-3">
+              <div class="w-full p-4 rounded-xl border-2 border-gray-200 bg-white hover:border-[#6ab29e]/20 peer-checked:border-[#6ab29e] peer-checked:bg-[#6ab29e]/5 transition-all flex items-center gap-3">
                 <Icon name={section.icon} class="w-5 h-5 text-sky-600" />
                 <span class="text-gray-700 font-medium">{section.label}</span>
               </div>
@@ -160,7 +160,7 @@ const sections = [
       <!-- Description -->
       <div class="space-y-2">
         <label for="description" class="text-sm font-medium text-gray-700 flex items-center gap-2">
-          <Icon name="tabler:file-description" class="w-4 h-4 text-gray-400" />
+          <Icon name="tabler:file-description" class="w-4 h-4 text-sky-600/70" />
           Description du projet *
         </label>
         <textarea
@@ -176,7 +176,7 @@ const sections = [
       <!-- Compétences -->
       <div class="space-y-2">
         <label for="competences" class="text-sm font-medium text-gray-700 flex items-center gap-2">
-          <Icon name="tabler:target" class="w-4 h-4 text-gray-400" />
+          <Icon name="tabler:target" class="w-4 h-4 text-sky-600/70" />
           Compétences développées *
         </label>
         <textarea
@@ -192,7 +192,7 @@ const sections = [
       <!-- Résultats -->
       <div class="space-y-2">
         <label for="resultats" class="text-sm font-medium text-gray-700 flex items-center gap-2">
-          <Icon name="tabler:chart-bar" class="w-4 h-4 text-gray-400" />
+          <Icon name="tabler:chart-bar" class="w-4 h-4 text-sky-600/70" />
           Résultats observés
         </label>
         <textarea
@@ -214,31 +214,31 @@ const sections = [
           name="links"
           id="links"
           placeholder="Site web, vidéo, compte Twitter..."
-          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition-colors duration-200"
+          class="form-input"
         />
         <p class="text-sm text-gray-500">
           Ajoutez vos liens séparés par des virgules
         </p>
       </div>
-    </div>
-  </div>
 
-  <!-- Boutons -->
-  <div class="flex justify-end mt-8 mb-8">
-    <button
-      type="submit"
-      class="group inline-flex items-center gap-3 text-lg px-8 py-4 bg-[--ootb-blue] hover:bg-[#4d72cd] text-white font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 rounded-xl mb-8"
-    >
-      <Icon name="tabler:send" class="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-      <span>Soumettre le projet</span>
-    </button>
+      <!-- Bouton de soumission -->
+      <div class="flex justify-end pt-8">
+        <button
+          type="submit"
+          class="group inline-flex items-center gap-3 text-lg px-8 py-4 bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 rounded-xl"
+        >
+          <Icon name="tabler:send" class="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+          <span>Soumettre le projet</span>
+        </button>
+      </div>
+    </div>
   </div>
 </form>
 
 <style>
   .form-input,
   .form-textarea {
-    @apply w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 
            focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 focus:bg-white
            placeholder:text-gray-400
            transition-all duration-200;
@@ -246,8 +246,8 @@ const sections = [
 
   .button-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl
-           bg-gradient-to-r from-sky-600 to-blue-600 text-white font-medium
-           hover:from-sky-500 hover:to-blue-500
+           bg-gradient-to-r from-sky-500 to-sky-600 text-white font-medium
+           hover:from-sky-600 hover:to-sky-700
            focus:ring-2 focus:ring-offset-2 focus:ring-sky-500
            transform hover:-translate-y-0.5 active:translate-y-0
            transition-all duration-200;

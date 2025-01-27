@@ -1,10 +1,11 @@
 export interface Event {
-  id?: string;
+  id: string;
   time: string;
-  type: 'Stands' | 'Conferences' | 'Workshops';
+  type: 'Conférences' | 'Ateliers' | 'Stands';
   title: string;
   description: string;
-  location?: string;
+  location: string;
   speaker?: string;
-  day: '1' | '2' | '3';
+  day: string;
+  image?: string;
 } 

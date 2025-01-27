@@ -2,7 +2,7 @@
 import Layout from '~/layouts/PageLayout.astro';
 import { Icon } from 'astro-icon/components';
 import DayFilter from '~/components/ui/DayFilter.astro';
-import { events } from '~/data/festival';
+import { eventsByDay } from '~/data/festival';
 import Image from '~/components/common/Image.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import VideoPlayer from '~/components/common/VideoPlayer.astro';
@@ -58,7 +58,7 @@ const themes = [
 
 <Layout metadata={metadata}>
   <!-- Hero Section -->
-  <section class="relative min-h-[75vh] flex items-start pt-24 justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] via-[#7ec3af] to-[#fbfcfb]">
+  <section class="relative min-h-[85vh] flex items-start pt-32 justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] from-40% via-[#7ec3af] to-[#fbfcfb]">
     <!-- Éléments décoratifs flottants -->
     <div class="absolute inset-0 overflow-hidden">
       <!-- Livres flottants -->
@@ -84,15 +84,15 @@ const themes = [
           <div class="text-left">
             <h1 class="text-left">
               <ActionBadge variant="festival" class="inline-block sm:text-xl md:text-1xl lg:text-2xl tracking-wide mb-4 max-w-[200px]">Festival</ActionBadge>
-              <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-yellow-400 italic mb-2 tracking-tight">Out of the Books</span>
-              <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">2025</span>
+              <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white italic mb-2 tracking-tight">Out of the Books</span>
+              <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-yellow-400 tracking-tight">2025</span>
             </h1>
 
             <div class="mt-6 space-y-2">
-              <p class="text-base sm:text-lg md:text-xl text-white font-light tracking-wide">
+              <p class="hero-text text-base sm:text-lg md:text-xl drop-shadow-sm">
                 1, 2 et 3 octobre 2025 | La Sucrerie - Wavre
               </p>
-              <p class="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl leading-relaxed">
+              <p class="hero-text text-base sm:text-lg md:text-xl leading-relaxed drop-shadow-sm">
                 3 jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes.
               </p>
             </div>
@@ -142,17 +142,65 @@ const themes = [
         ></path>
       </svg>
     </div>
+
+    <!-- Cartes d'activités -->
+    <div class="absolute bottom-0 translate-y-[-20%] w-full z-10">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Conférences -->
+          <div class="festival-card group backdrop-blur-md">
+            <div class="relative p-8">
+              <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+              <div class="relative z-10">
+                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Icon name="tabler:presentation" class="w-8 h-8 text-white" />
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Conférences</h3>
+                <p class="text-gray-600 leading-relaxed">40+ conférences inspirantes sur l'innovation pédagogique</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ateliers -->
+          <div class="festival-card group backdrop-blur-md">
+            <div class="relative p-8">
+              <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+              <div class="relative z-10">
+                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Icon name="tabler:tool" class="w-8 h-8 text-white" />
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Ateliers</h3>
+                <p class="text-gray-600 leading-relaxed">20+ ateliers pratiques pour expérimenter et apprendre</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stands -->
+          <div class="festival-card group backdrop-blur-md">
+            <div class="relative p-8">
+              <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+              <div class="relative z-10">
+                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Icon name="tabler:building-store" class="w-8 h-8 text-white" />
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Stands</h3>
+                <p class="text-gray-600 leading-relaxed">30+ exposants et démos de solutions pédagogiques</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Section Introduction -->
-  <section class="py-24 bg-white">
+  <section class="py-32 bg-white">
     <div class="container mx-auto px-4">
-      <div class="max-w-5xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16">
           <SectionDivider variant="orange" class="mb-6">
-            <Icon name="tabler:flame" class="w-4 h-4" />
-            À propos
-          </SectionDivider>
+            <Icon name="tabler:bulb" class="w-5 h-5" />
+            En bref          </SectionDivider>
           <h2 class="text-4xl md:text-5xl font-bold mb-6 text-sky-900">
             Le festival des pédagogies innovantes
           </h2>
@@ -161,102 +209,61 @@ const themes = [
           </p>
         </div>
 
-        <!-- Cartes d'activités -->
-        <div class="grid md:grid-cols-3 gap-8 mb-16">
-          <!-- Conférences -->
-          <div class="festival-card group">
-            <div class="relative p-8">
-              <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#e4451e]/10 to-transparent rounded-bl-full transition-all duration-300 group-hover:scale-110"></div>
-              <Icon name="tabler:presentation" class="w-12 h-12 text-[#e4451e] mb-6 transition-transform duration-300 group-hover:scale-110" />
-              <h3 class="text-2xl font-bold mb-4 text-gray-900">Conférences</h3>
-              <p class="text-gray-600 mb-6">40+ conférences inspirantes sur l'innovation pédagogique</p>
-              <ul class="space-y-3">
-                <li class="flex items-center gap-3 text-gray-600">
-                  <Icon name="tabler:point" class="w-5 h-5 text-[#e4451e] flex-shrink-0" />
-                  <span>Experts internationaux</span>
-                </li>
-                <li class="flex items-center gap-3 text-gray-600">
-                  <Icon name="tabler:point" class="w-5 h-5 text-[#e4451e] flex-shrink-0" />
-                  <span>Retours d'expérience</span>
-                </li>
-              </ul>
+        <!-- Présentation en deux colonnes -->
+        <div class="grid md:grid-cols-2 gap-16 items-center mb-16">
+          <!-- Texte à gauche -->
+          <div class="space-y-6">
+            <div class="max-w-xl">
+              <p class="text-lg text-gray-600 mb-4">
+                Le Festival Out of the Books est né d'une volonté de rassembler tous les acteurs de l'éducation autour d'un objectif commun : repenser l'apprentissage pour le rendre plus efficace, inclusif et épanouissant.
+              </p>
+              <p class="text-lg text-gray-600">
+                Pendant trois jours, enseignants, professionnels de l'éducation, parents et élèves se réunissent pour partager leurs expériences,
+                découvrir de nouvelles approches pédagogiques et s'inspirer mutuellement.
+              </p>
             </div>
           </div>
 
-          <!-- Ateliers -->
-          <div class="festival-card group">
-            <div class="relative p-8">
-              <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-full transition-all duration-300 group-hover:scale-110"></div>
-              <Icon name="tabler:tool" class="w-12 h-12 text-[#6ab29e] mb-6 transition-transform duration-300 group-hover:scale-110" />
-              <h3 class="text-2xl font-bold mb-4 text-gray-900">Ateliers</h3>
-              <p class="text-gray-600 mb-6">20+ ateliers pratiques pour expérimenter et apprendre</p>
-              <ul class="space-y-3">
-                <li class="flex items-center gap-3 text-gray-600">
-                  <Icon name="tabler:point" class="w-5 h-5 text-[#6ab29e] flex-shrink-0" />
-                  <span>Hands-on workshops</span>
-                </li>
-                <li class="flex items-center gap-3 text-gray-600">
-                  <Icon name="tabler:point" class="w-5 h-5 text-[#6ab29e] flex-shrink-0" />
-                  <span>Outils innovants</span>
-                </li>
-              </ul>
+          <!-- Vidéo à droite -->
+          <div class="relative aspect-video">
+            <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform-gpu hover:scale-[1.02] transition-transform duration-500">
+              <VideoPlayer
+                url="https://youtu.be/lZqHW0GtwG0"
+                title="Festival Out of the Books 2025"
+                platform="youtube"
+                className="w-full aspect-video"
+              />
+              <!-- Effet de reflet -->
+              <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-20 bg-gradient-to-t from-white/20 to-transparent blur-lg transform-gpu"></div>
             </div>
-          </div>
-
-          <!-- Stands -->
-          <div class="festival-card group">
-            <div class="relative p-8">
-              <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#e4451e]/10 to-transparent rounded-bl-full transition-all duration-300 group-hover:scale-110"></div>
-              <Icon name="tabler:building-store" class="w-12 h-12 text-[#e4451e] mb-6 transition-transform duration-300 group-hover:scale-110" />
-              <h3 class="text-2xl font-bold mb-4 text-gray-900">Stands</h3>
-              <p class="text-gray-600 mb-6">30+ exposants et démos de solutions pédagogiques</p>
-              <ul class="space-y-3">
-                <li class="flex items-center gap-3 text-gray-600">
-                  <Icon name="tabler:point" class="w-5 h-5 text-[#e4451e] flex-shrink-0" />
-                  <span>Solutions EdTech</span>
-                </li>
-                <li class="flex items-center gap-3 text-gray-600">
-                  <Icon name="tabler:point" class="w-5 h-5 text-[#e4451e] flex-shrink-0" />
-                  <span>Ressources pédagogiques</span>
-                </li>
-              </ul>
+            <!-- Cercles décoratifs -->
+            <div class="absolute inset-0 z-0">
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full bg-[#6ab29e]/10 blur-2xl"></div>
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] rounded-full bg-[#e4451e]/10 blur-xl"></div>
             </div>
-          </div>
-        </div>
-
-        <!-- Texte descriptif -->
-        <div class="max-w-3xl mx-auto text-center mb-16">
-          <p class="text-lg text-gray-600 mb-4">
-            Le Festival Out of the Books est né d'une volonté de rassembler tous les acteurs de l'éducation autour d'un objectif commun : 
-            <span class="text-[#e4451e] font-semibold">repenser l'apprentissage pour le rendre plus efficace, inclusif et épanouissant</span>.
-          </p>
-          <p class="text-lg text-gray-600">
-            Pendant trois jours, enseignants, professionnels de l'éducation, parents et élèves se réunissent pour partager leurs expériences,
-            découvrir de nouvelles approches pédagogiques et s'inspirer mutuellement.
-          </p>
-        </div>
-
-        <!-- Vidéo avec effet 3D -->
-        <div class="relative mb-24">
-          <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform-gpu hover:scale-[1.02] transition-transform duration-500">
-            <VideoPlayer
-              url="https://youtu.be/lZqHW0GtwG0"
-              title="Festival Out of the Books 2025"
-              platform="youtube"
-              className="w-full aspect-video"
-            />
-            <!-- Effet de reflet -->
-            <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-20 bg-gradient-to-t from-white/20 to-transparent blur-lg transform-gpu"></div>
           </div>
         </div>
 
         <!-- Stats sur une ligne avec style amélioré -->
-        <div class="relative py-16 bg-gradient-to-br from-[#6ab29e]/5 to-[#e4451e]/5 rounded-3xl">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        <div class="relative py-16 bg-gradient-to-br from-[#6ab29e]/5 to-[#6ab29e]/10 rounded-3xl overflow-hidden">
+          <!-- Éléments décoratifs -->
+          <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[#6ab29e]/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-48 h-48 bg-[#e4451e]/5 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2"></div>
+            <!-- Icônes flottantes -->
+            <div class="absolute w-8 h-8 top-[20%] left-[10%] text-[#6ab29e]/20 animate-float">
+              <Icon name="tabler:chart-dots" class="w-full h-full" />
+            </div>
+            <div class="absolute w-8 h-8 bottom-[20%] right-[10%] text-[#e4451e]/20 animate-float-delayed">
+              <Icon name="tabler:chart-bar" class="w-full h-full" />
+            </div>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             {[
-              { number: '40+', label: 'conférences', color: 'text-[#e4451e]' },
+              { number: '40+', label: 'conférences', color: 'text-[#6ab29e]' },
               { number: '20+', label: 'ateliers pratiques', color: 'text-[#6ab29e]' },
-              { number: '50+', label: 'intervenants', color: 'text-[#e4451e]' },
+              { number: '50+', label: 'intervenants', color: 'text-[#6ab29e]' },
               { number: '1000+', label: 'participants', color: 'text-[#6ab29e]' }
             ].map(({ number, label, color }) => (
               <div class="text-center transform hover:-translate-y-1 transition-all duration-300">
@@ -275,102 +282,207 @@ const themes = [
   </section>
 
   <!-- Programme du festival -->
-  <section id="programme" class="py-24 bg-sky-100/30">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <SectionDivider variant="orange" class="mb-6">
-          <Icon name="tabler:calendar" class="w-4 h-4" />
-          Programme
+  <section id="programme" class="relative py-24 bg-gradient-to-br from-[#e4451e] via-[#e4451e] to-[#d13d19] overflow-hidden">
+    <!-- Éléments décoratifs -->
+    <div class="absolute inset-0">
+      <div class="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform -translate-x-1/3 -translate-y-1/3"></div>
+      <div class="absolute bottom-0 right-0 w-80 h-80 bg-black/5 rounded-full blur-2xl transform translate-x-1/4 translate-y-1/4"></div>
+    </div>
+
+    <div class="relative z-10 container mx-auto px-4">
+      <div class="text-center mb-16">
+        <SectionDivider variant="primary" class="mb-8 bg-white/10 backdrop-blur-sm">
+          <Icon name="tabler:calendar" class="w-5 h-5 text-white" />
+          <span class="text-white">Planning</span>
         </SectionDivider>
-        <h2 class="text-4xl font-bold mb-4 text-sky-900">Programme du festival</h2>
-        <p class="text-xl text-gray-600">
+        <h2 class="text-4xl md:text-5xl  font-bold mb-6 text-white tracking-tight !text-white">Programme du festival</h2>
+        <p class="text-xl !text-white/90 max-w-2xl mx-auto font-light tracking-wide leading-relaxed">
           Découvrez toutes les conférences, ateliers et stands sur les 3 jours
         </p>
       </div>
 
-      <div class="bg-white rounded-xl shadow-lg p-8">
-        <DayFilter events={events} />
+      <div class="bg-white/95 backdrop-blur-xl rounded-[32px] shadow-2xl p-8 mb-16 transform hover:scale-[1.01] transition-all duration-300 border border-white/20">
+        <style>
+          /* Style personnalisé pour les boutons du DayFilter */
+          :global(.day-filter-button) {
+            @apply border-2 border-gray-100 text-gray-600 px-6 py-3 rounded-xl
+              hover:border-[#e4451e]/40 hover:text-[#e4451e] 
+              transition-all duration-300 bg-white/80
+              flex items-center gap-2 cursor-pointer;
+          }
+          :global(.day-filter-button.active) {
+            @apply border-[#e4451e] text-[#e4451e] bg-white 
+              font-medium shadow-sm ring-2 ring-[#e4451e]/10 ring-offset-2;
+          }
+          :global(.day-filter-button:hover) {
+            @apply shadow-md bg-white transform -translate-y-[2px];
+          }
+          :global(.day-filter-button::before) {
+            content: '';
+            @apply w-2 h-2 rounded-full bg-current opacity-0 transition-opacity duration-300;
+          }
+          :global(.day-filter-button:hover::before) {
+            @apply opacity-50;
+          }
+          :global(.day-filter-button.active::before) {
+            @apply opacity-100;
+          }
+
+          /* Style pour la pagination */
+          :global(.pagination-button) {
+            @apply px-4 py-2 border border-gray-200 rounded-lg text-gray-600
+              hover:border-[#e4451e]/40 hover:text-[#e4451e] 
+              transition-all duration-300
+              flex items-center gap-2;
+          }
+          :global(.pagination-button:disabled) {
+            @apply opacity-50 cursor-not-allowed hover:border-gray-200 hover:text-gray-600;
+          }
+          :global(.pagination-info) {
+            @apply text-sm text-gray-500 font-medium;
+          }
+
+          /* Réduction de la taille des images */
+          :global(.event-image) {
+            @apply w-24 h-24 rounded-xl object-cover;
+          }
+
+          /* Système typographique harmonisé */
+          p:not(.hero-text) {
+            color: #5d7186; /* Gris bleuté plus doux */
+            @apply tracking-wide font-normal;
+          }
+
+          .hero-text {
+            @apply text-white font-light tracking-wide;
+          }
+
+          h3 {
+            @apply tracking-tight;
+            color: #34495e;
+            transition: color 0.3s ease;
+          }
+        </style>
+        <DayFilter events={eventsByDay} />
+      </div>
+
+      <!-- Éléments décoratifs supplémentaires -->
+      <div class="relative h-32 mb-8">
+        <!-- Cercles décoratifs -->
+        <div class="absolute bottom-0 left-1/4 w-48 h-48 bg-gradient-to-br from-white/20 to-white/5 rounded-full blur-2xl"></div>
+        <div class="absolute bottom-8 right-1/3 w-32 h-32 bg-gradient-to-tl from-black/10 to-transparent rounded-full blur-xl"></div>
+        <!-- Icônes flottantes supplémentaires -->
+        <div class="absolute bottom-4 left-1/3 w-8 h-8 text-white/30 animate-float">
+          <Icon name="tabler:calendar-stats" class="w-full h-full" />
+        </div>
+        <div class="absolute bottom-12 right-1/4 w-6 h-6 text-white/30 animate-float-delayed">
+          <Icon name="tabler:calendar-time" class="w-full h-full" />
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Thèmes avec animation au scroll -->
-  <section class="py-20 bg-gradient-to-b from-white to-gray-50">
-    <div class="container mx-auto px-4">
+  <section class="relative py-20 bg-gradient-to-br from-[#6ab29e]/5 via-white to-[#e4451e]/5 overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#6ab29e]/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
+      <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#e4451e]/5 rounded-full blur-2xl transform -translate-x-1/3 translate-y-1/3"></div>
+      <!-- Icônes flottantes -->
+      <div class="absolute w-10 h-10 top-[25%] left-[15%] text-[#6ab29e]/20 animate-float">
+        <Icon name="tabler:bulb" class="w-full h-full" />
+      </div>
+      <div class="absolute w-8 h-8 bottom-[30%] right-[10%] text-[#e4451e]/20 animate-float-delayed">
+        <Icon name="tabler:brain" class="w-full h-full" />
+      </div>
+    </div>
+
+    <div class="relative z-10 container mx-auto px-4">
       <div class="text-center mb-16">
         <SectionDivider variant="orange" class="mb-6">
-          <Icon name="tabler:bulb" class="w-4 h-4" />
+          <Icon name="tabler:bulb" class="w-5 h-5" />
           Thématiques
         </SectionDivider>
-        <h2 class="text-4xl font-bold mb-6 text-sky-900">Les grands thèmes du Festival</h2>
+        <h2 class="ext-4xl md:text-5xl  font-bold mb-6 text-sky-900">Les grands thèmes du Festival</h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
           Découvrez les 5 axes principaux qui seront abordés lors du festival
         </p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
-        {themes.map((theme, index) => (
-          <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group">
-            <div class="mb-6 transform group-hover:scale-110 transition-transform duration-300">
-              <div class={`w-14 h-14 ${index % 2 === 0 ? 'bg-[#e4451e]' : 'bg-[#6ab29e]'} rounded-xl flex items-center justify-center`}>
-                <Icon name={theme.icon} class="w-7 h-7 text-white" />
+        {themes.map((theme) => (
+          <div class="relative bg-gradient-to-br from-white to-gray-50/80 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group transform hover:-translate-y-1 border border-gray-100 overflow-hidden">
+            <div class="relative z-10">
+              <div class="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-xl flex items-center justify-center relative">
+                  <div class="absolute inset-0 bg-[#6ab29e] rounded-xl opacity-20 animate-pulse"></div>
+                  <Icon name={theme.icon} class="w-7 h-7 text-white relative z-10" />
+                </div>
               </div>
+              <h3 class="text-xl font-bold text-[#2d3748] mb-4 group-hover:text-[#e4451e] transition-colors tracking-tight">{theme.title}</h3>
+              <p class="text-[#4a5568] leading-relaxed font-normal tracking-wide">{theme.description}</p>
             </div>
-            <h3 class={`text-xl font-bold ${index % 2 === 0 ? 'text-[#e4451e]' : 'text-[#6ab29e]'} mb-4`}>{theme.title}</h3>
-            <p class="text-gray-600 leading-relaxed">{theme.description}</p>
+            
+            <!-- Effets décoratifs -->
+            <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#e4451e]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute -bottom-2 -right-2 w-32 h-32 bg-[#e4451e]/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#e4451e]/10 to-transparent rounded-bl-full transform scale-0 group-hover:scale-100 transition-transform duration-300"></div>
           </div>
         ))}
       </div>
     </div>
   </section>
-
-  <!-- Call to Action avec effet glassmorphism -->
-  <section class="relative py-32 overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-[#e4451e]/20 to-[#e4451e]/10 opacity-90"></div>
-    <div class="absolute inset-0">
-      <Image
-        src="https://images.unsplash.com/photo-1604147706283-d7119b5b822c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
-        alt="Background image"
-        class="w-full h-full object-cover opacity-5"
-        widths={[400, 900]}
-        sizes="(max-width: 900px) 400px, 900px"
-        aspectRatio="16:9"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-    <div class="relative container mx-auto px-4">
-      <div class="max-w-3xl mx-auto text-center">
-        <SectionDivider variant="turquoise" class="mb-6">
-          <Icon name="tabler:sparkles" class="w-4 h-4" />
-          Les enseignants ont du talent
-        </SectionDivider>
-        <h2 class="text-4xl font-bold text-[#e4451e] mb-6">Présentez votre projet</h2>
-        <p class="text-xl text-gray-800 mb-8">
-          Partagez votre expérience et inspirez vos pairs lors d'une conférence ou d'un atelier. Nous recherchons des enseignants passionnés pour partager leurs pratiques innovantes, leurs succès et leurs apprentissages.
-        </p>
-        <a 
-          href="#submit" 
-          class="inline-flex items-center px-8 py-4 bg-[#6ab29e] text-white rounded-full font-semibold hover:bg-[#6ab29e]/90 transition-all duration-300 shadow-lg hover:shadow-xl group"
-        >
-          <Icon name="tabler:send" class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:translate-x-1" />
-          Soumettre un projet
-        </a>
-      </div>
-    </div>
-  </section>
-
-
 </Layout>
 
 <style>
   .festival-card {
-    @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
-    background: linear-gradient(to bottom right, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+    @apply bg-white/95 rounded-[32px] shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+    background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
     backdrop-filter: blur(10px);
+    box-shadow: 
+      0 10px 30px -5px rgba(0, 0, 0, 0.1), 
+      0 5px 15px -3px rgba(0, 0, 0, 0.05),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
 
-  /* Les autres styles peuvent être supprimés car remplacés par les classes directes */
+  .theme-title {
+    color: #34495e;
+    @apply tracking-tight transition-colors duration-300;
+  }
+
+  .theme-title:hover {
+    color: #6ab29e;
+  }
+
+  .section-title {
+    @apply tracking-tight;
+    background: linear-gradient(135deg, #34495e 0%, #435e78 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .theme-description {
+    color: #5d7186;
+    @apply tracking-wide font-normal leading-relaxed;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+  }
 </style>
 
 <script>

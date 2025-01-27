@@ -58,7 +58,7 @@ const themes = [
 
 <Layout metadata={metadata}>
   <!-- Hero Section -->
-  <section class="relative min-h-[85vh] flex items-start pt-32 justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] from-40% via-[#7ec3af] to-[#fbfcfb]">
+  <section class="relative min-h-[85vh] flex items-start pt-32 justify-center overflow-visible bg-gradient-to-b from-[#6ab29e] from-40% via-[#7ec3af] to-[#fbfcfb]">
     <!-- Éléments décoratifs flottants -->
     <div class="absolute inset-0 overflow-hidden">
       <!-- Livres flottants -->
@@ -142,21 +142,20 @@ const themes = [
         ></path>
       </svg>
     </div>
-
     <!-- Cartes d'activités -->
-    <div class="absolute bottom-0 translate-y-[-20%] w-full z-10">
+    <div class="absolute bottom-0 left-0 right-0 translate-y-1/2 w-full z-20">
       <div class="container mx-auto px-4">
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           <!-- Conférences -->
           <div class="festival-card group backdrop-blur-md">
-            <div class="relative p-8">
+            <div class="relative p-6">
               <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
               <div class="relative z-10">
-                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Icon name="tabler:presentation" class="w-8 h-8 text-white" />
+                <div class="w-12 h-12 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Icon name="tabler:presentation" class="w-6 h-6 text-white" />
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Conférences</h3>
-                <p class="text-gray-600 leading-relaxed">40+ conférences inspirantes sur l'innovation pédagogique</p>
+                <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Conférences</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">40+ conférences inspirantes sur l'innovation pédagogique</p>
               </div>
             </div>
           </div>
@@ -194,7 +193,7 @@ const themes = [
   </section>
 
   <!-- Section Introduction -->
-  <section class="py-32 bg-white">
+  <section class="pt-64 pb-32 bg-white relative">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16">
@@ -435,13 +434,10 @@ const themes = [
 
 <style>
   .festival-card {
-    @apply bg-white/95 rounded-[32px] shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
-    background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
-    backdrop-filter: blur(10px);
-    box-shadow: 
-      0 10px 30px -5px rgba(0, 0, 0, 0.1), 
-      0 5px 15px -3px rgba(0, 0, 0, 0.05),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    @apply bg-white/90 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+    background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,255,255,0.88));
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .theme-title {

@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import logoHeader from '~/assets/images/ootb-logo-header.svg';
 
 interface Props {
   size?: 'sm' | 'md' | 'lg';
@@ -16,7 +17,7 @@ const sizes = {
 
 <div class={sizes[size]}>
   <Image
-    src="/src/assets/images/ootb-logo-header.svg"
+    src={logoHeader}
     alt="Out of the Books"
     class="w-full h-auto"
     width={256}

@@ -7,19 +7,12 @@ interface Props {
 const { variant = 'festival', class: className } = Astro.props;
 
 const variants = {
-  festival: 'bg-[#e4451e] text-white hover:bg-[#cc3e1b]',
-  podcast: 'bg-[#8d216d] text-white hover:bg-[#7a1c5e]',
-  emission: 'bg-[#2ebf4d] text-white hover:bg-[#29ab44]',
-  appel: 'bg-[#2091bc] text-white hover:bg-[#1b7da3]'
+  festival: 'bg-[var(--ootb-orange)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-orange)_90%,black)]',
+  podcast: 'bg-[var(--ootb-violet)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-violet)_90%,black)]',
+  emission: 'bg-[var(--ootb-green)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-green)_90%,black)]',
+  appel: 'bg-[var(--ootb-blue)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)]'
 };
 
-// Ajustement automatique du padding en fonction du texte
-const paddings = {
-  festival: 'px-6',
-  podcast: 'px-6',
-  emission: 'px-6',
-  appel: 'px-8' // Plus large pour "Appel à projets"
-};
 ---
 
 <span

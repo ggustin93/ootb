@@ -1,0 +1,98 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from '~/components/ui/Card.astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
+
+interface FeaturedContent {
+  href: string;
+  title: string;
+  description: string;
+  image: string;
+  badge: string;
+  type: 'podcast' | 'tv' | 'default';
+  meta: {
+    episode?: string;
+    duration: string;
+    expert: string;
+    contributors?: string;
+  };
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  contents: FeaturedContent[];
+}
+
+const {
+  title = "Actualités du moment",
+  description = "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
+  contents = []
+} = Astro.props;
+
+---
+
+<section class="px-4 bg-[color-mix(in_srgb,var(--ootb-turquoise)_10%,white)] py-20">
+  <div class="max-w-7xl mx-auto">
+    <!-- En-tête de section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16">
+      <div class="max-w-2xl">
+        <SectionDivider variant="turquoise" class="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full">
+          <Icon name="tabler:flame" class="w-4 h-4 text-[--ootb-turquoise]" />
+          <span class="text-[--ootb-turquoise] font-medium tracking-wide">A L'AFFICHE</span>
+        </SectionDivider>
+        
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-600 mb-6 tracking-tight leading-tight">
+          {title}        
+        </h2>
+        
+        <p class="text-gray-600 text-lg leading-relaxed">
+          {description}
+        </p>
+      </div>
+
+      <a 
+        href="/contenus" 
+        class="group hidden md:inline-flex items-center gap-3 text-[#6ab29e] hover:text-[#5a9886] bg-white/80 hover:bg-white backdrop-blur-sm px-6 py-3.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
+      >
+        <span class="font-medium">Voir tout</span>
+        <Icon 
+          name="tabler:arrow-right" 
+          class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+        />
+      </a>
+    </div>
+    
+    <!-- Grille de contenu -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+      {contents.map((content) => (
+        <div class="group">
+          <Card
+            href={content.href}
+            title={content.title}
+            description={content.description}
+            image={content.image}
+            badge={content.badge}
+            type={content.type}
+            meta={content.meta}
+            class="transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- Bouton mobile -->
+    <div class="mt-12 md:hidden">
+      <a 
+        href="/contenus" 
+        class="group flex items-center justify-center gap-3 w-full text-[#6ab29e] hover:text-[#5a9886] bg-white/80 hover:bg-white backdrop-blur-sm px-6 py-3.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
+      >
+        <span class="font-medium">Voir tout</span>
+        <Icon 
+          name="tabler:arrow-right" 
+          class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+        />
+      </a>
+    </div>
+  </div>
+</section> 

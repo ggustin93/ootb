@@ -1,0 +1,91 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+import type { ImageMetadata } from 'astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
+import Button from '~/components/ui/Button.astro';
+
+interface Props {
+  image: ImageMetadata;
+  features: string[];
+}
+
+const { image, features } = Astro.props;
+---
+<section class="md:pb-16 pb-12 md:pb-32 px-4 md:px-8 bg-[#FFFFFF] relative isolate">
+  <!-- Effets de fond -->
+  <div class="absolute inset-0 bg-[#FFFFFF]"></div>
+  
+  <div class="max-w-6xl mx-auto relative z-10">
+    <!-- Contenu principal -->
+    <div class="flex flex-col md:grid md:grid-cols-5 gap-8 md:gap-16 lg:gap-24 items-start">
+      <!-- En-tête mobile -->
+      <div class="md:hidden mb-8">
+        <SectionDivider variant="secondary" class="mb-3 inline-flex">
+          <Icon name="tabler:target" class="w-4 h-4 mr-1" />
+          Notre mission
+        </SectionDivider>
+        <h2 class="font-display text-3xl font-bold leading-tight text-[--ootb-blue] tracking-tight">
+          Innover pour l'éducation de demain
+        </h2>
+      </div>
+
+      <!-- Image (à gauche - 2/5) -->
+      <div class="relative group w-full md:col-span-2">
+        <!-- Effet de relief pour l'image -->
+        <div class="absolute inset-0 bg-gradient-to-r from-[--ootb-turquoise]/8 to-[--ootb-violet]/8 rounded-xl md:rounded-2xl transform rotate-2 scale-[1.02] blur-[2px] transition-transform group-hover:rotate-1"></div>
+        <div class="absolute -inset-1 bg-gradient-to-r from-[--ootb-turquoise]/15 to-[--ootb-violet]/15 rounded-xl md:rounded-2xl transform -rotate-1 opacity-75"></div>
+        <Image 
+          src={image}
+          alt="L'équipe Out of the Books en action"
+          class="relative z-10 rounded-xl md:rounded-2xl shadow-xl transform transition-all duration-300 group-hover:scale-[1.02] w-full h-full object-cover"
+          widths={[400, 900]}
+          sizes="(max-width: 768px) 100vw, 33vw"
+          aspectRatio="4:5"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <!-- Texte (3/5) -->
+      <div class="md:col-span-3 space-y-6 md:space-y-8">
+        <!-- En-tête desktop -->
+        <div class="hidden md:block">
+          <SectionDivider variant="turquoise" class="mb-3 inline-flex">
+            <Icon name="tabler:target" class="w-4 h-4 mr-1" />
+            Notre mission
+          </SectionDivider>
+          <h2 class="font-display text-4xl font-bold leading-tight text-[--ootb-blue] tracking-tight mb-8">
+            Innover pour l'éducation de demain
+          </h2>
+        </div>
+
+        <p class="text-base md:text-lg text-gray-600 leading-relaxed">
+          La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.
+        </p>
+
+        <ul class="space-y-3 md:space-y-6">
+          {features.map((feature: string) => (
+            <li class="flex items-start gap-3 md:gap-5 group">
+              <span class="flex-shrink-0 w-5 h-5 md:w-6 md:h-6 mt-1 rounded-full bg-[--ootb-turquoise]/8 flex items-center justify-center">
+                <Icon name="tabler:circle-check-filled" class="w-6 h-6 md:w-5 md:h-6 text-[--ootb-turquoise]" />
+              </span>
+              <span class="text-sm md:text-base text-gray-700">{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Bouton amélioré -->
+        <div class="pt-4 md:pt-6">
+          <Button
+            variant="primary"
+            href="/about"
+            text="En savoir plus sur notre mission"
+            icon="tabler:arrow-right"
+            class="w-full md:w-auto shadow-xl shadow-[--ootb-turquoise]/15 hover:shadow-2xl hover:shadow-[--ootb-turquoise]/20 transition-shadow duration-300 text-base"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

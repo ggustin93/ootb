@@ -1,6 +1,6 @@
 ---
 interface Props {
-    variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow';
+    variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow' | 'turquoise';
     class?: string;
 }
 
@@ -42,15 +42,16 @@ const variants = {
 ]}>
   <span 
     class:list={[
-      'relative px-8 py-3',
-      'text-sm tracking-wide uppercase',
+      'relative px-6 py-2',
+      'text-lg tracking-wide uppercase',
       'font-heading',
       'flex items-center gap-3',
-      'border-l border-b',
-      'border-opacity-60',
-      'rounded-bl-2xl',
-      'transition-all duration-300',
-      'hover:border-opacity-100 hover:px-10',
+      'border-l-2 border-b-2',
+      'border-opacity-90',
+      'rounded-bl-xl',
+      'transition-all duration-300 ease-out',
+      'hover:border-opacity-100 hover:pl-8',
+      'hover:scale-[1.02] origin-bottom-left',
       variants[variant]
     ]}
   >

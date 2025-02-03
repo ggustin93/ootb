@@ -1,205 +1,76 @@
 ---
-import '@fontsource-variable/inter';
-import '@fontsource-variable/outfit';
-import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource/bebas-neue/400.css';  // Import spécifique du poids 400
+import '@fontsource-variable/raleway';
+import '@fontsource-variable/caveat/wght.css';  // Import de Caveat Variable avec tous les poids
 
 // Ajout des polices personnalisées
 ---
 
 <style is:inline>
-  /* Déclaration des font-face pour les polices personnalisées */
-  @font-face {
-    font-family: 'Gotham Narrow Book Italic';
-    src: url('/fonts/GothamNarrow-BookItalic.otf') format('opentype');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-  }
-
+  /* Déclaration explicite de Bebas Neue */
   @font-face {
     font-family: 'Bebas Neue';
-    src: url('/fonts/BebasNeue.otf') format('opentype');
-    font-weight: normal;
     font-style: normal;
+    font-weight: 400;
     font-display: swap;
+    src: url('/node_modules/@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff2') format('woff2');
   }
 
   :root {
-    /* Typographie optimisée pour la lisibilité */
-    /* Police logo = Bebas Neue Bold Bold */
-    /* Police tagline = Gotham Narrow Book Italic */
-    --aw-font-sans: 'Gotham Narrow Book Italic', var(--aw-font-sans);
-    --aw-font-serif: 'Plus Jakarta Sans Variable';
-    --aw-font-heading: 'Bebas Neue', var(--aw-font-heading);
-
-    /* Palette de couleurs accessible et harmonieuse */
-    --aw-color-secondary: var(--ootb-violet);
-    --aw-color-accent: var(--ootb-orange);
-    
-    /* Couleurs OOTB spécifiques - Définies en premier car utilisées comme références */
+    /* Couleurs OOTB */
     --ootb-orange: #e7461c;
     --ootb-violet: #921e6d;
     --ootb-green: #40ad50;
     --ootb-blue: #0890bd;
     --ootb-turquoise: #69b29e;
     --ootb-yellow: #f9b004;
+  }
+  
 
-    /* Variables pour le système de design */
-    --primary: var(--ootb-turquoise);
-    --primary-foreground: 0 0% 98%;
-    --secondary: var(--ootb-violet);
-    --secondary-foreground: 0 0% 98%;
-    --accent: var(--ootb-orange);
-    --accent-foreground: 0 0% 98%;
-
-    /* Couleurs sémantiques avec contraste amélioré */
-    --aw-color-success: #10B981;
-    --aw-color-info: #0EA5E9;
-    --aw-color-warning: #F59E0B;
-    --aw-color-error: #EF4444;
-    
-    /* Couleurs spécifiques OOTB */
-    --ootb-purple: #81547f;
-    --ootb-purple-light: rgba(129, 84, 127, 0.2);
-    --ootb-purple-medium: rgba(129, 84, 127, 0.4);
-    --ootb-purple-dark: rgba(129, 84, 127, 0.8);
-    
-    /* Gradients optimisés pour l'accessibilité */
-    --festival-gradient: linear-gradient(135deg, var(--ootb-turquoise), var(--ootb-violet));
-    --festival-gradient-soft: linear-gradient(135deg, rgba(106, 178, 158, 0.15), rgba(141, 33, 109, 0.15));
-    --festival-gradient-hover: linear-gradient(135deg, #5a9886, #7a1c5e);
-    
-    /* États interactifs améliorés */
-    --festival-primary-soft: rgba(var(--aw-color-primary), 0.15);
-    --festival-secondary-soft: var(--ootb-purple-light);
-    
-    /* Sélection plus visible */
-    ::selection {
-      background-color: var(--ootb-purple);
-      color: #FFFFFF;
-    }
-
-    /* Système typographique optimisé */
-    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-    --text-sm: clamp(0.875rem, 0.825rem + 0.25vw, 1rem);
-    --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-    --text-lg: clamp(1.125rem, 1.075rem + 0.25vw, 1.25rem);
-    --text-xl: clamp(1.25rem, 1.2rem + 0.25vw, 1.5rem);
-    --text-2xl: clamp(1.5rem, 1.45rem + 0.25vw, 1.875rem);
-    --text-3xl: clamp(1.875rem, 1.825rem + 0.25vw, 2.25rem);
-    --text-4xl: clamp(2.25rem, 2.2rem + 0.25vw, 3rem);
-    --text-5xl: clamp(3rem, 2.95rem + 0.25vw, 4rem);
-    
-    /* Line heights optimisés pour la lecture */
-    --leading-tight: 1.3;     /* Titres */
-    --leading-normal: 1.6;    /* Corps de texte */
-    --leading-relaxed: 1.75;  /* Longs paragraphes */
-    --leading-loose: 2;       /* Contenu espacé */
+  .font-handwritten {
+    font-family: 'Caveat Variable', cursive;
+  }
+  /* Typographie essentielle */
+  .font-heading {
+    font-family: 'Bebas Neue', system-ui, sans-serif !important;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
-  .dark {
-    --aw-font-sans: 'Plus Jakarta Sans Variable';
-    --aw-font-serif: 'Plus Jakarta Sans Variable';
-    --aw-font-heading: 'Plus Jakarta Sans Variable';
-
-    /* Couleurs mode sombre optimisées */
-    --aw-color-primary: #38BDF8;
-    --aw-color-secondary: #818CF8;
-    --aw-color-accent: #FCD34D;
-
-    --aw-color-text-heading: #F9FAFB; /* gray-50 */
-    --aw-color-text-default: #E5E7EB; /* gray-200 */
-    --aw-color-text-muted: #9CA3AF;   /* gray-400 */
-    --aw-color-bg-page: var(--aw-color-bg-page-dark);
-
-    ::selection {
-      background-color: #60A5FA;
-      color: #FFFFFF;
-    }
+  .font-body {
+    font-family: 'Raleway Variable', system-ui, sans-serif;
   }
 
-  /* Typographie responsive */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--aw-font-heading);
-    letter-spacing: -0.025em;
-    line-height: var(--leading-tight);
+  /* Hiérarchie de base */
+  h1, .h1 {
+    @apply font-heading text-4xl md:text-5xl lg:text-6xl;
   }
 
-  /* Animations fluides */
-  .transition-all {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  h2, .h2 {
+    @apply font-body font-semibold text-2xl md:text-3xl;
+    letter-spacing: -0.02em;
   }
 
-  /* Composants UI améliorés */
-  .festival-card {
-    @apply rounded-xl bg-white shadow-lg p-6 transition-all duration-300;
-    box-shadow: 0 4px 20px -5px rgba(139, 92, 246, 0.15);
+  h3, .h3 {
+    font-family: 'Caveat Variable', cursive;
+    font-variation-settings: "wght" 600;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    @apply text-2xl md:text-3xl;
+  }
+  /* Classes utilitaires minimales */
+  .section-divider {
+    @apply font-heading uppercase tracking-wider text-sm;
   }
 
-  .festival-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 25px -7px rgba(56, 189, 248, 0.2);
-  }
-
-  .festival-button {
-    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white rounded-full transition-all duration-300;
-    background: var(--festival-gradient);
-    box-shadow: 0 2px 10px -3px rgba(14, 165, 233, 0.3);
-  }
-
-  .festival-button:hover {
-    background: var(--festival-gradient-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px -3px rgba(14, 165, 233, 0.4);
-  }
-
-  .festival-button:focus {
-    outline: 2px solid var(--aw-color-primary);
-    outline-offset: 2px;
-  }
-
-  .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white rounded-full transition-all duration-300;
-    background-color: var(--ootb-blue);
-    box-shadow: 0 2px 10px -3px rgba(32, 145, 188, 0.3);
-  }
-
-  .btn-primary:hover {
-    background-color: color-mix(in srgb, var(--ootb-blue) 90%, black);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px -3px rgba(32, 145, 188, 0.4);
-  }
-
-  .btn-primary:focus-visible {
-    outline: 2px solid var(--ootb-blue);
-    outline-offset: 2px;
-  }
-
-  /* Mode sombre */
-  .dark .btn-primary {
-    background-color: var(--ootb-blue);
-    box-shadow: 0 2px 10px -3px rgba(32, 145, 188, 0.4);
-  }
-
-  .dark .btn-primary:hover {
-    background-color: color-mix(in srgb, var(--ootb-blue) 80%, black);
+  .tagline {
+    @apply font-body font-medium tracking-tight;
   }
 
   /* Support de prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
-    *, ::before, ::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
+    * {
+      @apply transition-none animate-none;
     }
-  }
-
-  /* Optimisation du rendu */
-  body {
-    font-family: var(--aw-font-sans);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    line-height: var(--leading-normal);
   }
 </style>

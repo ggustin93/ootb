@@ -1,0 +1,365 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
+import Button from '~/components/ui/Button.astro';
+
+const colors = {
+  'Violet': { value: 'var(--ootb-violet)', hex: '#921e6d' },
+  'Orange': { value: 'var(--ootb-orange)', hex: '#e7461c' },
+  'Green': { value: 'var(--ootb-green)', hex: '#40ad50' },
+  'Blue': { value: 'var(--ootb-blue)', hex: '#0890bd' },
+  'Turquoise': { value: 'var(--ootb-turquoise)', hex: '#69b29e' },
+  'Yellow': { value: 'var(--ootb-yellow)', hex: '#f9b004' },
+};
+
+const pangrams = {
+  en: "The quick brown fox jumps over the lazy dog",
+  fr: "Portez ce vieux whisky au juge blond qui fume"
+};
+---
+
+<Layout metadata={{ title: 'Style Guide - OOTB' }}>
+  <main class="py-20 px-8 max-w-6xl mx-auto">
+    <h1 class="font-heading text-6xl mb-16 text-[--ootb-violet]">OOTB Style Guide</h1>
+
+    <!-- Système Typographique -->
+    <section class="mb-20">
+      <SectionDivider variant="primary" class="mb-8">Système Typographique</SectionDivider>
+      
+      <!-- Bebas Neue -->
+      <div class="mb-12 p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Bebas Neue - Titres principaux</h3>
+        <div class="space-y-8">
+          <div>
+            <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-4 block">h1, .h1 - font-heading - text-4xl md:text-5xl lg:text-6xl (36px → 48px → 60px)</code>
+            <div class="space-y-6">
+              <div>
+                <p class="text-sm text-gray-500 mb-2">Desktop (lg)</p>
+                <h1 class="font-heading text-6xl">{pangrams.fr}</h1>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 mb-2">Tablet (md)</p>
+                <h1 class="font-heading text-5xl">{pangrams.fr}</h1>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 mb-2">Mobile</p>
+                <h1 class="font-heading text-4xl">{pangrams.fr}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Raleway -->
+      <div class="p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Raleway Variable</h3>
+        
+        <!-- Hiérarchie -->
+        <div class="mb-12 space-y-8 border-b border-gray-200 pb-8">
+          <div>
+            <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-4 block">h2, .h2 - Raleway Variable 600 - text-3xl → text-4xl</code>
+            <h2 class="font-body text-4xl font-semibold">{pangrams.fr}</h2>
+          </div>
+
+          <div>
+            <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-4 block">h4, .h4 - Raleway Variable 600 - text-xl → text-2xl</code>
+            <h4 class="font-body text-2xl font-semibold">{pangrams.fr}</h4>
+          </div>
+        </div>
+
+        <!-- Variations de poids -->
+        <div class="space-y-6">
+          <h4 class="text-lg font-semibold mb-4">Variations de poids</h4>
+          <div class="grid gap-6">
+            {['light', 'normal', 'medium', 'semibold', 'bold'].map((weight) => (
+              <div>
+                <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-3 block">font-{weight} - font-variation-settings: "wght" {weight === 'light' ? '300' : weight === 'normal' ? '400' : weight === 'medium' ? '500' : weight === 'semibold' ? '600' : '700'}</code>
+                <p class={`font-body font-${weight} text-xl`}>{pangrams.fr}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Caveat - Police manuscrite -->
+      <div class="p-8 bg-gray-50 rounded-xl mt-12">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Caveat Variable - Style manuscrit éducatif</h3>
+        <div class="space-y-8">
+          <div>
+            <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-4 block">h3, .h3 - Caveat Variable - text-3xl → text-4xl</code>
+            <div class="space-y-6">
+              <div>
+                <p class="text-sm text-gray-500 mb-2">Style par défaut</p>
+                <h3 class="font-handwritten text-4xl text-[--ootb-violet]">{pangrams.fr}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Couleurs -->
+    <section class="mb-20">
+      <SectionDivider variant="primary" class="mb-8">Couleurs</SectionDivider>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+        {
+          Object.entries(colors).map(([name, { value, hex }]) => (
+            <div class="overflow-hidden rounded-xl">
+              <div class="h-32 p-6" style={{ backgroundColor: value }}>
+              </div>
+              <div class="p-4 bg-gray-50">
+                <p class="font-body font-semibold mb-1">{name}</p>
+                <p class="text-sm font-mono text-gray-500">{value}</p>
+                <p class="text-sm font-mono text-gray-500">{hex}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Guide Développeur -->
+    <section class="mb-20">
+      <SectionDivider variant="primary" class="mb-8">Guide Développeur</SectionDivider>
+      
+      <div class="space-y-12">
+        <!-- Composants -->
+        <div class="p-8 bg-gray-50 rounded-xl">
+          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Composants UI</h3>
+          <div class="space-y-8">
+            <!-- Boutons -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Boutons</h4>
+              <div class="space-y-4">
+                <div>
+                  <p class="text-sm text-gray-500 mb-2">Classes de base</p>
+                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<button class="btn-primary">
+  <!-- Pour un bouton principal violet -->
+</button>
+
+<button class="btn-secondary">
+  <!-- Pour un bouton secondaire turquoise -->
+</button>
+
+<button class="btn-outline">
+  <!-- Pour un bouton avec contour -->
+</button>`}</pre>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500 mb-2">Variantes de taille</p>
+                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<button class="btn-primary w-full">
+  <!-- Pleine largeur sur mobile -->
+</button>
+
+<button class="btn-primary w-full md:w-auto">
+  <!-- Adaptatif : plein sur mobile, auto sur desktop -->
+</button>`}</pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Typographie -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Utilisation des polices</h4>
+              <div class="space-y-4">
+                <div>
+                  <p class="text-sm text-gray-500 mb-2">Titres</p>
+                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<h1 class="font-heading text-4xl md:text-5xl lg:text-6xl">
+  <!-- Titre principal -->
+</h1>
+
+<h2 class="font-body text-3xl md:text-4xl font-semibold">
+  <!-- Sous-titre -->
+</h2>`}</pre>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500 mb-2">Style manuscrit</p>
+                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<span class="font-handwritten text-2xl text-[--ootb-violet]">
+  <!-- Texte manuscrit standard -->
+</span>
+
+<span class="font-handwritten text-2xl text-[--ootb-violet] 
+            absolute -top-4 -right-16 transform rotate-[-8deg]">
+  <!-- Annotation en surimpression -->
+</span>`}</pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Couleurs -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Utilisation des couleurs</h4>
+              <div class="space-y-4">
+                <div>
+                  <p class="text-sm text-gray-500 mb-2">Classes de couleur</p>
+                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<!-- Texte -->
+<p class="text-[--ootb-violet]">Texte violet</p>
+<p class="text-[--ootb-turquoise]">Texte turquoise</p>
+
+<!-- Arrière-plan -->
+<div class="bg-[--ootb-violet]">Fond violet</div>
+<div class="bg-[--ootb-turquoise]">Fond turquoise</div>
+
+<!-- Bordures -->
+<div class="border-2 border-[--ootb-violet]">Bordure violette</div>
+<div class="border-2 border-[--ootb-turquoise]">Bordure turquoise</div>`}</pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Espacements -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Espacements standards</h4>
+              <div class="space-y-4">
+                <div>
+                  <p class="text-sm text-gray-500 mb-2">Marges et padding</p>
+                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<!-- Sections -->
+<section class="mb-20">
+  <!-- Espacement entre sections -->
+</section>
+
+<!-- Composants -->
+<div class="space-y-8">
+  <!-- Espacement vertical entre éléments -->
+</div>
+
+<!-- Grilles -->
+<div class="grid gap-6">
+  <!-- Espacement dans les grilles -->
+</div>`}</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accessibilité -->
+        <div class="p-8 bg-gray-50 rounded-xl">
+          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Bonnes pratiques UI</h3>
+          <div class="space-y-4">
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Accessibilité</h4>
+              <ul class="list-disc pl-6 space-y-2 text-gray-600">
+                <li>Contraste minimum de 4.5:1 pour le texte</li>
+                <li>Taille de police minimum de 16px pour le corps de texte</li>
+                <li>Focus visible sur tous les éléments interactifs</li>
+                <li>Textes alternatifs descriptifs pour les images</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Responsive Design</h4>
+              <ul class="list-disc pl-6 space-y-2 text-gray-600">
+                <li>Mobile-first : styles de base pour mobile</li>
+                <li>Breakpoints : sm (640px), md (768px), lg (1024px)</li>
+                <li>Images responsives avec aspect-ratio maintenu</li>
+                <li>Grilles adaptatives avec auto-fit/auto-fill</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Organisation des styles -->
+        <div class="p-8 bg-gray-50 rounded-xl">
+          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Organisation des styles</h3>
+          <div class="space-y-8">
+            <!-- Fichiers de configuration -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Distinction des fichiers</h4>
+              <div class="space-y-6">
+                <div>
+                  <p class="font-semibold text-gray-700">1. CustomStyles.astro</p>
+                  <p class="text-gray-600 mb-2">Configuration centrale des styles :</p>
+                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`---
+import '@fontsource/bebas-neue/400.css';
+import '@fontsource-variable/raleway';
+import '@fontsource-variable/caveat/wght.css';
+---
+
+<style is:inline>
+  :root {
+    /* Variables CSS globales */
+    --ootb-violet: #921e6d;
+    --ootb-turquoise: #69b29e;
+  }
+
+  /* Classes de typographie essentielles */
+  .font-heading {
+    font-family: 'Bebas Neue', system-ui, sans-serif !important;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Hiérarchie typographique */
+  h1, .h1 {
+    @apply font-heading text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  /* Support de prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      @apply transition-none animate-none;
+    }
+  }
+</style>`}</pre>
+                </div>
+
+                <div>
+                  <p class="font-semibold text-gray-700">2. tailwind.config.js</p>
+                  <p class="text-gray-600 mb-2">Extensions Tailwind :</p>
+                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        'ootb': {
+          violet: 'var(--ootb-violet)',
+          turquoise: 'var(--ootb-turquoise)',
+        }
+      },
+      fontFamily: {
+        heading: ['Bebas Neue', 'system-ui'],
+        body: ['Raleway Variable', 'system-ui'],
+        handwritten: ['Caveat Variable', 'cursive'],
+      }
+    }
+  }
+}`}</pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bonnes pratiques -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Bonnes pratiques</h4>
+              <ul class="list-disc pl-6 space-y-2 text-gray-600">
+                <li><span class="font-semibold">CustomStyles.astro :</span> Point central pour les imports de polices, variables CSS, styles globaux et hiérarchie typographique</li>
+                <li><span class="font-semibold">tailwind.config.js :</span> Extensions du thème Tailwind et réutilisation des variables CSS</li>
+                <li><span class="font-semibold">Classes Tailwind :</span> Styles composés directement dans les composants pour plus de flexibilité</li>
+              </ul>
+            </div>
+
+            <!-- Ordre de priorité -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Ordre de priorité</h4>
+              <ol class="list-decimal pl-6 space-y-2 text-gray-600">
+                <li>Classes Tailwind inline (plus haute spécificité)</li>
+                <li>Styles de CustomStyles.astro avec !important</li>
+                <li>Styles de CustomStyles.astro standards</li>
+                <li>Configuration de tailwind.config.js</li>
+              </ol>
+            </div>
+
+            <!-- Cas d'utilisation -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Cas d'utilisation</h4>
+              <ul class="list-disc pl-6 space-y-2 text-gray-600">
+                <li><span class="font-semibold">Dans CustomStyles :</span> Imports de polices, variables globales, styles de base, media queries</li>
+                <li><span class="font-semibold">Dans tailwind.config :</span> Extensions de thème réutilisables</li>
+                <li><span class="font-semibold">Dans les composants :</span> Styles spécifiques avec classes Tailwind</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout> 

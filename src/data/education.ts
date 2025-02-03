@@ -12,7 +12,7 @@ export const heroContent = {
     line2: 'des pédagogies',
     line3: 'innovantes !'
   },
-  subtitle: "Out of the Books est une ASBL qui dynamise l'éducation en créant des espaces de rencontre et du contenu expert pour les acteurs du monde éducatif.",
+  subtitle: "La plateforme des pédagogies innovantes !",
   image: hero,
   primaryCTA: {
     text: "Découvrir nos contenus",

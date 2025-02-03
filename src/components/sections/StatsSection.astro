@@ -1,31 +1,53 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 interface Stat {
   number: string;
   label: string;
+  sublabel: string;
+  icon: string;
 }
 
 interface Props {
-  stats: Stat[];
+  stats?: Stat[];
 }
 
-const { stats } = Astro.props;
+const { stats = [
+  { 
+    number: "9000", 
+    label: "Membres actifs", 
+    sublabel: "dans la communauté",
+    icon: "tabler:users-group"
+  },
+  { 
+    number: "3000", 
+    label: "Participants", 
+    sublabel: "au festival annuel",
+    icon: "tabler:ticket"
+  },
+  { 
+    number: "80+", 
+    label: "Contenus", 
+    sublabel: "pédagogiques",
+    icon: "tabler:device-tv"
+  }
+] } = Astro.props;
 ---
 
-<section class="py-20 bg-gradient-to-b from-white to-sky-50/30">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-      {stats.map(({ number, label }) => (
-        <div class="group relative">
-          <!-- Effet de carte avec animation subtile -->
-          <div class="absolute inset-0 bg-gradient-to-br from-sky-100/50 to-white rounded-2xl -rotate-2 transform transition-transform group-hover:rotate-0"></div>
-          <div class="relative bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition-all">
-            <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-500 to-sky-600 bg-clip-text text-transparent mb-2">
-              {number}
-            </div>
-            <div class="text-gray-600 font-medium">{label}</div>
-          </div>
+<div class="mt-12 md:mt-24 max-w-6xl mx-auto">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+    {stats.map(({ number, label, sublabel, icon }) => (
+      <div class="group relative">
+        <div class="relative p-8 md:p-10 text-center rounded-2xl transition-all duration-300 bg-white/10 backdrop-blur-sm border border-[--ootb-turquoise]/10 hover:border-[--ootb-turquoise]/20">
+          <Icon 
+            name={icon} 
+            class="w-8 h-8 md:w-10 md:h-10 mx-auto mb-3 md:mb-4 text-[--ootb-turquoise] opacity-40 group-hover:opacity-100 transition-opacity duration-300" 
+          />
+          <div class="text-3xl md:text-5xl font-bold text-[--ootb-turquoise] mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300" style="text-shadow: none;">{number}</div>
+          <div class="text-sm md:text-base font-medium text-gray-800">{label}</div>
+          <div class="text-xs md:text-sm text-gray-600 mt-1">{sublabel}</div>
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </div>
-</section> 
+</div> 

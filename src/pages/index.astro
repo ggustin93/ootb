@@ -2,10 +2,9 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroSection from '~/components/sections/HeroSection.astro';
 import MissionSection from '~/components/sections/MissionSection.astro';
+import StatsSection from '~/components/sections/StatsSection.astro';
 import FeaturedContentSection from '~/components/sections/FeaturedContentSection.astro';
-import FeaturesSection from '~/components/sections/FeaturesSection.astro';
-import { Icon } from 'astro-icon/components';
-import Image from '~/components/common/Image.astro';
+import PremiumSection from '~/components/sections/PremiumSection.astro';
 import NewsletterSection from '~/components/sections/NewsletterSection.astro';
 
 import {
@@ -16,156 +15,22 @@ import {
 } from '~/data/education';
 
 import { featuredContents } from '~/data/featured';
-
-// Données pour la section Features
-const featuresSectionData = [
-  {
-    icon: 'tabler:brain',
-    title: 'Pédagogie innovante',
-    description: 'Des approches pédagogiques modernes basées sur les dernières recherches en neurosciences et en éducation.'
-  },
-  {
-    icon: 'tabler:users',
-    title: 'Communauté active',
-    description: 'Un réseau d\'experts et de professionnels de l\'éducation partageant leurs meilleures pratiques.'
-  },
-  {
-    icon: 'tabler:tool',
-    title: 'Outils pratiques',
-    description: 'Des ressources concrètes et des outils directement applicables en classe.'
-  }
-];
 ---
 
 <Layout {metadata}>
   <HeroSection {...heroContent} />
   
   <MissionSection image={images.about} features={aboutFeatures} />
+  
+  <section class="relative -mt-24 pb-16 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <StatsSection />
+    </div>
+  </section>
 
   <FeaturedContentSection contents={featuredContents} />
 
-  <!-- Section Premium épurée -->
-  <section class="py-16 px-4 bg-[#45b3a4] text-white relative overflow-hidden">
-    <!-- Éléments décoratifs flottants -->
-    <div class="absolute inset-0 overflow-hidden">
-      <!-- Logo garçon en miroir -->
-      <div class="absolute top-0 right-0 w-[200px] h-[200px] z-20">
-        <Image
-          src={heroContent.image}
-          alt=""
-          class="w-full h-full object-contain transform scale-x-[-1] rotate-[-15deg]"
-          widths={[200]}
-          sizes="200px"
-          aspectRatio="1:1"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-      <!-- Premier livre -->
-      <div class="absolute w-20 h-24 -rotate-12 top-[15%] left-[15%] opacity-20 transition-transform hover:-translate-y-2 duration-1000">
-        <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
-      </div>
-      
-      <!-- Second livre -->
-      <div class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000">
-        <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
-      </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto relative z-10">
-      <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div class="relative z-10">
-          <!-- Badge Premium -->
-          <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Icon name="tabler:sparkles" class="w-4 h-4 text-[#ffd875]" />
-            <span class="font-medium">PREMIUM</span>
-          </div>
-          
-          <!-- Titre -->
-          <h2 class="font-heading text-4xl md:text-5xl font-bold leading-tight mb-6">
-            <span class="text-white">Passez au niveau</span>
-            <span class="text-[#ffd875] italic">premium</span>
-          </h2>
-          
-          <p class="text-lg text-white mb-8 max-w-xl">
-            Accédez à nos contenus experts et analyses approfondies pour transformer votre approche pédagogique
-          </p>
-          
-          <!-- Features -->
-          <div class="space-y-4 mb-8">
-            {[
-              "Hors-séries exclusifs mensuels",
-              "Analyses approfondies des experts",
-              "Ressources pédagogiques premium"
-            ].map(feature => (
-              <div class="flex items-center gap-3 group">
-                <span class="flex-shrink-0 w-5 h-5 rounded-full bg-[#ffd875]/20 flex items-center justify-center">
-                  <Icon name="tabler:check" class="w-4 h-4 text-[#ffd875]" />
-                </span>
-                <span class="text-base text-white group-hover:text-[#ffd875] transition-colors">{feature}</span>
-              </div>
-            ))}
-          </div>
-
-          <!-- Boutons -->
-          <div class="flex flex-wrap gap-4">
-            <a href="/premium" class="inline-flex items-center gap-2 bg-[#ffd875] hover:bg-[#ffc875] text-[#45b3a4] px-6 py-3 rounded-full font-medium transition-all hover:scale-105">
-              <Icon name="tabler:crown" class="w-5 h-5" />
-              Découvrir l'offre Premium
-            </a>
-            <a href="/podcast" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 px-6 py-3 rounded-full font-medium transition-all hover:scale-105">
-              <Icon name="tabler:player-play" class="w-5 h-5" />
-              Écouter un extrait
-            </a>
-          </div>
-        </div>
-
-        <!-- Cards avec badges ajustés -->
-        <div class="space-y-3 relative">
-          {[
-            {
-              title: "Les neurosciences en classe",
-              description: "Découvrez les dernières avancées en neurosciences appliquées à l'éducation",
-              image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800",
-              duration: "1h 12min"
-            },
-            {
-              title: "La pédagogie active",
-              description: "Guide complet et pratique pour une classe dynamique",
-              image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
-              duration: "58min"
-            }
-          ].map(podcast => (
-            <div class="group relative bg-white/15 backdrop-blur-sm rounded-xl p-4 hover:bg-white/25 transition-all border border-white/20">
-              <div class="flex gap-4">
-                <div class="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                  <img 
-                    src={podcast.image}
-                    alt=""
-                    class="w-full h-full object-cover"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <Icon name="tabler:player-play" class="w-8 h-8 text-[#ffd875]" />
-                  </div>
-                </div>
-                <div>
-                  <div class="inline-flex items-center gap-1 bg-#8d216d-400 px-2 py-1 rounded-full text-xs font-medium mb-2 text-white backdrop-blur-sm">
-                    Hors-série
-                  </div>
-                  <h3 class="text-lg font-bold mb-1 line-clamp-1">{podcast.title}</h3>
-                  <p class="text-white/90 text-sm mb-2 line-clamp-2">{podcast.description}</p>
-                  <div class="flex items-center gap-1 text-xs text-[#ffd875]">
-                    <Icon name="tabler:clock" class="w-4 h-4" />
-                    <span>{podcast.duration}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
+  <PremiumSection heroImage={heroContent.image.src} />
 
   <NewsletterSection />
 </Layout> 

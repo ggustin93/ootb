@@ -1,0 +1,121 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+
+interface Props {
+  heroImage: string;
+}
+
+const { heroImage } = Astro.props as Props;
+---
+<section class="py-16 px-4 bg-[#45b3a4] text-white relative overflow-hidden">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-4 -right-4 w-[240px] h-[240px] z-20">
+      <Image
+        src={heroImage}
+        alt=""
+        class="w-full h-full object-contain transform scale-x-[-1] rotate-[-15deg]"
+        widths={[240]}
+        sizes="240px"
+        aspectRatio="1:1"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="absolute w-20 h-24 -rotate-12 top-[15%] left-[15%] opacity-20 transition-transform hover:-translate-y-2 duration-1000">
+      <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
+    </div>
+    <div class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000">
+      <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto relative z-10">
+    <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+      <div class="relative z-10">
+        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <Icon name="tabler:sparkles" class="w-4 h-4 text-[var(--ootb-yellow)]" />
+          <span class="font-medium">PREMIUM</span>
+        </div>
+        
+        <h2 class="font-heading text-4xl md:text-5xl font-bold leading-tight mb-6">
+          <span class="text-white">Passez au niveau</span>
+          <span class="text-[var(--ootb-yellow)] italic">premium</span>
+        </h2>
+        
+        <p class="text-lg text-white mb-8 max-w-xl">
+          Accédez à nos contenus experts et analyses approfondies pour transformer votre approche pédagogique
+        </p>
+        
+        <div class="space-y-4 mb-8">
+          {[
+            "Hors-séries exclusifs mensuels",
+            "Analyses approfondies des experts",
+            "Ressources pédagogiques premium"
+          ].map(feature => (
+            <div class="flex items-center gap-3 group">
+              <span class="flex-shrink-0 w-5 h-5 rounded-full bg-[color-mix(in_srgb,var(--ootb-yellow)_20%,transparent)] flex items-center justify-center">
+                <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-yellow)]" />
+              </span>
+              <span class="text-base text-white group-hover:text-[var(--ootb-yellow)] transition-colors">{feature}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="/premium" class="inline-flex items-center gap-2 bg-[var(--ootb-yellow)] hover:bg-[color-mix(in_srgb,var(--ootb-yellow)_90%,black)] text-[#2A6B62] px-6 py-3 rounded-full transition-all hover:scale-105">
+            <Icon name="tabler:crown" class="w-5 h-5" />
+            Découvrir l'offre Premium
+          </a>
+          <a href="/podcast" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 px-6 py-3 rounded-full font-medium transition-all hover:scale-105">
+            <Icon name="tabler:player-play" class="w-5 h-5" />
+            Écouter un extrait
+          </a>
+        </div>
+      </div>
+
+      <div class="space-y-3 relative">
+        {[
+          {
+            title: "Les neurosciences en classe",
+            description: "Découvrez les dernières avancées en neurosciences appliquées à l'éducation",
+            image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800",
+            duration: "1h 12min"
+          },
+          {
+            title: "La pédagogie active",
+            description: "Guide complet et pratique pour une classe dynamique",
+            image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
+            duration: "58min"
+          }
+        ].map(podcast => (
+          <div class="group relative bg-white/15 backdrop-blur-sm rounded-xl p-4 hover:bg-white/25 transition-all border border-white/20">
+            <div class="flex gap-4">
+              <div class="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                <img 
+                  src={podcast.image}
+                  alt=""
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Icon name="tabler:player-play" class="w-8 h-8 text-[#]" />
+                </div>
+              </div>
+              <div>
+                <div class="inline-flex items-center gap-1 bg-[color-mix(in_srgb,var(--ootb-yellow)_100%,transparent)] px-2 py-1 rounded-full text-xs font-medium mb-2 text-[color-mix(in_srgb,var(--ootb-turquoise)_50%,black)] backdrop-blur-sm">
+                  Hors-série
+                </div>
+                <h3 class="text-lg font-bold mb-1 line-clamp-1">{podcast.title}</h3>
+                <p class="text-white/90 text-sm mb-2 line-clamp-2">{podcast.description}</p>
+                <div class="flex items-center gap-1 text-xs text-white/75">
+                  <Icon name="tabler:clock" class="w-3.5 h-3.5" />
+                  <span>{podcast.duration}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section> 

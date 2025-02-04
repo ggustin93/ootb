@@ -126,97 +126,66 @@ const themes = [
         </div>
       </div>
     </div>
+  </GradientHeroSection>
 
-    <!-- Nuages -->
-    <div class="absolute bottom-[10%] left-0 right-0 pointer-events-none">
-      <Image
-        src={cloudsBg}
-        alt="Nuages décoratifs"
-        class="w-full h-auto"
-        widths={[1200, 1600, 2000]}
-        sizes="100vw"
-        loading="eager"
-        decoding="async"
-      />
-    </div>
-
-    <!-- Fond blanc sous les nuages -->
-    <div class="absolute bottom-0 left-0 right-0 h-[12%] bg-white"></div>
-
-    <!-- Vague décorative -->
-    <div class="absolute -bottom-1 left-0 right-0">
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        viewBox="0 0 1440 320" 
-        class="w-full h-[120px] md:h-[180px] text-white"
-        preserveAspectRatio="none"
-      >
-        <path 
-          fill="currentColor" 
-          fill-opacity="1" 
-          d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-        ></path>
-      </svg>
-    </div>
-    <!-- Cartes d'activités -->
-    <div class="absolute bottom-0 left-0 right-0 translate-y-1/2 w-full z-20">
-      <div class="container mx-auto px-4">
-        <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          <!-- Conférences -->
-          <div class="festival-card group backdrop-blur-md">
-            <div class="relative p-6">
-              <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
-              <div class="relative z-10">
-                <div class="w-12 h-12 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Icon name="tabler:presentation" class="w-6 h-6 text-white" />
-                </div>
-                <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Conférences</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">40+ conférences inspirantes sur l'innovation pédagogique</p>
+  <!-- Cartes d'activités -->
+  <section class="relative -mt-32 mb-16">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <!-- Conférences -->
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+          <div class="relative p-6">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-12 h-12 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <Icon name="tabler:presentation" class="w-6 h-6 text-white" />
               </div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Conférences</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">40+ conférences inspirantes sur l'innovation pédagogique</p>
             </div>
           </div>
+        </div>
 
-          <!-- Ateliers -->
-          <div class="festival-card group backdrop-blur-md">
-            <div class="relative p-8">
-              <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
-              <div class="relative z-10">
-                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Icon name="tabler:tool" class="w-8 h-8 text-white" />
-                </div>
-                <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Ateliers</h3>
-                <p class="text-gray-600 leading-relaxed">20+ ateliers pratiques pour expérimenter et apprendre</p>
+        <!-- Ateliers -->
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+          <div class="relative p-6">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#e4451e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-12 h-12 bg-gradient-to-br from-[#e4451e] to-[#f4552e] rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <Icon name="tabler:tool" class="w-6 h-6 text-white" />
               </div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#e4451e] transition-colors">Ateliers</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">20+ ateliers pratiques et interactifs</p>
             </div>
           </div>
+        </div>
 
-          <!-- Stands -->
-          <div class="festival-card group backdrop-blur-md">
-            <div class="relative p-8">
-              <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
-              <div class="relative z-10">
-                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Icon name="tabler:building-store" class="w-8 h-8 text-white" />
-                </div>
-                <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Stands</h3>
-                <p class="text-gray-600 leading-relaxed">30+ exposants et démos de solutions pédagogiques</p>
+        <!-- Networking -->
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+          <div class="relative p-6">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#8b5cf6]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-12 h-12 bg-gradient-to-br from-[#8b5cf6] to-[#9f75ff] rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <Icon name="tabler:users" class="w-6 h-6 text-white" />
               </div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#8b5cf6] transition-colors">Networking</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Espaces d'échange et de rencontre entre professionnels</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </GradientHeroSection>
+  </section>
 
   <!-- Section Introduction -->
-  <section class="pt-64 pb-32 bg-white relative">
+  <section class="py-24 bg-white relative">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16">
           <SectionDivider variant="orange" class="mb-6">
             <Icon name="tabler:bulb" class="w-5 h-5" />
             En bref          </SectionDivider>
-          <h2 class="text-4xl md:text-5xl font-bold mb-6 text-sky-900">
+          <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-sky-900">
             Le festival des pédagogies innovantes
           </h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
@@ -297,26 +266,26 @@ const themes = [
   </section>
 
   <!-- Programme du festival -->
-  <section id="programme" class="relative py-24 bg-gradient-to-br from-[#e4451e] via-[#e4451e] to-[#d13d19] overflow-hidden">
+  <section id="programme" class="pt-48 pb-24 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
     <!-- Éléments décoratifs -->
     <div class="absolute inset-0">
-      <div class="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform -translate-x-1/3 -translate-y-1/3"></div>
-      <div class="absolute bottom-0 right-0 w-80 h-80 bg-black/5 rounded-full blur-2xl transform translate-x-1/4 translate-y-1/4"></div>
+      <div class="absolute top-0 left-0 w-96 h-96 bg-[--ootb-orange]/5 rounded-full blur-3xl transform -translate-x-1/3 -translate-y-1/3"></div>
+      <div class="absolute bottom-0 right-0 w-80 h-80 bg-[--ootb-orange]/5 rounded-full blur-2xl transform translate-x-1/4 translate-y-1/4"></div>
     </div>
 
-    <div class="relative z-10 container mx-auto px-4">
-      <div class="text-center mb-16">
-        <SectionDivider variant="primary" class="mb-8 bg-white/10 backdrop-blur-sm">
-          <Icon name="tabler:calendar" class="w-5 h-5 text-white" />
-          <span class="text-white">Planning</span>
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16 relative z-10">
+        <SectionDivider variant="orange" class="mb-8">
+          <Icon name="tabler:calendar" class="w-5 h-5" />
+          <span>Planning</span>
         </SectionDivider>
-        <h2 class="text-4xl md:text-5xl  font-bold mb-6 text-white tracking-tight !text-white">Programme du festival</h2>
-        <p class="text-xl !text-white/90 max-w-2xl mx-auto font-light tracking-wide leading-relaxed">
+        <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-gray-900 tracking-tight">Programme du festival</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto font-light tracking-wide leading-relaxed">
           Découvrez toutes les conférences, ateliers et stands sur les 3 jours
         </p>
       </div>
 
-      <div class="bg-white/95 backdrop-blur-xl rounded-[32px] shadow-2xl p-8 mb-16 transform hover:scale-[1.01] transition-all duration-300 border border-white/20">
+      <div class="bg-white rounded-[32px] shadow-xl p-8 mb-16 transform hover:scale-[1.01] transition-all duration-300 relative z-10">
         <style>
           /* Style personnalisé pour les boutons du DayFilter */
           :global(.day-filter-button) {
@@ -417,7 +386,7 @@ const themes = [
           <Icon name="tabler:bulb" class="w-5 h-5" />
           Thématiques
         </SectionDivider>
-        <h2 class="ext-4xl md:text-5xl  font-bold mb-6 text-sky-900">Les grands thèmes du Festival</h2>
+        <h2 class="ext-4xl md:text-5xl  font-body font-bold mb-6 text-sky-900">Les grands thèmes du Festival</h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
           Découvrez les 5 axes principaux qui seront abordés lors du festival
         </p>

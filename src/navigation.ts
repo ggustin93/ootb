@@ -1,4 +1,4 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { getPermalink, getBlogPermalink } from './utils/permalinks';
 
 export const headerData = {
   links: [
@@ -55,14 +55,19 @@ export const headerData = {
     },
     {
       text: 'À propos',
+      href: getPermalink('/a-propos'),
       links: [
         {
-          text: 'Notre mission',
-          href: getPermalink('/about#mission'),
+          text: 'Nos Missions',
+          href: getPermalink('/a-propos#nos-missions'),
         },
         {
-          text: 'Partenaires',
-          href: getPermalink('/about#partners'),
+          text: 'Notre Équipe',
+          href: getPermalink('/a-propos#notre-equipe'),
+        },
+        {
+          text: 'Nos Partenaires',
+          href: getPermalink('/a-propos#partenaires'),
         },
         {
           text: 'Contact',
@@ -85,8 +90,12 @@ export const footerData = {
     {
       title: 'À propos',
       links: [
-        { text: 'Notre mission', href: getPermalink('/about#mission') },
-        { text: 'Partenaires', href: getPermalink('/about#partners') },
+        { text: 'Contexte', href: getPermalink('/a-propos#contexte') },
+        { text: 'Notre Vision', href: getPermalink('/a-propos#notre-vision') },
+        { text: 'Nos Missions', href: getPermalink('/a-propos#nos-missions') },
+        { text: 'Nos Valeurs', href: getPermalink('/a-propos#nos-valeurs') },
+        { text: 'Notre Équipe', href: getPermalink('/a-propos#notre-equipe') },
+        { text: 'Nos Partenaires', href: getPermalink('/a-propos#partenaires') },
         { text: 'Contact', href: getPermalink('/contact') },
       ],
     },

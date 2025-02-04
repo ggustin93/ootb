@@ -3,7 +3,7 @@
   "compilerOptions": {
     "moduleResolution": "Bundler",
     "esModuleInterop": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,

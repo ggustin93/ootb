@@ -18,7 +18,7 @@ const { image, features } = Astro.props;
   
   <div class="max-w-6xl mx-auto relative z-10">
     <!-- Contenu principal -->
-    <div class="flex flex-col md:grid md:grid-cols-5 gap-8 md:gap-16 lg:gap-24 items-start">
+    <div class="flex flex-col md:grid md:grid-cols-5 gap-8 md:gap-16 lg:gap-24 items-center">
       <!-- En-tête mobile -->
       <div class="md:hidden mb-8">
         <SectionDivider variant="secondary" class="mb-3 inline-flex">
@@ -48,14 +48,14 @@ const { image, features } = Astro.props;
       </div>
 
       <!-- Texte (3/5) -->
-      <div class="md:col-span-3 space-y-6 md:space-y-8">
+      <div class="md:col-span-3 space-y-8">
         <!-- En-tête desktop -->
         <div class="hidden md:block">
           <SectionDivider variant="turquoise" class="mb-3 inline-flex">
             <Icon name="tabler:target" class="w-4 h-4 mr-1" />
             Notre mission
           </SectionDivider>
-          <h2 class="font-body text-4xl font-semibold leading-tight text-[--ootb-blue] tracking-tight mb-8">
+          <h2 class="font-body text-4xl font-semibold leading-tight text-[--ootb-blue] tracking-tight mb-6">
             Innover pour l'éducation de demain
           </h2>
         </div>
@@ -64,7 +64,7 @@ const { image, features } = Astro.props;
           La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.
         </p>
 
-        <ul class="space-y-3 md:space-y-6">
+        <ul class="space-y-3 md:space-y-4">
           {features.map((feature: string) => (
             <li class="flex items-start gap-3 md:gap-5 group">
               <span class="flex-shrink-0 w-5 h-5 md:w-6 md:h-6 mt-1 rounded-full bg-[--ootb-turquoise]/8 flex items-center justify-center">
@@ -76,14 +76,16 @@ const { image, features } = Astro.props;
         </ul>
 
         <!-- Bouton amélioré -->
-        <div class="pt-4 md:pt-6">
+        <div>
           <Button
-            variant="primary"
+            variant="outline-blue"
             href="/about"
-            text="En savoir plus sur notre mission"
             icon="tabler:arrow-right"
-            class="w-full md:w-auto shadow-xl shadow-[--ootb-turquoise]/15 hover:shadow-2xl hover:shadow-[--ootb-turquoise]/20 transition-shadow duration-300 text-base"
-          />
+            iconPosition="right"
+            class="w-full md:w-auto shadow-xl shadow-[--ootb-blue]/15 hover:shadow-2xl hover:shadow-[--ootb-blue]/20 transition-shadow duration-300 text-base"
+          >
+            En savoir plus sur notre mission
+          </Button>
         </div>
       </div>
     </div>

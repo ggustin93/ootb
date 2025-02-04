@@ -18,16 +18,17 @@ const variants = {
 <span
   class:list={[
     'inline-flex items-center justify-center',
-    'text-sm font-medium',
-    'transform skew-x-[-12deg]',
+    'text-md font-medium',
+    'transform skew-x-[-16deg]',
     'shadow-sm hover:shadow-md',
     'transition-all duration-300',
-    'w-full whitespace-nowrap',
+    'whitespace-nowrap',
+    'max-w-[200px]',
     variants[variant],
     className
   ]}
 >
-  <span class="transform skew-x-[12deg] font-body italic font-extrabold uppercase tracking-wide px-6 py-2.5">
+  <span class="transform skew-x-[16deg] font-body italic font-extrabold uppercase tracking-wide px-2 py-1">
     <slot />
   </span>
 </span> 

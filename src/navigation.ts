@@ -75,7 +75,7 @@ export const headerData = {
     { 
       text: 'Rejoindre la communauté', 
       href: '/#rejoindre',
-      class: 'btn-primary rounded-full'
+      variant: 'outline'
     }
   ],
 };

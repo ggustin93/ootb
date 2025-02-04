@@ -1,7 +1,14 @@
 ---
 import Layout from '~/layouts/Layout.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
+import ActionBadge from '~/components/ui/ActionBadge.astro';
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+import logo from '~/assets/images/ootb-logo.svg';
+import cloudsBg from '~/assets/images/clouds_bg.svg';
 import Button from '~/components/ui/Button.astro';
+import Card from '~/components/ui/Card.astro';
+import Link from '~/components/ui/Link.astro';
 
 const colors = {
   'Violet': { value: 'var(--ootb-violet)', hex: '#921e6d' },
@@ -16,348 +23,793 @@ const pangrams = {
   en: "The quick brown fox jumps over the lazy dog",
   fr: "Portez ce vieux whisky au juge blond qui fume"
 };
+
+const sections = [
+  {
+    id: 'fondations',
+    title: 'Fondations',
+    subsections: ['Typographie', 'Couleurs', 'Grille & Layout']
+  },
+  {
+    id: 'composants',
+    title: 'Composants',
+    subsections: [
+      {
+        title: 'Atomes',
+        items: ['Couleurs', 'Typographie', 'Icônes', 'Boutons', 'Badges']
+      },
+      {
+        title: 'Molécules',
+        items: ['Logo', 'Action Badges', 'Boutons avec icônes', 'Navigation']
+      },
+      {
+        title: 'Organismes',
+        items: ['Hero Section', 'Navigation principale', 'Footer']
+      }
+    ]
+  },
+  {
+    id: 'developpeur',
+    title: 'Guide Développeur',
+    subsections: ['Configuration', 'Accessibilité', 'Performance', 'Code Snippets']
+  }
+];
 ---
 
 <Layout metadata={{ title: 'Style Guide - OOTB' }}>
   <main class="py-20 px-8 max-w-6xl mx-auto">
     <h1 class="font-heading text-6xl mb-16 text-[--ootb-violet]">OOTB Style Guide</h1>
 
-    <!-- Système Typographique -->
-    <section class="mb-20">
-      <SectionDivider variant="primary" class="mb-8">Système Typographique</SectionDivider>
-      
-      <!-- Bebas Neue -->
-      <div class="mb-12 p-8 bg-gray-50 rounded-xl">
-        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Bebas Neue - Titres principaux</h3>
-        <div class="space-y-8">
+    <!-- Table des matières -->
+    <nav class="mb-16 p-8 bg-gray-50 rounded-xl">
+      <h2 class="text-2xl font-semibold mb-6 text-[--ootb-turquoise]">Table des matières</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        {sections.map((section, sectionIndex) => (
           <div>
-            <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-4 block">h1, .h1 - font-heading - text-4xl md:text-5xl lg:text-6xl (36px → 48px → 60px)</code>
-            <div class="space-y-6">
-              <div>
-                <p class="text-sm text-gray-500 mb-2">Desktop (lg)</p>
-                <h1 class="font-heading text-6xl">{pangrams.fr}</h1>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500 mb-2">Tablet (md)</p>
-                <h1 class="font-heading text-5xl">{pangrams.fr}</h1>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500 mb-2">Mobile</p>
-                <h1 class="font-heading text-4xl">{pangrams.fr}</h1>
-              </div>
-            </div>
+            <a href={`#${section.id}`} class="text-lg font-medium hover:text-[--ootb-turquoise] transition-colors">
+              {sectionIndex + 1}. {section.title}
+            </a>
+            <ul class="mt-2 space-y-4">
+              {section.subsections.map((sub, subIndex) => {
+                if (typeof sub === 'string') {
+                  return (
+                    <li>
+                      <a href={`#${section.id}-${sub.toLowerCase().replace(/\s+/g, '-')}`} 
+                         class="text-sm text-gray-600 hover:text-[--ootb-turquoise] transition-colors">
+                        {sectionIndex + 1}.{subIndex + 1}. {sub}
+                      </a>
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li class="space-y-2">
+                      <p class="text-sm font-medium text-gray-700">{sectionIndex + 1}.{subIndex + 1}. {sub.title}</p>
+                      <ul class="ml-4 space-y-1">
+                        {sub.items.map((item, itemIndex) => (
+                          <li>
+                            <a href={`#${section.id}-${item.toLowerCase().replace(/\s+/g, '-')}`}
+                               class="text-sm text-gray-600 hover:text-[--ootb-turquoise] transition-colors">
+                              {sectionIndex + 1}.{subIndex + 1}.{itemIndex + 1}. {item}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  );
+                }
+              })}
+            </ul>
           </div>
+        ))}
+      </div>
+    </nav>
+
+    <!-- Fondations -->
+    <section id="fondations" class="mb-20">
+      <SectionDivider variant="primary" class="mb-8">Fondations</SectionDivider>
+
+      <!-- Couleurs -->
+      <div id="fondations-couleurs" class="mb-16 p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Couleurs</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+          {
+            Object.entries(colors).map(([name, { value, hex }]) => (
+              <div class="overflow-hidden rounded-xl">
+                <div class="h-32 p-6" style={{ backgroundColor: value }}>
+                </div>
+                <div class="p-4 bg-gray-50">
+                  <p class="font-body font-semibold mb-1">{name}</p>
+                  <p class="text-sm font-mono text-gray-500">{value}</p>
+                  <p class="text-sm font-mono text-gray-500">{hex}</p>
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
 
-      <!-- Raleway -->
-      <div class="p-8 bg-gray-50 rounded-xl">
-        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Raleway Variable</h3>
+      <!-- Typographie -->
+      <div id="fondations-typographie" class="mb-16 p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Système Typographique</h3>
         
-        <!-- Hiérarchie -->
-        <div class="mb-12 space-y-8 border-b border-gray-200 pb-8">
+        <div class="space-y-12">
+          <!-- Hiérarchie -->
           <div>
-            <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-4 block">h2, .h2 - Raleway Variable 600 - text-3xl → text-4xl</code>
-            <h2 class="font-body text-4xl font-semibold">{pangrams.fr}</h2>
-          </div>
-
-          <div>
-            <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-4 block">h4, .h4 - Raleway Variable 600 - text-xl → text-2xl</code>
-            <h4 class="font-body text-2xl font-semibold">{pangrams.fr}</h4>
-          </div>
-        </div>
-
-        <!-- Variations de poids -->
-        <div class="space-y-6">
-          <h4 class="text-lg font-semibold mb-4">Variations de poids</h4>
-          <div class="grid gap-6">
-            {['light', 'normal', 'medium', 'semibold', 'bold'].map((weight) => (
+            <h4 class="text-lg font-semibold mb-4">Hiérarchie typographique</h4>
+            <div class="space-y-8">
               <div>
-                <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-3 block">font-{weight} - font-variation-settings: "wght" {weight === 'light' ? '300' : weight === 'normal' ? '400' : weight === 'medium' ? '500' : weight === 'semibold' ? '600' : '700'}</code>
-                <p class={`font-body font-${weight} text-xl`}>{pangrams.fr}</p>
+                <p class="text-sm text-gray-500 mb-2">H1 - Bebas Neue - Titres principaux</p>
+                <h1 class="font-heading text-6xl">OUT OF THE BOOKS</h1>
+                <p class="text-sm text-gray-600 mt-2">Usage : Titres de sections principales, marque</p>
               </div>
-            ))}
+              <div>
+                <p class="text-sm text-gray-500 mb-2">H2 - Raleway Light Italic - Sous-titres</p>
+                <h2 class="font-body font-light italic text-4xl">La plateforme des pédagogies innovantes</h2>
+                <p class="text-sm text-gray-600 mt-2">Usage : Taglines, descriptions principales</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 mb-2">H3 - Caveat - Accents manuscrits</p>
+                <h3 class="font-handwritten text-4xl text-[--ootb-violet]">Notes et accents éducatifs</h3>
+                <p class="text-sm text-gray-600 mt-2">Usage : Annotations, touches personnelles</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 mb-2">Corps de texte - Raleway Variable</p>
+                <p class="text-lg">{pangrams.fr}</p>
+                <p class="text-sm text-gray-600 mt-2">Usage : Contenu principal, descriptions</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Variations Raleway -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Variations Raleway</h4>
+            <div class="space-y-4">
+              {['light', 'normal', 'medium', 'semibold', 'bold'].map((weight) => (
+                <div>
+                  <p class="text-sm text-gray-500 mb-2">font-{weight}</p>
+                  <p class={`font-body font-${weight} text-xl`}>{pangrams.fr}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Caveat - Police manuscrite -->
-      <div class="p-8 bg-gray-50 rounded-xl mt-12">
-        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Caveat Variable - Style manuscrit éducatif</h3>
-        <div class="space-y-8">
+      <!-- Grille & Layout -->
+      <div id="fondations-espacement-grille" class="p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Grille & Layout</h3>
+        
+        <div class="space-y-12">
+          <!-- Largeurs -->
           <div>
-            <code class="text-sm bg-gray-200 px-2 py-1 rounded mb-4 block">h3, .h3 - Caveat Variable - text-3xl → text-4xl</code>
+            <h4 class="text-lg font-semibold mb-4">Largeurs standards</h4>
             <div class="space-y-6">
-              <div>
-                <p class="text-sm text-gray-500 mb-2">Style par défaut</p>
-                <h3 class="font-handwritten text-4xl text-[--ootb-violet]">{pangrams.fr}</h3>
+              <div class="relative">
+                <div class="max-w-7xl mx-auto bg-[--ootb-violet]/10 p-4 rounded-xl">
+                  <p class="text-center text-sm font-medium">max-w-7xl : Sections hero et pleine largeur</p>
+                </div>
+              </div>
+              <div class="relative">
+                <div class="max-w-6xl mx-auto bg-[--ootb-turquoise]/10 p-4 rounded-xl">
+                  <p class="text-center text-sm font-medium">max-w-6xl : Conteneur principal</p>
+                </div>
+              </div>
+              <div class="relative">
+                <div class="max-w-4xl mx-auto bg-[--ootb-green]/10 p-4 rounded-xl">
+                  <p class="text-center text-sm font-medium">max-w-4xl : Blocs de texte</p>
+                </div>
+              </div>
+              <div class="text-sm text-gray-600 mt-2">
+                <ul class="list-disc pl-6 space-y-2">
+                  <li><code>max-w-7xl</code> (1280px) : Sections larges comme le hero</li>
+                  <li><code>max-w-6xl</code> (1152px) : Layout principal du site</li>
+                  <li><code>max-w-4xl</code> (896px) : Optimisé pour la lecture</li>
+                  <li>Padding horizontal : <code>px-4 sm:px-6 lg:px-8</code></li>
+                </ul>
               </div>
             </div>
+          </div>
+
+          <!-- Exemple 1: Mission Section -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Layout Mission Section</h4>
+            <div class="border-2 border-[--ootb-turquoise] rounded-xl p-8">
+              <div class="flex flex-col md:grid md:grid-cols-5 gap-8 md:gap-16">
+                <!-- Image (2/5) -->
+                <div class="md:col-span-2 bg-[--ootb-turquoise]/10 rounded-xl p-8 flex items-center justify-center">
+                  <p class="text-center text-sm font-medium">Image<br/>2/5 colonnes</p>
+                </div>
+                <!-- Contenu (3/5) -->
+                <div class="md:col-span-3 bg-[--ootb-turquoise]/10 rounded-xl p-8 flex items-center justify-center">
+                  <p class="text-center text-sm font-medium">Contenu<br/>3/5 colonnes</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mt-4">Layout asymétrique pour mettre en avant le contenu</p>
+          </div>
+
+          <!-- Exemple 2: Featured Content -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Layout Featured Content</h4>
+            <div class="border-2 border-[--ootb-violet] rounded-xl p-8">
+              <!-- En-tête -->
+              <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-8 bg-[--ootb-violet]/10 rounded-xl p-4">
+                <p class="text-center text-sm font-medium">En-tête flexible</p>
+              </div>
+              
+              <!-- Grille de contenu -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-[--ootb-violet]/10 rounded-xl aspect-[4/3] flex items-center justify-center">
+                  <p class="text-center text-sm font-medium">Carte 1</p>
+                </div>
+                <div class="bg-[--ootb-violet]/10 rounded-xl aspect-[4/3] flex items-center justify-center">
+                  <p class="text-center text-sm font-medium">Carte 2</p>
+                </div>
+                <div class="bg-[--ootb-violet]/10 rounded-xl aspect-[4/3] flex items-center justify-center">
+                  <p class="text-center text-sm font-medium">Carte 3</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mt-4">Grille responsive : 1 colonne (mobile) → 3 colonnes (desktop)</p>
+          </div>
+
+          <!-- Points clés -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Points clés</h4>
+            <ul class="list-disc pl-6 space-y-2 text-gray-600">
+              <li>Approche mobile-first avec <code>grid-cols-1</code> par défaut</li>
+              <li>Breakpoint principal à <code>md:</code> pour le passage en colonnes</li>
+              <li>Utilisation de <code>gap-8</code> pour l'espacement uniforme</li>
+              <li>Ratios cohérents avec <code>aspect-[3/4]</code> pour les cartes</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Couleurs -->
-    <section class="mb-20">
-      <SectionDivider variant="primary" class="mb-8">Couleurs</SectionDivider>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-        {
-          Object.entries(colors).map(([name, { value, hex }]) => (
-            <div class="overflow-hidden rounded-xl">
-              <div class="h-32 p-6" style={{ backgroundColor: value }}>
+    <!-- Composants -->
+    <section id="composants" class="mb-20">
+      <SectionDivider variant="primary" class="mb-8">Composants</SectionDivider>
+
+      <!-- Atomes -->
+      <div class="space-y-16">
+        <div>
+          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Atomes</h3>
+
+          <!-- Boutons -->
+          <div id="composants-boutons" class="p-8 bg-gray-50 rounded-xl mb-8">
+            <h4 class="text-lg font-semibold mb-4">Boutons</h4>
+            <div class="space-y-8">
+              <!-- Variantes -->
+              <div>
+                <p class="text-sm text-gray-600 mb-4">Variantes de base</p>
+                <div class="flex flex-wrap gap-4">
+                  <Button>Primary</Button>
+                  <Button variant="secondary">Secondary</Button>
+                  <Button variant="outline">Outline</Button>
+                  <Button variant="ghost">Ghost</Button>
+                  <Button variant="link">Link</Button>
+                  <Button variant="blue">Blue</Button>
+                  <Button variant="outline-blue">Outline Blue</Button>
+                </div>
               </div>
-              <div class="p-4 bg-gray-50">
-                <p class="font-body font-semibold mb-1">{name}</p>
-                <p class="text-sm font-mono text-gray-500">{value}</p>
-                <p class="text-sm font-mono text-gray-500">{hex}</p>
+
+              <!-- Avec icônes -->
+              <div>
+                <p class="text-sm text-gray-600 mb-4">Avec icônes</p>
+                <div class="flex flex-wrap gap-4">
+                  <Button icon="tabler:arrow-right" iconPosition="right">
+                    Suite
+                  </Button>
+                  <Button variant="secondary" icon="tabler:download">
+                    Télécharger
+                  </Button>
+                </div>
+              </div>
+
+              <!-- États -->
+              <div>
+                <p class="text-sm text-gray-600 mb-4">États</p>
+                <div class="flex flex-wrap gap-4">
+                  <Button disabled>Désactivé</Button>
+                  <div class="w-48">
+                    <Button fullWidth>Full width</Button>
+                  </div>
+                </div>
               </div>
             </div>
-          ))
-        }
+          </div>
+
+          <!-- Liens -->
+          <div id="composants-liens" class="p-8 bg-gray-50 rounded-xl mb-8">
+            <h4 class="text-lg font-semibold mb-4">Liens</h4>
+            <div class="space-y-4">
+              <div>
+                <p class="text-sm text-gray-600 mb-4">Styles de liens</p>
+                <div class="space-y-4">
+                  <div>
+                    <Link href="#" icon="tabler:external-link">
+                      Lien externe
+                    </Link>
+                  </div>
+                  <div>
+                    <Link href="#" icon="tabler:arrow-right">
+                      Lien avec flèche
+                    </Link>
+                  </div>
+                  <div>
+                    <Link href="#" icon="tabler:download" iconPosition="left">
+                      Télécharger le document
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Badges -->
+          <div id="composants-badges" class="p-8 bg-gray-50 rounded-xl mb-8">
+            <h4 class="text-lg font-semibold mb-4">Badges</h4>
+            <div class="flex gap-2">
+              <ActionBadge variant="festival">Festival</ActionBadge>
+              <ActionBadge variant="podcast">Podcast</ActionBadge>
+              <ActionBadge variant="emission">Émission</ActionBadge>
+              <ActionBadge variant="appel">Appel à projets</ActionBadge>
+            </div>
+          </div>
+
+          <!-- Icônes -->
+          <div id="composants-icones" class="p-8 bg-gray-50 rounded-xl">
+            <h4 class="text-lg font-semibold mb-4">Icônes</h4>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="flex items-center gap-2 p-3 bg-white rounded-lg">
+                <Icon name="tabler:arrow-right" class="w-5 h-5 text-[--ootb-turquoise]" />
+                <span class="text-sm text-gray-600">Navigation</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-white rounded-lg">
+                <Icon name="tabler:external-link" class="w-5 h-5 text-[--ootb-violet]" />
+                <span class="text-sm text-gray-600">Lien externe</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-white rounded-lg">
+                <Icon name="tabler:download" class="w-5 h-5 text-[--ootb-green]" />
+                <span class="text-sm text-gray-600">Télécharger</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-white rounded-lg">
+                <Icon name="tabler:share" class="w-5 h-5 text-[--ootb-blue]" />
+                <span class="text-sm text-gray-600">Partager</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Molécules -->
+        <div>
+          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Molécules</h3>
+
+          <!-- Logo -->
+          <div id="composants-logo" class="p-8 bg-gray-50 rounded-xl mb-8">
+            <h4 class="text-lg font-semibold mb-4">Logo</h4>
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <Image
+                  src={logo}
+                  alt="Logo Out of the Books"
+                  class="w-24 h-auto"
+                  widths={[96]}
+                  sizes="96px"
+                  loading="eager"
+                  decoding="async"
+                />
+                <p class="text-sm text-gray-600 mt-4">Version standard</p>
+              </div>
+              <div>
+                <div class="bg-[--ootb-turquoise] p-4 rounded-lg inline-block">
+                  <Image
+                    src={logo}
+                    alt="Logo Out of the Books sur fond foncé"
+                    class="w-24 h-auto"
+                    widths={[96]}
+                    sizes="96px"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </div>
+                <p class="text-sm text-gray-600 mt-4">Version sur fond foncé</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Badges -->
+          <div id="composants-action-badges" class="p-8 bg-gray-50 rounded-xl mb-8">
+            <h4 class="text-lg font-semibold mb-4">Action Badges</h4>
+            <div class="space-y-4">
+              <div class="flex flex-wrap gap-2">
+                <ActionBadge variant="festival">Festival</ActionBadge>
+                <ActionBadge variant="podcast">Podcast</ActionBadge>
+                <ActionBadge variant="emission">Émission</ActionBadge>
+                <ActionBadge variant="appel">Appel à projets</ActionBadge>
+              </div>
+            </div>
+          </div>
+
+         
+        </div>
+
+        <!-- Organismes -->
+        <div>
+          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Organismes</h3>
+
+          <!-- Hero Section -->
+          <div id="composants-hero-section" class="p-8 bg-gray-50 rounded-xl mb-8">
+            <h4 class="text-lg font-semibold mb-4">Hero Section</h4>
+            <div class="bg-[--ootb-turquoise] p-12 md:p-16 rounded-lg relative overflow-hidden">
+              <Image
+                src={cloudsBg}
+                alt=""
+                class="absolute bottom-0 left-0 right-0 w-full h-auto object-cover object-bottom transform scale-105"
+                widths={[400]}
+                sizes="400px"
+                loading="eager"
+                decoding="async"
+              />
+              <div class="relative z-10 max-w-4xl">
+                <h1 class="font-heading text-6xl md:text-7xl font-bold leading-none tracking-tight text-white mb-8">
+                  OUT OF THE BOOKS
+                </h1>
+                
+                <h2 class="font-sans text-3xl md:text-4xl font-light italic mb-12">
+                  <span class="text-white block">La plateforme des pédagogies <span class="relative">
+                    <span class="text-[--ootb-yellow]">innovantes !</span>
+                    <span class="absolute bottom-0 left-0 w-[102%] h-[0.12em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
+                    <span class="absolute bottom-[0.1em] left-0 w-[101%] h-[0.08em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
+                    <span class="absolute bottom-[-0.1em] left-0 w-[103%] h-[0.1em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
+                  </span></span>
+                </h2>
+
+                <div class="flex flex-wrap gap-3">
+                  <ActionBadge variant="festival">Festival</ActionBadge>
+                  <ActionBadge variant="podcast">Podcast</ActionBadge>
+                  <ActionBadge variant="emission">Émission</ActionBadge>
+                  <ActionBadge variant="appel">Appel à projets</ActionBadge>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cards -->
+          <div id="composants-cards" class="p-8 bg-gray-50 rounded-xl">
+            <h4 class="text-lg font-semibold mb-4">Cards</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Carte Podcast -->
+              <div>
+                <h5 class="text-base font-medium mb-4">Podcast</h5>
+                <div class="group">
+                  <Card
+                    href="/podcast/example"
+                    title="L'innovation pédagogique en pratique"
+                    description="Découvrez comment les enseignants innovent au quotidien dans leurs classes"
+                    image="https://images.unsplash.com/photo-1590650046871-92c887180603?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                    badge="Épisode 12"
+                    type="podcast"
+                    meta={{
+                      expert: "Marie Dubois",
+                      duration: "45 min",
+                      episode: "EP12"
+                    }}
+                    class="transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
+                  />
+                </div>
+              </div>
+
+              <!-- Carte TV -->
+              <div>
+                <h5 class="text-base font-medium mb-4">TV</h5>
+                <div class="group">
+                  <Card
+                    href="/tv/example"
+                    title="Les nouvelles approches d'apprentissage"
+                    description="Une émission spéciale sur les méthodes qui révolutionnent l'éducation"
+                    image="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                    badge="Émission"
+                    type="tv"
+                    meta={{
+                      duration: "26 min",
+                      contributors: "Équipe OOTB"
+                    }}
+                    class="transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Icônes et éléments graphiques -->
+        <div id="composants-graphiques" class="p-8 bg-gray-50 rounded-xl mb-8">
+          <h4 class="text-lg font-semibold mb-4">Iconographie & Éléments graphiques</h4>
+          
+          <!-- Icônes Tabler -->
+          <div class="mb-12">
+            <p class="text-sm text-gray-600 mb-4">Icônes fonctionnelles</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="flex items-center gap-2 p-3 bg-white rounded-lg">
+                <Icon name="tabler:book" class="w-6 h-6 text-[--ootb-turquoise]" />
+                <span class="text-sm text-gray-600">tabler:book</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-white rounded-lg">
+                <Icon name="tabler:book-2" class="w-6 h-6 text-[--ootb-violet]" />
+                <span class="text-sm text-gray-600">tabler:book-2</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-white rounded-lg">
+                <Icon name="tabler:books" class="w-6 h-6 text-[--ootb-green]" />
+                <span class="text-sm text-gray-600">tabler:books</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-white rounded-lg">
+                <Icon name="tabler:notebook" class="w-6 h-6 text-[--ootb-blue]" />
+                <span class="text-sm text-gray-600">tabler:notebook</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mt-4">
+              Utilisation de Tabler Icons, une suite d'icônes open source minimaliste et cohérente 
+              (<Link href="https://tabler-icons.io" external>tabler-icons.io</Link>)
+            </p>
+          </div>
+
+          <!-- Icônes décoratives -->
+          <div class="mb-12">
+            <p class="text-sm text-gray-600 mb-4">Icônes décoratives</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="aspect-square bg-[--ootb-turquoise]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-turquoise]/20 transition-colors">
+                <Icon name="tabler:book-2" class="w-12 h-12 text-[--ootb-turquoise] transform group-hover:rotate-12 transition-transform" />
+              </div>
+              <div class="aspect-square bg-[--ootb-violet]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-violet]/20 transition-colors">
+                <Icon name="tabler:pencil" class="w-12 h-12 text-[--ootb-violet] transform group-hover:-rotate-12 transition-transform" />
+              </div>
+              <div class="aspect-square bg-[--ootb-green]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-green]/20 transition-colors">
+                <Icon name="tabler:notebook" class="w-12 h-12 text-[--ootb-green] transform group-hover:scale-110 transition-transform" />
+              </div>
+              <div class="aspect-square bg-[--ootb-blue]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-blue]/20 transition-colors">
+                <Icon name="tabler:books" class="w-12 h-12 text-[--ootb-blue] transform group-hover:rotate-6 transition-transform" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Éléments décoratifs -->
+          <div>
+            <p class="text-sm text-gray-600 mb-4">Éléments décoratifs</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Nuages avec dégradé -->
+              <div class="bg-[--ootb-turquoise] rounded-xl relative overflow-hidden h-64">
+                <div class="absolute inset-0 bg-gradient-to-b from-[--ootb-turquoise] from-5% via-[--ootb-turquoise] via-60% via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] via-75% to-[color-mix(in_srgb,var(--ootb-turquoise)_20%,white)] to-100%"></div>
+                <Image
+                  src={cloudsBg}
+                  alt="Motif de nuages"
+                  class="absolute bottom-0 left-0 right-0 w-full h-auto object-cover object-bottom transform scale-105"
+                  widths={[400]}
+                  sizes="400px"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="relative z-10 p-6">
+                  <p class="text-white font-medium mb-2">Nuages & Dégradé</p>
+                  <p class="text-sm text-white/90">Fond signature avec dégradé et motif de nuages</p>
+                </div>
+              </div>
+
+              <!-- Livres décoratifs -->
+              <div class="p-8 bg-white rounded-xl border-2 border-[--ootb-violet]/20">
+                <div class="flex gap-8 justify-center items-center h-48">
+                  <div class="flex flex-col items-center">
+                    <div class="w-20 h-28 bg-[--ootb-violet] rounded-lg transform -rotate-6 shadow-lg relative">
+                      <div class="absolute inset-0 bg-black/5 rounded-lg"></div>
+                      <Icon name="tabler:book" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80" />
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">Violet</p>
+                  </div>
+                  <div class="flex flex-col items-center">
+                    <div class="w-20 h-28 bg-[--ootb-turquoise] rounded-lg shadow-lg relative">
+                      <div class="absolute inset-0 bg-black/5 rounded-lg"></div>
+                      <Icon name="tabler:book-2" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80" />
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">Turquoise</p>
+                  </div>
+                  <div class="flex flex-col items-center">
+                    <div class="w-20 h-28 bg-[--ootb-green] rounded-lg transform rotate-6 shadow-lg relative">
+                      <div class="absolute inset-0 bg-black/5 rounded-lg"></div>
+                      <Icon name="tabler:books" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80" />
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">Vert</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Animations -->
+          <div class="mt-12">
+            <p class="text-sm text-gray-600 mb-4">Animations</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 bg-white rounded-lg">
+                <p class="text-sm font-medium mb-2">Flottement</p>
+                <div class="flex justify-center">
+                  <Icon name="tabler:book" class="w-8 h-8 text-[--ootb-turquoise] animate-float" />
+                </div>
+                <p class="text-xs text-gray-500 mt-2 text-center">animate-float</p>
+              </div>
+              <div class="p-4 bg-white rounded-lg">
+                <p class="text-sm font-medium mb-2">Rotation</p>
+                <div class="flex justify-center">
+                  <Icon name="tabler:book-2" class="w-8 h-8 text-[--ootb-violet] hover:rotate-12 transition-transform duration-300" />
+                </div>
+                <p class="text-xs text-gray-500 mt-2 text-center">hover:rotate-12</p>
+              </div>
+              <div class="p-4 bg-white rounded-lg">
+                <p class="text-sm font-medium mb-2">Scale</p>
+                <div class="flex justify-center">
+                  <Icon name="tabler:books" class="w-8 h-8 text-[--ootb-green] hover:scale-110 transition-transform duration-300" />
+                </div>
+                <p class="text-xs text-gray-500 mt-2 text-center">hover:scale-110</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Guide Développeur -->
-    <section class="mb-20">
+    <section id="developpeur" class="mb-20">
       <SectionDivider variant="primary" class="mb-8">Guide Développeur</SectionDivider>
-      
-      <div class="space-y-12">
-        <!-- Composants -->
-        <div class="p-8 bg-gray-50 rounded-xl">
-          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Composants UI</h3>
-          <div class="space-y-8">
-            <!-- Boutons -->
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Boutons</h4>
-              <div class="space-y-4">
-                <div>
-                  <p class="text-sm text-gray-500 mb-2">Classes de base</p>
-                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<button class="btn-primary">
-  <!-- Pour un bouton principal violet -->
-</button>
 
-<button class="btn-secondary">
-  <!-- Pour un bouton secondaire turquoise -->
-</button>
-
-<button class="btn-outline">
-  <!-- Pour un bouton avec contour -->
-</button>`}</pre>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-500 mb-2">Variantes de taille</p>
-                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<button class="btn-primary w-full">
-  <!-- Pleine largeur sur mobile -->
-</button>
-
-<button class="btn-primary w-full md:w-auto">
-  <!-- Adaptatif : plein sur mobile, auto sur desktop -->
-</button>`}</pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Typographie -->
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Utilisation des polices</h4>
-              <div class="space-y-4">
-                <div>
-                  <p class="text-sm text-gray-500 mb-2">Titres</p>
-                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<h1 class="font-heading text-4xl md:text-5xl lg:text-6xl">
-  <!-- Titre principal -->
-</h1>
-
-<h2 class="font-body text-3xl md:text-4xl font-semibold">
-  <!-- Sous-titre -->
-</h2>`}</pre>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-500 mb-2">Style manuscrit</p>
-                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<span class="font-handwritten text-2xl text-[--ootb-violet]">
-  <!-- Texte manuscrit standard -->
-</span>
-
-<span class="font-handwritten text-2xl text-[--ootb-violet] 
-            absolute -top-4 -right-16 transform rotate-[-8deg]">
-  <!-- Annotation en surimpression -->
-</span>`}</pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Couleurs -->
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Utilisation des couleurs</h4>
-              <div class="space-y-4">
-                <div>
-                  <p class="text-sm text-gray-500 mb-2">Classes de couleur</p>
-                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<!-- Texte -->
-<p class="text-[--ootb-violet]">Texte violet</p>
-<p class="text-[--ootb-turquoise]">Texte turquoise</p>
-
-<!-- Arrière-plan -->
-<div class="bg-[--ootb-violet]">Fond violet</div>
-<div class="bg-[--ootb-turquoise]">Fond turquoise</div>
-
-<!-- Bordures -->
-<div class="border-2 border-[--ootb-violet]">Bordure violette</div>
-<div class="border-2 border-[--ootb-turquoise]">Bordure turquoise</div>`}</pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Espacements -->
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Espacements standards</h4>
-              <div class="space-y-4">
-                <div>
-                  <p class="text-sm text-gray-500 mb-2">Marges et padding</p>
-                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`<!-- Sections -->
-<section class="mb-20">
-  <!-- Espacement entre sections -->
-</section>
-
-<!-- Composants -->
-<div class="space-y-8">
-  <!-- Espacement vertical entre éléments -->
-</div>
-
-<!-- Grilles -->
-<div class="grid gap-6">
-  <!-- Espacement dans les grilles -->
-</div>`}</pre>
-                </div>
-              </div>
-            </div>
+      <!-- Accessibilité -->
+      <div id="developpeur-accessibilite" class="mb-16 p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Accessibilité</h3>
+        <div class="space-y-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Principes clés</h4>
+            <ul class="list-disc pl-6 space-y-2 text-gray-600">
+              <li>Contraste minimum 4.5:1</li>
+              <li>Support de la navigation au clavier</li>
+              <li>Textes alternatifs descriptifs</li>
+              <li>Structure sémantique HTML5</li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        <!-- Accessibilité -->
-        <div class="p-8 bg-gray-50 rounded-xl">
-          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Bonnes pratiques UI</h3>
-          <div class="space-y-4">
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Accessibilité</h4>
-              <ul class="list-disc pl-6 space-y-2 text-gray-600">
-                <li>Contraste minimum de 4.5:1 pour le texte</li>
-                <li>Taille de police minimum de 16px pour le corps de texte</li>
-                <li>Focus visible sur tous les éléments interactifs</li>
-                <li>Textes alternatifs descriptifs pour les images</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Responsive Design</h4>
-              <ul class="list-disc pl-6 space-y-2 text-gray-600">
-                <li>Mobile-first : styles de base pour mobile</li>
-                <li>Breakpoints : sm (640px), md (768px), lg (1024px)</li>
-                <li>Images responsives avec aspect-ratio maintenu</li>
-                <li>Grilles adaptatives avec auto-fit/auto-fill</li>
-              </ul>
-            </div>
+      <!-- Performance -->
+      <div id="developpeur-performance" class="mb-16 p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Performance</h3>
+        <div class="space-y-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Objectifs</h4>
+            <ul class="list-disc pl-6 space-y-2 text-gray-600">
+              <li>Score Lighthouse &gt; 90</li>
+              <li>First Contentful Paint &lt; 1.5s</li>
+              <li>Time to Interactive &lt; 3.5s</li>
+              <li>Cumulative Layout Shift &lt; 0.1</li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        <!-- Organisation des styles -->
-        <div class="p-8 bg-gray-50 rounded-xl">
-          <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Organisation des styles</h3>
-          <div class="space-y-8">
-            <!-- Fichiers de configuration -->
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Distinction des fichiers</h4>
-              <div class="space-y-6">
-                <div>
-                  <p class="font-semibold text-gray-700">1. CustomStyles.astro</p>
-                  <p class="text-gray-600 mb-2">Configuration centrale des styles :</p>
-                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`---
-import '@fontsource/bebas-neue/400.css';
-import '@fontsource-variable/raleway';
-import '@fontsource-variable/caveat/wght.css';
+      <!-- Code Snippets -->
+      <div id="developpeur-code-snippets" class="p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Code Snippets</h3>
+        <div class="space-y-8">
+          <details>
+            <summary class="cursor-pointer text-lg font-medium text-[--ootb-turquoise] hover:text-[--ootb-violet]">
+              Hero Section
+            </summary>
+            <div class="mt-4 bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+              {`<section class="relative bg-[--ootb-turquoise] overflow-hidden">
+  <!-- Fond décoratif -->
+  <Image
+    src={cloudsBg}
+    alt=""
+    class="absolute bottom-0 left-0 right-0 w-full h-auto object-cover object-bottom transform scale-105"
+    widths={[400, 800]}
+    sizes="100vw"
+    loading="eager"
+  />
+  
+  <!-- Contenu -->
+  <div class="relative z-10 max-w-6xl mx-auto px-4 py-16 md:py-24">
+    <h1 class="font-heading text-6xl md:text-7xl text-white mb-8">
+      OUT OF THE BOOKS
+    </h1>
+    
+    <h2 class="font-body font-light italic text-3xl md:text-5xl text-white mb-12">
+      La plateforme des pédagogies
+      <span class="relative inline-block">
+        <span class="text-[--ootb-yellow]">innovantes !</span>
+        <span class="absolute bottom-0 left-0 w-[102%] h-[0.12em] 
+          bg-[--ootb-yellow] rounded-full 
+          transform -rotate-1"></span>
+        <span class="absolute bottom-[0.1em] left-0 w-[101%] h-[0.08em] 
+          bg-[--ootb-yellow]/70 rounded-full 
+          transform rotate-[0.5deg]"></span>
+        <span class="absolute bottom-[-0.1em] left-0 w-[103%] h-[0.1em] 
+          bg-[--ootb-yellow]/60 rounded-full 
+          transform -rotate-[1.5deg]"></span>
+      </span>
+    </h2>
+
+    <div class="flex flex-wrap gap-3">
+      <ActionBadge variant="festival">Festival</ActionBadge>
+      <ActionBadge variant="podcast">Podcast</ActionBadge>
+      <ActionBadge variant="emission">Émission</ActionBadge>
+      <ActionBadge variant="appel">Appel à projets</ActionBadge>
+    </div>
+  </div>
+</section>`}
+            </div>
+          </details>
+
+          <details>
+            <summary class="cursor-pointer text-lg font-medium text-[--ootb-turquoise] hover:text-[--ootb-violet]">
+              Action Badge Component
+            </summary>
+            <div class="mt-4 bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+              {`---
+interface Props {
+  variant?: 'festival' | 'podcast' | 'emission' | 'appel';
+  class?: string;
+}
+
+const { variant = 'festival', class: className } = Astro.props;
+
+const variants = {
+  festival: 'bg-[var(--ootb-orange)] hover:bg-[color-mix(in_srgb,var(--ootb-orange)_90%,black)]',
+  podcast: 'bg-[var(--ootb-violet)] hover:bg-[color-mix(in_srgb,var(--ootb-violet)_90%,black)]',
+  emission: 'bg-[var(--ootb-green)] hover:bg-[color-mix(in_srgb,var(--ootb-green)_90%,black)]',
+  appel: 'bg-[var(--ootb-blue)] hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)]'
+};
 ---
 
-<style is:inline>
-  :root {
-    /* Variables CSS globales */
-    --ootb-violet: #921e6d;
-    --ootb-turquoise: #69b29e;
-  }
-
-  /* Classes de typographie essentielles */
-  .font-heading {
-    font-family: 'Bebas Neue', system-ui, sans-serif !important;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-
-  /* Hiérarchie typographique */
-  h1, .h1 {
-    @apply font-heading text-4xl md:text-5xl lg:text-6xl;
-  }
-
-  /* Support de prefers-reduced-motion */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      @apply transition-none animate-none;
-    }
-  }
-</style>`}</pre>
-                </div>
-
-                <div>
-                  <p class="font-semibold text-gray-700">2. tailwind.config.js</p>
-                  <p class="text-gray-600 mb-2">Extensions Tailwind :</p>
-                  <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">{`module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        'ootb': {
-          violet: 'var(--ootb-violet)',
-          turquoise: 'var(--ootb-turquoise)',
-        }
-      },
-      fontFamily: {
-        heading: ['Bebas Neue', 'system-ui'],
-        body: ['Raleway Variable', 'system-ui'],
-        handwritten: ['Caveat Variable', 'cursive'],
-      }
-    }
-  }
-}`}</pre>
-                </div>
-              </div>
+<span
+  class:list={[
+    'inline-flex items-center justify-center',
+    'text-white text-md font-medium',
+    'transform skew-x-[-16deg]',
+    'shadow-sm hover:shadow-md',
+    'transition-all duration-300',
+    'whitespace-nowrap max-w-[180px]',
+    variants[variant],
+    className
+  ]}
+>
+  <span class="transform skew-x-[16deg] font-body italic font-extrabold uppercase tracking-wide px-2 py-1">
+    <slot />
+  </span>
+</span>`}
             </div>
+          </details>
 
-            <!-- Bonnes pratiques -->
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Bonnes pratiques</h4>
-              <ul class="list-disc pl-6 space-y-2 text-gray-600">
-                <li><span class="font-semibold">CustomStyles.astro :</span> Point central pour les imports de polices, variables CSS, styles globaux et hiérarchie typographique</li>
-                <li><span class="font-semibold">tailwind.config.js :</span> Extensions du thème Tailwind et réutilisation des variables CSS</li>
-                <li><span class="font-semibold">Classes Tailwind :</span> Styles composés directement dans les composants pour plus de flexibilité</li>
-              </ul>
+          <details>
+            <summary class="cursor-pointer text-lg font-medium text-[--ootb-turquoise] hover:text-[--ootb-violet]">
+              Underline Effect
+            </summary>
+            <div class="mt-4 bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">
+              {`<span class="relative inline-block">
+  <span class="text-[--ootb-yellow]">innovantes !</span>
+  <!-- Ligne principale -->
+  <span class="absolute bottom-0 left-0 w-[102%] h-[0.12em] 
+    bg-[--ootb-yellow] rounded-full 
+    transform -rotate-1 translate-x-[-1%]">
+  </span>
+  <!-- Ligne secondaire 1 -->
+  <span class="absolute bottom-[0.1em] left-0 w-[101%] h-[0.08em] 
+    bg-[--ootb-yellow]/70 rounded-full 
+    transform rotate-[0.5deg] translate-x-[-2%]">
+  </span>
+  <!-- Ligne secondaire 2 -->
+  <span class="absolute bottom-[-0.1em] left-0 w-[103%] h-[0.1em] 
+    bg-[--ootb-yellow]/60 rounded-full 
+    transform -rotate-[1.5deg] translate-x-[1%]">
+  </span>
+</span>`}
             </div>
-
-            <!-- Ordre de priorité -->
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Ordre de priorité</h4>
-              <ol class="list-decimal pl-6 space-y-2 text-gray-600">
-                <li>Classes Tailwind inline (plus haute spécificité)</li>
-                <li>Styles de CustomStyles.astro avec !important</li>
-                <li>Styles de CustomStyles.astro standards</li>
-                <li>Configuration de tailwind.config.js</li>
-              </ol>
-            </div>
-
-            <!-- Cas d'utilisation -->
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Cas d'utilisation</h4>
-              <ul class="list-disc pl-6 space-y-2 text-gray-600">
-                <li><span class="font-semibold">Dans CustomStyles :</span> Imports de polices, variables globales, styles de base, media queries</li>
-                <li><span class="font-semibold">Dans tailwind.config :</span> Extensions de thème réutilisables</li>
-                <li><span class="font-semibold">Dans les composants :</span> Styles spécifiques avec classes Tailwind</li>
-              </ul>
-            </div>
-          </div>
+          </details>
         </div>
       </div>
     </section>

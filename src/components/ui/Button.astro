@@ -1,41 +1,126 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { twMerge } from 'tailwind-merge';
-import type { CallToAction as Props } from '~/types';
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'blue' | 'outline-blue';
+  size?: 'sm' | 'md' | 'lg';
+  icon?: string;
+  iconPosition?: 'left' | 'right';
+  href?: string;
+  class?: string;
+  fullWidth?: boolean;
+  disabled?: boolean;
+}
 
 const {
-  variant = 'secondary',
-  target,
-  text = Astro.slots.render('default'),
-  icon = '',
-  class: className = '',
-  type,
-  ...rest
+  variant = 'primary',
+  size = 'md',
+  icon,
+  iconPosition = 'left',
+  href,
+  class: className,
+  fullWidth = false,
+  disabled = false,
 } = Astro.props;
 
-const variants = {
-  primary: 'btn-primary',
-  secondary: 'btn-secondary',
-  tertiary: 'btn btn-tertiary',
-  link: 'cursor-pointer hover:text-primary',
-  outline: 'border-2 border-[--ootb-turquoise] text-[--ootb-turquoise] px-6 py-3 rounded-full hover:bg-[--ootb-turquoise] hover:text-white transition-all duration-300 font-medium',
+// Tailles
+const sizes = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg'
 };
+
+// Variantes de base
+const variants = {
+  primary: 'bg-white text-[--ootb-turquoise] hover:bg-[--ootb-turquoise] hover:text-white shadow-lg hover:shadow-xl',
+  secondary: 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm border border-white/10 hover:border-white/20',
+  outline: 'bg-white border-2 border-[--ootb-turquoise] text-[--ootb-turquoise] hover:bg-[--ootb-turquoise] hover:text-white',
+  ghost: 'bg-transparent text-current hover:bg-current/10',
+  link: 'bg-transparent text-current hover:underline p-0',
+  blue: 'bg-[--ootb-blue] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)] shadow-lg hover:shadow-xl',
+  'outline-blue': 'bg-white border-2 border-[--ootb-blue] text-[--ootb-blue] hover:bg-[--ootb-blue] hover:text-white shadow-lg hover:shadow-xl'
+};
+
+// États communs
+const states = 'transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2';
+const focusRings = {
+  primary: 'focus:ring-[--ootb-turquoise]',
+  secondary: 'focus:ring-white/50',
+  outline: 'focus:ring-[--ootb-turquoise]',
+  ghost: 'focus:ring-current',
+  link: 'focus:ring-current',
+  blue: 'focus:ring-[--ootb-blue]',
+  'outline-blue': 'focus:ring-[--ootb-blue]'
+};
+
+// Styles de base
+const baseStyles = 'inline-flex items-center justify-center gap-2 font-medium rounded-full';
+
+// Styles désactivés
+const disabledStyles = 'opacity-50 cursor-not-allowed pointer-events-none';
+
+// Construction de la classe finale
+const buttonClass = [
+  baseStyles,
+  sizes[size],
+  variants[variant],
+  focusRings[variant],
+  states,
+  fullWidth && 'w-full',
+  disabled && disabledStyles,
+  variant !== 'link' && 'hover:-translate-y-0.5',
+  className
+].filter(Boolean).join(' ');
+
+// Classes d'icônes
+const getIconClasses = (position: 'left' | 'right') => [
+  'w-5 h-5 transition-transform duration-300',
+  position === 'right' ? 'group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5',
+  variant === 'link' && position === 'right' && 'ml-1 -mr-1',
+  variant === 'link' && position === 'left' && '-ml-1 mr-1'
+].filter(Boolean).join(' ');
+
+const Element = href ? 'a' : 'button';
 ---
 
-{
-  type === 'button' || type === 'submit' || type === 'reset' ? (
-    <button type={type} class={twMerge(variants[variant] || '', className)} {...rest}>
-      <Fragment set:html={text} />
-      {icon && <Icon name={icon} class="w-5 h-5 ml-1 -mr-1.5 rtl:mr-1 rtl:-ml-1.5 inline-block" />}
-    </button>
-  ) : (
-    <a
-      class={twMerge(variants[variant] || '', className)}
-      {...(target ? { target: target, rel: 'noopener noreferrer' } : {})}
-      {...rest}
-    >
-      <Fragment set:html={text} />
-      {icon && <Icon name={icon} class="w-5 h-5 ml-1 -mr-1.5 rtl:mr-1 rtl:-ml-1.5 inline-block" />}
-    </a>
-  )
-}
+<Element
+  href={href}
+  class:list={[buttonClass, 'group']}
+  disabled={disabled}
+  {...disabled && { 'aria-disabled': true }}
+>
+  {icon && iconPosition === 'left' && (
+    <Icon name={icon} class={getIconClasses('left')} />
+  )}
+  <slot />
+  {icon && iconPosition === 'right' && (
+    <Icon name={icon} class={getIconClasses('right')} />
+  )}
+</Element>
+
+<style>
+  /* Styles spécifiques pour les liens */
+  a.link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  a.link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  a.link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+</style>

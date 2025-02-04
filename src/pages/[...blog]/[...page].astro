@@ -10,6 +10,7 @@ import { findTags } from '~/utils/blog';
 import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
 import { CONTENT_TYPES } from '~/config/content-types';
 import { Image } from 'astro:assets';
+import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 
 export const prerender = true;
 
@@ -77,8 +78,7 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Section avec fond turquoise -->
-  <section class="relative min-h-[70vh] flex items-start justify-center overflow-hidden bg-gradient-to-b from-[#6ab29e] from-0% via-[#7ec3af] via-60% to-white to-100%">
+  <GradientHeroSection>
     <!-- Éléments décoratifs flottants -->
     <div class="absolute inset-0 overflow-hidden">
       <!-- Formes géométriques subtiles -->
@@ -86,7 +86,7 @@ const metadata = {
       <div class="absolute w-48 h-48 rounded-full bg-white/10 blur-3xl bottom-32 right-16 animate-float-delayed"></div>
     </div>
 
-    <div class="relative z-10 container mx-auto px-4 pt-24 pb-16">
+    <div class="relative z-10 container mx-auto px-4 pt-32">
       <div class="max-w-6xl mx-auto">
         <div class="grid md:grid-cols-12 gap-12 items-center">
           <!-- Mascotte (1/3 de l'espace) -->
@@ -180,7 +180,7 @@ const metadata = {
         </div>
       </div>
     </div>
-  </section>
+  </GradientHeroSection>
 
   <!-- Section contenu -->
   <section class="py-12 bg-white">

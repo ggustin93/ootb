@@ -128,13 +128,11 @@ const socialLinks = [
           <Button 
             type="submit"
             variant="primary" 
-            class="h-14 px-8 rounded-full bg-[--ootb-blue] ootb-blue hover:scale-105 transition-all duration-300"
+            class="h-14 px-8 rounded-full bg-[--ootb-blue] hover:scale-105 transition-all duration-300"
+            icon="tabler:arrow-right"
+            iconPosition="right"
           >
-            <span class="relative z-10">{buttonText}</span>
-            <Icon 
-              name="tabler:arrow-right" 
-              class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-            />
+            {buttonText}
           </Button>
         </form>
 

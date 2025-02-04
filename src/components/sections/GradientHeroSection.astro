@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import cloudsBg from '~/assets/images/clouds_bg.svg';
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'section'>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<section 
+  class:list={[
+    "relative min-h-[75vh] flex items-start justify-center overflow-hidden",
+    "bg-[--ootb-turquoise]",
+    // Dégradé plus doux jusqu'aux nuages
+    "bg-gradient-to-b from-[--ootb-turquoise] from-0%",
+    "via-[--ootb-turquoise] via-40%",
+    "via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] via-60%",
+    "via-[color-mix(in_srgb,var(--ootb-turquoise)_70%,white)] via-75%",
+    "to-[color-mix(in_srgb,var(--ootb-turquoise)_40%,white)] to-90%",
+    className
+  ]}
+  {...props}
+>
+  <slot />
+
+  <!-- Nuages -->
+  <div class="absolute bottom-[10%] left-0 right-0 pointer-events-none">
+    <Image
+      src={cloudsBg}
+      alt="Nuages décoratifs"
+      class="w-full h-auto"
+      widths={[1200, 1600, 2000]}
+      sizes="100vw"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+
+  <!-- Section blanche sous les nuages -->
+  <div class="absolute -bottom-1 left-0 right-0 h-[12%] bg-white"></div>
+</section> 

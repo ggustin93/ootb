@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
-
+import SectionDivider from '~/components/ui/SectionDivider.astro';
 interface Props {
   heroImage: string;
 }
@@ -22,7 +22,7 @@ const { heroImage } = Astro.props as Props;
         decoding="async"
       />
     </div>
-    <div class="absolute w-20 h-24 -rotate-12 top-[15%] left-[15%] opacity-20 transition-transform hover:-translate-y-2 duration-1000">
+    <div class="absolute w-20 h-24 -rotate-12 top-[10%] left-[35%] opacity-20 transition-transform hover:-translate-y-2 duration-1000">
       <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
     </div>
     <div class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000">
@@ -33,11 +33,10 @@ const { heroImage } = Astro.props as Props;
   <div class="max-w-6xl mx-auto relative z-10">
     <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
       <div class="relative z-10">
-        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
-          <Icon name="tabler:sparkles" class="w-4 h-4 text-[var(--ootb-yellow)]" />
-          <span class="font-medium">PREMIUM</span>
-        </div>
-        
+        <SectionDivider variant="yellow" class="mb-6">
+          <Icon name="tabler:sparkles" class="w-4 h-4 mr-1" />
+          Premium
+        </SectionDivider>
         <h2>
           <span class="heading-2 text-white">Passez au niveau</span>
           <span class="heading-2 text-[var(--ootb-yellow)] italic">premium</span>

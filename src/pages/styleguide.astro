@@ -736,29 +736,39 @@ const sections = [
           <!-- CustomStyles.astro -->
           <div>
             <h4 class="text-lg font-semibold mb-4">1. CustomStyles.astro</h4>
-            <p class="text-gray-600 mb-4">Source unique de vérité pour l'identité visuelle et les styles globaux.</p>
+            <p class="text-gray-600 mb-4">Source unique de vérité pour les couleurs de marque et styles globaux.</p>
             <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
               <code class="block whitespace-pre">
 {`// src/components/CustomStyles.astro
 :root {
-  /* Couleurs de marque */
-  --ootb-orange: #e7461c;
+  /* Couleurs primaires de la marque */
   --ootb-violet: #921e6d;
+  --ootb-orange: #e7461c;
+  --ootb-turquoise: #69b29e;
+  --ootb-green: #40ad50;
+  --ootb-blue: #0890bd;
+  --ootb-yellow: #f9b004;
+
+  /* Couleurs neutres */
+  --ootb-gray-50: #f9fafb;
+  --ootb-gray-100: #f3f4f6;
+  --ootb-gray-700: #374151;
+  --ootb-gray-900: #111827;
 }`}
               </code>
             </div>
             <ul class="list-disc list-inside text-gray-600 space-y-2">
-              <li>Variables de marque (--ootb-*)</li>
-              <li>Imports de polices</li>
-              <li>Styles globaux de base</li>
-              <li>Classes de typographie globales</li>
+              <li>Définition des couleurs brutes de la marque</li>
+              <li>Une seule source de vérité pour les valeurs hexadécimales</li>
+              <li>Inclut les couleurs primaires et neutres</li>
+              <li>Pas de duplication de valeurs</li>
             </ul>
           </div>
 
           <!-- tailwind.config.js -->
           <div>
             <h4 class="text-lg font-semibold mb-4">2. tailwind.config.js</h4>
-            <p class="text-gray-600 mb-4">Configuration technique et extensions de Tailwind.</p>
+            <p class="text-gray-600 mb-4">Mapping sémantique des couleurs et configuration Tailwind.</p>
             <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
               <code class="block whitespace-pre">
 {`// tailwind.config.js
@@ -766,7 +776,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--ootb-turquoise)'
+        // Mapping des couleurs de marque
+        'brand': {
+          violet: 'var(--ootb-violet)',
+          orange: 'var(--ootb-orange)',
+          turquoise: 'var(--ootb-turquoise)',
+          green: 'var(--ootb-green)',
+          blue: 'var(--ootb-blue)',
+          yellow: 'var(--ootb-yellow)',
+        },
+        // Couleurs sémantiques par type de contenu
+        'content': {
+          actualite: 'var(--ootb-gray-700)',
+          podcast: 'var(--ootb-violet)',
+          tv: 'var(--ootb-green)',
+          fiche: 'var(--ootb-blue)',
+          premium: 'var(--ootb-orange)',
+        }
       }
     }
   }
@@ -774,34 +800,38 @@ export default {
               </code>
             </div>
             <ul class="list-disc list-inside text-gray-600 space-y-2">
-              <li>Configuration des chemins de contenu</li>
-              <li>Extension du thème Tailwind</li>
-              <li>Définition des breakpoints</li>
-              <li>Configuration des plugins</li>
+              <li>Organisation sémantique des couleurs</li>
+              <li>Mapping vers les variables CSS de marque</li>
+              <li>Définition des couleurs par type de contenu</li>
+              <li>Intégration avec l'écosystème Tailwind</li>
             </ul>
           </div>
 
           <!-- tailwind.css -->
           <div>
             <h4 class="text-lg font-semibold mb-4">3. tailwind.css</h4>
-            <p class="text-gray-600 mb-4">Styles spécifiques à l'application et variables contextuelles.</p>
+            <p class="text-gray-600 mb-4">Utilitaires et variations de couleurs.</p>
             <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
               <code class="block whitespace-pre">
 {`/* src/assets/styles/tailwind.css */
-@layer base {
-  :root {
-    /* Variables système */
-    --content-actualite: var(--ootb-gray);
-    --content-podcast: var(--ootb-violet);
+@layer utilities {
+  /* Utilitaires pour les fonds avec opacité */
+  .bg-content-actualite { 
+    @apply bg-[color-mix(in_srgb,theme(colors.content.actualite)_10%,transparent)]; 
+  }
+  .bg-content-podcast { 
+    @apply bg-[color-mix(in_srgb,theme(colors.content.podcast)_10%,transparent)]; 
+  }
+  .bg-content-tv { 
+    @apply bg-[color-mix(in_srgb,theme(colors.content.tv)_10%,transparent)]; 
   }
 }`}
               </code>
             </div>
             <ul class="list-disc list-inside text-gray-600 space-y-2">
-              <li>Directives Tailwind</li>
-              <li>Variables système (--content-*)</li>
-              <li>Classes composées</li>
               <li>Utilitaires personnalisés</li>
+              <li>Variations de couleurs (opacité, mélanges)</li>
+              <li>Classes composées réutilisables</li>
             </ul>
           </div>
 
@@ -811,14 +841,14 @@ export default {
             
             <!-- Ordre de priorité -->
             <div class="mb-8">
-              <p class="font-medium mb-2">Ordre de priorité :</p>
+              <p class="font-medium mb-2">Hiérarchie des couleurs :</p>
               <div class="bg-white p-4 rounded-lg text-sm space-y-2">
-                <p class="font-medium">1. CustomStyles.astro</p>
-                <p class="text-gray-600 ml-4">Source de vérité pour l'identité visuelle</p>
-                <p class="font-medium">2. tailwind.config.js</p>
-                <p class="text-gray-600 ml-4">Configuration technique</p>
-                <p class="font-medium">3. tailwind.css</p>
-                <p class="text-gray-600 ml-4">Styles spécifiques à l'application</p>
+                <p class="font-medium">1. Couleurs de marque (CustomStyles.astro)</p>
+                <p class="text-gray-600 ml-4">Valeurs hexadécimales de base</p>
+                <p class="font-medium">2. Mapping sémantique (tailwind.config.js)</p>
+                <p class="text-gray-600 ml-4">Organisation par contexte d'utilisation</p>
+                <p class="font-medium">3. Utilitaires (tailwind.css)</p>
+                <p class="text-gray-600 ml-4">Variations et classes composées</p>
               </div>
             </div>
 
@@ -827,14 +857,19 @@ export default {
               <p class="font-medium mb-2">Exemples d'utilisation :</p>
               <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm">
                 <code class="block whitespace-pre">
-{`<!-- Utilisation de color-mix pour les fonds avec opacité -->
-<div class="bg-[color-mix(in_srgb,var(--content-actualite)_10%,transparent)]">
-  Fond avec opacité de 10%
+{`<!-- Utilisation des couleurs de marque -->
+<div class="text-brand-violet">
+  Texte en violet de marque
 </div>
 
-<!-- Utilisation des variables système -->
-<div class="text-[var(--content-fiche)]">
-  Texte coloré
+<!-- Utilisation des couleurs de contenu -->
+<div class="text-content-podcast">
+  Texte pour le podcast
+</div>
+
+<!-- Utilisation des fonds avec opacité -->
+<div class="bg-content-podcast hover:bg-content-podcast/20">
+  Fond pour le podcast
 </div>`}
                 </code>
               </div>
@@ -844,10 +879,11 @@ export default {
             <div>
               <p class="font-medium mb-2">Points clés à retenir :</p>
               <ul class="list-disc list-inside text-gray-600 space-y-2">
-                <li>Définir les couleurs de marque dans CustomStyles.astro</li>
-                <li>Utiliser les variables système dans les composants</li>
-                <li>Préférer color-mix pour les opacités</li>
-                <li>Maintenir une hiérarchie claire des styles</li>
+                <li>Une seule source de vérité pour les valeurs hexadécimales</li>
+                <li>Organisation sémantique des couleurs par contexte</li>
+                <li>Utilisation des utilitaires Tailwind pour la cohérence</li>
+                <li>Éviter la duplication des valeurs de couleurs</li>
+                <li>Préférer les classes utilitaires aux styles en ligne</li>
               </ul>
             </div>
           </div>

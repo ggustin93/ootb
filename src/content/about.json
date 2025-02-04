@@ -1,0 +1,144 @@
+{
+    "metadata": {
+      "title": "À propos - Out of the Books",
+      "description": "L'innovation pédagogique au service des enseignants et des apprenants",
+      "openGraph": {
+        "type": "website",
+        "images": [
+          {
+            "url": "/images/og/about.jpg",
+            "width": 1200,
+            "height": 630,
+            "alt": "Out of the Books - Innovation pédagogique"
+          }
+        ]
+      }
+    },
+    "hero": {
+      "title": "Out of the Books",
+      "subtitle": "L'éducation de demain, c'est notre responsabilité à tous !",
+      "stats": [
+        {
+          "icon": "tabler:users",
+          "value": "+8420",
+          "label": "visiteurs au Festival"
+        },
+        {
+          "icon": "tabler:school",
+          "value": "+320",
+          "label": "exposants"
+        },
+        {
+          "icon": "tabler:heart",
+          "value": "+8600",
+          "label": "membres"
+        }
+      ]
+    },
+    "missions": [
+      {
+        "icon": "tabler:bulb",
+        "title": "Inspirer",
+        "description": "Mettre en lumière les initiatives pédagogiques innovantes"
+      },
+      {
+        "icon": "tabler:users",
+        "title": "Connecter",
+        "description": "Créer des ponts entre les acteurs de l'éducation"
+      },
+      {
+        "icon": "tabler:tool",
+        "title": "Outiller",
+        "description": "Fournir des ressources pratiques pour transformer l'éducation"
+      },
+      {
+        "icon": "tabler:chart-dots",
+        "title": "Accompagner",
+        "description": "Soutenir les enseignants dans leur démarche d'innovation"
+      }
+    ],
+    "values": [
+      {
+        "icon": "tabler:heart-handshake",
+        "title": "Synergies",
+        "description": "Favoriser les collaborations et le partage d'expériences"
+      },
+      {
+        "icon": "tabler:star",
+        "title": "Innovation",
+        "description": "Encourager les nouvelles approches pédagogiques"
+      },
+      {
+        "icon": "tabler:heart",
+        "title": "Bienveillance",
+        "description": "Promouvoir une approche positive de l'éducation"
+      },
+      {
+        "icon": "tabler:award",
+        "title": "Valorisation",
+        "description": "Mettre en lumière les talents et les réussites"
+      }
+    ],
+    "team": {
+      "members": [
+        {
+          "name": "Sophie Vanden Plas",
+          "role": "Co-fondatrice",
+          "description": "Formatrice à l'IFEC et créatrice d'Evocation",
+          "contact": {
+            "email": "sophie@festivalootb.com",
+            "phone": "0476/46.24.25"
+          }
+        },
+        {
+          "name": "Alexia Martin",
+          "role": "Co-fondatrice",
+          "description": "Entrepreneuse et créatrice d'événements",
+          "contact": {
+            "email": "alexia@festivalootb.com",
+            "phone": "0477/45.56.11"
+          }
+        }
+      ],
+      "stats": [
+        {
+          "value": "65",
+          "label": "Lives depuis 2020"
+        },
+        {
+          "value": "60",
+          "label": "Projets d'enseignants"
+        },
+        {
+          "value": "6",
+          "label": "Éditions du Festival"
+        },
+        {
+          "value": "2018",
+          "label": "Année de création"
+        }
+      ]
+    },
+    "socials": [
+      {
+        "platform": "facebook",
+        "url": "facebook.com/festivaloutofthebooks",
+        "icon": "tabler:brand-facebook"
+      },
+      {
+        "platform": "instagram",
+        "url": "instagram.com/festivaloutofthebooks",
+        "icon": "tabler:brand-instagram"
+      },
+      {
+        "platform": "youtube",
+        "url": "@festivaloutofthebookseduca5858",
+        "icon": "tabler:brand-youtube"
+      },
+      {
+        "platform": "linkedin",
+        "url": "@festivaloutofthebooks",
+        "icon": "tabler:brand-linkedin"
+      }
+    ]
+  }

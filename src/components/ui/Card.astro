@@ -2,6 +2,7 @@
 import Image from '~/components/common/Image.astro';
 import { Icon } from 'astro-icon/components';
 import { getPermalink } from '~/utils/permalinks';
+import Button from '~/components/ui/Button.astro';
 
 interface Meta {
   author?: string;
@@ -50,43 +51,43 @@ const typeConfig = {
   actualite: {
     icon: 'tabler:news',
     label: 'Lire l\'actualité',
-    color: 'var(--ootb-blue)',
+    color: 'var(--content-actualite)',  // Gris neutre
     badgeIcon: 'tabler:news',
   },
   fiche: {
     icon: 'tabler:file-text',
     label: 'Consulter la fiche',
-    color: 'var(--ootb-blue)',
+    color: 'var(--content-fiche)',  // --ootb-blue
     badgeIcon: 'tabler:file-text',
   },
   live: {
     icon: 'tabler:broadcast',
     label: 'Voir le live Facebook',
-    color: 'var(--ootb-turquoise)',
+    color: 'var(--content-live)',  // Facebook Blue
     badgeIcon: 'tabler:brand-facebook',
   },
   podcast: {
     icon: 'tabler:brand-spotify', 
     label: 'Écouter l\'épisode',
-    color: 'var(--ootb-violet)',
+    color: 'var(--content-podcast)',  // --ootb-violet
     badgeIcon: 'tabler:microphone',
   },
   tv: {
     icon: 'tabler:player-play',
     label: 'Regarder l\'émission', 
-    color: 'var(--ootb-green)',
+    color: 'var(--content-tv)',  // --ootb-green
     badgeIcon: 'tabler:video',
   },
   premium: {
     icon: 'tabler:crown',
     label: 'Accéder au contenu premium',
-    color: 'var(--ootb-orange)',
+    color: 'var(--content-premium)',  // --ootb-orange
     badgeIcon: 'tabler:crown',
   },
   default: {
     icon: 'tabler:article',
     label: 'Lire l\'article',
-    color: 'var(--ootb-blue)',
+    color: 'var(--content-actualite)',  // Même gris que les actualités
     badgeIcon: 'tabler:article',
   }
 } as const;
@@ -122,8 +123,19 @@ const config = typeConfig[finalType];
     {(badge || category) && (
       <div class="absolute top-4 left-4 z-10">
         <span 
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105"
-          style={`background-color: ${config.color}`}
+          class:list={[
+            'inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white',
+            'transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105',
+            {
+              'bg-[var(--content-actualite)]': finalType === 'actualite',
+              'bg-[var(--content-live)]': finalType === 'live',
+              'bg-[var(--content-fiche)]': finalType === 'fiche',
+              'bg-[var(--content-podcast)]': finalType === 'podcast',
+              'bg-[var(--content-tv)]': finalType === 'tv',
+              'bg-[var(--content-premium)]': finalType === 'premium',
+              'bg-slate-500': finalType === 'default'
+            }
+          ]}
         >
           <span class="transform skew-x-[12deg] flex items-center gap-1.5">
             <Icon name={config.badgeIcon} class="w-4 h-4" />
@@ -198,24 +210,31 @@ const config = typeConfig[finalType];
     )}
 
     <div class="mt-auto">
-      <a 
+      <Button 
         href={getPermalink(href, 'post')}
-        class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 group/button"
-        style={`
-          background-color: color-mix(in srgb, ${config.color} 10%, transparent);
-          &:hover {
-            background-color: color-mix(in srgb, ${config.color} 20%, transparent);
-            color: ${config.color};
-          }
-        `}
+        variant="card"
+        icon={config.icon}
+        iconPosition="left"
+        class:list={[
+          'text-gray-700',
+          {
+            'bg-[color-mix(in_srgb,var(--content-actualite)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-actualite)_15%,transparent)]': finalType === 'actualite',
+            'bg-[color-mix(in_srgb,var(--content-live)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-live)_15%,transparent)]': finalType === 'live',
+            'bg-[color-mix(in_srgb,var(--content-fiche)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-fiche)_15%,transparent)]': finalType === 'fiche',
+            'bg-[color-mix(in_srgb,var(--content-podcast)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-podcast)_15%,transparent)]': finalType === 'podcast',
+            'bg-[color-mix(in_srgb,var(--content-tv)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-tv)_15%,transparent)]': finalType === 'tv',
+            'bg-[color-mix(in_srgb,var(--content-premium)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-premium)_15%,transparent)]': finalType === 'premium',
+          },
+          'transition-all duration-300 shadow-sm hover:shadow'
+        ]}
       >
-        <Icon name={config.icon} class="w-5 h-5" />
         <span class="font-medium">{config.label}</span>
         <Icon 
           name="tabler:chevron-right" 
           class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5" 
+          slot="icon-right"
         />
-      </a>
+      </Button>
     </div>
   </div>
 </article>

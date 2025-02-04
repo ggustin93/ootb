@@ -12,4 +12,9 @@ export interface Post {
   duration?: string;
   contributors?: string[];
   publishDate: Date;
+}
+
+export interface Tag {
+  slug: string;
+  title: string;
 } 

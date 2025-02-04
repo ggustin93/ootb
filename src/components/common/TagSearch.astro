@@ -1,0 +1,174 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Tag } from '~/types';
+
+interface Props {
+  tags: Tag[];
+  placeholder?: string;
+  label?: string;
+}
+
+const {
+  tags,
+  placeholder = "Ex: programme scolaire, mathématiques, histoire...",
+  label = "Rechercher par thématique :"
+} = Astro.props;
+---
+
+<div class="mb-4">
+  <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">{label}</div>
+  <div class="relative">
+    <input
+      type="search"
+      id="tag-search"
+      placeholder={placeholder}
+      class="w-full px-5 py-4 pl-12 text-gray-700 bg-white/95 backdrop-blur-sm border border-white/20 rounded-full focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300"
+      autocomplete="off"
+    />
+    <Icon 
+      name="tabler:search" 
+      class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
+    />
+    <!-- Suggestions de recherche -->
+    <div id="search-suggestions" class="absolute w-full mt-2 bg-white rounded-xl shadow-lg overflow-hidden hidden z-50 p-2">
+      <div class="max-h-64 overflow-y-auto">
+        {tags.map((tag) => (
+          <button
+            class="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-gray-700"
+            data-tag-slug={tag.slug}
+            data-tag-title={tag.title}
+          >
+            <Icon name="tabler:tag" class="w-4 h-4 text-gray-400" />
+            <span>{tag.title}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initializeTagSearch() {
+    let isSearchFocused = false;
+    let mouseOverSuggestions = false;
+
+    const searchInput = document.getElementById('tag-search') as HTMLInputElement;
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const suggestionButtons = document.querySelectorAll('#search-suggestions button') as NodeListOf<HTMLButtonElement>;
+
+    function showSuggestions() {
+      if (searchSuggestions) {
+        searchSuggestions.classList.remove('hidden');
+      }
+    }
+
+    function hideSuggestions() {
+      if (!mouseOverSuggestions && !isSearchFocused && searchSuggestions) {
+        searchSuggestions.classList.add('hidden');
+      }
+    }
+
+    function filterSuggestions(searchTerm: string) {
+      let hasVisibleSuggestions = false;
+
+      suggestionButtons?.forEach(button => {
+        const tagTitle = button.getAttribute('data-tag-title') || '';
+        const normalizedTitle = tagTitle
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+
+        const normalizedSearch = searchTerm
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+
+        const isVisible = normalizedSearch === '' || normalizedTitle.includes(normalizedSearch);
+        button.style.display = isVisible ? '' : 'none';
+        if (isVisible) hasVisibleSuggestions = true;
+      });
+
+      return hasVisibleSuggestions;
+    }
+
+    // Gérer le focus de l'input
+    searchInput?.addEventListener('focus', () => {
+      isSearchFocused = true;
+      showSuggestions();
+      filterSuggestions(searchInput.value);
+    });
+
+    searchInput?.addEventListener('blur', () => {
+      isSearchFocused = false;
+      setTimeout(hideSuggestions, 200);
+    });
+
+    searchSuggestions?.addEventListener('mouseenter', () => {
+      mouseOverSuggestions = true;
+    });
+
+    searchSuggestions?.addEventListener('mouseleave', () => {
+      mouseOverSuggestions = false;
+      if (!isSearchFocused) {
+        hideSuggestions();
+      }
+    });
+
+    // Filtrer les suggestions
+    searchInput?.addEventListener('input', (e) => {
+      const searchTerm = (e.target as HTMLInputElement).value;
+      const hasResults = filterSuggestions(searchTerm);
+
+      if (hasResults || searchTerm === '') {
+        showSuggestions();
+      } else {
+        hideSuggestions();
+      }
+    });
+
+    // Gérer la sélection d'une suggestion
+    suggestionButtons?.forEach(button => {
+      button.addEventListener('click', () => {
+        const tagSlug = button.getAttribute('data-tag-slug');
+        if (tagSlug) {
+          window.location.href = `/tag/${tagSlug}`;
+        }
+      });
+    });
+
+    // Reset initial
+    if (searchInput) {
+      searchInput.value = '';
+      hideSuggestions();
+    }
+  }
+
+  // Initialiser au chargement initial
+  initializeTagSearch();
+
+  // Réinitialiser à chaque changement de page
+  document.addEventListener('astro:page-load', () => {
+    initializeTagSearch();
+  });
+</script>
+
+<style>
+  /* Style pour la barre de défilement des suggestions */
+  #search-suggestions .max-h-64 {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  }
+
+  #search-suggestions .max-h-64::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #search-suggestions .max-h-64::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #search-suggestions .max-h-64::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 3px;
+  }
+</style> 

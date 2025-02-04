@@ -24,6 +24,14 @@ import '@fontsource-variable/caveat/wght.css';  // Import de Caveat Variable ave
     --ootb-blue: #0890bd;
     --ootb-turquoise: #69b29e;
     --ootb-yellow: #f9b004;
+
+    /* Couleurs des types de contenu */
+    --content-actualite: #4B5563;  /* Gris neutre */
+    --content-fiche: var(--ootb-blue);
+    --content-live: #1877F2;  /* Facebook Blue */
+    --content-podcast: var(--ootb-violet);
+    --content-tv: var(--ootb-green);
+    --content-premium: var(--ootb-orange);
   }
   
 
@@ -44,6 +52,7 @@ import '@fontsource-variable/caveat/wght.css';  // Import de Caveat Variable ave
   /* Hiérarchie de base */
   h1, .h1 {
     @apply font-heading text-4xl md:text-5xl lg:text-6xl;
+    letter-spacing: 0.03em;
   }
 
   h2, .h2 {

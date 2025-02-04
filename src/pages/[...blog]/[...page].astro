@@ -11,6 +11,7 @@ import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
 import { CONTENT_TYPES } from '~/config/content-types';
 import { Image } from 'astro:assets';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
+import TagSearch from '~/components/common/TagSearch.astro';
 
 export const prerender = true;
 
@@ -40,27 +41,27 @@ const initialTags = allTags.slice(0, 15);
 const FILTER_TYPES = {
   actualite: {
     ...CONTENT_TYPES.actualite,
-    label: 'ACTUALITÉS',
+    label: 'Actualités',
   },
   fiche: {
     ...CONTENT_TYPES.fiche,
-    label: 'FICHES PÉDAGOGIQUES',
+    label: 'Fiches',
   },
   live: {
     ...CONTENT_TYPES.live,
-    label: 'LIVES FACEBOOK',
+    label: 'Lives',
   },
   podcast: {
     ...CONTENT_TYPES.podcast,
-    label: 'PODCASTS',
+    label: 'Podcasts',
   },
   tv: {
     ...CONTENT_TYPES.tv,
-    label: 'ÉMISSIONS TV',
+    label: 'TV',
   },
   premium: {
     ...CONTENT_TYPES.premium,
-    label: 'CONTENUS PREMIUM',
+    label: 'Premium',
   }
 } as const;
 
@@ -86,84 +87,87 @@ const metadata = {
       <div class="absolute w-48 h-48 rounded-full bg-white/10 blur-3xl bottom-32 right-16 animate-float-delayed"></div>
     </div>
 
-    <div class="relative z-10 container mx-auto px-4 pt-32">
+    <div class="relative z-10 container mx-auto px-4 pt-16 pb-8">
       <div class="max-w-6xl mx-auto">
         <div class="grid md:grid-cols-12 gap-12 items-center">
           <!-- Mascotte (1/3 de l'espace) -->
-          <div class="relative hidden md:block order-1 md:col-span-4">
-            <div class="relative w-full max-w-[400px] transform hover:-rotate-2 transition-transform duration-300">
+          <div class="relative hidden md:block order-1 md:col-span-5 -mt-8">
+            <div class="relative w-full max-w-[500px] transform hover:-rotate-2 transition-transform duration-300">
               <Image
                 src={import('~/assets/images/ootb-logo.svg')}
                 alt="Out of the Books Mascotte"
                 class="w-full h-full object-contain drop-shadow-xl"
-                widths={[400]}
-                sizes="400px"
+                widths={[500]}
+                sizes="500px"
                 loading="eager"
               />
             </div>
           </div>
 
-          <!-- Contenu textuel (2/3 de l'espace) -->
-          <div class="text-center md:text-left order-2 md:col-span-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          <!-- Contenu textuel -->
+          <div class="text-center md:text-left order-2 md:col-span-7">
+            <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
               Nos contenus
             </h1>
-            <p class="text-xl text-white/90 font-light mb-12 max-w-xl">
+            <p class="text-xl text-white/90 font-light mb-8 max-w-xl">
               Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <div class="relative mb-12">
-              <div class="relative">
-                <input
-                  type="search"
-                  id="tag-search"
-                  placeholder="Rechercher un contenu par thématique..."
-                  class="w-full px-5 py-4 pl-12 text-gray-700 bg-white/95 backdrop-blur-sm border border-white/20 rounded-full focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300"
-                />
-                <Icon 
-                  name="tabler:search" 
-                  class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
-                />
-              </div>
-              <!-- Suggestions de recherche -->
-              <div id="search-suggestions" class="absolute w-full mt-2 bg-white rounded-xl shadow-lg overflow-hidden hidden z-50">
-                <div class="max-h-64 overflow-y-auto">
-                  {initialTags.map((tag) => (
-                    <button
-                      class="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-gray-700"
-                      data-tag-name={tag.title.toLowerCase()}
-                    >
-                      <Icon name="tabler:tag" class="w-4 h-4 text-gray-400" />
-                      <span>{tag.title}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+            <TagSearch tags={initialTags} />
+
+            <!-- Séparateur discret -->
+            <div class="mb-4 text-center">
+              <span class="text-white/40 text-xs">ou</span>
             </div>
 
             <!-- Label pour les filtres -->
-            <div class="text-white/90 text-sm uppercase tracking-wider mb-4 font-medium">Filtrer par type de contenu :</div>
+            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">Filtrer par type de contenu :</div>
 
             <!-- Filtres principaux -->
-            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-              {Object.entries(FILTER_TYPES).map(([key, config]) => (
+            <div class="flex flex-wrap gap-3 justify-center md:justify-start mb-8">
+              {/* Bouton "TOUS" toujours présent et actif par défaut */}
+              <a
+                href="/blog"
+                class:list={[
+                  'group relative inline-flex items-center gap-2',
+                  'transform skew-x-[-12deg]',
+                  'transition-all duration-300',
+                  'px-6 py-2.5',
+                  'ring-2',
+                  'bg-white text-gray-800 ring-gray-800',
+                  'scale-105',
+                  'shadow-lg'
+                ]}
+              >
+                <span class="transform skew-x-[12deg] flex items-center gap-2.5">
+                  <Icon 
+                    name="tabler:layout-grid" 
+                    class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
+                  />
+                  <span class="text-sm font-bold uppercase tracking-wide">Tous</span>
+                </span>
+              </a>
+
+              {/* Autres filtres */}
+              {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
                 <a
                   href={`/category/${key}`}
                   class:list={[
                     'group relative inline-flex items-center gap-2',
                     'transform skew-x-[-12deg]',
                     'transition-all duration-300',
-                    'hover:-translate-y-1',
                     'px-6 py-2.5',
+                    'ring-2',
                     {
-                      'bg-gray-700/90 text-white hover:bg-gray-800/90': key === 'actualite',
-                      'bg-[#0EA5E9]/90 text-white hover:bg-[#0EA5E9]': key === 'fiche',
-                      'bg-[#1877F2]/90 text-white hover:bg-[#1877F2]': key === 'live',
-                      'bg-[#8d216d]/90 text-white hover:bg-[#8d216d]': key === 'podcast',
-                      'bg-[#22C55E]/90 text-white hover:bg-[#22C55E]': key === 'tv',
-                      'bg-[#F43F5E]/90 text-white hover:bg-[#F43F5E]': key === 'premium',
-                    }
+                      'bg-[--content-actualite] text-white ring-[--content-actualite] hover:bg-white hover:text-[--content-actualite]': key === 'actualite',
+                      'bg-[--content-fiche] text-white ring-[--content-fiche] hover:bg-white hover:text-[--content-fiche]': key === 'fiche',
+                      'bg-[--content-live] text-white ring-[--content-live] hover:bg-white hover:text-[--content-live]': key === 'live',
+                      'bg-[--content-podcast] text-white ring-[--content-podcast] hover:bg-white hover:text-[--content-podcast]': key === 'podcast',
+                      'bg-[--content-tv] text-white ring-[--content-tv] hover:bg-white hover:text-[--content-tv]': key === 'tv',
+                      'bg-[--content-premium] text-white ring-[--content-premium] hover:bg-white hover:text-[--content-premium]': key === 'premium',
+                    },
+                    'hover:-translate-y-1'
                   ]}
                 >
                   <span class="transform skew-x-[12deg] flex items-center gap-2.5">
@@ -186,6 +190,9 @@ const metadata = {
   <section class="py-12 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl font-body font-semibold mb-12">
+          Tous
+        </h2>
         <BlogList posts={page.data} />
         <div class="mt-12">
           <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
@@ -194,58 +201,6 @@ const metadata = {
     </div>
   </section>
 </Layout>
-
-<script>
-  // Logique de recherche avec autocomplétion
-  const searchInput = document.getElementById('tag-search') as HTMLInputElement;
-  const searchSuggestions = document.getElementById('search-suggestions');
-  const suggestionButtons = searchSuggestions?.getElementsByTagName('button');
-
-  // Afficher/masquer les suggestions
-  searchInput?.addEventListener('focus', () => {
-    searchSuggestions?.classList.remove('hidden');
-  });
-
-  // Gérer la recherche et le filtrage des suggestions
-  searchInput?.addEventListener('input', (e) => {
-    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
-    
-    if (suggestionButtons) {
-      Array.from(suggestionButtons).forEach(button => {
-        const tagName = button.getAttribute('data-tag-name');
-        if (tagName?.includes(searchTerm)) {
-          button.style.display = '';
-        } else {
-          button.style.display = 'none';
-        }
-      });
-    }
-  });
-
-  // Gérer la sélection d'une suggestion
-  if (suggestionButtons) {
-    Array.from(suggestionButtons).forEach(button => {
-      button.addEventListener('click', () => {
-        if (searchInput) {
-          searchInput.value = button.textContent?.trim() || '';
-          searchSuggestions?.classList.add('hidden');
-          // Rediriger vers la page du tag
-          const tagSlug = button.getAttribute('data-tag-name');
-          if (tagSlug) {
-            window.location.href = `/tag/${tagSlug}`;
-          }
-        }
-      });
-    });
-  }
-
-  // Masquer les suggestions lors d'un clic en dehors
-  document.addEventListener('click', (e) => {
-    if (!searchInput?.contains(e.target as Node) && !searchSuggestions?.contains(e.target as Node)) {
-      searchSuggestions?.classList.add('hidden');
-    }
-  });
-</script>
 
 <style>
   /* Animations raffinées */

@@ -32,6 +32,13 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+
+    --content-actualite: #4B5563;
+    --content-fiche: #0890bd;
+    --content-live: #1877F2;
+    --content-podcast: #921e6d;
+    --content-tv: #40ad50;
+    --content-premium: #e7461c;
   }
 
   * {

@@ -2,6 +2,8 @@
 import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
+import Button from '~/components/ui/Button.astro';
+
 interface Props {
   heroImage: string;
 }
@@ -62,14 +64,20 @@ const { heroImage } = Astro.props as Props;
         </div>
 
         <div class="flex flex-wrap gap-4">
-          <a href="/premium" class="inline-flex items-center gap-2 bg-[var(--ootb-yellow)] hover:bg-[color-mix(in_srgb,var(--ootb-yellow)_90%,black)] text-[#2A6B62] px-6 py-3 rounded-full transition-all hover:scale-105">
-            <Icon name="tabler:crown" class="w-5 h-5" />
+          <Button
+            href="/premium"
+            variant="premium-primary"
+            icon="tabler:crown"
+          >
             Découvrir l'offre Premium
-          </a>
-          <a href="/podcast" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 px-6 py-3 rounded-full font-medium transition-all hover:scale-105">
-            <Icon name="tabler:player-play" class="w-5 h-5" />
+          </Button>
+          <Button
+            href="/podcast"
+            variant="premium-secondary"
+            icon="tabler:player-play"
+          >
             Écouter un extrait
-          </a>
+          </Button>
         </div>
       </div>
 

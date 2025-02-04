@@ -23,12 +23,12 @@ const title = {
   <!-- Éléments décoratifs flottants -->
   <div class="absolute inset-0 overflow-hidden">
     <!-- Premier livre - Repositionné au milieu gauche -->
-    <div class="absolute w-24 h-32 -rotate-12 top-[10%] left-[40%] opacity-30 transition-transform hover:-translate-y-2 duration-1000">
+    <div class="absolute w-16 h-24 -rotate-12 top-[10%] left-[40%] opacity-40 transition-transform hover:-translate-y-2 duration-1000">
       <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
     </div>
     
     <!-- Second livre - Position ajustée en miroir -->
-    <div class="absolute w-20 h-28 rotate-45 top-[40%] right-[12%] opacity-30 transition-transform hover:translate-y-2 duration-1000">
+    <div class="absolute w-14 h-20 rotate-45 top-[40%] right-[12%] opacity-40 transition-transform hover:translate-y-2 duration-1000">
       <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
     </div>
   </div>
@@ -68,16 +68,16 @@ const title = {
 
       {/* Version 3 (actuelle) : Tagline en 3 lignes avec soulignement fin sur "des pédagogies" */}
       <h2 class="font-body text-5xl font-light mb-16 max-w-lg leading-tight">
-        <span class="text-white block mb-0.5">{title.line1}</span>
+        <span class="text-white  font-bold  block mb-0.5">{title.line1}</span>
         <span class="text-[--ootb-yellow] relative ml-6 font-bold italic block mb-0.5">
-          <span class="relative">
+          <span class="relative  font-bold ">
             {title.line2}
             <span class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
             <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
             <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
           </span>
         </span>
-        <span class="text-white block">{title.line3}</span>
+        <span class="text-white  font-bold  block">{title.line3}</span>
       </h2>
 
       <!-- Section des badges sur une seule ligne -->

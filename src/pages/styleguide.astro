@@ -294,6 +294,74 @@ const sections = [
                 </div>
               </div>
 
+              <!-- Variantes Premium -->
+              <div>
+                <p class="text-sm text-gray-600 mb-4">Variantes Premium</p>
+                <div class="bg-[--ootb-turquoise] p-6 rounded-xl">
+                  <div class="flex flex-wrap gap-4">
+                    <Button variant="premium-primary" icon="tabler:crown">Premium Primary</Button>
+                    <Button variant="premium-secondary" icon="tabler:player-play">Premium Secondary</Button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Variante Card -->
+              <div>
+                <p class="text-sm text-gray-600 mb-4">Variante Card</p>
+                <div class="space-y-4">
+                  <!-- Podcast -->
+                  <div class="bg-gray-50 p-6 rounded-xl">
+                    <Button 
+                      variant="card"
+                      icon="tabler:brand-spotify"
+                      iconPosition="left"
+                      class="bg-[color-mix(in_srgb,var(--ootb-violet)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--ootb-violet)_20%,transparent)]"
+                    >
+                      <span class="font-medium">Écouter l'épisode</span>
+                      <Icon 
+                        name="tabler:chevron-right" 
+                        class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5"
+                        slot="icon-right"
+                      />
+                    </Button>
+                  </div>
+
+                  <!-- TV -->
+                  <div class="bg-gray-50 p-6 rounded-xl">
+                    <Button 
+                      variant="card"
+                      icon="tabler:player-play"
+                      iconPosition="left"
+                      class="bg-[color-mix(in_srgb,var(--ootb-green)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--ootb-green)_20%,transparent)]"
+                    >
+                      <span class="font-medium">Regarder l'émission</span>
+                      <Icon 
+                        name="tabler:chevron-right" 
+                        class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5"
+                        slot="icon-right"
+                      />
+                    </Button>
+                  </div>
+
+                  <!-- Premium -->
+                  <div class="bg-gray-50 p-6 rounded-xl">
+                    <Button 
+                      variant="card"
+                      icon="tabler:crown"
+                      iconPosition="left"
+                      class="bg-[color-mix(in_srgb,var(--ootb-orange)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--ootb-orange)_20%,transparent)]"
+                    >
+                      <span class="font-medium">Accéder au contenu premium</span>
+                      <Icon 
+                        name="tabler:chevron-right" 
+                        class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5"
+                        slot="icon-right"
+                      />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
               <!-- Avec icônes -->
               <div>
                 <p class="text-sm text-gray-600 mb-4">Avec icônes</p>
@@ -659,6 +727,132 @@ const sections = [
     <!-- Guide Développeur -->
     <section id="developpeur" class="mb-20">
       <SectionDivider variant="primary" class="mb-8">Guide Développeur</SectionDivider>
+
+      <!-- Organisation des styles -->
+      <div id="developpeur-styles" class="mb-16 p-8 bg-gray-50 rounded-xl">
+        <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Organisation des styles</h3>
+        
+        <div class="space-y-12">
+          <!-- CustomStyles.astro -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">1. CustomStyles.astro</h4>
+            <p class="text-gray-600 mb-4">Source unique de vérité pour l'identité visuelle et les styles globaux.</p>
+            <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
+              <code class="block whitespace-pre">
+{`// src/components/CustomStyles.astro
+:root {
+  /* Couleurs de marque */
+  --ootb-orange: #e7461c;
+  --ootb-violet: #921e6d;
+}`}
+              </code>
+            </div>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>Variables de marque (--ootb-*)</li>
+              <li>Imports de polices</li>
+              <li>Styles globaux de base</li>
+              <li>Classes de typographie globales</li>
+            </ul>
+          </div>
+
+          <!-- tailwind.config.js -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">2. tailwind.config.js</h4>
+            <p class="text-gray-600 mb-4">Configuration technique et extensions de Tailwind.</p>
+            <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
+              <code class="block whitespace-pre">
+{`// tailwind.config.js
+export default {
+  theme: {
+    extend: {
+      colors: {
+        primary: 'var(--ootb-turquoise)'
+      }
+    }
+  }
+}`}
+              </code>
+            </div>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>Configuration des chemins de contenu</li>
+              <li>Extension du thème Tailwind</li>
+              <li>Définition des breakpoints</li>
+              <li>Configuration des plugins</li>
+            </ul>
+          </div>
+
+          <!-- tailwind.css -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">3. tailwind.css</h4>
+            <p class="text-gray-600 mb-4">Styles spécifiques à l'application et variables contextuelles.</p>
+            <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
+              <code class="block whitespace-pre">
+{`/* src/assets/styles/tailwind.css */
+@layer base {
+  :root {
+    /* Variables système */
+    --content-actualite: var(--ootb-gray);
+    --content-podcast: var(--ootb-violet);
+  }
+}`}
+              </code>
+            </div>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>Directives Tailwind</li>
+              <li>Variables système (--content-*)</li>
+              <li>Classes composées</li>
+              <li>Utilitaires personnalisés</li>
+            </ul>
+          </div>
+
+          <!-- Bonnes pratiques -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Bonnes pratiques</h4>
+            
+            <!-- Ordre de priorité -->
+            <div class="mb-8">
+              <p class="font-medium mb-2">Ordre de priorité :</p>
+              <div class="bg-white p-4 rounded-lg text-sm space-y-2">
+                <p class="font-medium">1. CustomStyles.astro</p>
+                <p class="text-gray-600 ml-4">Source de vérité pour l'identité visuelle</p>
+                <p class="font-medium">2. tailwind.config.js</p>
+                <p class="text-gray-600 ml-4">Configuration technique</p>
+                <p class="font-medium">3. tailwind.css</p>
+                <p class="text-gray-600 ml-4">Styles spécifiques à l'application</p>
+              </div>
+            </div>
+
+            <!-- Exemples d'utilisation -->
+            <div class="mb-8">
+              <p class="font-medium mb-2">Exemples d'utilisation :</p>
+              <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm">
+                <code class="block whitespace-pre">
+{`<!-- Utilisation de color-mix pour les fonds avec opacité -->
+<div class="bg-[color-mix(in_srgb,var(--content-actualite)_10%,transparent)]">
+  Fond avec opacité de 10%
+</div>
+
+<!-- Utilisation des variables système -->
+<div class="text-[var(--content-fiche)]">
+  Texte coloré
+</div>`}
+                </code>
+              </div>
+            </div>
+
+            <!-- Points clés -->
+            <div>
+              <p class="font-medium mb-2">Points clés à retenir :</p>
+              <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <li>Définir les couleurs de marque dans CustomStyles.astro</li>
+                <li>Utiliser les variables système dans les composants</li>
+                <li>Préférer color-mix pour les opacités</li>
+                <li>Maintenir une hiérarchie claire des styles</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Accessibilité -->
       <div id="developpeur-accessibilite" class="mb-16 p-8 bg-gray-50 rounded-xl">

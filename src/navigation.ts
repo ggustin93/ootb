@@ -90,12 +90,9 @@ export const footerData = {
     {
       title: 'À propos',
       links: [
-        { text: 'Contexte', href: getPermalink('/a-propos#contexte') },
         { text: 'Notre Vision', href: getPermalink('/a-propos#notre-vision') },
-        { text: 'Nos Missions', href: getPermalink('/a-propos#nos-missions') },
         { text: 'Nos Valeurs', href: getPermalink('/a-propos#nos-valeurs') },
-        { text: 'Notre Équipe', href: getPermalink('/a-propos#notre-equipe') },
-        { text: 'Nos Partenaires', href: getPermalink('/a-propos#partenaires') },
+        { text: 'Nos Missions', href: getPermalink('/a-propos#nos-missions') },
         { text: 'Contact', href: getPermalink('/contact') },
       ],
     },

@@ -36,3 +36,7 @@ env/
 venv/
 .env/
 .venv/
+
+# Tina CMS
+.tina/__generated__/*
+tina/__generated__/*

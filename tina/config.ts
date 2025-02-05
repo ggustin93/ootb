@@ -10,9 +10,9 @@ const CONTENT_TYPES = {
 } as const;
 
 export default defineConfig({
- branch: process.env.TINA_BRANCH || "",
- clientId: process.env.TINA_CLIENT_ID || "",
- token: process.env.TINA_TOKEN || "",
+ branch: "main",
+ clientId: "",
+ token: "",
  disableImportAliasWarnings: true,
 
  build: {
@@ -29,7 +29,7 @@ export default defineConfig({
 
  search: {
    tina: {
-     indexerToken: process.env.TINA_SEARCH_TOKEN,  
+     indexerToken: "",  
      stopwordLanguages: ['fra'],
    },
  },
@@ -135,8 +135,15 @@ export default defineConfig({
          {
            type: "string",
            name: "videoUrl",
-           label: "URL de la vidéo",
-           description: "Pour les Lives Facebook et TV uniquement",
+           label: "URL de la vidéo YouTube",
+           description: "URL de la vidéo YouTube (format: https://youtu.be/XXXX)",
+           ui: {
+             validate: (value) => {
+               if (value && !value.match(/^https:\/\/(youtu\.be\/|www\.youtube\.com\/)/)) {
+                 return 'L\'URL doit être une URL YouTube valide';
+               }
+             },
+           },
          },
          {
            type: "string", 

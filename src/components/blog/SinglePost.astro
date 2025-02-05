@@ -1,13 +1,9 @@
 ---
 import { Icon } from 'astro-icon/components';
-
 import Image from '~/components/common/Image.astro';
-import PostTags from '~/components/blog/Tags.astro';
 import SocialShare from '~/components/common/SocialShare.astro';
-
-import { getPermalink } from '~/utils/permalinks';
+import ActionBadge from '~/components/ui/ActionBadge.astro';
 import { getFormattedDate } from '~/utils/utils';
-
 import type { Post } from '~/types';
 import { CONTENT_TYPES } from '~/config/content-types';
 
@@ -18,133 +14,282 @@ export interface Props {
 
 const { post, url } = Astro.props;
 
-// Ajout des métadonnées spécifiques selon le type de contenu
-const showExpertInfo = post.expert || post.author;
+// Métadonnées spécifiques
+const showExpertInfo = post.expert;
 const showDuration = post.duration;
-const showLevel = post.level;
-const showMaterials = post.materials;
+const isLiveFacebook = post.category?.slug?.toLowerCase() === 'live';
 
 const contentType = CONTENT_TYPES[post.category?.slug?.toLowerCase() as keyof typeof CONTENT_TYPES] || CONTENT_TYPES.actualite;
+
+// Fonction pour extraire l'ID YouTube
+function getYouTubeId(url: string): string {
+  if (!url) return '';
+  const regExp = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match ? match[1] : '';
+}
+
+// Fonction pour obtenir l'URL de la miniature YouTube
+function getYouTubeThumbnail(videoId: string): string {
+  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+}
+
+// Détermine l'image à utiliser
+const videoId = post.videoUrl ? getYouTubeId(post.videoUrl) : '';
+const imageUrl = post.image || (videoId ? getYouTubeThumbnail(videoId) : '');
 ---
 
-<section class="py-8 sm:py-16 lg:py-20 mx-auto">
-  <article>
-    <header
-      class={post.image
-        ? 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'
-        : 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'}
-    >
-      <div class="flex justify-between flex-col sm:flex-row max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6 sm:items-center">
-        <p>
-          <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
-          <time datetime={String(post.publishDate)} class="inline-block">{getFormattedDate(post.publishDate)}</time>
-          {showExpertInfo && (
+<section class="py-8 sm:py-16 lg:py-20 mx-auto px-4">
+  <article class:list={[
+    'max-w-[1200px] mx-auto',
+    'bg-white dark:bg-gray-900',
+    'border border-gray-100 dark:border-gray-800',
+    'rounded-2xl shadow-sm',
+    'p-8 sm:p-12 lg:p-16',
+    isLiveFacebook && 'ring-1 ring-[#1877F2]/10'
+  ]}>
+    <div class="pt-8 sm:pt-12 lg:pt-16">
+      <!-- En-tête compact -->
+      <div class="max-w-4xl mx-auto mb-8">
+        <div class="flex items-center flex-wrap gap-4 text-sm text-gray-600">
+          {isLiveFacebook ? (
             <>
-              {' '}
-              · <Icon name="tabler:user" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
-              <span class="inline-block">{post.expert || post.author}</span>
+              <div class="flex items-center gap-3">
+                <ActionBadge variant="live">
+                  <Icon name="tabler:brand-facebook" class="w-4 h-4 -ml-1 mr-1" />
+                  Live Facebook
+                </ActionBadge>
+                <time datetime={String(post.publishDate)}>
+                  {getFormattedDate(post.publishDate)}
+                </time>
+              </div>
+              
+              {showExpertInfo && (
+                <div class="flex items-center gap-2">
+                  <Icon name="tabler:user" class="w-4 h-4" />
+                  <span>{post.expert}</span>
+                </div>
+              )}
             </>
-          )}
-          {post.category && (
+          ) : (
             <>
-              {' '}
-              ·{' '}
-              <a class="hover:underline inline-block" href={getPermalink(post.category.slug, 'category')}>
-                {post.category.title}
-              </a>
+              <span class:list={[
+                'inline-flex items-center gap-2 px-4 py-2',
+                'text-white font-bold tracking-wider uppercase text-sm',
+                'rounded-lg shadow-sm',
+                contentType.badgeClass
+              ]}>
+                <Icon name={contentType.icon} class="w-5 h-5" />
+                {contentType.label}
+              </span>
+
+              <time datetime={String(post.publishDate)} class="inline-flex items-center gap-1">
+                <Icon name="tabler:calendar" class="w-4 h-4" />
+                {getFormattedDate(post.publishDate)}
+              </time>
+
+              {showExpertInfo && (
+                <span class="inline-flex items-center gap-1">
+                  <Icon name="tabler:user" class="w-4 h-4" />
+                  {post.expert}
+                </span>
+              )}
+
+              {showDuration && (
+                <span class="inline-flex items-center gap-1">
+                  <Icon name="tabler:clock" class="w-4 h-4" />
+                  {post.duration}
+                </span>
+              )}
             </>
-          )}
-          {showDuration && (
-            <>
-              {' '}
-              · <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
-              <span class="inline-block">{post.duration}</span>
-            </>
-          )}
-        </p>
-      </div>
-
-      <h1
-        class="px-4 sm:px-6 max-w-3xl mx-auto text-4xl md:text-5xl font-bold leading-tighter tracking-tighter font-heading"
-      >
-        {post.title}
-      </h1>
-      <p
-        class="max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-6 text-xl md:text-2xl text-muted dark:text-slate-400 text-justify"
-      >
-        {post.excerpt}
-      </p>
-
-      {
-        post.image ? (
-          <Image
-            src={post.image}
-            class="max-w-full lg:max-w-[900px] mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
-            widths={[400, 900]}
-            sizes="(max-width: 900px) 400px, 900px"
-            alt={post?.excerpt || ''}
-            width={900}
-            height={506}
-            loading="eager"
-            decoding="async"
-          />
-        ) : (
-          <div class="max-w-3xl mx-auto px-4 sm:px-6">
-            <div class="border-t dark:border-slate-700" />
-          </div>
-        )
-      }
-    </header>
-
-    {showLevel && (
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 mt-8">
-        <div class="grid grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-          <div>
-            <Icon name="tabler:school" class="w-5 h-5 inline-block mr-2 text-primary" />
-            <strong>Niveau :</strong> {post.level}
-          </div>
-          {showDuration && (
-            <div>
-              <Icon name="tabler:clock" class="w-5 h-5 inline-block mr-2 text-primary" />
-              <strong>Durée :</strong> {post.duration}
-            </div>
           )}
         </div>
       </div>
-    )}
 
-    <!-- Badge de catégorie -->
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 mb-8">
-      <span class:list={[
-        'inline-flex items-center gap-2 px-4 py-2',
-        'text-white font-bold tracking-wider uppercase text-sm',
-        'rounded-lg',
-        contentType.badgeClass
+      <!-- Titre principal -->
+      <h1 class:list={[
+        'px-4 sm:px-6 max-w-4xl mx-auto',
+        'text-3xl md:text-4xl lg:text-5xl',
+        'font-heading font-bold leading-tight tracking-tight',
+        'mb-8',
+        isLiveFacebook ? 'text-[#1877F2] text-center' : 'text-gray-900 dark:text-gray-100'
       ]}>
-        <Icon name={contentType.icon} class="w-5 h-5" />
-        {contentType.label}
-      </span>
-    </div>
+        {post.title}
+      </h1>
 
-    <div
-      class="mx-auto px-6 sm:px-6 max-w-3xl prose prose-md lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0"
-    >
-      <slot />
-    </div>
-    <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
-      <!-- Tags optimisés -->
-      <div class="flex flex-wrap gap-2 mb-6">
-        {post.tags?.map((tag) => (
-          <a 
-            href={`/tag/${tag}`}
-            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-          >
-            <Icon name="tabler:tag" class="w-4 h-4 mr-1" />
-            {tag}
-          </a>
-        ))}
+      <!-- Média principal (vidéo ou image) -->
+      {
+        (() => {
+          if (post.videoUrl) {
+            const videoId = getYouTubeId(post.videoUrl);
+            return (
+              <div class="max-w-4xl mx-auto mb-10 px-4 sm:px-6">
+                <div class:list={[
+                  'relative aspect-video rounded-xl overflow-hidden shadow-lg',
+                  isLiveFacebook && 'ring-4 ring-[#1877F2]/20'
+                ]}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${videoId}`}
+                    title={post.title}
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="w-full h-full rounded-xl"
+                  />
+                </div>
+              </div>
+            );
+          } else if (imageUrl) {
+            return (
+              <Image
+                src={imageUrl}
+                class:list={[
+                  'max-w-full lg:max-w-[900px] mx-auto mb-10 sm:rounded-xl shadow-lg bg-gray-400 dark:bg-slate-700',
+                  isLiveFacebook && 'ring-4 ring-[#1877F2]/20'
+                ]}
+                widths={[400, 900]}
+                sizes="(max-width: 900px) 400px, 900px"
+                alt={`Image illustrant l'article : ${post.title}`}
+                width={900}
+                height={506}
+                loading="eager"
+                decoding="async"
+              />
+            );
+          }
+          return null;
+        })()
+      }
+
+      <!-- Description -->
+      <div class:list={[
+        'max-w-3xl mx-auto px-4 sm:px-6 mb-12',
+        'rounded-2xl overflow-hidden',
+        isLiveFacebook 
+          ? 'bg-gradient-to-br from-[#1877F2]/[0.03] to-[#1877F2]/[0.08] border-[#1877F2]/10'
+          : 'bg-gradient-to-br from-[--ootb-turquoise]/[0.03] to-[--ootb-turquoise]/[0.08] border-[--ootb-turquoise]/10',
+        'border-2',
+        'transform hover:scale-[1.02] transition-transform duration-300'
+      ]}>
+        <div class="p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <Icon 
+              name={isLiveFacebook ? "tabler:quote" : "tabler:info-circle"} 
+              class:list={[
+                'w-6 h-6',
+                isLiveFacebook ? 'text-[#1877F2]' : 'text-[--ootb-turquoise]'
+              ]}
+            />
+            <h2 class:list={[
+              'text-lg font-medium',
+              isLiveFacebook ? 'text-[#1877F2]' : 'text-[--ootb-turquoise]'
+            ]}>
+              En résumé
+            </h2>
+          </div>
+          <p class:list={[
+            'text-xl leading-relaxed',
+            'text-gray-700 dark:text-slate-300',
+            isLiveFacebook ? 'text-center' : ''
+          ]}>
+            {post.description}
+          </p>
+        </div>
       </div>
-      <SocialShare url={url} text={post.title} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" />
+
+      <!-- Contenu -->
+      <div class:list={[
+        'mx-auto px-6 sm:px-6 max-w-3xl',
+        'prose prose-lg lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300',
+        // Styles pour h2
+        'prose-h2:font-body prose-h2:font-light prose-h2:italic prose-h2:text-2xl md:prose-h2:text-3xl',
+        isLiveFacebook 
+          ? 'prose-h2:text-[#1877F2] prose-h2:border-b-2 prose-h2:border-[#1877F2]/10 prose-h2:pb-2'
+          : 'prose-h2:text-[--ootb-violet] prose-h2:border-b-2 prose-h2:border-[--ootb-violet]/10 prose-h2:pb-2',
+        // Styles pour h3
+        'prose-h3:font-handwritten prose-h3:text-2xl md:prose-h3:text-3xl',
+        isLiveFacebook 
+          ? 'prose-h3:text-[#1877F2]/80'
+          : 'prose-h3:text-[--ootb-turquoise]',
+        'prose-h3:leading-relaxed',
+        // Autres styles
+        'prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-xl prose-img:shadow-lg mt-12',
+        'prose-headings:scroll-mt-[80px]',
+        isLiveFacebook && 'prose-a:text-[#1877F2] hover:prose-a:text-[#0C63D4]'
+      ]}>
+        <slot />
+      </div>
+
+      <!-- Pied de page -->
+      <footer class="max-w-3xl mx-auto mt-12 pt-8">
+        <!-- Section tags -->
+        <div class="flex flex-wrap gap-2 mb-8">
+          {post.tags?.map((tag) => (
+            <a 
+              href={`/tag/${tag.slug}`}
+              class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+            >
+              <Icon name="tabler:tag" class="w-4 h-4" />
+              {tag.title}
+            </a>
+          ))}
+        </div>
+
+        <!-- Séparateur -->
+        <div class:list={[
+          'border-t mb-8',
+          isLiveFacebook ? 'border-[#1877F2]/10' : 'border-gray-200 dark:border-gray-800'
+        ]}></div>
+
+        <!-- Section partage -->
+        <div class="flex flex-col items-center gap-4">
+          <h2 class:list={[
+            'text-sm font-medium uppercase tracking-wider',
+            isLiveFacebook ? 'text-[#1877F2]/70' : 'text-gray-600 dark:text-gray-400'
+          ]}>
+            Partager cet article
+          </h2>
+          <SocialShare 
+            url={url} 
+            text={post.title} 
+            class="flex items-center gap-4"
+            buttonClass={isLiveFacebook 
+              ? 'hover:scale-110 transition-transform duration-300 hover:bg-[#1877F2]/20 text-[#1877F2]'
+              : 'hover:scale-110 transition-transform duration-300'
+            }
+          />
+        </div>
+
+        <!-- Bouton retour -->
+        <div class="mt-12">
+          <a 
+            href="/blog" 
+            class:list={[
+              'inline-flex items-center gap-2 group',
+              'px-4 py-2 rounded-xl',
+              'font-medium transition-all duration-300',
+              'hover:-translate-x-1',
+              isLiveFacebook 
+                ? 'text-[#1877F2] hover:bg-[#1877F2]/5'
+                : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'
+            ]}
+          >
+            <Icon 
+              name="tabler:chevron-left" 
+              class="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1" 
+            />
+            Retour aux contenus
+          </a>
+        </div>
+      </footer>
     </div>
   </article>
 </section>
+
+<style>
+  .aspect-video {
+    aspect-ratio: 16/9;
+  }
+</style>

@@ -5,61 +5,57 @@ export interface Props {
   text: string;
   url: string | URL;
   class?: string;
+  buttonClass?: string;
 }
 
-const { text, url, class: className = 'inline-block' } = Astro.props;
+const { text, url, class: className = 'inline-block', buttonClass = '' } = Astro.props;
+
+const buttons = [
+  {
+    title: 'Partager sur X',
+    icon: 'tabler:brand-x',
+    type: 'twitter'
+  },
+  {
+    title: 'Partager sur Facebook',
+    icon: 'tabler:brand-facebook',
+    type: 'facebook'
+  },
+  {
+    title: 'Partager sur LinkedIn',
+    icon: 'tabler:brand-linkedin',
+    type: 'linkedin'
+  },
+  {
+    title: 'Partager sur WhatsApp',
+    icon: 'tabler:brand-whatsapp',
+    type: 'whatsapp'
+  },
+  {
+    title: 'Partager par email',
+    icon: 'tabler:mail',
+    type: 'mail'
+  }
+];
 ---
 
 <div class={className}>
-  <span class="align-super font-bold text-slate-500 dark:text-slate-400">Share:</span>
-  <button
-    class="ml-2 rtl:ml-0 rtl:mr-2"
-    title="Twitter Share"
-    data-aw-social-share="twitter"
-    data-aw-url={url}
-    data-aw-text={text}
-    ><Icon
-      name="tabler:brand-x"
-      class="w-6 h-6 text-gray-400 dark:text-slate-500 hover:text-black dark:hover:text-slate-300"
-    />
-  </button>
-  <button class="ml-2 rtl:ml-0 rtl:mr-2" title="Facebook Share" data-aw-social-share="facebook" data-aw-url={url}
-    ><Icon
-      name="tabler:brand-facebook"
-      class="w-6 h-6 text-gray-400 dark:text-slate-500 hover:text-black dark:hover:text-slate-300"
-    />
-  </button>
-  <button
-    class="ml-2 rtl:ml-0 rtl:mr-2"
-    title="Linkedin Share"
-    data-aw-social-share="linkedin"
-    data-aw-url={url}
-    data-aw-text={text}
-    ><Icon
-      name="tabler:brand-linkedin"
-      class="w-6 h-6 text-gray-400 dark:text-slate-500 hover:text-black dark:hover:text-slate-300"
-    />
-  </button>
-  <button
-    class="ml-2 rtl:ml-0 rtl:mr-2"
-    title="Whatsapp Share"
-    data-aw-social-share="whatsapp"
-    data-aw-url={url}
-    data-aw-text={text}
-    ><Icon
-      name="tabler:brand-whatsapp"
-      class="w-6 h-6 text-gray-400 dark:text-slate-500 hover:text-black dark:hover:text-slate-300"
-    />
-  </button>
-  <button
-    class="ml-2 rtl:ml-0 rtl:mr-2"
-    title="Email Share"
-    data-aw-social-share="mail"
-    data-aw-url={url}
-    data-aw-text={text}
-    ><Icon
-      name="tabler:mail"
-      class="w-6 h-6 text-gray-400 dark:text-slate-500 hover:text-black dark:hover:text-slate-300"
-    />
-  </button>
+  {buttons.map(button => (
+    <button
+      class:list={[
+        'inline-flex items-center justify-center',
+        'w-10 h-10 rounded-full',
+        'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200',
+        'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700',
+        'transition-all duration-300',
+        buttonClass
+      ]}
+      title={button.title}
+      data-aw-social-share={button.type}
+      data-aw-url={url}
+      data-aw-text={text}
+    >
+      <Icon name={button.icon} class="w-5 h-5" />
+    </button>
+  ))}
 </div>

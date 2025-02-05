@@ -1,7 +1,7 @@
 import type { PaginateFunction } from 'astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import type { Post } from '~/types';
+import type { Post, PostCategory } from '~/types';
 import { APP_BLOG } from 'astrowind:config';
 import { cleanSlug, trimSlash, BLOG_BASE, POST_PERMALINK_PATTERN, CATEGORY_BASE, TAG_BASE } from './permalinks';
 
@@ -48,25 +48,31 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     publishDate: rawPublishDate = new Date(),
     updateDate: rawUpdateDate,
     title,
-    excerpt,
+    description,
     image,
     tags: rawTags = [],
     category: rawCategory,
-    author,
+    expert,
     draft = false,
     metadata = {},
+    videoUrl,
+    published = true,
+    duration,
   } = data;
 
-  const slug = cleanSlug(id); // cleanSlug(rawSlug.split('/').pop());
+  const slug = cleanSlug(id);
   const publishDate = new Date(rawPublishDate);
   const updateDate = rawUpdateDate ? new Date(rawUpdateDate) : undefined;
 
   const category = rawCategory
     ? {
-        slug: cleanSlug(rawCategory),
+        slug: rawCategory as PostCategory,
         title: rawCategory,
       }
-    : undefined;
+    : {
+        slug: 'actualite' as PostCategory,
+        title: 'Actualité',
+      };
 
   const tags = rawTags.map((tag: string) => ({
     slug: cleanSlug(tag),
@@ -76,25 +82,27 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   return {
     id: id,
     slug: slug,
-    permalink: await generatePermalink({ id, slug, publishDate, category: category?.slug }),
+    permalink: await generatePermalink({ id, slug, publishDate, category: category.slug }),
 
     publishDate: publishDate,
     updateDate: updateDate,
 
     title: title,
-    excerpt: excerpt,
+    description: description,
     image: image,
+    videoUrl: videoUrl,
 
     category: category,
     tags: tags,
-    author: author,
+    expert: expert,
+    duration: duration,
 
     draft: draft,
+    published: published,
 
     metadata,
 
     Content: Content,
-    // or 'content' in case you consume from API
 
     readingTime: remarkPluginFrontmatter?.readingTime,
   };
@@ -198,10 +206,11 @@ export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: Pagin
   if (!isBlogEnabled || !isBlogCategoryRouteEnabled) return [];
 
   const posts = await fetchPosts();
-  const categories = {};
-  posts.map((post) => {
+  const categories: Record<string, Post['category']> = {};
+  
+  posts.forEach((post) => {
     if (post.category?.slug) {
-      categories[post.category?.slug] = post.category;
+      categories[post.category.slug] = post.category;
     }
   });
 
@@ -222,11 +231,14 @@ export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFu
   if (!isBlogEnabled || !isBlogTagRouteEnabled) return [];
 
   const posts = await fetchPosts();
-  const tags = {};
-  posts.map((post) => {
-    if (Array.isArray(post.tags)) {
-      post.tags.map((tag) => {
-        tags[tag?.slug] = tag;
+  const tags: Record<string, { slug: string; title: string }> = {};
+  
+  posts.forEach((post) => {
+    if (post.tags) {
+      post.tags.forEach((tag) => {
+        if (tag?.slug) {
+          tags[tag.slug] = tag;
+        }
       });
     }
   });

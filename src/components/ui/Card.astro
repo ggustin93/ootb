@@ -11,6 +11,8 @@ interface Meta {
   expert?: string;
   contributors?: string;
   publishDate?: string;
+  isLive?: boolean;
+  platform?: string;
 }
 
 interface Category {
@@ -101,6 +103,39 @@ const finalType = category?.slug?.toLowerCase() === 'podcast' ? 'podcast'
   : type;
 
 const config = typeConfig[finalType];
+
+// Debug info
+console.log('DEBUG Card:', {
+  title,
+  type: finalType,
+  image,
+  imageType: typeof image,
+});
+
+// Vérifie si l'image est une URL externe
+const isExternalImage = image?.startsWith('http://') || image?.startsWith('https://');
+
+// Optimise l'URL de l'image externe
+const getOptimizedImageUrl = (url: string) => {
+  // Pour les miniatures YouTube
+  if (url.includes('i.ytimg.com') || url.includes('img.youtube.com')) {
+    // Utilise hqdefault pour un bon compromis qualité/performance
+    return url.replace(/\/(default|hqdefault|mqdefault|sddefault|maxresdefault)\.jpg/, '/hqdefault.jpg');
+  }
+  // Pour les images Unsplash
+  if (url.includes('unsplash.com')) {
+    // Ajoute les paramètres d'optimisation Unsplash
+    const params = new URLSearchParams({
+      w: '800', // largeur maximale
+      q: '80',  // qualité
+      auto: 'format,compress' // optimisation automatique
+    });
+    return `${url}${url.includes('?') ? '&' : '?'}${params.toString()}`;
+  }
+  return url;
+};
+
+const optimizedImageUrl = isExternalImage ? getOptimizedImageUrl(image) : image;
 ---
 
 <article class:list={[
@@ -111,15 +146,27 @@ const config = typeConfig[finalType];
   className
 ]}>
   <div class="relative aspect-[16/9] overflow-hidden">
-    <Image 
-      src={image}
-      alt={title}
-      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-      widths={[400, 800]}
-      sizes="(max-width: 768px) 100vw, 400px"
-      loading="lazy"
-      decoding="async"
-    />
+    {image && isExternalImage ? (
+      <img 
+        src={optimizedImageUrl}
+        alt={title}
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        loading="lazy"
+        decoding="async"
+        width="800"
+        height="450"
+      />
+    ) : image && (
+      <Image 
+        src={image}
+        alt={title}
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        widths={[400, 800]}
+        sizes="(max-width: 768px) 100vw, 400px"
+        loading="lazy"
+        decoding="async"
+      />
+    )}
     {(badge || category) && (
       <div class="absolute top-4 left-4 z-10">
         <span 

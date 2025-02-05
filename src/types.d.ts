@@ -5,7 +5,7 @@ export interface Post {
   /** A unique ID number that identifies a post. */
   id: string;
 
-  /** A post’s unique slug – part of the post’s URL based on its name, i.e. a post called “My Sample Page” has a slug “my-sample-page”. */
+  /** A post's unique slug – part of the post's URL based on its name, i.e. a post called "My Sample Page" has a slug "my-sample-page". */
   slug: string;
 
   /**  */
@@ -21,12 +21,12 @@ export interface Post {
   /** Optional summary of post content. */
   excerpt?: string;
   /**  */
-  image?: ImageMetadata | string;
+  image?: string;
 
-  /**  */
-  category?: Taxonomy;
-  /**  */
-  tags?: Taxonomy[];
+  /** Category as a simple string */
+  category: string;
+  /** Tags as simple string array */
+  tags?: string[];
   /**  */
   author?: string;
 
@@ -42,6 +42,11 @@ export interface Post {
 
   /**  */
   readingTime?: number;
+
+  /** URL de la vidéo (YouTube, etc.) */
+  videoUrl?: string;
+
+  published: boolean;
 }
 
 export interface Taxonomy {

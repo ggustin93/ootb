@@ -1,7 +1,8 @@
 ---
 publishDate: 2024-01-15T00:00:00Z
 title: "Education Mode d'Emploi Podcast"
-excerpt: "Découvrez notre podcast dédié à l'innovation pédagogique et aux acteurs du changement éducatif."
+description: "Découvrez notre podcast dédié à l'innovation pédagogique et aux acteurs du changement éducatif. Chaque semaine, des experts partagent leurs expériences et bonnes pratiques."
+published: true
 image: https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80
 tags:
   - podcast

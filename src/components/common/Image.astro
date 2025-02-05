@@ -51,6 +51,12 @@ if (!props.decoding) {
   props.decoding = 'async';
 }
 
+// Debug info
+console.log('DEBUG Image:', {
+  src: props.src,
+  type: typeof props.src,
+});
+
 const _image = await findImage(props.src);
 
 let image: ImageType | undefined = undefined;
@@ -102,10 +108,21 @@ if (typeof _image === 'string' && _image.includes('unsplash.com')) {
   }
 } else if (
   typeof _image === 'string' &&
-  (_image.startsWith('http://') || _image.startsWith('https://')) &&
-  isUnpicCompatible(_image)
+  (_image.startsWith('http://') || _image.startsWith('https://'))
 ) {
-  image = await getImagesOptimized(_image, props, unpicOptimizer);
+  // Pour les URLs externes (y compris YouTube)
+  image = {
+    src: _image,
+    attributes: {
+      ...props,
+      loading: props.loading,
+      decoding: props.decoding,
+      alt: props.alt,
+      width: props.width,
+      height: props.height,
+      sizes: props.sizes,
+    },
+  };
 } else if (_image) {
   image = await getImagesOptimized(_image, props, astroAsseetsOptimizer);
 }

@@ -10,6 +10,7 @@ import Button from '~/components/ui/Button.astro';
 import PodcastPlayer from './media/PodcastPlayer.astro';
 import VideoPlayer from './media/VideoPlayer.astro';
 import FeaturedImage from './media/FeaturedImage.astro';
+import PedagogicalSheet from './components/PedagogicalSheet.astro';
 
 // Import des composants de structure
 import PostHeader from './components/PostHeader.astro';
@@ -118,6 +119,9 @@ console.log('Debug TV content:', {
 <section class="py-4 sm:py-8 mx-auto max-w-6xl px-4 sm:px-6">
   <article class="pb-16 md:pb-24">
     <div class="pt-8 sm:pt-12 lg:pt-16">
+      {post.category === 'fiche' && post.pedagogicalSheet && (
+        <PedagogicalSheet sheet={post.pedagogicalSheet} />
+      )}
       {/* En-tête avec métadonnées */}
       <PostHeader
         title={post.title}

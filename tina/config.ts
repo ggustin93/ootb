@@ -170,6 +170,116 @@ export default defineConfig({
             label: "Durée",
             description: "Format: 1h15, 45min, etc.",
           },
+          // Champs spécifiques aux fiches pédagogiques
+          {
+            type: "object",
+            name: "pedagogicalSheet",
+            label: "Fiche pédagogique",
+            description: "Informations spécifiques à la fiche pédagogique",
+            ui: {
+              // N'afficher que si la catégorie est 'fiche'
+              itemProps: (item) => {
+                return { className: item.category === 'fiche' ? '' : 'hidden' };
+              },
+            },
+            fields: [
+              {
+                type: "string",
+                name: "enseignement",
+                label: "Type d'enseignement",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "section",
+                label: "Section",
+                required: true,
+              },
+              {
+                type: "object",
+                name: "responsable",
+                label: "Responsable du projet",
+                fields: [
+                  {
+                    type: "string",
+                    name: "prenom",
+                    label: "Prénom",
+                    required: true,
+                  },
+                  {
+                    type: "string",
+                    name: "nom",
+                    label: "Nom",
+                    required: true,
+                  },
+                  {
+                    type: "string",
+                    name: "email",
+                    label: "Email",
+                    required: true,
+                  },
+                ],
+              },
+              {
+                type: "string",
+                list: true,
+                name: "objectifs",
+                label: "Objectifs",
+                description: "Liste des objectifs du projet",
+              },
+              {
+                type: "string",
+                list: true,
+                name: "competences",
+                label: "Compétences développées",
+                description: "Liste des compétences développées",
+              },
+              {
+                type: "string",
+                name: "declinaisons",
+                label: "Déclinaisons possibles",
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "conseils",
+                label: "Conseils du créateur",
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "object",
+                list: true,
+                name: "references",
+                label: "Références",
+                fields: [
+                  {
+                    type: "string",
+                    name: "type",
+                    label: "Type",
+                    options: [
+                      { label: "Site web", value: "site" },
+                      { label: "Vidéo", value: "video" },
+                      { label: "Document", value: "document" },
+                    ],
+                  },
+                  {
+                    type: "string",
+                    name: "url",
+                    label: "URL",
+                  },
+                  {
+                    type: "string",
+                    name: "description",
+                    label: "Description",
+                  },
+                ],
+              },
+            ],
+          },
           {
             type: "rich-text",
             name: "body",

@@ -1,5 +1,43 @@
 import { defineCollection, z } from 'astro:content';
 
+// Schéma pour les fiches pédagogiques
+const pedagogicalSheet = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    publishDate: z.date(),
+    updateDate: z.date().optional(),
+    published: z.boolean(),
+    enseignement: z.string(),
+    section: z.string(),
+    responsable: z.object({
+      prenom: z.string(),
+      nom: z.string(),
+      email: z.string().email()
+    }),
+    objectifs: z.array(z.string()),
+    competences: z.array(z.string()),
+    declinaisons: z.string().optional(),
+    conseils: z.string().optional(),
+    references: z.array(z.object({
+      type: z.enum(['site', 'video', 'document']),
+      url: z.string().optional(),
+      description: z.string().optional()
+    })).optional(),
+    metadata: z.object({
+      title: z.string().optional(),
+      description: z.string().optional(),
+      canonical: z.string().optional(),
+      robots: z.object({
+        index: z.boolean().optional(),
+        follow: z.boolean().optional(),
+      }).optional(),
+    }).optional(),
+  })
+});
+
+// Schéma pour les posts normaux
 const post = defineCollection({
   type: 'content',
   schema: z.object({
@@ -19,6 +57,25 @@ const post = defineCollection({
     expert: z.string().optional(),
     duration: z.string().optional(),
     draft: z.boolean().optional().default(false),
+    // Champs spécifiques aux fiches pédagogiques
+    pedagogicalSheet: z.object({
+      enseignement: z.string(),
+      section: z.string(),
+      responsable: z.object({
+        prenom: z.string(),
+        nom: z.string(),
+        email: z.string().email()
+      }),
+      objectifs: z.array(z.string()),
+      competences: z.array(z.string()),
+      declinaisons: z.string().optional(),
+      conseils: z.string().optional(),
+      references: z.array(z.object({
+        type: z.enum(['site', 'video', 'document']),
+        url: z.string().optional(),
+        description: z.string().optional()
+      })).optional()
+    }).optional(),
     metadata: z.object({
       title: z.string().optional(),
       description: z.string().optional(),

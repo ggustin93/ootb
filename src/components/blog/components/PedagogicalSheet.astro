@@ -1,0 +1,103 @@
+---
+interface Props {
+  sheet: {
+    enseignement: string;
+    section: string;
+    responsable: {
+      prenom: string;
+      nom: string;
+      email: string;
+    };
+    objectifs: string[];
+    competences: string[];
+    declinaisons?: string;
+    conseils?: string;
+    references?: Array<{
+      type: 'site' | 'video' | 'document';
+      url?: string;
+      description?: string;
+    }>;
+  };
+}
+
+const { sheet } = Astro.props;
+---
+
+<div class="pedagogical-sheet bg-gray-50 p-6 rounded-lg mb-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Enseignement</h3>
+      <p>{sheet.enseignement}</p>
+    </div>
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Section</h3>
+      <p>{sheet.section}</p>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold mb-2">Responsable du projet</h3>
+    <p>
+      {sheet.responsable.prenom} {sheet.responsable.nom}<br />
+      <a href={`mailto:${sheet.responsable.email}`} class="text-primary-600 hover:underline">
+        {sheet.responsable.email}
+      </a>
+    </p>
+  </div>
+
+  {sheet.objectifs && sheet.objectifs.length > 0 && (
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Objectifs</h3>
+      <ul class="list-disc list-inside space-y-1">
+        {sheet.objectifs.map((objectif) => (
+          <li>{objectif}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  {sheet.competences && sheet.competences.length > 0 && (
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Compétences développées</h3>
+      <ul class="list-disc list-inside space-y-1">
+        {sheet.competences.map((competence) => (
+          <li>{competence}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  {sheet.declinaisons && (
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Déclinaisons possibles</h3>
+      <p>{sheet.declinaisons}</p>
+    </div>
+  )}
+
+  {sheet.conseils && (
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Conseils du créateur</h3>
+      <p>{sheet.conseils}</p>
+    </div>
+  )}
+
+  {sheet.references && sheet.references.length > 0 && (
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Pour aller plus loin...</h3>
+      <ul class="space-y-2">
+        {sheet.references.map((ref) => (
+          <li>
+            <strong>{ref.type === 'site' ? 'Site web' : ref.type === 'video' ? 'Vidéo' : 'Document'} : </strong>
+            {ref.url ? (
+              <a href={ref.url} class="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                {ref.description || ref.url}
+              </a>
+            ) : (
+              ref.description
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>

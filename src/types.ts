@@ -46,6 +46,26 @@ export interface Post {
     };
   };
 
+  // Fiche pédagogique
+  pedagogicalSheet?: {
+    enseignement: string;
+    section: string;
+    responsable: {
+      prenom: string;
+      nom: string;
+      email: string;
+    };
+    objectifs: string[];
+    competences: string[];
+    declinaisons?: string;
+    conseils?: string;
+    references?: Array<{
+      type: 'site' | 'video' | 'document';
+      url?: string;
+      description?: string;
+    }>;
+  };
+
   // Rendu
   Content?: import('astro/runtime/server/index.js').AstroComponentFactory;
   readingTime?: number;

@@ -222,39 +222,29 @@ export default defineConfig({
               },
               {
                 type: "string",
+                name: "description",
+                label: "Description",
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
                 list: true,
                 name: "objectifs",
                 label: "Objectifs",
-                description: "Liste des objectifs du projet",
               },
               {
                 type: "string",
                 list: true,
                 name: "competences",
                 label: "Compétences développées",
-                description: "Liste des compétences développées",
-              },
-              {
-                type: "string",
-                name: "declinaisons",
-                label: "Déclinaisons possibles",
-                ui: {
-                  component: "textarea",
-                },
-              },
-              {
-                type: "string",
-                name: "conseils",
-                label: "Conseils du créateur",
-                ui: {
-                  component: "textarea",
-                },
               },
               {
                 type: "object",
                 list: true,
                 name: "references",
-                label: "Références",
+                label: "Pour aller plus loin",
                 fields: [
                   {
                     type: "string",
@@ -277,6 +267,22 @@ export default defineConfig({
                     label: "Description",
                   },
                 ],
+              },
+              {
+                type: "string",
+                name: "declinaisons",
+                label: "Déclinaisons possibles",
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "conseils",
+                label: "Conseils du créateur",
+                ui: {
+                  component: "textarea",
+                },
               },
             ],
           },

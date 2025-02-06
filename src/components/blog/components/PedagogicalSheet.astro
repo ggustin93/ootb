@@ -8,6 +8,7 @@ interface Props {
       nom: string;
       email: string;
     };
+    description?: string;
     objectifs: string[];
     competences: string[];
     declinaisons?: string;
@@ -23,21 +24,22 @@ interface Props {
 const { sheet } = Astro.props;
 ---
 
-<div class="pedagogical-sheet bg-gray-50 p-6 rounded-lg mb-8">
+<div class="pedagogical-sheet bg-gradient-to-br from-white to-ootb-blue/5 p-8 rounded-xl mb-8 border border-ootb-blue/20 shadow-lg hover:shadow-xl transition-all duration-300">
+  <h2 class="text-3xl font-bold mb-8 pb-3 border-b-2 border-ootb-blue/20" style="color: var(--content-fiche);">Fiche pédagogique</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <div>
-      <h3 class="text-lg font-semibold mb-2">Enseignement</h3>
-      <p>{sheet.enseignement}</p>
+    <div class="bg-white/90 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Enseignement</h3>
+      <p class="text-gray-600 leading-relaxed">{sheet.enseignement}</p>
     </div>
-    <div>
-      <h3 class="text-lg font-semibold mb-2">Section</h3>
-      <p>{sheet.section}</p>
+    <div class="bg-white/90 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Section</h3>
+      <p class="text-gray-600 leading-relaxed">{sheet.section}</p>
     </div>
   </div>
 
-  <div class="mb-6">
-    <h3 class="text-lg font-semibold mb-2">Responsable du projet</h3>
-    <p>
+  <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
+    <h3 class="text-xl font-semibold mb-2" style="color: var(--content-fiche);">Responsable du projet</h3>
+    <p class="text-gray-600">
       {sheet.responsable.prenom} {sheet.responsable.nom}<br />
       <a href={`mailto:${sheet.responsable.email}`} class="text-primary-600 hover:underline">
         {sheet.responsable.email}
@@ -45,56 +47,87 @@ const { sheet } = Astro.props;
     </p>
   </div>
 
+  {sheet.description && (
+    <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Description</h3>
+      <div class="text-gray-600 whitespace-pre-wrap">{sheet.description}</div>
+    </div>
+  )}
+
   {sheet.objectifs && sheet.objectifs.length > 0 && (
-    <div class="mb-6">
-      <h3 class="text-lg font-semibold mb-2">Objectifs</h3>
-      <ul class="list-disc list-inside space-y-1">
+    <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Objectifs</h3>
+      <ul class="list-none space-y-3 text-gray-600">
+        <style>
+          .custom-bullet::before {
+            content: '•';
+            color: var(--content-fiche);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+          }
+        </style>
         {sheet.objectifs.map((objectif) => (
-          <li>{objectif}</li>
+          <li class="pl-4 custom-bullet leading-relaxed hover:translate-x-1 transition-transform duration-200">{objectif}</li>
         ))}
       </ul>
     </div>
   )}
 
   {sheet.competences && sheet.competences.length > 0 && (
-    <div class="mb-6">
-      <h3 class="text-lg font-semibold mb-2">Compétences développées</h3>
-      <ul class="list-disc list-inside space-y-1">
+    <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Compétences développées</h3>
+      <ul class="list-none space-y-3 text-gray-600">
+        <style>
+          .custom-bullet::before {
+            content: '•';
+            color: var(--content-fiche);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+          }
+        </style>
         {sheet.competences.map((competence) => (
-          <li>{competence}</li>
+          <li class="pl-4 custom-bullet leading-relaxed hover:translate-x-1 transition-transform duration-200">{competence}</li>
         ))}
       </ul>
     </div>
   )}
 
   {sheet.declinaisons && (
-    <div class="mb-6">
-      <h3 class="text-lg font-semibold mb-2">Déclinaisons possibles</h3>
-      <p>{sheet.declinaisons}</p>
+    <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Déclinaisons possibles</h3>
+      <p class="text-gray-600 leading-relaxed">{sheet.declinaisons}</p>
     </div>
   )}
 
   {sheet.conseils && (
-    <div class="mb-6">
-      <h3 class="text-lg font-semibold mb-2">Conseils du créateur</h3>
-      <p>{sheet.conseils}</p>
+    <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Conseils du créateur</h3>
+      <p class="text-gray-600 leading-relaxed">{sheet.conseils}</p>
     </div>
   )}
 
   {sheet.references && sheet.references.length > 0 && (
-    <div>
-      <h3 class="text-lg font-semibold mb-2">Pour aller plus loin...</h3>
-      <ul class="space-y-2">
+    <div class="bg-white/90 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Pour aller plus loin...</h3>
+      <ul class="space-y-3">
         {sheet.references.map((ref) => (
-          <li>
-            <strong>{ref.type === 'site' ? 'Site web' : ref.type === 'video' ? 'Vidéo' : 'Document'} : </strong>
-            {ref.url ? (
-              <a href={ref.url} class="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">
-                {ref.description || ref.url}
-              </a>
-            ) : (
-              ref.description
-            )}
+          <li class="flex items-start space-x-2">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+              {ref.type === 'site' ? 'Site web' : ref.type === 'video' ? 'Vidéo' : 'Document'}
+            </span>
+            <span class="text-gray-600">
+              {ref.url ? (
+                <a href={ref.url} class="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  {ref.description || ref.url}
+                </a>
+              ) : (
+                ref.description
+              )}
+            </span>
           </li>
         ))}
       </ul>

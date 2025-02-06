@@ -66,6 +66,7 @@ const post = defineCollection({
         nom: z.string(),
         email: z.string().email()
       }),
+      description: z.string().optional(),
       objectifs: z.array(z.string()),
       competences: z.array(z.string()),
       declinaisons: z.string().optional(),
@@ -95,6 +96,10 @@ const post = defineCollection({
       if (data.category === 'tv' && !data.tvcomUrl) {
         return false;
       }
+      // Pour les fiches pédagogiques, l'image est optionnelle
+      if (data.category === 'fiche') {
+        return true;
+      }
       // Pour les autres types, l'image est requise sauf pour les émissions TV
       if (data.category !== 'live' && data.category !== 'tv') {
         return !!data.image;
@@ -102,7 +107,7 @@ const post = defineCollection({
       return true;
     },
     {
-      message: "Une image est requise sauf pour les lives qui ont une URL vidéo YouTube. Pour les émissions TV, l'URL TV Com est obligatoire.",
+      message: "Une image est requise sauf pour les lives qui ont une URL vidéo YouTube, les émissions TV, et les fiches pédagogiques. Pour les émissions TV, l'URL TV Com est obligatoire.",
     }
   )
 });

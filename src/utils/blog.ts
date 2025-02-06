@@ -60,6 +60,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     published = true,
     duration,
     podcastUrl,
+    pedagogicalSheet,
   } = data;
 
   const slug = cleanSlug(id);
@@ -67,10 +68,12 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   const updateDate = rawUpdateDate ? new Date(rawUpdateDate) : undefined;
 
   const category = rawCategory
-    ? {
-        slug: rawCategory as PostCategory,
-        title: rawCategory,
-      }
+    ? typeof rawCategory === 'string'
+      ? {
+          slug: rawCategory as PostCategory,
+          title: rawCategory,
+        }
+      : rawCategory
     : {
         slug: 'actualite' as PostCategory,
         title: 'Actualité',
@@ -100,6 +103,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     tags: tags,
     expert: expert,
     duration: duration,
+    pedagogicalSheet: pedagogicalSheet,
 
     draft: draft,
     published: published,

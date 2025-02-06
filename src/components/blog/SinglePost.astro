@@ -24,6 +24,25 @@ interface Props {
     podcastId?: string;
     image: ImageMetadata | string;
     tvcomUrl?: string;
+    pedagogicalSheet?: {
+      enseignement: string;
+      section: string;
+      responsable: {
+        prenom: string;
+        nom: string;
+        email: string;
+      };
+      description?: string;
+      objectifs: string[];
+      competences: string[];
+      declinaisons?: string;
+      conseils?: string;
+      references?: Array<{
+        type: 'site' | 'video' | 'document';
+        url?: string;
+        description?: string;
+      }>;
+    };
   };
   url: string | URL;
 }
@@ -54,10 +73,12 @@ const contentStates = {
   isPodcast: contentType === 'podcast',
   isVideo: contentType === 'tv',
   isTvContent: contentType === 'tv',
+  isPedagogicalSheet: contentType === 'fiche',
   hasExpertInfo: Boolean(post.expert),
   hasDuration: Boolean(post.duration),
   hasSubtitle: Boolean(post.subtitle),
-  hasTags: Boolean(post.tags?.length)
+  hasTags: Boolean(post.tags?.length),
+  hasPedagogicalInfo: Boolean(post.pedagogicalSheet)
 };
 
 // Extraire l'ID YouTube pour les lives Facebook
@@ -119,9 +140,6 @@ console.log('Debug TV content:', {
 <section class="py-4 sm:py-8 mx-auto max-w-6xl px-4 sm:px-6">
   <article class="pb-16 md:pb-24">
     <div class="pt-8 sm:pt-12 lg:pt-16">
-      {post.category === 'fiche' && post.pedagogicalSheet && (
-        <PedagogicalSheet sheet={post.pedagogicalSheet} />
-      )}
       {/* En-tête avec métadonnées */}
       <PostHeader
         title={post.title}
@@ -137,12 +155,17 @@ console.log('Debug TV content:', {
 
       {/* Contenu principal */}
       <main class="max-w-4xl mx-auto space-y-8">
-        {/* Description */}
-        {post.description && (
+        {/* Description (sauf pour les fiches pédagogiques) */}
+        {post.description && !contentStates.isPedagogicalSheet && (
           <PostDescription
             description={post.description}
             contentStates={contentStates}
           />
+        )}
+
+        {/* Fiche pédagogique */}
+        {contentStates.isPedagogicalSheet && post.pedagogicalSheet && (
+          <PedagogicalSheet sheet={post.pedagogicalSheet} />
         )}
 
         {/* Média */}
@@ -192,7 +215,7 @@ console.log('Debug TV content:', {
 
         {/* Contenu de l'article */}
         <div class:list={[styles.prose.base, styles.prose.headings, styles.prose.facebook]}>
-          <slot />
+          {post.Content ? <post.Content /> : <slot />}
         </div>
       </main>
 

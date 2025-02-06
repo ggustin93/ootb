@@ -55,6 +55,7 @@ export interface Post {
       nom: string;
       email: string;
     };
+    description?: string;
     objectifs: string[];
     competences: string[];
     declinaisons?: string;

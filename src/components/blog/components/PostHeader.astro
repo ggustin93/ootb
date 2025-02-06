@@ -95,7 +95,9 @@ const { title, subtitle, publishDate, expert, duration, tags, contentConfig, sty
       ? "text-[#1877F2]" 
       : contentStates.isPodcast
         ? "text-[var(--ootb-violet)]"
-        : `text-[${contentConfig.color}]`
+        : contentConfig.variant === 'appel'
+          ? "text-[var(--content-fiche)]"
+          : `text-[${contentConfig.color}]`
   ]}>
     {title}
   </h1>

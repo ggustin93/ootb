@@ -95,7 +95,7 @@ const getYouTubeThumbnail = (url: string | undefined) => {
 };
 
 // Gérer l'image à afficher
-const displayImage = post.image || (contentStates.isLiveFacebook && post.videoUrl ? getYouTubeThumbnail(post.videoUrl) : undefined);
+const displayImage = post.image;
 
 // Styles conditionnels
 const styles = {
@@ -125,7 +125,8 @@ const mediaWrapperClasses = [
   "rounded-lg overflow-hidden shadow-lg relative aspect-video mb-8",
   contentStates.isLiveFacebook && "ring-4 ring-[#1877F2]/20",
   contentStates.isPodcast && "ring-4 ring-[var(--ootb-violet)]/20",
-  contentType === 'tv' && "ring-4 ring-[var(--ootb-green)]/20"
+  contentType === 'tv' && "ring-4 ring-[var(--ootb-green)]/20",
+  contentType === 'actualite' && "ring-4 ring-[var(--content-actualite)]/20"
 ];
 
 // Debug info
@@ -175,8 +176,15 @@ console.log('Debug TV content:', {
           />
         )}
 
-        {/* Média avec bouton superposé pour TV */}
-        {(displayImage && !contentStates.isPodcast) && (
+        {/* Média */}
+        {contentStates.isLiveFacebook && post.videoUrl ? (
+          <div class:list={[...mediaWrapperClasses, "group"]}>
+            <VideoPlayer 
+              videoUrl={post.videoUrl}
+              title={post.title}
+            />
+          </div>
+        ) : (displayImage && !contentStates.isPodcast) && (
           <div class:list={[...mediaWrapperClasses, "group"]}>
             <FeaturedImage 
               image={displayImage}

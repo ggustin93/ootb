@@ -3,7 +3,7 @@ export const CONTENT_TYPES = {
     label: 'ACTUALITÉ',
     color: 'var(--content-actualite)',
     icon: 'tabler:news',
-    variant: 'festival'
+    variant: 'actualite'
   },
   fiche: {
     label: 'FICHE PÉDAGOGIQUE',

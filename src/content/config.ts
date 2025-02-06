@@ -1,4 +1,5 @@
 import { defineCollection, z } from 'astro:content';
+import type { ImageMetadata } from 'astro';
 
 // Schéma pour les fiches pédagogiques
 const pedagogicalSheet = defineCollection({
@@ -47,7 +48,7 @@ const post = defineCollection({
     updateDate: z.date().optional(),
     published: z.boolean(),
     category: z.enum(['actualite', 'fiche', 'live', 'podcast', 'tv', 'premium']),
-    image: z.string().optional(),
+    image: z.string().or(z.custom<ImageMetadata>()).optional(),
     videoUrl: z.string().optional(),
     tvcomUrl: z.string().optional(),
     podcastUrl: z.string().optional(),

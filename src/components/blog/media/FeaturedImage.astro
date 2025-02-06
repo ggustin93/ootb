@@ -9,7 +9,15 @@ interface Props {
 }
 
 const { image: imageProp, title } = Astro.props;
-const image = imageProp === '~/assets/images/Pedagoscope.webp' ? pedagoscope : imageProp;
+
+// Gérer les différents cas d'images
+let image = imageProp;
+if (imageProp === '~/assets/images/Pedagoscope.webp') {
+  image = pedagoscope;
+} else if (typeof imageProp === 'string' && !imageProp.startsWith('/') && !imageProp.startsWith('http')) {
+  // Si c'est un chemin relatif (de Tina), on le transforme en chemin absolu
+  image = `/images/${imageProp}`;
+}
 ---
 
 <Image

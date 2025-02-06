@@ -33,7 +33,23 @@ export default defineConfig({
    tailwind({
      applyBaseStyles: false,
    }),
-   mdx(),
+   mdx({
+    extendMarkdownConfig: true,
+    optimize: true,
+    syntaxHighlight: 'shiki',
+    shikiConfig: {
+      theme: 'github-dark',
+    },
+    remarkPlugins: [
+      ...defineConfig.markdown?.remarkPlugins || [],
+      readingTimeRemarkPlugin
+    ],
+    rehypePlugins: [
+      ...defineConfig.markdown?.rehypePlugins || [],
+      responsiveTablesRehypePlugin, 
+      lazyImagesRehypePlugin
+    ]
+  }),
    react(),
    {
      name: 'font-assets',
@@ -88,7 +104,11 @@ export default defineConfig({
    }),
  ],
  image: {
-   domains: ['cdn.pixabay.com'],
+   domains: [
+     'cdn.pixabay.com', 
+     'image.ausha.co',  
+     'images.unsplash.com'
+   ],
  },
  markdown: {
    remarkPlugins: [readingTimeRemarkPlugin],

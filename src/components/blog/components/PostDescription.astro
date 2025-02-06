@@ -1,0 +1,91 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  description: string;
+  contentStates: {
+    isLiveFacebook: boolean;
+  };
+}
+
+const { description, contentStates } = Astro.props;
+---
+
+<style>
+  .gradient-live {
+    background: linear-gradient(to right, transparent, rgb(24 119 242 / 0.1));
+  }
+  .gradient-podcast {
+    background: linear-gradient(to right, transparent, rgb(146 30 109 / 0.1));
+  }
+  .gradient-default {
+    background: linear-gradient(to right, transparent, rgb(0 178 178 / 0.1));
+  }
+</style>
+
+<div class:list={[
+  "mb-12 rounded-3xl overflow-hidden p-8 md:p-10",
+  contentStates.isLiveFacebook 
+    ? "gradient-live"
+    : contentStates.isPodcast
+      ? "gradient-podcast"
+      : "gradient-default",
+  "shadow-lg",
+  contentStates.isLiveFacebook 
+    ? "shadow-[#1877F2]/5"
+    : contentStates.isPodcast
+      ? "shadow-[var(--ootb-violet)]/5"
+      : "shadow-[--ootb-turquoise]/5",
+  "border",
+  contentStates.isLiveFacebook 
+    ? "border-[#1877F2]/10"
+    : contentStates.isPodcast
+      ? "border-[var(--ootb-violet)]/10"
+      : "border-[--ootb-turquoise]/10",
+  "transform hover:scale-[1.01]",
+  "transition-all duration-500"
+]}>
+  <div class="flex items-center gap-4 mb-6">
+    <div class:list={[
+      "p-3 rounded-xl",
+      contentStates.isLiveFacebook 
+        ? "bg-[#1877F2]/5"
+        : contentStates.isPodcast
+          ? "bg-[var(--ootb-violet)]/5"
+          : "bg-[--ootb-turquoise]/5"
+    ]}>
+      <Icon 
+        name={contentStates.isLiveFacebook ? "tabler:quote" : "tabler:microphone"} 
+        class:list={[
+          "w-6 h-6",
+          contentStates.isLiveFacebook 
+            ? "text-[#1877F2]" 
+            : contentStates.isPodcast
+              ? "text-[var(--ootb-violet)]"
+              : "text-[--ootb-turquoise]"
+        ]}
+      />
+    </div>
+    <h2 class:list={[
+      "font-handwritten text-2xl",
+      contentStates.isLiveFacebook 
+        ? "text-[#1877F2]" 
+        : contentStates.isPodcast
+          ? "text-[var(--ootb-violet)]"
+          : "text-[--ootb-turquoise]"
+    ]}>
+      En résumé
+    </h2>
+  </div>
+  <p class:list={[
+    "text-xl leading-relaxed",
+    "text-gray-600",
+    contentStates.isLiveFacebook 
+      ? "text-center" 
+      : contentStates.isPodcast
+        ? "text-center" 
+        : ""
+  ]}>
+    {description}
+  </p>
+</div>

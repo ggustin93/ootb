@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+import { generateAushaPlayer } from '~/utils/podcast';
+
+interface Props {
+  podcastUrl: string;
+}
+
+const { podcastUrl } = Astro.props;
+const playerResult = generateAushaPlayer(podcastUrl);
+---
+
+<div class="space-y-6">
+  {/* Player Ausha */}
+  <div class="ausha-podcast-player">
+    <iframe
+      name="Ausha Podcast Player"
+      frameborder="0"
+      loading="lazy"
+      id={playerResult.playerConfig.id}
+      height="220"
+      style="border: none; width:100%; height:220px"
+      src={playerResult.playerConfig.src}
+    />
+    <script src="https://player.ausha.co/ausha-player.js" />
+  </div>
+
+  {/* Smart Button */}
+  <div class="flex justify-center">
+    <Button
+      variant="outline-podcast"
+      href={playerResult.smartlinkUrl}
+      target="_blank"
+      class="group"
+    >
+      <Icon name="tabler:headphones" class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110" />
+      Écouter sur votre plateforme préférée
+    </Button>
+  </div>
+</div>

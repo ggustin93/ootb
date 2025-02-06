@@ -24,6 +24,7 @@ export interface Post {
   // Média
   image?: string;
   videoUrl?: string;
+  podcastUrl?: string;
 
   // Informations additionnelles
   expert?: string;

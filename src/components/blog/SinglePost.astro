@@ -1,294 +1,148 @@
 ---
-import { Icon } from 'astro-icon/components';
-import Image from '~/components/common/Image.astro';
-import SocialShare from '~/components/common/SocialShare.astro';
-import ActionBadge from '~/components/ui/ActionBadge.astro';
-import { getFormattedDate } from '~/utils/utils';
 import type { Post } from '~/types';
+import type { ImageMetadata } from 'astro';
 import { CONTENT_TYPES } from '~/config/content-types';
+import { getBlogPermalink } from '~/utils/permalinks';
 
-export interface Props {
-  post: Post;
+// Import des composants média
+import PodcastPlayer from './media/PodcastPlayer.astro';
+import VideoPlayer from './media/VideoPlayer.astro';
+import FeaturedImage from './media/FeaturedImage.astro';
+
+// Import des composants de structure
+import PostHeader from './components/PostHeader.astro';
+import PostDescription from './components/PostDescription.astro';
+import PostFooter from './components/PostFooter.astro';
+
+// Types
+interface Props {
+  post: Post & {
+    showId?: string;
+    podcastId?: string;
+    image: ImageMetadata | string;
+  };
   url: string | URL;
 }
 
+// Configuration initiale
 const { post, url } = Astro.props;
+const blogLink = typeof getBlogPermalink === 'function' ? getBlogPermalink() : '/blog';
 
-// Métadonnées spécifiques
-const showExpertInfo = post.expert;
-const showDuration = post.duration;
-const isLiveFacebook = post.category?.slug?.toLowerCase() === 'live';
+// Configuration du type de contenu
+const contentType = (post.category?.slug?.toLowerCase() || 'actualite') as keyof typeof CONTENT_TYPES;
+const contentConfig = CONTENT_TYPES[contentType];
 
-const contentType = CONTENT_TYPES[post.category?.slug?.toLowerCase() as keyof typeof CONTENT_TYPES] || CONTENT_TYPES.actualite;
+// États du contenu
+const contentStates = {
+  isLiveFacebook: contentType === 'live',
+  isPodcast: contentType === 'podcast',
+  isVideo: contentType === 'tv' || Boolean(post.videoUrl),
+  hasExpertInfo: Boolean(post.expert),
+  hasDuration: Boolean(post.duration),
+  hasSubtitle: Boolean(post.subtitle),
+  hasTags: Boolean(post.tags?.length)
+};
 
-// Fonction pour extraire l'ID YouTube
-function getYouTubeId(url: string): string {
-  if (!url) return '';
-  const regExp = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/;
-  const match = url.match(regExp);
-  return match ? match[1] : '';
-}
+// Styles conditionnels
+const styles = {
+  contentColor: contentConfig.color,
+  heading: {
+    base: "text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading",
+    color: contentStates.isLiveFacebook 
+      ? "text-[#1877F2]" 
+      : contentStates.isPodcast 
+        ? "text-[var(--ootb-violet)]" 
+        : `text-[${contentConfig.color}]`
+  },
+  prose: {
+    base: "prose prose-lg lg:prose-xl dark:prose-invert max-w-none",
+    headings: [
+      "prose-h2:font-body prose-h3:font-handwritten",
+      "prose-h2:text-[color:var(--content-color)]",
+      "prose-h3:text-gray-600 dark:prose-h3:text-gray-400"
+    ].join(" ")
+  }
+};
 
-// Fonction pour obtenir l'URL de la miniature YouTube
-function getYouTubeThumbnail(videoId: string): string {
-  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-}
-
-// Détermine l'image à utiliser
-const videoId = post.videoUrl ? getYouTubeId(post.videoUrl) : '';
-const imageUrl = post.image || (videoId ? getYouTubeThumbnail(videoId) : '');
+// Classes pour le wrapper média
+const mediaWrapperClasses = [
+  "mb-8 rounded-lg overflow-hidden shadow-lg",
+  contentStates.isLiveFacebook && "ring-4 ring-[#1877F2]/20",
+  contentStates.isPodcast && "ring-4 ring-[var(--ootb-violet)]/20"
+];
 ---
 
-<section class="py-8 sm:py-16 lg:py-20 mx-auto px-4">
-  <article class:list={[
-    'max-w-[1200px] mx-auto',
-    'bg-white dark:bg-gray-900',
-    'border border-gray-100 dark:border-gray-800',
-    'rounded-2xl shadow-sm',
-    'p-8 sm:p-12 lg:p-16',
-    isLiveFacebook && 'ring-1 ring-[#1877F2]/10'
-  ]}>
+<section class="py-4 sm:py-8 mx-auto px-4">
+  <article class="pb-16 md:pb-24">
     <div class="pt-8 sm:pt-12 lg:pt-16">
-      <!-- En-tête compact -->
-      <div class="max-w-4xl mx-auto mb-8">
-        <div class="flex items-center flex-wrap gap-4 text-sm text-gray-600">
-          {isLiveFacebook ? (
-            <>
-              <div class="flex items-center gap-3">
-                <ActionBadge variant="live">
-                  <Icon name="tabler:brand-facebook" class="w-4 h-4 -ml-1 mr-1" />
-                  Live Facebook
-                </ActionBadge>
-                <time datetime={String(post.publishDate)}>
-                  {getFormattedDate(post.publishDate)}
-                </time>
-              </div>
-              
-              {showExpertInfo && (
-                <div class="flex items-center gap-2">
-                  <Icon name="tabler:user" class="w-4 h-4" />
-                  <span>{post.expert}</span>
-                </div>
-              )}
-            </>
-          ) : (
-            <>
-              <span class:list={[
-                'inline-flex items-center gap-2 px-4 py-2',
-                'text-white font-bold tracking-wider uppercase text-sm',
-                'rounded-lg shadow-sm',
-                contentType.badgeClass
-              ]}>
-                <Icon name={contentType.icon} class="w-5 h-5" />
-                {contentType.label}
-              </span>
+      {/* En-tête avec métadonnées */}
+      <PostHeader
+        title={post.title}
+        subtitle={post.subtitle}
+        publishDate={post.publishDate}
+        expert={post.expert}
+        duration={post.duration}
+        tags={post.tags}
+        contentConfig={contentConfig}
+        styles={styles}
+        contentStates={contentStates}
+      />
 
-              <time datetime={String(post.publishDate)} class="inline-flex items-center gap-1">
-                <Icon name="tabler:calendar" class="w-4 h-4" />
-                {getFormattedDate(post.publishDate)}
-              </time>
-
-              {showExpertInfo && (
-                <span class="inline-flex items-center gap-1">
-                  <Icon name="tabler:user" class="w-4 h-4" />
-                  {post.expert}
-                </span>
-              )}
-
-              {showDuration && (
-                <span class="inline-flex items-center gap-1">
-                  <Icon name="tabler:clock" class="w-4 h-4" />
-                  {post.duration}
-                </span>
-              )}
-            </>
-          )}
-        </div>
-      </div>
-
-      <!-- Titre principal -->
-      <h1 class:list={[
-        'px-4 sm:px-6 max-w-4xl mx-auto',
-        'text-3xl md:text-4xl lg:text-5xl',
-        'font-heading font-bold leading-tight tracking-tight',
-        'mb-8',
-        isLiveFacebook ? 'text-[#1877F2] text-center' : 'text-gray-900 dark:text-gray-100'
-      ]}>
-        {post.title}
-      </h1>
-
-      <!-- Média principal (vidéo ou image) -->
-      {
-        (() => {
-          if (post.videoUrl) {
-            const videoId = getYouTubeId(post.videoUrl);
-            return (
-              <div class="max-w-4xl mx-auto mb-10 px-4 sm:px-6">
-                <div class:list={[
-                  'relative aspect-video rounded-xl overflow-hidden shadow-lg',
-                  isLiveFacebook && 'ring-4 ring-[#1877F2]/20'
-                ]}>
-                  <iframe
-                    src={`https://www.youtube.com/embed/${videoId}`}
-                    title={post.title}
-                    width="100%"
-                    height="100%"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    class="w-full h-full rounded-xl"
-                  />
-                </div>
-              </div>
-            );
-          } else if (imageUrl) {
-            return (
-              <Image
-                src={imageUrl}
-                class:list={[
-                  'max-w-full lg:max-w-[900px] mx-auto mb-10 sm:rounded-xl shadow-lg bg-gray-400 dark:bg-slate-700',
-                  isLiveFacebook && 'ring-4 ring-[#1877F2]/20'
-                ]}
-                widths={[400, 900]}
-                sizes="(max-width: 900px) 400px, 900px"
-                alt={`Image illustrant l'article : ${post.title}`}
-                width={900}
-                height={506}
-                loading="eager"
-                decoding="async"
-              />
-            );
-          }
-          return null;
-        })()
-      }
-
-      <!-- Description -->
-      <div class:list={[
-        'max-w-3xl mx-auto px-4 sm:px-6 mb-12',
-        'rounded-2xl overflow-hidden',
-        isLiveFacebook 
-          ? 'bg-gradient-to-br from-[#1877F2]/[0.03] to-[#1877F2]/[0.08] border-[#1877F2]/10'
-          : 'bg-gradient-to-br from-[--ootb-turquoise]/[0.03] to-[--ootb-turquoise]/[0.08] border-[--ootb-turquoise]/10',
-        'border-2',
-        'transform hover:scale-[1.02] transition-transform duration-300'
-      ]}>
-        <div class="p-8">
-          <div class="flex items-center gap-3 mb-4">
-            <Icon 
-              name={isLiveFacebook ? "tabler:quote" : "tabler:info-circle"} 
-              class:list={[
-                'w-6 h-6',
-                isLiveFacebook ? 'text-[#1877F2]' : 'text-[--ootb-turquoise]'
-              ]}
-            />
-            <h2 class:list={[
-              'text-lg font-medium',
-              isLiveFacebook ? 'text-[#1877F2]' : 'text-[--ootb-turquoise]'
-            ]}>
-              En résumé
-            </h2>
-          </div>
-          <p class:list={[
-            'text-xl leading-relaxed',
-            'text-gray-700 dark:text-slate-300',
-            isLiveFacebook ? 'text-center' : ''
-          ]}>
-            {post.description}
-          </p>
-        </div>
-      </div>
-
-      <!-- Contenu -->
-      <div class:list={[
-        'mx-auto px-6 sm:px-6 max-w-3xl',
-        'prose prose-lg lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300',
-        // Styles pour h2
-        'prose-h2:font-body prose-h2:font-light prose-h2:italic prose-h2:text-2xl md:prose-h2:text-3xl',
-        isLiveFacebook 
-          ? 'prose-h2:text-[#1877F2] prose-h2:border-b-2 prose-h2:border-[#1877F2]/10 prose-h2:pb-2'
-          : 'prose-h2:text-[--ootb-violet] prose-h2:border-b-2 prose-h2:border-[--ootb-violet]/10 prose-h2:pb-2',
-        // Styles pour h3
-        'prose-h3:font-handwritten prose-h3:text-2xl md:prose-h3:text-3xl',
-        isLiveFacebook 
-          ? 'prose-h3:text-[#1877F2]/80'
-          : 'prose-h3:text-[--ootb-turquoise]',
-        'prose-h3:leading-relaxed',
-        // Autres styles
-        'prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-xl prose-img:shadow-lg mt-12',
-        'prose-headings:scroll-mt-[80px]',
-        isLiveFacebook && 'prose-a:text-[#1877F2] hover:prose-a:text-[#0C63D4]'
-      ]}>
-        <slot />
-      </div>
-
-      <!-- Pied de page -->
-      <footer class="max-w-3xl mx-auto mt-12 pt-8">
-        <!-- Section tags -->
-        <div class="flex flex-wrap gap-2 mb-8">
-          {post.tags?.map((tag) => (
-            <a 
-              href={`/tag/${tag.slug}`}
-              class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
-            >
-              <Icon name="tabler:tag" class="w-4 h-4" />
-              {tag.title}
-            </a>
-          ))}
-        </div>
-
-        <!-- Séparateur -->
-        <div class:list={[
-          'border-t mb-8',
-          isLiveFacebook ? 'border-[#1877F2]/10' : 'border-gray-200 dark:border-gray-800'
-        ]}></div>
-
-        <!-- Section partage -->
-        <div class="flex flex-col items-center gap-4">
-          <h2 class:list={[
-            'text-sm font-medium uppercase tracking-wider',
-            isLiveFacebook ? 'text-[#1877F2]/70' : 'text-gray-600 dark:text-gray-400'
-          ]}>
-            Partager cet article
-          </h2>
-          <SocialShare 
-            url={url} 
-            text={post.title} 
-            class="flex items-center gap-4"
-            buttonClass={isLiveFacebook 
-              ? 'hover:scale-110 transition-transform duration-300 hover:bg-[#1877F2]/20 text-[#1877F2]'
-              : 'hover:scale-110 transition-transform duration-300'
-            }
+      {/* Contenu principal */}
+      <main class="max-w-4xl mx-auto space-y-8">
+        {/* Description */}
+        {post.description && (
+          <PostDescription
+            description={post.description}
+            contentStates={contentStates}
           />
-        </div>
+        )}
 
-        <!-- Bouton retour -->
-        <div class="mt-12">
-          <a 
-            href="/blog" 
-            class:list={[
-              'inline-flex items-center gap-2 group',
-              'px-4 py-2 rounded-xl',
-              'font-medium transition-all duration-300',
-              'hover:-translate-x-1',
-              isLiveFacebook 
-                ? 'text-[#1877F2] hover:bg-[#1877F2]/5'
-                : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'
-            ]}
-          >
-            <Icon 
-              name="tabler:chevron-left" 
-              class="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1" 
+        {/* Média */}
+        {(contentStates.isPodcast && post.podcastUrl) && (
+          <PodcastPlayer 
+            podcastUrl={post.podcastUrl}
+          />
+        )}
+
+        {(contentStates.isVideo && post.videoUrl) && (
+          <div class:list={mediaWrapperClasses}>
+            <VideoPlayer 
+              videoUrl={post.videoUrl}
+              title={post.title}
             />
-            Retour aux contenus
-          </a>
+          </div>
+        )}
+
+        {(post.image && !contentStates.isLiveFacebook && !contentStates.isPodcast) && (
+          <div class:list={mediaWrapperClasses}>
+            <FeaturedImage 
+              image={post.image}
+              title={post.title}
+            />
+          </div>
+        )}
+
+        {/* Contenu de l'article */}
+        <div class:list={[styles.prose.base, styles.prose.headings, styles.prose.facebook]}>
+          <slot />
         </div>
-      </footer>
+      </main>
+
+      {/* Pied de page */}
+      <PostFooter
+        tags={post.tags}
+        url={url}
+        title={post.title}
+        blogLink={blogLink}
+        contentStates={contentStates}
+        contentConfig={contentConfig}
+      />
     </div>
   </article>
 </section>
 
-<style>
+<style>  
   .aspect-video {
     aspect-ratio: 16/9;
   }

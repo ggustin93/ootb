@@ -58,6 +58,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     videoUrl,
     published = true,
     duration,
+    podcastUrl,
   } = data;
 
   const slug = cleanSlug(id);
@@ -91,6 +92,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     description: description,
     image: image,
     videoUrl: videoUrl,
+    podcastUrl: podcastUrl,
 
     category: category,
     tags: tags,

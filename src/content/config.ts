@@ -11,6 +11,7 @@ const post = defineCollection({
     category: z.enum(['actualite', 'fiche', 'live', 'podcast', 'tv', 'premium']),
     image: z.string().optional(),
     videoUrl: z.string().optional(),
+    tvcomUrl: z.string().optional(),
     podcastUrl: z.string().optional(),
     showId: z.string().optional(),
     podcastId: z.string().optional(),
@@ -33,16 +34,16 @@ const post = defineCollection({
       if (data.category === 'live' && !data.image) {
         return !!data.videoUrl;
       }
-      // Pour les autres types, l'image est requise
-      if (data.category !== 'live') {
+      // Pour les autres types, l'image est requise sauf pour les émissions TV
+      if (data.category !== 'live' && data.category !== 'tv') {
         return !!data.image;
       }
       return true;
     },
     {
-      message: "Une image est requise sauf pour les lives qui ont une URL vidéo YouTube",
+      message: "Une image est requise sauf pour les lives qui ont une URL vidéo YouTube et les émissions TV",
     }
-  ),
+  )
 });
 
 export const collections = {

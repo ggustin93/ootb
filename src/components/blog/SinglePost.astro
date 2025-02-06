@@ -3,6 +3,7 @@ import type { Post } from '~/types';
 import type { ImageMetadata } from 'astro';
 import { CONTENT_TYPES } from '~/config/content-types';
 import { getBlogPermalink } from '~/utils/permalinks';
+import { DEFAULT_IMAGES } from '~/config/images';
 
 // Import des composants média
 import PodcastPlayer from './media/PodcastPlayer.astro';
@@ -43,6 +44,22 @@ const contentStates = {
   hasTags: Boolean(post.tags?.length)
 };
 
+// Extraire l'ID YouTube pour les lives Facebook
+const getYouTubeThumbnail = (url: string | undefined) => {
+  if (!url) return undefined;
+  
+  // Extraire l'ID YouTube de l'URL
+  const regExp = /^.*((youtu.be\/)|(v\/)|(\/?v=)|(\/embed\/)|(watch\?))([\w\-]+)/;
+  const match = url.match(regExp);
+  if (!match || !match[7]) return undefined;
+  
+  // Retourner l'URL de la miniature HD
+  return `https://img.youtube.com/vi/${match[7]}/maxresdefault.jpg`;
+};
+
+// Gérer l'image à afficher
+const displayImage = post.image || (contentStates.isLiveFacebook && post.videoUrl ? getYouTubeThumbnail(post.videoUrl) : undefined);
+
 // Styles conditionnels
 const styles = {
   contentColor: contentConfig.color,
@@ -72,7 +89,7 @@ const mediaWrapperClasses = [
 ];
 ---
 
-<section class="py-4 sm:py-8 mx-auto px-4">
+<section class="py-4 sm:py-8 mx-auto max-w-6xl px-4 sm:px-6">
   <article class="pb-16 md:pb-24">
     <div class="pt-8 sm:pt-12 lg:pt-16">
       {/* En-tête avec métadonnées */}
@@ -114,10 +131,10 @@ const mediaWrapperClasses = [
           </div>
         )}
 
-        {(post.image && !contentStates.isLiveFacebook && !contentStates.isPodcast) && (
+        {(displayImage && !contentStates.isPodcast) && (
           <div class:list={mediaWrapperClasses}>
             <FeaturedImage 
-              image={post.image}
+              image={displayImage}
               title={post.title}
             />
           </div>

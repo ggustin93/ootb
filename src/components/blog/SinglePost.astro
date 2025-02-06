@@ -4,6 +4,7 @@ import type { ImageMetadata } from 'astro';
 import { CONTENT_TYPES } from '~/config/content-types';
 import { getBlogPermalink } from '~/utils/permalinks';
 import { DEFAULT_IMAGES } from '~/config/images';
+import Button from '~/components/ui/Button.astro';
 
 // Import des composants média
 import PodcastPlayer from './media/PodcastPlayer.astro';
@@ -21,6 +22,7 @@ interface Props {
     showId?: string;
     podcastId?: string;
     image: ImageMetadata | string;
+    tvcomUrl?: string;
   };
   url: string | URL;
 }
@@ -30,14 +32,27 @@ const { post, url } = Astro.props;
 const blogLink = typeof getBlogPermalink === 'function' ? getBlogPermalink() : '/blog';
 
 // Configuration du type de contenu
-const contentType = (post.category?.slug?.toLowerCase() || 'actualite') as keyof typeof CONTENT_TYPES;
-const contentConfig = CONTENT_TYPES[contentType];
+const contentType = typeof post.category === 'string' ? post.category : (post.category?.slug || 'actualite');
+const contentConfig = CONTENT_TYPES[contentType as keyof typeof CONTENT_TYPES];
+
+// Debug - Post Category
+console.log('Debug - Post Category:', {
+  rawCategory: post.category,
+  contentType,
+  contentConfig,
+  postData: {
+    tvcomUrl: post.tvcomUrl,
+    category: post.category,
+    title: post.title
+  }
+});
 
 // États du contenu
 const contentStates = {
   isLiveFacebook: contentType === 'live',
   isPodcast: contentType === 'podcast',
-  isVideo: contentType === 'tv' || Boolean(post.videoUrl),
+  isVideo: contentType === 'tv',
+  isTvContent: contentType === 'tv',
   hasExpertInfo: Boolean(post.expert),
   hasDuration: Boolean(post.duration),
   hasSubtitle: Boolean(post.subtitle),
@@ -69,7 +84,9 @@ const styles = {
       ? "text-[#1877F2]" 
       : contentStates.isPodcast 
         ? "text-[var(--ootb-violet)]" 
-        : `text-[${contentConfig.color}]`
+        : contentType === 'tv'
+          ? "text-[var(--content-tv)]"
+          : `text-[${contentConfig.color}]`
   },
   prose: {
     base: "prose prose-lg lg:prose-xl dark:prose-invert max-w-none",
@@ -83,10 +100,19 @@ const styles = {
 
 // Classes pour le wrapper média
 const mediaWrapperClasses = [
-  "mb-8 rounded-lg overflow-hidden shadow-lg",
+  "rounded-lg overflow-hidden shadow-lg relative aspect-video mb-8",
   contentStates.isLiveFacebook && "ring-4 ring-[#1877F2]/20",
-  contentStates.isPodcast && "ring-4 ring-[var(--ootb-violet)]/20"
+  contentStates.isPodcast && "ring-4 ring-[var(--ootb-violet)]/20",
+  contentType === 'tv' && "ring-4 ring-[var(--ootb-green)]/20"
 ];
+
+// Debug info
+console.log('Debug TV content:', {
+  tvcomUrl: post.tvcomUrl,
+  isVideo: contentStates.isVideo,
+  category: post.category,
+  contentType: contentType
+});
 ---
 
 <section class="py-4 sm:py-8 mx-auto max-w-6xl px-4 sm:px-6">
@@ -122,8 +148,35 @@ const mediaWrapperClasses = [
           />
         )}
 
-        {(contentStates.isVideo && post.videoUrl) && (
-          <div class:list={mediaWrapperClasses}>
+        {/* Média avec bouton superposé pour TV */}
+        {(displayImage && !contentStates.isPodcast) && (
+          <div class:list={[...mediaWrapperClasses, "group"]}>
+            <FeaturedImage 
+              image={displayImage}
+              title={post.title}
+            />
+            {/* Overlay sombre et bouton TV Com */}
+            {contentType === 'tv' && post.tvcomUrl && (
+              <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all duration-300">
+                <Button
+                  variant="outline-tv"
+                  href={post.tvcomUrl}
+                  icon="tabler:device-tv"
+                  size="lg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group/btn hover:scale-105 transition-transform duration-300"
+                >
+                  Voir l'émission sur TV Com
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Video Player for TV content */}
+        {(contentStates.isTvContent && post.videoUrl) && (
+          <div class:list={[...mediaWrapperClasses, "mb-0 p-0"]}>
             <VideoPlayer 
               videoUrl={post.videoUrl}
               title={post.title}
@@ -131,14 +184,7 @@ const mediaWrapperClasses = [
           </div>
         )}
 
-        {(displayImage && !contentStates.isPodcast) && (
-          <div class:list={mediaWrapperClasses}>
-            <FeaturedImage 
-              image={displayImage}
-              title={post.title}
-            />
-          </div>
-        )}
+
 
         {/* Contenu de l'article */}
         <div class:list={[styles.prose.base, styles.prose.headings, styles.prose.facebook]}>

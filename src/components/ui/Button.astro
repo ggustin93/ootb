@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 
 interface Props {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'blue' | 'outline-blue' | 'premium-primary' | 'premium-secondary' | 'card' | 'outline-podcast';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'blue' | 'outline-blue' | 'premium-primary' | 'premium-secondary' | 'card' | 'outline-podcast' | 'outline-tv';
   size?: 'sm' | 'md' | 'lg';
   icon?: string;
   iconPosition?: 'left' | 'right';
@@ -42,6 +42,7 @@ const variants = {
   blue: 'bg-[--ootb-blue] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)] shadow-lg hover:shadow-xl',
   'outline-blue': 'bg-white border-2 border-[--ootb-blue] text-[--ootb-blue] hover:bg-[--ootb-blue] hover:text-white shadow-lg hover:shadow-xl',
   'outline-podcast': 'bg-white border-2 border-[--ootb-violet] text-[--ootb-violet] hover:bg-[--ootb-violet] hover:text-white shadow-lg hover:shadow-xl',
+  'outline-tv': 'bg-white border-2 border-[--ootb-green] text-[--ootb-green] hover:bg-[--ootb-green] hover:text-white shadow-lg hover:shadow-xl',
   'premium-primary': 'bg-[var(--ootb-yellow)] hover:bg-[color-mix(in_srgb,var(--ootb-yellow)_90%,black)] text-[#2A6B62]',
   'premium-secondary': 'bg-white/20 hover:bg-white/30 text-white font-medium',
   'card': 'w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full font-medium transition-all duration-300 group/button'

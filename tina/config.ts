@@ -22,7 +22,7 @@ export default defineConfig({
 
   media: {
     tina: {
-      publicFolder: "public",
+      publicFolder: "src/assets",
       mediaRoot: "images",
     },
   },
@@ -151,6 +151,12 @@ export default defineConfig({
                 }
               },
             },
+          },
+          {
+            type: "string",
+            name: "tvcomUrl",
+            label: "URL TV Com",
+            description: "Pour les émissions TV uniquement",
           },
           {
             type: "string", 

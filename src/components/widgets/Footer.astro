@@ -2,7 +2,6 @@
 import { Icon } from 'astro-icon/components';
 import { getHomePermalink } from '~/utils/permalinks';
 import LogoWithIcon from '~/components/common/LogoWithIcon.astro';
-import Container from '~/components/common/Container.astro';
 
 interface Link {
   text?: string;
@@ -42,7 +41,7 @@ const { socialLinks = [], links = [] } = Astro.props;
     </svg>
   </div>
 
-  <Container>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
     <!-- Section principale -->
     <div class="py-16">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
@@ -117,7 +116,7 @@ const { socialLinks = [], links = [] } = Astro.props;
         </div>
       </div>
     </div>
-  </Container>
+  </div>
 </footer>
 
 <style>

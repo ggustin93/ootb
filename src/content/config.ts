@@ -34,6 +34,10 @@ const post = defineCollection({
       if (data.category === 'live' && !data.image) {
         return !!data.videoUrl;
       }
+      // Pour les émissions TV, tvcomUrl est requis
+      if (data.category === 'tv' && !data.tvcomUrl) {
+        return false;
+      }
       // Pour les autres types, l'image est requise sauf pour les émissions TV
       if (data.category !== 'live' && data.category !== 'tv') {
         return !!data.image;
@@ -41,7 +45,7 @@ const post = defineCollection({
       return true;
     },
     {
-      message: "Une image est requise sauf pour les lives qui ont une URL vidéo YouTube et les émissions TV",
+      message: "Une image est requise sauf pour les lives qui ont une URL vidéo YouTube. Pour les émissions TV, l'URL TV Com est obligatoire.",
     }
   )
 });

@@ -56,6 +56,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     draft = false,
     metadata = {},
     videoUrl,
+    tvcomUrl,
     published = true,
     duration,
     podcastUrl,
@@ -92,6 +93,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     description: description,
     image: image,
     videoUrl: videoUrl,
+    tvcomUrl: tvcomUrl,
     podcastUrl: podcastUrl,
 
     category: category,

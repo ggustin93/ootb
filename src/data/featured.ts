@@ -18,7 +18,7 @@ export const featuredContents: FeaturedContent[] = [
     href: "/podcast/ep45",
     title: "L'intelligence émotionnelle à l'école",
     description: "Comment développer l'intelligence émotionnelle des élèves ?",
-    image: "https://images.unsplash.com/photo-1544717305-2782549b5136",
+    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=640&q=80",
     badge: "Podcast",
     type: "podcast",
     meta: {
@@ -31,7 +31,7 @@ export const featuredContents: FeaturedContent[] = [
     href: "/tv/neurosciences",
     title: "Les neurosciences en classe",
     description: "Reportage exclusif dans une classe laboratoire",
-    image: "https://images.unsplash.com/photo-1559757175-5700dde675bc",
+    image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=640&q=80",
     badge: "TV",
     type: "tv",
     meta: {
@@ -43,7 +43,7 @@ export const featuredContents: FeaturedContent[] = [
     href: "/premium/learning-game",
     title: "L'apprentissage par le jeu",
     description: "Une analyse approfondie avec les meilleurs experts du domaine",
-    image: "https://images.unsplash.com/photo-1632571401005-458e9d244591",
+    image: "https://images.unsplash.com/photo-1632571401005-458e9d244591?w=640&q=80",
     badge: "Article",
     type: "default",
     meta: {

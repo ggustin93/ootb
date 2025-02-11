@@ -1,0 +1,102 @@
+---
+interface Photo {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  title: string;
+}
+
+interface Props {
+  photos: Photo[];
+}
+
+const { photos } = Astro.props;
+---
+
+<div class="pswp-gallery grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-3xl mx-auto" id="gallery">
+  {photos.map((photo, index) => (
+    <a 
+      href={photo.src}
+      data-pswp-width={photo.width}
+      data-pswp-height={photo.height}
+      class="relative group rounded-2xl overflow-hidden aspect-[4/3] cursor-zoom-in"
+    >
+      <img 
+        src={photo.src} 
+        alt={photo.alt}
+        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div class="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+        <p class="text-sm font-semibold">{photo.title}</p>
+      </div>
+    </a>
+  ))}
+</div>
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+
+<style>
+  .pswp__custom-close-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    color: #1a1a1a;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 1500;
+  }
+</style>
+
+<template id="pswp" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="pswp__bg"></div>
+  <div class="pswp__scroll-wrap">
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <div class="pswp__counter"></div>
+        <button class="pswp__custom-close-button" title="Fermer (Esc)" aria-label="Fermer">Fermer</button>
+        <button class="pswp__button pswp__button--share" title="Partager"></button>
+        <button class="pswp__button pswp__button--fs" title="Plein écran"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom +/-"></button>
+      </div>
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip"></div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Précédent"></button>
+      <button class="pswp__button pswp__button--arrow--right" title="Suivant"></button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import PhotoSwipeLightbox from '/photoswipe/photoswipe-lightbox.esm.js';
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#gallery',
+    children: 'a',
+    pswpModule: () => import('/photoswipe/photoswipe.esm.js')
+  });
+
+  lightbox.init();
+</script>

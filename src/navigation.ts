@@ -3,7 +3,7 @@ import { getPermalink, getBlogPermalink } from './utils/permalinks';
 export const headerData = {
   links: [
     {
-      text: 'Le Festival',
+      text: 'Le festival',
       href: getPermalink('/festival'),
       links: [
         {
@@ -21,7 +21,7 @@ export const headerData = {
       ]
     },
     {
-      text: 'Nos Contenus',
+      text: 'Nos contenus',
       links: [
         {
           text: 'Tous les contenus',
@@ -108,7 +108,7 @@ export const footerData = {
       ],
     },
     {
-      title: 'Le Festival',
+      title: 'Le festival',
       links: [
         { text: 'Programme 2024', href: getPermalink('/festival#programme') },
         { text: 'Appel à projets', href: getPermalink('/appel-a-projets') },

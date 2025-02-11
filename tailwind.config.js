@@ -6,6 +6,15 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,json,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
   	extend: {
+      keyframes: {
+        'bounce-slow': {
+          '0%, 100%': { transform: 'translateY(-10%)' },
+          '50%': { transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'bounce-slow': 'bounce-slow 2s ease-in-out infinite',
+      },
   		colors: {
   			primary: 'var(--ootb-turquoise)',
   			secondary: {

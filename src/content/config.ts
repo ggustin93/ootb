@@ -41,6 +41,10 @@ const pedagogicalSheet = defineCollection({
 // Schéma pour les posts normaux
 const post = defineCollection({
   type: 'content',
+  // Spécifier le dossier en fonction de la catégorie
+  getEntrySlug: (entry) => {
+    return `${entry.data.category}/${entry.id}`;
+  },
   schema: z.object({
     title: z.string(),
     description: z.string(),

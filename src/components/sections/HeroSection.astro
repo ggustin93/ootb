@@ -22,66 +22,92 @@ const title = {
 <section class="relative min-h-[85vh] flex items-start justify-center bg-[--ootb-turquoise] bg-gradient-to-b from-[--ootb-turquoise] from-65% via-[color-mix(in_srgb,var(--ootb-turquoise)_65%,white)] via-80% to-white to-95%">
   <!-- Éléments décoratifs flottants -->
   <div class="absolute inset-0 overflow-hidden">
-    <!-- Premier livre - Repositionné au milieu gauche -->
-    <div class="absolute w-16 h-24 -rotate-12 top-[10%] left-[40%] opacity-40 transition-transform hover:-translate-y-2 duration-1000">
+    <!-- Premier livre - Position différente sur mobile/desktop -->
+    <div class="absolute w-12 md:w-16 h-20 md:h-24 -rotate-[15deg] md:-rotate-12 top-[12%] md:top-[10%] left-[8%] md:left-[40%] opacity-40 transition-transform hover:-translate-y-2 duration-1000">
       <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
     </div>
     
-    <!-- Second livre - Position ajustée en miroir -->
-    <div class="absolute w-14 h-20 rotate-45 top-[40%] right-[12%] opacity-40 transition-transform hover:translate-y-2 duration-1000">
+    <!-- Second livre - Position ajustée pour mobile -->
+    <div class="absolute w-10 md:w-14 h-16 md:h-20 rotate-45 top-[30%] md:top-[40%] right-[5%] md:right-[12%] opacity-40 transition-transform hover:translate-y-2 duration-1000">
       <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
     </div>
   </div>
 
-  <div class="relative z-20 grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto px-8 pt-32 w-full">
-    <div class="text-center md:text-left">
-      <h1 class="font-heading text-7xl font-bold leading-none tracking-tight mb-12">
+  <div class="relative z-20 grid md:grid-cols-2 gap-8 md:gap-12 items-center max-w-6xl mx-auto px-4 md:px-8 pt-12 md:pt-32 w-full">
+    <div class="text-center md:text-left flex flex-col">
+      <!-- Sur mobile: d'abord le logo -->
+      <div class="md:hidden px-10 mb-0">
         <Image
           src={logo_blanc}
           alt="Out of the Books"
-          class="w-[400px] h-auto"
+          class="w-[180px] h-auto mx-auto"
+          widths={[180]}
+          sizes="180px"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <!-- Mascotte sur mobile -->
+      <div class="md:hidden mb-0 px-20 py-8">
+        <Image
+          src={image}
+          alt="Mascotte Out of the Books"
+          class="w-[70px] h-auto mx-auto animate-float"
+          widths={[70]}
+          sizes="70px"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <!-- Titre sur mobile -->
+      <div class="md:hidden mb-8">
+        <h2 class="font-body text-3xl font-light max-w-lg leading-tight mx-auto">
+          <span class="text-white font-bold block mb-1">{title.line1}</span>
+          <span class="text-[--ootb-yellow] relative font-bold italic block mb-1">
+            <span class="relative font-bold">
+              {title.line2}
+              <span class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
+              <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
+              <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
+            </span>
+          </span>
+          <span class="text-white font-bold block">{title.line3}</span>
+        </h2>
+      </div>
+
+      <!-- Logo desktop -->
+      <h1 class="hidden md:block font-heading text-7xl font-bold leading-none tracking-tight mb-16">
+        <Image
+          src={logo_blanc}
+          alt="Out of the Books"
+          class="w-[400px] h-auto md:mx-0"
           widths={[400]}
           sizes="400px"
           loading="eager"
           decoding="async"
         />
       </h1>
-      
-      {/* Version 1 : Tagline en une ligne avec soulignement sur "innovantes !" */}
-      <!--
-      <h2 class="font-sans text-3xl text-[--ootb-yellow] font-light mb-12 max-w-lg italic">
-        <span class="text-white text-5xl mt-4 block">La plateforme des pédagogies <span class="relative">
-          <span class="text-[--ootb-yellow]">innovantes !</span>
-          <span class="absolute bottom-0 left-0 w-[102%] h-[0.12em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
-          <span class="absolute bottom-[0.1em] left-0 w-[101%] h-[0.08em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
-          <span class="absolute bottom-[-0.1em] left-0 w-[103%] h-[0.1em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
-        </span></span>
-      </h2>
 
-      {/* Version 2 : Tagline en 3 lignes sans effet de soulignement */}
-      <h2 class="font-body text-5xl font-light mb-16 max-w-lg leading-tight">
-        <span class="text-white block mb-0.5">{title.line1}</span>
-        <span class="text-[--ootb-yellow] relative ml-6 font-bold italic block mb-0.5">{title.line2}</span>
-        <span class="text-white block">{title.line3}</span>
-      </h2>
-      -->
-
-      {/* Version 3 (actuelle) : Tagline en 3 lignes avec soulignement fin sur "des pédagogies" */}
-      <h2 class="font-body text-5xl font-light mb-16 max-w-lg leading-tight">
-        <span class="text-white  font-bold  block mb-0.5">{title.line1}</span>
-        <span class="text-[--ootb-yellow] relative ml-6 font-bold italic block mb-0.5">
-          <span class="relative  font-bold ">
-            {title.line2}
-            <span class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
-            <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
-            <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
+      <!-- Sur desktop: le texte après le logo -->
+      <div class="hidden md:block">
+        <h2 class="font-body text-3xl md:text-5xl font-light mb-8 md:mb-16 max-w-lg leading-tight mx-auto md:mx-0">
+          <span class="text-white font-bold block mb-0.5">{title.line1}</span>
+          <span class="text-[--ootb-yellow] relative md:ml-6 font-bold italic block mb-0.5">
+            <span class="relative font-bold">
+              {title.line2}
+              <span class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
+              <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
+              <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
+            </span>
           </span>
-        </span>
-        <span class="text-white  font-bold  block">{title.line3}</span>
-      </h2>
+          <span class="text-white font-bold block">{title.line3}</span>
+        </h2>
+      </div>
 
-      <!-- Section des badges sur une seule ligne -->
-      <div class="flex flex-row gap-2.5 justify-start items-center">
+      <!-- Section des badges responsive -->
+      <div class="flex flex-wrap md:flex-nowrap gap-2.5 justify-center md:justify-start items-center md:relative md:mt-4 md:mb-4 md:w-full">
         <a href="/festival" class="transform hover:scale-105 transition-all duration-300">
           <ActionBadge variant="festival">
             Festival
@@ -131,13 +157,13 @@ const title = {
   </div>
 
   <!-- Fond de nuages -->
-  <div class="absolute bottom-[5%] left-0 right-0 w-full z-0">
+  <div class="absolute bottom-0 left-0 right-0 w-full z-0 overflow-hidden">
     <Image
       src={cloudsBg}
       alt="Fond décoratif de nuages"
-      class="w-full h-auto object-cover object-bottom transform scale-105"
+      class="w-[120%] md:w-[110%] h-auto object-cover object-bottom transform scale-125 md:scale-110 -translate-x-[10%] translate-y-[20%] md:translate-y-[10%]"
       widths={[1024, 2048]}
-      sizes="100vw"
+      sizes="120vw"
       aspectRatio="20:1"
       loading="eager"
       decoding="async"

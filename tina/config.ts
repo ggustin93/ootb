@@ -15,6 +15,12 @@ export default defineConfig({
   token: "local-dev-token",
   disableImportAliasWarnings: true,
 
+  // Activation du mode preview
+  preview: {
+    hosts: ['localhost:4321'],
+    previewTimeout: 3000,
+  },
+
   build: {
     outputFolder: "admin",
     publicFolder: "public",
@@ -48,6 +54,60 @@ export default defineConfig({
           }
         },
         ui: {
+          itemTable: {
+            defaultSort: {
+              key: "_values.publishDate",
+              direction: "desc"
+            },
+            tableColumns: [
+              {
+                key: "_values.published",
+                name: "Statut",
+                render: (value) => value ? "✅ Publié" : "⚠️ Brouillon"
+              },
+              {
+                key: "_values.publishDate",
+                name: "Date de publication",
+                render: (value) => {
+                  if (!value) return '';
+                  return new Date(value).toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                  });
+                }
+              },
+              {
+                key: "_values.title",
+                name: "Titre"
+              },
+              {
+                key: "_values.category",
+                name: "Type",
+                render: (value) => CONTENT_TYPES[value] || value
+              }
+            ]
+          },
+          sortable: {
+            fields: [
+              {
+                key: "_values.publishDate",
+                name: "Date de publication"
+              },
+              {
+                key: "_values.title",
+                name: "Titre"
+              },
+              {
+                key: "_values.category",
+                name: "Type de contenu"
+              },
+              {
+                key: "_values.published",
+                name: "Statut"
+              }
+            ]
+          },
           allowedActions: {
             create: true,
             delete: true,

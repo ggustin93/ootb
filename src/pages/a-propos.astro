@@ -5,7 +5,8 @@ import Image from '~/components/common/Image.astro';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import logo_blanc from '~/assets/images/logo_ootb_white.svg';
-import hero from '~/assets/images/ootb-logo.svg';
+import mascotte from '~/assets/images/ootb-logo.svg';
+import logo from '~/assets/images/ootb-logo.svg';
 import teamImage from '~/assets/images/ootb_team.webp';
 
 const metadata = {
@@ -82,7 +83,7 @@ const teamMembers = [
     name: 'Sophie Vanden Plas',
     role: 'Co-fondatrice',
     description: 'Formatrice à l\'IFEC et créatrice de la structure Evocation qui accompagne des enfants en gestion mentale.',
-    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    photo: 'https://static.wixstatic.com/media/56c117_03c0b6edb89e41668481a0559794a6e1~mv2.png/v1/fill/w_200,h_200,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/56c117_03c0b6edb89e41668481a0559794a6e1~mv2.png',
     contact: {
       email: 'sophie@festivalootb.com',
       phone: '0476/46.24.25'
@@ -92,7 +93,7 @@ const teamMembers = [
     name: 'Alexia Martin',
     role: 'Co-fondatrice',
     description: 'Entrepreneuse dans l\'âme et créatrice d\'événements grands publics.',
-    photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    photo: 'https://static.wixstatic.com/media/e57c2b_3037ee1644ce493eae96141d7c74c2e2~mv2.jpg/v1/crop/x_0,y_0,w_4509,h_4509/fill/w_200,h_200,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/12_ALEXIA_058.jpg',
     contact: {
       email: 'alexia@festivalootb.com',
       phone: '0477/45.56.11'
@@ -111,38 +112,34 @@ const actions = [
 
 const partenaires = [
   {
-    name: 'Ministère de l\'Éducation',
-    logo: '/src/assets/images/partners/education.svg',
-    description: 'Partenaire institutionnel'
+    name: 'Partenaire 1',
+    logo: 'https://static.wixstatic.com/media/56c117_9fc5d8c1349844e0b59a4576763ab276~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-bw.jpg'
   },
   {
-    name: 'Réseau Canopé',
-    logo: '/src/assets/images/partners/canope.svg',
-    description: 'Partenaire pédagogique'
+    name: 'Fédération Wallonie-Bruxelles',
+    logo: 'https://static.wixstatic.com/media/e57c2b_cae38a1c958d45099aed30675c9664bd~mv2.png/v1/fill/w_210,h_200,al_c,lg_1,q_85,enc_avif,quality_auto/1200px-F%EF%BF%BD%C3%A9d%C3%A9ration_Wallonie-Bruxelles_log.png'
   },
   {
-    name: 'EdTech France',
-    logo: '/src/assets/images/partners/edtech.svg',
-    description: 'Partenaire innovation'
+    name: 'Ville de Wavre',
+    logo: 'https://static.wixstatic.com/media/e57c2b_1a0a229810d347e6a3fcabeedae6ae31~mv2.png/v1/fill/w_224,h_411,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Wavre%20-%20Logo%20-%20PNG%20-%20Vert.png'
+  },
+  {
+    name: 'Daoust',
+    logo: 'https://static.wixstatic.com/media/56c117_a88c6bf5870d4c1792472d4c9d4264de~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-daoust.jpg'
+  },
+  {
+    name: 'IFPC',
+    logo: 'https://static.wixstatic.com/media/e57c2b_6bf32d95aa624c06ae30d6809dcb156f~mv2.png/v1/crop/x_0,y_242,w_2886,h_1732/fill/w_396,h_236,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20IFPC.png'
+  },
+  {
+    name: 'TV Com',
+    logo: 'https://static.wixstatic.com/media/56c117_0943597d29324f9fbfadeefe2237eecd~mv2.jpg/v1/fill/w_296,h_148,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/ootb-partenaire-tvcom.jpg'
   }
 ];
 ---
 
 <Layout {metadata}>
   <GradientHeroSection>
-    <!-- Éléments décoratifs flottants -->
-    <div class="absolute inset-0 overflow-hidden">
-      <!-- Formes géométriques subtiles -->
-      <div class="absolute w-32 h-32 rounded-full bg-white/10 blur-2xl -top-8 -left-8 animate-float"></div>
-      <div class="absolute w-48 h-48 rounded-full bg-white/10 blur-3xl bottom-32 right-16 animate-float-delayed"></div>
-      <!-- Livres flottants -->
-      <div class="absolute w-20 h-28 -rotate-12 top-[15%] left-[40%] opacity-30 transition-transform hover:-translate-y-2 duration-1000">
-        <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
-      </div>
-      <div class="absolute w-16 h-24 rotate-45 top-[35%] right-[12%] opacity-30 transition-transform hover:translate-y-2 duration-1000">
-        <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
-      </div>
-    </div>
 
     <div class="relative z-10 container mx-auto px-4 pt-32">
       <div class="max-w-6xl mx-auto">
@@ -158,11 +155,11 @@ const partenaires = [
                 loading="eager"
                 decoding="async"
               />
-              <span class="block text-3xl md:text-4xl mt-4 font-light text-[--ootb-yellow] italic">À propos</span>
+              <span class="block text-4xl md:text-5xl mt-4 font-bold text-[--ootb-yellow] italic">À propos</span>
             </h1>
-            <p class="text-xl text-white/90 font-light italic mt-6 mb-8">
+            <blockquote class="text-2xl text-white/90 font-light mt-6 mb-8 border-l-4 border-[--ootb-yellow] pl-4">
               Changer ensemble l'éducation de demain
-            </p>
+            </blockquote>
             <div class="flex flex-wrap gap-4 justify-center md:justify-start">
               <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
                 <Icon name="tabler:users" class="w-5 h-5 text-white" />
@@ -194,34 +191,17 @@ const partenaires = [
               />
             </div>
             <!-- Élément décoratif derrière l'image -->
-            <div class="absolute inset-0 bg-[--ootb-violet] rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"></div>
+            <div class="absolute inset-0 bg-[--ootb-yellow] rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Vague décorative -->
-    <div class="absolute -bottom-1 left-0 right-0">
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        viewBox="0 0 1440 320" 
-        class="w-full h-[120px] md:h-[180px] text-white"
-        preserveAspectRatio="none"
-      >
-        <path 
-          fill="currentColor" 
-          fill-opacity="1" 
-          d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-        ></path>
-      </svg>
-    </div>
+
   </GradientHeroSection>
 
   <!-- Contexte -->
   <section class="py-16 bg-white relative overflow-hidden">
-    <!-- Éléments décoratifs -->
-    <div class="absolute top-0 right-0 w-64 h-64 bg-[--ootb-turquoise]/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-[--ootb-violet]/5 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
 
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
@@ -253,16 +233,13 @@ const partenaires = [
   </section>
 
   <!-- Notre Vision -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-violet)_5%,white)] relative overflow-hidden">
+  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-yellow)_5%,white)] relative overflow-hidden">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">Notre Vision</SectionDivider>
         
         <!-- Citation -->
         <div class="bg-gradient-to-br from-[--ootb-turquoise] to-[color-mix(in_srgb,var(--ootb-turquoise)_80%,var(--ootb-violet))] rounded-xl p-8 shadow-lg relative overflow-hidden group mb-8">
-          <!-- Effet de brillance au hover -->
-          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transform duration-1000"></div>
-          
           <p class="font-handwritten text-2xl md:text-3xl text-white font-light leading-relaxed relative z-10">
             "Nous croyons en une éducation innovante, inclusive et épanouissante, où chaque apprenant peut développer son plein potentiel."
           </p>
@@ -300,7 +277,7 @@ const partenaires = [
     <!-- Mascotte -->
     <div class="absolute bottom-0 right-0 w-[200px] h-[200px] z-20">
       <Image
-        src={hero}
+        src={mascotte}
         alt=""
         class="w-full h-full object-contain transform scale-x-[-1] rotate-[-5deg]"
         widths={[200]}
@@ -310,11 +287,21 @@ const partenaires = [
         decoding="async"
       />
     </div>
-    <!-- Vagues décoratives -->
-    <div class="absolute inset-0 opacity-5">
-      <svg class="absolute w-full h-full" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-        <path fill="var(--ootb-turquoise)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-      </svg>
+    <!-- Livres flottants -->
+    <div class="absolute w-20 h-28 -rotate-12 top-[15%] left-[40%] opacity-20">
+      <Icon name="tabler:book-2" class="w-full h-full text-[--ootb-green] filter drop-shadow-lg" />
+    </div>
+    <div class="absolute w-16 h-24 rotate-45 top-[35%] right-[12%] opacity-20">
+      <Icon name="tabler:book" class="w-full h-full text-[--ootb-green] filter drop-shadow-lg" />
+    </div>
+    <div class="absolute w-14 h-20 -rotate-6 bottom-[25%] left-[15%] opacity-20">
+      <Icon name="tabler:book-upload" class="w-full h-full text-[--ootb-turquoise] filter drop-shadow-lg" />
+    </div>
+    <div class="absolute w-12 h-16 rotate-12 top-[45%] left-[25%] opacity-15">
+      <Icon name="tabler:books" class="w-full h-full text-[--ootb-violet] filter drop-shadow-lg" />
+    </div>
+    <div class="absolute w-10 h-14 -rotate-15 top-[20%] right-[35%] opacity-15">
+      <Icon name="tabler:book-download" class="w-full h-full text-[--ootb-orange] filter drop-shadow-lg" />
     </div>
 
     <div class="container mx-auto px-4">
@@ -322,7 +309,7 @@ const partenaires = [
         <SectionDivider variant="primary" class="mb-12">Nos Missions</SectionDivider>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {missions.map(mission => (
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md">
               <div class="flex items-start gap-4">
                 <div class="bg-[--ootb-turquoise] rounded-lg p-3 transform transition-transform duration-300 hover:rotate-6">
                   <Icon name={mission.icon} class="w-6 h-6 text-white" />
@@ -340,25 +327,18 @@ const partenaires = [
   </section>
 
   <!-- Nos Valeurs -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
-    <!-- Motif de points décoratifs -->
-    <div class="absolute inset-0">
-      <div class="grid grid-cols-12 gap-8 opacity-5">
-        {Array(48).fill('').map(() => (
-          <div class="w-2 h-2 rounded-full bg-[--ootb-violet]"></div>
-        ))}
-      </div>
-    </div>
+  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-violet)_5%,white)] relative overflow-hidden">
+
 
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">Nos Valeurs</SectionDivider>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {valeurs.map(valeur => (
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md transition-all duration-300 hover:-translate-y-1 relative group">
-              <div class="absolute inset-0 bg-gradient-to-br from-[--ootb-violet]/5 to-transparent rounded-xl transform scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300"></div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md relative group">
+
               <div class="relative flex items-start gap-4">
-                <div class="bg-[--ootb-violet] rounded-lg p-3 transform transition-transform duration-300 group-hover:rotate-6">
+                <div class="bg-[--ootb-violet] rounded-lg p-3 ">
                   <Icon name={valeur.icon} class="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -400,10 +380,22 @@ const partenaires = [
   */}
 
   <!-- Notre Équipe -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] relative overflow-hidden">
+  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="primary" class="mb-12">Notre Équipe</SectionDivider>
+        <SectionDivider variant="primary" class="mb-12">Qui sommes-nous ?</SectionDivider>
+        
+        <!-- Présentation -->
+        <div class="prose prose-lg max-w-none bg-white/80 backdrop-blur-sm rounded-xl p-8 mb-12">
+          <p class="text-gray-700 leading-relaxed">
+            Out of the Books est une association créée par des passionnés d'éducation, réunissant des enseignants, des chercheurs, des experts en pédagogie et des professionnels de l'éducation. Notre équipe pluridisciplinaire travaille main dans la main pour identifier, documenter et partager les meilleures pratiques pédagogiques.
+          </p>
+          <p class="text-gray-700 leading-relaxed mt-4">
+            Nous sommes convaincus que l'innovation en éducation ne peut se faire qu'à travers la collaboration et le partage d'expériences. C'est pourquoi nous avons créé cette plateforme, véritable carrefour d'échanges et de ressources pour tous les acteurs de l'éducation.
+          </p>
+        </div>
+
+        <!-- Membres de l'équipe -->
         <div class="grid md:grid-cols-2 gap-8">
           {teamMembers.map(member => (
             <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm">
@@ -414,13 +406,12 @@ const partenaires = [
                     <Image
                       src={member.photo}
                       alt={member.name}
-                      class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
+                      class="w-full h-full object-cover"
                       widths={[96]}
                       sizes="96px"
                       aspectRatio="1:1"
                       loading="lazy"
                     />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                 </div>
                 <!-- Informations -->
@@ -431,13 +422,13 @@ const partenaires = [
                   <div class="space-y-2">
                     <div class="flex items-center gap-2 text-gray-600">
                       <Icon name="tabler:mail" class="w-5 h-5" />
-                      <a href={`mailto:${member.contact.email}`} class="hover:text-[--ootb-turquoise] transition-colors">
+                      <a href={`mailto:${member.contact.email}`} class="hover:text-[--ootb-turquoise]">
                         {member.contact.email}
                       </a>
                     </div>
                     <div class="flex items-center gap-2 text-gray-600">
                       <Icon name="tabler:phone" class="w-5 h-5" />
-                      <a href={`tel:${member.contact.phone.replace(/[^0-9+]/g, '')}`} class="hover:text-[--ootb-turquoise] transition-colors">
+                      <a href={`tel:${member.contact.phone.replace(/[^0-9+]/g, '')}`} class="hover:text-[--ootb-turquoise]">
                         {member.contact.phone}
                       </a>
                     </div>
@@ -451,65 +442,26 @@ const partenaires = [
     </div>
   </section>
 
-  <!-- Qui sommes-nous -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] relative overflow-hidden">
-    <!-- Image de fond avec overlay -->
-    <div class="absolute inset-0">
-      <Image
-        src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3"
-        alt="Équipe collaborative"
-        class="w-full h-full object-cover opacity-5"
-        widths={[1920]}
-        sizes="100vw"
-        aspectRatio="16:9"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-gradient-to-b from-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] via-[color-mix(in_srgb,var(--ootb-blue)_5%,white)]/95 to-[color-mix(in_srgb,var(--ootb-blue)_5%,white)]"></div>
-    </div>
-
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto relative">
-        <SectionDivider variant="primary" class="mb-12">Qui sommes-nous ?</SectionDivider>
-        <div class="prose prose-lg max-w-none bg-white/80 backdrop-blur-sm rounded-xl p-8">
-          <p class="text-gray-700 leading-relaxed">
-            Out of the Books est une association créée par des passionnés d'éducation, réunissant des enseignants, des chercheurs, des experts en pédagogie et des professionnels de l'éducation. Notre équipe pluridisciplinaire travaille main dans la main pour identifier, documenter et partager les meilleures pratiques pédagogiques.
-          </p>
-          <p class="text-gray-700 leading-relaxed mt-4">
-            Nous sommes convaincus que l'innovation en éducation ne peut se faire qu'à travers la collaboration et le partage d'expériences. C'est pourquoi nous avons créé cette plateforme, véritable carrefour d'échanges et de ressources pour tous les acteurs de l'éducation.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Partenaires -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-turquoise)_8%,white)] relative overflow-hidden">
-    <!-- Éléments décoratifs -->
-    <div class="absolute inset-0">
-      <div class="absolute top-0 right-0 w-64 h-64 bg-[--ootb-turquoise]/5 rounded-full blur-3xl"></div>
-      <div class="absolute bottom-0 left-0 w-96 h-96 bg-[--ootb-violet]/5 rounded-full blur-3xl"></div>
-    </div>
-
+  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] relative overflow-hidden">
     <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto relative">
+      <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">Nos Partenaires</SectionDivider>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
           {partenaires.map(partenaire => (
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center hover:shadow-md transition-all duration-300 hover:-translate-y-1 relative group">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-50/50 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center hover:shadow-md relative group">
               <div class="relative">
                 <div class="h-24 flex items-center justify-center mb-4">
                   <Image
                     src={partenaire.logo}
                     alt={`Logo ${partenaire.name}`}
-                    class="max-h-full w-auto transform transition-transform duration-300 group-hover:scale-105"
+                    class="max-h-full w-auto"
                     widths={[200]}
                     sizes="200px"
                     loading="lazy"
                   />
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">{partenaire.name}</h3>
-                <p class="text-gray-600 text-sm">{partenaire.description}</p>
+                <h3 class="text-lg font-semibold text-gray-900">{partenaire.name}</h3>
               </div>
             </div>
           ))}
@@ -519,37 +471,8 @@ const partenaires = [
   </section>
 </Layout>
 
-<style>
-  /* Animations raffinées */
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
 
-  .animate-float-delayed {
-    animation: float 8s ease-in-out infinite;
-    animation-delay: -4s;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
     }
   }
 
-  /* Transitions douces */
-  .transition-all {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Support de prefers-reduced-motion */
-  /* Support de prefers-reduced-motion */
-  @media (prefers-reduced-motion: reduce) {
-    .animate-float,
-    .animate-float-delayed {
-      animation: none;
-    }
-  }
-</style> 
+ 

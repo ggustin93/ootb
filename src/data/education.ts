@@ -15,7 +15,7 @@ export const heroContent = {
   subtitle: "La plateforme des pédagogies innovantes !",
   image: hero,
   primaryCTA: {
-    text: "Découvrir nos contenus",
+    text: "Découvrir Nos contenus",
     href: "/contenus"
   },
   secondaryCTA: {
@@ -133,7 +133,7 @@ export const aboutFeatures = [
 ];
 
 export const premiumFeatures = [
-  "Accès illimité à tous nos contenus experts",
+  "Accès illimité à tous Nos contenus experts",
   "Participation privilégiée aux événements",
   "Ressources pédagogiques exclusives",
   "Networking avec la communauté"

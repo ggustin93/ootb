@@ -12,13 +12,13 @@ const { heroImage } = Astro.props as Props;
 ---
 <section class="py-16 px-4 bg-[#45b3a4] text-white relative overflow-hidden">
   <div class="absolute inset-0 overflow-hidden">
-    <div class="absolute top-4 -right-4 w-[240px] h-[240px] z-20">
+    <div class="absolute top-4 -right-4 w-[120px] h-[120px] md:w-[240px] md:h-[240px] z-20">
       <Image
         src={heroImage}
         alt=""
         class="w-full h-full object-contain transform scale-x-[-1] rotate-[-15deg]"
-        widths={[240]}
-        sizes="240px"
+        widths={[120, 240]}
+        sizes="(max-width: 768px) 120px, 240px"
         aspectRatio="1:1"
         loading="lazy"
         decoding="async"
@@ -45,7 +45,7 @@ const { heroImage } = Astro.props as Props;
         </h2>
         
         <p class="text-lg text-white mb-8 max-w-xl">
-          Accédez à nos contenus experts et analyses approfondies pour transformer votre approche pédagogique
+          Accédez à Nos contenus experts et analyses approfondies pour transformer votre approche pédagogique
         </p>
         
         <div class="space-y-4 mb-8">
@@ -63,13 +63,13 @@ const { heroImage } = Astro.props as Props;
           ))}
         </div>
 
-        <div class="flex flex-wrap gap-4">
+        <div class="flex flex-col sm:flex-row gap-4">
           <Button
             href="/premium"
             variant="premium-primary"
             icon="tabler:crown"
           >
-            Découvrir l'offre Premium
+            Découvrir Premium
           </Button>
           <Button
             href="/podcast"

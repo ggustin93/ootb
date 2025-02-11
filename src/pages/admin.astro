@@ -1,0 +1,39 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administration OOTB</title>
+    <script
+      src="https://unpkg.com/@tinacms/cli@1.5.29/dist/tina.js"
+      crossorigin
+    ></script>
+  </head>
+  <body class="tinacms">
+    <div id="root"></div>
+    <script>
+      const init = async () => {
+        try {
+          await window.tina.init({
+            clientId: import.meta.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+            branch: 'main',
+            tokenStorage: 'LOCAL_STORAGE',
+            cmsCallback: (cms) => {
+              cms.flags.set('tina-admin', true);
+            },
+            apiURL: import.meta.env.TINA_PUBLIC_IS_LOCAL
+              ? 'http://localhost:4001/graphql'
+              : `https://content.tinajs.io/content/${import.meta.env.NEXT_PUBLIC_TINA_CLIENT_ID}/github/main`
+          });
+        } catch (error) {
+          console.error('Failed to initialize Tina', error);
+        }
+      };
+
+      init();
+    </script>
+  </body>
+</html>

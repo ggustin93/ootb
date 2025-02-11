@@ -12,16 +12,19 @@ interface Props {
 
 const { image, features } = Astro.props;
 ---
-<section class="md:pb-16 pb-12 md:pb-32 px-4 md:px-8 bg-[#FFFFFF] relative isolate">
+<section class="md:pb-16 md:pt-12 pb-8 pt-6 px-4 md:px-8 bg-[#FFFFFF] relative isolate">
   <!-- Effets de fond -->
   <div class="absolute inset-0 bg-[#FFFFFF]"></div>
+  
+  <!-- Séparateur visuel pour mobile -->
+  <div class="md:hidden w-full h-12 bg-gradient-to-b from-[--ootb-turquoise]/5 to-transparent"></div>
   
   <div class="max-w-6xl mx-auto relative z-10">
     <!-- Contenu principal -->
     <div class="flex flex-col md:grid md:grid-cols-5 gap-8 md:gap-16 lg:gap-24 items-center">
       <!-- En-tête mobile -->
       <div class="md:hidden mb-8">
-        <SectionDivider variant="secondary" class="mb-3 inline-flex">
+        <SectionDivider variant="turquoise" class="mb-3 inline-flex">
           <Icon name="tabler:target" class="w-4 h-4 mr-1" />
           Notre mission
         </SectionDivider>

@@ -10,14 +10,25 @@ const { class: className, ...props } = Astro.props;
 
 <section 
   class:list={[
-    "relative min-h-[75vh] flex items-start justify-center overflow-hidden",
+    // Layout de base : hauteur plein écran, centré horizontalement
+    "relative h-screen flex items-start justify-center overflow-hidden",
+
+    // Couleur de base turquoise
     "bg-[--ootb-turquoise]",
-    // Dégradé plus doux jusqu'aux nuages
+
+    // Dégradé vertical avec 4 points d'arrêt :
+    // 1. De 0% à 60% : turquoise pur pour garder une zone solide en haut
     "bg-gradient-to-b from-[--ootb-turquoise] from-0%",
-    "via-[--ootb-turquoise] via-40%",
-    "via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] via-60%",
-    "via-[color-mix(in_srgb,var(--ootb-turquoise)_70%,white)] via-75%",
-    "to-[color-mix(in_srgb,var(--ootb-turquoise)_40%,white)] to-90%",
+    "via-[--ootb-turquoise] via-60%",
+
+    // 2. À 70% : début subtil du dégradé (90% turquoise)
+    "via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] via-70%",
+
+    // 3. À 75% : transition plus marquée (60% turquoise)
+    "via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] via-75%",
+
+    // 4. À 80% : fin du dégradé proche du blanc (30% turquoise)
+    "to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%",
     className
   ]}
   {...props}
@@ -25,7 +36,7 @@ const { class: className, ...props } = Astro.props;
   <slot />
 
   <!-- Nuages -->
-  <div class="absolute bottom-[5%] md:bottom-[10%] left-0 right-0 pointer-events-none overflow-hidden">
+  <div class="absolute bottom-[15%] md:bottom-[18%] left-0 right-0 pointer-events-none overflow-hidden">
     <div class="relative w-full">
       <!-- Dégradé pour renforcer la visibilité -->
       <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/30 z-10"></div>
@@ -33,7 +44,7 @@ const { class: className, ...props } = Astro.props;
       <Image
         src={cloudsBg}
         alt="Nuages décoratifs"
-        class="w-[120%] md:w-[110%] h-auto transform md:scale-110 -translate-x-[10%] translate-y-[25%] md:translate-y-[10%] opacity-90"
+        class="w-[100%] md:w-[100%] h-auto transform"
         widths={[1200, 1600, 2000]}
         sizes="120vw"
         loading="eager"
@@ -43,5 +54,5 @@ const { class: className, ...props } = Astro.props;
   </div>
 
   <!-- Section blanche sous les nuages -->
-  <div class="absolute -bottom-1 left-0 right-0 h-[15%] md:h-[12%] bg-white"></div>
+  <div class="absolute bottom-[0%] md:-bottom-1 left-0 right-0 h-[1%] md:h-[19%] bg-white"></div>
 </section> 

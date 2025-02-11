@@ -544,6 +544,26 @@ const sections = [
             </div>
           </div>
 
+          <!-- Gradient Hero Section -->
+          <div id="composants-gradient-hero-section" class="p-8 bg-gray-50 rounded-xl mb-8">
+            <h4 class="text-lg font-semibold mb-4">Gradient Hero Section</h4>
+            <div class="bg-[--ootb-turquoise] p-8 rounded-lg">
+              <pre class="text-sm text-white font-mono overflow-x-auto">
+                <code>{
+`
+// Dégradé vertical avec 4 points d'arrêt
+
+bg-gradient-to-b from-[--ootb-turquoise] from-0%
+via-[--ootb-turquoise] via-60%
+via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] via-70%
+via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] via-75%
+to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
+                }</code>
+              </pre>
+              <p class="mt-4 text-sm text-white/80">Un dégradé progressif qui maintient une zone turquoise solide jusqu'à 60%, puis transite doucement vers le blanc en trois étapes (90%, 60%, puis 30% de turquoise) pour une meilleure intégration avec les nuages.</p>
+            </div>
+          </div>
+
           <!-- Cards -->
           <div id="composants-cards" class="p-8 bg-gray-50 rounded-xl">
             <h4 class="text-lg font-semibold mb-4">Cards</h4>

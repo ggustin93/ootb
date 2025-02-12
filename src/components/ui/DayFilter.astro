@@ -2,6 +2,7 @@
 import { dates, eventTypes } from '~/data/festival';
 import type { Event } from '~/types/festival';
 import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
 
 interface Props {
   events: Record<string, Event[]>;
@@ -19,35 +20,53 @@ const allEvents = Object.values(events).flat();
   <!-- Filtres -->
   <div class="space-y-6">
     <!-- Filtre par jour -->
-    <div class="flex overflow-x-auto gap-3 p-1" id="days-container">
-      <!-- Option "Tous les jours" -->
-      <button
-        class:list={[
-          "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
-          "flex flex-col items-center justify-center border border-[#e4451e]/20",
-          "active bg-[#e4451e] text-white shadow-md"
-        ]}
-        data-day="all"
-        type="button"
-      >
-        <span class="text-sm text-current opacity-75">Vue globale</span>
-        <span class="text-lg mt-1 font-semibold text-current">Tous les jours</span>
-      </button>
+    <div class="relative">
+      <div class="flex justify-between items-start mb-4">
+        <div class="flex-1">
+          <div class="flex overflow-x-auto gap-3 p-1" id="days-container">
+            <!-- Option "Tous les jours" -->
+            <button
+              class:list={[
+                "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
+                "flex flex-col items-center justify-center border border-[#e4451e]/20",
+                "active bg-[#e4451e] text-white shadow-md"
+              ]}
+              data-day="all"
+              type="button"
+            >
+              <span class="text-sm text-current opacity-75">Vue globale</span>
+              <span class="text-lg mt-1 font-semibold text-current">Tous les jours</span>
+            </button>
 
-      {dates.map((date, index) => (
-        <button
-          class:list={[
-            "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
-            "flex flex-col items-center justify-center border border-[#e4451e]/20",
-            "bg-white text-[#e4451e] hover:bg-[#e4451e]/5 hover:border-[#e4451e]/40 hover:shadow-sm"
-          ]}
-          data-day={String(index + 1)}
-          type="button"
-        >
-          <span class="text-sm text-current opacity-75">Jour {index + 1}</span>
-          <span class="text-lg mt-1 font-semibold text-current">{date}</span>
-        </button>
-      ))}
+            {dates.map((date, index) => (
+              <button
+                class:list={[
+                  "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
+                  "flex flex-col items-center justify-center border border-[#e4451e]/20",
+                  "bg-white text-[#e4451e] hover:bg-[#e4451e]/5 hover:border-[#e4451e]/40 hover:shadow-sm"
+                ]}
+                data-day={String(index + 1)}
+                type="button"
+              >
+                <span class="text-sm text-current opacity-75">Jour {index + 1}</span>
+                <span class="text-lg mt-1 font-semibold text-current">{date}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        <div class="ml-4">
+          <Button
+            href="/programme.pdf"
+            variant="outline"
+            size="sm"
+            icon="tabler:file-download"
+            iconPosition="left"
+          >
+            Programme PDF
+          </Button>
+        </div>
+      </div>
     </div>
 
     <!-- Filtre par type -->
@@ -134,7 +153,7 @@ const allEvents = Object.values(events).flat();
                 {event.speaker && (
                   <div class="flex items-center">
                     <Icon name="tabler:user" class="w-4 h-4 mr-1" />
-                    <span class="font-medium text-[#6ab29e]">{event.speaker}</span>
+                    <span class="font-medium text-gray-500">{event.speaker}</span>
                   </div>
                 )}
               </div>

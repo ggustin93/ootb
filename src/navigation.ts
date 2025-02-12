@@ -7,8 +7,8 @@ export const headerData = {
       href: getPermalink('/festival'),
       links: [
         {
-          text: 'À propos',
-          href: getPermalink('/festival#about'),
+          text: 'Vue d\'ensemble',
+          href: getPermalink('/festival'),
         },
         {
           text: 'Thèmes', 
@@ -30,6 +30,7 @@ export const headerData = {
     },
     {
       text: 'Nos contenus',
+      href: getBlogPermalink(),
       links: [
         {
           text: 'Tous les contenus',
@@ -62,6 +63,10 @@ export const headerData = {
       href: getPermalink('/appel-a-projets'),
       links: [
         {
+          text: 'Vue d\'ensemble',
+          href: getPermalink('/appel-a-projets'),
+        },
+        {
           text: 'Processus',
           href: getPermalink('/appel-a-projets#processus'),
         },
@@ -80,20 +85,12 @@ export const headerData = {
       href: getPermalink('/a-propos'),
       links: [
         {
-          text: 'Qui sommes-nous',
-          href: getPermalink('/a-propos#qui-sommes-nous'),
+          text: 'Vue d\'ensemble',
+          href: getPermalink('/a-propos'),
         },
         {
           text: 'Notre Vision',
           href: getPermalink('/a-propos#vision'),
-        },
-        {
-          text: 'Nos Missions',
-          href: getPermalink('/a-propos#missions'),
-        },
-        {
-          text: 'Nos Valeurs',
-          href: getPermalink('/a-propos#valeurs'),
         },
         {
           text: 'Notre Équipe',

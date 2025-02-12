@@ -11,6 +11,7 @@ import banniereFestival from '~/assets/images/banniere_festival.jpeg';
 import ActionBadge from '~/components/ui/ActionBadge.astro';
 import logo_festival_white from '~/assets/images/logo_festival_white.svg';
 import festivalHeroImage from '~/assets/images/festival_hero.webp';
+import ootbLogo from '~/assets/images/ootb-logo.svg';
 
 const metadata = {
   title: 'Festival Out of the Books 2025 | La Sucrerie - Wavre',
@@ -237,32 +238,35 @@ const themes = [
         </div>
 
         <!-- Stats sur une ligne avec style amélioré -->
-        <div class="relative py-16 bg-gradient-to-br from-[#6ab29e]/5 to-[#6ab29e]/10 rounded-3xl overflow-hidden">
+        <div class="relative py-16 bg-[--ootb-turquoise] rounded-3xl overflow-hidden shadow-xl">
           <!-- Éléments décoratifs -->
           <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-[#6ab29e]/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-            <div class="absolute bottom-0 left-0 w-48 h-48 bg-[#e4451e]/5 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2"></div>
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2"></div>
             <!-- Icônes flottantes -->
-            <div class="absolute w-8 h-8 top-[20%] left-[10%] text-[#6ab29e]/20 animate-float">
+            <div class="absolute w-8 h-8 top-[20%] left-[10%] text-white/20 animate-float">
               <Icon name="tabler:chart-dots" class="w-full h-full" />
             </div>
-            <div class="absolute w-8 h-8 bottom-[20%] right-[10%] text-[#e4451e]/20 animate-float-delayed">
+            <div class="absolute w-8 h-8 bottom-[20%] right-[10%] text-white/20 animate-float-delayed">
               <Icon name="tabler:chart-bar" class="w-full h-full" />
             </div>
           </div>
 
           <div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-6xl mx-auto">
             {[
-              { number: '40+', label: 'conférences', color: 'text-[#6ab29e]' },
-              { number: '20+', label: 'ateliers pratiques', color: 'text-[#6ab29e]' },
-              { number: '50+', label: 'intervenants', color: 'text-[#6ab29e]' },
-              { number: '1000+', label: 'participants', color: 'text-[#6ab29e]' }
-            ].map(({ number, label, color }) => (
+              { number: '40+', label: 'conférences', icon: 'tabler:presentation' },
+              { number: '20+', label: 'ateliers pratiques', icon: 'tabler:tool' },
+              { number: '80+', label: 'intervenants', icon: 'tabler:users' },
+              { number: '3000+', label: 'participants', icon: 'tabler:heart-handshake' }
+            ].map(({ number, label, icon }) => (
               <div class="text-center transform hover:-translate-y-1 transition-all duration-300">
-                <div class={`text-4xl md:text-5xl font-bold ${color} mb-2`}>
+                <div class="mb-4">
+                  <Icon name={icon} class="w-8 h-8 text-white/90 mx-auto" />
+                </div>
+                <div class="text-4xl md:text-5xl font-bold text-white mb-3">
                   {number}
                 </div>
-                <div class="text-base md:text-lg text-gray-600 font-medium capitalize">
+                <div class="text-xl md:text-2xl lg:text-3xl text-white/90 font-handwritten">
                   {label}
                 </div>
               </div>
@@ -375,17 +379,19 @@ const themes = [
   </section>
 
   <!-- Thèmes avec animation au scroll -->
-  <section class="relative py-24 bg-[#f8f6f4] overflow-hidden">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-          <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-[#6ab29e]/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
-          <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-[#e4451e]/5 rounded-full blur-3xl"></div>
-          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-white/50 rounded-full blur-3xl opacity-50"></div>
-      <!-- Icônes flottantes -->
-      <div class="absolute w-10 h-10 top-[25%] left-[15%] text-[#6ab29e]/20 animate-float">
-        <Icon name="tabler:bulb" class="w-full h-full" />
-      </div>
-      <div class="absolute w-8 h-8 bottom-[30%] right-[10%] text-[#e4451e]/20 animate-float-delayed">
-        <Icon name="tabler:brain" class="w-full h-full" />
+  <section class="relative py-24 bg-white overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute top-8 -right-4 w-[100px] h-[100px] md:w-[180px] md:h-[180px] z-20">
+        <Image
+          src={ootbLogo}
+          alt=""
+          class="w-full h-full object-contain transform scale-x-[-1] rotate-[-8deg] opacity-90"
+          widths={[100, 180]}
+          sizes="(max-width: 768px) 100px, 180px"
+          aspectRatio="1:1"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </div>
 
@@ -403,17 +409,17 @@ const themes = [
 
       <div class="grid md:grid-cols-3 gap-8">
         {themes.map((theme) => (
-          <div class="relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group transform hover:-translate-y-1 border border-white/20 overflow-hidden">
+          <div class="relative bg-[color-mix(in_srgb,var(--ootb-orange)_2%,white)] p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1 border border-[#e4451e]/5 overflow-hidden">
             <!-- Effet de brillance sur le hover -->
             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000"></div>
             <div class="relative z-10">
               <div class="mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-xl flex items-center justify-center relative">
-                  <div class="absolute inset-0 bg-[#6ab29e] rounded-xl opacity-20 animate-pulse"></div>
+                <div class="w-14 h-14 bg-gradient-to-br from-[#e4451e] to-[#ff6b47] rounded-xl flex items-center justify-center relative shadow-lg">
+                  <div class="absolute inset-0 bg-[#e4451e] rounded-xl opacity-20 animate-pulse"></div>
                   <Icon name={theme.icon} class="w-7 h-7 text-white relative z-10" />
                 </div>
               </div>
-              <h3 class="text-2xl font-bold text-[#2d3748] mb-4 group-hover:text-[#e4451e] transition-colors tracking-tight">{theme.title}</h3>
+              <h3 class="text-2xl font-bold text-gray-600 mb-4 group-hover:text-[#e4451e] transition-colors tracking-tight">{theme.title}</h3>
               <p class="text-[#4a5568] leading-relaxed font-normal tracking-wide">{theme.description}</p>
             </div>
             
@@ -429,11 +435,14 @@ const themes = [
 </Layout>
 
 <style>
+  .bg-pattern {
+    background-color: #f8f6f4;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e4451e' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
   .festival-card {
-    @apply bg-white/90 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
-    background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,255,255,0.88));
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    @apply bg-white/95 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
+    border: 1px solid rgba(255, 255, 255, 0.4);
   }
 
   .theme-title {

@@ -7,7 +7,7 @@ import logoTalent from '~/assets/images/logo_talent.avif';
 import ActionBadge from '~/components/ui/ActionBadge.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
-import Link from '~/components/ui/Link.astro';
+import Button from '~/components/ui/Button.astro';
 
 const metadata = {
   title: 'Appel à projets | Out of the Books',
@@ -55,100 +55,86 @@ const criteria = [
     description: "Une valeur ajoutée pour la communauté éducative"
   }
 ];
+
+const floatingIcons = [
+  { name: 'tabler:bulb', size: 'lg', position: { top: '15%', left: '40%' }, rotate: '-12deg' },
+  { name: 'tabler:messages', size: 'md', position: { top: '35%', right: '12%' }, rotate: '45deg' },
+  { name: 'tabler:target', size: 'sm', position: { top: '25%', left: '15%' }, animation: 'float' },
+  { name: 'tabler:check', size: 'sm', position: { top: '45%', right: '20%' }, animation: 'float-delayed' }
+];
+
 ---
 
 <Layout {metadata}>
   <GradientHeroSection>
-    <!-- Éléments décoratifs flottants -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <!-- Un seul motif géométrique subtil -->
-      <div class="absolute top-1/3 right-[10%] w-16 h-16 opacity-10">
-        <Icon name="tabler:book-2" class="w-full h-full text-white transform rotate-12 animate-float" />
-      </div>
-    </div>
-
-    <!-- Contenu principal -->
-    <div class="relative z-10 container mx-auto px-4 pt-32">
+    <div class="relative z-10 container mx-auto px-4 pt-16">
       <div class="max-w-6xl mx-auto">
-        <div class="grid md:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <!-- Image à gauche (1/3) -->
-          <div class="relative hidden md:block md:col-span-5">
-            <div class="relative w-full">
-              <div class="absolute inset-0 bg-white/10 rounded-3xl blur-2xl transform scale-95"></div>
-              <div class="relative transform hover:-rotate-2 transition-transform duration-500">
-                <Image
-                  src={logoTalent}
-                  alt="Les enseignants ont du talent"
-                  class="w-full h-full object-contain drop-shadow-2xl relative z-10"
-                  widths={[400]}
-                  sizes="400px"
-                  loading="eager"
-                />
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="text-center md:text-left">
+            <ActionBadge 
+              variant="appel" 
+              class="inline-block text-lg sm:text-xl tracking-wide transform -skew-x-12 shadow-lg mb-4"
+            >
+              Appel à projets
+            </ActionBadge>
+            <Image
+              src={logoTalent}
+              alt="Les enseignants ont du talent"
+              class="w-[400px] h-auto mb-4"
+              widths={[400]}
+              sizes="400px"
+              loading="eager"
+              decoding="async"
+            />
+            <blockquote class="text-2xl text-white/90 font-light mt-4 mb-6 border-l-4 border-[--ootb-yellow] pl-4">
+              Partagez votre expérience pédagogique innovante et inspirez vos pairs
+            </blockquote>
+            <div class="flex flex-wrap gap-3 justify-center md:justify-start mb-6">
+              <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                <Icon name="tabler:users" class="w-5 h-5 text-white" />
+                <span class="text-white">+100 projets soumis</span>
               </div>
+              <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                <Icon name="tabler:school" class="w-5 h-5 text-white" />
+                <span class="text-white">+50 écoles</span>
+              </div>
+            </div>
+            <div class="flex gap-4 justify-center md:justify-start">
+              <Button
+                href="#processus"
+                variant="outline-blue"
+                size="lg"
+                icon="tabler:send"
+              >
+                Soumettre mon projet
+              </Button>
+              <Button
+                href="#criteres"
+                variant="secondary"
+                size="lg"
+                icon="tabler:info-circle"
+              >
+                En savoir plus
+              </Button>
             </div>
           </div>
 
-          <!-- Contenu textuel (2/3) -->
-          <div class="text-center md:text-left md:col-span-7">
-            <div class="space-y-6">
-              <!-- Badge et titre -->
-              <div>
-                <ActionBadge 
-                  variant="appel" 
-                  class="inline-block text-lg sm:text-xl tracking-wide transform -skew-x-12 shadow-lg mb-6"
-                >
-                  Appel à projets
-                </ActionBadge>
-
-                <h1 class="text-5xl md:text-6xl font-extrabold text-white">
-                  <span class="text-4xl md:text-5xl font-bold text-white/90">
-                    <span class="font-handwritten">"Les enseignants ont du talent"</span>
-                  </span>
-                </h1>
-              </div>
-
-              <!-- Description -->
-              <p class="text-lg text-white/90 font-light leading-relaxed">
-                Vous avez mis en place un projet innovant dans votre classe ? Participez à l'appel à projets "Les enseignants ont du talent" et 
-                <span class="text-white font-medium">inspirez vos pairs</span>. Découvrez les 
-                <Link 
-                  href="/category/fiche" 
-                  icon="tabler:external-link"
-                >
-                  ressources pédagogiques
-                </Link>
-                déjà partagées par la communauté.
-              </p>
-
-              <!-- CTA -->
-              <div class="flex flex-wrap gap-6 justify-center md:justify-start pt-6">
-                <a 
-                  href="#soumettre"
-                  class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-[#6ab29e] rounded-full hover:bg-[#6ab29e] hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6ab29e]"
-                >
-                  <Icon 
-                    name="tabler:send" 
-                    class="w-5 h-5 transition-all duration-300 group-hover:translate-x-0.5 group-hover:scale-110" 
-                  />
-                  <span class="font-semibold">
-                    Soumettre un projet
-                  </span>
-                </a>
-
-                <a 
-                  href="#criteres"
-                  class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white/10 text-white rounded-full hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/10 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50"
-                >
-                  <span class="font-medium">
-                    En savoir plus
-                  </span>
-                  <Icon 
-                    name="tabler:arrow-right" 
-                    class="w-5 h-5 transition-all duration-300 group-hover:translate-x-1" 
-                  />
-                </a>
-              </div>
+          <!-- Image à droite -->
+          <div class="relative hidden md:block">
+            <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+              <Image
+                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop"
+                alt="Innovation pédagogique"
+                class="rounded-2xl shadow-xl"
+                widths={[400, 800]}
+                sizes="(max-width: 768px) 400px, 800px"
+                aspectRatio="4:3"
+                loading="eager"
+                decoding="async"
+              />
             </div>
+            <!-- Élément décoratif derrière l'image -->
+            <div class="absolute inset-0 bg-[--ootb-blue] rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"></div>
           </div>
         </div>
       </div>
@@ -156,12 +142,12 @@ const criteria = [
   </GradientHeroSection>
 
   <!-- Processus avec fond subtil -->
-  <section class="py-24 bg-[color-mix(in_srgb,var(--ootb-turquoise)_3%,white)]">
-    <div class="container mx-auto px-4">
+  <section id="processus" class="bg-white scroll-mt-16">
+    <div class="container mx-auto px-4 pb-16">
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-16">
           <SectionDivider variant="sky" class="mb-6">
-            <Icon name="tabler:bulb" class="w-5 h-5" />
+            <Icon name="tabler:list-check" class="w-5 h-5" />
             Processus
           </SectionDivider>
           <h2 class="text-4xl md:text-5xl font-bold text-sky-900 mb-6">
@@ -172,37 +158,44 @@ const criteria = [
           </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8">
-          {processSteps.map((step, index) => (
-            <div class="relative group bg-white/80 backdrop-blur-sm rounded-2xl p-8 hover:shadow-lg transition-all duration-300 border border-white/60">
-              <div class="absolute inset-0 bg-gradient-to-br from-[#6ab29e]/5 to-transparent rounded-2xl transition-opacity duration-300 opacity-0 group-hover:opacity-100"></div>
-              
-              <div class="relative space-y-4">
-                <!-- Numéro de l'étape -->
-                <span class="absolute -top-4 -left-4 w-8 h-8 bg-[#6ab29e]/10 rounded-full flex items-center justify-center text-[#6ab29e] font-semibold">
-                  {index + 1}
-                </span>
-
-                <div class="inline-flex items-center justify-center w-14 h-14 bg-[#6ab29e]/10 text-[--ootb-blue] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <Icon name={step.icon} class="w-7 h-7" />
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <!-- Cartes à gauche -->
+          <div class="space-y-6 h-full">
+            {processSteps.map((step, index) => (
+              <div class="bg-[color-mix(in_srgb,var(--ootb-blue)_85%,white)] rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-start gap-5">
+                  <div class="bg-white/10 rounded-lg p-3 shrink-0">
+                    <Icon name={step.icon} class="w-6 h-6 text-white" />
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="text-xl font-semibold mb-2 text-white">{step.title}</h3>
+                    <p class="text-white/90 leading-relaxed">{step.description}</p>
+                  </div>
                 </div>
-                
-                <h3 class="text-xl font-semibold text-sky-900">
-                  {step.title}
-                </h3>
-                <p class="text-gray-600 text-sm leading-relaxed">
-                  {step.description}
-                </p>
               </div>
+            ))}
+          </div>
+          
+          <!-- Image à droite -->
+          <div class="relative order-first md:order-last h-full">
+            <div class="h-full">
+              <Image
+                src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3"
+                alt="Innovation pédagogique"
+                class="rounded-2xl shadow-xl w-full h-full object-cover"
+                width={600}
+                height={400}
+                aspectRatio={1}
+              />
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Critères avec image de fond -->
-  <section id="criteres" class="py-24 md:py-32 relative">
+  <section id="criteres" class="py-24 md:py-32 relative bg-[color-mix(in_srgb,var(--ootb-blue)_10%,white)] scroll-mt-16">
     <!-- Image de fond avec overlay -->
     <div class="absolute inset-0">
       <Image
@@ -214,7 +207,7 @@ const criteria = [
         aspectRatio="16:9"
         loading="lazy"
       />
-      <div class="absolute inset-0 bg-gradient-to-b from-white via-[color-mix(in_srgb,var(--ootb-violet)_5%,white)] to-white"></div>
+      <div class="absolute inset-0 bg-[color-mix(in_srgb,var(--ootb-blue)_5%,white)]"></div>
     </div>
 
     <div class="container mx-auto px-4 relative z-10">
@@ -273,10 +266,10 @@ const criteria = [
   </section>
 
   <!-- Formulaire -->
-  <section id="soumettre" class="py-24 md:py-32 bg-gradient-to-b from-[--ootb-blue] from-0% via-[#4a90c9] via-60% to-[--ootb-blue] to-100%">
+  <section id="formulaire" class="py-24 md:py-32 bg-gradient-to-b from-[--ootb-blue] from-0% via-[#4a90c9] via-60% to-[--ootb-blue] to-100% scroll-mt-16">
     <div class="container mx-auto px-4">
       <div class="max-w-3xl mx-auto text-center mb-16">
-        <SectionDivider variant="sky" class="mb-6 bg-white/10 backdrop-blur-sm">
+        <SectionDivider variant="sky" class="mb-6">
           <Icon name="tabler:send" class="w-5 h-5 text-white" />
           <span class="text-white">Soumission</span>
         </SectionDivider>
@@ -350,4 +343,4 @@ const criteria = [
   .criteria-card:hover {
     background: linear-gradient(135deg, white, rgba(var(--ootb-blue-rgb), 0.05));
   }
-</style> 
+</style>

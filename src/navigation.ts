@@ -60,18 +60,44 @@ export const headerData = {
     {
       text: 'Appel à projet',
       href: getPermalink('/appel-a-projets'),
+      links: [
+        {
+          text: 'Processus',
+          href: getPermalink('/appel-a-projets#processus'),
+        },
+        {
+          text: 'Critères',
+          href: getPermalink('/appel-a-projets#criteres'),
+        },
+        {
+          text: 'Soumettre un projet',
+          href: getPermalink('/appel-a-projets#formulaire'),
+        },
+      ],
     },
     {
       text: 'À propos',
       href: getPermalink('/a-propos'),
       links: [
         {
+          text: 'Qui sommes-nous',
+          href: getPermalink('/a-propos#qui-sommes-nous'),
+        },
+        {
+          text: 'Notre Vision',
+          href: getPermalink('/a-propos#vision'),
+        },
+        {
           text: 'Nos Missions',
-          href: getPermalink('/a-propos#nos-missions'),
+          href: getPermalink('/a-propos#missions'),
+        },
+        {
+          text: 'Nos Valeurs',
+          href: getPermalink('/a-propos#valeurs'),
         },
         {
           text: 'Notre Équipe',
-          href: getPermalink('/a-propos#notre-equipe'),
+          href: getPermalink('/a-propos#equipe'),
         },
         {
           text: 'Nos Partenaires',
@@ -98,9 +124,11 @@ export const footerData = {
     {
       title: 'À propos',
       links: [
-        { text: 'Notre Vision', href: getPermalink('/a-propos#notre-vision') },
-        { text: 'Nos Valeurs', href: getPermalink('/a-propos#nos-valeurs') },
-        { text: 'Nos Missions', href: getPermalink('/a-propos#nos-missions') },
+        { text: 'Qui sommes-nous', href: getPermalink('/a-propos#qui-sommes-nous') },
+        { text: 'Notre Vision', href: getPermalink('/a-propos#vision') },
+        { text: 'Nos Valeurs', href: getPermalink('/a-propos#valeurs') },
+        { text: 'Nos Missions', href: getPermalink('/a-propos#missions') },
+        { text: 'Notre Équipe', href: getPermalink('/a-propos#equipe') },
         { text: 'Contact', href: getPermalink('/contact') },
       ],
     },

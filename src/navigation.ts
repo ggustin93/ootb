@@ -3,19 +3,27 @@ import { getPermalink, getBlogPermalink } from './utils/permalinks';
 export const headerData = {
   links: [
     {
-      text: 'Le festival',
+      text: 'Festival',
       href: getPermalink('/festival'),
       links: [
         {
-          text: 'Infos pratiques',
-          href: getPermalink('/festival#infos-pratiques'),
+          text: 'À propos',
+          href: getPermalink('/festival#about'),
         },
         {
-          text: 'Programme', 
+          text: 'Thèmes', 
+          href: getPermalink('/festival#themes'),
+        },
+        {
+          text: 'Programme',
           href: getPermalink('/festival#programme'),
         },
         {
-          text: 'Tickets',
+          text: 'Galerie photos',
+          href: getPermalink('/festival#gallery'),
+        },
+        {
+          text: 'Billetterie',
           href: getPermalink('/festival/tickets'),
         }
       ]
@@ -29,23 +37,23 @@ export const headerData = {
         },
         {
           text: 'Premium',
-          href: getBlogPermalink() + '?category=premium',
+          href: getPermalink('/category/premium'),
         },
         {
           text: 'Podcasts',
-          href: getBlogPermalink() + '?category=podcasts',
+          href: getPermalink('/category/podcast'),
         },
         {
           text: 'Pédagoscope',
-          href: getBlogPermalink() + '?category=tv',
+          href: getPermalink('/category/tv'),
         },
         {
           text: 'Live Facebook',
-          href: getBlogPermalink() + '?category=live',
+          href: getPermalink('/category/live'),
         },
         {
           text: 'Fiches pédagogiques',
-          href: getBlogPermalink() + '?category=fiches',
+          href: getPermalink('/category/fiche'),
         },
       ],
     },
@@ -100,11 +108,11 @@ export const footerData = {
       title: 'Nos contenus',
       links: [
         { text: 'Tous les contenus', href: getBlogPermalink() },
-        { text: 'Premium', href: getBlogPermalink() + '?category=premium' },
-        { text: 'Podcasts', href: getBlogPermalink() + '?category=podcasts' },
-        { text: 'Pédagoscope', href: getBlogPermalink() + '?category=tv' },
-        { text: 'Live Facebook', href: getBlogPermalink() + '?category=live' },
-        { text: 'Fiches pédagogiques', href: getBlogPermalink() + '?category=fiches' },
+        { text: 'Premium', href: getPermalink('/category/premium') },
+        { text: 'Podcasts', href: getPermalink('/category/podcast') },
+        { text: 'Pédagoscope', href: getPermalink('/category/tv') },
+        { text: 'Live Facebook', href: getPermalink('/category/live') },
+        { text: 'Fiches pédagogiques', href: getPermalink('/category/fiche') },
       ],
     },
     {
@@ -132,6 +140,6 @@ export const footerData = {
   //  { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
   footNote: `
-    Out of the Books ASBL · Tous droits réservés © ${new Date().getFullYear()}
+    Out of the Books ASBL · Tous droits réservés ${new Date().getFullYear()}
   `,
 };

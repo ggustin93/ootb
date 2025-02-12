@@ -53,31 +53,6 @@ const valeurs = [
   }
 ];
 
-{/* Section réalisations commentée
-const realisations = [
-  {
-    icon: 'tabler:calendar',
-    title: 'Festival Out of the Books',
-    description: 'Organisation de 6 éditions avec plus de 8 400 visiteurs cumulés'
-  },
-  {
-    icon: 'tabler:device-tv',
-    title: 'Contenus Multimédia',
-    description: 'Émission Pédagoscope, podcast "Education: mode d\'emploi" et plus de 65 Lives depuis 2020'
-  },
-  {
-    icon: 'tabler:users',
-    title: 'Communauté',
-    description: 'Plus de 8 600 membres actifs et engagés'
-  },
-  {
-    icon: 'tabler:star',
-    title: 'Projets Enseignants',
-    description: '60 projets d\'enseignants mis en valeur'
-  }
-];
-*/}
-
 const teamMembers = [
   {
     name: 'Sophie Vanden Plas',
@@ -136,6 +111,7 @@ const partenaires = [
     logo: 'https://static.wixstatic.com/media/56c117_0943597d29324f9fbfadeefe2237eecd~mv2.jpg/v1/fill/w_296,h_148,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/ootb-partenaire-tvcom.jpg'
   }
 ];
+
 ---
 
 <Layout {metadata}>
@@ -200,32 +176,32 @@ const partenaires = [
 
   </GradientHeroSection>
 
-  <!-- Contexte -->
-  <section class="py-16 bg-white relative overflow-hidden">
-
+  <!-- Qui sommes-nous -->
+  <section class="pb-16 bg-white relative overflow-hidden">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="primary" class="mb-12">Contexte</SectionDivider>
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div class="prose prose-lg max-w-none order-2 md:order-1">
-            <p class="text-gray-700 leading-relaxed">
+        <SectionDivider variant="primary" class="mb-12 text-[--ootb-turquoise]">Qui sommes-nous ?</SectionDivider>
+        
+        <div class="md:flex md:gap-8 md:items-start">
+          <div class="md:w-1/3 mb-6 md:mb-0">
+            <div class="rounded-xl overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop"
+                alt="Des personnes collaborant autour d'un projet éducatif"
+                class="w-full h-auto object-cover aspect-[3/4]"
+              />
+            </div>
+          </div>
+          <div class="md:w-2/3">
+            <p>
               Face aux défis croissants de l'éducation moderne et à l'évolution rapide de notre société, nous avons constaté un besoin urgent de repenser nos approches pédagogiques. Les méthodes traditionnelles, bien qu'ayant fait leurs preuves, ne suffisent plus à préparer pleinement les apprenants aux enjeux du XXIe siècle.
             </p>
-            <p class="text-gray-700 leading-relaxed mt-4">
+            <p>
               C'est de ce constat qu'est né Out of the Books : une plateforme dédiée à l'innovation pédagogique, conçue pour accompagner les enseignants, les formateurs et tous les acteurs de l'éducation dans leur démarche de transformation.
             </p>
-          </div>
-          <div class="relative group order-1 md:order-2">
-            <div class="absolute inset-0 bg-[--ootb-turquoise] rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-300"></div>
-            <Image
-              src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2532&q=80"
-              alt="Éducation moderne et innovation"
-              class="relative rounded-2xl shadow-lg transform group-hover:-rotate-1 transition-transform duration-300 aspect-[4/3] object-cover w-full"
-              widths={[400, 800]}
-              sizes="(max-width: 768px) 400px, 800px"
-              loading="eager"
-              decoding="async"
-            />
+            <p>
+              Nous sommes convaincus que l'innovation en éducation ne peut se faire qu'à travers la collaboration et le partage d'expériences. C'est pourquoi nous avons créé cette plateforme, véritable carrefour d'échanges et de ressources pour tous les acteurs de l'éducation.
+            </p>
           </div>
         </div>
       </div>
@@ -236,7 +212,7 @@ const partenaires = [
   <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-yellow)_5%,white)] relative overflow-hidden">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="primary" class="mb-12">Notre Vision</SectionDivider>
+        <SectionDivider variant="primary" class="mb-12 text-[--ootb-yellow]">Notre Vision</SectionDivider>
         
         <!-- Citation -->
         <div class="bg-gradient-to-br from-[--ootb-turquoise] to-[color-mix(in_srgb,var(--ootb-turquoise)_80%,var(--ootb-violet))] rounded-xl p-8 shadow-lg relative overflow-hidden group mb-8">
@@ -273,45 +249,15 @@ const partenaires = [
   </section>
 
   <!-- Nos Missions -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-green)_8%,white)] relative overflow-hidden">
-    <!-- Mascotte -->
-    <div class="absolute bottom-0 right-0 w-[200px] h-[200px] z-20">
-      <Image
-        src={mascotte}
-        alt=""
-        class="w-full h-full object-contain transform scale-x-[-1] rotate-[-5deg]"
-        widths={[200]}
-        sizes="200px"
-        aspectRatio="1:1"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-    <!-- Livres flottants -->
-    <div class="absolute w-20 h-28 -rotate-12 top-[15%] left-[40%] opacity-20">
-      <Icon name="tabler:book-2" class="w-full h-full text-[--ootb-green] filter drop-shadow-lg" />
-    </div>
-    <div class="absolute w-16 h-24 rotate-45 top-[35%] right-[12%] opacity-20">
-      <Icon name="tabler:book" class="w-full h-full text-[--ootb-green] filter drop-shadow-lg" />
-    </div>
-    <div class="absolute w-14 h-20 -rotate-6 bottom-[25%] left-[15%] opacity-20">
-      <Icon name="tabler:book-upload" class="w-full h-full text-[--ootb-turquoise] filter drop-shadow-lg" />
-    </div>
-    <div class="absolute w-12 h-16 rotate-12 top-[45%] left-[25%] opacity-15">
-      <Icon name="tabler:books" class="w-full h-full text-[--ootb-violet] filter drop-shadow-lg" />
-    </div>
-    <div class="absolute w-10 h-14 -rotate-15 top-[20%] right-[35%] opacity-15">
-      <Icon name="tabler:book-download" class="w-full h-full text-[--ootb-orange] filter drop-shadow-lg" />
-    </div>
-
+  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="primary" class="mb-12">Nos Missions</SectionDivider>
+        <SectionDivider variant="primary" class="mb-12 text-[--ootb-orange]">Nos Missions</SectionDivider>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {missions.map(mission => (
             <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md">
               <div class="flex items-start gap-4">
-                <div class="bg-[--ootb-turquoise] rounded-lg p-3 transform transition-transform duration-300 hover:rotate-6">
+                <div class="bg-[--ootb-turquoise] rounded-lg p-3">
                   <Icon name={mission.icon} class="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -327,12 +273,10 @@ const partenaires = [
   </section>
 
   <!-- Nos Valeurs -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-violet)_5%,white)] relative overflow-hidden">
-
-
+  <section class="py-16 bg-white relative overflow-hidden">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="primary" class="mb-12">Nos Valeurs</SectionDivider>
+        <SectionDivider variant="primary" class="mb-12 text-[--ootb-violet]">Nos Valeurs</SectionDivider>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {valeurs.map(valeur => (
             <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md relative group">
@@ -353,89 +297,113 @@ const partenaires = [
     </div>
   </section>
 
-  <!-- Nos Réalisations -->
-  {/* Nos Réalisations - Section commentée car informations présentes dans d'autres sections
-  <section class="py-16 bg-white relative overflow-hidden">
+  <!-- Notre Équipe -->
+  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-violet)_5%,white)] relative overflow-hidden">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="primary" class="mb-12">Nos Réalisations</SectionDivider>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {realisations.map(realisation => (
-            <div class="bg-white shadow-sm rounded-xl p-6 hover:shadow-md transition-all duration-300">
-              <div class="flex items-start gap-4">
-                <div class="bg-[--ootb-violet] rounded-lg p-3">
-                  <Icon name={realisation.icon} class="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 class="text-xl font-semibold text-gray-900 mb-2">{realisation.title}</h3>
-                  <p class="text-gray-700">{realisation.description}</p>
+        <SectionDivider variant="primary" class="mb-12 text-[--ootb-orange]">Notre équipe</SectionDivider>
+        
+        <!-- Fondatrices -->
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <!-- Sophie -->
+          <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm">
+            <div class="flex items-start gap-6">
+              <div class="flex-shrink-0">
+                <div class="relative w-24 h-24 rounded-xl overflow-hidden shadow-md group">
+                  <Image
+                    src={teamMembers[0].photo}
+                    alt={teamMembers[0].name}
+                    class="w-full h-full object-cover"
+                    widths={[96]}
+                    sizes="96px"
+                    aspectRatio="1:1"
+                    loading="lazy"
+                  />
                 </div>
               </div>
+              <div class="flex-grow">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">{teamMembers[0].name}</h3>
+                <p class="text-[--ootb-violet] font-medium mb-3">{teamMembers[0].role}</p>
+                <p class="text-gray-700 mb-4">{teamMembers[0].description}</p>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-  */}
+          </div>
 
-  <!-- Notre Équipe -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="primary" class="mb-12">Qui sommes-nous ?</SectionDivider>
-        
+          <!-- Alexia -->
+          <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm">
+            <div class="flex items-start gap-6">
+              <div class="flex-shrink-0">
+                <div class="relative w-24 h-24 rounded-xl overflow-hidden shadow-md group">
+                  <Image
+                    src={teamMembers[1].photo}
+                    alt={teamMembers[1].name}
+                    class="w-full h-full object-cover"
+                    widths={[96]}
+                    sizes="96px"
+                    aspectRatio="1:1"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="flex-grow">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">{teamMembers[1].name}</h3>
+                <p class="text-[--ootb-violet] font-medium mb-3">{teamMembers[1].role}</p>
+                <p class="text-gray-700 mb-4">{teamMembers[1].description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Présentation -->
         <div class="prose prose-lg max-w-none bg-white/80 backdrop-blur-sm rounded-xl p-8 mb-12">
           <p class="text-gray-700 leading-relaxed">
-            Out of the Books est une association créée par des passionnés d'éducation, réunissant des enseignants, des chercheurs, des experts en pédagogie et des professionnels de l'éducation. Notre équipe pluridisciplinaire travaille main dans la main pour identifier, documenter et partager les meilleures pratiques pédagogiques.
-          </p>
-          <p class="text-gray-700 leading-relaxed mt-4">
-            Nous sommes convaincus que l'innovation en éducation ne peut se faire qu'à travers la collaboration et le partage d'expériences. C'est pourquoi nous avons créé cette plateforme, véritable carrefour d'échanges et de ressources pour tous les acteurs de l'éducation.
+            Notre équipe est composée de professionnels passionnés qui apportent chacun leur expertise unique : enseignants de terrain, chercheurs en sciences de l'éducation, experts en pédagogie et spécialistes de l'innovation éducative. Cette diversité est notre force et nous permet d'avoir une approche complète et pragmatique des enjeux éducatifs.
           </p>
         </div>
 
-        <!-- Membres de l'équipe -->
+        <!-- Autres membres -->
         <div class="grid md:grid-cols-2 gap-8">
-          {teamMembers.map(member => (
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm">
-              <div class="flex items-start gap-6">
-                <!-- Photo -->
-                <div class="flex-shrink-0">
-                  <div class="relative w-24 h-24 rounded-xl overflow-hidden shadow-md group">
-                    <Image
-                      src={member.photo}
-                      alt={member.name}
-                      class="w-full h-full object-cover"
-                      widths={[96]}
-                      sizes="96px"
-                      aspectRatio="1:1"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <!-- Informations -->
-                <div class="flex-grow">
-                  <h3 class="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                  <p class="text-[--ootb-violet] font-medium mb-3">{member.role}</p>
-                  <p class="text-gray-700 mb-4">{member.description}</p>
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-gray-600">
-                      <Icon name="tabler:mail" class="w-5 h-5" />
-                      <a href={`mailto:${member.contact.email}`} class="hover:text-[--ootb-turquoise]">
-                        {member.contact.email}
-                      </a>
+          {teamMembers.map((member, index) => (
+            index > 1 && (
+              <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm">
+                <div class="flex items-start gap-6">
+                  <!-- Photo -->
+                  <div class="flex-shrink-0">
+                    <div class="relative w-24 h-24 rounded-xl overflow-hidden shadow-md group">
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        class="w-full h-full object-cover"
+                        widths={[96]}
+                        sizes="96px"
+                        aspectRatio="1:1"
+                        loading="lazy"
+                      />
                     </div>
-                    <div class="flex items-center gap-2 text-gray-600">
-                      <Icon name="tabler:phone" class="w-5 h-5" />
-                      <a href={`tel:${member.contact.phone.replace(/[^0-9+]/g, '')}`} class="hover:text-[--ootb-turquoise]">
-                        {member.contact.phone}
-                      </a>
+                  </div>
+                  <!-- Informations -->
+                  <div class="flex-grow">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
+                    <p class="text-[--ootb-violet] font-medium mb-3">{member.role}</p>
+                    <p class="text-gray-700 mb-4">{member.description}</p>
+                    <div class="space-y-2">
+                      <div class="flex items-center gap-2 text-gray-600">
+                        <Icon name="tabler:mail" class="w-5 h-5" />
+                        <a href={`mailto:${member.contact.email}`} class="hover:text-[--ootb-turquoise]">
+                          {member.contact.email}
+                        </a>
+                      </div>
+                      <div class="flex items-center gap-2 text-gray-600">
+                        <Icon name="tabler:phone" class="w-5 h-5" />
+                        <a href={`tel:${member.contact.phone.replace(/[^0-9+]/g, '')}`} class="hover:text-[--ootb-turquoise]">
+                          {member.contact.phone}
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )
           ))}
         </div>
       </div>
@@ -443,10 +411,10 @@ const partenaires = [
   </section>
 
   <!-- Partenaires -->
-  <section class="py-16 bg-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] relative overflow-hidden">
+  <section class="py-16 bg-white relative overflow-hidden">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="primary" class="mb-12">Nos Partenaires</SectionDivider>
+        <SectionDivider variant="primary" class="mb-12 text-[--ootb-blue]">Nos Partenaires</SectionDivider>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
           {partenaires.map(partenaire => (
             <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center hover:shadow-md relative group">
@@ -470,9 +438,3 @@ const partenaires = [
     </div>
   </section>
 </Layout>
-
-
-    }
-  }
-
- 

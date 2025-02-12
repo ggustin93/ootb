@@ -1,17 +1,16 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import { Icon } from 'astro-icon/components';
-
+import Image from '~/components/common/Image.astro';
+import FestivalHeroSection from '~/components/sections/FestivalHeroSection.astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
 import DayFilter from '~/components/ui/DayFilter.astro';
 import { eventsByDay } from '~/data/festival';
-import Image from '~/components/common/Image.astro';
-import SectionDivider from '~/components/ui/SectionDivider.astro';
-import VideoPlayer from '~/components/common/VideoPlayer.astro';
+import YouTubePlayer from '~/components/common/YouTubePlayer.astro';
 import banniereFestival from '~/assets/images/banniere_festival.jpeg';
-import ootbLogo from '~/assets/images/ootb-logo.svg';
-import ootbLogoWhite from '~/assets/images/logo_ootb_white.svg';
 import ActionBadge from '~/components/ui/ActionBadge.astro';
-import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
+import logo_festival_white from '~/assets/images/logo_festival_white.svg';
+import festivalHeroImage from '~/assets/images/festival_hero.webp';
 
 const metadata = {
   title: 'Festival Out of the Books 2025 | La Sucrerie - Wavre',
@@ -60,97 +59,23 @@ const themes = [
 ---
 
 <Layout metadata={metadata}>
-  <GradientHeroSection>
-    <!-- Éléments décoratifs flottants -->
-    <div class="absolute inset-0 overflow-hidden">
-      <!-- Livres flottants -->
-      <div class="absolute w-24 h-32 -rotate-12 top-[15%] left-[40%] opacity-30 transition-transform hover:-translate-y-2 duration-1000">
-        <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
-      </div>
-      <div class="absolute w-20 h-28 rotate-45 top-[35%] right-[12%] opacity-30 transition-transform hover:translate-y-2 duration-1000">
-        <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
-      </div>
-      <!-- Icônes flottantes supplémentaires -->
-      <div class="absolute w-16 h-16 top-[25%] left-[15%] opacity-20 animate-float">
-        <Icon name="tabler:school" class="w-full h-full text-white filter drop-shadow-lg" />
-      </div>
-      <div class="absolute w-16 h-16 top-[45%] right-[20%] opacity-20 animate-float-delayed">
-        <Icon name="tabler:bulb" class="w-full h-full text-white filter drop-shadow-lg" />
-      </div>
-    </div>
+  <FestivalHeroSection
+    logo={logo_festival_white}
+    heroImage={festivalHeroImage}
+    date="1, 2 et 3 octobre 2025"
+    location="La Sucrerie - Wavre"
+    stats={[
+      { icon: "tabler:users", value: "+3000 participants" },
+      { icon: "tabler:microphone-2", value: "+40 conférences" },
+      { icon: "tabler:presentation", value: "+20 ateliers" }
+    ]}
+  />
 
-    <div class="relative z-10 container mx-auto px-4 pt-24">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-8 items-start">
-          <!-- Contenu textuel -->
-          <div class="text-left">
-            <h1 class="text-left">
-              <ActionBadge variant="festival" class="inline-block sm:text-xl md:text-1xl lg:text-2xl tracking-wide mb-4 max-w-[200px]">Festival</ActionBadge>
-              <div class="block mb-2">
-                <Image
-                  src={ootbLogoWhite}
-                  alt="Out of the Books"
-                  class="w-full max-w-[400px] h-auto"
-                  widths={[300, 400]}
-                  sizes="(max-width: 768px) 300px, 400px"
-                  loading="eager"
-                />
-              </div>
-              <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[--ootb-yellow] tracking-tight">2025</span>
-            </h1>
-
-            <div class="mt-6 space-y-2">
-              <p class="hero-text text-base sm:text-lg md:text-xl drop-shadow-sm">
-                1, 2 et 3 octobre 2025 | La Sucrerie - Wavre
-              </p>
-              <p class="hero-text text-base sm:text-lg md:text-xl leading-relaxed drop-shadow-sm">
-                3 jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes.
-              </p>
-            </div>
-
-            <!-- Boutons d'action -->
-            <div class="mt-10 relative">
-              <a href="#tickets" class="inline-flex items-center gap-3 bg-white/90 text-[--ootb-orange] px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[--ootb-orange] hover:text-white border-2 border-[--ootb-orange] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group text-base sm:text-lg backdrop-blur-sm">
-                <Icon name="tabler:ticket" class="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:-translate-x-0.5" />
-                <span class="font-medium">Réserver mes tickets</span>
-              </a>
-              <div class="absolute right-0 -top-8">
-                <a href="#programme" class="inline-flex items-center gap-2 text-[--ootb-yellow] transition-all duration-300 group text-2xl sm:text-3xl font-handwritten rotate-[-2deg] hover:rotate-[-1deg]">
-                  <span class="relative">
-                    Voir le programme
-                    <span class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
-                    <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
-                    <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
-                  </span>
-                  <Icon name="tabler:arrow-down" class="w-8 h-8 transition-transform duration-300 group-hover:translate-y-1 animate-bounce-slow" />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Image/Logo -->
-          <div class="relative hidden md:block">
-            <div class="relative w-full max-w-[450px] mx-auto aspect-square transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src={ootbLogo}
-                alt="Logo Out of the Books"
-                class="w-full h-full object-contain drop-shadow-2xl"
-                widths={[400, 450]}
-                sizes="(max-width: 768px) 400px, 450px"
-                loading="eager"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </GradientHeroSection>
-
-  <!-- Cartes d'activités -->
+  <!-- Cartes d'activités 
   <section class="relative -mt-16 mb-16">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="grid md:grid-cols-3 gap-6">
-        <!-- Conférences -->
+       # Conférences 
         <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
           <div class="relative p-6">
             <div class="absolute inset-0 bg-gradient-to-br from-[#6ab29e]/5 to-transparent rounded-2xl transition-all duration-300 group-hover:from-[#6ab29e]/10"></div>
@@ -164,7 +89,7 @@ const themes = [
           </div>
         </div>
 
-        <!-- Ateliers -->
+        # Ateliers
         <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
           <div class="relative p-6">
             <div class="absolute inset-0 bg-gradient-to-br from-[#e4451e]/5 to-transparent rounded-2xl transition-all duration-300 group-hover:from-[#e4451e]/10"></div>
@@ -178,7 +103,7 @@ const themes = [
           </div>
         </div>
 
-        <!-- Networking -->
+        # Networking
         <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
           <div class="relative p-6">
             <div class="absolute inset-0 bg-gradient-to-br from-[#8b5cf6]/5 to-transparent rounded-2xl transition-all duration-300 group-hover:from-[#8b5cf6]/10"></div>
@@ -193,17 +118,17 @@ const themes = [
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Section Introduction -->
-  <section class="py-24 bg-white relative">
+  <section class="pb-24 bg-white relative">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="text-center mb-16">
           <SectionDivider variant="orange" class="mb-6">
             <Icon name="tabler:bulb" class="w-5 h-5" />
             En bref          </SectionDivider>
           <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-sky-900">
-            le festival des pédagogies innovantes
+            Le festival des pédagogies innovantes
           </h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
             3 jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes
@@ -216,7 +141,7 @@ const themes = [
           <div class="space-y-6">
             <div class="max-w-xl">
               <p class="text-lg text-gray-600 mb-4">
-                le festival Out of the Books est né d'une volonté de rassembler tous les acteurs de l'éducation autour d'un objectif commun : repenser l'apprentissage pour le rendre plus efficace, inclusif et épanouissant.
+                Le festival Out of the Books est né d'une volonté de rassembler tous les acteurs de l'éducation autour d'un objectif commun : repenser l'apprentissage pour le rendre plus efficace, inclusif et épanouissant.
               </p>
               <p class="text-lg text-gray-600">
                 Pendant trois jours, enseignants, professionnels de l'éducation, parents et élèves se réunissent pour partager leurs expériences,
@@ -227,11 +152,12 @@ const themes = [
 
           <!-- Vidéo à droite -->
           <div class="relative aspect-video">
+            <!-- Carte de fond noire avec bordure orange -->
+            <div class="absolute -inset-4 bg-black rounded-[2rem] border-2 border-[--ootb-orange] shadow-[0_0_20px_rgba(228,69,30,0.3)] transform rotate-2"></div>
             <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform-gpu hover:scale-[1.02] transition-transform duration-500">
-              <VideoPlayer
-                url="https://youtu.be/lZqHW0GtwG0"
+              <YouTubePlayer
+                videoId="D74JiIP9rtc"
                 title="Festival Out of the Books 2025"
-                platform="youtube"
                 className="w-full aspect-video"
               />
               <!-- Effet de reflet -->

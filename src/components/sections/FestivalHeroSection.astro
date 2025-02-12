@@ -1,0 +1,190 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+import GradientHeroSection from './GradientHeroSection.astro';
+import TicketingButton from '../ui/TicketingButton';
+
+interface Button {
+  href: string;
+  icon: string;
+  label: string;
+  variant: 'primary' | 'secondary';
+}
+
+interface FloatingIcon {
+  name: string;
+  size: 'sm' | 'md' | 'lg';
+  position: {
+    top?: string;
+    left?: string;
+    right?: string;
+    bottom?: string;
+  };
+  rotate?: string;
+  animation?: 'float' | 'float-delayed' | 'none';
+}
+
+interface Props {
+  logo: ImageMetadata;
+  heroImage: ImageMetadata;
+  date: string;
+  location: string;
+  stats: Array<{
+    icon: string;
+    value: string;
+  }>;
+  buttons?: Array<Button>;
+  floatingIcons?: Array<FloatingIcon>;
+  accentColor?: string;
+  quoteColor?: string;
+  imageBackgroundColor?: string;
+}
+
+const { 
+  logo, 
+  heroImage, 
+  date, 
+  location, 
+  stats,
+  buttons = [
+    {
+      href: '#tickets',
+      icon: 'tabler:ticket',
+      label: 'Réserver mes tickets',
+      variant: 'primary'
+    },
+    {
+      href: '#programme',
+      icon: 'tabler:calendar-event',
+      label: 'Voir le programme',
+      variant: 'secondary'
+    }
+  ],
+  floatingIcons = [
+    { name: 'tabler:book-2', size: 'lg', position: { top: '15%', left: '40%' }, rotate: '-12deg' },
+    { name: 'tabler:book', size: 'md', position: { top: '35%', right: '12%' }, rotate: '45deg' },
+    { name: 'tabler:school', size: 'sm', position: { top: '25%', left: '15%' }, animation: 'float' },
+    { name: 'tabler:bulb', size: 'sm', position: { top: '45%', right: '20%' }, animation: 'float-delayed' }
+  ],
+  accentColor = '--ootb-orange',
+  quoteColor = '--ootb-yellow',
+  imageBackgroundColor = '--ootb-orange'
+} = Astro.props;
+
+const getButtonClass = (variant: 'primary' | 'secondary') => {
+  if (variant === 'primary') {
+    return `inline-flex items-center gap-3 bg-white/90 text-[${accentColor}] px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[${accentColor}] hover:text-white border-2 border-[${accentColor}] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group text-lg backdrop-blur-sm`;
+  }
+  return `inline-flex items-center gap-3 text-white border-2 border-white/20 px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-white/10 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group text-lg backdrop-blur-sm`;
+};
+
+const getIconSize = (size: 'sm' | 'md' | 'lg') => {
+  switch (size) {
+    case 'sm': return 'w-16 h-16';
+    case 'md': return 'w-20 h-28';
+    case 'lg': return 'w-24 h-32';
+  }
+};
+---
+
+<GradientHeroSection>
+  <div class="relative z-10 container mx-auto px-4 pt-32">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="text-center md:text-left">
+          <Image
+            src={logo}
+            alt="Out of the Books Festival"
+            class="w-[450px] h-auto mx-auto md:mx-0"
+            widths={[450]}
+            sizes="450px"
+            loading="eager"
+            decoding="async"
+          />
+          <blockquote class="text-2xl text-white/90 font-light mt-8 mb-8 border-l-4 border-[--ootb-yellow] pl-4">
+            {date} | {location}
+          </blockquote>
+          <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+            {stats.map(({ icon, value }) => (
+              <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
+                <Icon name={icon} class="w-5 h-5 text-white" />
+                <span class="text-white">{value}</span>
+              </div>
+            ))}
+          </div>
+          <div class="flex flex-wrap gap-4 justify-center md:justify-start mt-8">
+            {buttons.map(({ href, icon, label, variant }) => {
+              const isTicketButton = href === '#tickets';
+              if (isTicketButton) {
+                return (
+                  <TicketingButton
+                    icon={icon.replace('tabler:', '')}
+                    label={label}
+                    variant={variant}
+                    client:load
+                  />
+                );
+              }
+
+              return (
+                <a
+                  href={href}
+                  class={getButtonClass(variant)}
+                >
+                  <Icon name={icon} class="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-0.5" />
+                  <span class="font-medium">{label}</span>
+                </a>
+              );
+
+
+            })}
+          </div>
+        </div>
+
+        <div class="relative hidden md:block">
+          <div class="relative">
+            <!-- Fond décoratif -->
+            <div class="absolute inset-0 bg-[--ootb-orange] rounded-2xl transform rotate-3 translate-x-4 translate-y-4"></div>
+            <!-- Image -->
+            <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+              <Image
+                src={heroImage}
+                alt="Festival Out of the Books"
+                class="rounded-2xl shadow-xl w-full h-auto"
+                widths={[400, 800]}
+                sizes="(max-width: 768px) 400px, 800px"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Icônes flottantes -->
+  {floatingIcons.map(({ name, size, position, rotate, animation }) => (
+    <div
+      class:list={[
+        'absolute',
+        getIconSize(size),
+        'opacity-30',
+        { 'transition-transform hover:-translate-y-2 duration-1000': !animation },
+        { 'animate-float': animation === 'float' },
+        { 'animate-float-delayed': animation === 'float-delayed' }
+      ]}
+      style={{
+        top: position.top,
+        left: position.left,
+        right: position.right,
+        bottom: position.bottom,
+        transform: rotate ? `rotate(${rotate})` : undefined
+      }}
+    >
+      <Icon name={name} class="w-full h-full text-white filter drop-shadow-lg" />
+    </div>
+  ))}
+</GradientHeroSection>
+
+

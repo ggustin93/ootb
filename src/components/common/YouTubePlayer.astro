@@ -1,0 +1,31 @@
+---
+interface Props {
+  videoId: string;
+  title: string;
+  className?: string;
+}
+
+const { videoId, title, className = '' } = Astro.props;
+
+// Ajout des paramètres pour une meilleure intégration
+const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&autoplay=1&modestbranding=1`;
+---
+
+<div class="relative">
+  {/* Fond orange avec glow */}
+  <div class="absolute -inset-8 bg-[--ootb-orange] rounded-[2.5rem] -rotate-2 -z-10 shadow-[0_0_30px_rgba(228,69,30,0.3)]"></div>
+
+  {/* Conteneur de la vidéo */}
+  <div class={`relative aspect-video ${className}`}>
+    <iframe
+      src={embedUrl}
+      title={title}
+      width="100%"
+      height="100%"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      class="w-full h-full rounded-2xl"
+    />
+  </div>
+</div>

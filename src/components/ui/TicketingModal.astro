@@ -1,0 +1,125 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<ticketing-modal
+  id={id}
+  class="fixed inset-0 z-50 hidden"
+  role="dialog"
+  aria-modal="true"
+>
+  <!-- Overlay -->
+  <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" data-close></div>
+
+  <!-- Modal -->
+  <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg">
+    <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+      <!-- Header -->
+      <div class="flex justify-between items-start mb-6">
+        <h2 class="text-2xl font-medium text-gray-900">Réserver mes tickets</h2>
+        <button
+          type="button"
+          class="text-gray-400 hover:text-gray-500 transition-colors"
+          data-close
+        >
+          <span class="sr-only">Fermer</span>
+          <Icon name="tabler:x" class="w-6 h-6" />
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="mb-8">
+        <p class="text-gray-600 mb-4">
+          Le Festival Out of the Books fait partie du programme des formations en Interréseaux organisées par l'IFPC.
+        </p>
+        <p class="text-gray-600">
+          Si vous êtes enseignant·e, vous pouvez vous inscrire via la billetterie dédiée de l'IFPC. Sinon, utilisez notre billetterie générale Weezevent.
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a
+          href="https://ifpc-fwb.be"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-1 inline-flex justify-center items-center gap-2 rounded-full bg-[--ootb-orange] px-6 py-3 text-white hover:bg-[--ootb-orange]/90 transition-colors"
+        >
+          <Icon name="tabler:school" class="w-5 h-5" />
+          <span>Billetterie IFPC</span>
+        </a>
+        <a
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-1 inline-flex justify-center items-center gap-2 rounded-full bg-gray-100 px-6 py-3 text-gray-700 hover:bg-gray-200 transition-colors"
+        >
+          <Icon name="tabler:ticket" class="w-5 h-5" />
+          <span>Billetterie générale</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  class TicketingModal extends HTMLElement {
+    constructor() {
+      super();
+      this.handleClick = this.handleClick.bind(this);
+      this.handleKeyDown = this.handleKeyDown.bind(this);
+    }
+
+    connectedCallback() {
+      document.addEventListener('click', this.handleClick);
+      document.addEventListener('keydown', this.handleKeyDown);
+    }
+
+    disconnectedCallback() {
+      document.removeEventListener('click', this.handleClick);
+      document.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+    handleClick(event) {
+      const target = event.target;
+
+      // Ouvrir le modal
+      if (target.hasAttribute('data-open-modal') && target.dataset.modalTarget === this.id) {
+        event.preventDefault();
+        this.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Fermer le modal
+      if (target.hasAttribute('data-close') || 
+          (target.closest('[data-close]')) || 
+          (target === this.querySelector('.fixed.inset-0'))) {
+        this.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    handleKeyDown(event) {
+      if (event.key === 'Escape' && !this.classList.contains('hidden')) {
+        this.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+  }
+
+  customElements.define('ticketing-modal', TicketingModal);
+</script>
+        this.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+  }
+
+  customElements.define('ticketing-modal', TicketingModal);
+</script>

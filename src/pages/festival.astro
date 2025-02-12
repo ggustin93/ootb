@@ -12,6 +12,7 @@ import ActionBadge from '~/components/ui/ActionBadge.astro';
 import logo_festival_white from '~/assets/images/logo_festival_white.svg';
 import festivalHeroImage from '~/assets/images/festival_hero.webp';
 import ootbLogo from '~/assets/images/ootb-logo.svg';
+import Carousel from '~/components/ui/Carousel.astro';
 
 const metadata = {
   title: 'Festival Out of the Books 2025 | La Sucrerie - Wavre',
@@ -171,55 +172,77 @@ const themes = [
   </section>
 
   <!-- Galerie photos des éditions précédentes -->
-  <section class="py-24 bg-white relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="text-center mb-16">
-          <SectionDivider variant="orange" class="mb-6">
+  <section class="bg-white relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-16">
+        <div class="text-center">
+          <SectionDivider variant="orange" class="mb-4">
             <Icon name="tabler:camera" class="w-5 h-5" />
             <span>Rétrospective</span>
           </SectionDivider>
-          <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-sky-900">Revivez les moments forts</h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-4 text-sky-900">Revivez les moments forts</h2>
+          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
             Plongez dans l'ambiance des éditions précédentes du festival
           </p>
         </div>
 
-        <div class="grid grid-cols-12 gap-4 md:gap-6">
-          <!-- Image principale -->
-          <div class="col-span-12 md:col-span-8">
-            <div class="relative group rounded-2xl overflow-hidden aspect-[16/9]">
-              <img 
-                src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop" 
-                alt="Conférence principale Out of The Books" 
-                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <p class="text-lg font-semibold">Conférence d'ouverture 2024</p>
-                <p class="text-sm opacity-90">Plus de 500 participants réunis pour explorer le futur de l'éducation</p>
-              </div>
-            </div>
-          </div>
-          <!-- Images secondaires -->
-          <div class="col-span-12 md:col-span-4 grid grid-rows-2 gap-4 md:gap-6">
-            <div class="relative group rounded-2xl overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" 
-                alt="Atelier pratique" 
-                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div class="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <p class="text-base font-semibold">Ateliers interactifs</p>
-                <p class="text-sm opacity-90">Apprentissage par la pratique</p>
-              </div>
-            </div>
-            <div class="relative group rounded-2xl overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop" 
-                alt="Espace networking" 
-                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-              />
+        <!-- Carousel de photos -->
+        <div class="w-full max-w-3xl mx-auto">
+          <Carousel
+            photos={[
+              {
+                src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop",
+                alt: "Conférence principale Out of The Books",
+                title: "Conférence principale",
+                width: 2070,
+                height: 1380
+              },
+              {
+                src: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop",
+                alt: "Atelier collaboratif",
+                title: "Atelier collaboratif",
+                width: 2069,
+                height: 1380
+              },
+              {
+                src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop",
+                alt: "Stand d'éditeurs",
+                title: "Stand d'éditeurs",
+                width: 2070,
+                height: 1380
+              },
+              {
+                src: "https://images.unsplash.com/photo-1531496681078-27dc2277e898?q=80&w=2074&auto=format&fit=crop",
+                alt: "Espace de networking",
+                title: "Networking & Échanges",
+                width: 2074,
+                height: 1383
+              },
+              {
+                src: "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=2487&auto=format&fit=crop",
+                alt: "Espace détente",
+                title: "Espace détente & café",
+                width: 2487,
+                height: 1658
+              },
+              {
+                src: "https://images.unsplash.com/photo-1559223607-a43c990c692c?q=80&w=2070&auto=format&fit=crop",
+                alt: "Espace de discussion",
+                title: "Discussions informelles",
+                width: 2070,
+                height: 1380
+              },
+              {
+                src: "https://images.unsplash.com/photo-1558008258-3256797b43f3?q=80&w=2131&auto=format&fit=crop",
+                alt: "Présentation interactive",
+                title: "Présentations interactives",
+                width: 2131,
+                height: 1421
+              }
+            ]}
+          />
+
+
+
               <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div class="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                 <p class="text-base font-semibold">Espaces d'échange</p>
@@ -247,7 +270,7 @@ const themes = [
             <div class="absolute w-8 h-8 top-[20%] left-[10%] text-white/20 animate-float">
               <Icon name="tabler:chart-dots" class="w-full h-full" />
             </div>
-            <div class="absolute w-8 h-8 bottom-[20%] right-[10%] text-white/20 animate-float-delayed">
+            <div class="absolute bottom-4 left-[30%] w-8 h-8 text-white/20 animate-float-delayed">
               <Icon name="tabler:chart-bar" class="w-full h-full" />
             </div>
           </div>
@@ -278,7 +301,7 @@ const themes = [
   </section>
 
   <!-- Programme du festival -->
-  <section id="programme" class="pt-32 pb-16 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
+  <section id="programme" class="pt-32 pb-8 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
     <!-- Éléments décoratifs -->
     <div class="absolute inset-0">
       <div class="absolute top-0 left-0 w-96 h-96 bg-[--ootb-orange]/5 rounded-full blur-3xl transform -translate-x-1/3 -translate-y-1/3"></div>
@@ -291,7 +314,7 @@ const themes = [
           <Icon name="tabler:calendar" class="w-5 h-5" />
           <span>Planning</span>
         </SectionDivider>
-        <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-gray-900 tracking-tight">Programme du festival</h2>
+        <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-sky-900 tracking-tight">Programme du festival</h2>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto font-light tracking-wide leading-relaxed">
           Découvrez toutes les conférences, ateliers et stands sur les 3 jours
         </p>

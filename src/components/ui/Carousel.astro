@@ -1,0 +1,120 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+
+interface Photo {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  title: string;
+}
+
+interface Props {
+  photos: Photo[];
+}
+
+const { photos } = Astro.props;
+---
+
+<div class="relative flex flex-col w-full gap-4">
+  <!-- Main Swiper -->
+  <div class="swiper main-swiper relative">
+    <div class="swiper-wrapper">
+      {photos.map((photo) => (
+        <div class="swiper-slide">
+          <div class="relative group rounded-lg md:rounded-2xl overflow-hidden">
+            <div class="aspect-[4/3] w-full">
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={photo.width}
+                height={photo.height}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-3 md:p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              <p class="text-sm md:text-base font-semibold">{photo.title}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Navigation -->
+    <button class="swiper-button-prev !w-8 !h-8 md:!w-11 md:!h-11 group/btn absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10">
+      <span class="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 transition-colors group-hover/btn:bg-white/20 shadow-lg"></span>
+      <Icon name="tabler:chevron-left" class="w-4 h-4 md:w-6 md:h-6 !text-white relative z-10" />
+    </button>
+    <button class="swiper-button-next !w-8 !h-8 md:!w-11 md:!h-11 group/btn absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10">
+      <span class="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 transition-colors group-hover/btn:bg-white/20 shadow-lg"></span>
+      <Icon name="tabler:chevron-right" class="w-4 h-4 md:w-6 md:h-6 !text-white relative z-10" />
+    </button>
+  </div>
+
+  <!-- Pagination -->
+  <div class="swiper-pagination static flex justify-center py-2"></div>
+</div>
+
+<!-- Styles -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<style>
+  .main-swiper {
+    @apply w-full rounded-lg md:rounded-2xl;
+  }
+
+  .main-swiper .swiper-wrapper,
+  .main-swiper .swiper-slide {
+    @apply w-full;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    @apply !m-0;
+    &::after {
+      @apply hidden;
+    }
+  }
+
+  :global(.swiper-pagination-bullet) {
+    @apply !opacity-100;
+    background-color: white;
+    border: 1px solid var(--ootb-orange);
+    width: 6px;
+    height: 6px;
+    margin: 0 4px !important;
+  }
+
+  @media (min-width: 768px) {
+    :global(.swiper-pagination-bullet) {
+      width: 8px;
+      height: 8px;
+      margin: 0 6px !important;
+    }
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    background-color: var(--ootb-orange);
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, Pagination } from 'swiper/modules';
+  import 'swiper/css/pagination';
+
+  // Initialize Swiper
+  const swiper = new Swiper('.main-swiper', {
+    modules: [Navigation, Pagination],
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+</script>

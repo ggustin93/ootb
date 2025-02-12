@@ -55,6 +55,7 @@
         "limax": "4.1.0",
         "lodash.merge": "^4.6.2",
         "lucide-react": "^0.469.0",
+        "swiper": "^11.2.2",
         "tailwindcss-animate": "^1.0.7",
         "tinacms": "^2.6.2",
         "unpic": "^3.22.0"

@@ -52,6 +52,25 @@ const allEvents = Object.values(events).flat();
 
     <!-- Filtre par type -->
     <div class="flex flex-wrap gap-3" id="types-container">
+      <!-- Bouton "Tous les événements" -->
+      <button
+        class:list={[
+          "type-filter-button group px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
+          "flex items-center gap-2",
+          "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
+          "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
+        ]}
+        data-type="all"
+        data-state="active"
+        type="button"
+      >
+        <Icon name="tabler:layout-grid" class="w-5 h-5" />
+        <span>Tous les événements</span>
+        <span class="ml-2 px-2 py-0.5 rounded-full text-xs bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white/20 group-data-[state=active]:text-white">
+          {Object.values(events).flat().filter(event => event.type === 'Conférences' || event.type === 'Ateliers').length}
+        </span>
+      </button>
+
       {eventTypes.map(type => (
         <button
           class:list={[
@@ -61,7 +80,7 @@ const allEvents = Object.values(events).flat();
             "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
           ]}
           data-type={type}
-          data-state={type === eventTypes[0] ? 'active' : 'inactive'}
+          data-state="inactive"
           type="button"
         >
           <Icon name={
@@ -69,7 +88,10 @@ const allEvents = Object.values(events).flat();
             type === 'Ateliers' ? 'tabler:hammer' : 'tabler:building-store'
           } class="w-5 h-5" />
           <span>{type}</span>
-          <span class="ml-2 px-2 py-0.5 rounded-full text-xs bg-[#e4451e]/10 text-[#e4451e] data-[state=active]:bg-white/20 data-[state=active]:text-white">
+          <span 
+            class="ml-2 px-2 py-0.5 rounded-full text-xs bg-[#e4451e]/10 text-[#e4451e] data-[state=active]:bg-white/20 data-[state=active]:text-white"
+            data-state={type === eventTypes[0] ? 'active' : 'inactive'}
+          >
             {Object.values(events).flat().filter(event => event.type === type).length}
           </span>
         </button>
@@ -99,8 +121,8 @@ const allEvents = Object.values(events).flat();
           <!-- Contenu à droite -->
           <div class="md:w-2/3 p-6 flex flex-col">
             <div class="flex-grow">
-              <!-- En-tête avec heure et lieu -->
-              <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+              <!-- En-tête avec heure, lieu et expert -->
+              <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-3">
                 <div class="flex items-center">
                   <Icon name="tabler:clock" class="w-4 h-4 mr-1" />
                   <span>{event.time}</span>
@@ -109,10 +131,16 @@ const allEvents = Object.values(events).flat();
                   <Icon name="tabler:map-pin" class="w-4 h-4 mr-1" />
                   <span>{event.location}</span>
                 </div>
+                {event.speaker && (
+                  <div class="flex items-center">
+                    <Icon name="tabler:user" class="w-4 h-4 mr-1" />
+                    <span class="font-medium text-[#6ab29e]">{event.speaker}</span>
+                  </div>
+                )}
               </div>
 
               <!-- Titre -->
-              <h3 class="text-2xl font-bold text-gray-900 group-hover:text-[#e4451e] transition-colors mb-3">
+              <h3 class="text-2xl font-bold text-sky-900 group-hover:text-[#e4451e] transition-colors mb-3">
                 {event.title}
               </h3>
 
@@ -121,13 +149,7 @@ const allEvents = Object.values(events).flat();
             </div>
 
             <div class="mt-auto">
-              <!-- Intervenant si présent -->
-              {event.speaker && (
-                <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
-                  <Icon name="tabler:user" class="w-4 h-4" />
-                  <span class="font-medium text-[#6ab29e]">{event.speaker}</span>
-                </div>
-              )}
+
             </div>
           </div>
         </div>
@@ -263,8 +285,12 @@ const allEvents = Object.values(events).flat();
     button.addEventListener('click', () => {
       document.querySelectorAll('.type-filter-button').forEach(b => {
         b.setAttribute('data-state', 'inactive');
+        // Mettre à jour l'état de la pastille
+        b.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
       });
       button.setAttribute('data-state', 'active');
+      // Mettre à jour l'état de la pastille
+      button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
       currentPage = 1;
       updatePagination();
     });
@@ -272,17 +298,17 @@ const allEvents = Object.values(events).flat();
 
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
-    // Activer le premier jour et le premier type par défaut
+    // Activer le premier jour et "Tous les événements" par défaut
     const firstDayButton = document.querySelector('.day-filter-button[data-day="all"]');
-    const firstTypeButton = document.querySelector('.type-filter-button');
+    const allEventsButton = document.querySelector('.type-filter-button[data-type="all"]');
     
     if (firstDayButton) {
       firstDayButton.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
       firstDayButton.classList.remove('bg-white', 'text-[#e4451e]');
     }
-    
-    if (firstTypeButton) {
-      firstTypeButton.setAttribute('data-state', 'active');
+
+    if (allEventsButton) {
+      allEventsButton.setAttribute('data-state', 'active');
     }
     
     updatePagination();

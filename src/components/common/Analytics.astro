@@ -3,6 +3,7 @@ import { GoogleAnalytics } from '@astrolib/analytics';
 import { ANALYTICS } from 'astrowind:config';
 ---
 
+{/* Google Analytics */}
 {
   ANALYTICS?.vendors?.googleAnalytics?.id ? (
     <GoogleAnalytics
@@ -11,3 +12,10 @@ import { ANALYTICS } from 'astrowind:config';
     />
   ) : null
 }
+
+{/* Umami Analytics */}
+<script 
+  defer 
+  src="https://cloud.umami.is/script.js" 
+  data-website-id="62126ce8-7e42-4260-811a-2aeaf88cca6a"
+></script>

@@ -10,33 +10,36 @@ const { class: className, ...props } = Astro.props;
 
 <section 
   class:list={[
-    // Layout de base : hauteur plein écran, centré horizontalement
-    "relative h-screen flex items-start justify-center overflow-hidden",
-
-    // Couleur de base turquoise
+    // ====== RESPONSIVE DESIGN ======
+    // Mobile (<768px) :
+    // - Hauteur réduite à 80vh pour un meilleur affichage
+    // - Fond turquoise uni sans dégradé
+    // - Nuages masqués (voir plus bas)
+    "relative h-[80vh] flex items-start justify-center overflow-hidden",
     "bg-[--ootb-turquoise]",
 
-    // Dégradé vertical avec 4 points d'arrêt :
-    // 1. De 0% à 60% : turquoise pur pour garder une zone solide en haut
-    "bg-gradient-to-b from-[--ootb-turquoise] from-0%",
-    "via-[--ootb-turquoise] via-60%",
-
-    // 2. À 70% : début subtil du dégradé (90% turquoise)
-    "via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] via-70%",
-
-    // 3. À 75% : transition plus marquée (60% turquoise)
-    "via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] via-75%",
-
-    // 4. À 80% : fin du dégradé proche du blanc (30% turquoise)
-    "to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%",
+    // Desktop (≥768px) :
+    // - Hauteur plein écran
+    // - Dégradé subtil avec transitions
+    // - Nuages visibles
+    "md:h-screen",
+    "md:bg-gradient-to-b md:from-[--ootb-turquoise] md:from-0%",
+    "md:via-[--ootb-turquoise] md:via-60%",
+    "md:via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] md:via-70%",
+    "md:via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] md:via-75%",
+    "md:to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] md:to-80%",
     className
   ]}
   {...props}
 >
   <slot />
 
-  <!-- Nuages -->
-  <div class="absolute bottom-[15%] md:bottom-[18%] left-0 right-0 pointer-events-none overflow-hidden">
+  <!-- Nuages décoratifs
+       - Masqués sur mobile avec hidden
+       - Affichés sur desktop avec md:block
+       - Position ajustée selon le breakpoint (15% vs 18% du bas)
+  -->
+  <div class="absolute bottom-[15%] md:bottom-[18%] left-0 right-0 pointer-events-none overflow-hidden hidden md:block">
     <div class="relative w-full">
       <!-- Dégradé pour renforcer la visibilité -->
       <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/30 z-10"></div>

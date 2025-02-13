@@ -44,6 +44,7 @@ const { heroImage } = Astro.props as Props;
           <span class="heading-2 text-[var(--ootb-yellow)] italic">premium</span>
         </h2>
         
+        <div class="mb-4"></div>
         <p class="text-lg text-white mb-8 max-w-xl">
           Accédez à Nos contenus experts et analyses approfondies pour transformer votre approche pédagogique
         </p>
@@ -112,7 +113,7 @@ const { heroImage } = Astro.props as Props;
                 <div class="inline-flex items-center gap-1 bg-[color-mix(in_srgb,var(--ootb-yellow)_100%,transparent)] px-2 py-1 rounded-full text-xs font-medium mb-2 text-[color-mix(in_srgb,var(--ootb-turquoise)_50%,black)] backdrop-blur-sm">
                   Hors-série
                 </div>
-                <h3 class="text-lg font-bold mb-1 line-clamp-1">{podcast.title}</h3>
+                <h3 class="text-2xl font-bold mb-1 line-clamp-1">{podcast.title}</h3>
                 <p class="text-white/90 text-sm mb-2 line-clamp-2">{podcast.description}</p>
                 <div class="flex items-center gap-1 text-xs text-white/75">
                   <Icon name="tabler:clock" class="w-3.5 h-3.5" />

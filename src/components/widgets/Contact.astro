@@ -22,16 +22,29 @@ const {
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
-  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+  <div class="text-center mb-12">
+    {tagline && (
+      <div class="font-bold tracking-wide uppercase text-[--ootb-blue] mb-4" set:html={tagline} />
+    )}
+    {title && (
+      <h2 class={`mb-4 ${classes?.title ?? 'text-4xl font-bold'}`} set:html={title} />
+    )}
+    {subtitle && (
+      <p class="text-xl text-gray-600 dark:text-gray-400" set:html={subtitle} />
+    )}
+  </div>
 
   {
     inputs && (
-      <div class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full">
+      <div class="flex flex-col max-w-xl mx-auto rounded-xl backdrop-blur border border-gray-100 dark:border-gray-800 bg-white dark:bg-slate-900 shadow-lg shadow-gray-200/50 dark:shadow-none p-6 sm:p-8 lg:p-10 w-full hover:shadow-xl transition-shadow duration-300">
         <FormContainer
           inputs={inputs}
           textarea={textarea}
           disclaimer={disclaimer}
-          button={button}
+          button={{
+            text: 'Envoyer',
+            class: 'w-full sm:w-auto bg-[--ootb-blue] hover:bg-[--ootb-blue-hover] text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-300'
+          }}
           description={description}
         />
       </div>

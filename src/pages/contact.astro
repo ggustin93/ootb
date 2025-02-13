@@ -1,8 +1,11 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
-import Features2 from '~/components/widgets/Features2.astro';
+import Button from '~/components/ui/Button.astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import OotbLogo from '~/assets/images/ootb-logo.svg';
+import '~/assets/styles/handwritten.css';
 
 const metadata = {
   title: 'Contact',
@@ -10,70 +13,156 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <!-- HeroText Widget ******************* -->
+  <div class="relative min-h-screen bg-gradient-to-b from-[color-mix(in_srgb,var(--ootb-blue)_2%,white)] via-white to-[color-mix(in_srgb,var(--ootb-turquoise)_3%,white)] dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(var(--ootb-blue-rgb),0.03),transparent_40%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(var(--ootb-blue-rgb),0.05),transparent_40%)]"></div>
+      
+      {/* Éléments décoratifs flottants */}
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute w-8 md:w-12 h-12 md:h-16 -rotate-[15deg] top-[15%] left-[85%] opacity-20 transition-transform hover:-translate-y-2 duration-1000 dark:opacity-10">
+          <Icon name="tabler:book-2" class="w-full h-full text-[--ootb-violet]" />
+        </div>
+        
+        <div class="absolute w-6 md:w-10 h-10 md:h-14 rotate-45 bottom-[10%] left-[8%] opacity-20 transition-transform hover:translate-y-2 duration-1000 dark:opacity-10">
+          <Icon name="tabler:book" class="w-full h-full text-[--ootb-blue]" />
+        </div>
 
-  <HeroText tagline="Contact" title="Let's Connect!" />
+        <div class="absolute w-7 md:w-11 h-11 md:h-15 -rotate-12 bottom-[20%] right-[15%] opacity-20 transition-transform hover:-translate-y-3 duration-1000 dark:opacity-10">
+          <Icon name="tabler:notebook" class="w-full h-full text-[--ootb-turquoise]" />
+        </div>
 
-  <ContactUs
-    id="form"
-    title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
-    inputs={[
-      {
-        type: 'text',
-        name: 'name',
-        label: 'Name',
-      },
-      {
-        type: 'email',
-        name: 'email',
-        label: 'Email',
-      },
-    ]}
-    textarea={{
-      label: 'Message',
-    }}
-    disclaimer={{
-      label:
-        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
-    }}
-    description="Our support team typically responds within 24 business hours."
-  />
+        <div class="absolute w-5 md:w-8 h-8 md:h-12 rotate-[25deg] top-[35%] left-[15%] opacity-15 transition-transform hover:translate-y-2 duration-1000 dark:opacity-5">
+          <Icon name="tabler:books" class="w-full h-full text-sky-700" />
+        </div>
 
-  <!-- Features2 Widget ************** -->
+        <div class="absolute w-6 md:w-9 h-9 md:h-13 -rotate-[8deg] top-[60%] right-[25%] opacity-10 transition-transform hover:-translate-y-2 duration-1000 dark:opacity-5">
+          <Icon name="tabler:book-upload" class="w-full h-full text-[--ootb-orange]" />
+        </div>
+      </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+      
+      {/* En-tête */}
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <SectionDivider variant="sky" class="mb-8">Contact</SectionDivider>
+        <h1 class="text-4xl md:text-6xl font-handwritten mb-6 text-sky-900 dark:text-sky-400">
+          Envoyez-nous un message
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400">
+          Notre équipe est là pour vous aider et répondre à toutes vos questions.
+        </p>
+      </div>
 
-  <Features2
-    title="We are here to help!"
-    items={[
-      {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
-      },
-      {
-        title: 'Contact sales',
-        description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
-      },
-      {
-        title: 'Technical support',
-        description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
-      },
-      {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
-      },
-      {
-        title: 'Email',
-        description: 'contact@support.com',
-        icon: 'tabler:mail',
-      },
-      {
-        title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
-        icon: 'tabler:map-pin',
-      },
-    ]}
-  />
+      <div class="grid lg:grid-cols-3 gap-12 items-start">
+        {/* Formulaire */}
+        <div class="relative lg:col-span-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-10 border border-gray-100 dark:border-gray-700 h-full">
+          <div class="absolute -top-20 -left-4 md:-left-8">
+            <Image
+              src={OotbLogo}
+              alt="OOTB Mascotte"
+              class="w-24 h-24 md:w-32 md:h-32 transform -rotate-12"
+            />
+          </div>
+          <form class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="name">
+                  Nom
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="email">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="message">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="8"
+                class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                required
+              ></textarea>
+            </div>
+
+            <div class="pt-4">
+              <Button
+                type="submit"
+                variant="blue"
+                class="w-full md:w-auto"
+              >
+                Envoyer le message
+              </Button>
+            </div>
+          </form>
+        </div>
+
+        {/* Informations de contact */}
+        <div class="lg:sticky lg:top-8 space-y-8">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-1 gap-6">
+            {/* Téléphone */}
+            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_10%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="text-[--ootb-blue]">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
+                    <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Téléphone</h3>
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">+33 1 23 45 67 89</p>
+            </div>
+
+            {/* Email */}
+            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_10%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="text-[--ootb-blue]">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
+                    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+                    <path d="M3 7l9 6l9 -6" />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Email</h3>
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">contact@support.fr</p>
+            </div>
+
+            {/* Adresse */}
+            <div class="sm:col-span-2 lg:col-span-1 bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_10%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="text-[--ootb-blue]">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
+                  <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                  <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+                </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Adresse</h3>
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">
+                Avenue Louise 65, 1050 Bruxelles
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </Layout>

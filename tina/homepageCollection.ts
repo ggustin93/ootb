@@ -264,6 +264,136 @@ export const homepageCollection: Collection = {
           default: "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative."
         }
       ]
+    },
+    {
+      type: "object",
+      name: "premium",
+      label: "Section Premium",
+      fields: [
+        {
+          type: "image",
+          name: "heroImage",
+          label: "Image de la section Premium",
+          description: "Image mise en avant dans la section Premium"
+        },
+        {
+          type: "string",
+          name: "title",
+          label: "Titre de la section Premium",
+          description: "Titre principal de la section Premium"
+        },
+        {
+          type: "string",
+          name: "intro",
+          label: "Introduction de la section Premium",
+          description: "Texte d'introduction pour la section Premium",
+          ui: {
+            component: "textarea"
+          }
+        },
+        {
+          type: "object",
+          name: "features",
+          label: "Fonctionnalités Premium",
+          list: true,
+          fields: [
+            {
+              type: "string",
+              name: "text",
+              label: "Texte de la fonctionnalité"
+            }
+          ]
+        },
+        {
+          type: "object",
+          name: "podcastHighlights",
+          label: "Points forts des Podcasts",
+          list: true,
+          fields: [
+            {
+              type: "string",
+              name: "title",
+              label: "Titre du Podcast"
+            },
+            {
+              type: "string",
+              name: "description",
+              label: "Description du Podcast"
+            },
+            {
+              type: "image",
+              name: "image",
+              label: "Image du Podcast"
+            },
+            {
+              type: "string",
+              name: "duration",
+              label: "Durée du Podcast"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      type: "object", 
+      name: "newsletter",
+      label: "Section Newsletter",
+      fields: [
+        {
+          type: "string",
+          name: "title",
+          label: "Titre de la section",
+          description: "Titre de la section Newsletter"
+        },
+        {
+          type: "string",
+          name: "description",
+          label: "Description de la section"
+        },
+        {
+          type: "string",
+          name: "placeholder",
+          label: "Placeholder de l'input email"
+        },
+        {
+          type: "string",
+          name: "buttonText",
+          label: "Texte du bouton d'abonnement"
+        },
+        {
+          type: "string",
+          name: "badgeText",
+          label: "Texte du badge"
+        },
+        {
+          type: "object",
+          name: "socialLinks",
+          label: "Liens réseaux sociaux",
+          list: true,
+          fields: [
+            {
+              type: "string",
+              name: "name",
+              label: "Nom de la plateforme"
+            },
+            {
+              type: "string",
+              name: "icon",
+              label: "Nom de l'icône"
+            },
+            {
+              type: "string",
+              name: "href",
+              label: "URL du réseau social"
+            },
+            {
+              type: "string",
+              name: "color",
+              label: "Couleur de l'icône"
+            }
+          ]
+        }
+      ]
     }
-  ],
-}
+  ]
+};

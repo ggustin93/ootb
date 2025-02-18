@@ -3,12 +3,15 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import Button from '~/components/ui/Button.astro';
+import homepageData from '../../content/homepage/index.json';
 
-interface Props {
-  heroImage: string;
-}
-
-const { heroImage } = Astro.props as Props;
+const { 
+  heroImage, 
+  title: sectionTitle, 
+  intro, 
+  features, 
+  podcastHighlights 
+} = homepageData.premium;
 ---
 <section class="py-16 px-4 bg-[--ootb-turquoise] text-white relative overflow-hidden">
   <div class="absolute inset-0 overflow-hidden">
@@ -46,20 +49,16 @@ const { heroImage } = Astro.props as Props;
         
         <div class="mb-4"></div>
         <p class="text-lg text-white mb-8 max-w-xl">
-          Accédez à Nos contenus experts et analyses approfondies pour transformer votre approche pédagogique
+          {intro}
         </p>
         
         <div class="space-y-4 mb-8">
-          {[
-            "Hors-séries exclusifs mensuels",
-            "Analyses approfondies des experts",
-            "Ressources pédagogiques premium"
-          ].map(feature => (
+          {features.map(feature => (
             <div class="flex items-center gap-3 group">
               <span class="flex-shrink-0 w-5 h-5 rounded-full bg-[color-mix(in_srgb,var(--ootb-yellow)_20%,transparent)] flex items-center justify-center">
                 <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-yellow)]" />
               </span>
-              <span class="text-base text-white group-hover:text-[var(--ootb-yellow)] transition-colors">{feature}</span>
+              <span class="text-base text-white group-hover:text-[var(--ootb-yellow)] transition-colors">{feature.text}</span>
             </div>
           ))}
         </div>
@@ -83,20 +82,7 @@ const { heroImage } = Astro.props as Props;
       </div>
 
       <div class="space-y-3 relative">
-        {[
-          {
-            title: "Les neurosciences en classe",
-            description: "Découvrez les dernières avancées en neurosciences appliquées à l'éducation",
-            image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800",
-            duration: "1h 12min"
-          },
-          {
-            title: "La pédagogie active",
-            description: "Guide complet et pratique pour une classe dynamique",
-            image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
-            duration: "58min"
-          }
-        ].map(podcast => (
+        {podcastHighlights.map(podcast => (
           <div class="group relative bg-white/15 backdrop-blur-sm rounded-xl p-4 hover:bg-white/25 transition-all border border-white/20">
             <div class="flex gap-4">
               <div class="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
@@ -126,4 +112,4 @@ const { heroImage } = Astro.props as Props;
       </div>
     </div>
   </div>
-</section> 
+</section>

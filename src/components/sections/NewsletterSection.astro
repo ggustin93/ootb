@@ -2,55 +2,45 @@
 import { Icon } from 'astro-icon/components';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import Button from '~/components/ui/Button.astro';
-
-interface Props {
-  title?: string;
-  description?: string;
-  placeholder?: string;
-  buttonText?: string;
-  badgeText?: string;
-}
+import homepageData from '../../content/homepage/index.json';
 
 const {
   title = "Rejoignez notre communauté éducative",
   description = "Recevez chaque mois une sélection d'articles, de ressources et d'événements pour innover dans votre pratique",
   placeholder = "Votre adresse email",
   buttonText = "S'inscrire",
-  badgeText = "Newsletter mensuelle"
-} = Astro.props;
+  badgeText = "Newsletter mensuelle",
+  socialLinks = []
+} = homepageData.newsletter || {};
 
-const socialLinks = [
+const defaultSocialLinks = [
   {
     name: 'YouTube',
     icon: 'tabler:brand-youtube',
     href: 'https://youtube.com/@outofthebooks',
-    color: 'text-red-500'
-  },
-  {
-    name: 'Spotify',
-    icon: 'tabler:brand-spotify',
-    href: 'https://open.spotify.com/show/outofthebooks',
-    color: 'text-green-500'
+    color: 'text-[--ootb-blue]'
   },
   {
     name: 'Facebook',
     icon: 'tabler:brand-facebook',
     href: 'https://facebook.com/outofthebooks',
-    color: 'text-blue-500'
+    color: 'text-[--ootb-blue]'
   },
   {
     name: 'LinkedIn',
     icon: 'tabler:brand-linkedin',
     href: 'https://linkedin.com/company/outofthebooks',
-    color: 'text-blue-600'
+    color: 'text-[--ootb-blue]'
   },
   {
     name: 'Instagram',
     icon: 'tabler:brand-instagram',
     href: 'https://instagram.com/outofthebooks',
-    color: 'text-pink-500'
+    color: 'text-[--ootb-blue]'
   }
 ];
+
+const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLinks;
 ---
 
 <section id="rejoindre" class="relative py-24 px-4 md:px-8 mb-8">
@@ -142,7 +132,7 @@ const socialLinks = [
           <p class="font-sans text-gray-600 text-sm mb-6">Découvrez Nos contenus exclusifs sur vos réseaux préférés</p>
           
           <div class="flex justify-center flex-wrap gap-3">
-            {socialLinks.map(social => (
+            {mergedSocialLinks.map(social => (
               <a
                 href={social.href}
                 target="_blank"
@@ -163,6 +153,7 @@ const socialLinks = [
     </div>
   </div>
 </section>
+
 <style is:global>
   /* Police display pour les titres */
   .font-display {

@@ -3,7 +3,7 @@
 import { defineConfig } from "tinacms";
 import { postsCollection } from "./postsCollection";
 // Importez d'autres collections ici
-// import { homepageCollection } from "./homepageCollection";
+import { homepageCollection } from "./homepageCollection";
 // import { legalPagesCollection } from "./legalPagesCollection";
 
 export default defineConfig({
@@ -39,6 +39,9 @@ export default defineConfig({
 
   schema: {
     collections: [
+      {
+        ...homepageCollection,
+      },
       {
         ...postsCollection,
         label: "Gestion des contenus",

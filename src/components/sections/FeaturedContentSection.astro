@@ -2,6 +2,8 @@
 import { Icon } from 'astro-icon/components';
 import Card from '~/components/ui/Card.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
+import homepageData from '../../content/homepage/index.json';
+import { getCollection } from 'astro:content';
 
 interface FeaturedContent {
   href: string;
@@ -21,13 +23,49 @@ interface FeaturedContent {
 interface Props {
   title?: string;
   description?: string;
-  contents: FeaturedContent[];
+  buttonText?: string;
+  buttonLink?: string;
+  contents?: FeaturedContent[];
+}
+
+// Get homepage data
+const featuredContent = homepageData.featuredContent;
+
+// Get latest posts as fallback (excluding 'fiche' category)
+let latestPosts = [];
+try {
+  const allPosts = await getCollection('post', (post) => {
+    return post.data.published && post.data.category !== 'fiche';
+  });
+  
+  // Sort by publish date and take the 3 most recent
+  latestPosts = allPosts
+    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+    .slice(0, 3)
+    .map(post => ({
+      href: `/${post.data.category}/${post.slug}`,
+      title: post.data.title,
+      description: post.data.description,
+      image: post.data.image || `/src/assets/images/default-${post.data.category}.jpg`,
+      badge: post.data.category.charAt(0).toUpperCase() + post.data.category.slice(1),
+      type: post.data.category === 'podcast' ? 'podcast' : 
+            post.data.category === 'tv' ? 'tv' : 'default',
+      meta: {
+        episode: post.data.showId || post.data.podcastId,
+        duration: post.data.duration || '5 min',
+        expert: post.data.expert || 'Out of the Books'
+      }
+    }));
+} catch (error) {
+  console.error('Error fetching latest posts:', error);
 }
 
 const {
-  title = "Actualités du moment",
-  description = "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
-  contents = []
+  title = featuredContent?.title || "Actualités du moment",
+  description = featuredContent?.description || "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
+  buttonText = featuredContent?.buttonText || "Voir tout",
+  buttonLink = featuredContent?.buttonLink || "/contenus",
+  contents = featuredContent?.items || latestPosts
 } = Astro.props;
 
 ---
@@ -52,10 +90,10 @@ const {
       </div>
 
       <a 
-        href="/contenus" 
+        href={buttonLink}
         class="group hidden md:inline-flex items-center gap-3 text-[#6ab29e] hover:text-[#5a9886] bg-white/80 hover:bg-white backdrop-blur-sm px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
       >
-        <span class="font-medium">Voir tout</span>
+        <span class="font-medium">{buttonText}</span>
         <Icon 
           name="tabler:arrow-right" 
           class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
@@ -84,10 +122,10 @@ const {
     <!-- Bouton mobile -->
     <div class="mt-12 md:hidden">
       <a 
-        href="/contenus" 
+        href={buttonLink} 
         class="group flex items-center justify-center gap-3 w-full text-[#6ab29e] hover:text-[#5a9886] bg-white/80 hover:bg-white backdrop-blur-sm px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
       >
-        <span class="font-medium">Voir tout</span>
+        <span class="font-medium">{buttonText}</span>
         <Icon 
           name="tabler:arrow-right" 
           class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 

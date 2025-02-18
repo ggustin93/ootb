@@ -4,13 +4,39 @@ import Image from '~/components/common/Image.astro';
 import type { ImageMetadata } from 'astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import Button from '~/components/ui/Button.astro';
+import homepageData from '../../content/homepage/index.json';
 
 interface Props {
-  image: ImageMetadata;
-  features: string[];
+  image?: ImageMetadata;
+  features?: string[];
 }
 
-const { image, features } = Astro.props;
+const { image: propImage, features: propFeatures } = Astro.props;
+
+// Get homepage data from JSON
+const mission = homepageData.mission;
+
+// Fallback values if no Tina data is available
+const defaultMission = {
+  title: "Innover pour l'éducation de demain",
+  description: "La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.",
+  features: [
+    { text: "Créer des espaces d'échange et d'apprentissage" },
+    { text: "Connecter les acteurs du changement éducatif" },
+    { text: "Inspirer l'innovation dans l'éducation" }
+  ],
+  cta: {
+    text: "En savoir plus sur notre mission",
+    link: "/a-propos"
+  }
+};
+
+// Use props if provided, otherwise use Tina data with fallback
+const displayImage = propImage || mission?.image;
+const displayFeatures = propFeatures || mission?.features?.map(f => f.text) || defaultMission.features.map(f => f.text);
+const displayTitle = mission?.title || defaultMission.title;
+const displayDescription = mission?.description || defaultMission.description;
+const displayCta = mission?.cta || defaultMission.cta;
 ---
 <section class="md:pb-16 md:pt-12 pb-8 px-4 md:px-8 bg-[#FFFFFF] relative isolate -mt-24 md:-mt-32">
   <!-- Effets de fond -->
@@ -29,7 +55,7 @@ const { image, features } = Astro.props;
           Notre mission
         </SectionDivider>
         <h2 class="font-body text-3xl font-semibold leading-tight text-[--ootb-blue] tracking-tight">
-          Innover pour l'éducation de demain
+          {displayTitle}
         </h2>
       </div>
 
@@ -39,7 +65,7 @@ const { image, features } = Astro.props;
         <div class="absolute inset-0 bg-gradient-to-r from-[--ootb-turquoise]/8 to-[--ootb-violet]/8 rounded-xl md:rounded-2xl transform rotate-2 scale-[1.02] blur-[2px] transition-transform group-hover:rotate-1"></div>
         <div class="absolute -inset-1 bg-gradient-to-r from-[--ootb-turquoise]/15 to-[--ootb-violet]/15 rounded-xl md:rounded-2xl transform -rotate-1 opacity-75"></div>
         <Image 
-          src={image}
+          src={displayImage}
           alt="L'équipe Out of the Books en action"
           class="relative z-10 rounded-xl md:rounded-2xl shadow-xl transform transition-all duration-300 group-hover:scale-[1.02] w-full h-full object-cover"
           widths={[400, 900]}
@@ -59,16 +85,16 @@ const { image, features } = Astro.props;
             Notre mission
           </SectionDivider>
           <h2 class="font-body text-4xl font-semibold leading-tight text-[--ootb-blue] tracking-tight mb-6">
-            Innover pour l'éducation de demain
+            {displayTitle}
           </h2>
         </div>
 
         <p class="text-base md:text-lg text-gray-600 leading-relaxed">
-          La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.
+          {displayDescription}
         </p>
 
         <ul class="space-y-3 md:space-y-4">
-          {features.map((feature: string) => (
+          {displayFeatures.map((feature: string) => (
             <li class="flex items-start gap-3 md:gap-5 group">
               <span class="flex-shrink-0 w-5 h-5 md:w-6 md:h-6 mt-1 rounded-full bg-[--ootb-turquoise]/8 flex items-center justify-center">
                 <Icon name="tabler:circle-check-filled" class="w-6 h-6 md:w-5 md:h-6 text-[--ootb-turquoise]" />
@@ -82,12 +108,12 @@ const { image, features } = Astro.props;
         <div>
           <Button
             variant="outline-blue"
-            href="/a-propos"
+            href={displayCta.link}
             icon="tabler:arrow-right"
             iconPosition="right"
             class="w-full md:w-auto shadow-xl shadow-[--ootb-blue]/15 hover:shadow-2xl hover:shadow-[--ootb-blue]/20 transition-shadow duration-300 text-base"
           >
-            En savoir plus sur notre mission
+            {displayCta.text}
           </Button>
         </div>
       </div>

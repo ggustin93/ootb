@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "title": {
+      "line1": "La plateforme",
+      "line2": "des pédagogies",
+      "line3": "innovantes !"
+    },
+    "image": "/src/assets/images/mascotte.png",
+    "badges": [
+      {
+        "text": "Festival",
+        "link": "/festival",
+        "variant": "festival"
+      },
+      {
+        "text": "Podcast",
+        "link": "/category/podcast",
+        "variant": "podcast"
+      },
+      {
+        "text": "Émission",
+        "link": "/category/tv",
+        "variant": "emission"
+      },
+      {
+        "text": "Appel à projets",
+        "link": "/appel-a-projets",
+        "variant": "appel"
+      }
+    ]
+  },
+  "stats": {
+    "items": [
+      {
+        "number": "9002",
+        "label": "Membres actifs",
+        "sublabel": "dans la communauté",
+        "icon": "tabler:users-group"
+      },
+      {
+        "number": "3000",
+        "label": "Participants",
+        "sublabel": "au festival annuel",
+        "icon": "tabler:ticket"
+      },
+      {
+        "number": "80+",
+        "label": "Contenus",
+        "sublabel": "pédagogiques",
+        "icon": "tabler:device-tv"
+      }
+    ]
+  },
+  "mission": {
+    "title": "Innover pour l'éducation de demain",
+    "description": "La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.",
+    "image": "/src/assets/images/team.jpg",
+    "features": [
+      {
+        "text": "Créer des espaces d'échange et d'apprentissage"
+      },
+      {
+        "text": "Connecter les acteurs du changement éducatif"
+      },
+      {
+        "text": "Inspirer l'innovation dans l'éducation"
+      }
+    ],
+    "cta": {
+      "text": "En savoir plus sur notre mission",
+      "link": "/a-propos"
+    }
+  },
+  "featuredContent": {
+    "title": "Actualités du moment",
+    "description": "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
+    "buttonText": "Voir tout",
+    "buttonLink": "/contenus",
+    "items": [
+      {
+        "href": "/actualite/exemple-1",
+        "title": "L'innovation pédagogique en 2026",
+        "description": "Découvrez les dernières tendances en matière d'innovation pédagogique.",
+        "image": "/src/assets/images/default-content.jpg",
+        "badge": "Actualité",
+        "type": "default",
+        "meta": {
+          "duration": "5 min",
+          "expert": "Marie Dupont"
+        }
+      },
+      {
+        "href": "/podcast/exemple-1",
+        "title": "Le numérique à l'école",
+        "description": "Comment intégrer efficacement le numérique dans l'enseignement ?",
+        "image": "/src/assets/images/default-podcast.jpg",
+        "badge": "Podcast",
+        "type": "podcast",
+        "meta": {
+          "episode": "EP 12",
+          "duration": "25 min",
+          "expert": "Jean Martin"
+        }
+      },
+      {
+        "href": "/tv/exemple-1",
+        "title": "Repenser l'espace classe",
+        "description": "Un reportage sur les nouvelles configurations des salles de classe.",
+        "image": "/src/assets/images/default-tv.jpg",
+        "badge": "TV",
+        "type": "tv",
+        "meta": {
+          "duration": "15 min",
+          "expert": "Sophie Dubois"
+        }
+      }
+    ]
+  }
+}

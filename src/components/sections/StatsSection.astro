@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import homepageData from '../../content/homepage/index.json';
 
 interface Stat {
   number: string;
@@ -12,7 +13,12 @@ interface Props {
   stats?: Stat[];
 }
 
-const { stats = [
+// Get homepage data from JSON
+const homeStats = homepageData.stats;
+console.log('Home stats:', homeStats);
+
+// Default stats if no Tina data is available
+const defaultStats = [
   { 
     number: "9000", 
     label: "Membres actifs", 
@@ -31,12 +37,18 @@ const { stats = [
     sublabel: "pédagogiques",
     icon: "tabler:device-tv"
   }
-] } = Astro.props;
+];
+
+const { stats: propStats } = Astro.props;
+
+// Use props if provided, otherwise use Tina data with fallback
+const displayStats = propStats || (homeStats?.items ?? defaultStats);
+console.log('Display stats:', displayStats);
 ---
 
 <div class="mt-12 md:mt-24 max-w-6xl mx-auto">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
-    {stats.map(({ number, label, sublabel, icon }) => (
+    {displayStats.map(({ number, label, sublabel, icon }) => (
       <div class="group relative">
         <div class="relative p-8 md:p-10 text-center rounded-2xl transition-all duration-300 bg-white/10 backdrop-blur-sm border border-[--ootb-turquoise]/10 hover:border-[--ootb-turquoise]/20">
           <Icon 

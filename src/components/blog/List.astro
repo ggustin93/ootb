@@ -58,7 +58,9 @@ const displayedPosts = posts.slice(0, 9);
             href={post.slug}
             type={typeMapping[post.category?.slug || 'actualite']}
             meta={{
-              publishDate: getFormattedDate(publishDate)
+              publishDate: getFormattedDate(publishDate),
+              expert: post.expert,
+              duration: post.duration
             }}
           />
         );

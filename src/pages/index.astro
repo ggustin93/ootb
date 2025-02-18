@@ -13,8 +13,6 @@ import {
   images,
   aboutFeatures,
 } from '~/data/education';
-
-import { featuredContents } from '~/data/featured';
 ---
 
 <Layout {metadata}>
@@ -28,7 +26,7 @@ import { featuredContents } from '~/data/featured';
     </div>
   </section>
 
-  <FeaturedContentSection contents={featuredContents} />
+  <FeaturedContentSection />
 
   <PremiumSection heroImage={heroContent.image.src} />
 

@@ -73,47 +73,6 @@
   },
   "featuredContent": {
     "title": "Actualités du moment",
-    "description": "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
-    "buttonText": "Voir tout",
-    "buttonLink": "/contenus",
-    "items": [
-      {
-        "href": "/actualite/exemple-1",
-        "title": "L'innovation pédagogique en 2026",
-        "description": "Découvrez les dernières tendances en matière d'innovation pédagogique.",
-        "image": "/src/assets/images/default-content.jpg",
-        "badge": "Actualité",
-        "type": "default",
-        "meta": {
-          "duration": "5 min",
-          "expert": "Marie Dupont"
-        }
-      },
-      {
-        "href": "/podcast/exemple-1",
-        "title": "Le numérique à l'école",
-        "description": "Comment intégrer efficacement le numérique dans l'enseignement ?",
-        "image": "/src/assets/images/default-podcast.jpg",
-        "badge": "Podcast",
-        "type": "podcast",
-        "meta": {
-          "episode": "EP 12",
-          "duration": "25 min",
-          "expert": "Jean Martin"
-        }
-      },
-      {
-        "href": "/tv/exemple-1",
-        "title": "Repenser l'espace classe",
-        "description": "Un reportage sur les nouvelles configurations des salles de classe.",
-        "image": "/src/assets/images/default-tv.jpg",
-        "badge": "TV",
-        "type": "tv",
-        "meta": {
-          "duration": "15 min",
-          "expert": "Sophie Dubois"
-        }
-      }
-    ]
+    "description": "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative."
   }
 }

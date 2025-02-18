@@ -5,14 +5,13 @@ import { getPermalink } from '~/utils/permalinks';
 import Button from '~/components/ui/Button.astro';
 
 interface Meta {
-  author?: string;
-  episode?: string;
+  publishDate?: Date | string;
+  isLive?: boolean;
+  platform?: string;
   duration?: string;
   expert?: string;
   contributors?: string;
-  publishDate?: string;
-  isLive?: boolean;
-  platform?: string;
+  episode?: string;
 }
 
 interface Category {
@@ -22,7 +21,6 @@ interface Category {
 
 interface Props {
   title: string;
-  description: string;
   image: string;
   badge?: string;
   href: string;
@@ -35,7 +33,6 @@ interface Props {
 
 const { 
   title, 
-  description, 
   image, 
   badge,
   href,
@@ -136,36 +133,59 @@ const getOptimizedImageUrl = (url: string) => {
 };
 
 const optimizedImageUrl = isExternalImage ? getOptimizedImageUrl(image) : image;
+
+// Format date subtly
+const formatPublishDate = (date?: Date | string) => {
+  if (!date) return null;
+  
+  const publishDate = date instanceof Date ? date : new Date(date);
+  
+  return new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  }).format(publishDate);
+};
+
+const formattedPublishDate = meta?.publishDate 
+  ? formatPublishDate(meta.publishDate) 
+  : null;
+
 ---
 
-<article class:list={[
-  'group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden',
-  'hover:shadow-xl hover:-translate-y-1',
-  'border border-gray-100/50 dark:border-gray-700/50',
-  'flex flex-col h-full transition-all duration-300',
-  className
-]}>
+<article 
+  class:list={[
+    'flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden h-full',
+    className
+  ]}
+>
   <div class="relative aspect-[16/9] overflow-hidden">
     {image && isExternalImage ? (
       <img 
         src={optimizedImageUrl}
         alt={title}
-        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        loading="lazy"
-        decoding="async"
-        width="800"
-        height="450"
+        class="w-full h-full object-cover"
       />
-    ) : image && (
+    ) : (
       <Image 
-        src={image}
-        alt={title}
-        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        widths={[400, 800]}
-        sizes="(max-width: 768px) 100vw, 400px"
-        loading="lazy"
-        decoding="async"
+        src={image} 
+        alt={title} 
+        class="w-full h-full object-cover"
       />
+    )}
+    {badge && (
+      <div class="absolute top-4 left-4 z-10">
+        <span class="bg-[var(--badge-color)] text-white text-xs px-2.5 py-1 rounded-full">
+          {badge}
+        </span>
+      </div>
+    )}
+    {formattedPublishDate && (
+      <div class="absolute bottom-4 right-4 z-10">
+        <span class="bg-black/60 text-white text-xs px-2.5 py-1 rounded-full font-medium">
+          {formattedPublishDate}
+        </span>
+      </div>
     )}
     {(badge || category) && (
       <div class="absolute top-4 left-4 z-10">
@@ -196,93 +216,72 @@ const optimizedImageUrl = isExternalImage ? getOptimizedImageUrl(image) : image;
   </div>
 
   <div class="p-6 flex flex-col flex-grow">
-    <h3>
+    <div class="flex justify-between items-center mb-2">
+      {/* Date removed from this section */}
+    </div>
+    <h3 class="flex-grow">
       <a 
         href={getPermalink(href, 'post')} 
         class="text-2xl font-bold mb-2 line-clamp-2 text-gray-900 hover:text-[var(--hover-color)] transition-colors duration-300"
-        style={`--hover-color: ${config.color}`}
       >
         {title}
       </a>
     </h3>
     
-    <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 text-sm leading-relaxed">
-      {description}
-    </p>
-
-    {displayedTags.length > 0 && (
-      <div class="flex flex-wrap gap-2 mb-4">
-        {displayedTags.map((tag) => (
-          <span class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer">
-            <Icon name="tabler:tag" class="w-3 h-3 mr-1" />
-            {tag}
-          </span>
-        ))}
-      </div>
-    )}
-
-    {meta && (
-      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
-        {meta.author && (
-          <div class="flex items-center gap-1">
-            <Icon name="tabler:pencil" class="w-4 h-4" />
-            <span>{meta.author}</span>
-          </div>
-        )}
-        {meta.publishDate && (
-          <div class="flex items-center gap-1">
-            <Icon name="tabler:calendar" class="w-4 h-4" />
-            <span>{meta.publishDate}</span>
-          </div>
-        )}
-        {meta.expert && (
-          <div class="flex items-center gap-1">
-            <Icon name="tabler:user" class="w-4 h-4" />
-            <span>{meta.expert}</span>
-          </div>
-        )}
+    {(meta?.duration || meta?.expert || meta?.contributors || meta?.episode) && (
+      <div class="mt-3 flex flex-col space-y-1.5 text-sm text-gray-600">
         {meta.duration && (
-          <div class="flex items-center gap-1">
-            <Icon name="tabler:clock" class="w-4 h-4" />
+          <div class="inline-flex items-center space-x-2">
+            <Icon name="tabler:clock" class="h-4 w-4 text-gray-500 opacity-70" />
             <span>{meta.duration}</span>
           </div>
         )}
-        {meta.contributors && (
-          <div class="flex items-center gap-1">
-            <Icon name="tabler:users" class="w-4 h-4" />
-            <span>{meta.contributors}</span>
+        {(meta.expert || meta.contributors) && (
+          <div class="inline-flex items-center space-x-2">
+            <Icon name="tabler:users" class="h-4 w-4 text-gray-500 opacity-70" />
+            <span>
+              {meta.expert && meta.contributors 
+                ? `${meta.expert}, ${meta.contributors}`
+                : (meta.expert || meta.contributors)}
+            </span>
+          </div>
+        )}
+        {meta.episode && (
+          <div class="inline-flex items-center space-x-2">
+            <Icon name="tabler:device-tv" class="h-4 w-4 text-gray-500 opacity-70" />
+            <span>{meta.episode}</span>
           </div>
         )}
       </div>
     )}
-
-    <div class="mt-auto">
-      <Button 
-        href={getPermalink(href, 'post')}
-        variant="card"
-        icon={config.icon}
-        iconPosition="left"
-        class:list={[
-          'text-gray-700',
-          {
-            'bg-[color-mix(in_srgb,var(--content-actualite)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-actualite)_15%,transparent)]': finalType === 'actualite',
-            'bg-[color-mix(in_srgb,var(--content-live)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-live)_15%,transparent)]': finalType === 'live',
-            'bg-[color-mix(in_srgb,var(--content-fiche)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-fiche)_15%,transparent)]': finalType === 'fiche',
-            'bg-[color-mix(in_srgb,var(--content-podcast)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-podcast)_15%,transparent)]': finalType === 'podcast',
-            'bg-[color-mix(in_srgb,var(--content-tv)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-tv)_15%,transparent)]': finalType === 'tv',
-            'bg-[color-mix(in_srgb,var(--content-premium)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-premium)_15%,transparent)]': finalType === 'premium',
-          },
-          'transition-all duration-300 shadow-sm hover:shadow'
-        ]}
-      >
-        <span class="font-medium">{config.label}</span>
-        <Icon 
-          name="tabler:chevron-right" 
-          class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5" 
-          slot="icon-right"
-        />
-      </Button>
-    </div>
+  </div>
+  
+  <div class="p-6 pt-0 mb-6">
+    <Button 
+      href={getPermalink(href, 'post')}
+      variant="card"
+      icon={config.icon}
+      iconPosition="left"
+      class:list={[
+        'text-gray-700',
+        {
+          'bg-[color-mix(in_srgb,var(--content-actualite)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-actualite)_15%,transparent)]': finalType === 'actualite',
+          'bg-[color-mix(in_srgb,var(--content-live)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-live)_15%,transparent)]': finalType === 'live',
+          'bg-[color-mix(in_srgb,var(--content-fiche)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-fiche)_15%,transparent)]': finalType === 'fiche',
+          'bg-[color-mix(in_srgb,var(--content-podcast)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-podcast)_15%,transparent)]': finalType === 'podcast',
+          'bg-[color-mix(in_srgb,var(--content-tv)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-tv)_15%,transparent)]': finalType === 'tv',
+          'bg-[color-mix(in_srgb,var(--content-premium)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-premium)_15%,transparent)]': finalType === 'premium',
+        },
+        'transition-all duration-300 shadow-sm hover:shadow'
+      ]}
+    >
+      <span class="font-medium">{config.label}</span>
+      <Icon 
+        name="tabler:chevron-right" 
+        class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5" 
+        slot="icon-right"
+      />
+    </Button>
   </div>
 </article>
 

@@ -33,6 +33,10 @@ export const homepageCollection: Collection = {
           icon: "tabler:device-tv"
         }
       ]
+    },
+    featuredContent: {
+      title: "Actualités du moment",
+      description: "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative."
     }
   }),
   fields: [
@@ -243,13 +247,12 @@ export const homepageCollection: Collection = {
     {
       type: "object",
       name: "featuredContent",
-      label: "Contenus en vedette",
+      label: "Section Contenus à la Une",
       fields: [
         {
           type: "string",
           name: "title",
-          label: "Titre de la section",
-          description: "Le titre principal de la section des contenus en vedette",
+          label: "Titre",
           required: true,
           default: "Actualités du moment"
         },
@@ -257,126 +260,8 @@ export const homepageCollection: Collection = {
           type: "string",
           name: "description",
           label: "Description",
-          description: "Une brève description de la section",
           required: true,
-          default: "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
-          ui: {
-            component: "textarea"
-          }
-        },
-        {
-          type: "string",
-          name: "buttonText",
-          label: "Texte du bouton",
-          description: "Texte du bouton 'Voir tout'",
-          required: true,
-          default: "Voir tout"
-        },
-        {
-          type: "string",
-          name: "buttonLink",
-          label: "Lien du bouton",
-          description: "URL du bouton 'Voir tout'",
-          required: true,
-          default: "/contenus"
-        },
-        {
-          type: "object",
-          name: "items",
-          label: "Contenus",
-          description: "Liste des contenus à mettre en avant (si vide, affichera les 3 derniers contenus)",
-          list: true,
-          ui: {
-            itemProps: (item) => ({
-              label: item.title || "Nouveau contenu"
-            })
-          },
-          fields: [
-            {
-              type: "string",
-              name: "href",
-              label: "Lien",
-              description: "URL du contenu (ex: /actualite/exemple-1)"
-            },
-            {
-              type: "string",
-              name: "title",
-              label: "Titre",
-              description: "Titre du contenu"
-            },
-            {
-              type: "string",
-              name: "description",
-              label: "Description",
-              description: "Brève description du contenu",
-              ui: {
-                component: "textarea"
-              }
-            },
-            {
-              type: "image",
-              name: "image",
-              label: "Image",
-              description: "Image du contenu"
-            },
-            {
-              type: "string",
-              name: "badge",
-              label: "Badge",
-              description: "Texte du badge (ex: Actualité, Podcast, TV)"
-            },
-            {
-              type: "string",
-              name: "type",
-              label: "Type",
-              description: "Type de contenu",
-              options: [
-                {
-                  label: "Par défaut",
-                  value: "default"
-                },
-                {
-                  label: "Podcast",
-                  value: "podcast"
-                },
-                {
-                  label: "TV",
-                  value: "tv"
-                }
-              ]
-            },
-            {
-              type: "object",
-              name: "meta",
-              label: "Métadonnées",
-              fields: [
-                {
-                  type: "string",
-                  name: "episode",
-                  label: "Numéro d'épisode",
-                  description: "Pour les podcasts et émissions TV (ex: EP 12)"
-                },
-                {
-                  type: "string",
-                  name: "duration",
-                  label: "Durée",
-                  description: "Durée du contenu (ex: 5 min)"
-                },
-                {
-                  type: "string",
-                  name: "expert",
-                  label: "Expert",
-                  description: "Nom de l'expert ou intervenant"
-                },
-                {
-                  type: "string",
-                  name: "contributors",
-                  label: "Contributeurs",
-                  description: "Autres contributeurs (optionnel)"
-                }
-              ]
-            }
-          ]
+          default: "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative."
         }
       ]
     }

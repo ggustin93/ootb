@@ -334,3 +334,53 @@ export async function findTags(): Promise<Taxonomy[]> {
   
   return Array.from(uniqueTags.values());
 }
+
+export const findDiverseLatestPosts = async ({ count = 3 }: { count?: number } = {}): Promise<Post[]> => {
+  const allPosts = await getCollection('post', (post) => 
+    post.data.published && post.data.category !== 'fiche'
+  );
+
+  // Convert to normalized posts
+  const normalizedPosts = await Promise.all(
+    allPosts.map(post => getNormalizedPost(post))
+  );
+
+  // Sort by publish date
+  const sortedPosts = normalizedPosts
+    .sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime());
+
+  // Prioritize diversity of content types
+  const contentTypes = ['actualite', 'podcast', 'tv', 'live', 'premium'];
+  const diversePosts: Post[] = [];
+  const usedTypes = new Set<string>();
+
+  for (const post of sortedPosts) {
+    if (
+      !usedTypes.has(post.category.slug) && 
+      contentTypes.includes(post.category.slug)
+    ) {
+      diversePosts.push(post);
+      usedTypes.add(post.category.slug);
+    }
+
+    // If we have at least 3 different types, fill the rest with latest posts
+    if (diversePosts.length >= count) {
+      break;
+    }
+  }
+
+  // If we don't have enough diverse posts, fill with latest
+  while (diversePosts.length < count) {
+    const nextPost = sortedPosts.find(
+      post => !diversePosts.some(p => p.id === post.id)
+    );
+    
+    if (nextPost) {
+      diversePosts.push(nextPost);
+    } else {
+      break;
+    }
+  }
+
+  return diversePosts.slice(0, count);
+};

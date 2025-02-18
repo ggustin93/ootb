@@ -4,13 +4,29 @@ import Image from '~/components/common/Image.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import Button from '~/components/ui/Button.astro';
 import homepageData from '../../content/homepage/index.json';
+import ootbLogo from '~/assets/images/ootb-logo.svg';
 
 const { 
-  heroImage, 
-  title: sectionTitle, 
+  heroImage = ootbLogo, 
+  title: { 
+    firstLine = 'Passez au niveau', 
+    secondLine = 'premium' 
+  } = {}, 
   intro, 
   features, 
-  podcastHighlights 
+  podcastHighlights,
+  buttons = {
+    primary: {
+      text: 'Découvrir Premium',
+      href: '/premium',
+      icon: 'tabler:crown'
+    },
+    secondary: {
+      text: 'Écouter un extrait',
+      href: '/podcast',
+      icon: 'tabler:player-play'
+    }
+  }
 } = homepageData.premium;
 ---
 <section class="py-16 px-4 bg-[--ootb-turquoise] text-white relative overflow-hidden">
@@ -43,8 +59,8 @@ const {
           Premium
         </SectionDivider>
         <h2>
-          <span class="heading-2 text-white">Passez au niveau</span>
-          <span class="heading-2 text-[var(--ootb-yellow)] italic">premium</span>
+          <span class="heading-2 text-white">{firstLine}</span>
+          <span class="heading-2 text-[var(--ootb-yellow)] italic">{secondLine}</span>
         </h2>
         
         <div class="mb-4"></div>
@@ -65,18 +81,18 @@ const {
 
         <div class="flex flex-col sm:flex-row gap-4">
           <Button
-            href="/premium"
+            href={buttons.primary.href}
             variant="premium-primary"
-            icon="tabler:crown"
+            icon={buttons.primary.icon}
           >
-            Découvrir Premium
+            {buttons.primary.text}
           </Button>
           <Button
-            href="/podcast"
+            href={buttons.secondary.href}
             variant="premium-secondary"
-            icon="tabler:player-play"
+            icon={buttons.secondary.icon}
           >
-            Écouter un extrait
+            {buttons.secondary.text}
           </Button>
         </div>
       </div>

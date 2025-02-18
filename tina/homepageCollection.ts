@@ -274,61 +274,147 @@ export const homepageCollection: Collection = {
           type: "image",
           name: "heroImage",
           label: "Image de la section Premium",
-          description: "Image mise en avant dans la section Premium"
+          required: false
         },
         {
-          type: "string",
+          type: "object",
           name: "title",
-          label: "Titre de la section Premium",
-          description: "Titre principal de la section Premium"
+          label: "Titre principal",
+          fields: [
+            {
+              type: "string",
+              name: "firstLine",
+              label: "Première ligne",
+              required: true,
+              default: "Passez au niveau"
+            },
+            {
+              type: "string",
+              name: "secondLine",
+              label: "Deuxième ligne",
+              required: true,
+              default: "premium"
+            }
+          ]
         },
         {
           type: "string",
           name: "intro",
-          label: "Introduction de la section Premium",
-          description: "Texte d'introduction pour la section Premium",
+          label: "Introduction",
+          required: true,
           ui: {
-            component: "textarea"
+            component: 'textarea'
           }
         },
         {
           type: "object",
+          name: "buttons",
+          label: "Boutons",
+          fields: [
+            {
+              type: "object",
+              name: "primary",
+              label: "Bouton Principal",
+              fields: [
+                {
+                  type: "string",
+                  name: "text",
+                  label: "Texte",
+                  required: true,
+                  default: "Découvrir Premium"
+                },
+                {
+                  type: "string",
+                  name: "href",
+                  label: "Lien",
+                  required: true,
+                  default: "/premium"
+                },
+                {
+                  type: "string",
+                  name: "icon",
+                  label: "Icône",
+                  required: true,
+                  default: "tabler:crown"
+                }
+              ]
+            },
+            {
+              type: "object",
+              name: "secondary",
+              label: "Bouton Secondaire",
+              fields: [
+                {
+                  type: "string",
+                  name: "text",
+                  label: "Texte",
+                  required: true,
+                  default: "Écouter un extrait"
+                },
+                {
+                  type: "string",
+                  name: "href",
+                  label: "Lien",
+                  required: true,
+                  default: "/podcast"
+                },
+                {
+                  type: "string",
+                  name: "icon",
+                  label: "Icône",
+                  required: true,
+                  default: "tabler:player-play"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          type: "object",
           name: "features",
-          label: "Fonctionnalités Premium",
+          label: "Fonctionnalités",
           list: true,
           fields: [
             {
               type: "string",
               name: "text",
-              label: "Texte de la fonctionnalité"
+              label: "Texte de la fonctionnalité",
+              required: true
             }
           ]
         },
         {
           type: "object",
           name: "podcastHighlights",
-          label: "Points forts des Podcasts",
+          label: "Points forts du podcast",
           list: true,
           fields: [
             {
               type: "string",
               name: "title",
-              label: "Titre du Podcast"
+              label: "Titre",
+              required: true
             },
             {
               type: "string",
               name: "description",
-              label: "Description du Podcast"
+              label: "Description",
+              required: true,
+              ui: {
+                component: 'textarea'
+              }
             },
             {
               type: "image",
               name: "image",
-              label: "Image du Podcast"
+              label: "Image du podcast",
+              required: false
             },
             {
               type: "string",
               name: "duration",
-              label: "Durée du Podcast"
+              label: "Durée",
+              required: false
             }
           ]
         }

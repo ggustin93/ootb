@@ -1,0 +1,25 @@
+name: Auto Merge Tina Changes
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/content/**'  # Déclenché uniquement pour les modifications de contenu
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Auto Merge
+      uses: "pascalgn/automerge-action@v0.15.6"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        MERGE_LABELS: ""
+        MERGE_METHOD: "squash"
+        MERGE_COMMIT_MESSAGE: "Merge Tina CMS changes: {pullRequest.title} (#{pullRequest.number})"

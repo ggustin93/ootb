@@ -13,6 +13,20 @@ import { homepageCollection } from "./homepageCollection";
 //    - CLOUDINARY_API_KEY=your_api_key
 //    - CLOUDINARY_API_SECRET=your_api_secret
 
+// Logs de débogage pour l'environnement
+console.log('🔍 Variables Tina Cloud:');
+console.log('TINA_CLIENT_ID:', process.env.TINA_CLIENT_ID ? 'Présent ✅' : 'Manquant ❌');
+console.log('TINA_TOKEN:', process.env.TINA_TOKEN ? 'Présent ✅' : 'Manquant ❌');
+console.log('TINA_SEARCH_TOKEN:', process.env.TINA_SEARCH_TOKEN ? 'Présent ✅' : 'Manquant ❌');
+
+// Log de tous les environnements pour débogage complet
+console.log('🌍 Tous les environnements:');
+Object.keys(process.env).forEach(key => {
+  if (key.includes('TINA') || key.includes('CLIENT') || key.includes('TOKEN')) {
+    console.log(`${key}: ${process.env[key]}`);
+  }
+});
+
 export default defineConfig({
   // Tina Cloud Credentials
   // Use environment variables from .env file
@@ -93,4 +107,20 @@ export default defineConfig({
       },
     ],
   },
+
+  // Configuration automatique des modifications
+  gitProvider: {
+    name: 'github',
+    branch: 'main',
+    authProvider: 'github',
+    autoCommit: true,   // Commits automatiques
+    autoMerge: true     // Merge automatique des changements
+  },
+  
+  // Options de commit personnalisées
+  commitMessages: {
+    createNew: 'Création de {{collection.label}} : {{document.title}}',
+    update: 'Mise à jour de {{collection.label}} : {{document.title}}',
+    delete: 'Suppression de {{collection.label}} : {{document.title}}'
+  }
 });

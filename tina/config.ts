@@ -4,14 +4,24 @@ import { defineConfig } from "tinacms";
 import { postsCollection } from "./postsCollection";
 import { homepageCollection } from "./homepageCollection";
 
-// Tina Cloud & Cloudinary Configuration 
+// Fonction de validation des variables d'environnement
+const validateEnvVar = (varName: string, defaultValue?: string): string => {
+  const value = process.env[varName];
+  if (!value) {
+    console.error(`❌ Variable d'environnement ${varName} manquante !`);
+    if (defaultValue) {
+      console.warn(`🔧 Utilisation de la valeur par défaut : ${defaultValue}`);
+      return defaultValue;
+    }
+    throw new Error(`Variable d'environnement ${varName} requise mais non définie`);
+  }
+  return value;
+};
 
-// CLOUDINARY CONFIGURATION:
-// 1. Install cloudinary package: npm install cloudinary
-// 2. Set up Cloudinary environment variables in .env:
-//    - CLOUDINARY_CLOUD_NAME=your_cloud_name
-//    - CLOUDINARY_API_KEY=your_api_key
-//    - CLOUDINARY_API_SECRET=your_api_secret
+// Récupération sécurisée des variables Tina
+const TINA_CLIENT_ID = validateEnvVar('TINA_CLIENT_ID', 'e5043161-7d23-41bf-a7bc-626eef359ef0');
+const TINA_TOKEN = validateEnvVar('TINA_TOKEN', 'abe9d5391460078be76f1935613f9055303eff11');
+const TINA_SEARCH_TOKEN = validateEnvVar('TINA_SEARCH_TOKEN');
 
 // Logs de débogage pour l'environnement
 console.log('🔍 Variables Tina Cloud:');
@@ -30,11 +40,20 @@ Object.keys(process.env).forEach(key => {
 export default defineConfig({
   // Tina Cloud Credentials
   branch: "main", 
-  clientId: process.env.TINA_CLIENT_ID,
-  token: process.env.TINA_TOKEN,
+  clientId: TINA_CLIENT_ID,
+  token: TINA_TOKEN,
   
-  // Configuration de l'URL Tina avec version 1.8
-  contentApiUrlOverride: `https://content.tinajs.io/1.8/content/${process.env.TINA_CLIENT_ID}/github/main`,
+  // Configuration de l'URL Tina avec vérification explicite
+  contentApiUrlOverride: (() => {
+    const version = '1.8';
+    const url = `https://content.tinajs.io/${version}/content/${TINA_CLIENT_ID}/github/main`;
+    
+    console.log('🚀 URL de contenu Tina générée:', url);
+    console.log('🔑 Version utilisée:', version);
+    console.log('🆔 ClientID utilisé:', TINA_CLIENT_ID);
+    
+    return url;
+  })(),
   
   // Optional: Disable import alias warnings
   disableImportAliasWarnings: true,
@@ -74,7 +93,7 @@ export default defineConfig({
   // Search Configuration
   search: {
     tina: {
-      indexerToken: process.env.TINA_SEARCH_TOKEN || "", // Optional: Add search token if using Tina's search
+      indexerToken: TINA_SEARCH_TOKEN || "", // Optional: Add search token if using Tina's search
       stopwordLanguages: ['fra'],
     },
   },

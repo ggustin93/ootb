@@ -1,5 +1,6 @@
 ---
 // Configuration Tina CMS pour Astro
+const TINA_CLIENT_ID = import.meta.env.TINA_CLIENT_ID || 'default-client-id';
 ---
 
 <!DOCTYPE html>
@@ -15,12 +16,12 @@
   </head>
   <body class="tinacms">
     <div id="root"></div>
-    <script>
+    <script define:vars={{TINA_CLIENT_ID}}>
       const init = async () => {
         try {
           // 🚀 Configuration Tina Cloud
           await window.tina.init({
-            clientId: 'e5043161-7d23-41bf-a7bc-626eef359ef0', // Hardcoded client ID
+            clientId: TINA_CLIENT_ID,
             branch: 'main',
             tokenStorage: 'LOCAL_STORAGE',
             cmsCallback: (cms) => {
@@ -30,7 +31,7 @@
             // Configuration de l'API
             apiURL: import.meta.env.DEV 
               ? 'http://localhost:4001/graphql'
-              : 'https://content.tinajs.io/1.5/content/e5043161-7d23-41bf-a7bc-626eef359ef0/github/main'
+              : `https://content.tinajs.io/1.5/content/${TINA_CLIENT_ID}/github/main`
           });
 
           console.log('✅ Tina CMS initialisé avec succès');

@@ -29,10 +29,12 @@ Object.keys(process.env).forEach(key => {
 
 export default defineConfig({
   // Tina Cloud Credentials
-  // Use environment variables from .env file
   branch: "main", 
   clientId: process.env.TINA_CLIENT_ID,
   token: process.env.TINA_TOKEN,
+  
+  // Configuration de l'URL Tina
+  contentApiUrlOverride: `https://content.tinajs.io/content/${process.env.TINA_CLIENT_ID}/github/main`,
   
   // Optional: Disable import alias warnings
   disableImportAliasWarnings: true,

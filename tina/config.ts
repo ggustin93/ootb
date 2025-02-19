@@ -33,7 +33,7 @@ export default defineConfig({
   clientId: process.env.TINA_CLIENT_ID,
   token: process.env.TINA_TOKEN,
   
-  // Configuration de l'URL Tina avec version CLI
+  // Configuration de l'URL Tina avec version 1.8
   contentApiUrlOverride: `https://content.tinajs.io/1.8/content/${process.env.TINA_CLIENT_ID}/github/main`,
   
   // Optional: Disable import alias warnings

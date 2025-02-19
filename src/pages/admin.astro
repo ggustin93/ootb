@@ -1,6 +1,14 @@
 ---
-// Configuration Tina CMS pour Astro
+// Configuration des variables d'environnement pour Tina CMS
 const TINA_CLIENT_ID = import.meta.env.TINA_CLIENT_ID || 'default-client-id';
+const API_URL = import.meta.env.DEV 
+  ? 'http://localhost:4001/graphql' 
+  : 'https://content.tinajs.io/graphql';
+
+console.log('🔍 Debug Admin Page:');
+console.log('TINA_CLIENT_ID:', TINA_CLIENT_ID);
+console.log('API_URL:', API_URL);
+console.log('All Env Vars:', JSON.stringify(import.meta.env, null, 2));
 ---
 
 <!DOCTYPE html>
@@ -13,13 +21,44 @@ const TINA_CLIENT_ID = import.meta.env.TINA_CLIENT_ID || 'default-client-id';
       src="https://unpkg.com/@tinacms/cli@latest/dist/tina.js" 
       crossorigin
     ></script>
+    <style>
+      body { 
+        font-family: Arial, sans-serif; 
+        background-color: #f4f4f4; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        height: 100vh; 
+        margin: 0; 
+      }
+      #debug-info {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-width: 600px;
+        width: 100%;
+      }
+    </style>
   </head>
   <body class="tinacms">
+    <div id="debug-info">
+      <h1>Tina CMS Debug Information</h1>
+      <pre id="debug-output"></pre>
+    </div>
     <div id="root"></div>
-    <script define:vars={{TINA_CLIENT_ID}}>
+    <script define:vars={{TINA_CLIENT_ID, API_URL}}>
+      // Capture console logs
+      const originalLog = console.log;
+      const logs = [];
+      console.log = function() {
+        logs.push(Array.from(arguments).map(String).join(' '));
+        originalLog.apply(console, arguments);
+      };
+
       const init = async () => {
         try {
-          // 🚀 Configuration Tina Cloud
+          // 🚀 Configuration de Tina Cloud
           await window.tina.init({
             clientId: TINA_CLIENT_ID,
             branch: 'main',
@@ -28,15 +67,15 @@ const TINA_CLIENT_ID = import.meta.env.TINA_CLIENT_ID || 'default-client-id';
               // Activation des fonctionnalités admin
               cms.flags.set('tina-admin', true);
             },
-            // Configuration de l'API
-            apiURL: import.meta.env.DEV 
-              ? 'http://localhost:4001/graphql'
-              : `https://content.tinajs.io/1.5/content/${TINA_CLIENT_ID}/github/main`
+            apiURL: API_URL
           });
 
           console.log('✅ Tina CMS initialisé avec succès');
         } catch (error) {
           console.error('❌ Échec de l\'initialisation de Tina', error);
+        } finally {
+          // Afficher les logs de débogage
+          document.getElementById('debug-output').textContent = logs.join('\n');
         }
       };
 

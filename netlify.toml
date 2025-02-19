@@ -1,5 +1,18 @@
 [build]
-  command = "npx tinacms build && npm run build"
+  command = """
+    echo "🔍 Variables d'environnement Tina CMS :"
+    echo "TINA_CLIENT_ID: $TINA_CLIENT_ID"
+    echo "TINA_TOKEN: ${TINA_TOKEN:0:8}..."
+    echo "TINA_SEARCH_TOKEN: ${TINA_SEARCH_TOKEN:0:8}..."
+    
+    # Vérification de la présence des variables
+    if [ -z "$TINA_CLIENT_ID" ] || [ -z "$TINA_TOKEN" ]; then
+      echo "❌ ERREUR : Variables Tina CMS manquantes"
+      exit 1
+    fi
+    
+    npx tinacms build && npm run build
+  """
   publish = "dist"
 
 [build.environment]

@@ -18,6 +18,7 @@ console.log('All Env Vars:', JSON.stringify(import.meta.env, null, 2));
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Administration Out of the Books</title>
     <script 
+      type="module"
       src="https://unpkg.com/@tinacms/cli@latest/dist/tina.js" 
       crossorigin
     ></script>
@@ -50,16 +51,44 @@ console.log('All Env Vars:', JSON.stringify(import.meta.env, null, 2));
     <script define:vars={{TINA_CLIENT_ID, API_URL}}>
       // Capture console logs
       const originalLog = console.log;
+      const originalError = console.error;
       const logs = [];
+      
       console.log = function() {
         logs.push(Array.from(arguments).map(String).join(' '));
         originalLog.apply(console, arguments);
       };
+      
+      console.error = function() {
+        logs.push('ERROR: ' + Array.from(arguments).map(String).join(' '));
+        originalError.apply(console, arguments);
+      };
+
+      // Attendre que le script Tina soit chargé
+      const waitForTina = () => {
+        return new Promise((resolve, reject) => {
+          const checkInterval = setInterval(() => {
+            if (window.tina && typeof window.tina.init === 'function') {
+              clearInterval(checkInterval);
+              resolve(window.tina);
+            }
+          }, 100);
+
+          // Timeout après 5 secondes
+          setTimeout(() => {
+            clearInterval(checkInterval);
+            reject(new Error('Tina CMS script not loaded'));
+          }, 5000);
+        });
+      };
 
       const init = async () => {
         try {
+          // Attendre le chargement de Tina
+          const tina = await waitForTina();
+          
           // 🚀 Configuration de Tina Cloud
-          await window.tina.init({
+          await tina.init({
             clientId: TINA_CLIENT_ID,
             branch: 'main',
             tokenStorage: 'LOCAL_STORAGE',
@@ -75,11 +104,19 @@ console.log('All Env Vars:', JSON.stringify(import.meta.env, null, 2));
           console.error('❌ Échec de l\'initialisation de Tina', error);
         } finally {
           // Afficher les logs de débogage
-          document.getElementById('debug-output').textContent = logs.join('\n');
+          const debugOutput = document.getElementById('debug-output');
+          if (debugOutput) {
+            debugOutput.textContent = logs.join('\n');
+          }
         }
       };
 
-      init();
+      // Charger Tina une fois le DOM chargé
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
     </script>
   </body>
 </html>

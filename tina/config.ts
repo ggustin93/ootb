@@ -5,37 +5,33 @@ import { postsCollection } from "./postsCollection";
 import { homepageCollection } from "./homepageCollection";
 
 // Fonction de validation des variables d'environnement
-const validateEnvVar = (varName: string, defaultValue?: string): string => {
+const validateEnvVar = (varName: string): string => {
   const value = process.env[varName];
   if (!value) {
     console.error(`❌ Variable d'environnement ${varName} manquante !`);
-    if (defaultValue) {
-      console.warn(`🔧 Utilisation de la valeur par défaut : ${defaultValue}`);
-      return defaultValue;
-    }
     throw new Error(`Variable d'environnement ${varName} requise mais non définie`);
   }
   return value;
 };
 
 // Récupération sécurisée des variables Tina
-const TINA_CLIENT_ID = validateEnvVar('TINA_CLIENT_ID', 'e5043161-7d23-41bf-a7bc-626eef359ef0');
-const TINA_TOKEN = validateEnvVar('TINA_TOKEN', 'abe9d5391460078be76f1935613f9055303eff11');
-const TINA_SEARCH_TOKEN = validateEnvVar('TINA_SEARCH_TOKEN');
+const TINA_CLIENT_ID = validateEnvVar('TINA_CLIENT_ID');
+const TINA_TOKEN = validateEnvVar('TINA_TOKEN');
+const TINA_SEARCH_TOKEN = process.env.TINA_SEARCH_TOKEN || '';
 
-// Logs de débogage pour l'environnement
-console.log('🔍 Variables Tina Cloud:');
-console.log('TINA_CLIENT_ID:', process.env.TINA_CLIENT_ID ? 'Présent ✅' : 'Manquant ❌');
-console.log('TINA_TOKEN:', process.env.TINA_TOKEN ? 'Présent ✅' : 'Manquant ❌');
-console.log('TINA_SEARCH_TOKEN:', process.env.TINA_SEARCH_TOKEN ? 'Présent ✅' : 'Manquant ❌');
-
-// Log de tous les environnements pour débogage complet
-console.log('🌍 Tous les environnements:');
-Object.keys(process.env).forEach(key => {
-  if (key.includes('TINA') || key.includes('CLIENT') || key.includes('TOKEN')) {
-    console.log(`${key}: ${process.env[key]}`);
+// Validation supplémentaire pour les variables critiques
+if (!TINA_CLIENT_ID || !TINA_TOKEN) {
+  console.error('🚨 ERREUR CRITIQUE : Les variables Tina CMS sont manquantes !');
+  console.error('Veuillez configurer TINA_CLIENT_ID et TINA_TOKEN dans vos variables d\'environnement.');
+  
+  // En développement local, on peut tolérer l'absence de variables
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn('⚠️ Mode développement : Utilisation de variables temporaires');
+  } else {
+    // En production, on bloque strictement
+    throw new Error('Configuration Tina CMS incomplète');
   }
-});
+}
 
 export default defineConfig({
   // Tina Cloud Credentials
@@ -50,7 +46,7 @@ export default defineConfig({
     
     console.log('🚀 URL de contenu Tina générée:', url);
     console.log('🔑 Version utilisée:', version);
-    console.log('🆔 ClientID utilisé:', TINA_CLIENT_ID);
+    console.log('🆔 ClientID utilisé:', TINA_CLIENT_ID.substring(0, 8) + '...');
     
     return url;
   })(),
@@ -93,7 +89,7 @@ export default defineConfig({
   // Search Configuration
   search: {
     tina: {
-      indexerToken: TINA_SEARCH_TOKEN || "", // Optional: Add search token if using Tina's search
+      indexerToken: TINA_SEARCH_TOKEN, 
       stopwordLanguages: ['fra'],
     },
   },

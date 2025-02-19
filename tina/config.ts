@@ -4,19 +4,45 @@ import { defineConfig } from "tinacms";
 import { postsCollection } from "./postsCollection";
 import { homepageCollection } from "./homepageCollection";
 
-// Configuration explicite de l'URL de contenu
-const contentApiUrl = process.env.TINA_CLIENT_ID 
-  ? `https://content.tinajs.io/1.8/content/${process.env.TINA_CLIENT_ID}/github/main`
-  : '';
+// Validation stricte des variables sensibles
+const validateTinaConfig = () => {
+  const requiredVars = ['TINA_CLIENT_ID', 'TINA_TOKEN'];
+  const missingVars = requiredVars.filter(varName => !process.env[varName]);
+
+  if (missingVars.length > 0) {
+    console.error(`🚨 ERREUR CRITIQUE : Variables Tina CMS manquantes : ${missingVars.join(', ')}`);
+    
+    // En développement, on log un avertissement
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('⚠️ Mode développement : Configuration incomplète');
+      return false;
+    }
+    
+    // En production, on bloque
+    throw new Error(`Variables Tina CMS manquantes : ${missingVars.join(', ')}`);
+  }
+
+  // Log sécurisé : masquage partiel des tokens
+  console.log('🔐 Configuration Tina CMS validée');
+  console.log(`🆔 Client ID (partial): ${process.env.TINA_CLIENT_ID?.slice(0, 8)}...`);
+  
+  return true;
+};
+
+// Génération sécurisée de l'URL de contenu
+const getContentApiUrl = () => {
+  validateTinaConfig();
+  return `https://content.tinajs.io/1.8/content/${process.env.TINA_CLIENT_ID}/github/main`;
+};
 
 export default defineConfig({
-  // Tina Cloud Credentials
+  // Tina Cloud Credentials - Strictement depuis les variables d'environnement
   branch: "main", 
   clientId: process.env.TINA_CLIENT_ID || '',
   token: process.env.TINA_TOKEN || '',
   
   // Configuration de l'URL Tina
-  contentApiUrlOverride: contentApiUrl,
+  contentApiUrlOverride: getContentApiUrl(),
   
   // Optional: Disable import alias warnings
   disableImportAliasWarnings: true,

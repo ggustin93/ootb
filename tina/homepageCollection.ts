@@ -454,28 +454,33 @@ export const homepageCollection: Collection = {
         {
           type: "object",
           name: "socialLinks",
-          label: "Liens réseaux sociaux",
+          label: "Liens sociaux",
           list: true,
           fields: [
             {
               type: "string",
               name: "name",
-              label: "Nom de la plateforme"
+              label: "Nom",
+              required: true
             },
             {
               type: "string",
               name: "icon",
-              label: "Nom de l'icône"
+              label: "Icône",
+              required: true
             },
             {
               type: "string",
               name: "href",
-              label: "URL du réseau social"
+              label: "Lien",
+              required: true
             },
             {
               type: "string",
               name: "color",
-              label: "Couleur de l'icône"
+              label: "Couleur",
+              required: false,
+              default: "text-[--ootb-blue]"
             }
           ]
         }

@@ -106,7 +106,7 @@
     ]
   },
   "newsletter": {
-    "title": "Restez connectéss",
+    "title": "Restez connectés",
     "description": "Recevez nos dernières actualités et ressources pédagogiques",
     "placeholder": "Votre email",
     "buttonText": "S'abonner",
@@ -127,13 +127,19 @@
       {
         "name": "LinkedIn",
         "icon": "tabler:brand-linkedin",
-        "href": "https://linkedin.com/company/outofthebooks",
+        "href": "https://www.linkedin.com/company/festivalootb/",
         "color": "text-[--ootb-blue]"
       },
       {
         "name": "Instagram",
         "icon": "tabler:brand-instagram",
-        "href": "https://instagram.com/outofthebooks",
+        "href": "https://www.instagram.com/festivaloutofthebooks/",
+        "color": "text-[--ootb-blue]"
+      },
+      {
+        "name": "Spotify",
+        "icon": "tabler:brand-spotify",
+        "href": "https://open.spotify.com/show/outofthebooks",
         "color": "text-[--ootb-blue]"
       }
     ]

@@ -1,6 +1,14 @@
 [build]
   publish = "dist"
-  command = "npm run build"
+  # 🚀 Updated build command to include Tina CMS build
+  command = "npm run tina:build && npm run build"
 
 [build.environment]
   NODE_VERSION = "20.11.0"
+
+# 🔐 Tina CMS Environment Variables
+# Ensure these are also set in Netlify UI
+[context.production.environment]
+  TINA_CLIENT_ID = "${TINA_CLIENT_ID}"
+  TINA_TOKEN = "${TINA_TOKEN}"
+  TINA_SEARCH_TOKEN = "${TINA_SEARCH_TOKEN}"

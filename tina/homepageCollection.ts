@@ -1,5 +1,20 @@
 import type { Collection } from "tinacms";
 
+// Tina Cloud Migration Guide
+
+// PREREQUISITE STEPS:
+// 1. Create an account on cloud.tina.io
+// 2. Connect your GitHub repository to Tina Cloud
+// 3. Retrieve client credentials (clientId and token)
+// 4. Create a .env file with the following variables:
+//    - TINA_CLIENT_ID=your_client_id
+//    - TINA_TOKEN=your_token
+
+// CONFIGURATION NOTES:
+// - This configuration is already compatible with Tina Cloud
+// - Minimal changes required for migration
+// - Ensure you have the latest @tinacms/cli and tinacms packages installed
+
 export const homepageCollection: Collection = {
   label: "Page d'accueil",
   name: "homepage",

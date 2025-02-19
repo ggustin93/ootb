@@ -2,41 +2,68 @@
 
 import { defineConfig } from "tinacms";
 import { postsCollection } from "./postsCollection";
-// Importez d'autres collections ici
 import { homepageCollection } from "./homepageCollection";
-// import { legalPagesCollection } from "./legalPagesCollection";
+
+// Tina Cloud & Cloudinary Configuration 
+
+// CLOUDINARY CONFIGURATION:
+// 1. Install cloudinary package: npm install cloudinary
+// 2. Set up Cloudinary environment variables in .env:
+//    - CLOUDINARY_CLOUD_NAME=your_cloud_name
+//    - CLOUDINARY_API_KEY=your_api_key
+//    - CLOUDINARY_API_SECRET=your_api_secret
 
 export default defineConfig({
-  branch: "main",
-  clientId: "local-dev",
-  token: "local-dev-token",
+  // Tina Cloud Credentials
+  // Use environment variables from .env file
+  branch: "main", 
+  clientId: process.env.TINA_CLIENT_ID,
+  token: process.env.TINA_TOKEN,
+  
+  // Optional: Disable import alias warnings
   disableImportAliasWarnings: true,
 
-  // Activation du mode preview
+  // Preview Configuration
   preview: {
     hosts: ['localhost:4321'],
     previewTimeout: 3000,
   },
 
+  // Build Output Configuration
   build: {
     outputFolder: "admin",
     publicFolder: "public",
   },
 
+  // Media Management
   media: {
+    // Option 1: Tina's Default Media Management
     tina: {
       publicFolder: "src/assets",
       mediaRoot: "images",
     },
+    
+    // Option 2: Cloudinary Integration (Recommended)
+    // Uncomment and configure if you want to use Cloudinary
+    /*
+    cloudinary: {
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+      apiKey: process.env.CLOUDINARY_API_KEY,
+      apiSecret: process.env.CLOUDINARY_API_SECRET,
+      folder: "out-of-the-books", // Optional: specify a folder in your Cloudinary account
+    },
+    */
   },
 
+  // Search Configuration
   search: {
     tina: {
-      indexerToken: "",
+      indexerToken: process.env.TINA_SEARCH_TOKEN || "", // Optional: Add search token if using Tina's search
       stopwordLanguages: ['fra'],
     },
   },
 
+  // Schema Configuration
   schema: {
     collections: [
       {

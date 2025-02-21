@@ -16,15 +16,33 @@ content:
             label: Titre
             type: object
             fields:
-              - { name: line1, label: "Ligne 1", type: string }
-              - { name: line2, label: "Ligne 2", type: string }
-              - { name: line3, label: "Ligne 3", type: string }
-          - { name: image, label: "Image", type: file }
+              - name: line1
+                label: "Ligne 1"
+                type: string
+              - name: line2
+                label: "Ligne 2"
+                type: string
+              - name: line3
+                label: "Ligne 3"
+                type: string
+          - name: image
+            label: "Image"
+            type: image
           - name: badges
             label: Badges
+            type: object
             list: true
+            primary: text
             fields:
-              - { name: text, label: "Texte", type: string }
-              - { name: link, label: "Lien", type: string }
-              - { name: variant, label: "Variante", type: string }
-              - { name: color, label: "Couleur", type: string }
+              - name: text
+                label: "Texte"
+                type: string
+              - name: link
+                label: "Lien"
+                type: string
+              - name: variant
+                label: "Variante"
+                type: string
+              - name: color
+                label: "Couleur"
+                type: string

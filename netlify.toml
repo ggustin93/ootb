@@ -4,13 +4,3 @@
 
 [build.environment]
   NODE_VERSION = "20.11.0"
-  TINA_CLIENT_ID = "e5043161-7d23-41bf-a7bc-626eef359ef0"
-  TINA_TOKEN = "abe9d5391460078be76f1935613f9055303eff11"
-  TINA_SEARCH_TOKEN = "863c5906aca00d6e9a0c8b5224c0726f4cc45fdc"
-
-# 🔐 Tina CMS Environment Variables
-# Ensure these are also set in Netlify UI
-[context.production.environment]
-  TINA_CLIENT_ID = "${TINA_CLIENT_ID}"
-  TINA_TOKEN = "${TINA_TOKEN}"
-  TINA_SEARCH_TOKEN = "${TINA_SEARCH_TOKEN}"

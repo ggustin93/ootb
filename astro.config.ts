@@ -146,6 +146,6 @@ export default defineConfig({
      target: 'node'
    },
    assetsInclude: ['**/*.otf', '**/*.ttf', '**/*.woff', '**/*.woff2'],
-   publicDir: 'public',
+   publicDir: 'src/assets',
  },
 });

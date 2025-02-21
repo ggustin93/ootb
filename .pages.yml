@@ -11,102 +11,42 @@ media:
 
 content:
   - name: homepage
-    label: Homepage
-    path: src/content/homepage/index.json
+    label: Page d'accueil
     type: file
-    icon: home
+    path: src/content/homepage/index.json
     fields:
       - name: title
-        label: Title
+        label: Titre
         type: string
-        required: true
-      
+
       - name: description
         label: Description
         type: text
-      
-      - name: heroSection
-        label: Hero Section
-        type: object
-        fields:
-          - name: title
-            label: Title
-            type: string
-          
-          - name: subtitle
-            label: Subtitle
-            type: text
-          
-          - name: cta
-            label: Call to Action
-            type: object
-            fields:
-              - name: text
-                label: Text
-                type: string
-              
-              - name: link
-                label: Link
-                type: string
-
-      - name: statsSection
-        label: Stats Section
-        type: object
-        fields:
-          - name: stats
-            label: Statistics
-            type: object
-            list: true
-            fields:
-              - name: value
-                label: Value
-                type: string
-              
-              - name: label
-                label: Label
-                type: string
-
-      - name: missionSection
-        label: Mission Section
-        type: object
-        fields:
-          - name: title
-            label: Title
-            type: string
-          
-          - name: description
-            label: Description
-            type: text
-          
-          - name: values
-            label: Values
-            type: object
-            list: true
-            fields:
-              - name: title
-                label: Title
-                type: string
-              
-              - name: description
-                label: Description
-                type: text
-
-    view:
-      fields: [title]
-      primary: title
 
   - name: posts
     label: Posts
-    path: src/content/post
     type: collection
+    path: src/content/post
     format: mdx
-    icon: file-text
+    view:
+      fields: [title, published, publishDate]
     fields:
       - name: published
-        label: État de publication
+        label: Publié
         type: boolean
-        description: Boule bleue = contenu visible sur le site
-        required: true
+        default: false
+
+      - name: publishDate
+        label: Date de publication
+        type: date
+
+      - name: title
+        label: Titre
+        type: string
+
+      - name: description
+        label: Résumé
+        type: text
 
       - name: category
         label: Type de contenu
@@ -124,73 +64,39 @@ content:
             label: Émissions
           - value: premium
             label: Premium
-        required: true
-        description: Sélectionnez le type de contenu
-
-      - name: title
-        label: Titre du contenu
-        type: string
-        required: true
-        description: Le titre principal qui apparaîtra en haut de la page
-
-      - name: description
-        label: Résumé
-        type: text
-        required: true
-        description: Un bref résumé qui apparaîtra dans les aperçus et en haut de la page
-
-      - name: publishDate
-        label: Date de publication
-        type: date
-        required: true
-        description: Date à laquelle le contenu sera/a été publié
 
       - name: tags
         label: Mots-clés
         type: string
         list: true
-        description: Ajoutez des mots-clés pour faciliter la recherche et le filtrage des contenus
 
       - name: image
         label: Image de couverture
         type: image
-        required: true
-        description: L'image principale qui apparaîtra en haut de la page et dans les aperçus
 
-      - name: media
-        label: Média (Youtube, Ausha, lien TV com)
-        type: object
-        description: Liens vers les différents médias selon le type de contenu
-        fields:
-          - name: youtube
-            label: Lien YouTube
-            type: string
-          - name: ausha
-            label: Lien Ausha
-            type: string
-          - name: tvCom
-            label: Lien TV Com
-            type: string
+      - name: body
+        label: Contenu
+        type: rich-text
 
-      - name: pedagogicalSheet
-        label: Fiche pédagogique
-        type: object
-        description: Informations spécifiques pour les fiches pédagogiques
-        fields:
-          - name: enseignement
-            label: Type d'enseignement
-            type: string
-            description: Le type d'enseignement concerné par cette fiche
+  - name: site
+    label: Paramètres du site
+    type: file
+    path: src/content/config.ts
+    fields:
+      - name: title
+        label: Titre du site
+        type: string
 
-          - name: section
-            label: Section
-            type: string
-            description: La section d'études concernée
+      - name: description
+        label: Description du site
+        type: text
 
-    view:
-      fields: [title, publishDate, category, published]
-      primary: title
-      sort: [publishDate]
-      default:
-        sort: publishDate
-        order: desc
+      - name: url
+        label: URL du site
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+
+      - name: cover
+        label: Image de prévisualisation
+        type: image
+        description: Image utilisée pour les aperçus sur les réseaux sociaux

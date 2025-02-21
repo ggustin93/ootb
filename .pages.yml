@@ -1,4 +1,14 @@
-- name: hero
+media:
+  input: src/media
+  output: /media
+
+content:
+  - name: homepage
+    label: Page d'accueil
+    type: file
+    path: src/content/homepage/index.json
+    fields:
+     - name: hero
   label: Section Hero
   type: object
   fields:

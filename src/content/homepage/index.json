@@ -8,7 +8,6 @@
     "image": "/assets/images/mascotte.png",
     "badges": [
       {
-        "text": "Festival",
         "link": "/festival",
         "variant": "festival"
       },
@@ -26,121 +25,6 @@
         "text": "Appel à projets",
         "link": "/appel-a-projets",
         "variant": "appel"
-      }
-    ]
-  },
-  "stats": {
-    "items": [
-      {
-        "number": "9002",
-        "label": "Membres actifs",
-        "sublabel": "dans la communauté",
-        "icon": "tabler:users-group"
-      },
-      {
-        "number": "3000",
-        "label": "Participants",
-        "sublabel": "au festival annuel",
-        "icon": "tabler:ticket"
-      },
-      {
-        "number": "80+",
-        "label": "Contenus",
-        "sublabel": "pédagogiques",
-        "icon": "tabler:device-tv"
-      }
-    ]
-  },
-  "mission": {
-    "title": "Innover pour l'éducation de demain",
-    "description": "La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.",
-    "image": "/assets/images/team.jpg",
-    "features": [
-      {
-        "text": "Créer des espaces d'échange et d'apprentissage"
-      },
-      {
-        "text": "Connecter les acteurs du changement éducatif"
-      },
-      {
-        "text": "Inspirer l'innovation dans l'éducation"
-      }
-    ],
-    "cta": {
-      "text": "En savoir plus sur notre mission",
-      "link": "/a-propos"
-    }
-  },
-  "featuredContent": {
-    "title": "Actualités du moment",
-    "description": "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative."
-  },
-  "premium": {
-    "heroImage": "/images/ootb-logo.svg",
-    "title": {},
-    "intro": "Accédez à nos contenus experts et analyses approfondies pour transformer votre approche pédagogique!",
-    "features": [
-      {
-        "text": "Hors-séries exclusifs mensuels"
-      },
-      {
-        "text": "Analyses approfondies des experts"
-      },
-      {
-        "text": "Ressources pédagogiques premium"
-      }
-    ],
-    "podcastHighlights": [
-      {
-        "title": "Les neurosciences en classe",
-        "description": "Découvrez les dernières avancées en neurosciences appliquées à l'éducation",
-        "image": "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&auto=format&fit=crop&q=80",
-        "duration": "1h 12min"
-      },
-      {
-        "title": "La pédagogie active",
-        "description": "Guide complet et pratique pour une classe dynamique",
-        "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&auto=format&fit=crop&q=80",
-        "duration": "58min"
-      }
-    ]
-  },
-  "newsletter": {
-    "title": "Restez connectés",
-    "description": "Recevez nos dernières actualités et ressources pédagogiques",
-    "placeholder": "Votre email",
-    "buttonText": "S'abonner",
-    "badgeText": "Gratuit",
-    "socialLinks": [
-      {
-        "name": "YouTube",
-        "icon": "tabler:brand-youtube",
-        "href": "https://youtube.com/@outofthebooks",
-        "color": "text-[--ootb-blue]"
-      },
-      {
-        "name": "Facebook",
-        "icon": "tabler:brand-facebook",
-        "href": "https://facebook.com/outofthebooks",
-        "color": "text-[--ootb-blue]"
-      },
-      {
-        "name": "LinkedIn",
-        "icon": "tabler:brand-linkedin",
-        "href": "https://www.linkedin.com/company/festivalootb/",
-        "color": "text-[--ootb-blue]"
-      },
-      {
-        "name": "Instagram",
-        "icon": "tabler:brand-instagram",
-        "href": "https://www.instagram.com/festivaloutofthebooks/",
-        "color": "text-[--ootb-blue]"
-      },
-      {
-        "name": "Spotify",
-        "icon": "tabler:brand-spotify",
-        "href": "https://open.spotify.com/show/outofthebooks",
-        "color": "text-[--ootb-blue]"
       }
     ]
   }

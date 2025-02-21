@@ -39,7 +39,7 @@ content:
           
           - name: badges
             label: Badges
-            type: array
+            type: object
             fields:
               - name: badge
                 label: Badge
@@ -70,7 +70,7 @@ content:
         fields:
           - name: items
             label: Statistiques
-            type: array
+            type: object
             fields:
               - name: statItem
                 label: Élément Statistique
@@ -104,7 +104,7 @@ content:
             type: image
           - name: features
             label: Caractéristiques
-            type: array
+            type: object
             fields:
               - name: feature
                 label: Caractéristique
@@ -150,7 +150,7 @@ content:
             type: text
           - name: features
             label: Fonctionnalités
-            type: array
+            type: object
             fields:
               - name: feature
                 label: Fonctionnalité
@@ -161,7 +161,7 @@ content:
                     type: string
           - name: podcastHighlights
             label: Points Forts Podcast
-            type: array
+            type: object
             fields:
               - name: podcastHighlight
                 label: Point Fort Podcast
@@ -201,7 +201,7 @@ content:
             type: string
           - name: socialLinks
             label: Liens Sociaux
-            type: array
+            type: object
             fields:
               - name: socialLink
                 label: Lien Social

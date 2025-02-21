@@ -4,126 +4,115 @@ import { defineConfig } from "tinacms";
 import { postsCollection } from "./postsCollection";
 import { homepageCollection } from "./homepageCollection";
 
-// Débogage avancé des variables d'environnement
+// Débogage des variables d'environnement
 const debugEnvVars = () => {
-  console.log('🔍 DÉBOGAGE COMPLET DES VARIABLES TINA CMS 🔍');
-  console.log('-------------------------------------------');
+  console.log('🔍 DÉBOGAGE DES VARIABLES TINA CMS');
+  console.log('----------------------------------');
   
-  // Liste exhaustive des variables à vérifier
   const varsToCheck = [
     'TINA_CLIENT_ID', 
     'TINA_TOKEN', 
-    'TINA_SEARCH_TOKEN', 
-    'NODE_ENV'
+    'TINA_SEARCH_TOKEN'
   ];
 
   varsToCheck.forEach(varName => {
-    const rawValue = process.env[varName];
-    const value = rawValue || 'NON DÉFINIE';
+    const value = process.env[varName];
+    console.log(`🔑 ${varName}: ${value ? '✅ PRÉSENTE' : '❌ MANQUANTE'}`);
     
-    console.log(`🔑 ${varName}:`);
-    console.log(`   - Présence: ${rawValue ? '✅ DÉFINIE' : '❌ ABSENTE'}`);
-    
-    if (rawValue) {
-      console.log(`   - Longueur: ${rawValue.length} caractères`);
-      console.log(`   - Début: ${rawValue.slice(0, 4)}...`);
-      console.log(`   - Fin: ...${rawValue.slice(-4)}`);
+    if (value && process.env.NODE_ENV !== 'production') {
+      console.log(`   Aperçu: ${value.slice(0, 4)}...${value.slice(-4)}`);
     }
-    
-    console.log('-------------------------------------------');
   });
 
-  // Vérification de l'environnement
-  console.log('🌍 Environnement système :');
-  console.log(`   - NODE_ENV: ${process.env.NODE_ENV || 'Non spécifié'}`);
-  console.log(`   - NETLIFY: ${process.env.NETLIFY || 'Non défini'}`);
+  console.log(`🌍 Environnement: ${process.env.NODE_ENV === 'production' ? 'Production' : 'Développement'}`);
 };
 
-// Résolution sécurisée du client ID
-const resolveClientId = () => {
-  debugEnvVars(); // Appel du débogage avant toute résolution
+// Résolution sécurisée des variables d'environnement
+const resolveEnvVar = (varName: string, options: {
+  required?: boolean;
+  defaultValue?: string;
+  isSecret?: boolean;
+} = {}) => {
+  const {
+    required = true,
+    defaultValue = '',
+    isSecret = false
+  } = options;
 
-  const clientId = process.env.TINA_CLIENT_ID?.trim();
-  if (!clientId) {
-    console.error('🚨 CRITICAL: No Tina Client ID found');
-    console.error('Variables complètes:', JSON.stringify(process.env, null, 2));
-    throw new Error('Tina Client ID is required');
+  let value = process.env[varName] || defaultValue;
+  value = value?.trim() || '';
+
+  // Gestion des variables non-résolues de Netlify (qui commencent par ${)
+  if (value.startsWith('${') && value.endsWith('}')) {
+    console.warn(`⚠️ Variable ${varName} non résolue par Netlify`);
+    value = defaultValue;
   }
-  
-  console.log(`✅ Client ID valide : ${clientId.slice(0, 8)}...`);
-  return clientId;
+
+  // En prod, on lance une erreur si la variable est requise et manquante
+  if (!value && required && process.env.NODE_ENV === 'production') {
+    throw new Error(`🚨 Variable d'environnement requise manquante: ${varName}`);
+  }
+
+  // En dev, on affiche un warning si la variable est manquante
+  if (!value && required && process.env.NODE_ENV !== 'production') {
+    console.warn(`⚠️ Variable d'environnement manquante: ${varName}`);
+  }
+
+  // Log sécurisé (uniquement en dev et si ce n'est pas un secret)
+  if (process.env.NODE_ENV !== 'production' && !isSecret && value) {
+    console.log(`📝 ${varName}: ${value.slice(0, 4)}...${value.slice(-4)}`);
+  }
+
+  return value;
 };
 
 export default defineConfig({
-  // Configuration basée sur des variables d'environnement résolues
-  branch: "main", 
-  clientId: resolveClientId(),
-  token: process.env.TINA_TOKEN || '',
+  branch: "main",
+  clientId: resolveEnvVar('TINA_CLIENT_ID', { required: true }),
+  token: resolveEnvVar('TINA_TOKEN', { required: true, isSecret: true }),
   
-  // URL de contenu avec résolution explicite
-  contentApiUrlOverride: `https://content.tinajs.io/1.8/content/${resolveClientId()}/github/main`,
+  contentApiUrlOverride: `https://content.tinajs.io/1.8/content/${resolveEnvVar('TINA_CLIENT_ID', { required: true })}/github/main`,
   
-  // Désactivation des avertissements d'alias
-  disableImportAliasWarnings: true,
-
-  // Configuration de prévisualisation
-  preview: {
-    hosts: ['localhost:4321'],
-    previewTimeout: 3000,
-  },
-
-  // Configuration de build
   build: {
     outputFolder: "admin",
     publicFolder: "public",
   },
 
-  // Media Management
   media: {
-    // Option 1: Tina's Default Media Management
     tina: {
       publicFolder: "src/assets",
       mediaRoot: "images",
     },
-    
-    // Option 2: Cloudinary Integration (Recommended)
-    // Uncomment and configure if you want to use Cloudinary
-    /*
-    cloudinary: {
-      cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-      apiKey: process.env.CLOUDINARY_API_KEY,
-      apiSecret: process.env.CLOUDINARY_API_SECRET,
-      folder: "out-of-the-books", // Optional: specify a folder in your Cloudinary account
-    },
-    */
   },
 
-  // Configuration de recherche
+  preview: {
+    hosts: ['localhost:4321'],  // Port Astro par défaut
+    previewTimeout: 3000,
+  },
+
   search: {
     tina: {
-      indexerToken: process.env.TINA_SEARCH_TOKEN || '', 
+      indexerToken: resolveEnvVar('TINA_SEARCH_TOKEN', { required: false, isSecret: true }),
       stopwordLanguages: ['fra'],
     },
   },
 
-  // Configurations des collections
   schema: {
     collections: [
-      {
-        ...homepageCollection,
-      },
+      homepageCollection,
       {
         ...postsCollection,
         label: "Gestion des contenus",
         name: "post",
         path: "src/content/post",
         format: "mdx",
-        description: "Gérez ici tous vos contenus (Actualités, Fiches, Lives, Podcasts, Émissions, Premium). Chaque type de contenu a ses propres champs spécifiques qui s'afficheront selon la catégorie sélectionnée.",
+        description: "Gérez ici tous vos contenus (Actualités, Fiches, Lives, Podcasts, Émissions, Premium).",
         ui: {
           filename: {
             readonly: true,
             slugify: (values) => {
-              return `${values.category}-${values.title
+              if (!values?.title) return '';
+              return `${values.category || 'post'}-${values.title
                 .toLowerCase()
                 .replace(/ /g, '-')
                 .replace(/[^a-zA-Z0-9-]/g, '')}`;
@@ -134,22 +123,17 @@ export default defineConfig({
           publishDate: new Date().toISOString(),
         }),
       },
-    ]
+    ],
   },
 
-  // Configuration automatique des modifications
   gitProvider: {
     name: 'github',
     branch: 'main',
     authProvider: 'github',
-    autoCommit: true,   // Commits automatiques
-    autoMerge: true     // Merge automatique des changements
+    autoCommit: true,
+    autoMerge: true,
   },
-  
-  // Options de commit personnalisées
-  commitMessages: {
-    createNew: 'Création de {{collection.label}} : {{document.title}}',
-    update: 'Mise à jour de {{collection.label}} : {{document.title}}',
-    delete: 'Suppression de {{collection.label}} : {{document.title}}'
-  }
 });
+
+// Exécuter le débogage au chargement de la configuration
+debugEnvVars();

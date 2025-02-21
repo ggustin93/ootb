@@ -15,38 +15,95 @@ content:
     type: file
     path: src/content/homepage/index.json
     fields:
-      - name: title
-        label: Titre
-        type: string
+      - name: hero
+        label: Section Hero
+        type: object
+        fields:
+          - name: title
+            label: Titre
+            type: object
+            fields:
+              - name: line1
+                label: Ligne 1
+                type: string
+              - name: line2
+                label: Ligne 2
+                type: string
+              - name: line3
+                label: Ligne 3
+                type: string
+          
+          - name: image
+            label: Image mascotte
+            type: image
+          
+          - name: badges
+            label: Badges
+            type: object
+            list: true
+            fields:
+              - name: text
+                label: Texte
+                type: string
+              - name: link
+                label: Lien
+                type: string
+              - name: variant
+                label: Variante
+                type: select
+                options:
+                  - value: festival
+                    label: Festival
+                  - value: podcast
+                    label: Podcast
+                  - value: emission
+                    label: Émission
+                  - value: appel
+                    label: Appel à projets
 
-      - name: description
-        label: Description
-        type: text
+      - name: stats
+        label: Section Statistiques
+        type: object
+        fields:
+          - name: items
+            label: Statistiques
+            type: object
+            list: true
+            fields:
+              - name: number
+                label: Nombre
+                type: string
+              - name: label
+                label: Label
+                type: string
+              - name: sublabel
+                label: Sous-label
+                type: string
+              - name: icon
+                label: Icône
+                type: string
+
+      - name: mission
+        label: Section Mission
+        type: object
+        fields:
+          - name: title
+            label: Titre
+            type: string
+          - name: description
+            label: Description
+            type: text
 
   - name: posts
     label: Posts
     type: collection
     path: src/content/post
     format: mdx
-    view:
-      fields: [title, published, publishDate]
     fields:
       - name: published
-        label: Publié
+        label: État de publication
         type: boolean
-        default: false
-
-      - name: publishDate
-        label: Date de publication
-        type: date
-
-      - name: title
-        label: Titre
-        type: string
-
-      - name: description
-        label: Résumé
-        type: text
+        description: Boule bleue = contenu visible sur le site
 
       - name: category
         label: Type de contenu
@@ -65,6 +122,18 @@ content:
           - value: premium
             label: Premium
 
+      - name: title
+        label: Titre du contenu
+        type: string
+
+      - name: description
+        label: Résumé
+        type: text
+
+      - name: publishDate
+        label: Date de publication
+        type: date
+
       - name: tags
         label: Mots-clés
         type: string
@@ -74,29 +143,35 @@ content:
         label: Image de couverture
         type: image
 
-      - name: body
-        label: Contenu
-        type: rich-text
+      - name: media
+        label: Média
+        type: object
+        fields:
+          - name: youtube
+            label: Lien YouTube
+            type: string
+          - name: ausha
+            label: Lien Ausha
+            type: string
+          - name: tvCom
+            label: Lien TV Com
+            type: string
 
-  - name: site
-    label: Paramètres du site
-    type: file
-    path: src/content/config.ts
-    fields:
-      - name: title
-        label: Titre du site
-        type: string
+      - name: pedagogicalSheet
+        label: Fiche pédagogique
+        type: object
+        fields:
+          - name: enseignement
+            label: Type d'enseignement
+            type: string
+          - name: section
+            label: Section
+            type: string
 
-      - name: description
-        label: Description du site
-        type: text
-
-      - name: url
-        label: URL du site
-        type: string
-        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
-
-      - name: cover
-        label: Image de prévisualisation
-        type: image
-        description: Image utilisée pour les aperçus sur les réseaux sociaux
+    view:
+      fields: [title, publishDate, category, published]
+      primary: title
+      sort: [publishDate]
+      default:
+        sort: publishDate
+        order: desc

@@ -1,106 +1,102 @@
-media:
-  input: src/media
-  output: /media
+- name: hero
+  label: Section Hero
+  type: object
+  fields:
+    - name: title
+      label: Titre
+      type: object
+      fields:
+        - { name: line1, label: "Ligne 1", type: string }
+        - { name: line2, label: "Ligne 2", type: string }
+        - { name: line3, label: "Ligne 3", type: string }
+    - { name: image, label: "Image", type: file }
+    - name: badges
+      label: Badges
+      type: list
+      primary: text
+      fields:
+        - { name: text, label: "Texte", type: string }
+        - { name: link, label: "Lien", type: string }
+        - { name: variant, label: "Variante", type: string }
 
-content:
-  - name: homepage
-    label: Page d'accueil
-    type: file
-    path: src/content/homepage/index.json
-    fields:
-      - name: hero
-        label: Section Hero
-        type: object
-        fields:
-          - name: title
-            label: Titre
-            type: object
-            fields:
-              - { name: line1, label: "Ligne 1", type: string }
-              - { name: line2, label: "Ligne 2", type: string }
-              - { name: line3, label: "Ligne 3", type: string }
-          - { name: image, label: Image, type: file }
-          - name: badges
-            label: Badges
-            type: list
-            fields:
-              - { name: text, label: "Texte", type: string }
-              - { name: link, label: "Lien", type: string }
-              - { name: variant, label: "Variante", type: string }
+- name: stats
+  label: Statistiques
+  type: object
+  fields:
+    - name: items
+      label: Éléments
+      type: list
+      primary: label
+      fields:
+        - { name: number, label: "Nombre", type: string }
+        - { name: label, label: "Label", type: string }
+        - { name: sublabel, label: "Sous-label", type: string }
+        - { name: icon, label: "Icône", type: string }
 
-      - name: stats
-        label: Statistiques
-        type: object
-        fields:
-          - name: items
-            label: Éléments
-            type: list
-            fields:
-              - { name: number, label: "Nombre", type: string }
-              - { name: label, label: "Label", type: string }
-              - { name: sublabel, label: "Sous-label", type: string }
-              - { name: icon, label: "Icône", type: string }
+- name: mission
+  label: Mission
+  type: object
+  fields:
+    - { name: title, label: "Titre", type: string }
+    - { name: description, label: "Description", type: text }
+    - { name: image, label: "Image", type: file }
+    - name: features
+      label: "Points Clés"
+      type: list
+      primary: text
+      fields:
+        - { name: text, label: "Texte", type: string }
+    - name: cta
+      label: "Bouton d'Action"
+      type: object
+      fields:
+        - { name: text, label: "Texte", type: string }
+        - { name: link, label: "Lien", type: string }
 
-      - name: mission
-        label: Mission
-        type: object
-        fields:
-          - { name: title, label: "Titre", type: string }
-          - { name: description, label: "Description", type: text }
-          - { name: image, label: "Image", type: file }
-          - name: features
-            label: Fonctionnalités
-            type: list
-            fields:
-              - { name: text, label: "Texte", type: string }
-          - name: cta
-            label: Call to Action
-            type: object
-            fields:
-              - { name: text, label: "Texte", type: string }
-              - { name: link, label: "Lien", type: string }
+- name: featuredContent
+  label: Contenus mis en avant
+  type: object
+  fields:
+    - { name: title, label: "Titre", type: string }
+    - { name: description, label: "Description", type: text }
 
-      - name: featuredContent
-        label: Contenu mis en avant
-        type: object
-        fields:
-          - { name: title, label: "Titre", type: string }
-          - { name: description, label: "Description", type: text }
+- name: premium
+  label: Contenu Premium
+  type: object
+  fields:
+    - { name: heroImage, label: "Image principale", type: file }
+    - { name: intro, label: "Introduction", type: text }
+    - name: features
+      label: "Avantages"
+      type: list
+      primary: text
+      fields:
+        - { name: text, label: "Texte", type: string }
+    - name: podcastHighlights
+      label: Podcasts à la une
+      type: list
+      primary: title
+      fields:
+        - { name: title, label: "Titre", type: string }
+        - { name: description, label: "Description", type: text }
+        - { name: image, label: "Image", type: file }
+        - { name: duration, label: "Durée", type: string }
 
-      - name: premium
-        label: Section Premium
-        type: object
-        fields:
-          - { name: heroImage, label: "Image principale", type: file }
-          - { name: intro, label: "Introduction", type: text }
-          - name: features
-            label: Fonctionnalités
-            type: list
-            fields:
-              - { name: text, label: "Texte", type: string }
-          - name: podcastHighlights
-            label: Podcasts à la Une
-            type: list
-            fields:
-              - { name: title, label: "Titre", type: string }
-              - { name: description, label: "Description", type: text }
-              - { name: image, label: "Image", type: file }
-              - { name: duration, label: "Durée", type: string }
-
-      - name: newsletter
-        label: Newsletter
-        type: object
-        fields:
-          - { name: title, label: "Titre", type: string }
-          - { name: description, label: "Description", type: text }
-          - { name: placeholder, label: "Placeholder", type: string }
-          - { name: buttonText, label: "Texte du bouton", type: string }
-          - { name: badgeText, label: "Texte du badge", type: string }
-          - name: socialLinks
-            label: Réseaux sociaux
-            type: list
-            fields:
-              - { name: name, label: "Nom", type: string }
-              - { name: icon, label: "Icône", type: string }
-              - { name: href, label: "Lien", type: string }
-              - { name: color, label: "Couleur", type: string }
+- name: newsletter
+  label: Newsletter
+  type: object
+  fields:
+    - { name: title, label: "Titre", type: string }
+    - { name: description, label: "Description", type: text }
+    - { name: placeholder, label: "Placeholder Email", type: string }
+    - { name: buttonText, label: "Texte du bouton", type: string }
+    - { name: badgeText, label: "Texte du badge", type: string }
+    - name: socialLinks
+      label: Réseaux Sociaux
+      type: list
+      primary: name
+      fields:
+        - { name: name, label: "Nom", type: string }
+        - { name: icon, label: "Icône", type: string }
+        - { name: href, label: "Lien", type: string }
+        - { name: color, label: "Couleur", type: string }

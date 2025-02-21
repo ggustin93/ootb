@@ -99,15 +99,14 @@ content:
     label: Posts
     path: src/content/post
     type: collection
-    icon: file-text
     format: mdx
+    icon: file-text
     fields:
       - name: published
         label: État de publication
         type: boolean
         description: Boule bleue = contenu visible sur le site
         required: true
-        default: false
 
       - name: category
         label: Type de contenu
@@ -126,7 +125,7 @@ content:
           - value: premium
             label: Premium
         required: true
-        description: Sélectionnez le type de contenu. Certains champs spécifiques apparaîtront selon votre sélection
+        description: Sélectionnez le type de contenu
 
       - name: title
         label: Titre du contenu
@@ -176,24 +175,22 @@ content:
       - name: pedagogicalSheet
         label: Fiche pédagogique
         type: object
-        description: Informations spécifiques pour les fiches pédagogiques. Ces champs ne sont pertinents que si la catégorie est 'Fiches'
+        description: Informations spécifiques pour les fiches pédagogiques
         fields:
           - name: enseignement
             label: Type d'enseignement
             type: string
-            required: true
             description: Le type d'enseignement concerné par cette fiche
 
           - name: section
             label: Section
             type: string
-            required: true
             description: La section d'études concernée
 
     view:
       fields: [title, publishDate, category, published]
       primary: title
-      sort: [publishDate, title]
+      sort: [publishDate]
       default:
         sort: publishDate
         order: desc

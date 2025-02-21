@@ -8,6 +8,7 @@
     "image": "/assets/images/mascotte.png",
     "badges": [
       {
+        "text": "Festival",
         "link": "/festival",
         "variant": "festival"
       },

@@ -1,6 +1,6 @@
 media:
-  input: src/media
-  output: /media
+  input: src/assets
+  output: /assets
 
 content:
   - name: homepage

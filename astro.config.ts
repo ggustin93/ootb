@@ -28,6 +28,9 @@ export default defineConfig({
  experimental: {
    clientPrerender: true
  },
+ redirects: {
+   '/admin': '/admin/index.html'
+ },
  viewTransitions: true,
  integrations: [
    tailwind({
@@ -143,6 +146,6 @@ export default defineConfig({
      target: 'node'
    },
    assetsInclude: ['**/*.otf', '**/*.ttf', '**/*.woff', '**/*.woff2'],
-   publicDir: 'src/assets',
+   publicDir: 'public',
  },
 });

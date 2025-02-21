@@ -23,7 +23,7 @@ content:
           - name: badges
             label: Badges
             type: list
-            primary: text
+            **primary: text**  # 👈 Ajout d'une clé primaire pour afficher correctement les objets
             fields:
               - { name: text, label: "Texte", type: string }
               - { name: link, label: "Lien", type: string }
@@ -36,7 +36,7 @@ content:
           - name: items
             label: Éléments
             type: list
-            primary: label
+            **primary: label**  # 👈 Ajout d'une clé primaire pour éviter "[object Object]"
             fields:
               - { name: number, label: "Nombre", type: string }
               - { name: label, label: "Label", type: string }
@@ -53,7 +53,7 @@ content:
           - name: features
             label: "Points Clés"
             type: list
-            primary: text
+            **primary: text**  
             fields:
               - { name: text, label: "Texte", type: string }
           - name: cta
@@ -62,13 +62,6 @@ content:
             fields:
               - { name: text, label: "Texte", type: string }
               - { name: link, label: "Lien", type: string }
-
-      - name: featuredContent
-        label: Contenus mis en avant
-        type: object
-        fields:
-          - { name: title, label: "Titre", type: string }
-          - { name: description, label: "Description", type: text }
 
       - name: premium
         label: Contenu Premium
@@ -79,13 +72,13 @@ content:
           - name: features
             label: "Avantages"
             type: list
-            primary: text
+            **primary: text**
             fields:
               - { name: text, label: "Texte", type: string }
           - name: podcastHighlights
             label: Podcasts à la une
             type: list
-            primary: title
+            **primary: title**
             fields:
               - { name: title, label: "Titre", type: string }
               - { name: description, label: "Description", type: text }
@@ -104,7 +97,7 @@ content:
           - name: socialLinks
             label: Réseaux Sociaux
             type: list
-            primary: name
+            **primary: name**
             fields:
               - { name: name, label: "Nom", type: string }
               - { name: icon, label: "Icône", type: string }

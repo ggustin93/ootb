@@ -15,82 +15,66 @@ content:
     type: file
     path: src/content/homepage/index.json
     fields:
-      - name: hero
-        label: Section Hero
-        type: object
-        fields:
-          - name: title
-            label: Titre
-            type: object
-            fields:
-              - name: line1
-                label: Ligne 1
-                type: string
-              - name: line2
-                label: Ligne 2
-                type: string
-              - name: line3
-                label: Ligne 3
-                type: string
-          
-          - name: image
-            label: Image mascotte
-            type: image
-          
-          - name: badges
-            label: Badges
-            type: object
-            list: true
-            fields:
-              - name: text
-                label: Texte
-                type: string
-              - name: link
-                label: Lien
-                type: string
-              - name: variant
-                label: Variante
-                type: select
-                options:
-                  - value: festival
-                    label: Festival
-                  - value: podcast
-                    label: Podcast
-                  - value: emission
-                    label: Émission
-                  - value: appel
-                    label: Appel à projets
-      - name: stats
-        label: Section Statistiques
-        type: object
-        fields:
-          - name: items
-            label: Statistiques
-            type: object
-            list: true
-            fields:
-              - name: number
-                label: Nombre
-                type: string
-              - name: label
-                label: Label
-                type: string
-              - name: sublabel
-                label: Sous-label
-                type: string
-              - name: icon
-                label: Icône
-                type: string
+      - name: heroTitle
+        label: Titre Hero (Ligne 1)
+        type: string
 
-      - name: mission
-        label: Section Mission
-        type: object
+      - name: heroSubtitle
+        label: Titre Hero (Ligne 2)
+        type: string
+
+      - name: heroTitleEnd
+        label: Titre Hero (Ligne 3)
+        type: string
+
+      - name: heroImage
+        label: Image mascotte
+        type: image
+
+      - name: heroBadges
+        label: Badges Hero
+        type: array
         fields:
-          - name: title
-            label: Titre
+          - name: text
+            label: Texte
             type: string
-          - name: description
-            label: Description
-            type: text
+          - name: link
+            label: Lien
+            type: string
+          - name: variant
+            label: Variante
+            type: select
+            options:
+              - value: festival
+                label: Festival
+              - value: podcast
+                label: Podcast
+              - value: emission
+                label: Émission
+              - value: appel
+                label: Appel à projets
 
+      - name: statsItems
+        label: Statistiques
+        type: array
+        fields:
+          - name: number
+            label: Nombre
+            type: string
+          - name: label
+            label: Label
+            type: string
+          - name: sublabel
+            label: Sous-label
+            type: string
+          - name: icon
+            label: Icône
+            type: string
 
+      - name: missionTitle
+        label: Titre Mission
+        type: string
+
+      - name: missionDescription
+        label: Description Mission
+        type: text

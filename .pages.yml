@@ -15,66 +15,183 @@ content:
     type: file
     path: src/content/homepage/index.json
     fields:
-      - name: heroTitle
-        label: Titre Hero (Ligne 1)
-        type: string
-
-      - name: heroSubtitle
-        label: Titre Hero (Ligne 2)
-        type: string
-
-      - name: heroTitleEnd
-        label: Titre Hero (Ligne 3)
-        type: string
-
-      - name: heroImage
-        label: Image mascotte
-        type: image
-
-      - name: heroBadges
-        label: Badges Hero
-        type: array
+      - name: hero
+        label: Section Hero
+        type: object
         fields:
-          - name: text
-            label: Texte
-            type: string
-          - name: link
-            label: Lien
-            type: string
-          - name: variant
-            label: Variante
-            type: select
-            options:
-              - value: festival
-                label: Festival
-              - value: podcast
-                label: Podcast
-              - value: emission
-                label: Émission
-              - value: appel
-                label: Appel à projets
+          - name: title
+            label: Titre
+            type: object
+            fields:
+              - name: line1
+                label: Ligne 1
+                type: string
+              - name: line2
+                label: Ligne 2
+                type: string
+              - name: line3
+                label: Ligne 3
+                type: string
+          
+          - name: image
+            label: Image mascotte
+            type: image
+          
+          - name: badges
+            label: Badges
+            type: array
+            fields:
+              - name: text
+                label: Texte
+                type: string
+              - name: link
+                label: Lien
+                type: string
+              - name: variant
+                label: Variante
+                type: select
+                options:
+                  - value: festival
+                    label: Festival
+                  - value: podcast
+                    label: Podcast
+                  - value: emission
+                    label: Émission
+                  - value: appel
+                    label: Appel à projets
 
-      - name: statsItems
-        label: Statistiques
-        type: array
+      - name: stats
+        label: Section Statistiques
+        type: object
         fields:
-          - name: number
-            label: Nombre
-            type: string
-          - name: label
-            label: Label
-            type: string
-          - name: sublabel
-            label: Sous-label
-            type: string
-          - name: icon
-            label: Icône
-            type: string
+          - name: items
+            label: Statistiques
+            type: array
+            fields:
+              - name: number
+                label: Nombre
+                type: string
+              - name: label
+                label: Label
+                type: string
+              - name: sublabel
+                label: Sous-label
+                type: string
+              - name: icon
+                label: Icône
+                type: string
 
-      - name: missionTitle
-        label: Titre Mission
-        type: string
+      - name: mission
+        label: Section Mission
+        type: object
+        fields:
+          - name: title
+            label: Titre
+            type: string
+          - name: description
+            label: Description
+            type: text
+          - name: image
+            label: Image de la mission
+            type: image
+          - name: features
+            label: Caractéristiques
+            type: array
+            fields:
+              - name: text
+                label: Texte
+                type: string
+          - name: cta
+            label: Appel à l'action
+            type: object
+            fields:
+              - name: text
+                label: Texte
+                type: string
+              - name: link
+                label: Lien
+                type: string
 
-      - name: missionDescription
-        label: Description Mission
-        type: text
+      - name: featuredContent
+        label: Contenu à la Une
+        type: object
+        fields:
+          - name: title
+            label: Titre
+            type: string
+          - name: description
+            label: Description
+            type: text
+
+      - name: premium
+        label: Section Premium
+        type: object
+        fields:
+          - name: heroImage
+            label: Image Hero
+            type: image
+          - name: title
+            label: Titre
+            type: object
+          - name: intro
+            label: Introduction
+            type: text
+          - name: features
+            label: Fonctionnalités
+            type: array
+            fields:
+              - name: text
+                label: Texte
+                type: string
+          - name: podcastHighlights
+            label: Points Forts Podcast
+            type: array
+            fields:
+              - name: title
+                label: Titre
+                type: string
+              - name: description
+                label: Description
+                type: text
+              - name: image
+                label: Image
+                type: image
+              - name: duration
+                label: Durée
+                type: string
+
+      - name: newsletter
+        label: Section Newsletter
+        type: object
+        fields:
+          - name: title
+            label: Titre
+            type: string
+          - name: description
+            label: Description
+            type: text
+          - name: placeholder
+            label: Placeholder
+            type: string
+          - name: buttonText
+            label: Texte du bouton
+            type: string
+          - name: badgeText
+            label: Texte du badge
+            type: string
+          - name: socialLinks
+            label: Liens Sociaux
+            type: array
+            fields:
+              - name: name
+                label: Nom
+                type: string
+              - name: icon
+                label: Icône
+                type: string
+              - name: href
+                label: Lien
+                type: string
+              - name: color
+                label: Couleur
+                type: string

@@ -1,1 +1,96 @@
-k
+media:
+  input: public/assets
+  output: /assets
+  extensions: 
+    - jpg
+    - jpeg
+    - png
+    - gif
+    - svg
+    - webp
+
+content:
+  - name: homepage
+    label: Homepage
+    path: src/content/homepage/index.json
+    type: file
+    icon: home
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      
+      - name: description
+        label: Description
+        type: text
+      
+      - name: heroSection
+        label: Hero Section
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          
+          - name: subtitle
+            label: Subtitle
+            type: text
+          
+          - name: cta
+            label: Call to Action
+            type: object
+            fields:
+              - name: text
+                label: Text
+                type: string
+              
+              - name: link
+                label: Link
+                type: string
+
+      - name: statsSection
+        label: Stats Section
+        type: object
+        fields:
+          - name: stats
+            label: Statistics
+            type: object
+            list: true
+            fields:
+              - name: value
+                label: Value
+                type: string
+              
+              - name: label
+                label: Label
+                type: string
+
+      - name: missionSection
+        label: Mission Section
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          
+          - name: description
+            label: Description
+            type: text
+          
+          - name: values
+            label: Values
+            type: object
+            list: true
+            fields:
+              - name: title
+                label: Title
+                type: string
+              
+              - name: description
+                label: Description
+                type: text
+
+    view:
+      fields: [title]
+      primary: title

@@ -1,93 +1,106 @@
-collections:
-  - label: "Contenu du site"
-    folder: "/"
-    create: false
+media:
+  input: src/media
+  output: /media
+
+content:
+  - name: homepage
+    label: Page d'accueil
+    type: file
+    path: src/content/homepage/index.json
     fields:
       - name: hero
-        label: "Section Hero"
-        widget: object
+        label: Section Hero
+        type: object
         fields:
-          - { name: "title.line1", label: "Titre Ligne 1", widget: string }
-          - { name: "title.line2", label: "Titre Ligne 2", widget: string }
-          - { name: "title.line3", label: "Titre Ligne 3", widget: string }
-          - { name: "image", label: "Image", widget: image }
-          - name: badges
-            label: "Badges"
-            widget: list
+          - name: title
+            label: Titre
+            type: object
             fields:
-              - { name: "text", label: "Texte", widget: string }
-              - { name: "link", label: "Lien", widget: string }
-              - { name: "variant", label: "Variante", widget: string }
+              - { name: line1, label: "Ligne 1", type: string }
+              - { name: line2, label: "Ligne 2", type: string }
+              - { name: line3, label: "Ligne 3", type: string }
+          - { name: image, label: Image, type: file }
+          - name: badges
+            label: Badges
+            type: list
+            fields:
+              - { name: text, label: "Texte", type: string }
+              - { name: link, label: "Lien", type: string }
+              - { name: variant, label: "Variante", type: string }
+
       - name: stats
-        label: "Statistiques"
-        widget: object
+        label: Statistiques
+        type: object
         fields:
           - name: items
-            label: "Éléments"
-            widget: list
+            label: Éléments
+            type: list
             fields:
-              - { name: "number", label: "Nombre", widget: string }
-              - { name: "label", label: "Libellé", widget: string }
-              - { name: "sublabel", label: "Sous-libellé", widget: string }
-              - { name: "icon", label: "Icône", widget: string }
+              - { name: number, label: "Nombre", type: string }
+              - { name: label, label: "Label", type: string }
+              - { name: sublabel, label: "Sous-label", type: string }
+              - { name: icon, label: "Icône", type: string }
+
       - name: mission
-        label: "Mission"
-        widget: object
+        label: Mission
+        type: object
         fields:
-          - { name: "title", label: "Titre", widget: string }
-          - { name: "description", label: "Description", widget: text }
-          - { name: "image", label: "Image", widget: image }
+          - { name: title, label: "Titre", type: string }
+          - { name: description, label: "Description", type: text }
+          - { name: image, label: "Image", type: file }
           - name: features
-            label: "Fonctionnalités"
-            widget: list
+            label: Fonctionnalités
+            type: list
             fields:
-              - { name: "text", label: "Texte", widget: string }
+              - { name: text, label: "Texte", type: string }
           - name: cta
-            label: "Appel à l'action"
-            widget: object
+            label: Call to Action
+            type: object
             fields:
-              - { name: "text", label: "Texte", widget: string }
-              - { name: "link", label: "Lien", widget: string }
+              - { name: text, label: "Texte", type: string }
+              - { name: link, label: "Lien", type: string }
+
       - name: featuredContent
-        label: "Contenu en vedette"
-        widget: object
+        label: Contenu mis en avant
+        type: object
         fields:
-          - { name: "title", label: "Titre", widget: string }
-          - { name: "description", label: "Description", widget: text }
+          - { name: title, label: "Titre", type: string }
+          - { name: description, label: "Description", type: text }
+
       - name: premium
-        label: "Section Premium"
-        widget: object
+        label: Section Premium
+        type: object
         fields:
-          - { name: "heroImage", label: "Image principale", widget: image }
-          - { name: "title", label: "Titre", widget: string }
-          - { name: "intro", label: "Introduction", widget: text }
+          - { name: heroImage, label: "Image principale", type: file }
+          - { name: intro, label: "Introduction", type: text }
           - name: features
-            label: "Fonctionnalités"
-            widget: list
+            label: Fonctionnalités
+            type: list
             fields:
-              - { name: "text", label: "Texte", widget: string }
+              - { name: text, label: "Texte", type: string }
           - name: podcastHighlights
-            label: "Podcasts en vedette"
-            widget: list
+            label: Podcasts à la Une
+            type: list
             fields:
-              - { name: "title", label: "Titre", widget: string }
-              - { name: "description", label: "Description", widget: text }
-              - { name: "image", label: "Image", widget: image }
-              - { name: "duration", label: "Durée", widget: string }
+              - { name: title, label: "Titre", type: string }
+              - { name: description, label: "Description", type: text }
+              - { name: image, label: "Image", type: file }
+              - { name: duration, label: "Durée", type: string }
+
       - name: newsletter
-        label: "Newsletter"
-        widget: object
+        label: Newsletter
+        type: object
         fields:
-          - { name: "title", label: "Titre", widget: string }
-          - { name: "description", label: "Description", widget: text }
-          - { name: "placeholder", label: "Placeholder", widget: string }
-          - { name: "buttonText", label: "Texte du bouton", widget: string }
-          - { name: "badgeText", label: "Texte du badge", widget: string }
+          - { name: title, label: "Titre", type: string }
+          - { name: description, label: "Description", type: text }
+          - { name: placeholder, label: "Placeholder", type: string }
+          - { name: buttonText, label: "Texte du bouton", type: string }
+          - { name: badgeText, label: "Texte du badge", type: string }
           - name: socialLinks
-            label: "Liens sociaux"
-            widget: list
+            label: Réseaux sociaux
+            type: list
             fields:
-              - { name: "name", label: "Nom", widget: string }
-              - { name: "icon", label: "Icône", widget: string }
-              - { name: "href", label: "URL", widget: string }
-              - { name: "color", label: "Couleur", widget: string }
+              - { name: name, label: "Nom", type: string }
+              - { name: icon, label: "Icône", type: string }
+              - { name: href, label: "Lien", type: string }
+              - { name: color, label: "Couleur", type: string }

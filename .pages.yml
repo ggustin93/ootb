@@ -23,7 +23,7 @@ content:
           - name: badges
             label: Badges
             type: list
-            primary: text  # 👈 Ajout d'une clé primaire pour afficher correctement les objets
+            primary: text  
             fields:
               - { name: text, label: "Texte", type: string }
               - { name: link, label: "Lien", type: string }

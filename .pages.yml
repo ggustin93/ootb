@@ -60,7 +60,6 @@ content:
                     label: Émission
                   - value: appel
                     label: Appel à projets
-
       - name: stats
         label: Section Statistiques
         type: object
@@ -94,84 +93,4 @@ content:
             label: Description
             type: text
 
-  - name: posts
-    label: Posts
-    type: collection
-    path: src/content/post
-    format: mdx
-    fields:
-      - name: published
-        label: État de publication
-        type: boolean
-        description: Boule bleue = contenu visible sur le site
 
-      - name: category
-        label: Type de contenu
-        type: select
-        options:
-          - value: actualite
-            label: Actualités
-          - value: fiche
-            label: Fiches
-          - value: live
-            label: Lives
-          - value: podcast
-            label: Podcasts
-          - value: tv
-            label: Émissions
-          - value: premium
-            label: Premium
-
-      - name: title
-        label: Titre du contenu
-        type: string
-
-      - name: description
-        label: Résumé
-        type: text
-
-      - name: publishDate
-        label: Date de publication
-        type: date
-
-      - name: tags
-        label: Mots-clés
-        type: string
-        list: true
-
-      - name: image
-        label: Image de couverture
-        type: image
-
-      - name: media
-        label: Média
-        type: object
-        fields:
-          - name: youtube
-            label: Lien YouTube
-            type: string
-          - name: ausha
-            label: Lien Ausha
-            type: string
-          - name: tvCom
-            label: Lien TV Com
-            type: string
-
-      - name: pedagogicalSheet
-        label: Fiche pédagogique
-        type: object
-        fields:
-          - name: enseignement
-            label: Type d'enseignement
-            type: string
-          - name: section
-            label: Section
-            type: string
-
-    view:
-      fields: [title, publishDate, category, published]
-      primary: title
-      sort: [publishDate]
-      default:
-        sort: publishDate
-        order: desc

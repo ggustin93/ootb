@@ -94,3 +94,106 @@ content:
     view:
       fields: [title]
       primary: title
+
+  - name: posts
+    label: Posts
+    path: src/content/post
+    type: collection
+    icon: file-text
+    format: mdx
+    fields:
+      - name: published
+        label: État de publication
+        type: boolean
+        description: Boule bleue = contenu visible sur le site
+        required: true
+        default: false
+
+      - name: category
+        label: Type de contenu
+        type: select
+        options:
+          - value: actualite
+            label: Actualités
+          - value: fiche
+            label: Fiches
+          - value: live
+            label: Lives
+          - value: podcast
+            label: Podcasts
+          - value: tv
+            label: Émissions
+          - value: premium
+            label: Premium
+        required: true
+        description: Sélectionnez le type de contenu. Certains champs spécifiques apparaîtront selon votre sélection
+
+      - name: title
+        label: Titre du contenu
+        type: string
+        required: true
+        description: Le titre principal qui apparaîtra en haut de la page
+
+      - name: description
+        label: Résumé
+        type: text
+        required: true
+        description: Un bref résumé qui apparaîtra dans les aperçus et en haut de la page
+
+      - name: publishDate
+        label: Date de publication
+        type: date
+        required: true
+        description: Date à laquelle le contenu sera/a été publié
+
+      - name: tags
+        label: Mots-clés
+        type: string
+        list: true
+        description: Ajoutez des mots-clés pour faciliter la recherche et le filtrage des contenus
+
+      - name: image
+        label: Image de couverture
+        type: image
+        required: true
+        description: L'image principale qui apparaîtra en haut de la page et dans les aperçus
+
+      - name: media
+        label: Média (Youtube, Ausha, lien TV com)
+        type: object
+        description: Liens vers les différents médias selon le type de contenu
+        fields:
+          - name: youtube
+            label: Lien YouTube
+            type: string
+          - name: ausha
+            label: Lien Ausha
+            type: string
+          - name: tvCom
+            label: Lien TV Com
+            type: string
+
+      - name: pedagogicalSheet
+        label: Fiche pédagogique
+        type: object
+        description: Informations spécifiques pour les fiches pédagogiques. Ces champs ne sont pertinents que si la catégorie est 'Fiches'
+        fields:
+          - name: enseignement
+            label: Type d'enseignement
+            type: string
+            required: true
+            description: Le type d'enseignement concerné par cette fiche
+
+          - name: section
+            label: Section
+            type: string
+            required: true
+            description: La section d'études concernée
+
+    view:
+      fields: [title, publishDate, category, published]
+      primary: title
+      sort: [publishDate, title]
+      default:
+        sort: publishDate
+        order: desc

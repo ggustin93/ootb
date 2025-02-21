@@ -22,7 +22,7 @@ content:
           - { name: image, label: "Image", type: file }
           - name: badges
             label: Badges
-            type: list
+            list: true
             primary: text  
             fields:
               - { name: text, label: "Texte", type: string }

@@ -9,13 +9,12 @@ export default defineConfig({
   
   build: {
     outputFolder: "admin",
-    publicFolder: "dist",
+    publicFolder: "public",
   },
-
   media: {
     tina: {
-      publicFolder: "src/assets",
-      mediaRoot: "images",
+      mediaRoot: "",
+      publicFolder: "public",
     },
   },
 

@@ -4,58 +4,42 @@ import { defineConfig } from "tinacms";
 import { postsCollection } from "./postsCollection";
 import { homepageCollection } from "./homepageCollection";
 
-// Configuration par défaut sécurisée
+// Configuration par défaut sécurisée pour Tina CMS
 const DEFAULT_CONFIG = {
+  // Client ID par défaut pour les environnements de développement
   CLIENT_ID: 'e5043161-7d23-41bf-a7bc-626eef359ef0',
-  TOKEN: 'dummy-token-for-netlify-resolution',
+  TOKEN: 'dummy-token-for-local-dev',
   SEARCH_TOKEN: 'dummy-search-token'
 };
 
-// Fonction utilitaire pour récupérer les variables d'environnement
+// Fonction utilitaire pour récupérer les variables d'environnement avec fallback
 const getEnvVar = (varName: string) => {
-  // Utilisation prioritaire de process.env pour Netlify
-  const value = process.env[varName] || 
-                (import.meta.env && import.meta.env[varName]) || 
-                DEFAULT_CONFIG[varName.replace('TINA_', '').replace('PUBLIC_', '') as keyof typeof DEFAULT_CONFIG];
-  
-  console.log(`🔍 Résolution de ${varName}:`);
-  console.log(`   - Valeur résolue: ${value}`);
-  
-  return value;
-};
-
-// Fonction de validation et de construction de l'URL de contenu
-const buildContentApiUrl = (clientId: string) => {
-  console.log('🔍 Construction de l\'URL de contenu Tina CMS');
-  console.log(`   - Client ID source: ${clientId}`);
-
-  // Validation du Client ID
-  if (!clientId || clientId.trim() === '') {
-    console.error('🚨 ERREUR : Client ID invalide');
-    throw new Error('Client ID est requis pour construire l\'URL de contenu');
-  }
-
-  // Construction de l'URL
-  const contentApiUrl = `https://content.tinajs.io/1.8/content/${clientId.trim()}/github/main`;
-  
-  console.log(`   - URL de contenu générée: ${contentApiUrl}`);
-  return contentApiUrl;
+  // Priorité à import.meta.env, puis process.env, avec un fallback par défaut
+  return (import.meta.env && import.meta.env[varName]) || 
+         (process.env && process.env[varName]) || 
+         DEFAULT_CONFIG[varName.replace('TINA_', '').replace('PUBLIC_', '') as keyof typeof DEFAULT_CONFIG];
 };
 
 export default defineConfig({
+  // Configuration de base du dépôt
   branch: "main",
-  clientId: process.env.TINA_CLIENT_ID || 'e5043161-7d23-41bf-a7bc-626eef359ef0',
-  token: process.env.TINA_TOKEN || 'dummy-token',
+
+  // Résolution du Client ID avec fallback
+  clientId: getEnvVar('TINA_CLIENT_ID') || 'e5043161-7d23-41bf-a7bc-626eef359ef0',
   
-  contentApiUrlOverride: `https://content.tinajs.io/1.8/content/${
-    process.env.TINA_CLIENT_ID || 'e5043161-7d23-41bf-a7bc-626eef359ef0'
-  }/github/main`,
+  // Token d'authentification avec fallback
+  token: getEnvVar('TINA_TOKEN') || 'dummy-token',
   
+  // URL de contenu Tina CMS hardcodée pour résoudre les problèmes de build Netlify
+  contentApiUrlOverride: 'https://content.tinajs.io/1.8/content/e5043161-7d23-41bf-a7bc-626eef359ef0/github/main',
+  
+  // Configuration de build
   build: {
     outputFolder: "admin",
     publicFolder: "public",
   },
 
+  // Configuration des médias
   media: {
     tina: {
       publicFolder: "src/assets",
@@ -63,18 +47,22 @@ export default defineConfig({
     },
   },
 
+  // Configuration de prévisualisation
   preview: {
     hosts: ['localhost:4321'],
     previewTimeout: 3000,
   },
 
+  // Configuration de la recherche
   search: {
     tina: {
-      indexerToken: process.env.TINA_SEARCH_TOKEN || 'dummy-search-token',
+      // Token de recherche avec fallback
+      indexerToken: getEnvVar('TINA_SEARCH_TOKEN') || 'dummy-search-token',
       stopwordLanguages: ['fra'],
     },
   },
 
+  // Schéma des collections de contenu
   schema: {
     collections: [
       homepageCollection,
@@ -85,6 +73,8 @@ export default defineConfig({
         path: "src/content/post",
         format: "mdx",
         description: "Gérez ici tous vos contenus (Actualités, Fiches, Lives, Podcasts, Émissions, Premium).",
+        
+        // Configuration UI pour la génération de noms de fichiers
         ui: {
           filename: {
             readonly: true,
@@ -97,6 +87,8 @@ export default defineConfig({
             },
           },
         },
+        
+        // Définition d'un élément par défaut avec date de publication
         defaultItem: () => ({
           publishDate: new Date().toISOString(),
         }),
@@ -104,6 +96,7 @@ export default defineConfig({
     ],
   },
 
+  // Configuration du fournisseur Git
   gitProvider: {
     name: 'github',
     branch: 'main',

@@ -11,13 +11,21 @@ const DEFAULT_CONFIG = {
   SEARCH_TOKEN: 'dummy-search-token'
 };
 
+// Fonction utilitaire pour récupérer les variables d'environnement
+const getEnvVar = (varName: string) => {
+  // Priorité à import.meta.env, puis process.env
+  return (import.meta.env && import.meta.env[varName]) || 
+         (process.env && process.env[varName]) || 
+         DEFAULT_CONFIG[varName.replace('TINA_', '').replace('PUBLIC_', '') as keyof typeof DEFAULT_CONFIG];
+};
+
 export default defineConfig({
   branch: "main",
-  clientId: import.meta.env.TINA_CLIENT_ID || DEFAULT_CONFIG.CLIENT_ID,
-  token: import.meta.env.TINA_TOKEN || DEFAULT_CONFIG.TOKEN,
+  clientId: getEnvVar('TINA_CLIENT_ID'),
+  token: getEnvVar('TINA_TOKEN'),
   
   contentApiUrlOverride: `https://content.tinajs.io/1.8/content/${
-    import.meta.env.TINA_CLIENT_ID || DEFAULT_CONFIG.CLIENT_ID
+    getEnvVar('TINA_CLIENT_ID')
   }/github/main`,
   
   build: {
@@ -39,7 +47,7 @@ export default defineConfig({
 
   search: {
     tina: {
-      indexerToken: import.meta.env.TINA_SEARCH_TOKEN || DEFAULT_CONFIG.SEARCH_TOKEN,
+      indexerToken: getEnvVar('TINA_SEARCH_TOKEN'),
       stopwordLanguages: ['fra'],
     },
   },

@@ -23,7 +23,6 @@ content:
           - name: badges
             label: Badges
             list: true
-            primary: text  
             fields:
               - { name: text, label: "Texte", type: string }
               - { name: link, label: "Lien", type: string }

@@ -13,10 +13,15 @@ const DEFAULT_CONFIG = {
 
 // Fonction utilitaire pour récupérer les variables d'environnement
 const getEnvVar = (varName: string) => {
-  // Priorité à import.meta.env, puis process.env
-  return (import.meta.env && import.meta.env[varName]) || 
-         (process.env && process.env[varName]) || 
-         DEFAULT_CONFIG[varName.replace('TINA_', '').replace('PUBLIC_', '') as keyof typeof DEFAULT_CONFIG];
+  // Utilisation prioritaire de process.env pour Netlify
+  const value = process.env[varName] || 
+                (import.meta.env && import.meta.env[varName]) || 
+                DEFAULT_CONFIG[varName.replace('TINA_', '').replace('PUBLIC_', '') as keyof typeof DEFAULT_CONFIG];
+  
+  console.log(`🔍 Résolution de ${varName}:`);
+  console.log(`   - Valeur résolue: ${value}`);
+  
+  return value;
 };
 
 // Fonction de validation et de construction de l'URL de contenu

@@ -41,24 +41,28 @@ content:
             label: Badges
             type: array
             fields:
-              - name: text
-                label: Texte
-                type: string
-              - name: link
-                label: Lien
-                type: string
-              - name: variant
-                label: Variante
-                type: select
-                options:
-                  - value: festival
-                    label: Festival
-                  - value: podcast
-                    label: Podcast
-                  - value: emission
-                    label: Émission
-                  - value: appel
-                    label: Appel à projets
+              - name: badge
+                label: Badge
+                type: object
+                fields:
+                  - name: text
+                    label: Texte
+                    type: string
+                  - name: link
+                    label: Lien
+                    type: string
+                  - name: variant
+                    label: Variante
+                    type: select
+                    options:
+                      - value: festival
+                        label: Festival
+                      - value: podcast
+                        label: Podcast
+                      - value: emission
+                        label: Émission
+                      - value: appel
+                        label: Appel à projets
 
       - name: stats
         label: Section Statistiques
@@ -68,18 +72,22 @@ content:
             label: Statistiques
             type: array
             fields:
-              - name: number
-                label: Nombre
-                type: string
-              - name: label
-                label: Label
-                type: string
-              - name: sublabel
-                label: Sous-label
-                type: string
-              - name: icon
-                label: Icône
-                type: string
+              - name: statItem
+                label: Élément Statistique
+                type: object
+                fields:
+                  - name: number
+                    label: Nombre
+                    type: string
+                  - name: label
+                    label: Label
+                    type: string
+                  - name: sublabel
+                    label: Sous-label
+                    type: string
+                  - name: icon
+                    label: Icône
+                    type: string
 
       - name: mission
         label: Section Mission
@@ -98,9 +106,13 @@ content:
             label: Caractéristiques
             type: array
             fields:
-              - name: text
-                label: Texte
-                type: string
+              - name: feature
+                label: Caractéristique
+                type: object
+                fields:
+                  - name: text
+                    label: Texte
+                    type: string
           - name: cta
             label: Appel à l'action
             type: object
@@ -140,25 +152,33 @@ content:
             label: Fonctionnalités
             type: array
             fields:
-              - name: text
-                label: Texte
-                type: string
+              - name: feature
+                label: Fonctionnalité
+                type: object
+                fields:
+                  - name: text
+                    label: Texte
+                    type: string
           - name: podcastHighlights
             label: Points Forts Podcast
             type: array
             fields:
-              - name: title
-                label: Titre
-                type: string
-              - name: description
-                label: Description
-                type: text
-              - name: image
-                label: Image
-                type: image
-              - name: duration
-                label: Durée
-                type: string
+              - name: podcastHighlight
+                label: Point Fort Podcast
+                type: object
+                fields:
+                  - name: title
+                    label: Titre
+                    type: string
+                  - name: description
+                    label: Description
+                    type: text
+                  - name: image
+                    label: Image
+                    type: image
+                  - name: duration
+                    label: Durée
+                    type: string
 
       - name: newsletter
         label: Section Newsletter
@@ -183,15 +203,19 @@ content:
             label: Liens Sociaux
             type: array
             fields:
-              - name: name
-                label: Nom
-                type: string
-              - name: icon
-                label: Icône
-                type: string
-              - name: href
-                label: Lien
-                type: string
-              - name: color
-                label: Couleur
-                type: string
+              - name: socialLink
+                label: Lien Social
+                type: object
+                fields:
+                  - name: name
+                    label: Nom
+                    type: string
+                  - name: icon
+                    label: Icône
+                    type: string
+                  - name: href
+                    label: Lien
+                    type: string
+                  - name: color
+                    label: Couleur
+                    type: string

@@ -44,10 +44,12 @@ const buildContentApiUrl = (clientId: string) => {
 
 export default defineConfig({
   branch: "main",
-  clientId: getEnvVar('TINA_CLIENT_ID'),
-  token: getEnvVar('TINA_TOKEN'),
+  clientId: process.env.TINA_CLIENT_ID || 'e5043161-7d23-41bf-a7bc-626eef359ef0',
+  token: process.env.TINA_TOKEN || 'dummy-token',
   
-  contentApiUrlOverride: buildContentApiUrl(getEnvVar('TINA_CLIENT_ID')),
+  contentApiUrlOverride: `https://content.tinajs.io/1.8/content/${
+    process.env.TINA_CLIENT_ID || 'e5043161-7d23-41bf-a7bc-626eef359ef0'
+  }/github/main`,
   
   build: {
     outputFolder: "admin",
@@ -68,7 +70,7 @@ export default defineConfig({
 
   search: {
     tina: {
-      indexerToken: getEnvVar('TINA_SEARCH_TOKEN'),
+      indexerToken: process.env.TINA_SEARCH_TOKEN || 'dummy-search-token',
       stopwordLanguages: ['fra'],
     },
   },

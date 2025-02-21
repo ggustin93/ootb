@@ -1,221 +1,93 @@
-media:
-  input: public/assets
-  output: /assets
-  extensions: 
-    - jpg
-    - jpeg
-    - png
-    - gif
-    - svg
-    - webp
-
-content:
-  - name: homepage
-    label: Page d'accueil
-    type: file
-    path: src/content/homepage/index.json
+collections:
+  - label: "Contenu du site"
+    folder: "/"
+    create: false
     fields:
       - name: hero
-        label: Section Hero
-        type: object
+        label: "Section Hero"
+        widget: object
         fields:
-          - name: title
-            label: Titre
-            type: object
-            fields:
-              - name: line1
-                label: Ligne 1
-                type: string
-              - name: line2
-                label: Ligne 2
-                type: string
-              - name: line3
-                label: Ligne 3
-                type: string
-          
-          - name: image
-            label: Image mascotte
-            type: image
-          
+          - { name: "title.line1", label: "Titre Ligne 1", widget: string }
+          - { name: "title.line2", label: "Titre Ligne 2", widget: string }
+          - { name: "title.line3", label: "Titre Ligne 3", widget: string }
+          - { name: "image", label: "Image", widget: image }
           - name: badges
-            label: Badges
-            type: object
+            label: "Badges"
+            widget: list
             fields:
-              - name: badge
-                label: Badge
-                type: object
-                fields:
-                  - name: text
-                    label: Texte
-                    type: string
-                  - name: link
-                    label: Lien
-                    type: string
-                  - name: variant
-                    label: Variante
-                    type: select
-                    options:
-                      - value: festival
-                        label: Festival
-                      - value: podcast
-                        label: Podcast
-                      - value: emission
-                        label: Émission
-                      - value: appel
-                        label: Appel à projets
-
+              - { name: "text", label: "Texte", widget: string }
+              - { name: "link", label: "Lien", widget: string }
+              - { name: "variant", label: "Variante", widget: string }
       - name: stats
-        label: Section Statistiques
-        type: object
+        label: "Statistiques"
+        widget: object
         fields:
           - name: items
-            label: Statistiques
-            type: object
+            label: "Éléments"
+            widget: list
             fields:
-              - name: statItem
-                label: Élément Statistique
-                type: object
-                fields:
-                  - name: number
-                    label: Nombre
-                    type: string
-                  - name: label
-                    label: Label
-                    type: string
-                  - name: sublabel
-                    label: Sous-label
-                    type: string
-                  - name: icon
-                    label: Icône
-                    type: string
-
+              - { name: "number", label: "Nombre", widget: string }
+              - { name: "label", label: "Libellé", widget: string }
+              - { name: "sublabel", label: "Sous-libellé", widget: string }
+              - { name: "icon", label: "Icône", widget: string }
       - name: mission
-        label: Section Mission
-        type: object
+        label: "Mission"
+        widget: object
         fields:
-          - name: title
-            label: Titre
-            type: string
-          - name: description
-            label: Description
-            type: text
-          - name: image
-            label: Image de la mission
-            type: image
+          - { name: "title", label: "Titre", widget: string }
+          - { name: "description", label: "Description", widget: text }
+          - { name: "image", label: "Image", widget: image }
           - name: features
-            label: Caractéristiques
-            type: object
+            label: "Fonctionnalités"
+            widget: list
             fields:
-              - name: feature
-                label: Caractéristique
-                type: object
-                fields:
-                  - name: text
-                    label: Texte
-                    type: string
+              - { name: "text", label: "Texte", widget: string }
           - name: cta
-            label: Appel à l'action
-            type: object
+            label: "Appel à l'action"
+            widget: object
             fields:
-              - name: text
-                label: Texte
-                type: string
-              - name: link
-                label: Lien
-                type: string
-
+              - { name: "text", label: "Texte", widget: string }
+              - { name: "link", label: "Lien", widget: string }
       - name: featuredContent
-        label: Contenu à la Une
-        type: object
+        label: "Contenu en vedette"
+        widget: object
         fields:
-          - name: title
-            label: Titre
-            type: string
-          - name: description
-            label: Description
-            type: text
-
+          - { name: "title", label: "Titre", widget: string }
+          - { name: "description", label: "Description", widget: text }
       - name: premium
-        label: Section Premium
-        type: object
+        label: "Section Premium"
+        widget: object
         fields:
-          - name: heroImage
-            label: Image Hero
-            type: image
-          - name: title
-            label: Titre
-            type: object
-          - name: intro
-            label: Introduction
-            type: text
+          - { name: "heroImage", label: "Image principale", widget: image }
+          - { name: "title", label: "Titre", widget: string }
+          - { name: "intro", label: "Introduction", widget: text }
           - name: features
-            label: Fonctionnalités
-            type: object
+            label: "Fonctionnalités"
+            widget: list
             fields:
-              - name: feature
-                label: Fonctionnalité
-                type: object
-                fields:
-                  - name: text
-                    label: Texte
-                    type: string
+              - { name: "text", label: "Texte", widget: string }
           - name: podcastHighlights
-            label: Points Forts Podcast
-            type: object
+            label: "Podcasts en vedette"
+            widget: list
             fields:
-              - name: podcastHighlight
-                label: Point Fort Podcast
-                type: object
-                fields:
-                  - name: title
-                    label: Titre
-                    type: string
-                  - name: description
-                    label: Description
-                    type: text
-                  - name: image
-                    label: Image
-                    type: image
-                  - name: duration
-                    label: Durée
-                    type: string
-
+              - { name: "title", label: "Titre", widget: string }
+              - { name: "description", label: "Description", widget: text }
+              - { name: "image", label: "Image", widget: image }
+              - { name: "duration", label: "Durée", widget: string }
       - name: newsletter
-        label: Section Newsletter
-        type: object
+        label: "Newsletter"
+        widget: object
         fields:
-          - name: title
-            label: Titre
-            type: string
-          - name: description
-            label: Description
-            type: text
-          - name: placeholder
-            label: Placeholder
-            type: string
-          - name: buttonText
-            label: Texte du bouton
-            type: string
-          - name: badgeText
-            label: Texte du badge
-            type: string
+          - { name: "title", label: "Titre", widget: string }
+          - { name: "description", label: "Description", widget: text }
+          - { name: "placeholder", label: "Placeholder", widget: string }
+          - { name: "buttonText", label: "Texte du bouton", widget: string }
+          - { name: "badgeText", label: "Texte du badge", widget: string }
           - name: socialLinks
-            label: Liens Sociaux
-            type: object
+            label: "Liens sociaux"
+            widget: list
             fields:
-              - name: socialLink
-                label: Lien Social
-                type: object
-                fields:
-                  - name: name
-                    label: Nom
-                    type: string
-                  - name: icon
-                    label: Icône
-                    type: string
-                  - name: href
-                    label: Lien
-                    type: string
-                  - name: color
-                    label: Couleur
-                    type: string
+              - { name: "name", label: "Nom", widget: string }
+              - { name: "icon", label: "Icône", widget: string }
+              - { name: "href", label: "URL", widget: string }
+              - { name: "color", label: "Couleur", widget: string }

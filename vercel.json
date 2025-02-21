@@ -11,5 +11,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html",
+      "permanent": true
+    }
   ]
 }

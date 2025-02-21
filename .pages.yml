@@ -31,7 +31,7 @@ content:
           - name: badges
             label: Badges
             type: object
-            list: true
+            list: false
             primary: text
             fields:
               - name: text

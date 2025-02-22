@@ -28,9 +28,9 @@ export default defineConfig({
  experimental: {
    clientPrerender: true
  },
- redirects: {
+ /*redirects: {
    '/admin': '/admin/index.html'
- },
+ },*/
  viewTransitions: true,
  integrations: [
    tailwind({

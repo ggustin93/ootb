@@ -141,21 +141,29 @@ const thumbnailImageOptions = {
       />
     )}
     {(badge || category) && (
-      <div class="absolute top-4 left-4 z-10">
-        <span 
-          class:list={[
-            'inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white',
-            'transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105',
-            `bg-[${config.color}]`
-          ]}
-        >
-          <span class="transform skew-x-[12deg] flex items-center gap-1.5">
-            <Icon name={config.badgeIcon} class="w-4 h-4" />
-            {badge || category?.title || category?.slug}
-          </span>
-        </span>
-      </div>
-    )}
+  <div class="absolute top-4 left-4 z-10">
+    <span 
+      class:list={[
+        'inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white',
+        'transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105',
+        {
+          'bg-[var(--content-actualite)]': finalType === 'actualite',
+          'bg-[var(--content-live)]': finalType === 'live',
+          'bg-[var(--content-fiche)]': finalType === 'fiche',
+          'bg-[var(--content-podcast)]': finalType === 'podcast',
+          'bg-[var(--content-tv)]': finalType === 'tv',
+          'bg-[var(--content-premium)]': finalType === 'premium',
+          'bg-slate-500': finalType === 'default'
+        }
+      ]}
+    >
+      <span class="transform skew-x-[12deg] flex items-center gap-1.5">
+        <Icon name={config.badgeIcon} class="w-4 h-4" />
+        {badge || category?.title || category?.slug}
+      </span>
+    </span>
+  </div>
+)}
     {formattedPublishDate && (
       <div class="absolute bottom-4 right-4 z-10">
         <span class="bg-black/60 text-white text-xs px-2.5 py-1 rounded-full font-medium">

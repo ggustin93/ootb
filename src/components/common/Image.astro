@@ -22,6 +22,15 @@ interface UnsplashOptions {
   dpr?: 1 | 2 | 3;
 }
 
+interface CloudinaryOptions {
+  quality?: number | 'auto';
+  format?: 'auto' | 'webp' | 'jpg' | 'avif';
+  crop?: 'fill' | 'scale' | 'fit' | 'limit';
+  fetch_format?: 'auto';
+  dpr?: 'auto' | 1 | 2 | 3;
+  gravity?: 'auto' | 'center' | 'faces'; // Pour le focus intelligent
+}
+
 const defaultUnsplashOptions: UnsplashOptions = {
   quality: 80,
   fit: 'crop',
@@ -29,8 +38,18 @@ const defaultUnsplashOptions: UnsplashOptions = {
   dpr: 1
 };
 
+const defaultCloudinaryOptions: CloudinaryOptions = {
+  quality: 'auto:good', // Qualité automatique avec un bon équilibre
+  format: 'auto', // Format automatique (WebP, AVIF selon navigateur)
+  crop: 'fill', // Remplit l'espace en conservant les proportions
+  fetch_format: 'auto',
+  dpr: 'auto', // Adaptation automatique au DPR de l'appareil
+  gravity: 'auto' // Focus intelligent sur les éléments importants
+};
+
 const props = Astro.props;
 
+// Validation des props
 if (props.alt === undefined || props.alt === null) {
   throw new Error('Alt attribute is required for accessibility');
 }
@@ -55,75 +74,151 @@ const _image = await findImage(props.src);
 
 let image: ImageType | undefined = undefined;
 
-if (typeof _image === 'string' && _image.includes('unsplash.com')) {
-  const photoIdMatch = _image.match(/unsplash\.com\/(photos|a)\/([a-zA-Z0-9-_]+)/)?.[2] || 
-                      _image.match(/images\.unsplash\.com\/photo-([a-zA-Z0-9-_]+)/)?.[1];
-                      
-  if (photoIdMatch) {
-    if (props.width && props.height) {
-      image = {
-        src: `https://images.unsplash.com/photo-${photoIdMatch}?w=${props.width}&h=${props.height}&fit=crop&auto=format`,
-        attributes: {
-          ...props,
-          loading: props.loading,
-          decoding: props.decoding,
-          alt: props.alt,
-          width: props.width,
-          height: props.height,
-        },
-      };
-    } else {
-      const options: UnsplashOptions = {
-        ...defaultUnsplashOptions,
-        ...(props.unsplashOptions || {}),
-      };
-      
-      const params = new URLSearchParams({
-        w: (props.width || 800).toString(),
-        q: options.quality.toString(),
-        fit: options.fit,
-        auto: 'format,compress',
-      });
+// Fonction utilitaire pour générer les transformations Cloudinary
+function generateCloudinaryUrl(
+  baseUrl: string,
+  width: number,
+  options: CloudinaryOptions,
+  isSrcSet = false
+): string {
+  const url = new URL(baseUrl);
+  const pathParts = url.pathname.split('/');
+  const cloudName = pathParts[1];
+  const publicId = pathParts.slice(4).join('/').replace(/\.[^/.]+$/, '');
 
-      const optimizedSrc = `https://images.unsplash.com/photo-${photoIdMatch}?${params}`;
-      
-      image = {
-        src: optimizedSrc,
-        attributes: {
-          ...props,
-          loading: props.loading,
-          decoding: props.decoding,
-          alt: props.alt,
-          sizes: props.sizes || '(max-width: 800px) 100vw, 800px',
-          srcset: generateSrcSet(photoIdMatch, props.width || 800, options),
-        },
-      };
+  const transformations = [
+    `w_${width}`,
+    `c_${options.crop}`,
+    `q_${options.quality}`,
+    `f_${options.format}`,
+    `dpr_${options.dpr}`,
+    `g_${options.gravity}`, // Ajout du paramètre gravity
+  ].join(',');
+
+  return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations}/${publicId}`;
+}
+
+// Fonction pour générer le srcset pour Cloudinary
+function generateCloudinarySrcSet(
+  baseUrl: string,
+  baseWidth: number,
+  options: CloudinaryOptions
+): string {
+  // Tailles optimisées pour le responsive
+  const widths = [320, 640, 960, 1280, 1600]; // Tailles courantes pour différents écrans
+  return widths
+    .filter(w => w <= baseWidth * 2) // Ne pas générer de tailles trop grandes
+    .map(w => {
+      const url = generateCloudinaryUrl(baseUrl, w, options, true);
+      return `${url} ${w}w`;
+    })
+    .join(', ');
+}
+
+// Fonction pour générer les sizes par défaut
+function generateDefaultSizes(baseWidth: number): string {
+  return `(max-width: 320px) 300px,
+          (max-width: 640px) 580px,
+          (max-width: 960px) 920px,
+          (max-width: 1280px) 1200px,
+          ${baseWidth}px`;
+}
+
+if (typeof _image === 'string') {
+  // Gestion des images Cloudinary
+  if (_image.includes('cloudinary.com')) {
+    const options: CloudinaryOptions = {
+      ...defaultCloudinaryOptions,
+      ...(props.cloudinaryOptions || {}),
+    };
+
+    const baseWidth = props.width || 960; // Largeur par défaut raisonnable
+    const baseHeight = props.height || Math.round(baseWidth * 0.5625); // Ratio 16:9 par défaut
+
+    image = {
+      src: generateCloudinaryUrl(_image, baseWidth, options),
+      attributes: {
+        ...props,
+        loading: props.loading,
+        decoding: props.decoding,
+        alt: props.alt,
+        width: baseWidth,
+        height: baseHeight,
+        sizes: props.sizes || generateDefaultSizes(baseWidth),
+        srcset: generateCloudinarySrcSet(_image, baseWidth, options),
+      },
+    };
+  }
+  // Gestion des images Unsplash
+  else if (_image.includes('unsplash.com')) {
+    const photoIdMatch = _image.match(/unsplash\.com\/(photos|a)\/([a-zA-Z0-9-_]+)/)?.[2] || 
+                        _image.match(/images\.unsplash\.com\/photo-([a-zA-Z0-9-_]+)/)?.[1];
+                        
+    if (photoIdMatch) {
+      if (props.width && props.height) {
+        image = {
+          src: `https://images.unsplash.com/photo-${photoIdMatch}?w=${props.width}&h=${props.height}&fit=crop&auto=format`,
+          attributes: {
+            ...props,
+            loading: props.loading,
+            decoding: props.decoding,
+            alt: props.alt,
+            width: props.width,
+            height: props.height,
+          },
+        };
+      } else {
+        const options: UnsplashOptions = {
+          ...defaultUnsplashOptions,
+          ...(props.unsplashOptions || {}),
+        };
+        
+        const params = new URLSearchParams({
+          w: (props.width || 960).toString(),
+          q: options.quality.toString(),
+          fit: options.fit,
+          auto: 'format,compress',
+        });
+
+        const optimizedSrc = `https://images.unsplash.com/photo-${photoIdMatch}?${params}`;
+        
+        image = {
+          src: optimizedSrc,
+          attributes: {
+            ...props,
+            loading: props.loading,
+            decoding: props.decoding,
+            alt: props.alt,
+            sizes: props.sizes || generateDefaultSizes(props.width || 960),
+            srcset: generateSrcSet(photoIdMatch, props.width || 960, options),
+          },
+        };
+      }
     }
   }
-} else if (
-  typeof _image === 'string' &&
-  (_image.startsWith('http://') || _image.startsWith('https://'))
-) {
-  // Pour les URLs externes (y compris YouTube)
-  image = {
-    src: _image,
-    attributes: {
-      ...props,
-      loading: props.loading,
-      decoding: props.decoding,
-      alt: props.alt,
-      width: props.width,
-      height: props.height,
-      sizes: props.sizes,
-    },
-  };
+  // Gestion des autres URLs externes
+  else if (_image.startsWith('http://') || _image.startsWith('https://')) {
+    image = {
+      src: _image,
+      attributes: {
+        ...props,
+        loading: props.loading,
+        decoding: props.decoding,
+        alt: props.alt,
+        width: props.width,
+        height: props.height,
+        sizes: props.sizes,
+      },
+    };
+  }
 } else if (_image) {
   image = await getImagesOptimized(_image, props, astroAsseetsOptimizer);
 }
 
 function generateSrcSet(id: string, baseWidth: number, options: UnsplashOptions): string {
-  const widths = [baseWidth / 2, baseWidth, baseWidth * 2];
+  const widths = [320, 640, 960, 1280, 1600];
   return widths
+    .filter(w => w <= baseWidth * 2)
     .map(w => {
       const params = new URLSearchParams({
         w: w.toString(),
@@ -147,6 +242,8 @@ function generateSrcSet(id: string, baseWidth: number, options: UnsplashOptions)
       crossorigin="anonymous" 
       referrerpolicy="no-referrer"
       fetchpriority={props.loading === 'eager' ? 'high' : 'auto'}
+      loading={props.loading}
+      decoding={props.decoding}
     />
   )
 }

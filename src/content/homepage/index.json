@@ -5,7 +5,7 @@
       "line2": "des pédagogies",
       "line3": "innovantes !"
     },
-    "image": "/assets/images/mascotte.png",
+    "image": "/images/assets/mascotte.png",
     "badges": [
       {
         "text": "Festival",
@@ -54,7 +54,7 @@
   "mission": {
     "title": "Innover pour l'éducation de demain",
     "description": "La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.",
-    "image": "/assets/images/team.jpg",
+    "image": "/images/assets/team.jpg",
     "features": [
       {
         "text": "Créer des espaces d'échange et d'apprentissage"
@@ -94,20 +94,20 @@
       {
         "title": "Les neurosciences en classe",
         "description": "Découvrez les dernières avancées en neurosciences appliquées à l'éducation",
-        "image": "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&auto=format&fit=crop&q=80",
+        "image": "/imageshttps:/.unsplash.com/photo-1559757175-5700dde675bc?w=800&auto=format&fit=crop&q=80",
         "duration": "1h 12min"
       },
       {
         "title": "La pédagogie active",
         "description": "Guide complet et pratique pour une classe dynamique",
-        "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&auto=format&fit=crop&q=80",
+        "image": "/imageshttps:/.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&auto=format&fit=crop&q=80",
         "duration": "58min"
       }
     ]
   },
   "newsletter": {
     "title": "Restez connectés",
-    "description": "Recevez nos dernières actualités et ressources pédagogiques",
+    "description": "Recevez nos dernières actualités et ressources pédagogiques !",
     "placeholder": "Votre email",
     "buttonText": "S'abonner",
     "badgeText": "Gratuit",

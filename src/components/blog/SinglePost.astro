@@ -55,6 +55,18 @@ const blogLink = typeof getBlogPermalink === 'function' ? getBlogPermalink() : '
 const contentType = typeof post.category === 'string' ? post.category : (post.category?.slug || 'actualite');
 const contentConfig = CONTENT_TYPES[contentType as keyof typeof CONTENT_TYPES];
 
+// Debug - Post Category
+/*console.log('Debug - Post Category:', {
+  rawCategory: post.category,
+  contentType,
+  contentConfig,
+  postData: {
+    tvcomUrl: post.tvcomUrl,
+    category: post.category,
+    title: post.title
+  }
+});*/
+
 // États du contenu
 const contentStates = {
   isLiveFacebook: contentType === 'live',
@@ -116,6 +128,15 @@ const mediaWrapperClasses = [
   contentType === 'tv' && "ring-4 ring-[var(--ootb-green)]/20",
   contentType === 'actualite' && "ring-4 ring-[var(--content-actualite)]/20"
 ];
+
+// Debug info
+/* console.log('Debug TV content:', {
+  tvcomUrl: post.tvcomUrl,
+  isVideo: contentStates.isVideo,
+  category: post.category,
+  contentType: contentType
+});*/
+---
 
 <section class="py-4 sm:py-8 mx-auto max-w-6xl px-4 sm:px-6">
   <article class="pb-16 md:pb-24">

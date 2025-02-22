@@ -15,7 +15,6 @@ interface Props {
 
 // Get homepage data from JSON
 const homeStats = homepageData.stats;
-console.log('Home stats:', homeStats);
 
 // Default stats if no Tina data is available
 const defaultStats = [
@@ -43,7 +42,7 @@ const { stats: propStats } = Astro.props;
 
 // Use props if provided, otherwise use Tina data with fallback
 const displayStats = propStats || (homeStats?.items ?? defaultStats);
-console.log('Display stats:', displayStats);
+
 ---
 
 <div class="mt-12 md:mt-24 max-w-6xl mx-auto">

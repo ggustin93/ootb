@@ -51,12 +51,6 @@ if (!props.decoding) {
   props.decoding = 'async';
 }
 
-// Debug info
-console.log('DEBUG Image:', {
-  src: props.src,
-  type: typeof props.src,
-});
-
 const _image = await findImage(props.src);
 
 let image: ImageType | undefined = undefined;

@@ -101,14 +101,6 @@ const finalType = category?.slug?.toLowerCase() === 'podcast' ? 'podcast'
 
 const config = typeConfig[finalType];
 
-// Debug info
-console.log('DEBUG Card:', {
-  title,
-  type: finalType,
-  image,
-  imageType: typeof image,
-});
-
 // Vérifie si l'image est une URL externe
 const isExternalImage = image?.startsWith('http://') || image?.startsWith('https://');
 

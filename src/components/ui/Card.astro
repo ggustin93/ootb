@@ -50,88 +50,58 @@ const typeConfig = {
   actualite: {
     icon: 'tabler:news',
     label: 'Lire l\'actualité',
-    color: 'var(--content-actualite)',  // Gris neutre
+    color: 'var(--content-actualite)',
     badgeIcon: 'tabler:news',
   },
   fiche: {
     icon: 'tabler:file-text',
     label: 'Consulter la fiche',
-    color: 'var(--content-fiche)',  // --ootb-blue
+    color: 'var(--content-fiche)',
     badgeIcon: 'tabler:file-text',
   },
   live: {
     icon: 'tabler:broadcast',
     label: 'Voir le live Facebook',
-    color: 'var(--content-live)',  // Facebook Blue
+    color: 'var(--content-live)',
     badgeIcon: 'tabler:brand-facebook',
   },
   podcast: {
-    icon: 'tabler:brand-spotify', 
+    icon: 'tabler:brand-spotify',
     label: 'Écouter l\'épisode',
-    color: 'var(--content-podcast)',  // --ootb-violet
+    color: 'var(--content-podcast)',
     badgeIcon: 'tabler:microphone',
   },
   tv: {
     icon: 'tabler:player-play',
-    label: 'Regarder l\'émission', 
-    color: 'var(--content-tv)',  // --ootb-green
+    label: 'Regarder l\'émission',
+    color: 'var(--content-tv)',
     badgeIcon: 'tabler:video',
   },
   premium: {
     icon: 'tabler:crown',
     label: 'Accéder au contenu premium',
-    color: 'var(--content-premium)',  // --ootb-orange
+    color: 'var(--content-premium)',
     badgeIcon: 'tabler:crown',
   },
   default: {
     icon: 'tabler:article',
     label: 'Lire l\'article',
-    color: 'var(--content-actualite)',  // Même gris que les actualités
+    color: 'var(--content-actualite)',
     badgeIcon: 'tabler:article',
   }
 } as const;
 
-const finalType = category?.slug?.toLowerCase() === 'podcast' ? 'podcast' 
-  : category?.slug?.toLowerCase() === 'tv' ? 'tv'
-  : category?.slug?.toLowerCase() === 'premium' ? 'premium'
-  : category?.slug?.toLowerCase() === 'actualite' ? 'actualite'
-  : category?.slug?.toLowerCase() === 'fiche' ? 'fiche'
-  : category?.slug?.toLowerCase() === 'live' ? 'live'
+// Détermine le type final en fonction de la catégorie ou du type explicite
+const finalType = category?.slug?.toLowerCase() in typeConfig 
+  ? category.slug.toLowerCase() as keyof typeof typeConfig
   : type;
 
 const config = typeConfig[finalType];
 
-// Vérifie si l'image est une URL externe
-const isExternalImage = image?.startsWith('http://') || image?.startsWith('https://');
-
-// Optimise l'URL de l'image externe
-const getOptimizedImageUrl = (url: string) => {
-  // Pour les miniatures YouTube
-  if (url.includes('i.ytimg.com') || url.includes('img.youtube.com')) {
-    // Utilise hqdefault pour un bon compromis qualité/performance
-    return url.replace(/\/(default|hqdefault|mqdefault|sddefault|maxresdefault)\.jpg/, '/hqdefault.jpg');
-  }
-  // Pour les images Unsplash
-  if (url.includes('unsplash.com')) {
-    // Ajoute les paramètres d'optimisation Unsplash
-    const params = new URLSearchParams({
-      w: '800', // largeur maximale
-      q: '80',  // qualité
-      auto: 'format,compress' // optimisation automatique
-    });
-    return `${url}${url.includes('?') ? '&' : '?'}${params.toString()}`;
-  }
-  return url;
-};
-
-const optimizedImageUrl = isExternalImage ? getOptimizedImageUrl(image) : image;
-
-// Format date subtly
+// Format date
 const formatPublishDate = (date?: Date | string) => {
   if (!date) return null;
-  
   const publishDate = date instanceof Date ? date : new Date(date);
-  
   return new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'short',
@@ -143,6 +113,16 @@ const formattedPublishDate = meta?.publishDate
   ? formatPublishDate(meta.publishDate) 
   : null;
 
+// Options d'optimisation d'image spécifiques pour les miniatures
+const thumbnailImageOptions = {
+  width: 400, // Largeur adaptée pour les miniatures
+  height: 225, // Hauteur pour un ratio 16:9
+  quality: 75, // Qualité légèrement réduite pour les miniatures
+  format: 'auto', // Format automatique (WebP, AVIF)
+  loading: 'lazy',
+  decoding: 'async',
+};
+
 ---
 
 <article 
@@ -152,23 +132,27 @@ const formattedPublishDate = meta?.publishDate
   ]}
 >
   <div class="relative aspect-[16/9] overflow-hidden">
-    {image && isExternalImage ? (
-      <img 
-        src={optimizedImageUrl}
+    {image && (
+      <Image 
+        src={image}
         alt={title}
         class="w-full h-full object-cover"
-      />
-    ) : (
-      <Image 
-        src={image} 
-        alt={title} 
-        class="w-full h-full object-cover"
+        {...thumbnailImageOptions}
       />
     )}
-    {badge && (
+    {(badge || category) && (
       <div class="absolute top-4 left-4 z-10">
-        <span class="bg-[var(--badge-color)] text-white text-xs px-2.5 py-1 rounded-full">
-          {badge}
+        <span 
+          class:list={[
+            'inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white',
+            'transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105',
+            `bg-[${config.color}]`
+          ]}
+        >
+          <span class="transform skew-x-[12deg] flex items-center gap-1.5">
+            <Icon name={config.badgeIcon} class="w-4 h-4" />
+            {badge || category?.title || category?.slug}
+          </span>
         </span>
       </div>
     )}
@@ -179,42 +163,15 @@ const formattedPublishDate = meta?.publishDate
         </span>
       </div>
     )}
-    {(badge || category) && (
-      <div class="absolute top-4 left-4 z-10">
-        <span 
-          class:list={[
-            'inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white',
-            'transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105',
-            {
-              'bg-[var(--content-actualite)]': finalType === 'actualite',
-              'bg-[var(--content-live)]': finalType === 'live',
-              'bg-[var(--content-fiche)]': finalType === 'fiche',
-              'bg-[var(--content-podcast)]': finalType === 'podcast',
-              'bg-[var(--content-tv)]': finalType === 'tv',
-              'bg-[var(--content-premium)]': finalType === 'premium',
-              'bg-slate-500': finalType === 'default'
-            }
-          ]}
-        >
-          <span class="transform skew-x-[12deg] flex items-center gap-1.5">
-            <Icon name={config.badgeIcon} class="w-4 h-4" />
-            {badge || category?.title || category}
-          </span>
-        </span>
-      </div>
-    )}
-    
     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
   </div>
 
   <div class="p-6 flex flex-col flex-grow">
-    <div class="flex justify-between items-center mb-2">
-      {/* Date removed from this section */}
-    </div>
     <h3 class="flex-grow">
       <a 
         href={getPermalink(href, 'post')} 
         class="text-2xl font-bold mb-2 line-clamp-2 text-gray-900 hover:text-[var(--hover-color)] transition-colors duration-300"
+        aria-label={`Lire ${title}`}
       >
         {title}
       </a>
@@ -256,16 +213,10 @@ const formattedPublishDate = meta?.publishDate
       iconPosition="left"
       class:list={[
         'text-gray-700',
-        {
-          'bg-[color-mix(in_srgb,var(--content-actualite)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-actualite)_15%,transparent)]': finalType === 'actualite',
-          'bg-[color-mix(in_srgb,var(--content-live)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-live)_15%,transparent)]': finalType === 'live',
-          'bg-[color-mix(in_srgb,var(--content-fiche)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-fiche)_15%,transparent)]': finalType === 'fiche',
-          'bg-[color-mix(in_srgb,var(--content-podcast)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-podcast)_15%,transparent)]': finalType === 'podcast',
-          'bg-[color-mix(in_srgb,var(--content-tv)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-tv)_15%,transparent)]': finalType === 'tv',
-          'bg-[color-mix(in_srgb,var(--content-premium)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-premium)_15%,transparent)]': finalType === 'premium',
-        },
+        `bg-[color-mix(in_srgb,${config.color}_10%,transparent)] hover:bg-[color-mix(in_srgb,${config.color}_15%,transparent)]`,
         'transition-all duration-300 shadow-sm hover:shadow'
       ]}
+      aria-label={config.label}
     >
       <span class="font-medium">{config.label}</span>
       <Icon 

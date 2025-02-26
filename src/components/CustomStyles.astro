@@ -2,6 +2,7 @@
 import '@fontsource/bebas-neue/400.css';  // Import spécifique du poids 400
 import '@fontsource-variable/raleway';
 import '@fontsource-variable/caveat/wght.css';  // Import de Caveat Variable avec tous les poids
+import { getContentColor } from '~/config/theme';
 
 // Ajout des polices personnalisées
 ---
@@ -17,24 +18,15 @@ import '@fontsource-variable/caveat/wght.css';  // Import de Caveat Variable ave
   }
 
   :root {
-    /* Couleurs OOTB */
+    /* Couleurs OOTB de base */
     --ootb-orange: #e7461c;
     --ootb-violet: #921e6d;
     --ootb-green: #40ad50;
     --ootb-blue: #0890bd;
     --ootb-turquoise: #69b29e;
     --ootb-yellow: #f9b004;
-
-    /* Couleurs des types de contenu */
-    --content-actualite: #4B5563;  /* Gris neutre */
-    --content-fiche: var(--ootb-blue);
-    --content-live: #1877F2;  /* Facebook Blue */
-    --content-podcast: var(--ootb-violet);
-    --content-tv: var(--ootb-green);
-    --content-premium: var(--ootb-orange);
   }
   
-
   .font-handwritten {
     font-family: 'Caveat Variable', cursive;
   }
@@ -81,5 +73,10 @@ import '@fontsource-variable/caveat/wght.css';  // Import de Caveat Variable ave
     * {
       @apply transition-none animate-none;
     }
+  }
+
+  /* Pour les classes conditionnelles */
+  {
+    [`bg-[var(${getContentColor(finalType)})]`]: true,
   }
 </style>

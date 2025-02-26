@@ -195,12 +195,36 @@ const metadata = {
   />
 
   <!-- Section contenu -->
-  <section id="blog-content" class="py-12 bg-white">
+  <section id="blog-content" class=" bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl font-body font-semibold mb-12">
-          Tous
-        </h2>
+        <!-- Filtres minimalistes -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
+          <h2 class="text-2xl sm:text-3xl font-body font-semibold">
+            Tous les contenus
+          </h2>
+
+          <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg">
+            <a
+              href="/blog#blog-content"
+              class="flex items-center gap-2 px-3 py-1.5 rounded text-sm bg-white text-gray-900 shadow-sm"
+            >
+              <Icon name="tabler:layout-grid" class="w-4 h-4" />
+              <span class="text-xs sm:text-sm">Tous</span>
+            </a>
+
+            {Object.entries(FILTER_TYPES).map(([key, config]) => (
+              <a
+                href={`/category/${key}#category-content`}
+                class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
+              >
+                <Icon name={config.icon} class="w-4 h-4" />
+                <span class="text-xs sm:text-sm">{config.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
         <BlogList posts={page.data} />
         <div class="mt-12">
           <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />

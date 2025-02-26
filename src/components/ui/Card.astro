@@ -21,6 +21,7 @@ interface Category {
 
 interface Props {
   title: string;
+  description?: string;
   image: string;
   badge?: string;
   href: string;
@@ -32,7 +33,8 @@ interface Props {
 }
 
 const { 
-  title, 
+  title,
+  description,
   image, 
   badge,
   href,
@@ -54,10 +56,10 @@ const typeConfig = {
     badgeIcon: 'tabler:news',
   },
   fiche: {
-    icon: 'tabler:file-text',
+    icon: 'tabler:school',
     label: 'Consulter la fiche',
     color: 'var(--content-fiche)',
-    badgeIcon: 'tabler:file-text',
+    badgeIcon: 'tabler:school',
   },
   live: {
     icon: 'tabler:broadcast',
@@ -127,7 +129,11 @@ const thumbnailImageOptions = {
 
 <article 
   class:list={[
-    'flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden h-full',
+    'flex flex-col rounded-2xl overflow-hidden h-full',
+    'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm',
+    'border border-gray-200/50 dark:border-gray-700/50',
+    'shadow-sm hover:shadow-md transition-all duration-300',
+    'hover:translate-y-[-4px]',
     className
   ]}
 >
@@ -184,17 +190,24 @@ const thumbnailImageOptions = {
         {title}
       </a>
     </h3>
+
+    {description && (
+      <p class="text-gray-600 dark:text-gray-400 line-clamp-3 mt-3 mb-4 text-base group-hover:text-gray-900 dark:group-hover:text-gray-300">
+        {description}
+        <span class="inline-block ml-1 text-gray-400 dark:text-gray-500" aria-label="Suite du texte disponible">…</span>
+      </p>
+    )}
     
     {(meta?.duration || meta?.expert || meta?.contributors || meta?.episode) && (
-      <div class="mt-3 flex flex-col space-y-1.5 text-sm text-gray-600">
+      <div class="flex items-center gap-4 text-sm text-gray-600 flex-wrap">
         {meta.duration && (
-          <div class="inline-flex items-center space-x-2">
+          <div class="inline-flex items-center gap-1.5">
             <Icon name="tabler:clock" class="h-4 w-4 text-gray-500 opacity-70" />
             <span>{meta.duration}</span>
           </div>
         )}
         {(meta.expert || meta.contributors) && (
-          <div class="inline-flex items-center space-x-2">
+          <div class="inline-flex items-center gap-1.5">
             <Icon name="tabler:users" class="h-4 w-4 text-gray-500 opacity-70" />
             <span>
               {meta.expert && meta.contributors 
@@ -204,7 +217,7 @@ const thumbnailImageOptions = {
           </div>
         )}
         {meta.episode && (
-          <div class="inline-flex items-center space-x-2">
+          <div class="inline-flex items-center gap-1.5">
             <Icon name="tabler:device-tv" class="h-4 w-4 text-gray-500 opacity-70" />
             <span>{meta.episode}</span>
           </div>
@@ -220,18 +233,24 @@ const thumbnailImageOptions = {
       icon={config.icon}
       iconPosition="left"
       class:list={[
-        'text-gray-700',
-        `bg-[color-mix(in_srgb,${config.color}_10%,transparent)] hover:bg-[color-mix(in_srgb,${config.color}_15%,transparent)]`,
-        'transition-all duration-300 shadow-sm hover:shadow'
+        'text-gray-700 dark:text-gray-300 group/btn',
+        'inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium',
+        'transform transition-all duration-300',
+        {
+          'bg-[color-mix(in_srgb,var(--content-actualite)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-actualite)_15%,transparent)] border-[color-mix(in_srgb,var(--content-actualite)_25%,transparent)]': finalType === 'actualite',
+          'bg-[color-mix(in_srgb,var(--content-live)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-live)_15%,transparent)] border-[color-mix(in_srgb,var(--content-live)_25%,transparent)]': finalType === 'live',
+          'bg-[color-mix(in_srgb,var(--content-fiche)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-fiche)_15%,transparent)] border-[color-mix(in_srgb,var(--content-fiche)_25%,transparent)]': finalType === 'fiche',
+          'bg-[color-mix(in_srgb,var(--content-podcast)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-podcast)_15%,transparent)] border-[color-mix(in_srgb,var(--content-podcast)_25%,transparent)]': finalType === 'podcast',
+          'bg-[color-mix(in_srgb,var(--content-tv)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-tv)_15%,transparent)] border-[color-mix(in_srgb,var(--content-tv)_25%,transparent)]': finalType === 'tv',
+          'bg-[color-mix(in_srgb,var(--content-premium)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-premium)_15%,transparent)] border-[color-mix(in_srgb,var(--content-premium)_25%,transparent)]': finalType === 'premium',
+          'bg-[color-mix(in_srgb,#64748b_10%,transparent)] hover:bg-[color-mix(in_srgb,#64748b_15%,transparent)] border-[color-mix(in_srgb,#64748b_25%,transparent)]': finalType === 'default'
+        },
+        'border rounded-xl shadow-sm hover:shadow'
       ]}
       aria-label={config.label}
     >
       <span class="font-medium">{config.label}</span>
-      <Icon 
-        name="tabler:chevron-right" 
-        class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5" 
-        slot="icon-right"
-      />
+      <span class="ml-1 transform transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
     </Button>
   </div>
 </article>
@@ -239,24 +258,33 @@ const thumbnailImageOptions = {
 <style>
   article {
     transition: all 0.3s ease-in-out;
+    position: relative;
+    isolation: isolate;
   }
   
-  article:hover {
-    transform: translateY(-4px);
-  }
-
-  article::after {
+  article::before {
     content: '';
     position: absolute;
     inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.05)
+    );
     border-radius: 1rem;
-    pointer-events: none;
-    transition: all 0.3s ease-in-out;
-    opacity: 0;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(8px);
   }
 
-  article:hover::after {
-    opacity: 1;
+  .dark article::before {
+    background: linear-gradient(
+      to bottom right,
+      rgba(30, 41, 59, 0.2),
+      rgba(30, 41, 59, 0.05)
+    );
+  }
+
+  article:hover::before {
+    opacity: 0.8;
   }
 </style>

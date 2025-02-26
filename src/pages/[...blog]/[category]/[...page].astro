@@ -10,11 +10,13 @@ import { Image } from 'astro:assets';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 import TagSearch from '~/components/common/TagSearch.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
+import CategoryInfo from '~/components/blog/CategoryInfo.astro';
 
 export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
-  return await getStaticPathsBlogCategory({ paginate });
+  const paths = await getStaticPathsBlogCategory({ paginate });
+  return paths;
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths> & { 
@@ -102,10 +104,16 @@ const metadata = {
           <!-- Contenu textuel (2/3 de l'espace) -->
           <div class="text-center md:text-left order-2 md:col-span-7">
             <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
-              Nos contenus
+              {(!category.slug || category.slug === 'blog') 
+                ? "Tous nos contenus"
+                : `Nos ${FILTER_TYPES[category.slug as keyof typeof FILTER_TYPES]?.label.toLowerCase() || 'contenus'}`
+              }
             </h1>
             <p class="text-xl text-white/90 font-light mb-8 max-w-xl">
-              Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation
+              {(!category.slug || category.slug === 'blog')
+                ? "Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation"
+                : `Explorez notre sélection de ${FILTER_TYPES[category.slug as keyof typeof FILTER_TYPES]?.label.toLowerCase() || 'contenus'} pour enrichir vos pratiques pédagogiques`
+              }
             </p>
 
             <!-- Barre de recherche intelligente -->
@@ -117,21 +125,25 @@ const metadata = {
             </div>
 
             <!-- Label pour les filtres -->
-            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">Filtrer par type de contenu :</div>
+            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">
+              {(!category.slug || category.slug === 'blog')
+                ? "Filtrer par type de contenu :"
+                : "Autres types de contenus :"
+              }
+            </div>
 
             <!-- Filtres principaux -->
             <div class="flex flex-wrap gap-3 justify-center md:justify-start">
               {/* Bouton "TOUS" toujours présent */}
               <a
-                href="/blog"
+                href="/blog#category-content"
                 class:list={[
                   'group relative inline-flex items-center gap-2',
                   'transform skew-x-[-12deg]',
                   'transition-all duration-300',
                   'px-6 py-2.5',
                   'ring-2',
-                  'transition-all duration-300',
-                  !category.slug ? [
+                  (!category.slug || category.slug === 'blog') ? [
                     'bg-white text-gray-800 ring-gray-800',
                     'scale-105',
                     'shadow-lg'
@@ -155,7 +167,7 @@ const metadata = {
                 const isActive = key.toLowerCase() === category.slug?.toLowerCase();
                 return (
                   <a
-                    href={`/category/${key.toLowerCase()}`}
+                    href={`/category/${key.toLowerCase()}#category-content`}
                     class:list={[
                       'group relative inline-flex items-center gap-2',
                       'transform skew-x-[-12deg]',
@@ -209,26 +221,70 @@ const metadata = {
     position="left-[20%] bottom-[20%]"
     class="text-white hidden md:flex"
   />
-
   <!-- Section contenu -->
-  <section id="category-content" class="py-12 bg-white">
+  <section id="category-content" class="py-4 -mt-8 bg-white relative z-10">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl font-body font-semibold mb-12">
-          {category.slug 
-            ? FILTER_TYPES[category.slug as keyof typeof FILTER_TYPES]?.label 
-            : "Tous"
-          }
-          {tag && (
-            <span class="inline-flex items-center gap-3 ml-3">
-              <span class="text-gray-400">•</span>
-              <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
-                <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
-                <span class="text-gray-800 font-medium">{tag.title}</span>
+        <!-- En-tête avec titre et filtres -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
+          <h2 class="text-2xl sm:text-3xl font-body font-semibold">
+            {(!category.slug || category.slug === 'blog') 
+              ? "Tous les contenus" 
+              : FILTER_TYPES[category.slug as keyof typeof FILTER_TYPES]?.label
+            }
+            {tag && (
+              <span class="inline-flex items-center gap-3 ml-3">
+                <span class="text-gray-400">•</span>
+                <span class="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
+                  <Icon name="tabler:tag" class="w-4 h-4 text-gray-500" />
+                  <span class="text-sm text-gray-800 font-medium">{tag.title}</span>
+                </span>
               </span>
-            </span>
-          )}
-        </h2>
+            )}
+          </h2>
+
+          <!-- Filtres minimalistes toujours présents -->
+          <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg">
+            <a
+              href="/blog#category-content"
+              class:list={[
+                'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+                'transition-all duration-300',
+                (!category.slug || category.slug === 'blog') ? 
+                  'bg-white text-gray-900 shadow-sm' : 
+                  'text-gray-600 hover:text-gray-900'
+              ]}
+            >
+              <Icon name={FILTER_TYPES.all.icon} class="w-4 h-4" />
+              <span class="text-xs sm:text-sm">{FILTER_TYPES.all.label}</span>
+            </a>
+
+            {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
+              <a
+                href={`/category/${key.toLowerCase()}#category-content`}
+                class:list={[
+                  'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+                  'transition-all duration-300',
+                  key.toLowerCase() === category.slug?.toLowerCase() ? [
+                    'bg-white shadow-sm',
+                    `text-[--content-${key}]`
+                  ] : [
+                    'text-gray-600 hover:text-gray-900'
+                  ]
+                ]}
+              >
+                <Icon name={config.icon} class="w-4 h-4" />
+                <span class="text-xs sm:text-sm">{config.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Encart explicatif conditionnel selon la catégorie */}
+        {category.slug && (
+          <CategoryInfo type={category.slug as 'tv' | 'podcast' | 'fiche' | 'actualite' | 'live' | 'premium'} />
+        )}
+
         <BlogList posts={page.data} />
         <div class="mt-12">
           <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
@@ -259,5 +315,68 @@ const metadata = {
   a, button {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  /* Assure un défilement fluide pour toute la page */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Masquer la scrollbar tout en gardant la fonctionnalité */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 </style>
+
+<script>
+  // Amélioration de la fonction de défilement
+  function scrollToFilters() {
+    const element = document.getElementById('category-content');
+    if (element) {
+      const headerOffset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
+    }
+  }
+
+  // Gestionnaire pour les liens avec ancre
+  function handleAnchorClick(e) {
+    const href = e.currentTarget.getAttribute('href');
+    if (href?.includes('#category-content')) {
+      // Ne pas empêcher la navigation par défaut
+      // Attendre que la navigation soit terminée avant de scroller
+      setTimeout(() => {
+        scrollToFilters();
+      }, 100);
+    }
+  }
+
+  // Initialisation
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash === '#category-content') {
+      requestAnimationFrame(() => scrollToFilters());
+    }
+
+    // Ajout des écouteurs d'événements sur les liens
+    document.querySelectorAll('a[href*="#category-content"]').forEach(link => {
+      link.addEventListener('click', handleAnchorClick);
+    });
+  });
+</script>
 

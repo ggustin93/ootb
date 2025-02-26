@@ -3,12 +3,22 @@ interface Props {
   videoId: string;
   title: string;
   className?: string;
+  autoplay?: boolean;
+  muted?: boolean;
+  controls?: boolean;
 }
 
-const { videoId, title, className = '' } = Astro.props;
+const { 
+  videoId, 
+  title, 
+  className = '',
+  autoplay = false,
+  muted = false,
+  controls = true
+} = Astro.props;
 
-// Ajout des paramètres pour une meilleure intégration
-const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&autoplay=1&modestbranding=1`;
+// Construction de l'URL avec les paramètres dynamiques
+const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1&autoplay=${autoplay ? 1 : 0}&mute=${muted ? 1 : 0}&controls=${controls ? 1 : 0}`;
 ---
 
 <div class="relative">

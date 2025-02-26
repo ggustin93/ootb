@@ -1,0 +1,205 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+import GradientHeroSection from './GradientHeroSection.astro';
+import ScrollDownArrow from '../ui/ScrollDownArrow.astro';
+import Button from '../ui/Button.astro';
+
+interface Button {
+  href: string;
+  icon?: string;
+  label: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'blue' | 'outline-blue';
+  size?: 'sm' | 'md' | 'lg';
+}
+
+interface Stat {
+  icon: string;
+  value: string;
+}
+
+interface FloatingIcon {
+  name: string;
+  size: 'sm' | 'md' | 'lg';
+  position: {
+    top?: string;
+    left?: string;
+    right?: string;
+    bottom?: string;
+  };
+  rotate?: string;
+  animation?: 'float' | 'float-delayed' | 'none';
+}
+
+interface Props {
+  logo: ImageMetadata;
+  heroImage: ImageMetadata;
+  quote: string;
+  quoteColor?: string;
+  stats?: Array<Stat>;
+  buttons?: Array<Button>;
+  floatingIcons?: Array<FloatingIcon>;
+  scroll?: {
+    targetId: string;
+    label?: string;
+    position?: string;
+    hideOnMobile?: boolean;
+  };
+  imageBackgroundColor?: string;
+}
+
+const { 
+  logo, 
+  heroImage, 
+  quote,
+  quoteColor = '--ootb-yellow',
+  stats = [],
+  buttons = [],
+  floatingIcons = [],
+  scroll,
+  imageBackgroundColor = '--ootb-yellow'
+} = Astro.props;
+
+const getIconSize = (size: 'sm' | 'md' | 'lg') => {
+  switch (size) {
+    case 'sm': return 'w-16 h-16';
+    case 'md': return 'w-20 h-28';
+    case 'lg': return 'w-24 h-32';
+  }
+};
+---
+
+<GradientHeroSection>
+  <div class="relative z-10 container mx-auto px-4 pt-12 md:pt-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="text-center md:text-left px-4 md:px-0">
+          <h1 class="text-left">
+            <Image
+              src={logo}
+              alt="Out of the Books"
+              class="w-[280px] md:w-[400px] h-auto mx-auto md:mx-0"
+              widths={[280, 400]}
+              sizes="(max-width: 768px) 280px, 400px"
+              loading="eager"
+              decoding="async"
+            />
+          </h1>
+          <blockquote class="text-xl md:text-2xl text-white/90 font-light mt-8 md:mt-12 mb-12 md:mb-16 border-l-4 pl-6 md:pl-8 leading-relaxed max-w-3xl" style={`border-color: var(${quoteColor})`}>
+            {quote}
+          </blockquote>
+
+          {stats.length > 0 && (
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start mb-8">
+              {stats.map(({ icon, value }) => (
+                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
+                  <Icon name={icon} class="w-5 h-5 text-white" />
+                  <span class="text-white">{value}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {buttons.length > 0 && (
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+              {buttons.map(({ href, icon, label, variant = 'primary', size = 'lg' }) => (
+                <Button {href} {variant} {size} {icon}>
+                  {label}
+                </Button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <!-- Image/Logo -->
+        <div class="relative hidden md:block">
+          <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+            <Image
+              src={heroImage}
+              alt="Hero image"
+              class="rounded-2xl shadow-xl"
+              widths={[400, 800]}
+              sizes="(max-width: 768px) 400px, 800px"
+              aspectRatio="4:3"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <!-- Élément décoratif derrière l'image -->
+          <div 
+            class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"
+            style={`background-color: var(${imageBackgroundColor})`}
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <slot />
+
+  {scroll && (
+      <ScrollDownArrow 
+        targetId={scroll.targetId}
+        label={scroll.label}
+        position={scroll.position}
+        hideOnMobile={scroll.hideOnMobile}
+        class="text-white"
+      />
+  )}
+
+  <!-- Icônes flottantes -->
+  {floatingIcons.map(({ name, size, position, rotate, animation }) => (
+    <div
+      class:list={[
+        'absolute',
+        getIconSize(size),
+        'opacity-30',
+        { 'transition-transform hover:-translate-y-2 duration-1000': !animation },
+        { 'animate-float': animation === 'float' },
+        { 'animate-float-delayed': animation === 'float-delayed' }
+      ]}
+      style={{
+        top: position.top,
+        left: position.left,
+        right: position.right,
+        bottom: position.bottom,
+        transform: rotate ? `rotate(${rotate})` : undefined
+      }}
+    >
+      <Icon name={name} class="w-full h-full text-white filter drop-shadow-lg" />
+    </div>
+  ))}
+</GradientHeroSection>
+
+<style>
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+      opacity: 0.2;
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+      opacity: 0.15;
+    }
+    50% {
+      transform: translateY(-15px) rotate(-5deg);
+      opacity: 0.25;
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 8s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+</style>

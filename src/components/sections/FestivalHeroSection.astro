@@ -29,13 +29,9 @@ interface Props {
   heroImage: ImageMetadata;
   date: string;
   location: string;
-  stats: Array<{
-    icon: string;
-    value: string;
-  }>;
+  description: string;
   buttons?: Array<Button>;
   floatingIcons?: Array<FloatingIcon>;
-  accentColor?: string;
   quoteColor?: string;
   imageBackgroundColor?: string;
 }
@@ -44,8 +40,8 @@ const {
   logo, 
   heroImage, 
   date, 
-  location, 
-  stats,
+  location,
+  description,
   buttons = [
     {
       href: '#tickets',
@@ -60,20 +56,14 @@ const {
       variant: 'secondary'
     }
   ],
-  floatingIcons = [
-    { name: 'tabler:book-2', size: 'lg', position: { top: '15%', left: '40%' }, rotate: '-12deg' },
-    { name: 'tabler:book', size: 'md', position: { top: '35%', right: '12%' }, rotate: '45deg' },
-    { name: 'tabler:school', size: 'sm', position: { top: '25%', left: '15%' }, animation: 'float' },
-    { name: 'tabler:bulb', size: 'sm', position: { top: '45%', right: '20%' }, animation: 'float-delayed' }
-  ],
-  accentColor = '--ootb-orange',
+  floatingIcons = [],
   quoteColor = '--ootb-yellow',
   imageBackgroundColor = '--ootb-orange'
 } = Astro.props;
 
 const getButtonClass = (variant: 'primary' | 'secondary') => {
   if (variant === 'primary') {
-    return `inline-flex items-center gap-3 bg-white/90 text-[${accentColor}] px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[${accentColor}] hover:text-white border-2 border-[${accentColor}] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group text-lg backdrop-blur-sm`;
+    return `inline-flex items-center gap-3 bg-white/90 text-[${imageBackgroundColor}] px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[${imageBackgroundColor}] hover:text-white border-2 border-[${imageBackgroundColor}] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group text-lg backdrop-blur-sm`;
   }
   return `inline-flex items-center gap-3 text-white border-2 border-white/20 px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-white/10 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group text-lg backdrop-blur-sm`;
 };
@@ -88,31 +78,34 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
 ---
 
 <GradientHeroSection>
-  <div class="relative z-10 container mx-auto px-4 pt-32">
+  <div class="relative z-10 container mx-auto px-4 pt-12 md:pt-16">
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="text-center md:text-left">
-          <Image
-            src={logo}
-            alt="Out of the Books Festival"
-            class="w-[450px] h-auto mx-auto md:mx-0"
-            widths={[450]}
-            sizes="450px"
-            loading="eager"
-            decoding="async"
-          />
-          <blockquote class="text-2xl text-white/90 font-light mt-8 mb-8 border-l-4 border-[--ootb-yellow] pl-4">
-            {date} | {location}
+        <div class="text-center md:text-left px-4md:px-0">
+          <h1 class="text-left mb-12 pr-12">
+            <Image
+              src={logo}
+              alt="Out of the Books Festival"
+              class="w-[180px] md:w-[252px] h-auto mx-auto md:mx-0"
+              widths={[180, 252]}
+              sizes="(max-width: 768px) 180px, 252px"
+              loading="eager"
+              decoding="async"
+            />
+          </h1>
+          <blockquote class="text-xl md:text-2xl text-white/90 font-light mt-8 md:mt-12 mb-12 md:mb-16 border-l-4 pl-6 md:pl-8 leading-relaxed max-w-3xl" style={`border-color: var(--ootb-orange)`}>
+            <div class="flex items-center gap-3 mb-4">
+              <Icon name="tabler:calendar" class="w-6 h-6 text-white/80" />
+              <p>{date}</p>
+            </div>
+            <div class="flex items-center gap-3 mb-8">
+              <Icon name="tabler:map-pin" class="w-6 h-6 text-white/80" />
+              <p>{location}</p>
+            </div>
+            <p class="text-xl md:text-2xl font-light leading-relaxed opacity-95">{description}</p>
           </blockquote>
+
           <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-            {stats.map(({ icon, value }) => (
-              <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
-                <Icon name={icon} class="w-5 h-5 text-white" />
-                <span class="text-white">{value}</span>
-              </div>
-            ))}
-          </div>
-          <div class="flex flex-wrap gap-4 justify-center md:justify-start mt-8">
             {buttons.map(({ href, icon, label, variant }) => {
               const isTicketButton = href === '#tickets';
               if (isTicketButton) {
@@ -125,39 +118,33 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
                   />
                 );
               }
-
               return (
-                <a
-                  href={href}
-                  class={getButtonClass(variant)}
-                >
+                <a href={href} class={getButtonClass(variant)}>
                   <Icon name={icon} class="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-0.5" />
                   <span class="font-medium">{label}</span>
                 </a>
               );
-
-
             })}
           </div>
         </div>
 
-        <div class="relative hidden md:block">
-          <div class="relative">
-            <!-- Fond décoratif -->
-            <div class="absolute inset-0 bg-[--ootb-orange] rounded-2xl transform rotate-3 translate-x-4 translate-y-4"></div>
-            <!-- Image -->
-            <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
-              <Image
-                src={heroImage}
-                alt="Festival Out of the Books"
-                class="rounded-2xl shadow-xl w-full h-auto"
-                widths={[400, 800]}
-                sizes="(max-width: 768px) 400px, 800px"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
+        <div class="relative hidden md:block ml-6">
+          <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+            <Image
+              src={heroImage}
+              alt="Festival Out of the Books"
+              class="rounded-2xl shadow-xl"
+              widths={[400, 800]}
+              sizes="(max-width: 768px) 400px, 800px"
+              aspectRatio="4:3"
+              loading="eager"
+              decoding="async"
+            />
           </div>
+          <div 
+            class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"
+            style={`background-color: var(${imageBackgroundColor})`}
+          ></div>
         </div>
       </div>
     </div>
@@ -187,6 +174,62 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
       <Icon name={name} class="w-full h-full text-white filter drop-shadow-lg" />
     </div>
   ))}
+
+  <!-- Cartes d'activités -->
+  <div class="absolute bottom-0 left-0 right-0 translate-y-1/2 w-full z-20">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <!-- Conférences -->
+        <div class="festival-card group backdrop-blur-md">
+          <div class="relative p-6">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-12 h-12 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <Icon name="tabler:presentation" class="w-6 h-6 text-white" />
+              </div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Conférences</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">40+ conférences inspirantes sur l'innovation pédagogique</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ateliers -->
+        <div class="festival-card group backdrop-blur-md">
+          <div class="relative p-8">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <Icon name="tabler:tool" class="w-8 h-8 text-white" />
+              </div>
+              <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Ateliers</h3>
+              <p class="text-gray-600 leading-relaxed">20+ ateliers pratiques pour expérimenter et apprendre</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stands -->
+        <div class="festival-card group backdrop-blur-md">
+          <div class="relative p-8">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                <Icon name="tabler:building-store" class="w-8 h-8 text-white" />
+              </div>
+              <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Stands</h3>
+              <p class="text-gray-600 leading-relaxed">30+ exposants et démos de solutions pédagogiques</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </GradientHeroSection>
+
+<style>
+  .festival-card {
+    @apply bg-white/95 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+</style>
 
 

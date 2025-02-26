@@ -1,0 +1,97 @@
+---
+import { Icon } from 'astro-icon/components';
+
+type Activity = {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+type Props = {
+  class?: string;
+  id?: string;
+}
+
+const { class: className = '', id = '' } = Astro.props;
+
+const activities: Activity[] = [
+  {
+    icon: 'tabler:presentation',
+    title: 'Conférences',
+    description: '40+ conférences inspirantes sur l\'innovation pédagogique'
+  },
+  {
+    icon: 'tabler:tool',
+    title: 'Ateliers',
+    description: '20+ ateliers pratiques pour expérimenter et apprendre'
+  },
+  {
+    icon: 'tabler:building-store',
+    title: 'Stands',
+    description: '30+ exposants et démos de solutions pédagogiques'
+  }
+];
+---
+
+<section id={id} class={`relative z-20 ${className}`}>
+  <div class="container mx-auto px-4">
+    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      {activities.map(({ icon, title, description }, index) => (
+        <div class="festival-card drop-in" style={`animation-delay: ${index * 200}ms`}>
+          <div class="relative p-8">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/3 to-transparent rounded-bl-[40px]"></div>
+            <div class="relative z-10">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center shadow-md">
+                  <Icon name={icon} class="w-8 h-8 text-white" />
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900">{title}</h3>
+              </div>
+              <p class="text-gray-600 leading-relaxed">{description}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .festival-card {
+    @apply bg-white/70 rounded-2xl shadow-md transition-all duration-300;
+    background: linear-gradient(145deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  @keyframes dropIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    60% {
+      transform: translateY(10px);
+    }
+    80% {
+      transform: translateY(-5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .drop-in {
+    animation: dropIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drop-in {
+      animation: none;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

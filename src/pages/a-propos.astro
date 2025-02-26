@@ -9,6 +9,7 @@ import mascotte from '~/assets/images/ootb-logo.svg';
 import logo from '~/assets/images/ootb-logo.svg';
 import teamImage from '~/assets/images/ootb_team.webp';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
+import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
 
 const metadata = {
   title: 'À propos - Out of the Books',
@@ -116,71 +117,17 @@ const partenaires = [
 ---
 
 <Layout {metadata}>
-  <GradientHeroSection id="top" class="scroll-mt-0">
-
-    <div class="relative z-10 container mx-auto px-4 pt-32">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div class="text-center md:text-left">
-            <h1 class="text-left">
-              <Image
-                src={logo_blanc}
-                alt="Out of the Books"
-                class="w-[400px] h-auto"
-                widths={[400]}
-                sizes="400px"
-                loading="eager"
-                decoding="async"
-              />
-              <span class="block text-4xl md:text-5xl mt-4 font-bold text-[--ootb-yellow] italic">À propos</span>
-            </h1>
-            <blockquote class="text-2xl text-white/90 font-light mt-6 mb-8 border-l-4 border-[--ootb-yellow] pl-4">
-              Changer ensemble l'éducation de demain
-            </blockquote>
-            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-              <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
-                <Icon name="tabler:users" class="w-5 h-5 text-white" />
-                <span class="text-white">+1000 enseignants</span>
-              </div>
-              <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
-                <Icon name="tabler:school" class="w-5 h-5 text-white" />
-                <span class="text-white">+100 établissements</span>
-              </div>
-              <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
-                <Icon name="tabler:certificate" class="w-5 h-5 text-white" />
-                <span class="text-white">+50 experts</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Image/Logo -->
-          <div class="relative hidden md:block">
-            <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
-              <Image
-                src={teamImage}
-                alt="L'équipe Out of the Books"
-                class="rounded-2xl shadow-xl"
-                widths={[400, 800]}
-                sizes="(max-width: 768px) 400px, 800px"
-                aspectRatio="4:3"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <!-- Élément décoratif derrière l'image -->
-            <div class="absolute inset-0 bg-[--ootb-yellow] rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <ScrollDownArrow 
-      targetId="qui-sommes-nous" 
-      label="En savoir plus"
-      class="text-white"
-    />
-
-  </GradientHeroSection>
+  <ContentHeroSection
+    logo={logo_blanc}
+    heroImage={teamImage}
+    quote="Out of the Books rassemble des enseignants, experts et passionnés d'éducation pour transformer l'éducation en Belgique francophone. Notre mission : créer des ponts entre tous les acteurs de l'éducation et favoriser l'innovation pédagogique."
+    scroll={{
+      targetId: "qui-sommes-nous",
+      label: "En savoir plus",
+      position: "left-[20%] bottom-[33%]",
+      hideOnMobile: true
+    }}
+  />
 
   <!-- Qui sommes-nous -->
   <section id="qui-sommes-nous" class="pb-16 bg-white relative overflow-hidden">

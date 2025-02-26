@@ -6,7 +6,7 @@ import Image from '~/components/common/Image.astro';
 import logoTalent from '~/assets/images/logo_talent.avif';
 import ActionBadge from '~/components/ui/ActionBadge.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
-import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
+import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
 import Button from '~/components/ui/Button.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 
@@ -67,80 +67,35 @@ const floatingIcons = [
 ---
 
 <Layout {metadata}>
-  <GradientHeroSection id="top" class="scroll-mt-0">
-    <div class="relative z-10 container mx-auto px-4 pt-8 md:pt-16">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
-          <div class="text-center md:text-left">
-
-            <Image
-              src={logoTalent}
-              alt="Les enseignants ont du talent"
-              class="w-[400px] h-auto mb-4"
-              widths={[400]}
-              sizes="400px"
-              loading="eager"
-              decoding="async"
-            />
-            <blockquote class="text-xl md:text-2xl text-white/90 font-light mt-3 md:mt-4 mb-4 md:mb-6 border-l-4 border-[--ootb-yellow] pl-3 md:pl-4">
-              Partagez votre expérience pédagogique innovante et inspirez vos pairs
-            </blockquote>
-            <div class="flex flex-wrap gap-3 justify-center md:justify-start mb-6">
-              <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                <Icon name="tabler:users" class="w-5 h-5 text-white" />
-                <span class="text-white">+100 projets soumis</span>
-              </div>
-              <div class="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                <Icon name="tabler:school" class="w-5 h-5 text-white" />
-                <span class="text-white">+50 écoles</span>
-              </div>
-            </div>
-            <div class="flex gap-4 justify-center md:justify-start">
-              <Button
-                href="#processus"
-                variant="outline-blue"
-                size="lg"
-                icon="tabler:send"
-              >
-                Soumettre mon projet
-              </Button>
-           <Button
-                href="/category/fiche"
-                variant="secondary"
-                size="lg"
-                icon="tabler:files"
-              > Fiches pédagogiques
-              </Button> 
-            </div>
-          </div>
-
-          <!-- Image à droite -->
-          <div class="relative hidden md:block">
-            <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
-              <Image
-                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop"
-                alt="Innovation pédagogique"
-                class="rounded-2xl shadow-xl"
-                widths={[400, 800]}
-                sizes="(max-width: 768px) 400px, 800px"
-                aspectRatio="4:3"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <!-- Élément décoratif derrière l'image -->
-            <div class="absolute inset-0 bg-[--ootb-blue] rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <ScrollDownArrow 
-      targetId="criteres" 
-      label="En savoir plus"
-      class="text-white !opacity-100"
-    />
-  </GradientHeroSection>
+  <ContentHeroSection
+    logo={logoTalent}
+    heroImage="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop"
+    quote="Partagez votre expérience pédagogique innovante et inspirez vos pairs lors du Festival Out of the Books 2024."
+    quoteColor="--ootb-blue"
+    buttons={[
+      {
+        href: '#processus',
+        icon: 'tabler:send',
+        label: 'Soumettre mon projet',
+        variant: 'outline-blue',
+        size: 'lg'
+      },
+      {
+        href: '/category/fiche',
+        icon: 'tabler:files',
+        label: 'Fiches pédagogiques',
+        variant: 'secondary',
+        size: 'lg'
+      }
+    ]}
+    scroll={{
+      targetId: "criteres",
+      label: "En savoir plus",
+      position: "bottom-[25%] left-[55%]",
+      hideOnMobile: false
+    }}
+    imageBackgroundColor="--ootb-blue"
+  />
 
   <!-- Critères - PADDING ENCORE PLUS RÉDUIT -->
   <section id="criteres" class="pb-24 md:pb-32 relative bg-white scroll-mt-16">

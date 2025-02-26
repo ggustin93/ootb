@@ -6,12 +6,18 @@ import ActionBadge from '~/components/ui/ActionBadge.astro';
 import logo_blanc from '~/assets/images/logo_ootb_white.svg';
 import GradientHeroSection from './GradientHeroSection.astro';
 import homepageData from '../../content/homepage/index.json';
+// Import du composant ScrollDownArrow
+import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 
 interface Props {
   image?: ImageMetadata;
+  scrollTargetId?: string; // ID de la section cible pour le défilement
 }
 
-const { image: propImage } = Astro.props;
+const { 
+  image: propImage, 
+  scrollTargetId = "mission-section"
+} = Astro.props;
 
 // Get homepage data from JSON
 const hero = homepageData.hero;
@@ -150,7 +156,6 @@ const displayBadges = hero?.badges || defaultHero.badges;
           </a>
         ))}
       </div>
-
     </div>
 
     <div class="relative hidden md:block px-8">
@@ -173,5 +178,10 @@ const displayBadges = hero?.badges || defaultHero.badges;
       </div>
     </div>
   </div>
-
+  
+  <!-- Utilisation du composant ScrollDownArrow -->
+  <ScrollDownArrow 
+    targetId={scrollTargetId} 
+    label="Découvrir" 
+  />
 </GradientHeroSection>

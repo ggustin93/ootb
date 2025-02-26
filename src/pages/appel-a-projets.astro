@@ -8,6 +8,7 @@ import ActionBadge from '~/components/ui/ActionBadge.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 import Button from '~/components/ui/Button.astro';
+import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 
 const metadata = {
   title: 'Appel à projets | Out of the Books',
@@ -71,12 +72,7 @@ const floatingIcons = [
       <div class="max-w-6xl mx-auto">
         <div class="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
           <div class="text-center md:text-left">
-            <ActionBadge 
-              variant="appel" 
-              class="inline-block text-lg sm:text-xl tracking-wide transform -skew-x-12 shadow-lg mb-4"
-            >
-              Appel à projets
-            </ActionBadge>
+
             <Image
               src={logoTalent}
               alt="Les enseignants ont du talent"
@@ -108,14 +104,13 @@ const floatingIcons = [
               >
                 Soumettre mon projet
               </Button>
-              <Button
-                href="#criteres"
+           <Button
+                href="/category/fiche"
                 variant="secondary"
                 size="lg"
-                icon="tabler:info-circle"
-              >
-                En savoir plus
-              </Button>
+                icon="tabler:files"
+              > Fiches pédagogiques
+              </Button> 
             </div>
           </div>
 
@@ -139,11 +134,83 @@ const floatingIcons = [
         </div>
       </div>
     </div>
+
+    <ScrollDownArrow 
+      targetId="criteres" 
+      label="En savoir plus"
+      class="text-white !opacity-100"
+    />
   </GradientHeroSection>
 
-  <!-- Processus avec fond subtil -->
-  <section id="processus" class="bg-white scroll-mt-16">
-    <div class="container mx-auto px-4 pb-16">
+  <!-- Critères - PADDING ENCORE PLUS RÉDUIT -->
+  <section id="criteres" class="pb-24 md:pb-32 relative bg-white scroll-mt-16">
+    <!-- Image de fond avec overlay -->
+    <div class="absolute inset-0">
+      <Image
+        src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3"
+        alt="Collaboration éducative"
+        class="w-full h-full object-cover opacity-5"
+        widths={[1920]}
+        sizes="100vw"
+        aspectRatio="16:9"
+        loading="lazy"
+      />
+      <div class="absolute inset-0 bg-white/90"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+          <SectionDivider variant="sky" class="mb-6">
+            <Icon name="tabler:target" class="w-5 h-5" />
+            Critères
+          </SectionDivider>
+          <h2 class="text-4xl md:text-5xl font-bold text-sky-900 mb-4">
+            Ce que nous recherchons
+          </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          {criteria.map((item) => (
+            <div class="group bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-white/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div class="flex items-start gap-4">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-[#6ab29e]/10 text-[--ootb-blue] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <Icon name={item.icon} class="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 class="text-xl md:text-2xl font-semibold text-sky-900 mb-2">
+                    {item.title}
+                  </h3>
+                  <p class="text-sm text-gray-600">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Vidéo ou image inspirante -->
+        <div class="mt-16 p-6 relative rounded-2xl overflow-hidden shadow-2xl group">
+          <div class="aspect-video relative">
+            <Image
+              src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3"
+              alt="Enseignants collaborant sur un projet innovant"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              widths={[800, 1200]}
+              sizes="(max-width: 768px) 800px, 1200px"
+              aspectRatio="16:9"
+              loading="lazy"
+            />            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Processus - MAINTENANT AVEC FOND TRÈS LÉGÈREMENT BLEU -->
+  <section id="processus" class="bg-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] scroll-mt-16">
+    <div class="container mx-auto px-4 py-24 md:py-32">
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-16">
           <SectionDivider variant="sky" class="mb-6">
@@ -162,13 +229,15 @@ const floatingIcons = [
           <!-- Cartes à gauche -->
           <div class="space-y-6 h-full">
             {processSteps.map((step, index) => (
-              <div class="bg-[color-mix(in_srgb,var(--ootb-blue)_85%,white)] rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div class="bg-[var(--ootb-blue)] rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-start gap-5">
                   <div class="bg-white/10 rounded-lg p-3 shrink-0">
                     <Icon name={step.icon} class="w-6 h-6 text-white" />
                   </div>
                   <div class="min-w-0">
-                    <h3 class="text-xl font-semibold mb-2 text-white">{step.title}</h3>
+                    <h3 class="text-xl md:text-2xl font-semibold mb-2 text-white">
+                      {step.title}
+                    </h3>
                     <p class="text-white/90 leading-relaxed">{step.description}</p>
                   </div>
                 </div>
@@ -195,89 +264,18 @@ const floatingIcons = [
     </div>
   </section>
 
-  <!-- Critères avec image de fond -->
-  <section id="criteres" class="py-24 md:py-32 relative bg-[color-mix(in_srgb,var(--ootb-blue)_10%,white)] scroll-mt-16">
-    <!-- Image de fond avec overlay -->
-    <div class="absolute inset-0">
-      <Image
-        src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3"
-        alt="Collaboration éducative"
-        class="w-full h-full object-cover opacity-5"
-        widths={[1920]}
-        sizes="100vw"
-        aspectRatio="16:9"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-[color-mix(in_srgb,var(--ootb-blue)_5%,white)]"></div>
-    </div>
-
-    <div class="container mx-auto px-4 relative z-10">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-12">
-          <SectionDivider variant="sky" class="mb-6">
-            <Icon name="tabler:target" class="w-5 h-5" />
-            Critères
-          </SectionDivider>
-          <h2 class="text-4xl md:text-5xl font-bold text-sky-900 mb-4">
-            Ce que nous recherchons
-          </h2>
-        </div>
-
-        <div class="grid sm:grid-cols-2 gap-6">
-          {criteria.map((item) => (
-            <div class="group bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-white/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div class="flex items-start gap-4">
-                <div class="inline-flex items-center justify-center w-12 h-12 bg-[#6ab29e]/10 text-[--ootb-blue] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <Icon name={item.icon} class="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 class="text-lg font-semibold text-sky-900 mb-1">
-                    {item.title}
-                  </h3>
-                  <p class="text-sm text-gray-600">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <!-- Vidéo ou image inspirante -->
-        <div class="mt-16 relative rounded-2xl overflow-hidden shadow-2xl group">
-          <div class="aspect-video relative">
-            <Image
-              src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3"
-              alt="Enseignants collaborant sur un projet innovant"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              widths={[800, 1200]}
-              sizes="(max-width: 768px) 800px, 1200px"
-              aspectRatio="16:9"
-              loading="lazy"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-              <p class="text-lg font-medium">Découvrez les projets des années précédentes</p>
-              <p class="text-sm text-white/80">Plus de 60 projets d'enseignants mis en valeur</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Formulaire -->
+  <!-- Formulaire - RESTE EN DERNIER -->
   <section id="formulaire" class="py-24 md:py-32 bg-gradient-to-b from-[--ootb-blue] from-0% via-[#4a90c9] via-60% to-[--ootb-blue] to-100% scroll-mt-16">
     <div class="container mx-auto px-4">
       <div class="max-w-3xl mx-auto text-center mb-16">
-        <SectionDivider variant="sky" class="mb-6">
+        <SectionDivider variant="white" class="mb-6">
           <Icon name="tabler:send" class="w-5 h-5 text-white" />
           <span class="text-white">Soumission</span>
         </SectionDivider>
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
           Prêt à partager votre projet ?
         </h2>
-        <p class="text-xl text-white/90">
+        <p class="text-xl text-white/90 pb-6">
           Rejoignez la communauté des enseignants innovants
         </p>
       </div>

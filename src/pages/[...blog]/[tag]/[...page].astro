@@ -8,6 +8,7 @@ import Pagination from '~/components/blog/Pagination.astro';
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import TagSearch from '~/components/common/TagSearch.astro';
+import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 
 export const prerender = true;
 
@@ -184,8 +185,15 @@ const metadata = {
     </div>
   </GradientHeroSection>
 
+  <ScrollDownArrow 
+    targetId="tag-content" 
+    label={`Voir les contenus liés à "${tag.title}"`}
+    position="left-[20%] bottom-[20%]"
+    class="text-[--ootb-yellow] hidden md:flex"
+  />
+
   <!-- Section contenu -->
-  <section class="py-12 bg-white">
+  <section id="tag-content" class="py-12 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <h2 class="text-3xl font-body font-semibold mb-12">

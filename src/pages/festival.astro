@@ -14,6 +14,7 @@ import festivalHeroImage from '~/assets/images/festival_hero.webp';
 import ootbLogo from '~/assets/images/ootb-logo.svg';
 import Carousel from '~/components/ui/Carousel.astro';
 import Button from '~/components/ui/Button.astro';
+import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 
 const metadata = {
   title: 'Festival Out of the Books 2025 | La Sucrerie - Wavre',
@@ -73,7 +74,13 @@ const themes = [
       { icon: "tabler:microphone-2", value: "+40 conférences" },
       { icon: "tabler:presentation", value: "+20 ateliers" }
     ]}
-  />
+  >
+    <ScrollDownArrow 
+      targetId="about" 
+      label="En savoir plus"
+      class="text-yellow"
+    />
+  </FestivalHeroSection>
 
   <!-- Section Introduction -->
   <section id="about" class="pb-24 bg-white relative">

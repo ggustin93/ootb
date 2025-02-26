@@ -56,7 +56,7 @@ const {
     {
       href: '#programme',
       icon: 'tabler:calendar-event',
-      label: 'Voir le programme',
+      label: 'Programme',
       variant: 'secondary'
     }
   ],
@@ -162,6 +162,8 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
       </div>
     </div>
   </div>
+
+  <slot />
 
   <!-- Icônes flottantes -->
   {floatingIcons.map(({ name, size, position, rotate, animation }) => (

@@ -1,0 +1,160 @@
+---
+/**
+ * Composant ScrollDownArrow - Flèche de défilement élégante
+ * 
+ * Usage:
+ * <ScrollDownArrow targetId="section-id" label="Découvrir" />
+ */
+
+ interface Props {
+  /**
+   * ID de l'élément cible vers lequel défiler
+   */
+  targetId: string;
+  
+  /**
+   * Texte à afficher au-dessus de la flèche (optionnel)
+   * @default "Découvrir"
+   */
+  label?: string;
+  
+  /**
+   * Position verticale de la flèche (optionnel)
+   * @default "bottom-[20%] md:bottom-[25%]"
+   */
+  position?: string;
+  
+  /**
+   * Classes CSS supplémentaires (optionnel)
+   */
+  class?: string;
+  
+  /**
+   * Si true, masque la flèche sur mobile
+   * @default true
+   */
+  hideOnMobile?: boolean;
+}
+
+const { 
+  targetId, 
+  label = "Découvrir", 
+  position = "bottom-[15%] md:bottom-[25%]",
+  class: className = "",
+  hideOnMobile = true
+} = Astro.props;
+---
+
+<div 
+  id="scroll-down-arrow" 
+  class:list={[
+    "absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center z-40 cursor-pointer hover:scale-105 transition-all duration-300",
+    hideOnMobile ? "hidden md:flex" : "flex",
+    position,
+    className
+  ]}
+>
+  <p class="font-handwritten text-white text-2xl md:text-3xl mb-3 transform -rotate-3 drop-shadow-md">
+    {label}
+  </p>
+  <div class="arrow-container">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      fill="none" 
+      viewBox="0 0 24 24" 
+      stroke-width="2.5" 
+      stroke="currentColor" 
+      class="w-8 h-8 md:w-10 md:h-10 text-white hover:text-[--ootb-yellow] transition-colors duration-300 drop-shadow-md"
+    >
+      <path 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
+      />
+    </svg>
+  </div>
+</div>
+
+<style>
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(15px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .arrow-container {
+    animation: float 2s ease-in-out infinite;
+  }
+
+  .arrow-container:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .arrow-container {
+      animation: none;
+    }
+  }
+</style>
+
+<script define:vars={{ targetId }}>
+  // Fonction de cleanup
+  const cleanup = () => {
+    const oldArrow = document.getElementById('scroll-down-arrow');
+    if (oldArrow) {
+      oldArrow.removeEventListener('click', handleClick);
+    }
+  };
+
+  // Fonction de scroll
+  const handleClick = () => {
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      const headerOffset = 100;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    } else {
+      const defaultScrollDistance = window.innerHeight * 0.8;
+      const currentPosition = window.pageYOffset;
+      window.scrollTo({
+        top: currentPosition + defaultScrollDistance,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Cleanup avant initialisation pour éviter les doublons
+  cleanup();
+
+  // Initialisation avec gestion du lifecycle Astro
+  const init = () => {
+    const scrollArrow = document.getElementById('scroll-down-arrow');
+    if (scrollArrow) {
+      scrollArrow.addEventListener('click', handleClick);
+    }
+  };
+
+  // Initialisation au chargement initial
+  document.addEventListener('DOMContentLoaded', init);
+
+  // Réinitialisation lors des navigations View Transitions
+  document.addEventListener('astro:after-swap', init);
+
+  // Cleanup avant les transitions de page
+  document.addEventListener('astro:before-swap', cleanup);
+
+  // Cleanup lors du unmount
+  document.addEventListener('astro:unmount', cleanup);
+</script>

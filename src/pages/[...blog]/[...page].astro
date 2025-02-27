@@ -153,20 +153,17 @@ const metadata = {
           </h2>
 
           <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg">
-            <a
-              href="/blog#blog-content"
-              class="flex items-center gap-2 px-3 py-1.5 rounded text-sm bg-white text-gray-900 shadow-sm"
-            >
-              <Icon name="tabler:layout-grid" class="w-4 h-4" />
-              <span class="text-xs sm:text-sm">Tous</span>
-            </a>
-
             {Object.entries(CONTENT_TYPES).map(([key, config]) => (
               <a
-                href={`/category/${key}#category-content`}
-                class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
+                href={key === 'all' ? '/blog#blog-content' : `/category/${key}#category-content`}
+                class:list={[
+                  "flex items-center gap-2 px-3 py-1.5 rounded text-sm",
+                  key === 'all' 
+                    ? "bg-white text-gray-900 shadow-sm" 
+                    : "text-gray-600 hover:text-gray-900"
+                ]}
               >
-                <Icon name={config.icon} class="w-4 h-4" />
+                <Icon name={key === 'all' ? 'tabler:layout-grid' : config.icon} class="w-4 h-4" />
                 <span class="text-xs sm:text-sm">{config.shortLabel}</span>
               </a>
             ))}

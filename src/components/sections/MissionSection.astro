@@ -38,7 +38,7 @@ const displayTitle = mission?.title || defaultMission.title;
 const displayDescription = mission?.description || defaultMission.description;
 const displayCta = mission?.cta || defaultMission.cta;
 ---
-<section class="md:pb-16 md:pt-12 pb-8 px-4 md:px-8 bg-[#FFFFFF] relative isolate -mt-24 md:-mt-32" id="mission-section">
+<section class="md:pb-16 md:pt-12 pb-8 px-4 md:px-8 bg-[#FFFFFF] relative isolate md:-mt-32" id="mission-section">
   <!-- Effets de fond -->
   <div class="absolute inset-0 bg-[#FFFFFF]"></div>
   
@@ -47,14 +47,15 @@ const displayCta = mission?.cta || defaultMission.cta;
   
   <div class="max-w-6xl mx-auto relative z-10">
     <!-- Contenu principal -->
-    <div class="flex flex-col md:grid md:grid-cols-5 gap-8 md:gap-16 lg:gap-24 items-center">
+    <div class="flex flex-col md:grid md:grid-cols-5 gap-4 md:gap-16 lg:gap-24 items-center">
       <!-- En-tête mobile -->
-      <div class="md:hidden mb-8">
-        <SectionDivider variant="turquoise" class="mb-3 inline-flex">
-          <Icon name="tabler:target" class="w-4 h-4 mr-1" />
-          Notre mission
+      <div class="md:hidden mb-2">
+        <SectionDivider variant="turquoise" class="mb-4 inline-flex items-center rounded-full">
+          <Icon name="tabler:target" class="w-4 h-4 text-[--ootb-turquoise]" />
+          <span class="text-[--ootb-turquoise] font-medium tracking-wide">NOTRE MISSION</span>
         </SectionDivider>
-        <h2 class="font-body text-3xl font-semibold leading-tight text-[--ootb-blue] tracking-tight">
+        
+        <h2 class="font-body text-3xl md:text-4xl font-bold tracking-tight leading-tight text-[--ootb-blue] mb-4">
           {displayTitle}
         </h2>
       </div>
@@ -67,51 +68,51 @@ const displayCta = mission?.cta || defaultMission.cta;
         <Image 
           src={displayImage}
           alt="L'équipe Out of the Books en action"
-          class="relative z-10 rounded-xl md:rounded-2xl shadow-xl transform transition-all duration-300 group-hover:scale-[1.02] w-full h-full object-cover"
+          class="relative z-10 rounded-xl md:rounded-2xl shadow-xl transform transition-all duration-300 group-hover:scale-[1.02] w-full object-cover"
           widths={[400, 900]}
           sizes="(max-width: 768px) 100vw, 33vw"
-          aspectRatio="4:5"
+          aspectRatio="1:1"
           loading="lazy"
           decoding="async"
         />
       </div>
 
       <!-- Texte (3/5) -->
-      <div class="md:col-span-3 space-y-8">
+      <div class="md:col-span-3 space-y-6 md:space-y-8">
         <!-- En-tête desktop -->
         <div class="hidden md:block">
-          <SectionDivider variant="turquoise" class="mb-3 inline-flex">
-            <Icon name="tabler:target" class="w-4 h-4 mr-1" />
-            Notre mission
+          <SectionDivider variant="turquoise" class="mb-4 inline-flex items-center rounded-full">
+            <Icon name="tabler:target" class="w-4 h-4 text-[--ootb-turquoise]" />
+            <span class="text-[--ootb-turquoise] font-medium tracking-wide">NOTRE MISSION</span>
           </SectionDivider>
-          <h2 class="font-body text-4xl font-semibold leading-tight text-[--ootb-blue] tracking-tight mb-6">
+          <h2 class="font-body text-4xl font-bold tracking-tight leading-tight text-[--ootb-blue] mb-4">
             {displayTitle}
           </h2>
         </div>
 
-        <p class="text-base md:text-lg text-gray-600 leading-relaxed">
+        <p class="text-gray-600 text-lg leading-relaxed">
           {displayDescription}
         </p>
 
-        <ul class="space-y-3 md:space-y-4">
+        <ul class="space-y-4">
           {displayFeatures.map((feature: string) => (
-            <li class="flex items-start gap-3 md:gap-5 group">
-              <span class="flex-shrink-0 w-5 h-5 md:w-6 md:h-6 mt-1 rounded-full bg-[--ootb-turquoise]/8 flex items-center justify-center">
-                <Icon name="tabler:circle-check-filled" class="w-6 h-6 md:w-5 md:h-6 text-[--ootb-turquoise]" />
+            <li class="flex items-start gap-3 group">
+              <span class="flex-shrink-0 w-5 h-5 mt-1 rounded-full bg-[--ootb-turquoise]/8 flex items-center justify-center">
+                <Icon name="tabler:circle-check-filled" class="w-5 h-5 text-[--ootb-turquoise]" />
               </span>
-              <span class="text-sm md:text-base text-gray-700">{feature}</span>
+              <span class="text-gray-600 text-lg leading-relaxed">{feature}</span>
             </li>
           ))}
         </ul>
 
         <!-- Bouton amélioré -->
-        <div>
+        <div class="pb-4 md:pb-0">
           <Button
             variant="outline-blue"
             href={displayCta.link}
             icon="tabler:arrow-right"
             iconPosition="right"
-            class="w-full md:w-auto shadow-xl shadow-[--ootb-blue]/15 hover:shadow-2xl hover:shadow-[--ootb-blue]/20 transition-shadow duration-300 text-base"
+            class="w-full md:w-auto shadow-xl shadow-[--ootb-blue]/15 hover:shadow-2xl hover:shadow-[--ootb-blue]/20 transition-shadow duration-300 text-base md:text-lg"
           >
             {displayCta.text}
           </Button>

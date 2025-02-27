@@ -45,7 +45,7 @@ const displayStats = propStats || (homeStats?.items ?? defaultStats);
 
 ---
 
-<div class="mt-12 md:mt-24 max-w-6xl mx-auto">
+<div class="mt-12 md:mt-24 max-w-6xl mx-auto px-4">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
     {displayStats.map(({ number, label, sublabel, icon }) => (
       <div class="group relative">
@@ -54,9 +54,9 @@ const displayStats = propStats || (homeStats?.items ?? defaultStats);
             name={icon} 
             class="w-8 h-8 md:w-10 md:h-10 mx-auto mb-3 md:mb-4 text-[--ootb-turquoise] opacity-40 group-hover:opacity-100 transition-opacity duration-300" 
           />
-          <div class="text-3xl md:text-5xl font-bold text-[--ootb-turquoise] mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300" style="text-shadow: none;">{number}</div>
-          <div class="text-sm md:text-base font-medium text-gray-800">{label}</div>
-          <div class="text-xs md:text-sm text-gray-600 mt-1">{sublabel}</div>
+          <div class="text-4xl md:text-6xl font-bold text-[--ootb-turquoise] mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300" style="text-shadow: none;">{number}</div>
+          <div class="text-base md:text-lg font-medium text-gray-800">{label}</div>
+          <div class="text-sm md:text-base text-gray-600 mt-1">{sublabel}</div>
         </div>
       </div>
     ))}

@@ -1,6 +1,6 @@
 ---
 interface Props {
-    variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow' | 'turquoise';
+    variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow' | 'turquoise' | 'blue';
     class?: string;
 }
 
@@ -21,6 +21,10 @@ const variants = {
     border-[--ootb-green]
   `,
   sky: `
+    text-[--ootb-blue]
+    border-[--ootb-blue]
+  `,
+  blue: `
     text-[--ootb-blue]
     border-[--ootb-blue]
   `,

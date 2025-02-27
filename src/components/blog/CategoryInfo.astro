@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import { CONTENT_TYPES } from '~/config/content-types';
+import Button from '~/components/ui/Button.astro';
 
 interface Props {
   type: keyof typeof CONTENT_TYPES;
@@ -67,12 +68,21 @@ const INFO_CONFIGS = {
     ]
   },
   premium: {
-    colorVariable: 'var(--ootb-orange)',
+    colorVariable: 'var(--ootb-yellow)',
     title: 'Contenu Premium',
     description: [
-      'Accédez à du contenu exclusif et approfondi pour enrichir votre pratique pédagogique.'
+      "Les contenus premium seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.",
+      "En devenant contributeur premium sur Buy Me a Coffee, vous recevrez automatiquement accès à notre newsletter exclusive. Celle-ci vous donnera accès à du contenu hors-série et en avant-première !"
     ],
-    links: []
+    links: [
+      { icon: 'tabler:coffee', label: 'Faire un don', url: 'https://buymeacoffee.com/outofthebooks', variant: 'premium-primary' },
+      { icon: 'tabler:arrow-left', label: 'Retour aux contenus', url: '/blog#category-content', variant: 'premium-secondary' }
+    ],
+    qrCode: {
+      src: '~/assets/images/bmc_qr.png',
+      alt: 'QR Code Buy Me a Coffee',
+      caption: 'Scanner pour contribuer'
+    }
   }
 } as const;
 
@@ -81,44 +91,90 @@ const config = INFO_CONFIGS[type];
 if (!config) return null;
 ---
 
-<div class="border rounded-lg p-6 mb-8" style={`
-  background-color: color-mix(in srgb, ${config.colorVariable} 5%, transparent);
-  border-color: color-mix(in srgb, ${config.colorVariable} 20%, transparent);
-`}>
-  <div class="flex gap-6 items-start">
-    {config.logo && (
-      <div class="flex-shrink-0 w-48">
-        <Image
-          src={config.logo}
-          alt={`Logo ${config.title}`}
-          width={300}
-          height={167}
-          class="w-full h-auto"
-        />
-      </div>
-    )}
-    <div class="flex-grow">
-      <h3 class="font-heading text-xl mb-2" style={`color: ${config.colorVariable}`}>
-        {config.title}
-      </h3>
-      {config.description.map(paragraph => (
-        <p class="mb-3 text-gray-600">
-          {paragraph}
-        </p>
-      ))}
-      {config.links.length > 0 && (
-        <div class="flex items-center gap-4 text-sm">
-          {config.links.map(link => (
-            <a 
-              href={link.url}
-              class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-300"
-            >
-              <Icon name={link.icon} class="w-5 h-5" />
-              <span>{link.label}</span>
-            </a>
-          ))}
+{type === 'premium' ? (
+  <div class="bg-gradient-to-br from-amber-50 to-transparent p-8 rounded-2xl mb-12">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-gray-700 text-lg mb-6">
+        {config.description[0]}
+      </p>
+      
+      <div class="flex flex-col sm:flex-row items-center gap-8 justify-between">
+        <div class="space-y-4 flex-1">
+          <p class="text-gray-700">
+            {config.description[1]}
+            <span class="text-amber-600 font-medium">Plus d'informations à venir.</span>
+          </p>
+          
+          <div class="flex flex-wrap gap-4 mt-6">
+            {config.links.map(link => (
+              <Button 
+                href={link.url}
+                variant={link.variant}
+                icon={link.icon}
+              >
+                {link.label}
+              </Button>
+            ))}
+          </div>
         </div>
-      )}
+
+        {config.qrCode && (
+          <div class="transform hover:scale-105 transition-all duration-300">
+            <div class="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+              <Image
+                src={import(config.qrCode.src)}
+                alt={config.qrCode.alt}
+                width={160}
+                height={160}
+                class="w-full h-auto"
+              />
+              <p class="text-xs text-gray-500 mt-2 text-center">{config.qrCode.caption}</p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   </div>
-</div>
+) : (
+  <div class="border rounded-lg p-6 mb-8" style={`
+    background-color: color-mix(in srgb, ${config.colorVariable} 5%, transparent);
+    border-color: color-mix(in srgb, ${config.colorVariable} 20%, transparent);
+  `}>
+    <div class="flex gap-6 items-start">
+      {config.logo && (
+        <div class="flex-shrink-0 w-48">
+          <Image
+            src={config.logo}
+            alt={`Logo ${config.title}`}
+            width={300}
+            height={167}
+            class="w-full h-auto"
+          />
+        </div>
+      )}
+      <div class="flex-grow">
+        <h3 class="font-heading text-xl mb-2" style={`color: ${config.colorVariable}`}>
+          {config.title}
+        </h3>
+        {config.description.map(paragraph => (
+          <p class="mb-3 text-gray-600">
+            {paragraph}
+          </p>
+        ))}
+        {config.links.length > 0 && (
+          <div class="flex items-center gap-4 text-sm">
+            {config.links.map(link => (
+              <a 
+                href={link.url}
+                class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-300"
+              >
+                <Icon name={link.icon} class="w-5 h-5" />
+                <span>{link.label}</span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)}

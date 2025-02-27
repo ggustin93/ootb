@@ -209,30 +209,77 @@ export const getStaticPathsBlogPost = async () => {
   }));
 };
 
-/** */
+/** 
+ * Génère les chemins statiques pour les pages de catégories du blog
+ * Gère toutes les catégories, y compris premium qui peut être vide initialement
+ * mais prêt à recevoir du contenu ultérieurement
+ */
 export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogCategoryRouteEnabled) return [];
-
-  const posts = await fetchPosts();
-  const categories: Record<string, Post['category']> = {};
   
-  posts.forEach((post) => {
-    if (post.category?.slug) {
-      categories[post.category.slug] = post.category;
-    }
-  });
+  const posts = await fetchPosts();
+  
+  // Liste exhaustive des catégories possibles, indépendamment du contenu actuel
+  const categories = new Set([
+    'blog',
+    'actualite', 
+    'fiche',
+    'live',
+    'podcast',
+    'tv',
+    'premium'
+  ]);
+  
+  return Array.from(categories).flatMap((category) => {
+    // Pour premium ou toute autre catégorie, on filtre les posts correspondants
+    const filteredPosts = posts.filter((post) => 
+      post.category?.slug === category
+    );
 
-  return Array.from(Object.keys(categories)).flatMap((categorySlug) =>
-    paginate(
-      posts.filter((post) => post.category?.slug && categorySlug === post.category?.slug),
-      {
-        params: { category: categorySlug, blog: CATEGORY_BASE || undefined },
-        pageSize: blogPostsPerPage,
-        props: { category: categories[categorySlug] },
-      }
-    )
-  );
+    return paginate(filteredPosts, {
+      params: { category, blog: CATEGORY_BASE || undefined },
+      pageSize: blogPostsPerPage,
+      props: { 
+        category: { 
+          slug: category, 
+          title: category 
+        } 
+      },
+    });
+  });
 };
+
+// Version alternative avec gestion dynamique des catégories
+// À utiliser quand on voudra une gestion plus flexible des catégories
+/*
+export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: PaginateFunction }) => {
+  if (!isBlogEnabled || !isBlogCategoryRouteEnabled) return [];
+  
+  const posts = await fetchPosts();
+  
+  // Récupération dynamique des catégories depuis les posts
+  const categories = new Set(posts.map(post => post.category?.slug).filter(Boolean));
+  
+  // Ajout des catégories "fixes" même si pas de contenu
+  const requiredCategories = ['blog', 'actualite', 'fiche', 'live', 'podcast', 'tv', 'premium'];
+  requiredCategories.forEach(cat => categories.add(cat));
+  
+  return Array.from(categories).flatMap((category) => {
+    const filteredPosts = posts.filter(post => post.category?.slug === category);
+    
+    return paginate(filteredPosts, {
+      params: { category, blog: CATEGORY_BASE || undefined },
+      pageSize: blogPostsPerPage,
+      props: { 
+        category: { 
+          slug: category, 
+          title: category 
+        } 
+      },
+    });
+  });
+};
+*/
 
 /** */
 export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFunction }) => {

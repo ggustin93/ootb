@@ -39,7 +39,15 @@
     --content-live: #1877F2;
     --content-podcast: #921e6d;
     --content-tv: #40ad50;
-    --content-premium: #e7461c;
+    --content-premium:#f9b004;
+
+    --ootb-orange: #e7461c;
+    --ootb-violet: #921e6d;
+    --ootb-green: #40ad50;
+    --ootb-blue: #0890bd;
+    --ootb-turquoise: #69b29e;
+    --ootb-yellow: #f9b004;
+
   }
 
   * {

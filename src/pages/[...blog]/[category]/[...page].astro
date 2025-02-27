@@ -11,6 +11,8 @@ import GradientHeroSection from '~/components/sections/GradientHeroSection.astro
 import TagSearch from '~/components/common/TagSearch.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import CategoryInfo from '~/components/blog/CategoryInfo.astro';
+import Button from '~/components/ui/Button.astro';
+import { CONTENT_TYPES } from '~/config/content-types';
 
 export const prerender = true;
 
@@ -65,7 +67,7 @@ const FILTER_TYPES = {
   },
   tv: {
     icon: 'tabler:device-tv',
-    label: 'TV',
+    label: 'Emissions TV',
   },
   premium: {
     icon: 'tabler:crown',
@@ -106,13 +108,14 @@ const metadata = {
             <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
               {(!category.slug || category.slug === 'blog') 
                 ? "Tous nos contenus"
-                : `Nos ${FILTER_TYPES[category.slug as keyof typeof FILTER_TYPES]?.label.toLowerCase() || 'contenus'}`
+                : `${CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.titlePrefix} ${CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.label}`
               }
             </h1>
             <p class="text-xl text-white/90 font-light mb-8 max-w-xl">
               {(!category.slug || category.slug === 'blog')
-                ? "Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation"
-                : `Explorez notre sélection de ${FILTER_TYPES[category.slug as keyof typeof FILTER_TYPES]?.label.toLowerCase() || 'contenus'} pour enrichir vos pratiques pédagogiques`
+                ? CONTENT_TYPES.all.description
+                : CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.heroDescription || 
+                  CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.description
               }
             </p>
 
@@ -217,7 +220,10 @@ const metadata = {
 
   <ScrollDownArrow 
     targetId="category-content" 
-    label={`Voir les ${FILTER_TYPES[category.slug]?.label.toLowerCase() || 'contenus'}`}
+    label={category.slug 
+      ? CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.actionLabel 
+      : "Voir tous les contenus"
+    }
     position="left-[20%] bottom-[20%]"
     class="text-white hidden md:flex"
   />
@@ -225,70 +231,181 @@ const metadata = {
   <section id="category-content" class="py-4 -mt-8 bg-white relative z-10">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
-        <!-- En-tête avec titre et filtres -->
-        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
-          <h2 class="text-2xl sm:text-3xl font-body font-semibold">
-            {(!category.slug || category.slug === 'blog') 
-              ? "Tous les contenus" 
-              : FILTER_TYPES[category.slug as keyof typeof FILTER_TYPES]?.label
-            }
-            {tag && (
-              <span class="inline-flex items-center gap-3 ml-3">
-                <span class="text-gray-400">•</span>
-                <span class="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
-                  <Icon name="tabler:tag" class="w-4 h-4 text-gray-500" />
-                  <span class="text-sm text-gray-800 font-medium">{tag.title}</span>
-                </span>
-              </span>
+        {category.slug === 'premium' ? (
+          <section id="category-content" class="py-4 -mt-8 bg-white relative z-10">
+            <div class="container mx-auto px-4">
+              <div class="max-w-6xl mx-auto">
+                {/* En-tête avec titre et filtres */}
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
+                  <h2 class="text-2xl sm:text-3xl font-body font-semibold flex items-center gap-3">
+                    <Icon name="tabler:crown" class="w-8 h-8 text-[--ootb-yellow]" />
+                    Contenu premium
+                  </h2>
+
+                  {/* Filtres minimalistes */}
+                  <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg">
+                    <a
+                      href="/blog#category-content"
+                      class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
+                    >
+                      <Icon name={FILTER_TYPES.all.icon} class="w-4 h-4" />
+                      <span class="text-xs sm:text-sm">{FILTER_TYPES.all.label}</span>
+                    </a>
+
+                    {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
+                      <a
+                        href={`/category/${key.toLowerCase()}#category-content`}
+                        class:list={[
+                          'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+                          'transition-all duration-300',
+                          key === 'premium' ? [
+                            'bg-white shadow-sm',
+                            'text-[--ootb-yellow]'
+                          ] : [
+                            'text-gray-600 hover:text-gray-900'
+                          ]
+                        ]}
+                      >
+                        <Icon name={config.icon} class="w-4 h-4" />
+                        <span class="text-xs sm:text-sm">{config.label}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Encart explicatif */}
+                <div class="bg-gradient-to-br from-amber-50 to-transparent p-8 rounded-2xl mb-12">
+                  <div class="max-w-3xl mx-auto">
+                    <p class="text-gray-700 text-lg mb-6">
+                      Les contenus premium seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center gap-8 justify-between">
+                      <div class="space-y-4 flex-1">
+                        <p class="text-gray-700">
+                          En devenant contributeur premium sur <Button 
+                            href="https://buymeacoffee.com/outofthebooks" 
+                            variant="link" 
+                            size="sm"
+                            icon="tabler:coffee"
+                            class="text-[--ootb-yellow] hover:text-amber-500 font-semibold"
+                          >Buy Me a Coffee</Button>, vous recevrez automatiquement accès à notre newsletter exclusive.
+                        </p>
+                        <p class="text-gray-600">
+                          Celle-ci vous donnera accès à du contenu hors-série et en avant-première !
+                          <span class="text-amber-600 font-medium">Plus d'informations à venir.</span>
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-4 mt-6">
+                          <Button 
+                            href="https://buymeacoffee.com/outofthebooks" 
+                            variant="premium-primary"
+                            icon="tabler:coffee"
+                          >
+                            Faire un don
+                          </Button>
+                          <Button 
+                            href="/blog#category-content" 
+                            variant="premium-secondary"
+                            icon="tabler:arrow-left"
+                          >
+                            Retour aux contenus
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* QR Code */}
+                      <div class="transform hover:scale-105 transition-all duration-300">
+                        <div class="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                          <Image
+                            src={import('~/assets/images/bmc_qr.png')}
+                            alt="QR Code Buy Me a Coffee"
+                            width={160}
+                            height={160}
+                            class="w-full h-auto"
+                          />
+                          <p class="text-xs text-gray-500 mt-2 text-center">Scanner pour contribuer</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        ) : (
+          <>
+            {/* En-tête avec titre et filtres */}
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
+              <h2 class="text-2xl sm:text-3xl font-body font-semibold">
+                {(!category.slug || category.slug === 'blog') 
+                  ? "Tous les contenus" 
+                  : FILTER_TYPES[category.slug as keyof typeof FILTER_TYPES]?.label
+                }
+                {tag && (
+                  <span class="inline-flex items-center gap-3 ml-3">
+                    <span class="text-gray-400">•</span>
+                    <span class="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
+                      <Icon name="tabler:tag" class="w-4 h-4 text-gray-500" />
+                      <span class="text-sm text-gray-800 font-medium">{tag.title}</span>
+                    </span>
+                  </span>
+                )}
+              </h2>
+
+              {/* Filtres minimalistes toujours présents */}
+              <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg">
+                <a
+                  href="/blog#category-content"
+                  class:list={[
+                    'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+                    'transition-all duration-300',
+                    (!category.slug || category.slug === 'blog') ? 
+                      'bg-white text-gray-900 shadow-sm' : 
+                      'text-gray-600 hover:text-gray-900'
+                  ]}
+                >
+                  <Icon name={FILTER_TYPES.all.icon} class="w-4 h-4" />
+                  <span class="text-xs sm:text-sm">{FILTER_TYPES.all.label}</span>
+                </a>
+
+                {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
+                  <a
+                    href={`/category/${key.toLowerCase()}#category-content`}
+                    class:list={[
+                      'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+                      'transition-all duration-300',
+                      key.toLowerCase() === category.slug?.toLowerCase() ? [
+                        'bg-white shadow-sm',
+                        `text-[--content-${key}]`
+                      ] : [
+                        'text-gray-600 hover:text-gray-900'
+                      ]
+                    ]}
+                  >
+                    <Icon name={config.icon} class="w-4 h-4" />
+                    <span class="text-xs sm:text-sm">{config.label}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Encart explicatif conditionnel selon la catégorie */}
+            {category.slug && (
+              <CategoryInfo type={category.slug as keyof typeof CONTENT_TYPES} />
             )}
-          </h2>
 
-          <!-- Filtres minimalistes toujours présents -->
-          <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg">
-            <a
-              href="/blog#category-content"
-              class:list={[
-                'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
-                'transition-all duration-300',
-                (!category.slug || category.slug === 'blog') ? 
-                  'bg-white text-gray-900 shadow-sm' : 
-                  'text-gray-600 hover:text-gray-900'
-              ]}
-            >
-              <Icon name={FILTER_TYPES.all.icon} class="w-4 h-4" />
-              <span class="text-xs sm:text-sm">{FILTER_TYPES.all.label}</span>
-            </a>
-
-            {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
-              <a
-                href={`/category/${key.toLowerCase()}#category-content`}
-                class:list={[
-                  'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
-                  'transition-all duration-300',
-                  key.toLowerCase() === category.slug?.toLowerCase() ? [
-                    'bg-white shadow-sm',
-                    `text-[--content-${key}]`
-                  ] : [
-                    'text-gray-600 hover:text-gray-900'
-                  ]
-                ]}
-              >
-                <Icon name={config.icon} class="w-4 h-4" />
-                <span class="text-xs sm:text-sm">{config.label}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Encart explicatif conditionnel selon la catégorie */}
-        {category.slug && (
-          <CategoryInfo type={category.slug as 'tv' | 'podcast' | 'fiche' | 'actualite' | 'live' | 'premium'} />
+            {/* Liste des articles si pas en mode premium */}
+            {category.slug !== 'premium' && (
+              <>
+                <BlogList posts={page.data} />
+                <div class="mt-12">
+                  <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+                </div>
+              </>
+            )}
+          </>
         )}
-
-        <BlogList posts={page.data} />
-        <div class="mt-12">
-          <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
-        </div>
       </div>
     </div>
   </section>

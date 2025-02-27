@@ -1,6 +1,7 @@
 ---
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
 import { blogTagRobots, getStaticPathsBlogTag, findTags } from '~/utils/blog';
+import { CONTENT_TYPES } from '~/config/content-types';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 import Layout from '~/layouts/PageLayout.astro';
 import BlogList from '~/components/blog/List.astro';
@@ -36,38 +37,6 @@ const allTags = await findTags().then(tags => {
 // Limiter le nombre de tags affichés initialement
 const MAX_VISIBLE_TAGS = 15;
 const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
-
-// Configuration des filtres
-const FILTER_TYPES = {
-  all: {
-    icon: 'tabler:layout-grid',
-    label: 'Tous',
-  },
-  actualite: {
-    icon: 'tabler:news',
-    label: 'Actualités',
-  },
-  fiche: {
-    icon: 'tabler:file-text',
-    label: 'Fiches',
-  },
-  live: {
-    icon: 'tabler:brand-facebook',
-    label: 'Lives',
-  },
-  podcast: {
-    icon: 'tabler:brand-spotify',
-    label: 'Podcasts',
-  },
-  tv: {
-    icon: 'tabler:device-tv',
-    label: 'TV',
-  },
-  premium: {
-    icon: 'tabler:crown',
-    label: 'Premium',
-  }
-} as const;
 
 const metadata = {
   title: `Posts by tag '${tag.title}'${currentPage > 1 ? ` — Page ${currentPage} ` : ''}`,
@@ -117,22 +86,18 @@ const metadata = {
             <!-- Label pour les filtres -->
             <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">Filtrer par type de contenu :</div>
 
-            <!-- Filtres principaux -->
+            <!-- Filtres -->
             <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-              {/* Bouton "TOUS" toujours présent */}
               <a
-                href="/blog"
+                href="/blog#category-content"
                 class:list={[
                   'group relative inline-flex items-center gap-2',
                   'transform skew-x-[-12deg]',
                   'transition-all duration-300',
-                  'px-6 py-2.5',
-                  'ring-2',
-                  'transition-all duration-300',
-                  !tag.slug ? [
+                  'px-6 py-2.5 ring-2',
+                  !tag ? [
                     'bg-white text-gray-800 ring-gray-800',
-                    'scale-105',
-                    'shadow-lg'
+                    'scale-105 shadow-lg'
                   ] : [
                     'bg-gray-800 text-white ring-gray-800 hover:bg-white hover:text-gray-800',
                     'hover:-translate-y-1'
@@ -140,44 +105,36 @@ const metadata = {
                 ]}
               >
                 <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                  <Icon 
-                    name="tabler:layout-grid" 
-                    class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
-                  />
-                  <span class="text-sm font-bold uppercase tracking-wide">Tous</span>
+                  <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4" />
+                  <span class="text-sm font-bold uppercase tracking-wide">
+                    {CONTENT_TYPES.all.shortLabel}
+                  </span>
                 </span>
               </a>
 
-              {/* Autres filtres */}
-              {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
-                <a
-                  href={`/category/${key.toLowerCase()}`}
-                  class:list={[
-                    'group relative inline-flex items-center gap-2',
-                    'transform skew-x-[-12deg]',
-                    'transition-all duration-300',
-                    'px-6 py-2.5',
-                    'ring-2',
-                    {
-                      'bg-[--content-actualite] text-white ring-[--content-actualite] hover:bg-white hover:text-[--content-actualite]': key === 'actualite',
-                      'bg-[--content-fiche] text-white ring-[--content-fiche] hover:bg-white hover:text-[--content-fiche]': key === 'fiche',
-                      'bg-[--content-live] text-white ring-[--content-live] hover:bg-white hover:text-[--content-live]': key === 'live',
-                      'bg-[--content-podcast] text-white ring-[--content-podcast] hover:bg-white hover:text-[--content-podcast]': key === 'podcast',
-                      'bg-[--content-tv] text-white ring-[--content-tv] hover:bg-white hover:text-[--content-tv]': key === 'tv',
-                      'bg-[--content-premium] text-white ring-[--content-premium] hover:bg-white hover:text-[--content-premium]': key === 'premium',
-                    },
-                    'hover:-translate-y-1'
-                  ]}
-                >
-                  <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                    <Icon 
-                      name={config.icon} 
-                      class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
-                    />
-                    <span class="text-sm font-bold uppercase tracking-wide">{config.label}</span>
-                  </span>
-                </a>
-              ))}
+              {Object.entries(CONTENT_TYPES)
+                .filter(([key]) => key !== 'all')
+                .map(([key, config]) => (
+                  <a
+                    href={`/category/${key}#category-content`}
+                    class:list={[
+                      'group relative inline-flex items-center gap-2',
+                      'transform skew-x-[-12deg]',
+                      'transition-all duration-300',
+                      'px-6 py-2.5 ring-2',
+                      `bg-[${config.color}] text-white ring-[${config.color}]`,
+                      'hover:bg-white hover:text-[${config.color}]',
+                      'hover:-translate-y-1'
+                    ]}
+                  >
+                    <span class="transform skew-x-[12deg] flex items-center gap-2.5">
+                      <Icon name={config.icon} class="w-4 h-4" />
+                      <span class="text-sm font-bold uppercase tracking-wide">
+                        {config.shortLabel}
+                      </span>
+                    </span>
+                  </a>
+                ))}
             </div>
           </div>
         </div>
@@ -196,20 +153,42 @@ const metadata = {
   <section id="tag-content" class="py-12 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
+        <!-- Filtres minimalistes -->
+        <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg mb-8">
+          <a
+            href="/blog#category-content"
+            class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
+          >
+            <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4" />
+            <span class="text-xs sm:text-sm">{CONTENT_TYPES.all.shortLabel}</span>
+          </a>
+
+          {Object.entries(CONTENT_TYPES)
+            .filter(([key]) => key !== 'all')
+            .map(([key, config]) => (
+              <a
+                href={`/category/${key}#category-content`}
+                class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
+              >
+                <Icon name={config.icon} class="w-4 h-4" />
+                <span class="text-xs sm:text-sm">{config.shortLabel}</span>
+              </a>
+            ))}
+        </div>
+
+        <!-- Tag title -->
         <h2 class="text-3xl font-body font-semibold mb-12">
-          {tag.slug 
-            ? (
-              <span class="inline-flex items-center gap-3">
-                <span class="text-gray-600">Contenus liés à</span>
-                <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
-                  <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
-                  <span class="text-gray-800 font-medium">{tag.title}</span>
-                </span>
+          {tag.slug && (
+            <span class="inline-flex items-center gap-3">
+              <span class="text-gray-600">Contenus liés à</span>
+              <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
+                <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
+                <span class="text-gray-800 font-medium">{tag.title}</span>
               </span>
-            )
-            : "Tous"
-          }
+            </span>
+          )}
         </h2>
+
         <BlogList posts={page.data} />
         <div class="mt-12">
           <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
@@ -241,4 +220,8 @@ const metadata = {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 </style>
+
+<script>
+  // ... script existant ...
+</script>
 

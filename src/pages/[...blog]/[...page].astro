@@ -8,7 +8,7 @@ import { Icon } from 'astro-icon/components';
 import { findTags } from '~/utils/blog';
 
 import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
-import { CONTENT_TYPES } from '~/config/content-types';
+import { CONTENT_TYPES, type ContentType } from '~/config/content-types';
 import { Image } from 'astro:assets';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 import TagSearch from '~/components/common/TagSearch.astro';
@@ -37,34 +37,6 @@ const allTags = await findTags().then(tags => {
 
 // Limiter le nombre de tags affichés initialement
 const initialTags = allTags.slice(0, 15);
-
-// Configuration des filtres
-const FILTER_TYPES = {
-  actualite: {
-    ...CONTENT_TYPES.actualite,
-    label: 'Actualités',
-  },
-  fiche: {
-    ...CONTENT_TYPES.fiche,
-    label: 'Fiches',
-  },
-  live: {
-    ...CONTENT_TYPES.live,
-    label: 'Lives',
-  },
-  podcast: {
-    ...CONTENT_TYPES.podcast,
-    label: 'Podcasts',
-  },
-  tv: {
-    ...CONTENT_TYPES.tv,
-    label: 'TV',
-  },
-  premium: {
-    ...CONTENT_TYPES.premium,
-    label: 'Premium',
-  }
-} as const;
 
 const metadata = {
   title: `Blog${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
@@ -126,49 +98,23 @@ const metadata = {
             <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">Filtrer par type de contenu :</div>
 
             <!-- Filtres principaux -->
-            <div class="flex flex-wrap gap-3 justify-center md:justify-start mb-8">
-              {/* Bouton "TOUS" toujours présent et actif par défaut */}
-              <a
-                href="/blog"
-                class:list={[
-                  'group relative inline-flex items-center gap-2',
-                  'transform skew-x-[-12deg]',
-                  'transition-all duration-300',
-                  'px-6 py-2.5',
-                  'ring-2',
-                  'bg-white text-gray-800 ring-gray-800',
-                  'scale-105',
-                  'shadow-lg'
-                ]}
-              >
-                <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                  <Icon 
-                    name="tabler:layout-grid" 
-                    class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
-                  />
-                  <span class="text-sm font-bold uppercase tracking-wide">Tous</span>
-                </span>
-              </a>
-
-              {/* Autres filtres */}
-              {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
+            <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+              {Object.entries(CONTENT_TYPES).map(([key, config]) => (
                 <a
-                  href={`/category/${key}`}
+                  href={key === 'all' ? '/blog' : `/category/${key}`}
                   class:list={[
                     'group relative inline-flex items-center gap-2',
                     'transform skew-x-[-12deg]',
                     'transition-all duration-300',
-                    'px-6 py-2.5',
-                    'ring-2',
-                    {
-                      'bg-[--content-actualite] text-white ring-[--content-actualite] hover:bg-white hover:text-[--content-actualite]': key === 'actualite',
-                      'bg-[--content-fiche] text-white ring-[--content-fiche] hover:bg-white hover:text-[--content-fiche]': key === 'fiche',
-                      'bg-[--content-live] text-white ring-[--content-live] hover:bg-white hover:text-[--content-live]': key === 'live',
-                      'bg-[--content-podcast] text-white ring-[--content-podcast] hover:bg-white hover:text-[--content-podcast]': key === 'podcast',
-                      'bg-[--content-tv] text-white ring-[--content-tv] hover:bg-white hover:text-[--content-tv]': key === 'tv',
-                      'bg-[--content-premium] text-white ring-[--content-premium] hover:bg-white hover:text-[--content-premium]': key === 'premium',
-                    },
-                    'hover:-translate-y-1'
+                    'px-6 py-2.5 ring-2',
+                    key === 'all' ? [
+                      'bg-white text-gray-800 ring-gray-800',
+                      'scale-105 shadow-lg'
+                    ] : [
+                      `bg-[${config.color}] text-white ring-[${config.color}]`,
+                      'hover:bg-white hover:text-[${config.color}]',
+                      'hover:-translate-y-1'
+                    ]
                   ]}
                 >
                   <span class="transform skew-x-[12deg] flex items-center gap-2.5">
@@ -176,7 +122,9 @@ const metadata = {
                       name={config.icon} 
                       class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
                     />
-                    <span class="text-sm font-bold uppercase tracking-wide">{config.label}</span>
+                    <span class="text-sm font-bold uppercase tracking-wide">
+                      {config.shortLabel}
+                    </span>
                   </span>
                 </a>
               ))}
@@ -213,13 +161,13 @@ const metadata = {
               <span class="text-xs sm:text-sm">Tous</span>
             </a>
 
-            {Object.entries(FILTER_TYPES).map(([key, config]) => (
+            {Object.entries(CONTENT_TYPES).map(([key, config]) => (
               <a
                 href={`/category/${key}#category-content`}
                 class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
               >
                 <Icon name={config.icon} class="w-4 h-4" />
-                <span class="text-xs sm:text-sm">{config.label}</span>
+                <span class="text-xs sm:text-sm">{config.shortLabel}</span>
               </a>
             ))}
           </div>

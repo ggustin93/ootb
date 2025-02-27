@@ -75,10 +75,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         <Logo />
       </a>
       <div class="flex items-center md:hidden">
-        <ToggleMenu 
-          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group"
-          client:load
-        />
+        <ToggleMenu client:load />
       </div>
     </div>
     <nav
@@ -158,16 +155,15 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
   </div>
 </header>
 
-{/* Menu Mobile */}
-<div class="md:hidden fixed inset-0 z-50 bg-white/90 backdrop-blur-sm hidden" id="mobile-menu">
+{/* Menu Mobile - Traité comme un dropdown */}
+<div 
+  class="md:hidden dropdown-menu fixed inset-0 z-50 bg-white/90 backdrop-blur-sm hidden"
+  data-aw-toggle-menu-panel
+>
   <div class="w-full h-full overflow-y-auto">
     <div class="w-full text-center p-4">
-      {/* Bouton Close en haut à droite */}
       <div class="flex justify-end mb-4">
-        <ToggleMenu 
-          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group"
-          client:load
-        />
+        <ToggleMenu client:load />
       </div>
 
       {mobileLinks.map((section) => (
@@ -192,61 +188,19 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
           </ul>
         </div>
       ))}
-      
-      {/* Action pour mobile */}
-      {actions?.length && (
-        <div class="mt-4 pt-4 border-t border-gray-200">
-          {actions.map((btnProps) => (
-            <Button {...btnProps} class="w-full text-ootb-turquoise border-ootb-turquoise hover:bg-ootb-turquoise hover:text-white transition-colors">
-              {btnProps.text}
-            </Button>
-          ))}
-        </div>
-      )}
     </div>
   </div>
 </div>
 
 <script>
-  class MenuToggle {
-    constructor() {
-      this.init();
+  document.addEventListener('click', (e) => {
+    const panel = document.querySelector('[data-aw-toggle-menu-panel]');
+    const button = e.target.closest('[data-aw-toggle-menu]');
+    
+    if (button) {
+      panel?.classList.toggle('hidden');
+    } else if (!panel?.contains(e.target)) {
+      panel?.classList.add('hidden');
     }
-
-    init() {
-      const toggleButtons = document.querySelectorAll('[data-aw-toggle-menu]');
-      const mobileMenu = document.getElementById('mobile-menu');
-
-      if (toggleButtons && mobileMenu) {
-        // Fonction pour mettre à jour l'état des boutons et du menu
-        const toggleMenu = () => {
-          toggleButtons.forEach(btn => {
-            btn.classList.toggle('expanded');
-            // Force le rafraîchissement du composant Astro
-            btn.closest('.group')?.classList.toggle('expanded');
-          });
-          mobileMenu.classList.toggle('hidden');
-        };
-
-        // Gestionnaire d'événements pour les boutons
-        toggleButtons.forEach((button) => {
-          button.addEventListener('click', toggleMenu);
-        });
-
-        // Gestionnaire pour les clics en dehors du menu
-        document.addEventListener('click', (e) => {
-          if (!mobileMenu.classList.contains('hidden') && // Menu est ouvert
-              !e.target.closest('#mobile-menu') && // Clic en dehors du menu
-              !e.target.closest('[data-aw-toggle-menu]')) { // Clic pas sur un bouton toggle
-            toggleMenu();
-          }
-        });
-      }
-    }
-  }
-
-  // Initialize
-  window.addEventListener('load', () => {
-    new MenuToggle();
   });
 </script>

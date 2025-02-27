@@ -27,12 +27,12 @@ export const headerData = {
           href: getPermalink('/festival#themes'),
         },
         {
-          text: 'Partenaires',
-          href: getPermalink('/festival#partenaires'),
-        },
-        {
           text: 'Informations pratiques',
           href: getPermalink('/festival#accessibility'),
+        },
+        {
+          text: 'Partenaires',
+          href: getPermalink('/festival#partenaires'),
         }
       ]
     },

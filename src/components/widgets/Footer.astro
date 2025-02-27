@@ -19,6 +19,7 @@ interface EcoDesignBadge {
   text: string;
   icon: string;
   details: string;
+  href: string;
 }
 
 export interface Props {
@@ -27,9 +28,10 @@ export interface Props {
   legalLinks: Array<Link>;
   footNote: string;
   ecoDesignBadge: EcoDesignBadge;
+  mobileLinks: Array<Links>;
 }
 
-const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge } = Astro.props;
+const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge, mobileLinks } = Astro.props;
 ---
 
 <footer class="relative not-prose bg-gradient-to-b from-white to-[--ootb-turquoise]">
@@ -51,8 +53,33 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge 
           </div>
         </div>
 
+        <!-- Navigation mobile -->
+        <div class="lg:hidden grid grid-cols-1 gap-8 mb-8">
+          {
+            mobileLinks.map(({ title, links }) => (
+              <div class="space-y-4">
+                <h3 class="text-gray-900 font-semibold text-lg tracking-wide text-center">{title}</h3>
+                {links && Array.isArray(links) && links.length > 0 && (
+                  <ul class="space-y-3">
+                    {links.map(({ text, href }) => (
+                      <li class="text-center">
+                        <a
+                          class="text-gray-700 hover:text-[--ootb-turquoise] transition-colors duration-300"
+                          href={href}
+                        >
+                          {text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))
+          }
+        </div>
+
         <!-- Navigation 3 colonnes -->
-        <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="hidden lg:grid lg:grid-cols-12 gap-12 mb-16">
           {
             [links[2], links[1], links[0]].map(({ title, links }) => (
               <div class="space-y-4 text-center lg:text-left">
@@ -62,7 +89,7 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge 
                     {links.map(({ text, href, ariaLabel }) => (
                       <li>
                         <a
-                          class="text-gray-800 hover:text-white transition-colors duration-300"
+                          class="text-gray-700 hover:text-[--ootb-turquoise] transition-colors duration-300"
                           href={href}
                           aria-label={ariaLabel}
                         >
@@ -81,7 +108,7 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge 
       <!-- Badge Écoconception -->
       <div class="flex justify-center mb-4">
         <a 
-          href="https://www.websitecarbon.com/" 
+          href={ecoDesignBadge.href}
           target="_blank" 
           rel="noopener noreferrer" 
           class="group flex items-center gap-2 py-2.5 px-3.5 bg-white/40 backdrop-blur-sm rounded-lg border border-white/30 hover:bg-white/50 transition-all duration-300"
@@ -91,12 +118,12 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge 
             class="w-3.5 h-3.5 text-gray-600/80" 
           />
           <div class="flex flex-col">
-            <div class="text-sm font-medium text-gray-800/90 mb-1">Site écoconçu et optimisé</div>
+            <div class="text-sm font-medium text-gray-800/90 mb-1">{ecoDesignBadge.text}</div>
             <div class="flex items-center gap-1 text-xs text-gray-600/80 pb-2">
-              Plus écologique que 90% des sites web testés
+              {ecoDesignBadge.details}
               <span class="ml-1 text-[10px] text-gray-500/70 group-hover:text-gray-600/80 transition-colors duration-300">
-                • En savoir plus
-                <Icon name="tabler:arrow-right" class="inline w-2.5 h-2.5 -mt-[1px] ml-0.5 group-hover:translate-x-0.5 transition-transform duration-300" />
+                • Voir le rapport
+                <Icon name="tabler:external-link" class="inline w-2.5 h-2.5 -mt-[1px] ml-0.5" />
               </span>
             </div>
           </div>
@@ -155,13 +182,17 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge 
 </footer>
 
 <style>
-/* Animation subtile pour les liens */
-a:not([class*="rounded-full"]) {
+/* Animation subtile uniquement pour les liens du bas */
+.text-gray-600,
+a[href^="https://ecograder.com"],
+.legalLinks a {
   position: relative;
   padding-bottom: 2px;
 }
 
-a:not([class*="rounded-full"])::after {
+.text-gray-600::after,
+a[href^="https://ecograder.com"]::after,
+.legalLinks a::after {
   content: '';
   position: absolute;
   width: 0;
@@ -173,8 +204,15 @@ a:not([class*="rounded-full"])::after {
   transition: width 0.3s ease;
 }
 
-a:not([class*="rounded-full"]):hover::after {
+.text-gray-600:hover::after,
+a[href^="https://ecograder.com"]:hover::after,
+.legalLinks a:hover::after {
   width: 100%;
+}
+
+/* Suppression de l'animation pour les autres liens */
+a:not(.text-gray-600):not([href^="https://ecograder.com"]):not(.legalLinks a)::after {
+  display: none;
 }
 
 /* Amélioration de la lisibilité sur mobile */

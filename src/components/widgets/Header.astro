@@ -18,11 +18,13 @@ interface Link {
 
 interface MenuLink extends Link {
   links?: Array<MenuLink>;
+  title?: string;
 }
 
 export interface Props {
   id?: string;
   links?: Array<MenuLink>;
+  mobileLinks?: Array<{ title: string; links: Array<Link> }>;
   actions?: Array<CallToAction>;
   isSticky?: boolean;
   isDark?: boolean;
@@ -35,6 +37,7 @@ export interface Props {
 const {
   id = 'header',
   links = [],
+  mobileLinks = [],
   actions = [],
   isSticky = false,
   isDark = false,
@@ -50,7 +53,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
 <header
   class:list={[
     { sticky: isSticky, relative: !isSticky, dark: isDark },
-    'top-0 z-40 flex-none mx-auto w-full border-b border-gray-50/0 transition-[opacity] ease-in-out',
+    'top-0 z-40 flex-none mx-auto w-full border-b border-gray-50/0 transition-[opacity] ease-in-out bg-white/90 backdrop-blur-sm',
   ]}
   {...isSticky ? { 'data-aw-sticky-header': true } : {}}
   {...id ? { id } : {}}
@@ -72,16 +75,17 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         <Logo />
       </a>
       <div class="flex items-center md:hidden">
-        <ToggleMenu />
+        <ToggleMenu 
+          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group"
+          client:load
+        />
       </div>
     </div>
     <nav
-      class="items-center w-full md:w-auto hidden md:flex md:mx-5 text-default overflow-y-auto overflow-x-hidden md:overflow-y-visible md:overflow-x-auto md:justify-self-center"
+      class="items-center w-full md:w-auto hidden md:flex md:mx-5 text-default md:overflow-y-visible md:overflow-x-auto md:justify-self-center"
       aria-label="Main navigation"
     >
-      <ul
-        class="flex flex-col md:flex-row md:self-center w-full md:w-auto text-xl md:text-[0.9375rem] tracking-[0.01rem] font-medium md:justify-center"
-      >
+      <ul class="hidden md:flex md:flex-row md:self-center w-full md:w-auto text-xl md:text-[0.9375rem] tracking-[0.01rem] font-medium">
         {
           links.map(({ text, href, links }) => (
             <li class={links?.length ? 'dropdown' : ''}>
@@ -129,7 +133,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
     <div
       class:list={[
         { 'ml-auto rtl:ml-0 rtl:mr-auto': position === 'left' },
-        'hidden md:self-center md:flex items-center md:mb-0 fixed w-full md:w-auto md:static justify-end left-0 rtl:left-auto rtl:right-0 bottom-0 p-3 md:p-0 md:justify-self-end',
+        'hidden md:self-center md:flex items-center md:w-auto md:static justify-end md:justify-self-end',
       ]}
     >
       <div class="items-center flex justify-between w-full md:w-auto">
@@ -140,7 +144,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
           actions?.length ? (
             <span class="ml-4 rtl:ml-0 rtl:mr-4">
               {actions.map((btnProps) => (
-                <Button {...btnProps}>
+                <Button {...btnProps} class="text-ootb-turquoise border-ootb-turquoise hover:bg-ootb-turquoise hover:text-white transition-colors">
                   {btnProps.text}
                 </Button>
               ))}
@@ -153,3 +157,96 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
     </div>
   </div>
 </header>
+
+{/* Menu Mobile */}
+<div class="md:hidden fixed inset-0 z-50 bg-white/90 backdrop-blur-sm hidden" id="mobile-menu">
+  <div class="w-full h-full overflow-y-auto">
+    <div class="w-full text-center p-4">
+      {/* Bouton Close en haut à droite */}
+      <div class="flex justify-end mb-4">
+        <ToggleMenu 
+          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group"
+          client:load
+        />
+      </div>
+
+      {mobileLinks.map((section) => (
+        <div class="mb-8">
+          <h3 class="font-bold text-xl mb-4 px-4 text-ootb-turquoise">
+            {section.title}
+          </h3>
+          <ul>
+            {section.links.map(({ text, href }) => (
+              <li>
+                <a
+                  class:list={[
+                    'block py-3 px-4 hover:text-ootb-turquoise transition-colors',
+                    { 'text-ootb-turquoise': href === currentPath }
+                  ]}
+                  href={href}
+                >
+                  {text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      
+      {/* Action pour mobile */}
+      {actions?.length && (
+        <div class="mt-4 pt-4 border-t border-gray-200">
+          {actions.map((btnProps) => (
+            <Button {...btnProps} class="w-full text-ootb-turquoise border-ootb-turquoise hover:bg-ootb-turquoise hover:text-white transition-colors">
+              {btnProps.text}
+            </Button>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+<script>
+  class MenuToggle {
+    constructor() {
+      this.init();
+    }
+
+    init() {
+      const toggleButtons = document.querySelectorAll('[data-aw-toggle-menu]');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (toggleButtons && mobileMenu) {
+        // Fonction pour mettre à jour l'état des boutons et du menu
+        const toggleMenu = () => {
+          toggleButtons.forEach(btn => {
+            btn.classList.toggle('expanded');
+            // Force le rafraîchissement du composant Astro
+            btn.closest('.group')?.classList.toggle('expanded');
+          });
+          mobileMenu.classList.toggle('hidden');
+        };
+
+        // Gestionnaire d'événements pour les boutons
+        toggleButtons.forEach((button) => {
+          button.addEventListener('click', toggleMenu);
+        });
+
+        // Gestionnaire pour les clics en dehors du menu
+        document.addEventListener('click', (e) => {
+          if (!mobileMenu.classList.contains('hidden') && // Menu est ouvert
+              !e.target.closest('#mobile-menu') && // Clic en dehors du menu
+              !e.target.closest('[data-aw-toggle-menu]')) { // Clic pas sur un bouton toggle
+            toggleMenu();
+          }
+        });
+      }
+    }
+  }
+
+  // Initialize
+  window.addEventListener('load', () => {
+    new MenuToggle();
+  });
+</script>

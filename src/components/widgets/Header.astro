@@ -75,7 +75,11 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         <Logo />
       </a>
       <div class="flex items-center md:hidden">
-        <ToggleMenu client:load />
+        <ToggleMenu 
+          iconName="tabler:menu-2" 
+          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group hover:border-2 hover:border-ootb-turquoise data-[menu-open=true]:border-2 data-[menu-open=true]:border-ootb-turquoise transition-colors"
+          client:load 
+        />
       </div>
     </div>
     <nav
@@ -155,15 +159,19 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
   </div>
 </header>
 
-{/* Menu Mobile - Traité comme un dropdown */}
+{/* Menu Mobile */}
 <div 
-  class="md:hidden dropdown-menu fixed inset-0 z-50 bg-white/90 backdrop-blur-sm hidden"
+  class="md:hidden fixed inset-0 z-50 bg-white/90 backdrop-blur-sm hidden"
   data-aw-toggle-menu-panel
 >
   <div class="w-full h-full overflow-y-auto">
     <div class="w-full text-center p-4">
       <div class="flex justify-end mb-4">
-        <ToggleMenu client:load />
+        <ToggleMenu 
+          iconName="tabler:x" 
+          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group hover:border-2 hover:border-ootb-turquoise data-[menu-open=true]:border-2 data-[menu-open=true]:border-ootb-turquoise transition-colors"
+          client:load 
+        />
       </div>
 
       {mobileLinks.map((section) => (
@@ -188,6 +196,20 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
           </ul>
         </div>
       ))}
+
+      {/* Boutons d'action pour mobile */}
+      {actions?.length && (
+        <div class="mt-8 pt-8 border-t border-gray-200">
+          {actions.map((btnProps) => (
+            <Button 
+              {...btnProps} 
+              class="w-full mb-4 last:mb-0 text-ootb-turquoise border-ootb-turquoise hover:bg-ootb-turquoise hover:text-white transition-colors"
+            >
+              {btnProps.text}
+            </Button>
+          ))}
+        </div>
+      )}
     </div>
   </div>
 </div>
@@ -195,11 +217,15 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
 <script>
   document.addEventListener('click', (e) => {
     const panel = document.querySelector('[data-aw-toggle-menu-panel]');
+    const buttons = document.querySelectorAll('[data-aw-toggle-menu]');
     const button = e.target.closest('[data-aw-toggle-menu]');
     
     if (button) {
+      const isOpen = !panel?.classList.contains('hidden');
+      buttons.forEach(btn => btn.setAttribute('data-menu-open', isOpen));
       panel?.classList.toggle('hidden');
     } else if (!panel?.contains(e.target)) {
+      buttons.forEach(btn => btn.setAttribute('data-menu-open', false));
       panel?.classList.add('hidden');
     }
   });

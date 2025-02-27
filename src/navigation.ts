@@ -11,20 +11,12 @@ export const headerData = {
           href: getPermalink('/festival'),
         },
         {
-          text: 'Thèmes', 
-          href: getPermalink('/festival#themes'),
+          text: 'Billetterie',
+          href: getPermalink('/festival#tickets'),
         },
         {
           text: 'Programme',
           href: getPermalink('/festival#programme'),
-        },
-        {
-          text: 'Galerie photos',
-          href: getPermalink('/festival#gallery'),
-        },
-        {
-          text: 'Billetterie',
-          href: getPermalink('/festival/tickets'),
         }
       ]
     },

@@ -115,6 +115,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
                     label={label}
                     variant={variant}
                     client:load
+                    openOnLoad={Astro.url.hash === '#tickets'}
                   />
                 );
               }
@@ -224,6 +225,26 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
     </div>
   </div>
 </GradientHeroSection>
+
+<script>
+  // Fonction pour déclencher l'ouverture du modal via un événement personnalisé
+  function triggerModalOpen() {
+    window.dispatchEvent(new CustomEvent('openTicketingModal'));
+  }
+
+  // Vérifier le hash au chargement initial
+  if (window.location.hash === '#tickets') {
+    // Attendre que le composant React soit hydraté
+    setTimeout(triggerModalOpen, 0);
+  }
+
+  // Écouter les changements de hash
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#tickets') {
+      triggerModalOpen();
+    }
+  });
+</script>
 
 <style>
   .festival-card {

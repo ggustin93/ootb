@@ -505,4 +505,24 @@ const themes = [
       }
     });
   }) as EventListener);
+
+  function openTicketingModal() {
+    const ticketButton = document.querySelector('[data-ticketing-button]');
+    if (ticketButton instanceof HTMLElement) {
+      ticketButton.click();
+    }
+  }
+
+  // Vérifier le hash au chargement initial
+  if (window.location.hash === '#tickets') {
+    // Attendre que le composant soit hydraté
+    setTimeout(openTicketingModal, 0);
+  }
+
+  // Écouter les changements de hash pour les navigations ultérieures
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#tickets') {
+      openTicketingModal();
+    }
+  });
 </script> 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import TicketingModal from './TicketingModal';
 
@@ -7,10 +7,11 @@ interface TicketingButtonProps {
   label: string;
   variant: 'primary' | 'secondary';
   className?: string;
+  openOnLoad?: boolean;
 }
 
-export default function TicketingButton({ icon, label, variant, className = '' }: TicketingButtonProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export default function TicketingButton({ icon, label, variant, className = '', openOnLoad = false }: TicketingButtonProps) {
+  const [isModalOpen, setIsModalOpen] = useState(openOnLoad);
 
   const variants = {
     primary: 'bg-white border-2 border-[--ootb-orange] text-[--ootb-orange] hover:bg-[--ootb-orange] hover:text-white shadow-lg hover:shadow-xl',
@@ -35,12 +36,38 @@ export default function TicketingButton({ icon, label, variant, className = '' }
 
   const iconClass = 'w-6 h-6 transition-transform duration-300 group-hover:-translate-x-0.5';
 
+  const handleClick = () => {
+    setIsModalOpen(true);
+  };
+
+  useEffect(() => {
+    if (window.location.hash === '#tickets') {
+      setIsModalOpen(true);
+    }
+
+    const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
+
+    window.addEventListener('openTicketingModal', handleOpenModal);
+    document.addEventListener('astro:after-swap', () => {
+      if (window.location.hash === '#tickets') {
+        setIsModalOpen(true);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('openTicketingModal', handleOpenModal);
+      document.removeEventListener('astro:after-swap', handleOpenModal);
+    };
+  }, []);
+
   return (
     <>
       <button
         type="button"
         className={baseClass}
-        onClick={() => setIsModalOpen(true)}
+        onClick={handleClick}
       >
         <Icon icon={`tabler:${icon}`} className={iconClass} />
         <span className="font-medium">{label}</span>

@@ -149,23 +149,14 @@ export const headerData = {
 export const footerData = {
   mobileLinks: [
     {
-      title: 'Navigation',
       links: [
+        { text: 'Accueil', href: '/' },
         { text: 'Festival', href: getPermalink('/festival') },
-        { text: 'Nos contenus', href: getBlogPermalink() },
+        { text: 'Podcasts', href: getPermalink('/category/podcast') },
+        { text: 'Pédagoscope', href: getPermalink('/category/tv') },
         { text: 'Appel à projet', href: getPermalink('/appel-a-projets') },
         { text: 'À propos', href: getPermalink('/a-propos') },
         { text: 'Contact', href: getPermalink('/contact') },
-      ],
-    },
-    {
-      title: 'Liens utiles',
-      links: [
-        { text: 'Billetterie', href: getPermalink('/festival#tickets') },
-        { text: 'Programme 2024', href: getPermalink('/festival#programme') },
-        { text: 'Notre équipe', href: getPermalink('/a-propos#equipe') },
-        { text: 'Mentions légales', href: getPermalink('/terms') },
-        { text: 'Politique de confidentialité', href: getPermalink('/privacy') },
       ],
     },
   ],

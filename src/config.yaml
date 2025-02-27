@@ -9,22 +9,22 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: AstroWind
-    template: '%s — AstroWind'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+    default: 'Out of the Books'
+    template: '%s | Out of the Books'
+  description: "Out of the Books ASBL : l'éducation et le bien-être de l'enfant au cœur des priorités. Une plateforme collaborative pour transformer l'éducation en Belgique francophone."
   robots:
     index: false
     follow: false
   openGraph:
-    site_name: AstroWind
+    site_name: 'Out of the Books'
     images:
-      - url: '~/assets/images/default.png'
+      - url: '~/assets/images/ootb_team.webp'
         width: 1200
         height: 628
     type: website
   twitter:
-    handle: '@onwidget'
-    site: '@onwidget'
+    handle: '@OutoftheBooks'
+    site: '@OutoftheBooks'
     cardType: summary_large_image
 
 i18n:

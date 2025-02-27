@@ -1,7 +1,7 @@
 {
-    "name": "@onwidget/astrowind",
-    "version": "1.0.0-beta.49",
-    "description": "AstroWind: A free template using Astro 5.0 and Tailwind CSS. Astro starter theme.",
+    "name": "@outofthebooks/website",
+    "version": "1.0.0",
+    "description": "Site web de l'ASBL Out of the Books : plateforme collaborative dédiée à l'innovation pédagogique en Belgique francophone.",
     "type": "module",
     "private": true,
     "engines": {

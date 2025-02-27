@@ -81,7 +81,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
   <div class="relative z-10 container mx-auto px-4 pt-12 md:pt-16">
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="text-center md:text-left px-4md:px-0">
+        <div class="text-center md:text-left px-4 md:px-0">
           <h1 class="text-left mb-12 pr-12">
             <Image
               src={logo}
@@ -105,7 +105,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
             <p class="text-xl md:text-2xl font-light leading-relaxed opacity-95">{description}</p>
           </blockquote>
 
-          <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+          <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start">
             {buttons.map(({ href, icon, label, variant }) => {
               const isTicketButton = href === '#tickets';
               if (isTicketButton) {
@@ -116,11 +116,12 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
                     variant={variant}
                     client:load
                     openOnLoad={Astro.url.hash === '#tickets'}
+                    class="w-full sm:w-auto"
                   />
                 );
               }
               return (
-                <a href={href} class={getButtonClass(variant)}>
+                <a href={href} class={`${getButtonClass(variant)} w-full sm:w-auto justify-center`}>
                   <Icon name={icon} class="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-0.5" />
                   <span class="font-medium">{label}</span>
                 </a>
@@ -129,7 +130,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
           </div>
         </div>
 
-        <div class="relative hidden md:block ml-6">
+        <div class="relative md:ml-6 mt-8 md:mt-0 block">
           <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
             <Image
               src={heroImage}
@@ -176,54 +177,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
     </div>
   ))}
 
-  <!-- Cartes d'activités -->
-  <div class="absolute bottom-0 left-0 right-0 translate-y-1/2 w-full z-20">
-    <div class="container mx-auto px-4">
-      <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        <!-- Conférences -->
-        <div class="festival-card group backdrop-blur-md">
-          <div class="relative p-6">
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
-            <div class="relative z-10">
-              <div class="w-12 h-12 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
-                <Icon name="tabler:presentation" class="w-6 h-6 text-white" />
-              </div>
-              <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Conférences</h3>
-              <p class="text-gray-600 text-sm leading-relaxed">40+ conférences inspirantes sur l'innovation pédagogique</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ateliers -->
-        <div class="festival-card group backdrop-blur-md">
-          <div class="relative p-8">
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
-            <div class="relative z-10">
-              <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
-                <Icon name="tabler:tool" class="w-8 h-8 text-white" />
-              </div>
-              <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Ateliers</h3>
-              <p class="text-gray-600 leading-relaxed">20+ ateliers pratiques pour expérimenter et apprendre</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stands -->
-        <div class="festival-card group backdrop-blur-md">
-          <div class="relative p-8">
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#6ab29e]/10 to-transparent rounded-bl-[40px] transition-all duration-300 group-hover:scale-110"></div>
-            <div class="relative z-10">
-              <div class="w-14 h-14 bg-gradient-to-br from-[#6ab29e] to-[#7ec3af] rounded-2xl flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-300 shadow-lg">
-                <Icon name="tabler:building-store" class="w-8 h-8 text-white" />
-              </div>
-              <h3 class="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#6ab29e] transition-colors">Stands</h3>
-              <p class="text-gray-600 leading-relaxed">30+ exposants et démos de solutions pédagogiques</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Suppression des cartes d'activités qui sont maintenant gérées par le composant ActivityCards -->
 </GradientHeroSection>
 
 <script>

@@ -80,14 +80,13 @@ const themes = [
     />
   </FestivalHeroSection>
 
-  <!-- Cartes d'activités avec plus de chevauchement -->
-  <ActivityCards 
-    id="features" 
-    class="-mt-40 relative z-20" 
-  />
+  <!-- Cartes d'activités adaptées pour mobile - Utilisation unique -->
+  <div id="features" class="relative z-20 mt-8 sm:mt-0 sm:-mt-40">
+    <ActivityCards />
+  </div>
 
   <!-- Section Introduction -->
-  <section id="about" class="pt-20 pb-16 bg-white relative">
+  <section id="about" class="pt-8 sm:pt-20 pb-16 bg-white relative">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-16">
         <SectionDivider variant="orange" class="mb-6">

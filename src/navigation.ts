@@ -41,15 +41,11 @@ export const headerData = {
           href: getBlogPermalink(),
         },
         {
-          text: 'Premium',
-          href: getPermalink('/category/premium'),
-        },
-        {
           text: 'Podcasts',
           href: getPermalink('/category/podcast'),
         },
         {
-          text: 'Pédagoscope',
+          text: 'Emissions TV',
           href: getPermalink('/category/tv'),
         },
         {
@@ -59,6 +55,10 @@ export const headerData = {
         {
           text: 'Fiches pédagogiques',
           href: getPermalink('/category/fiche'),
+        },
+        {
+          text: 'Contenu premium',
+          href: getPermalink('/category/premium#category-content'),
         },
       ],
     },
@@ -71,12 +71,12 @@ export const headerData = {
           href: getPermalink('/appel-a-projets'),
         },
         {
-          text: 'Processus',
-          href: getPermalink('/appel-a-projets#processus'),
-        },
-        {
           text: 'Critères',
           href: getPermalink('/appel-a-projets#criteres'),
+        },
+        {
+          text: 'Processus',
+          href: getPermalink('/appel-a-projets#processus'),
         },
         {
           text: 'Soumettre un projet',
@@ -93,8 +93,20 @@ export const headerData = {
           href: getPermalink('/a-propos'),
         },
         {
+          text: 'Qui sommes-nous',
+          href: getPermalink('/a-propos#qui-sommes-nous'),
+        },
+        {
           text: 'Notre Vision',
           href: getPermalink('/a-propos#vision'),
+        },
+        {
+          text: 'Nos Missions',
+          href: getPermalink('/a-propos#missions'),
+        },
+        {
+          text: 'Nos Valeurs',
+          href: getPermalink('/a-propos#valeurs'),
         },
         {
           text: 'Notre Équipe',
@@ -103,10 +115,6 @@ export const headerData = {
         {
           text: 'Nos Partenaires',
           href: getPermalink('/a-propos#partenaires'),
-        },
-        {
-          text: 'Contact',
-          href: getPermalink('/contact'),
         },
       ],
     },
@@ -123,52 +131,48 @@ export const headerData = {
 export const footerData = {
   links: [
     {
-      title: 'À propos',
+      title: 'Le festival',
       links: [
-        { text: 'Qui sommes-nous', href: getPermalink('/a-propos#qui-sommes-nous') },
-        { text: 'Notre Vision', href: getPermalink('/a-propos#vision') },
-        { text: 'Nos Valeurs', href: getPermalink('/a-propos#valeurs') },
-        { text: 'Nos Missions', href: getPermalink('/a-propos#missions') },
-        { text: 'Notre Équipe', href: getPermalink('/a-propos#equipe') },
-        { text: 'Contact', href: getPermalink('/contact') },
+        { text: 'Vue d\'ensemble', href: getPermalink('/festival') },
+        { text: 'Programme 2024', href: getPermalink('/festival#programme') },
+        { text: 'Billetterie', href: getPermalink('/festival#tickets') },
+        { text: 'Infos pratiques', href: getPermalink('/festival#accessibility') },
       ],
     },
     {
       title: 'Nos contenus',
       links: [
         { text: 'Tous les contenus', href: getBlogPermalink() },
-        { text: 'Premium', href: getPermalink('/category/premium') },
         { text: 'Podcasts', href: getPermalink('/category/podcast') },
         { text: 'Pédagoscope', href: getPermalink('/category/tv') },
-        { text: 'Live Facebook', href: getPermalink('/category/live') },
         { text: 'Fiches pédagogiques', href: getPermalink('/category/fiche') },
       ],
     },
     {
-      title: 'Le festival',
+      title: 'À propos',
       links: [
-        { text: 'Programme 2024', href: getPermalink('/festival#programme') },
-        { text: 'Appel à projets', href: getPermalink('/appel-a-projets') },
-        { text: 'Infos pratiques', href: getPermalink('/festival#infos-pratiques') },
-        { text: 'Éditions précédentes', href: getPermalink('/festival/archives') },
+        { text: 'Qui sommes-nous', href: getPermalink('/a-propos') },
+        { text: 'Notre équipe', href: getPermalink('/a-propos#equipe') },
+        { text: 'Nos partenaires', href: getPermalink('/a-propos#partenaires') },
+        { text: 'Contact', href: getPermalink('/contact') },
       ],
     },
-    {
-      title: 'Légal',
-      links: [
-        { text: 'Mentions légales', href: getPermalink('/mentions-legales') },
-        { text: 'Politique de confidentialité', href: getPermalink('/privacy') },
-        { text: 'CGU', href: getPermalink('/cgu') },
-      ],
-    },
+  ],
+  legalLinks: [
+    { text: 'Mentions légales', href: getPermalink('/terms') },
+    { text: 'Politique de confidentialité', href: getPermalink('/privacy') },
   ],
   socialLinks: [
     { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
     { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: '#' },
-  //  { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
   footNote: `
-    Out of the Books ASBL · Tous droits réservés ${new Date().getFullYear()}
+    Out of the Books ASBL © ${new Date().getFullYear()}
   `,
+  ecoDesignBadge: {
+    text: 'Site écoconçu et optimisé',
+    icon: 'tabler:leaf',
+    details: 'Notre site web est conçu pour être performant, accessible et respectueux de l\'environnement'
+  }
 };

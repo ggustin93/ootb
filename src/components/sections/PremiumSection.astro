@@ -101,14 +101,20 @@ const {
         {podcastHighlights.map(podcast => (
           <div class="group relative bg-white/15 backdrop-blur-sm rounded-xl p-4 hover:bg-white/25 transition-all border border-white/20">
             <div class="flex gap-4">
-              <div class="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                <img 
+              <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                <Image 
                   src={podcast.image}
                   alt=""
                   class="w-full h-full object-cover"
+                  width={120}  // Augmenté de 100 à 120
+                  height={120} // Augmenté de 100 à 120
+                  widths={[120, 240]} // Augmenté de 100 à 120 et de 200 à 240
+                  sizes="120px" // Augmenté de 100px à 120px
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <Icon name="tabler:player-play" class="w-8 h-8 text-[#]" />
+                  <Icon name="tabler:player-play" class="w-8 h-8 text-white" />
                 </div>
               </div>
               <div>

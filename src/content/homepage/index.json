@@ -76,7 +76,7 @@
     "description": "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative."
   },
   "premium": {
-    "heroImage": "/images/ootb-logo.svg",
+    "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1740649896/ootb-logo_yfscco.svg",
     "title": {},
     "intro": "Accédez à nos contenus experts et analyses approfondies pour transformer votre approche pédagogique!",
     "features": [

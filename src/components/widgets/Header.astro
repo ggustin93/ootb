@@ -2,7 +2,6 @@
 import { Icon } from 'astro-icon/components';
 import Logo from '~/components/common/LogoWithIcon.astro';
 import ToggleTheme from '~/components/common/ToggleTheme.astro';
-import ToggleMenu from '~/components/common/ToggleMenu.astro';
 import Button from '~/components/ui/Button.astro';
 
 import { getHomePermalink } from '~/utils/permalinks';
@@ -75,11 +74,14 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         <Logo />
       </a>
       <div class="flex items-center md:hidden">
-        <ToggleMenu 
-          iconName="tabler:menu-2" 
-          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group hover:border-2 hover:border-ootb-turquoise data-[menu-open=true]:border-2 data-[menu-open=true]:border-ootb-turquoise transition-colors"
-          client:load 
-        />
+        <button 
+          type="button" 
+          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group hover:border-2 hover:border-ootb-turquoise data-[menu-open=true]:border-2 data-[menu-open=true]:border-ootb-turquoise transition-colors" 
+          aria-label="Toggle Menu" 
+          data-aw-toggle-menu
+        >
+          <Icon name="tabler:menu-2" class="w-6 h-6" />
+        </button>
       </div>
     </div>
     <nav
@@ -167,11 +169,14 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
   <div class="w-full h-full overflow-y-auto">
     <div class="w-full text-center p-4">
       <div class="flex justify-end mb-4">
-        <ToggleMenu 
-          iconName="tabler:x" 
-          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group hover:border-2 hover:border-ootb-turquoise data-[menu-open=true]:border-2 data-[menu-open=true]:border-ootb-turquoise transition-colors"
-          client:load 
-        />
+        <button 
+          type="button" 
+          class="flex flex-col h-12 w-12 rounded justify-center items-center cursor-pointer group hover:border-2 hover:border-ootb-turquoise data-[menu-open=true]:border-2 data-[menu-open=true]:border-ootb-turquoise transition-colors" 
+          aria-label="Close Menu" 
+          data-aw-toggle-menu
+        >
+          <Icon name="tabler:x" class="w-6 h-6" />
+        </button>
       </div>
 
       {mobileLinks.map((section) => (
@@ -217,15 +222,11 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
 <script>
   document.addEventListener('click', (e) => {
     const panel = document.querySelector('[data-aw-toggle-menu-panel]');
-    const buttons = document.querySelectorAll('[data-aw-toggle-menu]');
     const button = e.target.closest('[data-aw-toggle-menu]');
     
     if (button) {
-      const isOpen = !panel?.classList.contains('hidden');
-      buttons.forEach(btn => btn.setAttribute('data-menu-open', isOpen));
       panel?.classList.toggle('hidden');
     } else if (!panel?.contains(e.target)) {
-      buttons.forEach(btn => btn.setAttribute('data-menu-open', false));
       panel?.classList.add('hidden');
     }
   });

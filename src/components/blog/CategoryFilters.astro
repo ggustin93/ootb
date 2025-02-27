@@ -1,0 +1,89 @@
+---
+import { Icon } from 'astro-icon/components';
+import { CONTENT_TYPES } from '~/config/content-types';
+
+interface Props {
+  currentCategory?: string;
+}
+
+const { currentCategory } = Astro.props;
+---
+
+<div class="flex flex-col w-full sm:w-auto">
+  {/* Version Desktop */}
+  <div class="hidden sm:flex gap-1 bg-gray-100/80 p-1 rounded-lg">
+    <a
+      href="/blog#blog-content"
+      class={[
+        'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+        (!currentCategory || currentCategory === 'blog') 
+          ? 'bg-white text-gray-900 shadow-sm' 
+          : 'text-gray-600 hover:text-gray-900'
+      ].join(' ')}
+    >
+      <Icon name="tabler:layout-grid" class="w-4 h-4" />
+      <span class="text-sm">Tous</span>
+    </a>
+
+    {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
+      <a
+        href={`/category/${key}#category-content`}
+        class={[
+          'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+          key.toLowerCase() === currentCategory?.toLowerCase() 
+            ? [
+                'bg-white shadow-sm',
+                `text-[${config.color}]`
+              ].join(' ')
+            : 'text-gray-600 hover:text-gray-900'
+        ].join(' ')}
+      >
+        <Icon name={config.icon} class="w-4 h-4" />
+        <span class="text-sm">{config.shortLabel}</span>
+      </a>
+    ))}
+  </div>
+
+  {/* Version Mobile - Menu déroulant */}
+  <div class="sm:hidden relative">
+    <select
+      id="category-select"
+      class="w-full appearance-none bg-gray-100/80 rounded-lg px-4 py-2.5 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+    >
+      <option value="blog" selected={!currentCategory || currentCategory === 'blog'}>
+        Tous les contenus
+      </option>
+      {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
+        <option 
+          value={key} 
+          selected={key.toLowerCase() === currentCategory?.toLowerCase()}
+        >
+          {config.label}
+        </option>
+      ))}
+    </select>
+    <Icon 
+      name="tabler:chevron-down" 
+      class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" 
+    />
+  </div>
+</div>
+
+<script>
+  function initializeMobileFilter() {
+    const select = document.getElementById('category-select') as HTMLSelectElement;
+    
+    if (select) {
+      select.addEventListener('change', (e) => {
+        const value = (e.target as HTMLSelectElement).value;
+        const url = value === 'blog' ? '/blog#blog-content' : `/category/${value}#category-content`;
+        window.location.href = url;
+      });
+    }
+  }
+
+  // Exécuter l'initialisation au chargement de la page
+  document.addEventListener('DOMContentLoaded', initializeMobileFilter);
+  // Réinitialiser en cas de navigation par View Transitions
+  document.addEventListener('astro:page-load', initializeMobileFilter);
+</script> 

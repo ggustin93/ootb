@@ -12,16 +12,18 @@ const { class: className, ...props } = Astro.props;
   class:list={[
     // ====== RESPONSIVE DESIGN ======
     // Mobile (<768px) :
-    // - Hauteur réduite à 80vh pour un meilleur affichage
+    // - Hauteur adaptative avec min-h-0
     // - Fond turquoise uni sans dégradé
     // - Nuages masqués (voir plus bas)
-    "relative min-h-screen flex items-start justify-center overflow-hidden",
+    // - Padding bottom pour l'espacement
+    "relative min-h-0 flex items-start justify-center overflow-hidden pb-16",
     "bg-[--ootb-turquoise]",
 
     // Desktop (≥768px) :
     // - Hauteur plein écran
     // - Dégradé subtil avec transitions
     // - Nuages visibles
+    "md:min-h-screen md:pb-0",
     "md:bg-gradient-to-b md:from-[--ootb-turquoise] md:from-0%",
     "md:via-[--ootb-turquoise] md:via-60%",
     "md:via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] md:via-70%",

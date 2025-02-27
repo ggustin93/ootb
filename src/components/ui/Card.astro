@@ -123,6 +123,8 @@ const thumbnailImageOptions = {
   format: 'webp', 
   loading: 'lazy',
   decoding: 'async',
+  maxWidth: 800, // Ajout d'une largeur maximale
+  maxHeight: 450, // Ajout d'une hauteur maximale correspondante en 16:9
 };
 
 ---
@@ -142,7 +144,7 @@ const thumbnailImageOptions = {
       <Image 
         src={image}
         alt={title}
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover max-w-[800px] max-h-[450px]"
         {...thumbnailImageOptions}
       />
     )}

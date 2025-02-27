@@ -15,14 +15,13 @@ const { class: className, ...props } = Astro.props;
     // - Hauteur réduite à 80vh pour un meilleur affichage
     // - Fond turquoise uni sans dégradé
     // - Nuages masqués (voir plus bas)
-    "relative h-[80vh] flex items-start justify-center overflow-hidden",
+    "relative min-h-screen flex items-start justify-center overflow-hidden",
     "bg-[--ootb-turquoise]",
 
     // Desktop (≥768px) :
     // - Hauteur plein écran
     // - Dégradé subtil avec transitions
     // - Nuages visibles
-    "md:h-screen",
     "md:bg-gradient-to-b md:from-[--ootb-turquoise] md:from-0%",
     "md:via-[--ootb-turquoise] md:via-60%",
     "md:via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] md:via-70%",

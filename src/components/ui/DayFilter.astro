@@ -21,9 +21,23 @@ const allEvents = Object.values(events).flat();
   <div class="space-y-6">
     <!-- Filtre par jour -->
     <div class="relative">
-      <div class="flex justify-between items-start mb-4">
-        <div class="flex-1">
-          <div class="flex overflow-x-auto gap-3 p-1" id="days-container">
+      <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-4">
+        <div class="flex-1 w-full">
+          <!-- Version mobile: menu déroulant -->
+          <div class="sm:hidden w-full">
+            <select 
+              id="mobile-day-selector" 
+              class="w-full py-3 px-4 rounded-xl font-medium border border-[#e4451e]/20 bg-white text-[#e4451e] focus:outline-none focus:ring-2 focus:ring-[#e4451e]/30"
+            >
+              <option value="all">Tous les jours</option>
+              {dates.map((date, index) => (
+                <option value={String(index + 1)}>Jour {index + 1} - {date}</option>
+              ))}
+            </select>
+          </div>
+          
+          <!-- Version desktop: boutons -->
+          <div class="hidden sm:flex overflow-x-auto gap-3 p-1" id="days-container">
             <!-- Option "Tous les jours" -->
             <button
               class:list={[
@@ -55,13 +69,14 @@ const allEvents = Object.values(events).flat();
           </div>
         </div>
         
-        <div class="ml-4">
+        <div class="w-full sm:w-auto sm:ml-4">
           <Button
             href="/programme.pdf"
             variant="outline"
             size="sm"
             icon="tabler:file-download"
             iconPosition="left"
+            class="w-full sm:w-auto justify-center"
           >
             Programme PDF
           </Button>
@@ -75,7 +90,7 @@ const allEvents = Object.values(events).flat();
       <button
         class:list={[
           "type-filter-button group px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
-          "flex items-center gap-2",
+          "flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start mb-2 sm:mb-0",
           "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
           "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
         ]}
@@ -94,7 +109,7 @@ const allEvents = Object.values(events).flat();
         <button
           class:list={[
             "type-filter-button px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
-            "flex items-center gap-2",
+            "flex items-center gap-2 flex-1 sm:flex-none justify-center sm:justify-start",
             "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
             "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
           ]}
@@ -178,13 +193,13 @@ const allEvents = Object.values(events).flat();
 
   <!-- Pagination -->
   <div class="flex justify-between items-center pt-6 border-t border-gray-100">
-    <button class="pagination-button" id="prev-page" disabled>
+    <button class="pagination-button flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white" id="prev-page" disabled>
       <Icon name="tabler:chevron-left" class="w-5 h-5" />
-      <span>Précédent</span>
+      <span class="hidden sm:inline">Précédent</span>
     </button>
-    <span class="pagination-info">Page <span id="current-page">1</span> sur <span id="total-pages">1</span></span>
-    <button class="pagination-button" id="next-page">
-      <span>Suivant</span>
+    <span class="pagination-info text-sm text-gray-600">Page <span id="current-page">1</span> sur <span id="total-pages">1</span></span>
+    <button class="pagination-button flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white" id="next-page">
+      <span class="hidden sm:inline">Suivant</span>
       <Icon name="tabler:chevron-right" class="w-5 h-5" />
     </button>
   </div>
@@ -315,6 +330,18 @@ const allEvents = Object.values(events).flat();
     });
   });
 
+  // Gestionnaire d'événement pour le sélecteur mobile
+  document.getElementById('mobile-day-selector')?.addEventListener('change', (e) => {
+    const target = e.target as HTMLSelectElement;
+    const selectedDay = target.value;
+    
+    // Simuler un clic sur le bouton correspondant
+    const dayButton = document.querySelector(`.day-filter-button[data-day="${selectedDay}"]`);
+    if (dayButton) {
+      (dayButton as HTMLElement).click();
+    }
+  });
+
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
     // Activer le premier jour et "Tous les événements" par défaut
@@ -328,6 +355,12 @@ const allEvents = Object.values(events).flat();
 
     if (allEventsButton) {
       allEventsButton.setAttribute('data-state', 'active');
+    }
+    
+    // Initialiser le sélecteur mobile avec la valeur par défaut
+    const mobileSelector = document.getElementById('mobile-day-selector') as HTMLSelectElement;
+    if (mobileSelector) {
+      mobileSelector.value = 'all';
     }
     
     updatePagination();

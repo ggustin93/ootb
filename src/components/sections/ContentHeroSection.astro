@@ -33,6 +33,7 @@ interface FloatingIcon {
 
 interface Props {
   logo: ImageMetadata;
+  logoClass?: string;
   heroImage: ImageMetadata;
   quote: string;
   quoteColor?: string;
@@ -50,6 +51,7 @@ interface Props {
 
 const { 
   logo, 
+  logoClass = "w-[280px] md:w-[400px] h-auto mx-auto md:mx-0",
   heroImage, 
   quote,
   quoteColor = '--ootb-yellow',
@@ -73,35 +75,35 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
   <div class="relative z-10 container mx-auto px-4 pt-12 md:pt-20">
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="text-center md:text-left px-4 md:px-0">
-          <h1 class="text-left">
+        <div class="text-center md:text-left px-4 md:px-0 space-y-6 md:space-y-8">
+          <h1 class="text-left pb-8">
             <Image
               src={logo}
               alt="Out of the Books"
-              class="w-[280px] md:w-[400px] h-auto mx-auto md:mx-0"
-              widths={[280, 400]}
-              sizes="(max-width: 768px) 280px, 400px"
+              class={`${logoClass} max-w-full`}
+              widths={[200, 300]}
+              sizes="(max-width: 768px) 200px, 300px"
               loading="eager"
               decoding="async"
             />
           </h1>
-          <blockquote class="text-xl md:text-2xl text-white/90 font-light mt-8 md:mt-12 mb-12 md:mb-16 border-l-4 pl-6 md:pl-8 leading-relaxed max-w-3xl" style={`border-color: var(${quoteColor})`}>
+          <blockquote class="text-lg md:text-xl lg:text-2xl text-white/90 font-light border-l-4 pl-4 md:pl-6 leading-relaxed max-w-3xl mt-10 md:mt-12" style={`border-color: var(${quoteColor})`}>
             {quote}
           </blockquote>
 
           {stats.length > 0 && (
-            <div class="flex flex-wrap gap-4 justify-center md:justify-start mb-8">
+            <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
               {stats.map(({ icon, value }) => (
                 <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
                   <Icon name={icon} class="w-5 h-5 text-white" />
-                  <span class="text-white">{value}</span>
+                  <span class="text-white text-sm md:text-base">{value}</span>
                 </div>
               ))}
             </div>
           )}
 
           {buttons.length > 0 && (
-            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+            <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
               {buttons.map(({ href, icon, label, variant = 'primary', size = 'lg' }) => (
                 <Button {href} {variant} {size} {icon}>
                   {label}
@@ -112,14 +114,14 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
         </div>
 
         <!-- Image/Logo -->
-        <div class="relative hidden md:block">
-          <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+        <div class="relative mt-8 md:mt-0 md:block">
+          <div class="relative z-10">
             <Image
               src={heroImage}
               alt="Hero image"
-              class="rounded-2xl shadow-xl"
+              class="rounded-2xl shadow-xl w-full"
               widths={[400, 800]}
-              sizes="(max-width: 768px) 400px, 800px"
+              sizes="(max-width: 768px) 100vw, 800px"
               aspectRatio="4:3"
               loading="eager"
               decoding="async"

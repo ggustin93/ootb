@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
-import logo_blanc from '~/assets/images/logo_ootb_white.svg';
+import logo_blanc from  '~/assets/images/logo_ootb_garcon_blanc.svg'//'~/assets/images/logo_ootb_white.svg';
 import mascotte from '~/assets/images/ootb-logo.svg';
 import logo from '~/assets/images/ootb-logo.svg';
 import teamImage from '~/assets/images/ootb_team.webp';
@@ -119,8 +119,10 @@ const partenaires = [
 <Layout {metadata}>
   <ContentHeroSection
     logo={logo_blanc}
+    logoClass="w-[200px] md:w-[300px] h-auto mx-auto md:mx-0 md:transform md:scale-150 md:origin-left"
     heroImage={teamImage}
     quote="Out of the Books rassemble des enseignants, experts et passionnés d'éducation pour transformer l'éducation en Belgique francophone. Notre mission : créer des ponts entre tous les acteurs de l'éducation et favoriser l'innovation pédagogique."
+    quoteColor="--ootb-yellow"
     scroll={{
       targetId: "qui-sommes-nous",
       label: "En savoir plus",

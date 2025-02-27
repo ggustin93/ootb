@@ -106,22 +106,22 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge,
       </div>
 
       <!-- Badge Écoconception -->
-      <div class="flex justify-center mb-4">
+      <div class="flex justify-center mb-8">
         <a 
           href={ecoDesignBadge.href}
           target="_blank" 
           rel="noopener noreferrer" 
-          class="group flex items-center gap-2 py-2.5 px-3.5 bg-white/40 backdrop-blur-sm rounded-lg border border-white/30 hover:bg-white/50 transition-all duration-300"
+          class="group flex flex-col sm:flex-row items-center gap-2 py-3 px-4 bg-white/40 backdrop-blur-sm rounded-lg border border-white/30 hover:bg-white/50 transition-all duration-300 w-full max-w-md mx-auto"
         >
           <Icon 
             name={ecoDesignBadge.icon} 
-            class="w-3.5 h-3.5 text-gray-600/80" 
+            class="w-4 h-4 text-gray-600/80 mb-1 sm:mb-0" 
           />
-          <div class="flex flex-col">
+          <div class="flex flex-col text-center sm:text-left">
             <div class="text-sm font-medium text-gray-800/90 mb-1">{ecoDesignBadge.text}</div>
-            <div class="flex items-center gap-1 text-xs text-gray-600/80 pb-2">
+            <div class="flex flex-col sm:flex-row items-center gap-1 text-xs text-gray-600/80">
               {ecoDesignBadge.details}
-              <span class="ml-1 text-[10px] text-gray-500/70 group-hover:text-gray-600/80 transition-colors duration-300">
+              <span class="mt-1 sm:mt-0 sm:ml-1 text-[10px] text-gray-500/70 group-hover:text-gray-600/80 transition-colors duration-300">
                 • Voir le rapport
                 <Icon name="tabler:external-link" class="inline w-2.5 h-2.5 -mt-[1px] ml-0.5" />
               </span>
@@ -136,7 +136,7 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge,
       <!-- Footer bottom -->
       <div class="flex flex-col items-center md:flex-row md:justify-between gap-6">
         <!-- Liens légaux -->
-        <div class="flex gap-6 text-sm text-gray-800 md:w-1/3 md:justify-start">
+        <div class="flex gap-4 text-sm text-gray-800 md:w-1/3 md:justify-start">
           {
             legalLinks.map(({ text, href }) => (
               <a href={href} class="hover:text-white transition-colors duration-300">
@@ -147,7 +147,7 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge,
         </div>
 
         <!-- Réseaux sociaux -->
-        <div class="flex gap-5 md:w-1/3 justify-center">
+        <div class="flex gap-5 md:w-1/3 justify-center my-4 md:my-0">
           {
             socialLinks.map(({ ariaLabel, href, icon }) => (
               <a
@@ -164,17 +164,19 @@ const { socialLinks = [], links = [], legalLinks = [], footNote, ecoDesignBadge,
         </div>
 
         <!-- Copyright et crédit développeur -->
-        <div class="text-sm text-gray-800 md:w-1/3 md:text-right">
+        <div class="text-sm text-gray-800 md:w-1/3 md:text-right text-center">
           <span set:html={footNote} />
-          <span class="mx-1.5 text-gray-400">•</span>
-          <a 
-            href="https://pwablo.be" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="text-gray-600 hover:text-white transition-colors duration-300"
-          >
-            Design & code par Pwablo
-          </a>
+          <span class="hidden md:inline mx-1.5 text-gray-400">•</span>
+          <div class="md:inline-block mt-2 md:mt-0">
+            <a 
+              href="https://pwablo.be" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-gray-600 hover:text-white transition-colors duration-300"
+            >
+              Design & code par Pwablo
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -223,6 +225,12 @@ a:not(.text-gray-600):not([href^="https://ecograder.com"]):not(.legalLinks a)::a
   
   .bg-white\/95 {
     --tw-bg-opacity: 0.98;
+  }
+  
+  /* Espacement amélioré pour les liens légaux sur mobile */
+  .flex.gap-4 {
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }
 </style>

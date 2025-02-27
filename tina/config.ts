@@ -1,6 +1,7 @@
 import { defineConfig } from "tinacms";
 import { postsCollection } from "./postsCollection";
 import { homepageCollection } from "./homepageCollection";
+import { termsCollection, privacyCollection } from "./legalCollection";
 
 export default defineConfig({
   branch: "main",
@@ -49,6 +50,8 @@ export default defineConfig({
           publishDate: new Date().toISOString(),
         }),
       },
+      termsCollection,
+      privacyCollection,
     ],
   },
 

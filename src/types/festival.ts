@@ -1,4 +1,4 @@
-export interface Event {
+export type Event = {
   id: string;
   time: string;
   type: 'Conférences' | 'Ateliers' | 'Stands';
@@ -6,6 +6,6 @@ export interface Event {
   description: string;
   location: string;
   speaker?: string;
-  day: string;
+  day: 'Lundi' | 'Mardi' | 'Mercredi' | 'Jeudi' | 'Vendredi';
   image?: string;
-} 
+}; 

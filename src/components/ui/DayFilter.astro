@@ -1,5 +1,5 @@
 ---
-import { dates, eventTypes } from '~/data/festival';
+import { days, dayDates, eventTypes } from '~/data/festival';
 import type { Event } from '~/types/festival';
 import { Icon } from 'astro-icon/components';
 import Button from '~/components/ui/Button.astro';
@@ -30,8 +30,8 @@ const allEvents = Object.values(events).flat();
               class="w-full py-3 px-4 rounded-xl font-medium border border-[#e4451e]/20 bg-white text-[#e4451e] focus:outline-none focus:ring-2 focus:ring-[#e4451e]/30"
             >
               <option value="all">Tous les jours</option>
-              {dates.map((date, index) => (
-                <option value={String(index + 1)}>Jour {index + 1} - {date}</option>
+              {days.map((day, index) => (
+                <option value={day}>{day}</option>
               ))}
             </select>
           </div>
@@ -52,18 +52,18 @@ const allEvents = Object.values(events).flat();
               <span class="text-lg mt-1 font-semibold text-current">Tous les jours</span>
             </button>
 
-            {dates.map((date, index) => (
+            {days.map((day) => (
               <button
                 class:list={[
                   "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
                   "flex flex-col items-center justify-center border border-[#e4451e]/20",
                   "bg-white text-[#e4451e] hover:bg-[#e4451e]/5 hover:border-[#e4451e]/40 hover:shadow-sm"
                 ]}
-                data-day={String(index + 1)}
+                data-day={day}
                 type="button"
               >
-                <span class="text-sm text-current opacity-75">Jour {index + 1}</span>
-                <span class="text-lg mt-1 font-semibold text-current">{date}</span>
+                <span class="text-sm text-current opacity-75">{day}</span>
+                <span class="text-lg font-semibold text-current">{dayDates[day]}</span>
               </button>
             ))}
           </div>
@@ -157,6 +157,10 @@ const allEvents = Object.values(events).flat();
             <div class="flex-grow">
               <!-- En-tête avec heure, lieu et expert -->
               <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-3">
+                <div class="flex items-center">
+                  <Icon name="tabler:calendar" class="w-4 h-4 mr-1" />
+                  <span>{event.day} {dayDates[event.day]}</span>
+                </div>
                 <div class="flex items-center">
                   <Icon name="tabler:clock" class="w-4 h-4 mr-1" />
                   <span>{event.time}</span>

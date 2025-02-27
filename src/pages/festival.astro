@@ -61,6 +61,25 @@ const themes = [
     icon: 'tabler:heart'
   }
 ];
+
+const partenaires = [
+  {
+    name: 'Partenaire 1',
+    logo: 'https://via.placeholder.com/200x150?text=Partenaire+1'
+  },
+  {
+    name: 'Partenaire 2',
+    logo: 'https://via.placeholder.com/200x150?text=Partenaire+2'
+  },
+  {
+    name: 'Partenaire 3',
+    logo: 'https://via.placeholder.com/200x150?text=Partenaire+3'
+  },
+  {
+    name: 'Partenaire 4',
+    logo: 'https://via.placeholder.com/200x150?text=Partenaire+4'
+  }
+];
 ---
 
 <Layout metadata={metadata}>
@@ -517,6 +536,61 @@ const themes = [
           <Icon name="tabler:mail" class="w-5 h-5" />
           alexia@festivaloutofthebooks.com
         </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partenaires -->
+  <section id="partenaires" class="py-16 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16">
+        <SectionDivider variant="orange" class="mb-6">
+          <Icon name="tabler:building" class="w-5 h-5" />
+          Partenaires
+        </SectionDivider>
+        <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-sky-900">
+          Ils nous soutiennent
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+          Des partenaires institutionnels et privés qui contribuent à la réalisation du festival
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {[
+          {
+            logo: 'https://static.wixstatic.com/media/56c117_9fc5d8c1349844e0b59a4576763ab276~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-bw.jpg'
+          },
+          {
+            logo: 'https://static.wixstatic.com/media/e57c2b_cae38a1c958d45099aed30675c9664bd~mv2.png/v1/fill/w_210,h_200,al_c,lg_1,q_85,enc_avif,quality_auto/1200px-F%EF%BF%BD%C3%A9d%C3%A9ration_Wallonie-Bruxelles_log.png'
+          },
+          {
+            logo: 'https://static.wixstatic.com/media/e57c2b_1a0a229810d347e6a3fcabeedae6ae31~mv2.png/v1/fill/w_224,h_411,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Wavre%20-%20Logo%20-%20PNG%20-%20Vert.png'
+          },
+          {
+            logo: 'https://static.wixstatic.com/media/56c117_a88c6bf5870d4c1792472d4c9d4264de~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-daoust.jpg'
+          },
+          {
+            logo: 'https://static.wixstatic.com/media/e57c2b_6bf32d95aa624c06ae30d6809dcb156f~mv2.png/v1/crop/x_0,y_242,w_2886,h_1732/fill/w_396,h_236,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20IFPC.png'
+          },
+          {
+            logo: 'https://static.wixstatic.com/media/56c117_0943597d29324f9fbfadeefe2237eecd~mv2.jpg/v1/fill/w_296,h_148,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/ootb-partenaire-tvcom.jpg'
+          }
+        ].map(partenaire => (
+          <div class="group bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div class="aspect-[4/3] relative flex items-center justify-center p-4">
+              <div class="absolute inset-0 bg-gradient-to-br from-[#e4451e]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+              <Image
+                src={partenaire.logo}
+                alt="Logo partenaire"
+                class="max-h-full w-auto object-contain relative z-10"
+                widths={[200]}
+                sizes="200px"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>

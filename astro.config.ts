@@ -110,7 +110,8 @@ export default defineConfig({
    domains: [
      'cdn.pixabay.com', 
      'image.ausha.co',  
-     'images.unsplash.com'
+     'images.unsplash.com',
+     'res.cloudinary.com'
    ],
  },
  markdown: {
@@ -146,6 +147,6 @@ export default defineConfig({
      target: 'node'
    },
    assetsInclude: ['**/*.otf', '**/*.ttf', '**/*.woff', '**/*.woff2'],
-   publicDir: 'src/assets',
+   publicDir: 'public',
  },
 });

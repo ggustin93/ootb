@@ -11,7 +11,44 @@ interface TicketingButtonProps {
 }
 
 export default function TicketingButton({ icon, label, variant, className = '', openOnLoad = false }: TicketingButtonProps) {
-  const [isModalOpen, setIsModalOpen] = useState(openOnLoad);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    // Vérifier le hash initial
+    if (window.location.hash === '#tickets') {
+      setIsModalOpen(true);
+    }
+
+    // Créer un MutationObserver pour surveiller les changements de hash
+    const observer = new MutationObserver((mutations) => {
+      if (window.location.hash === '#tickets') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => setIsModalOpen(true), 300);
+      }
+    });
+
+    // Observer les changements dans le document
+    observer.observe(document.documentElement, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.location.hash = 'tickets';
+    setIsModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    // Retirer le hash #tickets de l'URL sans recharger la page
+    history.pushState("", document.title, window.location.pathname + window.location.search);
+  };
 
   const variants = {
     primary: 'bg-white border-2 border-[--ootb-orange] text-[--ootb-orange] hover:bg-[--ootb-orange] hover:text-white shadow-lg hover:shadow-xl',
@@ -36,32 +73,6 @@ export default function TicketingButton({ icon, label, variant, className = '', 
 
   const iconClass = 'w-6 h-6 transition-transform duration-300 group-hover:-translate-x-0.5';
 
-  const handleClick = () => {
-    setIsModalOpen(true);
-  };
-
-  useEffect(() => {
-    if (window.location.hash === '#tickets') {
-      setIsModalOpen(true);
-    }
-
-    const handleOpenModal = () => {
-      setIsModalOpen(true);
-    };
-
-    window.addEventListener('openTicketingModal', handleOpenModal);
-    document.addEventListener('astro:after-swap', () => {
-      if (window.location.hash === '#tickets') {
-        setIsModalOpen(true);
-      }
-    });
-
-    return () => {
-      window.removeEventListener('openTicketingModal', handleOpenModal);
-      document.removeEventListener('astro:after-swap', handleOpenModal);
-    };
-  }, []);
-
   return (
     <>
       <button
@@ -76,7 +87,7 @@ export default function TicketingButton({ icon, label, variant, className = '', 
       <TicketingModal
         id="ticketing-modal"
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleClose}
       />
     </>
   );

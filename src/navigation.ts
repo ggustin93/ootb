@@ -15,8 +15,20 @@ export const headerData = {
           href: getPermalink('/festival#tickets'),
         },
         {
+          text: 'A propos',
+          href: getPermalink('/festival#features'),
+        },
+        {
           text: 'Programme',
           href: getPermalink('/festival#programme'),
+        },
+        {
+          text: 'Thématiques',
+          href: getPermalink('/festival#themes'),
+        },
+        {
+          text: 'Informations pratiques',
+          href: getPermalink('/festival#accessibility'),
         }
       ]
     },

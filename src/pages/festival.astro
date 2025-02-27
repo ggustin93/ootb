@@ -420,6 +420,107 @@ const themes = [
       </div>
     </div>
   </section>
+
+  <!-- Section Accessibilité -->
+  <section id="accessibility" class="py-16 bg-white relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <SectionDivider variant="orange" class="mb-6">
+          <Icon name="tabler:accessible" class="w-5 h-5" />
+          Accessibilité
+        </SectionDivider>
+        <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-sky-900">Informations pratiques</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+          Le festival est accessible à tous. Voici les informations essentielles pour votre venue.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Accès -->
+        <div class="bg-gray-50 p-6 rounded-2xl">
+          <div class="mb-4">
+            <Icon name="tabler:map-pin" class="w-8 h-8 text-[--ootb-orange]" />
+          </div>
+          <h3 class="text-xl font-bold mb-3">Accès</h3>
+          <a 
+            href="https://maps.app.goo.gl/dsJnTzVSAh5aV2x3A" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="group block p-3 mb-4 bg-white rounded-xl border border-gray-100 hover:border-[#e4451e]/30 hover:shadow-md transition-all duration-300"
+          >
+            <p class="text-[#2D4356] flex items-center gap-2 mb-1 font-medium">
+              <Icon name="tabler:map-2" class="w-5 h-5 text-[#e4451e]" />
+              La Sucrerie
+            </p>
+            <p class="text-[#435B71] text-sm pl-7">Chemin de la Sucrerie 2, 1300 Wavre</p>
+            <div class="transform translate-y-0 group-hover:translate-y-0 transition-transform duration-300">
+              <p class="text-[#e4451e] text-sm pl-7 mt-2 flex items-center gap-1 font-medium">
+                <Icon name="tabler:navigation" class="w-4 h-4" />
+                Ouvrir dans Maps
+              </p>
+            </div>
+          </a>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:car" class="w-5 h-5" /> Parking gratuit sur place
+            </li>
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:train" class="w-5 h-5" /> Gare de Wavre à 10 min à pied
+            </li>
+          </ul>
+        </div>
+
+        <!-- Horaires -->
+        <div class="bg-gray-50 p-6 rounded-2xl">
+          <div class="mb-4">
+            <Icon name="tabler:clock" class="w-8 h-8 text-[--ootb-orange]" />
+          </div>
+          <h3 class="text-xl font-bold mb-3">Horaires</h3>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:door-enter" class="w-5 h-5" /> Ouverture : 8h30
+            </li>
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:door-exit" class="w-5 h-5" /> Fermeture : 18h00
+            </li>
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:coffee" class="w-5 h-5" /> Restauration sur place
+            </li>
+          </ul>
+        </div>
+
+        <!-- Accessibilité PMR -->
+        <div class="bg-gray-50 p-6 rounded-2xl">
+          <div class="mb-4">
+            <Icon name="tabler:wheelchair" class="w-8 h-8 text-[--ootb-orange]" />
+          </div>
+          <h3 class="text-xl font-bold mb-3">Accessibilité PMR</h3>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:check" class="w-5 h-5" /> Site entièrement accessible
+            </li>
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:parking" class="w-5 h-5" /> Places PMR réservées
+            </li>
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:accessible" class="w-5 h-5" /> Sanitaires adaptés
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Contact et assistance -->
+      <div class="mt-12 text-center">
+        <p class="text-gray-600 mb-4">
+          Besoin d'assistance particulière ? Contactez notre équipe :
+        </p>
+        <Button variant="primary" href="mailto:alexia@festivaloutofthebooks.com" class="inline-flex items-center gap-2">
+          <Icon name="tabler:mail" class="w-5 h-5" />
+          alexia@festivaloutofthebooks.com
+        </Button>
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <style>
@@ -475,7 +576,7 @@ const themes = [
 </style>
 
 <script>
-  // Animation au scroll pour les sections
+  // Garder uniquement la logique d'animation au scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -505,24 +606,4 @@ const themes = [
       }
     });
   }) as EventListener);
-
-  function openTicketingModal() {
-    const ticketButton = document.querySelector('[data-ticketing-button]');
-    if (ticketButton instanceof HTMLElement) {
-      ticketButton.click();
-    }
-  }
-
-  // Vérifier le hash au chargement initial
-  if (window.location.hash === '#tickets') {
-    // Attendre que le composant soit hydraté
-    setTimeout(openTicketingModal, 0);
-  }
-
-  // Écouter les changements de hash pour les navigations ultérieures
-  window.addEventListener('hashchange', () => {
-    if (window.location.hash === '#tickets') {
-      openTicketingModal();
-    }
-  });
 </script> 

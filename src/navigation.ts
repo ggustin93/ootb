@@ -122,6 +122,10 @@ export const headerData = {
         },
       ],
     },
+    {
+      text: 'Contact',
+      href: getPermalink('/contact'),
+    },
   ],
   mobileLinks: [
     {

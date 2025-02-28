@@ -32,7 +32,7 @@
   "stats": {
     "items": [
       {
-        "number": "9002",
+        "number": "9000",
         "label": "Membres actifs",
         "sublabel": "dans la communauté",
         "icon": "tabler:users-group"

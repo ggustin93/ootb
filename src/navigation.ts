@@ -125,7 +125,6 @@ export const headerData = {
   ],
   mobileLinks: [
     {
-      title: "Navigation principale",
       links: [
         { text: 'Accueil', href: '/' },
         { text: 'Festival', href: getPermalink('/festival') },

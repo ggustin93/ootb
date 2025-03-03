@@ -2,6 +2,8 @@ import { defineConfig } from "tinacms";
 import { postsCollection } from "./postsCollection";
 import { homepageCollection } from "./homepageCollection";
 import { termsCollection, privacyCollection } from "./legalCollection";
+import { blogCollection } from "./blogCollection";
+import { appelProjetCollection } from "./appelProjetCollection";
 
 export default defineConfig({
   branch: "main",
@@ -22,7 +24,6 @@ export default defineConfig({
 
   schema: {
     collections: [
-      homepageCollection,
       {
         ...postsCollection,
         label: "Gestion des contenus",
@@ -50,8 +51,11 @@ export default defineConfig({
           publishDate: new Date().toISOString(),
         }),
       },
+      homepageCollection,
+      appelProjetCollection,
       termsCollection,
       privacyCollection,
+      blogCollection,
     ],
   },
 

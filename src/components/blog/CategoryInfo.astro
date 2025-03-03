@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import { CONTENT_TYPES } from '~/config/content-types';
 import Button from '~/components/ui/Button.astro';
+import blogData from '~/content/blog/blog.json';
 
 interface Props {
   type: keyof typeof CONTENT_TYPES;
@@ -10,83 +11,34 @@ interface Props {
 
 const { type } = Astro.props;
 
-// Configuration des encarts par type
-const INFO_CONFIGS = {
-  tv: {
-    colorVariable: 'var(--ootb-green)',
-    logo: 'https://static.wixstatic.com/media/e57c2b_df52671ae61441c381d84bc2e805a342~mv2.png',
-    title: 'Pédagoscope, une émission éducative diffusée tous les 15 jours sur TVCOM',
-    description: [
-      'Tous les 15 jours, suivez Renaud Keymeulen et Sophie Vanden Plas alors qu\'ils explorent la transition de l\'école à la maison. Ensemble, ils vous offriront des idées novatrices à partir de thèmes captivants.',
-      'À chaque épisode, vous découvrirez un expert en plateau qui vous apportera un éclairage précis et concret sur la question. Nous irons également sur le terrain à la rencontre d\'un enseignant inspirant qui met en pratique ces idées novatrices dans sa propre classe.'
-    ],
-    links: [
-      { icon: 'tabler:brand-facebook', label: 'Suivez-nous sur Facebook', url: 'https://facebook.com/pedagoscope' },
-      { icon: 'tabler:mail', label: 'Contactez-nous', url: 'mailto:contact@pedagoscope.be' }
-    ]
-  },
-  podcast: {
-    colorVariable: 'var(--ootb-violet)',
-    logo: 'https://static.wixstatic.com/media/e57c2b_58dc80b3802d4b3d803e2f8fd41d125b~mv2.jpg/v1/fill/w_756,h_374,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/LOGO_EDUCATION_MODE-EMPLOI_HORIZONTAL_COLOR.jpg',
-    title: 'Éducation : mode d\'emploi',
-    description: [
-      'Bienvenue dans Éducation : mode d\'emploi, votre nouveau Podcast pour la rentrée.',
-      'Ce podcast est votre rendez-vous incontournable, que vous soyez enseignant ou parent, pour découvrir des solutions concrètes aux défis éducatifs du quotidien.',
-      'Éducation : mode d\'emploi, c\'est plus qu\'un podcast, c\'est une communauté engagée à transformer l\'éducation et à faire une vraie différence.'
-    ],
-    links: [
-      { icon: 'tabler:brand-spotify', label: 'Écoutez sur Spotify', url: 'https://open.spotify.com/show/education-mode-emploi' },
-      { icon: 'tabler:brand-apple', label: 'Apple Podcasts', url: 'https://podcasts.apple.com/education-mode-emploi' },
-      { icon: 'tabler:brand-youtube', label: 'YouTube', url: 'https://youtube.com/@education-mode-emploi' },
-      { icon: 'tabler:microphone', label: 'Ausha', url: 'https://podcast.ausha.co/education-mode-d-emploi' }
-    ]
-  },
-  fiche: {
-    colorVariable: 'var(--ootb-blue)',
-    title: 'Fiches pédagogiques',
-    description: [
-      'Des ressources pratiques et détaillées pour enrichir vos cours et activités pédagogiques.'
-    ],
-    links: []
-  },
-  actualite: {
-    colorVariable: 'var(--content-actualite)',
-    title: 'Actualités pédagogiques',
-    description: [
-      'Restez informé des dernières nouvelles et tendances dans le monde de l\'éducation.'
-    ],
-    links: []
-  },
-  live: {
-    colorVariable: 'var(--content-live)',
-    title: 'Lives Facebook',
-    description: [
-      'Participez à nos sessions en direct pour interagir avec des experts de l\'éducation.'
-    ],
-    links: [
-      { icon: 'tabler:brand-facebook', label: 'Suivez nos lives', url: '#' }
-    ]
-  },
-  premium: {
-    colorVariable: 'var(--ootb-yellow)',
-    title: 'Contenu Premium',
-    description: [
-      "Les contenus premium seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.",
-      "En devenant contributeur premium sur Buy Me a Coffee, vous recevrez automatiquement accès à notre newsletter exclusive. Celle-ci vous donnera accès à du contenu hors-série et en avant-première !"
-    ],
-    links: [
-      { icon: 'tabler:coffee', label: 'Faire un don', url: 'https://buymeacoffee.com/outofthebooks', variant: 'premium-primary' },
-      { icon: 'tabler:arrow-left', label: 'Retour aux contenus', url: '/blog#category-content', variant: 'premium-secondary' }
-    ],
-    qrCode: {
-      src: '~/assets/images/bmc_qr.png',
-      alt: 'QR Code Buy Me a Coffee',
-      caption: 'Scanner pour contribuer'
-    }
-  }
-} as const;
+// Type pour les liens
+interface Link {
+  icon: string;
+  label: string;
+  url: string;
+  variant?: "premium-primary" | "premium-secondary" | "link" | "primary" | "secondary" | "outline" | "ghost" | "blue" | "outline-blue" | "card" | "outline-podcast" | "outline-tv";
+}
 
-const config = INFO_CONFIGS[type];
+// Type pour le QR code
+interface QRCode {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+// Type pour les infos de catégorie
+interface CategoryInfoData {
+  colorVariable: string;
+  logo?: string;
+  title: string;
+  description: string[];
+  links: Link[];
+  qrCode?: QRCode;
+}
+
+// Récupération des données depuis blog.json
+const categoryInfos = blogData.categoryInfo as Record<string, CategoryInfoData>;
+const config = categoryInfos[type];
 
 if (!config) return null;
 ---
@@ -105,7 +57,7 @@ if (!config) return null;
           </p>
           
           <div class="flex flex-wrap gap-3 sm:gap-4 mt-4 sm:mt-6">
-            {config.links.map(link => (
+            {config.links.map((link: Link) => (
               <Button 
                 href={link.url}
                 variant={link.variant}
@@ -156,14 +108,14 @@ if (!config) return null;
         <h3 class="font-heading text-lg sm:text-xl mb-2" style={`color: ${config.colorVariable}`}>
           {config.title}
         </h3>
-        {config.description.map(paragraph => (
+        {config.description.map((paragraph: string) => (
           <p class="mb-3 text-sm sm:text-base text-gray-600">
             {paragraph}
           </p>
         ))}
         {config.links.length > 0 && (
           <div class="flex flex-wrap items-center gap-3 sm:gap-4 text-sm">
-            {config.links.map(link => (
+            {config.links.map((link: Link) => (
               <a 
                 href={link.url}
                 class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-300"

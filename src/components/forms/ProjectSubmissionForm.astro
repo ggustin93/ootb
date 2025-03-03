@@ -1,17 +1,13 @@
 ---
 import { Icon } from 'astro-icon/components';
+import appelProjetData from '~/content/appel_projet/index.json';
 
-const teachingTypes = [
-  { id: 'ordinaire', label: 'Ordinaire' },
-  { id: 'general', label: 'Général' },
-  { id: 'specialise', label: 'Spécialisé' }
-];
+// Extraction des données du formulaire depuis le fichier JSON
+const { personal, project } = appelProjetData.formulaire;
 
-const sections = [
-  { id: 'maternelle', label: 'Maternelle' },
-  { id: 'primaire', label: 'Primaire' },
-  { id: 'secondaire', label: 'Secondaire' }
-];
+// Utilisation des données du JSON pour les types d'enseignement et les sections
+const teachingTypes = project.teachingTypes;
+const sections = project.sections;
 ---
 
 <form class="space-y-8 max-w-4xl mx-auto -mt-12">
@@ -22,8 +18,8 @@ const sections = [
         <Icon name="tabler:user" class="w-6 h-6 text-sky-600" />
       </div>
       <div>
-        <h3 class="text-xl md:text-2xl font-bold text-sky-900">À propos de vous</h3>
-        <p class="text-gray-500 text-sm">Informations de contact</p>
+        <h3 class="text-xl md:text-2xl font-bold text-sky-900">{personal.title}</h3>
+        <p class="text-gray-500 text-sm">{personal.subtitle}</p>
       </div>
     </div>
 
@@ -31,7 +27,7 @@ const sections = [
       <div class="space-y-2">
         <label for="prenom" class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:id" class="w-4 h-4 text-sky-500/70" />
-          Prénom *
+          {personal.firstName} *
         </label>
         <input 
           type="text" 
@@ -45,7 +41,7 @@ const sections = [
       <div class="space-y-2">
         <label for="nom" class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:id" class="w-4 h-4 text-sky-500/70" />
-          Nom *
+          {personal.lastName} *
         </label>
         <input 
           type="text" 
@@ -59,7 +55,7 @@ const sections = [
       <div class="space-y-2">
         <label for="email" class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:mail" class="w-4 h-4 text-sky-500/70" />
-          Email *
+          {personal.email} *
         </label>
         <input 
           type="email" 
@@ -73,7 +69,7 @@ const sections = [
       <div class="space-y-2">
         <label for="telephone" class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:phone" class="w-4 h-4 text-sky-500/70" />
-          Téléphone
+          {personal.phone}
         </label>
         <input 
           type="tel" 
@@ -92,8 +88,8 @@ const sections = [
         <Icon name="tabler:bulb" class="w-6 h-6 text-sky-600" />
       </div>
       <div>
-        <h3 class="text-xl md:text-2xl font-bold text-sky-900">Votre projet</h3>
-        <p class="text-gray-500 text-sm">Détails de votre innovation pédagogique</p>
+        <h3 class="text-xl md:text-2xl font-bold text-sky-900">{project.title}</h3>
+        <p class="text-gray-500 text-sm">{project.subtitle}</p>
       </div>
     </div>
 
@@ -101,14 +97,14 @@ const sections = [
       <div class="space-y-2">
         <label for="titre" class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:heading" class="w-4 h-4 text-sky-500/70" />
-          Titre du projet *
+          {project.projectTitle} *
         </label>
         <input 
           type="text" 
           id="titre" 
           name="titre" 
           required
-          placeholder="Un titre accrocheur qui résume votre projet"
+          placeholder={project.projectTitlePlaceholder}
           class="form-input"
         />
       </div>
@@ -117,7 +113,7 @@ const sections = [
       <div class="space-y-4">
         <label class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:school" class="w-4 h-4 text-sky-500/70" />
-          Type d'enseignement *
+          {project.teachingType} *
         </label>
         <div class="grid md:grid-cols-3 gap-4">
           {teachingTypes.map(type => (
@@ -141,7 +137,7 @@ const sections = [
       <div class="space-y-4">
         <label class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:category" class="w-4 h-4 text-sky-500/70" />
-          Section *
+          {project.section} *
         </label>
         <div class="grid md:grid-cols-3 gap-4">
           {sections.map(section => (
@@ -165,14 +161,14 @@ const sections = [
       <div class="space-y-2">
         <label for="description" class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:file-description" class="w-4 h-4 text-sky-500/70" />
-          Description du projet *
+          {project.description} *
         </label>
         <textarea
           id="description"
           name="description"
           rows="4"
           required
-          placeholder="Décrivez votre projet, son contexte et ses objectifs..."
+          placeholder={project.descriptionPlaceholder}
           class="form-textarea"
         ></textarea>
       </div>
@@ -181,14 +177,14 @@ const sections = [
       <div class="space-y-2">
         <label for="competences" class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:list-check" class="w-4 h-4 text-sky-500/70" />
-          Compétences développées *
+          {project.skills} *
         </label>
         <textarea
           id="competences"
           name="competences"
           rows="3"
           required
-          placeholder="Quelles compétences les élèves développent-ils ?"
+          placeholder={project.skillsPlaceholder}
           class="form-textarea"
         ></textarea>
       </div>
@@ -197,13 +193,13 @@ const sections = [
       <div class="space-y-2">
         <label for="resultats" class="text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:chart-bar" class="w-4 h-4 text-sky-500/70" />
-          Résultats observés
+          {project.results}
         </label>
         <textarea
           id="resultats"
           name="resultats"
           rows="3"
-          placeholder="Quels résultats avez-vous observés ?"
+          placeholder={project.resultsPlaceholder}
           class="form-textarea"
         ></textarea>
       </div>
@@ -212,17 +208,17 @@ const sections = [
       <div class="space-y-2">
         <label for="links" class="block text-sm font-medium text-gray-700 flex items-center gap-2">
           <Icon name="tabler:link" class="w-4 h-4 text-sky-500/70" />
-          Liens du projet
+          {project.links}
         </label>
         <input
           type="text"
           name="links"
           id="links"
-          placeholder="Site web, vidéo, compte Twitter..."
+          placeholder={project.linksPlaceholder}
           class="form-input"
         />
         <p class="text-sm text-gray-500">
-          Ajoutez vos liens séparés par des virgules
+          {project.linksHelp}
         </p>
       </div>
 
@@ -233,7 +229,7 @@ const sections = [
           class="group inline-flex items-center gap-3 text-lg px-8 py-4 bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 rounded-xl"
         >
           <Icon name="tabler:send" class="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-          <span>Soumettre le projet</span>
+          <span>{project.submitButton}</span>
         </button>
       </div>
     </div>

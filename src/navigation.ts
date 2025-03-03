@@ -101,23 +101,23 @@ export const headerData = {
           href: getPermalink('/a-propos#qui-sommes-nous'),
         },
         {
-          text: 'Notre Vision',
+          text: 'Notre vision',
           href: getPermalink('/a-propos#vision'),
         },
         {
-          text: 'Nos Missions',
+          text: 'Nos missions',
           href: getPermalink('/a-propos#missions'),
         },
         {
-          text: 'Nos Valeurs',
+          text: 'Nos valeurs',
           href: getPermalink('/a-propos#valeurs'),
         },
         {
-          text: 'Notre Équipe',
+          text: 'Notre équipe',
           href: getPermalink('/a-propos#equipe'),
         },
         {
-          text: 'Nos Partenaires',
+          text: 'Nos partenaires',
           href: getPermalink('/a-propos#partenaires'),
         },
       ],

@@ -15,6 +15,12 @@ import Button from '~/components/ui/Button.astro';
 import { CONTENT_TYPES } from '~/config/content-types';
 import CategoryFilters from '~/components/blog/CategoryFilters.astro';
 
+// Import des données TinaCMS
+import sharedData from '~/content/blog/blog.json';
+
+// Import dynamique de l'image
+const mascotteLogo = await import(/* @vite-ignore */ sharedData.hero.mascotteImage);
+
 export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -76,6 +82,10 @@ const FILTER_TYPES = {
   }
 } as const;
 
+// Extraction des données
+const { hero } = sharedData;
+const { filters, search } = hero;
+
 const metadata = {
   title: `Category '${category.title}' ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   robots: {
@@ -87,14 +97,21 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <GradientHeroSection>
+    <!-- Éléments décoratifs flottants -->
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- Formes géométriques subtiles -->
+      <div class="absolute w-32 h-32 rounded-full bg-white/10 blur-2xl -top-8 -left-8 animate-float"></div>
+      <div class="absolute w-48 h-48 rounded-full bg-white/10 blur-3xl bottom-32 right-16 animate-float-delayed"></div>
+    </div>
+
     <div class="relative z-10 container mx-auto px-4 pt-16 pb-8">
       <div class="max-w-6xl mx-auto">
         <div class="grid md:grid-cols-12 gap-12 items-center">
           <!-- Mascotte (1/3 de l'espace) -->
-          <div class="relative hidden md:block order-1 md:col-span-5 -mt-8">
-            <div class="relative w-full max-w-[500px] transform hover:-rotate-2 transition-transform duration-300">
+          <div class="relative order-2 md:order-1 md:col-span-5 -mt-8">
+            <div class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300">
               <Image
-                src={import('~/assets/images/ootb-logo.svg')}
+                src={mascotteLogo.default}
                 alt="Out of the Books Mascotte"
                 class="w-full h-full object-contain drop-shadow-xl"
                 widths={[500]}
@@ -104,36 +121,32 @@ const metadata = {
             </div>
           </div>
 
-          <!-- Contenu textuel (2/3 de l'espace) -->
-          <div class="text-center md:text-left order-2 md:col-span-7">
+          <!-- Contenu textuel -->
+          <div class="text-center md:text-left order-1 md:order-2 md:col-span-7">
             <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
               {(!category.slug || category.slug === 'blog') 
-                ? "Tous nos contenus"
+                ? hero.title
                 : `${CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.titlePrefix} ${CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.label}`
               }
             </h1>
-            <p class="text-xl text-white/90 font-light mb-8 max-w-xl">
+            <p class="text-xl text-white/90 font-light mb-8 max-w-xl mx-auto md:mx-0">
               {(!category.slug || category.slug === 'blog')
-                ? CONTENT_TYPES.all.description
-                : CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.heroDescription || 
-                  CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.description
+                ? hero.description
+                : CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.description
               }
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch tags={initialTags} />
+            <TagSearch tags={initialTags} placeholder={search.placeholder} />
 
             <!-- Séparateur discret -->
-            <div class="mb-4 text-center">
-              <span class="text-white/40 text-xs">ou</span>
+            <div class="mb-4 text-center md:text-left">
+              <span class="text-white/40 text-xs">{filters.orLabel}</span>
             </div>
 
             <!-- Label pour les filtres -->
-            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">
-              {(!category.slug || category.slug === 'blog')
-                ? "Filtrer par type de contenu :"
-                : "Autres types de contenus :"
-              }
+            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium text-center md:text-left">
+              {filters.labels.category}
             </div>
 
             <!-- Filtres principaux -->
@@ -354,7 +367,7 @@ const metadata = {
                   </span>
                 )}
               </h2>
-              <CategoryFilters currentCategory={category.slug} />
+              <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
             </div>
 
             {/* Encart explicatif conditionnel selon la catégorie */}
@@ -440,11 +453,10 @@ const metadata = {
   }
 
   // Gestionnaire pour les liens avec ancre
-  function handleAnchorClick(e) {
-    const href = e.currentTarget.getAttribute('href');
+  function handleAnchorClick(e: Event) {
+    const target = e.currentTarget as HTMLAnchorElement;
+    const href = target.getAttribute('href');
     if (href?.includes('#category-content')) {
-      // Ne pas empêcher la navigation par défaut
-      // Attendre que la navigation soit terminée avant de scroller
       setTimeout(() => {
         scrollToFilters();
       }, 100);

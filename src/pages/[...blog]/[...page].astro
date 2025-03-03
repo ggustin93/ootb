@@ -8,12 +8,18 @@ import { Icon } from 'astro-icon/components';
 import { findTags } from '~/utils/blog';
 
 import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
-import { CONTENT_TYPES, type ContentType } from '~/config/content-types';
+import { CONTENT_TYPES } from '~/config/content-types';
 import { Image } from 'astro:assets';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 import TagSearch from '~/components/common/TagSearch.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import CategoryFilters from '~/components/blog/CategoryFilters.astro';
+
+// Import des données TinaCMS
+import sharedData from '~/content/blog/blog.json';
+
+// Import dynamique de l'image
+const mascotteLogo = await import(/* @vite-ignore */ sharedData.hero.mascotteImage);
 
 export const prerender = true;
 
@@ -50,6 +56,10 @@ const metadata = {
   },
 };
 
+// Extraction des données
+const { hero } = sharedData;
+const { filters, contentSection, search } = hero;
+
 ---
 
 <Layout metadata={metadata}>
@@ -65,10 +75,10 @@ const metadata = {
       <div class="max-w-6xl mx-auto">
         <div class="grid md:grid-cols-12 gap-12 items-center">
           <!-- Mascotte (1/3 de l'espace) -->
-          <div class="relative hidden md:block order-1 md:col-span-5 -mt-8">
-            <div class="relative w-full max-w-[500px] transform hover:-rotate-2 transition-transform duration-300">
+          <div class="relative order-2 md:order-1 md:col-span-5 -mt-8">
+            <div class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300">
               <Image
-                src={import('~/assets/images/ootb-logo.svg')}
+                src={mascotteLogo.default}
                 alt="Out of the Books Mascotte"
                 class="w-full h-full object-contain drop-shadow-xl"
                 widths={[500]}
@@ -79,24 +89,26 @@ const metadata = {
           </div>
 
           <!-- Contenu textuel -->
-          <div class="text-center md:text-left order-2 md:col-span-7">
+          <div class="text-center md:text-left order-1 md:order-2 md:col-span-7">
             <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
-              Nos contenus
+              {hero.title}
             </h1>
-            <p class="text-xl text-white/90 font-light mb-8 max-w-xl">
-              Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation
+            <p class="text-xl text-white/90 font-light mb-8 max-w-xl mx-auto md:mx-0">
+              {hero.description}
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch tags={initialTags} />
+            <TagSearch tags={initialTags} placeholder={search.placeholder} />
 
             <!-- Séparateur discret -->
-            <div class="mb-4 text-center">
-              <span class="text-white/40 text-xs">ou</span>
+            <div class="mb-4 text-center md:text-left">
+              <span class="text-white/40 text-xs">{filters.orLabel}</span>
             </div>
 
             <!-- Label pour les filtres -->
-            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">Filtrer par type de contenu :</div>
+            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium text-center md:text-left">
+              {filters.labels.default}
+            </div>
 
             <!-- Filtres principaux -->
             <div class="flex flex-wrap gap-3 justify-center md:justify-start">
@@ -141,7 +153,6 @@ const metadata = {
     label="Voir les contenus"
     position="left-[20%] bottom-[20%]"
     class="text-white hidden md:flex"
-    hidden={false}
   />
 
   <!-- Section contenu -->
@@ -151,9 +162,9 @@ const metadata = {
         <!-- Filtres minimalistes -->
         <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
           <h2 class="hidden sm:block text-2xl sm:text-3xl font-body font-semibold">
-            Tous les contenus
+            {contentSection.title}
           </h2>
-          <CategoryFilters />
+          <CategoryFilters blogConfig={sharedData} />
         </div>
 
         <BlogList posts={page.data} />

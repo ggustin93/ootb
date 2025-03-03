@@ -11,6 +11,12 @@ import { Image } from 'astro:assets';
 import TagSearch from '~/components/common/TagSearch.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 
+// Import des données TinaCMS
+import tagData from '~/content/blog/blog.json';
+
+// Import dynamique de l'image
+const mascotteLogo = await import(/* @vite-ignore */ tagData.hero.mascotteImage);
+
 export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -18,10 +24,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths> & {
-  category?: { slug: string; title: string; }; // Ajout de la catégorie optionnelle
+  tag: { slug: string; title: string; };
 };
 
-const { page, tag, category } = Astro.props as Props;
+const { page, tag } = Astro.props as Props;
 const currentPage = page.currentPage ?? 1;
 
 const allTags = await findTags().then(tags => {
@@ -38,6 +44,8 @@ const allTags = await findTags().then(tags => {
 const MAX_VISIBLE_TAGS = 15;
 const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
 
+const { hero, filters } = tagData;
+
 const metadata = {
   title: `Posts by tag '${tag.title}'${currentPage > 1 ? ` — Page ${currentPage} ` : ''}`,
   robots: {
@@ -49,14 +57,21 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <GradientHeroSection>
+    <!-- Éléments décoratifs flottants -->
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- Formes géométriques subtiles -->
+      <div class="absolute w-32 h-32 rounded-full bg-white/10 blur-2xl -top-8 -left-8 animate-float"></div>
+      <div class="absolute w-48 h-48 rounded-full bg-white/10 blur-3xl bottom-32 right-16 animate-float-delayed"></div>
+    </div>
+
     <div class="relative z-10 container mx-auto px-4 pt-16 pb-8">
       <div class="max-w-6xl mx-auto">
         <div class="grid md:grid-cols-12 gap-12 items-center">
           <!-- Mascotte (1/3 de l'espace) -->
-          <div class="relative hidden md:block order-1 md:col-span-5 -mt-8">
-            <div class="relative w-full max-w-[500px] transform hover:-rotate-2 transition-transform duration-300">
+          <div class="relative order-2 md:order-1 md:col-span-5 -mt-8">
+            <div class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300">
               <Image
-                src={import('~/assets/images/ootb-logo.svg')}
+                src={mascotteLogo.default}
                 alt="Out of the Books Mascotte"
                 class="w-full h-full object-contain drop-shadow-xl"
                 widths={[500]}
@@ -66,25 +81,27 @@ const metadata = {
             </div>
           </div>
 
-          <!-- Contenu textuel (2/3 de l'espace) -->
-          <div class="text-center md:text-left order-2 md:col-span-7">
+          <!-- Contenu textuel -->
+          <div class="text-center md:text-left order-1 md:order-2 md:col-span-7">
             <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
-              Nos contenus
+              {hero.title}
             </h1>
-            <p class="text-xl text-white/90 font-light mb-8 max-w-xl">
-              Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation
+            <p class="text-xl text-white/90 font-light mb-8 max-w-xl mx-auto md:mx-0">
+              {hero.description}
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch tags={initialTags} />
+            <TagSearch tags={initialTags} placeholder={tagData.search.placeholder} />
 
             <!-- Séparateur discret -->
-            <div class="mb-4 text-center">
-              <span class="text-white/40 text-xs">ou</span>
+            <div class="mb-4 text-center md:text-left">
+              <span class="text-white/40 text-xs">{filters.orLabel}</span>
             </div>
 
             <!-- Label pour les filtres -->
-            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium">Filtrer par type de contenu :</div>
+            <div class="text-white/90 text-sm uppercase tracking-wider mb-3 font-medium text-center md:text-left">
+              {filters.labels.default}
+            </div>
 
             <!-- Filtres -->
             <div class="flex flex-wrap gap-3 justify-center md:justify-start">

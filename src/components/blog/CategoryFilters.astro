@@ -4,9 +4,20 @@ import { CONTENT_TYPES } from '~/config/content-types';
 
 interface Props {
   currentCategory?: string;
+  blogConfig: {
+    hero: {
+      filters: {
+        categoryFilters: {
+          allLabel: string;
+          mobileSelectLabel: string;
+        }
+      }
+    }
+  }
 }
 
-const { currentCategory } = Astro.props;
+const { currentCategory, blogConfig } = Astro.props;
+const { allLabel, mobileSelectLabel } = blogConfig.hero.filters.categoryFilters;
 ---
 
 <div class="flex flex-col w-full sm:w-auto">
@@ -22,7 +33,7 @@ const { currentCategory } = Astro.props;
       ].join(' ')}
     >
       <Icon name="tabler:layout-grid" class="w-4 h-4" />
-      <span class="text-sm">Tous</span>
+      <span class="text-sm">{allLabel}</span>
     </a>
 
     {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
@@ -51,7 +62,7 @@ const { currentCategory } = Astro.props;
       class="w-full appearance-none bg-gray-100/80 rounded-lg px-4 py-2.5 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
     >
       <option value="blog" selected={!currentCategory || currentCategory === 'blog'}>
-        Tous les contenus
+        {mobileSelectLabel}
       </option>
       {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
         <option 

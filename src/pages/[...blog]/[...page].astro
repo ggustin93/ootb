@@ -17,9 +17,10 @@ import CategoryFilters from '~/components/blog/CategoryFilters.astro';
 
 // Import des données TinaCMS
 import sharedData from '~/content/blog/blog.json';
+import ootbLogo from '~/assets/images/ootb-logo.svg';
 
-// Import dynamique de l'image
-const mascotteLogo = await import(/* @vite-ignore */ sharedData.hero.mascotteImage);
+// Import statique de l'image au lieu d'un import dynamique
+const mascotteLogo = { default: ootbLogo };
 
 export const prerender = true;
 

@@ -2,7 +2,7 @@
   "hero": {
     "title": "Nos contenus",
     "description": "Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation",
-    "mascotteImage": "/src/assets/images/ootb-logo.svg",
+    "mascotteImage": "~/assets/images/ootb-logo.svg",
     "filters": {
       "orLabel": "ou",
       "labels": {

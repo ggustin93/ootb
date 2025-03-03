@@ -13,9 +13,10 @@ import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 
 // Import des données TinaCMS
 import tagData from '~/content/blog/blog.json';
+import ootbLogo from '~/assets/images/ootb-logo.svg';
 
-// Import dynamique de l'image
-const mascotteLogo = await import(/* @vite-ignore */ tagData.hero.mascotteImage);
+// Import statique de l'image au lieu d'un import dynamique
+const mascotteLogo = { default: ootbLogo };
 
 export const prerender = true;
 
@@ -44,7 +45,9 @@ const allTags = await findTags().then(tags => {
 const MAX_VISIBLE_TAGS = 15;
 const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
 
-const { hero, filters } = tagData;
+// Extraction correcte des données du JSON
+const { hero } = tagData;
+const { filters, search } = hero;
 
 const metadata = {
   title: `Posts by tag '${tag.title}'${currentPage > 1 ? ` — Page ${currentPage} ` : ''}`,
@@ -91,7 +94,7 @@ const metadata = {
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch tags={initialTags} placeholder={tagData.search.placeholder} />
+            <TagSearch tags={initialTags} placeholder={search.placeholder} />
 
             <!-- Séparateur discret -->
             <div class="mb-4 text-center md:text-left">

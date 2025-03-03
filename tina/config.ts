@@ -4,6 +4,7 @@ import { homepageCollection } from "./homepageCollection";
 import { termsCollection, privacyCollection } from "./legalCollection";
 import { blogCollection } from "./blogCollection";
 import { appelProjetCollection } from "./appelProjetCollection";
+import { navigationCollection } from "./navigationCollection";
 
 export default defineConfig({
   branch: "main",
@@ -30,7 +31,6 @@ export default defineConfig({
         name: "post",
         path: "src/content/post",
         format: "mdx",
-        description: "Gérez ici tous vos contenus (Actualités, Fiches, Lives, Podcasts, Émissions, Premium).",
         
         // Configuration UI pour la génération de noms de fichiers
         ui: {
@@ -53,9 +53,10 @@ export default defineConfig({
       },
       homepageCollection,
       appelProjetCollection,
+      blogCollection,
+      navigationCollection,
       termsCollection,
       privacyCollection,
-      blogCollection,
     ],
   },
 

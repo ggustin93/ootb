@@ -119,14 +119,15 @@ const metadata = {
                     'bg-white text-gray-800 ring-gray-800',
                     'scale-105 shadow-lg'
                   ] : [
-                    'bg-gray-800 text-white ring-gray-800 hover:bg-white hover:text-gray-800',
+                    'bg-gray-800 text-white ring-gray-800 hover:bg-white',
                     'hover:-translate-y-1'
                   ]
                 ]}
+                style="--hover-text-color: #1f2937; --hover-ring-color: #1f2937;"
               >
                 <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                  <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4" />
-                  <span class="text-sm font-bold uppercase tracking-wide">
+                  <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" />
+                  <span class="text-sm font-bold uppercase tracking-wide group-hover:text-[var(--hover-text-color)] italic">
                     {CONTENT_TYPES.all.shortLabel}
                   </span>
                 </span>
@@ -143,13 +144,14 @@ const metadata = {
                       'transition-all duration-300',
                       'px-6 py-2.5 ring-2',
                       `bg-[${config.color}] text-white ring-[${config.color}]`,
-                      'hover:bg-white hover:text-[${config.color}]',
+                      'hover:bg-white',
                       'hover:-translate-y-1'
                     ]}
+                    style={`--hover-text-color: ${config.color}; --hover-ring-color: ${config.color};`}
                   >
                     <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                      <Icon name={config.icon} class="w-4 h-4" />
-                      <span class="text-sm font-bold uppercase tracking-wide">
+                      <Icon name={config.icon} class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" />
+                      <span class="text-sm font-bold uppercase tracking-wide group-hover:text-[var(--hover-text-color)] italic">
                         {config.shortLabel}
                       </span>
                     </span>
@@ -177,10 +179,10 @@ const metadata = {
         <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg mb-8">
           <a
             href="/blog#category-content"
-            class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
+            class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900 group"
           >
-            <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4" />
-            <span class="text-xs sm:text-sm">{CONTENT_TYPES.all.shortLabel}</span>
+            <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4 transition-all duration-300" />
+            <span class="text-xs sm:text-sm italic">{CONTENT_TYPES.all.shortLabel}</span>
           </a>
 
           {Object.entries(CONTENT_TYPES)
@@ -188,10 +190,11 @@ const metadata = {
             .map(([key, config]) => (
               <a
                 href={`/category/${key}#category-content`}
-                class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
+                class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900 group"
+                style={`--hover-text-color: ${config.color};`}
               >
-                <Icon name={config.icon} class="w-4 h-4" />
-                <span class="text-xs sm:text-sm">{config.shortLabel}</span>
+                <Icon name={config.icon} class="w-4 h-4 transition-all duration-300 group-hover:text-[var(--hover-text-color)]" />
+                <span class="text-xs sm:text-sm italic group-hover:text-[var(--hover-text-color)]">{config.shortLabel}</span>
               </a>
             ))}
         </div>
@@ -238,6 +241,38 @@ const metadata = {
   /* Transitions douces */
   a, button {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 8s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+
+  /* Style pour les boutons de filtre */
+  .group:hover {
+    ring-color: var(--hover-ring-color) !important;
   }
 </style>
 

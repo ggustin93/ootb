@@ -126,17 +126,18 @@ const { filters, contentSection, search } = hero;
                       'scale-105 shadow-lg'
                     ] : [
                       `bg-[${config.color}] text-white ring-[${config.color}]`,
-                      'hover:bg-white hover:text-[${config.color}]',
+                      'hover:bg-white',
                       'hover:-translate-y-1'
                     ]
                   ]}
+                  style={key !== 'all' ? `--hover-text-color: ${config.color}; --hover-ring-color: ${config.color};` : '--hover-text-color: #1f2937; --hover-ring-color: #1f2937;'}
                 >
                   <span class="transform skew-x-[12deg] flex items-center gap-2.5">
                     <Icon 
                       name={config.icon} 
-                      class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
+                      class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" 
                     />
-                    <span class="text-sm font-bold uppercase tracking-wide">
+                    <span class="text-sm font-bold uppercase tracking-wide group-hover:text-[var(--hover-text-color)] italic">
                       {config.shortLabel}
                     </span>
                   </span>
@@ -256,5 +257,10 @@ const { filters, contentSection, search } = hero;
   #search-suggestions .max-h-64::-webkit-scrollbar-thumb {
     background-color: rgba(156, 163, 175, 0.5);
     border-radius: 3px;
+  }
+
+  /* Style pour les boutons de filtre */
+  .group:hover {
+    ring-color: var(--hover-ring-color) !important;
   }
 </style>

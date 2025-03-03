@@ -166,23 +166,25 @@ const metadata = {
                     'scale-105',
                     'shadow-lg'
                   ] : [
-                    'bg-gray-800 text-white ring-gray-800 hover:bg-white hover:text-gray-800',
+                    'bg-gray-800 text-white ring-gray-800 hover:bg-white',
                     'hover:-translate-y-1'
                   ]
                 ]}
+                style="--hover-text-color: #1f2937; --hover-ring-color: #1f2937;"
               >
                 <span class="transform skew-x-[12deg] flex items-center gap-2.5">
                   <Icon 
                     name="tabler:layout-grid" 
-                    class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
+                    class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" 
                   />
-                  <span class="text-sm font-bold uppercase tracking-wide">Tous</span>
+                  <span class="text-sm font-bold uppercase tracking-wide italic group-hover:text-[var(--hover-text-color)]">Tous</span>
                 </span>
               </a>
 
               {/* Autres filtres */}
               {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => {
                 const isActive = key.toLowerCase() === category.slug?.toLowerCase();
+                const colorVar = `--content-${key}`;
                 return (
                   <a
                     href={`/category/${key.toLowerCase()}#category-content`}
@@ -192,36 +194,21 @@ const metadata = {
                       'transition-all duration-300',
                       'px-6 py-2.5',
                       'ring-2',
-                      'transition-all duration-300',
-                      {
-                        'bg-[--content-actualite] text-white ring-[--content-actualite] hover:bg-white hover:text-[--content-actualite]': key === 'actualite' && !isActive,
-                        'bg-[--content-fiche] text-white ring-[--content-fiche] hover:bg-white hover:text-[--content-fiche]': key === 'fiche' && !isActive,
-                        'bg-[--content-live] text-white ring-[--content-live] hover:bg-white hover:text-[--content-live]': key === 'live' && !isActive,
-                        'bg-[--content-podcast] text-white ring-[--content-podcast] hover:bg-white hover:text-[--content-podcast]': key === 'podcast' && !isActive,
-                        'bg-[--content-tv] text-white ring-[--content-tv] hover:bg-white hover:text-[--content-tv]': key === 'tv' && !isActive,
-                        'bg-[--content-premium] text-white ring-[--content-premium] hover:bg-white hover:text-[--content-premium]': key === 'premium' && !isActive,
-                        // États actifs
-                        'bg-white text-[--content-actualite] ring-[--content-actualite]': key === 'actualite' && isActive,
-                        'bg-white text-[--content-fiche] ring-[--content-fiche]': key === 'fiche' && isActive,
-                        'bg-white text-[--content-live] ring-[--content-live]': key === 'live' && isActive,
-                        'bg-white text-[--content-podcast] ring-[--content-podcast]': key === 'podcast' && isActive,
-                        'bg-white text-[--content-tv] ring-[--content-tv]': key === 'tv' && isActive,
-                        'bg-white text-[--content-premium] ring-[--content-premium]': key === 'premium' && isActive,
-                      },
                       isActive ? [
-                        'scale-105',
-                        'shadow-lg'
+                        'bg-white shadow-lg scale-105',
+                        `text-[${colorVar}] ring-[${colorVar}]`
                       ] : [
-                        'hover:-translate-y-1'
+                        `bg-[${colorVar}] text-white ring-[${colorVar}] hover:bg-white hover:-translate-y-1`
                       ]
                     ]}
+                    style={`--hover-text-color: var(${colorVar}); --hover-ring-color: var(${colorVar});`}
                   >
                     <span class="transform skew-x-[12deg] flex items-center gap-2.5">
                       <Icon 
                         name={config.icon} 
-                        class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
+                        class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" 
                       />
-                      <span class="text-sm font-bold uppercase tracking-wide">{config.label}</span>
+                      <span class="text-sm font-bold uppercase tracking-wide italic group-hover:text-[var(--hover-text-color)]">{config.label}</span>
                     </span>
                   </a>
                 );
@@ -432,6 +419,11 @@ const metadata = {
   }
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+  }
+  
+  /* Style pour les boutons de filtre */
+  .group:hover {
+    ring-color: var(--hover-ring-color) !important;
   }
 </style>
 

@@ -1,210 +1,79 @@
 import { getPermalink, getBlogPermalink } from './utils/permalinks';
+import navigationData from './content/navigation/index.json';
 
-export const headerData = {
-  links: [
-    {
-      text: 'Festival',
-      href: getPermalink('/festival'),
-      links: [
-        {
-          text: 'Vue d\'ensemble',
-          href: getPermalink('/festival'),
-        },
-        {
-          text: 'Billetterie',
-          href: getPermalink('/festival#tickets'),
-        },
-        {
-          text: 'A propos',
-          href: getPermalink('/festival#features'),
-        },
-        {
-          text: 'Programme',
-          href: getPermalink('/festival#programme'),
-        },
-        {
-          text: 'Thématiques',
-          href: getPermalink('/festival#themes'),
-        },
-        {
-          text: 'Informations pratiques',
-          href: getPermalink('/festival#accessibility'),
-        },
-        {
-          text: 'Partenaires',
-          href: getPermalink('/festival#partenaires'),
-        }
-      ]
-    },
-    {
-      text: 'Nos contenus',
-      href: getBlogPermalink(),
-      links: [
-        {
-          text: 'Tous les contenus',
-          href: getBlogPermalink(),
-        },
-        {
-          text: 'Podcasts',
-          href: getPermalink('/category/podcast'),
-        },
-        {
-          text: 'Emissions TV',
-          href: getPermalink('/category/tv'),
-        },
-        {
-          text: 'Live Facebook',
-          href: getPermalink('/category/live'),
-        },
-        {
-          text: 'Fiches pédagogiques',
-          href: getPermalink('/category/fiche'),
-        },
-        {
-          text: 'Contenu premium',
-          href: getPermalink('/category/premium#category-content'),
-        },
-      ],
-    },
-    {
-      text: 'Appel à projet',
-      href: getPermalink('/appel-a-projets'),
-      links: [
-        {
-          text: 'Vue d\'ensemble',
-          href: getPermalink('/appel-a-projets'),
-        },
-        {
-          text: 'Critères',
-          href: getPermalink('/appel-a-projets#criteres'),
-        },
-        {
-          text: 'Processus',
-          href: getPermalink('/appel-a-projets#processus'),
-        },
-        {
-          text: 'Soumettre un projet',
-          href: getPermalink('/appel-a-projets#formulaire'),
-        },
-      ],
-    },
-    {
-      text: 'À propos',
-      href: getPermalink('/a-propos'),
-      links: [
-        {
-          text: 'Vue d\'ensemble',
-          href: getPermalink('/a-propos'),
-        },
-        {
-          text: 'Qui sommes-nous',
-          href: getPermalink('/a-propos#qui-sommes-nous'),
-        },
-        {
-          text: 'Notre vision',
-          href: getPermalink('/a-propos#vision'),
-        },
-        {
-          text: 'Nos missions',
-          href: getPermalink('/a-propos#missions'),
-        },
-        {
-          text: 'Nos valeurs',
-          href: getPermalink('/a-propos#valeurs'),
-        },
-        {
-          text: 'Notre équipe',
-          href: getPermalink('/a-propos#equipe'),
-        },
-        {
-          text: 'Nos partenaires',
-          href: getPermalink('/a-propos#partenaires'),
-        },
-      ],
-    },
-    {
-      text: 'Contact',
-      href: getPermalink('/contact'),
-    },
-  ],
-  mobileLinks: [
-    {
-      links: [
-        { text: 'Accueil', href: '/' },
-        { text: 'Festival', href: getPermalink('/festival') },
-        { text: 'Podcasts', href: getPermalink('/category/podcast') },
-        { text: 'Pédagoscope', href: getPermalink('/category/tv') },
-        { text: 'Appel à projet', href: getPermalink('/appel-a-projets') },
-        { text: 'À propos', href: getPermalink('/a-propos') },
-        { text: 'Contact', href: getPermalink('/contact') },
-      ],
-    },
-  ],
-  actions: [
-    { 
-      text: 'Rejoindre la communauté', 
-      href: '/#rejoindre',
-      variant: 'outline'
+// Types pour la navigation
+interface NavigationLink {
+  text: string;
+  href: string;
+  links?: NavigationLink[];
+  variant?: string;
+  ariaLabel?: string;
+  icon?: string;
+}
+
+interface NavigationGroup {
+  title?: string;
+  links: NavigationLink[];
+}
+
+// Fonction pour traiter les liens et appliquer les fonctions de permalien
+function processLinks(links: NavigationLink[]): NavigationLink[] {
+  return links.map(link => {
+    const processedLink = { ...link };
+    
+    // Traiter l'attribut href
+    if (link.href) {
+      if (link.href === '/blog') {
+        processedLink.href = getBlogPermalink();
+      } else if (link.href.startsWith('/')) {
+        processedLink.href = getPermalink(link.href);
+      }
     }
-  ],
+    
+    // Traiter les sous-liens récursivement si présents
+    if (link.links && Array.isArray(link.links)) {
+      processedLink.links = processLinks(link.links);
+    }
+    
+    return processedLink;
+  });
+}
+
+// Traiter les données de navigation
+const processedHeaderLinks = navigationData.header.links ? processLinks(navigationData.header.links as NavigationLink[]) : [];
+const processedHeaderMobileLinks = navigationData.header.mobileLinks ? 
+  (navigationData.header.mobileLinks as NavigationGroup[]).map(group => ({
+    ...group,
+    links: group.links ? processLinks(group.links) : []
+  })) : [];
+const processedHeaderActions = navigationData.header.actions ? processLinks(navigationData.header.actions as NavigationLink[]) : [];
+
+const processedFooterLinks = navigationData.footer.links ? 
+  (navigationData.footer.links as NavigationGroup[]).map(group => ({
+    ...group,
+    links: group.links ? processLinks(group.links) : []
+  })) : [];
+const processedFooterMobileLinks = navigationData.footer.mobileLinks ? 
+  (navigationData.footer.mobileLinks as NavigationGroup[]).map(group => ({
+    ...group,
+    links: group.links ? processLinks(group.links) : []
+  })) : [];
+const processedLegalLinks = navigationData.footer.legalLinks ? processLinks(navigationData.footer.legalLinks as NavigationLink[]) : [];
+
+// Exporter les données traitées
+export const headerData = {
+  links: processedHeaderLinks,
+  mobileLinks: processedHeaderMobileLinks,
+  actions: processedHeaderActions,
 };
 
 export const footerData = {
-  mobileLinks: [
-    {
-      links: [
-        { text: 'Accueil', href: '/' },
-        { text: 'Festival', href: getPermalink('/festival') },
-        { text: 'Podcasts', href: getPermalink('/category/podcast') },
-        { text: 'Pédagoscope', href: getPermalink('/category/tv') },
-        { text: 'Appel à projet', href: getPermalink('/appel-a-projets') },
-        { text: 'À propos', href: getPermalink('/a-propos') },
-        { text: 'Contact', href: getPermalink('/contact') },
-      ],
-    },
-  ],
-  links: [
-    {
-      title: 'Le festival',
-      links: [
-        { text: 'Vue d\'ensemble', href: getPermalink('/festival') },
-        { text: 'Programme 2024', href: getPermalink('/festival#programme') },
-        { text: 'Billetterie', href: getPermalink('/festival#tickets') },
-        { text: 'Infos pratiques', href: getPermalink('/festival#accessibility') },
-      ],
-    },
-    {
-      title: 'Nos contenus',
-      links: [
-        { text: 'Tous les contenus', href: getBlogPermalink() },
-        { text: 'Podcasts', href: getPermalink('/category/podcast') },
-        { text: 'Pédagoscope', href: getPermalink('/category/tv') },
-        { text: 'Fiches pédagogiques', href: getPermalink('/category/fiche') },
-      ],
-    },
-    {
-      title: 'À propos',
-      links: [
-        { text: 'Qui sommes-nous', href: getPermalink('/a-propos') },
-        { text: 'Notre équipe', href: getPermalink('/a-propos#equipe') },
-        { text: 'Nos partenaires', href: getPermalink('/a-propos#partenaires') },
-        { text: 'Contact', href: getPermalink('/contact') },
-      ],
-    },
-  ],
-  legalLinks: [
-    { text: 'Mentions légales', href: getPermalink('/terms') },
-    { text: 'Politique de confidentialité', href: getPermalink('/privacy') },
-  ],
-  socialLinks: [
-    { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: '#' },
-  ],
-  footNote: `
-    Out of the Books ASBL © ${new Date().getFullYear()}
-  `,
-  ecoDesignBadge: {
+  links: processedFooterLinks,
+  mobileLinks: processedFooterMobileLinks,
+  legalLinks: processedLegalLinks,
+  socialLinks: navigationData.footer.socialLinks || [],
+  footNote: navigationData.footer.footNote || `Out of the Books ASBL © ${new Date().getFullYear()}`,
+  ecoDesignBadge: navigationData.footer.ecoDesignBadge || {
     text: 'Site écoconçu et optimisé',
     icon: 'tabler:leaf',
     details: 'Plus écologique que 90% des sites web testés',

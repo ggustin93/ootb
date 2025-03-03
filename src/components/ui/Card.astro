@@ -3,6 +3,7 @@ import Image from '~/components/common/Image.astro';
 import { Icon } from 'astro-icon/components';
 import { getPermalink } from '~/utils/permalinks';
 import Button from '~/components/ui/Button.astro';
+import { getFormattedDate } from '~/utils/utils';
 
 interface Meta {
   publishDate?: Date | string;
@@ -103,12 +104,12 @@ const config = typeConfig[finalType];
 // Format date
 const formatPublishDate = (date?: Date | string) => {
   if (!date) return null;
-  const publishDate = date instanceof Date ? date : new Date(date);
-  return new Intl.DateTimeFormat('fr-FR', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric'
-  }).format(publishDate);
+  try {
+    return getFormattedDate(date);
+  } catch (error) {
+    console.error('Erreur de formatage de date:', error);
+    return null;
+  }
 };
 
 const formattedPublishDate = meta?.publishDate 

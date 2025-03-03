@@ -18,8 +18,8 @@ import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import ActivityCards from '~/components/sections/ActivityCards.astro';
 
 const metadata = {
-  title: 'Festival Out of the Books 2025 | La Sucrerie - Wavre',
-  description: 'Découvrez le festival Out of the Books 2025, l\'événement incontournable de l\'éducation innovante.',
+  title: 'Festival Out of the Books',
+  description: 'Le Festival Out of the Books est un événement dédié à la littérature et à l\'édition indépendante.',
   canonical: 'https://outofthebooks.org/festival',
   image: {
     src: banniereFestival,
@@ -82,7 +82,7 @@ const partenaires = [
 ];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} currentPage="festival">
   <FestivalHeroSection
     id="top"
     logo={logo_festival_white}

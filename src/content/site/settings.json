@@ -1,0 +1,20 @@
+{
+  "announcement": {
+    "enabled": true,
+    "color": "#e7461c",
+    "content": {
+      "badge": "NOUVEAU",
+      "text": "Le Festival Out of the Books revient en 2025 !",
+      "link": {
+        "text": "En savoir plus »",
+        "href": "/festival"
+      }
+    },
+    "showOnPages": [
+      "all"
+    ],
+    "hideOnPages": [
+      "festival"
+    ]
+  }
+}

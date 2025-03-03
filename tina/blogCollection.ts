@@ -1,7 +1,7 @@
 import type { Collection } from "tinacms";
 
 export const blogCollection: Collection = {
-  label: "Page - Nos contenus",
+  label: "📄 Page - Blog",
   name: "blog",
   path: "src/content/blog",
   format: "json",

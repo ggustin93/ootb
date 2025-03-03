@@ -1,8 +1,8 @@
 import type { Collection } from "tinacms";
 
 export const appelProjetCollection: Collection = {
-  label: "Page - Appel à projets",
-  name: "appelProjet",
+  label: "📄 Page - Appel à projets",
+  name: "appel_projet",
   path: "src/content/appel_projet",
   format: "json",
   ui: {

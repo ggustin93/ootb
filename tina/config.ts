@@ -7,6 +7,7 @@ import { appelProjetCollection } from "./appelProjetCollection";
 import { navigationCollection } from "./navigationCollection";
 import { aboutCollection } from "./aboutCollection";
 import { contactCollection } from "./contactCollection";
+import { siteSettingsCollection } from "./siteSettingsCollection";
 
 export default defineConfig({
   branch: "main",
@@ -27,37 +28,13 @@ export default defineConfig({
 
   schema: {
     collections: [
-      {
-        ...postsCollection,
-        label: "Gestion des contenus",
-        name: "post",
-        path: "src/content/post",
-        format: "mdx",
-        
-        // Configuration UI pour la génération de noms de fichiers
-        ui: {
-          filename: {
-            readonly: true,
-            slugify: (values) => {
-              if (!values?.title) return '';
-              return `${values.category || 'post'}-${values.title
-                .toLowerCase()
-                .replace(/ /g, '-')
-                .replace(/[^a-zA-Z0-9-]/g, '')}`;
-            },
-          },
-        },
-        
-        // Définition d'un élément par défaut avec date de publication
-        defaultItem: () => ({
-          publishDate: new Date().toISOString(),
-        }),
-      },
+      postsCollection,
       homepageCollection,
       appelProjetCollection,
       blogCollection,
       aboutCollection,
       contactCollection,
+      siteSettingsCollection,
       navigationCollection,
       termsCollection,
       privacyCollection,

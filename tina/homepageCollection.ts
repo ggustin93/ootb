@@ -16,7 +16,7 @@ import type { Collection } from "tinacms";
 // - Ensure you have the latest @tinacms/cli and tinacms packages installed
 
 export const homepageCollection: Collection = {
-  label: "Page - Accueil",
+  label: "📄 Page - Accueil",
   name: "homepage",
   path: "src/content/homepage",
   format: "json",

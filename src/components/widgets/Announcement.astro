@@ -1,23 +1,89 @@
 ---
+import siteSettings from '~/content/site/settings.json';
 
+export interface Props {
+  announcement?: {
+    enabled?: boolean;
+    color?: string;
+    content?: {
+      badge?: string;
+      text?: string;
+      link?: {
+        text?: string;
+        href?: string;
+      };
+    };
+    showOnPages?: string[];
+    hideOnPages?: string[];
+  };
+  currentPage?: string;
+}
+
+const { 
+  announcement = siteSettings.announcement,
+  currentPage = 'default'
+} = Astro.props;
+
+// Vérifier si l'annonce doit être masquée sur la page actuelle
+const isHiddenOnCurrentPage = announcement.hideOnPages?.includes(currentPage);
+
+// Vérifier si l'annonce doit être affichée sur la page actuelle
+const isShownOnCurrentPage = 
+  announcement.showOnPages?.includes('all') || 
+  announcement.showOnPages?.includes(currentPage);
+
+// L'option hideOnPages est prioritaire sur showOnPages
+const shouldShow = announcement.enabled && isShownOnCurrentPage && !isHiddenOnCurrentPage;
+
+if (!shouldShow) return null;
+
+// Couleur par défaut (orange du festival)
+const defaultColor = "#e7461c";
+const bgColor = announcement.color || defaultColor;
+
+// Fonction pour calculer une couleur de texte contrastée pour le badge
+const getContrastColor = (hexColor: string) => {
+  // Convertir la couleur hex en RGB
+  const r = parseInt(hexColor.slice(1, 3), 16);
+  const g = parseInt(hexColor.slice(3, 5), 16);
+  const b = parseInt(hexColor.slice(5, 7), 16);
+  
+  // Calculer la luminosité (formule YIQ)
+  const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+  
+  // Retourner noir ou blanc selon la luminosité
+  return yiq >= 128 ? '#000000' : '#ffffff';
+};
+
+const textColor = getContrastColor(bgColor);
 ---
 
-<div
-  class="dark text-muted text-sm bg-black dark:bg-transparent dark:border-b dark:border-slate-800 dark:text-slate-400 hidden md:flex gap-1 overflow-hidden px-3 py-2 relative text-ellipsis whitespace-nowrap"
->
-  <span
-    class="dark:bg-slate-700 bg-white/40 dark:text-slate-300 font-semibold px-1 py-0.5 text-xs mr-0.5 rtl:mr-0 rtl:ml-0.5 inline-block"
-    >NEW</span
-  >
-  <a href="https://astro.build/blog/astro-5/" class="text-muted hover:underline dark:text-slate-400 font-medium"
-    >Astro v5.0.0 is now available! »</a
-  >
-  <a
-    target="_blank"
-    rel="noopener"
-    class="ltr:ml-auto rtl:mr-auto w-[5.6rem] h-[1.25rem] ml-auto bg-contain inline-block bg-[url(https://img.shields.io/github/stars/onwidget/astrowind.svg?style=social&label=Stars&maxAge=86400)]"
-    title="If you like AstroWind, give us a star."
-    href="https://github.com/onwidget/astrowind"
-  >
-  </a>
-</div>
+{shouldShow && (
+  <div id="announcement-bar" class="relative">
+    <a 
+      href={announcement.content?.link?.href || '#'} 
+      class="block md:flex items-center justify-center gap-2 overflow-hidden px-4 py-2.5 relative text-ellipsis whitespace-nowrap shadow-sm transition-all hover:brightness-95"
+      style={`background-color: ${bgColor}; color: ${textColor};`}
+    >
+      {announcement.content?.badge && (
+        <span
+          class="font-semibold px-2 py-0.5 text-xs rounded-full mr-1 rtl:mr-0 rtl:ml-1 inline-block"
+          style={`background-color: white; color: ${bgColor};`}
+        >{announcement.content.badge}</span>
+      )}
+      
+      {announcement.content?.text && (
+        <span class="font-medium">{announcement.content.text}</span>
+      )}
+      
+      {announcement.content?.link?.text && (
+        <span class="underline font-medium ml-1 inline-flex items-center">
+          {announcement.content.link.text}
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+      )}
+    </a>
+  </div>
+)}

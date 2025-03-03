@@ -12,7 +12,7 @@ const CONTENT_TYPES = {
 
 export const postsCollection = {
   name: "post",
-  label: "Posts",
+  label: "📚 Gestion des contenus",
   path: "src/content/post",
   format: "mdx",
   mdx: {

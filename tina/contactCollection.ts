@@ -2,7 +2,7 @@ import type { Collection } from "tinacms";
 
 export const contactCollection: Collection = {
   name: "contact",
-  label: "Contact",
+  label: "📄 Page - Contact",
   path: "src/content/contact",
   format: "json",
   ui: {

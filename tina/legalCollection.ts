@@ -1,7 +1,7 @@
 import type { Collection } from "tinacms";
 
 export const termsCollection: Collection = {
-  label: "Mentions légales",
+  label: "📜 Mentions légales et CGV",
   name: "terms",
   path: "src/pages",
   format: "md",
@@ -41,7 +41,7 @@ export const termsCollection: Collection = {
 };
 
 export const privacyCollection: Collection = {
-  label: "Politique de confidentialité",
+  label: "🔒 Politique de confidentialité",
   name: "privacy",
   path: "src/pages",
   format: "md",

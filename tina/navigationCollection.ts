@@ -148,9 +148,19 @@ export const navigationCollection: Collection = {
       label: "Navigation Footer",
       fields: [
         {
+          type: "string",
+          name: "footerDescription",
+          label: "Description du footer",
+          description: "Texte descriptif qui apparaît sous le logo dans le footer",
+          ui: {
+            component: "textarea",
+          },
+        },
+        {
           type: "object",
           name: "links",
           label: "Colonnes de liens",
+          description: "Vous pouvez réorganiser ces colonnes par glisser-déposer pour changer leur ordre d'affichage",
           list: true,
           ui: {
             itemProps: (item) => ({
@@ -288,6 +298,7 @@ export const navigationCollection: Collection = {
           type: "string",
           name: "footNote",
           label: "Note de bas de page",
+          description: "Copyright et année, ex: Out of the Books ASBL © 2025",
           ui: {
             component: "textarea",
           },

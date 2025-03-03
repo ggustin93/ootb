@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "title": "À propos - Out of the Books",
+    "description": "Out of the Books ASBL : l'éducation et le bien-être de l'enfant au cœur des priorités pour bâtir une société de demain"
+  },
+  "hero": {
+    "logo": "~/assets/images/logo_ootb_garcon_blanc.svg",
+    "heroImage": "~/assets/images/ootb_team.webp",
+    "quote": "Out of the Books rassemble des enseignants, experts et passionnés d'éducation pour transformer l'éducation en Belgique francophone. Notre mission : créer des ponts entre tous les acteurs de l'éducation et favoriser l'innovation pédagogique.",
+    "quoteColor": "--ootb-yellow",
+    "scrollLabel": "En savoir plus"
+  },
+  "quiSommesNous": {
+    "title": "Qui sommes-nous ?",
+    "titleColor": "--ootb-turquoise",
+    "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop",
+    "imageAlt": "Des personnes collaborant autour d'un projet éducatif",
+    "paragraphs": [
+      "Face aux défis croissants de l'éducation moderne et à l'évolution rapide de notre société, nous avons constaté un besoin urgent de repenser nos approches pédagogiques. Les méthodes traditionnelles, bien qu'ayant fait leurs preuves, ne suffisent plus à préparer pleinement les apprenants aux enjeux du XXIe siècle.",
+      "C'est de ce constat qu'est née l'ASBL Out of the Books : une association dédiée à l'innovation pédagogique, conçue pour accompagner les enseignants, les formateurs et tous les acteurs de l'éducation dans leur démarche de transformation.",
+      "Notre association est convaincue que l'innovation en éducation ne peut se faire qu'à travers la collaboration et le partage d'expériences. C'est pourquoi nous avons créé cette plateforme, véritable carrefour d'échanges et de ressources pour tous les acteurs de l'éducation."
+    ]
+  },
+  "vision": {
+    "title": "Notre vision",
+    "titleColor": "--ootb-yellow",
+    "quote": "Nous croyons en une éducation innovante, inclusive et épanouissante, où chaque apprenant peut développer son plein potentiel.",
+    "description": "Dans une société en perpétuelle évolution, le système éducatif doit être repensé et tenir compte des besoins de la nouvelle génération. Nous souhaitons retrouver le plaisir d'apprendre et favoriser la créativité débordante de nos enfants."
+  },
+  "actions": [
+    "L'organisation du Festival Out of the Books",
+    "Des journées thématiques",
+    "Des Lives Facebook",
+    "L'émission télévisée \"Pédagoscope\"",
+    "Le podcast \"Education: mode d'emploi\"",
+    "L'appel à projets \"Les enseignants ont du talent\""
+  ],
+  "missions": [
+    {
+      "icon": "tabler:heart",
+      "title": "Notre mission",
+      "description": "Placer l'éducation et le bien-être de l'enfant au cœur des priorités pour bâtir une société de demain plus collaborative, créative et épanouissante."
+    },
+    {
+      "icon": "tabler:tool",
+      "title": "Notre objectif",
+      "description": "Outiller et accompagner les enseignants en prenant en compte leur réalité quotidienne sur le terrain."
+    }
+  ],
+  "valeurs": [
+    {
+      "icon": "tabler:puzzle",
+      "title": "Synergies",
+      "description": "Créer des ponts entre tous les acteurs de l'éducation"
+    },
+    {
+      "icon": "tabler:heart-handshake",
+      "title": "Bienveillance",
+      "description": "Promouvoir une approche positive et constructive de l'éducation"
+    },
+    {
+      "icon": "tabler:award",
+      "title": "Valorisation",
+      "description": "Mettre en lumière les talents et les initiatives des enseignants"
+    },
+    {
+      "icon": "tabler:bulb",
+      "title": "Innovation",
+      "description": "Encourager les nouvelles approches pédagogiques"
+    }
+  ],
+  "equipe": {
+    "title": "Notre équipe",
+    "titleColor": "--ootb-orange",
+    "description": "Notre équipe est composée de professionnels passionnés qui apportent chacun leur expertise unique : enseignants de terrain, chercheurs en sciences de l'éducation, experts en pédagogie et spécialistes de l'innovation éducative. Cette diversité est notre force et nous permet d'avoir une approche complète et pragmatique des enjeux éducatifs.",
+    "membres": [
+      {
+        "name": "Sophie Vanden Plas",
+        "role": "Co-fondatrice",
+        "description": "Formatrice à l'IFEC et créatrice de la structure Evocation qui accompagne des enfants en gestion mentale.",
+        "photo": "https://static.wixstatic.com/media/56c117_03c0b6edb89e41668481a0559794a6e1~mv2.png/v1/fill/w_200,h_200,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/56c117_03c0b6edb89e41668481a0559794a6e1~mv2.png",
+        "contact": {
+          "email": "sophie@festivalootb.com",
+          "phone": "0476/46.24.25"
+        }
+      },
+      {
+        "name": "Alexia Martin",
+        "role": "Co-fondatrice",
+        "description": "Entrepreneuse dans l'âme et créatrice d'événements grands publics.",
+        "photo": "https://static.wixstatic.com/media/e57c2b_3037ee1644ce493eae96141d7c74c2e2~mv2.jpg/v1/crop/x_0,y_0,w_4509,h_4509/fill/w_200,h_200,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/12_ALEXIA_058.jpg",
+        "contact": {
+          "email": "alexia@festivalootb.com",
+          "phone": "0477/45.56.11"
+        }
+      }
+    ]
+  },
+  "partenaires": {
+    "title": "Nos Partenaires",
+    "titleColor": "--ootb-blue",
+    "liste": [
+      {
+        "nom": "Partenaire 1",
+        "logo": "https://static.wixstatic.com/media/56c117_9fc5d8c1349844e0b59a4576763ab276~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-bw.jpg",
+        "lien": "#"
+      },
+      {
+        "nom": "Fédération Wallonie-Bruxelles",
+        "logo": "https://static.wixstatic.com/media/e57c2b_cae38a1c958d45099aed30675c9664bd~mv2.png/v1/fill/w_210,h_200,al_c,lg_1,q_85,enc_avif,quality_auto/1200px-F%EF%BF%BD%C3%A9d%C3%A9ration_Wallonie-Bruxelles_log.png",
+        "lien": "#"
+      },
+      {
+        "nom": "Ville de Wavre",
+        "logo": "https://static.wixstatic.com/media/e57c2b_1a0a229810d347e6a3fcabeedae6ae31~mv2.png/v1/fill/w_224,h_411,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Wavre%20-%20Logo%20-%20PNG%20-%20Vert.png",
+        "lien": "#"
+      },
+      {
+        "nom": "Daoust",
+        "logo": "https://static.wixstatic.com/media/56c117_a88c6bf5870d4c1792472d4c9d4264de~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-daoust.jpg",
+        "lien": "#"
+      },
+      {
+        "nom": "IFPC",
+        "logo": "https://static.wixstatic.com/media/e57c2b_6bf32d95aa624c06ae30d6809dcb156f~mv2.png/v1/crop/x_0,y_242,w_2886,h_1732/fill/w_396,h_236,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20IFPC.png",
+        "lien": "#"
+      },
+      {
+        "nom": "TV Com",
+        "logo": "https://static.wixstatic.com/media/56c117_0943597d29324f9fbfadeefe2237eecd~mv2.jpg/v1/fill/w_296,h_148,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/ootb-partenaire-tvcom.jpg",
+        "lien": "#"
+      }
+    ]
+  }
+}

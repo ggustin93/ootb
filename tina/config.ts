@@ -5,6 +5,8 @@ import { termsCollection, privacyCollection } from "./legalCollection";
 import { blogCollection } from "./blogCollection";
 import { appelProjetCollection } from "./appelProjetCollection";
 import { navigationCollection } from "./navigationCollection";
+import { aboutCollection } from "./aboutCollection";
+import { contactCollection } from "./contactCollection";
 
 export default defineConfig({
   branch: "main",
@@ -54,6 +56,8 @@ export default defineConfig({
       homepageCollection,
       appelProjetCollection,
       blogCollection,
+      aboutCollection,
+      contactCollection,
       navigationCollection,
       termsCollection,
       privacyCollection,

@@ -7,9 +7,10 @@ import { Icon } from 'astro-icon/components';
 import OotbLogo from '~/assets/images/ootb-logo.svg';
 import '~/assets/styles/handwritten.css';
 
-const metadata = {
-  title: 'Contact',
-};
+// Importer les données du fichier JSON
+import contactData from '~/content/contact/index.json';
+
+const { metadata, hero, form, contactInfo } = contactData;
 ---
 
 <Layout metadata={metadata}>
@@ -42,47 +43,49 @@ const metadata = {
       
       {/* En-tête */}
       <div class="text-center max-w-3xl mx-auto mb-16">
-        <SectionDivider variant="sky" class="mb-8">Contact</SectionDivider>
+        <SectionDivider variant="sky" class="mb-8">{hero.title}</SectionDivider>
         <h1 class="text-4xl md:text-6xl font-handwritten mb-6 text-sky-900 dark:text-sky-400">
-          Envoyez-nous un message
+          {hero.subtitle}
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">
-          Notre équipe est là pour vous aider et répondre à toutes vos questions.
+          {hero.description}
         </p>
       </div>
 
       <div class="grid lg:grid-cols-3 gap-12 items-start">
         {/* Formulaire */}
         <div class="relative lg:col-span-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-10 border border-gray-100 dark:border-gray-700 h-full">
-          <div class="absolute -top-20 -left-4 md:-left-8">
+          <div class="absolute -top-16 -left-6 md:-top-20 md:-left-10 lg:-left-12 z-10 pointer-events-none">
             <Image
               src={OotbLogo}
               alt="OOTB Mascotte"
-              class="w-24 h-24 md:w-32 md:h-32 transform -rotate-12"
+              class="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 transform -rotate-12 drop-shadow-lg"
             />
           </div>
-          <form class="space-y-6">
+          <form class="space-y-6 relative z-0 pt-4 md:pt-0">
             <div class="grid md:grid-cols-2 gap-6">
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="name">
-                  Nom
+                  {form.name.label}
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
+                  placeholder={form.name.placeholder}
                   class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
                   required
                 />
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="email">
-                  Email
+                  {form.email.label}
                 </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
+                  placeholder={form.email.placeholder}
                   class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
                   required
                 />
@@ -91,11 +94,12 @@ const metadata = {
 
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="message">
-                Message
+                {form.message.label}
               </label>
               <textarea
                 id="message"
                 name="message"
+                placeholder={form.message.placeholder}
                 rows="8"
                 class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
                 required
@@ -104,11 +108,10 @@ const metadata = {
 
             <div class="pt-4">
               <Button
-                type="submit"
                 variant="blue"
                 class="w-full md:w-auto"
               >
-                Envoyer le message
+                {form.button}
               </Button>
             </div>
           </form>
@@ -125,9 +128,9 @@ const metadata = {
                     <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
                   </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Téléphone</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{contactInfo.phone.title}</h3>
               </div>
-              <p class="text-gray-600 dark:text-gray-400">+33 1 23 45 67 89</p>
+              <p class="text-gray-600 dark:text-gray-400">{contactInfo.phone.value}</p>
             </div>
 
             {/* Email */}
@@ -139,9 +142,9 @@ const metadata = {
                     <path d="M3 7l9 6l9 -6" />
                   </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Email</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{contactInfo.email.title}</h3>
               </div>
-              <p class="text-gray-600 dark:text-gray-400">contact@support.fr</p>
+              <p class="text-gray-600 dark:text-gray-400">{contactInfo.email.value}</p>
             </div>
 
             {/* Adresse */}
@@ -153,10 +156,10 @@ const metadata = {
                   <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
                 </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Adresse</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{contactInfo.address.title}</h3>
               </div>
               <p class="text-gray-600 dark:text-gray-400">
-                Avenue Louise 65, 1050 Bruxelles
+                {contactInfo.address.value}
               </p>
             </div>
           </div>

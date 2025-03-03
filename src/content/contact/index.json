@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "title": "Contact - Out of the Books",
+    "description": "Contactez l'équipe Out of the Books pour toute question ou information"
+  },
+  "hero": {
+    "title": "Contact",
+    "subtitle": "Envoyez-nous un message",
+    "description": "Notre équipe est là pour vous aider et répondre à toutes vos questions."
+  },
+  "form": {
+    "name": {
+      "label": "Nom",
+      "placeholder": "Votre nom"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Votre email"
+    },
+    "message": {
+      "label": "Message",
+      "placeholder": "Votre message"
+    },
+    "button": "Envoyer le message"
+  },
+  "contactInfo": {
+    "phone": {
+      "title": "Téléphone",
+      "value": "+33 1 23 45 67 89"
+    },
+    "email": {
+      "title": "Email",
+      "value": "contact@support.fr"
+    },
+    "address": {
+      "title": "Adresse",
+      "value": "Avenue Louise 65, 1050 Bruxelles"
+    }
+  }
+} 

@@ -8,28 +8,29 @@ import PremiumSection from '~/components/sections/PremiumSection.astro';
 import NewsletterSection from '~/components/sections/NewsletterSection.astro';
 
 import {
-  metadata as siteMetadata,
+  metadata,
   heroContent,
   images,
   aboutFeatures,
 } from '~/data/education';
-
-const metadata = {
-  title: 'Out of the Books - Festival de littérature et d\'édition indépendante',
-  description: 'Out of the Books est un festival de littérature et d\'édition indépendante qui se déroule à Genève.',
-};
 ---
 
-<Layout metadata={metadata} currentPage="home">
+<Layout {metadata}>
   <HeroSection {...heroContent} scrollTargetId="mission-section" />
   
-  <MissionSection id="mission-section" />
+  <div class="w-full relative z-[100]">
+    <MissionSection image={images.about} features={aboutFeatures} />
+  </div>
   
-  <StatsSection />
-  
+  <section class="relative -mt-16 sm:-mt-20 md:-mt-24 pb-12 sm:pb-16 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8">
+      <StatsSection />
+    </div>
+  </section>
+
   <FeaturedContentSection />
-  
+
   <PremiumSection />
-  
+
   <NewsletterSection />
 </Layout>

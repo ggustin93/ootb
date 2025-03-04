@@ -11,7 +11,7 @@
         "dev": "astro dev && tinacms dev",
         "start": "astro dev",
         "build": "astro build && npx tinacms build",
-        "build:netlify": "astro build && mkdir -p dist/admin && echo '<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Tina CMS Admin</title><meta http-equiv=\"refresh\" content=\"0; url=https://outofthebooks.vercel.app/admin\"><script>window.location.href=\"https://outofthebooks.vercel.app/admin\";</script></head><body><h1>Redirection vers Tina CMS...</h1><p>Si vous n'êtes pas redirigé automatiquement, <a href=\"https://outofthebooks.vercel.app/admin\">cliquez ici</a>.</p></body></html>' > dist/admin/index.html",
+        "build:netlify": "astro build",
         "preview": "astro preview",
         "astro": "astro",
         "check": "npm run check:astro && npm run check:eslint && npm run check:prettier",

@@ -1,0 +1,201 @@
+{
+  "metadata": {
+    "title": "Festival Out of the Books",
+    "description": "Le Festival Out of the Books est un événement dédié à la littérature et à l'édition indépendante.",
+    "canonical": "https://outofthebooks.org/festival",
+    "image": {
+      "src": "~/assets/images/banniere_festival.jpeg",
+      "alt": "Festival Out of the Books 2025"
+    },
+    "openGraph": {
+      "title": "Festival Out of the Books 2025 | Innovation en Éducation",
+      "description": "Trois jours dédiés à l'innovation pédagogique",
+      "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070",
+      "type": "website",
+      "site_name": "Festival Out of the Books"
+    }
+  },
+  "hero": {
+    "logo": "~/assets/images/logo_festival_white.svg",
+    "heroImage": "~/assets/images/festival_hero.webp",
+    "date": "1, 2 et 3 octobre 2025",
+    "location": "La Sucrerie - Wavre",
+    "description": "Trois jours de conférences, d'ateliers et de rencontres pour repenser l'éducation de demain."
+  },
+  "about": {
+    "title": "Le festival des pédagogies innovantes",
+    "description": "Trois jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes, pour repenser l'éducation de demain.",
+    "videoId": "D74JiIP9rtc",
+    "videoTitle": "Festival Out of the Books 2025",
+    "paragraphs": [
+      "Le festival Out of the Books est le rendez-vous incontournable des acteurs de l'éducation innovante. Notre mission ? Créer un espace d'échange et d'inspiration où enseignants, parents et professionnels de l'éducation peuvent découvrir, partager et s'enrichir mutuellement.",
+      "Au programme : des conférences inspirantes, des ateliers pratiques, des démonstrations pédagogiques et de nombreuses opportunités de networking. Une expérience immersive unique pour explorer les pédagogies de demain."
+    ]
+  },
+  "gallery": {
+    "title": "Revivez les moments forts",
+    "description": "Plongez dans l'ambiance des éditions précédentes du festival",
+    "photos": [
+      {
+        "src": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop",
+        "alt": "Conférence principale Out of The Books",
+        "title": "Conférence principale"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=800&auto=format&fit=crop",
+        "alt": "Atelier collaboratif",
+        "title": "Atelier collaboratif"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop",
+        "alt": "Stand d'éditeurs",
+        "title": "Stand d'éditeurs"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1531496681078-27dc2277e898?q=80&w=800&auto=format&fit=crop",
+        "alt": "Espace de networking",
+        "title": "Networking & Échanges"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=800&auto=format&fit=crop",
+        "alt": "Espace détente",
+        "title": "Espace détente & café"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1559223607-a43c990c692c?q=80&w=800&auto=format&fit=crop",
+        "alt": "Espace de discussion",
+        "title": "Discussions informelles"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1558008258-3256797b43f3?q=80&w=800&auto=format&fit=crop",
+        "alt": "Présentation interactive",
+        "title": "Présentations interactives"
+      }
+    ]
+  },
+  "stats": [
+    { "number": "40+", "label": "conférences", "icon": "tabler:presentation" },
+    { "number": "20+", "label": "ateliers pratiques", "icon": "tabler:tool" },
+    { "number": "80+", "label": "intervenants", "icon": "tabler:users" },
+    { "number": "3000+", "label": "participants", "icon": "tabler:heart-handshake" }
+  ],
+  "programme": {
+    "title": "Programme du festival",
+    "description": "Découvrez toutes les conférences, ateliers et stands sur les 3 jours",
+    "dayFilter": {
+      "allDaysLabel": "Tous les jours",
+      "globalViewLabel": "Vue globale",
+      "days": [
+        { "name": "Mardi", "date": "1 oct" },
+        { "name": "Mercredi", "date": "2 oct" },
+        { "name": "Jeudi", "date": "3 oct" }
+      ],
+      "eventTypes": [
+        { "name": "Conférences", "icon": "tabler:presentation" },
+        { "name": "Ateliers", "icon": "tabler:hammer" },
+        { "name": "Stands", "icon": "tabler:building-store" }
+      ],
+      "allEventsLabel": "Tous les événements",
+      "pdfButtonLabel": "Programme PDF",
+      "pdfLink": "/programme.pdf",
+      "prevLabel": "Précédent",
+      "nextLabel": "Suivant",
+      "pageLabel": "Page",
+      "onLabel": "sur"
+    }
+  },
+  "themes": {
+    "title": "Les grands thèmes du Festival",
+    "description": "Découvrez les 5 axes principaux qui seront abordés lors du festival",
+    "liste": [
+      {
+        "title": "Pédagogies actives",
+        "description": "Faire découvrir des écoles, des structures d'aide et d'accompagnement moins « traditionnelles » et répondant aux besoins de tous.",
+        "icon": "tabler:school"
+      },
+      {
+        "title": "La classe autrement & les besoins spécifiques",
+        "description": "Faire découvrir de nouvelles approches méthodologiques à l'aide des intelligences multiples, de la gestion mentale, de la PNL d'apprentissage, du jeu...",
+        "icon": "tabler:brain"
+      },
+      {
+        "title": "La ludopédagogie en classe & à la maison",
+        "description": "Faire découvrir des techniques d'apprentage par le jeu. Démontrer qu'il est possible d'apprendre tout en jouant.",
+        "icon": "tabler:puzzle"
+      },
+      {
+        "title": "Les nouvelles technologies",
+        "description": "Faire découvrir des approches innovantes pour apprendre autrement à l'aide des nouvelles technologies.",
+        "icon": "tabler:device-laptop"
+      },
+      {
+        "title": "L'éducation positive & le bien-être",
+        "description": "Faire découvrir des outils de communication positive et de gestion efficace du stress et du harcèlement.",
+        "icon": "tabler:heart"
+      }
+    ]
+  },
+  "accessibility": {
+    "title": "Informations pratiques",
+    "description": "Le festival est accessible à tous. Voici les informations essentielles pour votre venue.",
+    "sections": [
+      {
+        "title": "Accès",
+        "icon": "tabler:map-pin",
+        "lieu": "La Sucrerie",
+        "adresse": "Chemin de la Sucrerie 2, 1300 Wavre",
+        "mapLink": "https://maps.app.goo.gl/dsJnTzVSAh5aV2x3A",
+        "infos": [
+          { "text": "Parking gratuit sur place", "icon": "tabler:car" },
+          { "text": "Gare de Wavre à 10 min à pied", "icon": "tabler:train" }
+        ]
+      },
+      {
+        "title": "Horaires",
+        "icon": "tabler:clock",
+        "infos": [
+          { "text": "Ouverture : 8h30", "icon": "tabler:door-enter" },
+          { "text": "Fermeture : 18h00", "icon": "tabler:door-exit" },
+          { "text": "Restauration sur place", "icon": "tabler:coffee" }
+        ]
+      },
+      {
+        "title": "Accessibilité PMR",
+        "icon": "tabler:wheelchair",
+        "infos": [
+          { "text": "Site entièrement accessible", "icon": "tabler:check" },
+          { "text": "Places PMR réservées", "icon": "tabler:parking" },
+          { "text": "Sanitaires adaptés", "icon": "tabler:accessible" }
+        ]
+      }
+    ],
+    "contact": {
+      "text": "Besoin d'assistance particulière ? Contactez notre équipe :",
+      "email": "alexia@festivaloutofthebooks.com"
+    }
+  },
+  "partenaires": {
+    "title": "Ils nous soutiennent",
+    "description": "Des partenaires institutionnels et privés qui contribuent à la réalisation du festival",
+    "liste": [
+      {
+        "logo": "https://static.wixstatic.com/media/56c117_9fc5d8c1349844e0b59a4576763ab276~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-bw.jpg"
+      },
+      {
+        "logo": "https://static.wixstatic.com/media/e57c2b_cae38a1c958d45099aed30675c9664bd~mv2.png/v1/fill/w_210,h_200,al_c,lg_1,q_85,enc_avif,quality_auto/1200px-F%EF%BF%BD%C3%A9d%C3%A9ration_Wallonie-Bruxelles_log.png"
+      },
+      {
+        "logo": "https://static.wixstatic.com/media/e57c2b_1a0a229810d347e6a3fcabeedae6ae31~mv2.png/v1/fill/w_224,h_411,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Wavre%20-%20Logo%20-%20PNG%20-%20Vert.png"
+      },
+      {
+        "logo": "https://static.wixstatic.com/media/56c117_a88c6bf5870d4c1792472d4c9d4264de~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-daoust.jpg"
+      },
+      {
+        "logo": "https://static.wixstatic.com/media/e57c2b_6bf32d95aa624c06ae30d6809dcb156f~mv2.png/v1/crop/x_0,y_242,w_2886,h_1732/fill/w_396,h_236,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20IFPC.png"
+      },
+      {
+        "logo": "https://static.wixstatic.com/media/56c117_0943597d29324f9fbfadeefe2237eecd~mv2.jpg/v1/fill/w_296,h_148,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/ootb-partenaire-tvcom.jpg"
+      }
+    ]
+  }
+} 

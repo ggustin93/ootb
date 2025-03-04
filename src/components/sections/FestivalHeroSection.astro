@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import GradientHeroSection from './GradientHeroSection.astro';
 import TicketingButton from '../ui/TicketingButton';
+import type { ImageMetadata } from 'astro';
 
 interface Button {
   href: string;
@@ -32,7 +33,6 @@ interface Props {
   description: string;
   buttons?: Array<Button>;
   floatingIcons?: Array<FloatingIcon>;
-  quoteColor?: string;
   imageBackgroundColor?: string;
 }
 
@@ -57,7 +57,6 @@ const {
     }
   ],
   floatingIcons = [],
-  quoteColor = '--ootb-yellow',
   imageBackgroundColor = '--ootb-orange'
 } = Astro.props;
 
@@ -116,7 +115,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
                     variant={variant}
                     client:load
                     openOnLoad={Astro.url.hash === '#tickets'}
-                    class="w-full sm:w-auto"
+                    className="w-full sm:w-auto"
                   />
                 );
               }
@@ -131,13 +130,13 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
         </div>
 
         <div class="relative md:ml-6 mt-8 md:mt-0 block">
-          <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+          <div class="relative z-10 transform hover:scale-[1.02] transition-transform duration-500">
             <Image
               src={heroImage}
               alt="Festival Out of the Books"
-              class="rounded-2xl shadow-xl"
-              widths={[400, 800]}
-              sizes="(max-width: 768px) 400px, 800px"
+              class="rounded-2xl shadow-xl w-full"
+              widths={[400, 800, 1200]}
+              sizes="(max-width: 768px) 400px, (max-width: 1200px) 800px, 1200px"
               aspectRatio="4:3"
               loading="eager"
               decoding="async"
@@ -204,6 +203,37 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
   .festival-card {
     @apply bg-white/95 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
     border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+      opacity: 0.2;
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+      opacity: 0.15;
+    }
+    50% {
+      transform: translateY(-15px) rotate(-5deg);
+      opacity: 0.25;
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 8s ease-in-out infinite;
+    animation-delay: -2s;
   }
 </style>
 

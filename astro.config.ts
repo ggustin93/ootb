@@ -21,9 +21,6 @@ export default defineConfig({
  output: 'static',
  build: {
    inlineStylesheets: 'auto',
-   rollupOptions: {
-     external: ['@astrojs/core']
-   }
  },
  experimental: {
    clientPrerender: true
@@ -31,8 +28,8 @@ export default defineConfig({
  /*redirects: {
    '/admin': '/admin/index.html'
  },*/
- viewTransitions: true,
  integrations: [
+   sitemap(),
    tailwind({
      applyBaseStyles: false,
    }),
@@ -44,11 +41,9 @@ export default defineConfig({
       theme: 'github-dark',
     },
     remarkPlugins: [
-      ...defineConfig.markdown?.remarkPlugins || [],
       readingTimeRemarkPlugin
     ],
     rehypePlugins: [
-      ...defineConfig.markdown?.rehypePlugins || [],
       responsiveTablesRehypePlugin, 
       lazyImagesRehypePlugin
     ]
@@ -95,11 +90,18 @@ export default defineConfig({
      HTML: {
        'html-minifier-terser': {
          removeAttributeQuotes: false,
+         collapseWhitespace: true,
+         removeComments: true,
+         removeRedundantAttributes: true,
+         removeScriptTypeAttributes: true,
+         removeStyleLinkTypeAttributes: true,
+         minifyJS: true,
+         minifyCSS: true,
        },
      },
-     Image: false,
+     Image: true,
      JavaScript: true,
-     SVG: false,
+     SVG: true,
      Logger: 1,
    }),
    astrowind({
@@ -113,10 +115,14 @@ export default defineConfig({
      'images.unsplash.com',
      'res.cloudinary.com'
    ],
- },
- markdown: {
-   remarkPlugins: [readingTimeRemarkPlugin],
-   rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
+   service: {
+     entrypoint: 'astro/assets/services/sharp',
+     config: {
+       quality: 80,
+       format: ['avif', 'webp', 'jpeg'],
+       cacheDir: './node_modules/.sharp-cache',
+     },
+   },
  },
  vite: {
    resolve: {
@@ -131,6 +137,14 @@ export default defineConfig({
    build: {
      assetsInlineLimit: 4096,
      modulePreload: false,
+     cssCodeSplit: true,
+     minify: 'terser',
+     terserOptions: {
+       compress: {
+         drop_console: true,
+         drop_debugger: true,
+       },
+     },
      rollupOptions: {
        external: [
          'astro:*'
@@ -138,7 +152,10 @@ export default defineConfig({
        output: {
          format: 'esm',
          chunkFileNames: 'chunks/[name].[hash].mjs',
-         entryFileNames: 'entries/[name].[hash].mjs'
+         entryFileNames: 'entries/[name].[hash].mjs',
+         manualChunks: {
+           'youtube-api': ['./src/components/common/YouTubePlayer.astro'],
+         },
        }
      }
    },

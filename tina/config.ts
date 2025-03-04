@@ -8,6 +8,7 @@ import { navigationCollection } from "./navigationCollection";
 import { aboutCollection } from "./aboutCollection";
 import { contactCollection } from "./contactCollection";
 import { siteSettingsCollection } from "./siteSettingsCollection";
+import { festivalCollection } from "./festivalCollection";
 
 export default defineConfig({
   branch: "main",
@@ -30,6 +31,7 @@ export default defineConfig({
     collections: [
       postsCollection,
       homepageCollection,
+      festivalCollection,
       appelProjetCollection,
       blogCollection,
       aboutCollection,

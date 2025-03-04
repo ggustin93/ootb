@@ -11,7 +11,7 @@
         "dev": "astro dev && tinacms dev",
         "start": "astro dev",
         "build": "astro build && npx tinacms build",
-        "build:netlify": "astro build && npx tinacms build && cp -r admin dist/",
+        "build:netlify": "astro build && npx tinacms build && mkdir -p dist/admin && echo '<!-- Tina CMS Admin -->' > dist/admin/index.html",
         "preview": "astro preview",
         "astro": "astro",
         "check": "npm run check:astro && npm run check:eslint && npm run check:prettier",

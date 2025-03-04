@@ -11,6 +11,12 @@
   to = "/.netlify/functions/tina/:splat"
   status = 200
 
+# Redirection pour l'interface d'administration Tina
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"

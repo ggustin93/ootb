@@ -16,18 +16,32 @@ exports.handler = async function(event, context) {
   // Extraire le chemin de la requête
   const segments = event.path.split('/').filter(Boolean);
   const lastSegment = segments[segments.length - 1];
+  
+  // Log pour le débogage
+  console.log('Tina function called with path:', event.path);
+  console.log('Method:', event.httpMethod);
+  console.log('Segments:', segments);
 
-  // Gérer les requêtes de médias
-  if (lastSegment === 'media') {
-    return mediaHandler(event, context);
+  try {
+    // Gérer les requêtes de médias
+    if (lastSegment === 'media' || segments.includes('media')) {
+      console.log('Handling media request');
+      return await mediaHandler(event, context);
+    }
+
+    // Gérer d'autres requêtes Tina si nécessaire
+    // ...
+
+    // Réponse par défaut
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ error: 'Route non trouvée', path: event.path }),
+    };
+  } catch (error) {
+    console.error('Error in Tina function:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Erreur interne du serveur', message: error.message }),
+    };
   }
-
-  // Gérer d'autres requêtes Tina si nécessaire
-  // ...
-
-  // Réponse par défaut
-  return {
-    statusCode: 404,
-    body: JSON.stringify({ error: 'Route non trouvée' }),
-  };
 }; 

@@ -1,6 +1,5 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Button from '~/components/ui/Button.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
@@ -14,7 +13,7 @@ const { metadata, hero, form, contactInfo } = contactData;
 ---
 
 <Layout metadata={metadata}>
-  <div class="relative min-h-screen bg-gradient-to-b from-[color-mix(in_srgb,var(--ootb-blue)_2%,white)] via-white to-[color-mix(in_srgb,var(--ootb-turquoise)_3%,white)] dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 overflow-hidden">
+  <div class="relative min-h-screen flex flex-col justify-start bg-gradient-to-b from-[color-mix(in_srgb,var(--ootb-blue)_2%,white)] via-white to-[color-mix(in_srgb,var(--ootb-turquoise)_3%,white)] dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 overflow-x-hidden pb-12">
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(var(--ootb-blue-rgb),0.03),transparent_40%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(var(--ootb-blue-rgb),0.05),transparent_40%)]"></div>
       
       {/* Éléments décoratifs flottants */}
@@ -39,131 +38,140 @@ const { metadata, hero, form, contactInfo } = contactData;
           <Icon name="tabler:book-upload" class="w-full h-full text-[--ootb-orange]" />
         </div>
       </div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 md:pt-8 md:pb-10 flex-1 flex flex-col">
       
       {/* En-tête */}
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <SectionDivider variant="sky" class="mb-8">{hero.title}</SectionDivider>
-        <h1 class="text-4xl md:text-6xl font-handwritten mb-6 text-sky-900 dark:text-sky-400">
+      <div class="text-center max-w-3xl mx-auto mb-6 md:mb-8">
+        <SectionDivider variant="sky" class="mb-4">{hero.title}</SectionDivider>
+        <h1 class="text-4xl md:text-6xl font-handwritten mb-4 text-sky-900 dark:text-sky-400">
           {hero.subtitle}
         </h1>
-        <p class="text-lg text-gray-600 dark:text-gray-400">
+        <p class="text-base md:text-lg text-gray-600 dark:text-gray-400">
           {hero.description}
         </p>
       </div>
 
-      <div class="grid lg:grid-cols-3 gap-12 items-start">
-        {/* Formulaire */}
-        <div class="relative lg:col-span-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-10 border border-gray-100 dark:border-gray-700 h-full">
-          <div class="absolute -top-16 -left-6 md:-top-20 md:-left-10 lg:-left-12 z-10 pointer-events-none">
-            <Image
-              src={OotbLogo}
-              alt="OOTB Mascotte"
-              class="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 transform -rotate-12 drop-shadow-lg"
-            />
-          </div>
-          <form class="space-y-6 relative z-0 pt-4 md:pt-0">
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="name">
-                  {form.name.label}
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder={form.name.placeholder}
-                  class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
-                  required
-                />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="email">
-                  {form.email.label}
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder={form.email.placeholder}
-                  class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="message">
-                {form.message.label}
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                placeholder={form.message.placeholder}
-                rows="8"
-                class="w-full px-4 py-3 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
-                required
-              ></textarea>
-            </div>
-
-            <div class="pt-4">
-              <Button
-                variant="blue"
-                class="w-full md:w-auto"
-              >
-                {form.button}
-              </Button>
-            </div>
-          </form>
+      {/* Formulaire et informations de contact intégrés */}
+      <div class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100 dark:border-gray-700">
+        <div class="absolute -top-14 -left-6 md:-top-16 md:-left-8 z-10 pointer-events-none">
+          <Image
+            src={OotbLogo}
+            alt="OOTB Mascotte"
+            class="w-20 h-20 md:w-28 md:h-28 transform -rotate-12 drop-shadow-lg"
+          />
         </div>
+        
+        <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+          {/* Formulaire */}
+          <div class="md:col-span-2">
+            <form class="space-y-5 relative z-0" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+              <input type="hidden" name="form-name" value="contact" />
+              <p class="hidden">
+                <label>
+                  Ne pas remplir si vous êtes humain: <input name="bot-field" />
+                </label>
+              </p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                <div>
+                  <label class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2" for="name">
+                    {form.name.label}
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder={form.name.placeholder}
+                    class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2" for="email">
+                    {form.email.label}
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder={form.email.placeholder}
+                    class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                    required
+                  />
+                </div>
+              </div>
 
-        {/* Informations de contact */}
-        <div class="lg:sticky lg:top-8 space-y-8">
-          <div class="grid sm:grid-cols-2 lg:grid-cols-1 gap-6">
+              <div>
+                <label class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2" for="message">
+                  {form.message.label}
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder={form.message.placeholder}
+                  rows="5"
+                  class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="pt-2">
+                <button 
+                  type="submit"
+                  class="inline-flex items-center justify-center gap-2 font-medium rounded-full px-8 py-3 bg-[--ootb-blue] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)] shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[--ootb-blue] hover:-translate-y-0.5 w-full md:w-auto text-base"
+                >
+                  {form.button}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Informations de contact */}
+          <div class="space-y-3 md:space-y-4 flex flex-col justify-center mt-6 md:mt-0">
+            
             {/* Téléphone */}
-            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_10%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="text-[--ootb-blue]">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
+            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20">
+              <div class="flex items-start sm:items-center gap-3 mb-1">
+                <div class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
                     <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
                   </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{contactInfo.phone.title}</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight">{contactInfo.phone.title}</h3>
               </div>
-              <p class="text-gray-600 dark:text-gray-400">{contactInfo.phone.value}</p>
+              <p class="text-base text-gray-600 dark:text-gray-400 pl-11 font-medium break-words">{contactInfo.phone.value}</p>
             </div>
 
             {/* Email */}
-            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_10%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="text-[--ootb-blue]">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
+            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20">
+              <div class="flex items-start sm:items-center gap-3 mb-1">
+                <div class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
                     <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
                     <path d="M3 7l9 6l9 -6" />
                   </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{contactInfo.email.title}</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight">{contactInfo.email.title}</h3>
               </div>
-              <p class="text-gray-600 dark:text-gray-400">{contactInfo.email.value}</p>
+              <p class="text-base text-gray-600 dark:text-gray-400 pl-11 font-medium break-words">{contactInfo.email.value}</p>
             </div>
 
             {/* Adresse */}
-            <div class="sm:col-span-2 lg:col-span-1 bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_10%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="text-[--ootb-blue]">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
+            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20">
+              <div class="flex items-start sm:items-center gap-3 mb-1">
+                <div class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
                   <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                   <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
                 </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{contactInfo.address.title}</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight">{contactInfo.address.title}</h3>
               </div>
-              <p class="text-gray-600 dark:text-gray-400">
+              <p class="text-base text-gray-600 dark:text-gray-400 pl-11 font-medium break-words">
                 {contactInfo.address.value}
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </div>

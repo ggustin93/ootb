@@ -49,6 +49,57 @@ npm run build
 npm run preview
 ```
 
+## 🔧 Environment Variables Configuration
+
+To ensure all features work correctly, you need to configure the following environment variables:
+
+### Brevo API (Newsletter)
+
+To connect the newsletter form to Brevo:
+
+```bash
+# Brevo API key for newsletter subscriptions
+BREVO_API_KEY=your_brevo_api_key
+```
+
+#### How to obtain a Brevo API key
+1. Log in to your Brevo account
+2. Go to SMTP & API > API Keys > Generate a new API key
+3. Copy the generated key
+
+#### Configuration on Netlify
+1. Go to Netlify dashboard > Site > Settings > Environment variables
+2. Add a variable named `BREVO_API_KEY` with your Brevo API key
+
+> **Important note**: With this configuration, you do **NOT** need n8n. The integrated API sends data directly to Brevo.
+
+### n8n Variables (OPTIONAL)
+
+n8n is a workflow automation tool that supports HTTP requests and can be used as an intermediary for form processing. While the direct Brevo API integration is simpler and recommended, you may choose to use n8n for more complex automation workflows:
+
+```bash
+# n8n webhook URL for forms
+PUBLIC_N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/...
+```
+
+#### Configuration on Netlify
+1. Go to Netlify dashboard > Site > Settings > Environment variables
+2. Add a variable named `PUBLIC_N8N_WEBHOOK_URL` with your n8n webhook URL
+
+### Local Development Variables
+
+For local development, create a `.env` file at the project root with the necessary variables:
+
+```bash
+# Brevo API key (recommended)
+BREVO_API_KEY=your_brevo_api_key
+
+# n8n webhook URL (optional - not recommended)
+PUBLIC_N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/...
+```
+
+**Important**: Make sure the `.env` file is included in your `.gitignore` to avoid exposing your API keys.
+
 ## 🙏 Credits
 
 This website was developed by [Guillaume Gustin](https://pwablo.be) using **AstroWind** as a starting template. While AstroWind provided the initial foundation, the website has been extensively customized and rebuilt to meet Out of the Books' specific needs, including custom components, unique design elements, and specialized features for educational content management.

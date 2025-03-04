@@ -1,9 +1,9 @@
 ---
 import { Icon } from 'astro-icon/components';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
-import Button from '~/components/ui/Button.astro';
 import homepageData from '../../content/homepage/index.json';
 
+// Configuration de la newsletter - À personnaliser selon vos besoins
 const {
   title = "Rejoignez notre communauté éducative",
   description = "Recevez chaque mois une sélection d'articles, de ressources et d'événements pour innover dans votre pratique",
@@ -12,6 +12,12 @@ const {
   badgeText = "Newsletter mensuelle",
   socialLinks = []
 } = homepageData.newsletter || {};
+
+// Configuration de l'intégration - À personnaliser même si non présent dans homepageData
+const formName = "newsletter-homepage"; // Nom du formulaire pour Netlify
+const redirectSuccess = "/merci-inscription"; // Page de redirection après succès
+const listId = "1"; // ID de la liste Brevo (à remplacer par votre ID réel)
+const n8nWebhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || ""; // URL du webhook n8n (à définir dans .env)
 
 const defaultSocialLinks = [
   {
@@ -49,41 +55,28 @@ const defaultSocialLinks = [
 const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLinks;
 ---
 
-<section id="rejoindre" class="relative py-24 px-4 md:px-8 mb-8">
+<section id="rejoindre" class="relative py-16 md:py-24 px-4 md:px-8 mb-0 md:mb-8">
   <!-- Livres flottants externes -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <!-- Premier livre flottant -->
-    <div class="absolute z-30 w-12 md:w-20 h-16 md:h-28 -rotate-[22deg] top-[25%] left-[12%] opacity-15 md:opacity-25 transition-transform hover:-translate-y-2 duration-1000">
-      <Icon name="tabler:book-2" class="w-full h-full text-[--ootb-blue] filter drop-shadow-lg" />
-    </div>
-    
-    <!-- Deuxième livre flottant -->
-    <div class="absolute z-30 w-10 md:w-16 h-14 md:h-24 rotate-[38deg] bottom-[30%] right-[8%] opacity-15 md:opacity-25 transition-transform hover:translate-y-2 duration-1000">
-      <Icon name="tabler:book" class="w-full h-full text-[--ootb-turquoise] filter drop-shadow-lg" />
-    </div>
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <Icon name="tabler:book-2" class="absolute z-30 w-12 md:w-20 h-16 md:h-28 -rotate-[22deg] top-[25%] left-[12%] opacity-15 md:opacity-25 transition-transform hover:-translate-y-2 duration-1000 text-[--ootb-blue] filter drop-shadow-lg" />
+    <Icon name="tabler:book" class="absolute z-30 w-10 md:w-16 h-14 md:h-24 rotate-[38deg] bottom-[30%] right-[8%] opacity-15 md:opacity-25 transition-transform hover:translate-y-2 duration-1000 text-[--ootb-turquoise] filter drop-shadow-lg" />
   </div>
 
   <div class="max-w-6xl mx-auto">
-    <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-8 md:p-16 text-center relative overflow-hidden border border-[--ootb-turquoise]/20 hover:border-[--ootb-turquoise]/30 transition-colors duration-300">
+    <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-6 md:p-16 text-center relative overflow-hidden border border-[--ootb-turquoise]/20 hover:border-[--ootb-turquoise]/30 transition-colors duration-300">
+      <!-- Effets décoratifs -->
       <div class="absolute inset-0 bg-white/90 backdrop-blur-xl rounded-3xl"></div>
-      <!-- Effets décoratifs modernes et subtils -->
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/10 to-[--ootb-turquoise]/10" />
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-60 bg-gradient-to-r from-blue-100/30 via-[--ootb-turquoise]/20 to-blue-100/30 blur-3xl opacity-30 rotate-12" />
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/10 to-[--ootb-turquoise]/10"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-60 bg-gradient-to-r from-blue-100/30 via-[--ootb-turquoise]/20 to-blue-100/30 blur-3xl opacity-30 rotate-12"></div>
 
-      <!-- Livre flottant interne droit -->
-      <div class="absolute z-30 w-10 md:w-14 h-14 md:h-20 rotate-[23deg] top-16 right-[22%] opacity-20 md:opacity-30 transition-all duration-1000 hover:rotate-[28deg] hover:-translate-y-2">
-        <Icon name="tabler:book-2" class="w-full h-full text-[--ootb-turquoise] filter drop-shadow-lg" />
-      </div>
-
-      <!-- Livre flottant interne gauche -->
-      <div class="absolute z-30 w-12 md:w-16 h-16 md:h-22 -rotate-[8deg] top-20 left-[18%] opacity-20 md:opacity-30 transition-all duration-1000 hover:-rotate-[12deg] hover:-translate-y-3">
-        <Icon name="tabler:book" class="w-full h-full text-[--ootb-blue] filter drop-shadow-lg" />
-      </div>
+      <!-- Livres flottants internes -->
+      <Icon name="tabler:book-2" class="absolute z-30 w-10 md:w-14 h-14 md:h-20 rotate-[23deg] top-16 right-[22%] opacity-20 md:opacity-30 transition-all duration-1000 hover:rotate-[28deg] hover:-translate-y-2 text-[--ootb-turquoise] filter drop-shadow-lg" aria-hidden="true" />
+      <Icon name="tabler:book" class="absolute z-30 w-12 md:w-16 h-16 md:h-22 -rotate-[8deg] top-20 left-[18%] opacity-20 md:opacity-30 transition-all duration-1000 hover:-rotate-[12deg] hover:-translate-y-3 text-[--ootb-blue] filter drop-shadow-lg" aria-hidden="true" />
 
       <div class="relative">
         <!-- Icône et badge -->
-        <div class="inline-flex flex-col items-center gap-4 mb-8">
-            <div class="bg-[--ootb-blue] rounded-2xl p-4 group hover:scale-105 transition-all duration-300">
+        <div class="inline-flex flex-col items-center gap-3 md:gap-4 mb-6 md:mb-8">
+          <div class="bg-[--ootb-blue] rounded-2xl p-4 group hover:scale-105 transition-all duration-300">
             <Icon name="tabler:mail-filled" class="w-8 h-8 text-white" />
           </div>
           <SectionDivider variant="turquoise" class="backdrop-blur-sm font-medium tracking-wide mb-2">
@@ -93,8 +86,8 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
         </div>
 
         <!-- Titre et description -->
-        <div class="max-w-2xl mx-auto mb-8">
-          <h2 class="font-body text-3xl md:text-4xl font-bold text-[--ootb-blue] mb-4">
+        <div class="max-w-2xl mx-auto mb-6 md:mb-8">
+          <h2 class="font-body text-3xl md:text-4xl font-bold text-[--ootb-blue] mb-3 md:mb-4">
             {title}
           </h2>
           <p class="text-lg text-gray-600">
@@ -102,12 +95,40 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
           </p>
         </div>
 
-        <!-- Formulaire -->
+        <!-- 
+          CONFIGURATION HYBRIDE NETLIFY FORMS + n8n
+          ----------------------------------------
+          Ce formulaire utilise deux approches complémentaires :
+          
+          1. NETLIFY FORMS (solution de secours)
+             - Capture automatiquement les soumissions
+             - Fournit une protection anti-spam
+             - Stocke les données dans le dashboard Netlify
+          
+          2. n8n WEBHOOK (solution principale)
+             - Le script JavaScript ci-dessous intercepte la soumission
+             - Envoie les données au webhook n8n configuré
+             - Permet des workflows personnalisés (Brevo, etc.)
+             
+          CONFIGURATION REQUISE :
+          1. Créer une variable d'environnement PUBLIC_N8N_WEBHOOK_URL
+          2. Configurer un workflow n8n qui reçoit les données et les envoie à Brevo
+        -->
         <form 
-          class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto group mb-12" 
-          action="/api/newsletter" 
+          id="newsletter-form"
+          class="flex flex-col sm:flex-row gap-3 md:gap-4 max-w-md mx-auto group mb-8 md:mb-12" 
+          name={formName}
           method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          action={redirectSuccess}
+          data-n8n-webhook={n8nWebhookUrl}
         >
+          <!-- Champ honeypot anti-spam -->
+          <p class="hidden">
+            <label>Ne pas remplir si vous êtes humain: <input name="bot-field" /></label>
+          </p>
+          
           <div class="flex-1 relative">
             <Icon 
               name="tabler:at" 
@@ -120,30 +141,43 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
               required
               class="w-full h-14 pl-14 pr-6 rounded-full text-base bg-white/80 backdrop-blur-sm border border-gray-200 focus:border-[--ootb-blue] focus:ring-2 focus:ring-[--ootb-blue]/20 outline-none transition-all placeholder:text-gray-400"
             />
+            
+            <!-- Champs cachés pour Brevo et n8n -->
+            <input type="hidden" name="form-name" value={formName}>
+            <input type="hidden" name="list_id" value={listId}>
+            <input type="hidden" name="source" value="website">
+            <input type="hidden" name="tags" value="site-web,newsletter">
+            <input type="hidden" name="redirect_url" value={redirectSuccess}>
+            <input type="hidden" name="timestamp" value="">
           </div>
-          <Button 
+          
+          <!-- Bouton de soumission -->
+          <button 
             type="submit"
-            variant="primary" 
-            class="h-14 px-8 rounded-full bg-[--ootb-blue] hover:scale-105 transition-all duration-300"
-            icon="tabler:arrow-right"
-            iconPosition="right"
+            class="h-14 px-8 rounded-full bg-[--ootb-blue] text-white hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 newsletter-submit"
           >
-            {buttonText}
-          </Button>
+            <span>{buttonText}</span>
+            <Icon name="tabler:arrow-right" class="w-5 h-5" />
+          </button>
+          
+          <!-- Message de statut (visible uniquement en cas d'erreur) -->
+          <div class="newsletter-status hidden absolute left-0 right-0 bottom-[-30px] text-center">
+            <p class="newsletter-error text-red-500 font-medium hidden">Une erreur est survenue. Veuillez réessayer.</p>
+          </div>
         </form>
 
         <!-- Réseaux sociaux -->
-        <div class="border-t border-gray-100/50 pt-8">
+        <div class="border-t border-gray-100/50 pt-6 md:pt-8">
           <h3 class="text-lg font-display font-semibold text-gray-900 mb-2">Rejoignez la conversation</h3>
-          <p class="font-sans text-gray-600 text-sm mb-6">Découvrez Nos contenus exclusifs sur vos réseaux préférés</p>
+          <p class="font-sans text-gray-600 text-sm mb-4 md:mb-6">Découvrez Nos contenus exclusifs sur vos réseaux préférés</p>
           
-          <div class="flex justify-center flex-wrap gap-3">
+          <div class="flex justify-center flex-wrap gap-2 md:gap-3">
             {mergedSocialLinks.map(social => (
               <a
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/80 backdrop-blur-sm hover:bg-white border border-gray-100 hover:border-gray-200 hover:-translate-y-0.5 transition-all duration-300"
+                class="group flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-xl bg-white/80 backdrop-blur-sm hover:bg-white border border-gray-100 hover:border-gray-200 hover:-translate-y-0.5 transition-all duration-300"
                 title={social.name}
               >
                 <Icon 
@@ -159,6 +193,93 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
     </div>
   </div>
 </section>
+
+<!-- Script pour l'intégration n8n -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('newsletter-form') as HTMLFormElement;
+    if (!form) return;
+    
+    // Récupérer l'URL du webhook n8n
+    const n8nWebhookUrl = form.getAttribute('data-n8n-webhook');
+    if (!n8nWebhookUrl) return; // Si pas de webhook configuré, utiliser Netlify Forms par défaut
+    
+    // Ajouter un timestamp au moment de la soumission
+    const timestampField = form.querySelector('input[name="timestamp"]') as HTMLInputElement;
+    if (timestampField) {
+      timestampField.value = new Date().toISOString();
+    }
+    
+    form.addEventListener('submit', async function handleSubmit(e) {
+      // Empêcher la soumission normale du formulaire
+      e.preventDefault();
+      
+      // Récupérer les données du formulaire
+      const formData = new FormData(form);
+      const submitButton = form.querySelector('.newsletter-submit') as HTMLButtonElement;
+      const errorMessage = form.querySelector('.newsletter-error');
+      const statusContainer = form.querySelector('.newsletter-status');
+      
+      // Désactiver le bouton pendant la soumission
+      if (submitButton) {
+        submitButton.setAttribute('disabled', 'true');
+        submitButton.classList.add('opacity-70');
+      }
+      
+      try {
+        // Convertir FormData en objet
+        const formDataObj: Record<string, string> = {};
+        formData.forEach((value, key) => {
+          if (typeof value === 'string') {
+            formDataObj[key] = value;
+          }
+        });
+        
+        // Envoyer les données au webhook n8n
+        const response = await fetch(n8nWebhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formDataObj),
+        });
+        
+        if (response.ok) {
+          // Rediriger vers la page de succès
+          const redirectUrl = formDataObj['redirect_url'] || form.getAttribute('action');
+          if (redirectUrl) {
+            window.location.href = redirectUrl;
+          }
+        } else {
+          // En cas d'erreur avec n8n, soumettre le formulaire à Netlify comme fallback
+          console.warn('Erreur avec n8n, utilisation de Netlify Forms comme fallback');
+          form.removeEventListener('submit', handleSubmit);
+          form.submit();
+        }
+      } catch (error) {
+        console.error('Erreur lors de l\'inscription:', error);
+        
+        // Afficher le message d'erreur
+        if (statusContainer && errorMessage) {
+          statusContainer.classList.remove('hidden');
+          errorMessage.classList.remove('hidden');
+        }
+        
+        // Soumettre à Netlify comme fallback après un délai
+        setTimeout(() => {
+          form.removeEventListener('submit', handleSubmit);
+          form.submit();
+        }, 1000);
+      } finally {
+        // Réactiver le bouton
+        if (submitButton) {
+          submitButton.removeAttribute('disabled');
+          submitButton.classList.remove('opacity-70');
+        }
+      }
+    });
+  });
+</script>
 
 <style is:global>
   /* Police display pour les titres */

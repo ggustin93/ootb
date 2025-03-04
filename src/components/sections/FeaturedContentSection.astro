@@ -61,17 +61,17 @@ const {
 
 ---
 
-<section class="px-4 bg-[color-mix(in_srgb,var(--ootb-turquoise)_10%,white)] py-20">
+<section class="px-4 bg-[color-mix(in_srgb,var(--ootb-turquoise)_10%,white)] py-12 md:py-20">
   <div class="max-w-6xl mx-auto">
     <!-- En-tête de section -->
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16">
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8 mb-10 md:mb-16">
       <div class="max-w-2xl">
-        <SectionDivider variant="turquoise" class="mb-6 inline-flex items-center rounded-full">
+        <SectionDivider variant="turquoise" class="mb-4 md:mb-6 inline-flex items-center rounded-full">
           <Icon name="tabler:flame" class="w-4 h-4 text-[--ootb-turquoise]" />
           <span class="text-[--ootb-turquoise] font-medium tracking-wide">A L'AFFICHE</span>
         </SectionDivider>
         
-        <h2 class="font-body text-3xl md:text-4xl font-bold tracking-tight leading-tight text-gray-600 mb-6">
+        <h2 class="font-body text-3xl md:text-4xl font-bold tracking-tight leading-tight text-gray-600 mb-4 md:mb-6">
           {title}        
         </h2>
         
@@ -90,38 +90,34 @@ const {
           class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
         />
       </a>
-    </div>
+    </header>
     
     <!-- Grille de contenu -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
       {contents.map((content) => (
-        <div class="group">
-          <Card
-            href={content.href}
-            title={content.title}
-            image={content.image}
-            badge={content.badge}
-            type={content.type}
-            meta={content.meta}
-            description={content.description}
-            class="transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
-          />
-        </div>
+        <Card
+          href={content.href}
+          title={content.title}
+          image={content.image}
+          badge={content.badge}
+          type={content.type}
+          meta={content.meta}
+          description={content.description}
+          class="transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl"
+        />
       ))}
     </div>
 
     <!-- Bouton mobile -->
-    <div class="mt-12 md:hidden">
-      <a 
-        href={buttonLink} 
-        class="group flex items-center justify-center gap-3 w-full text-[#6ab29e] hover:text-[#5a9886] bg-white/80 hover:bg-white backdrop-blur-sm px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
-      >
-        <span class="font-medium">{buttonText}</span>
-        <Icon 
-          name="tabler:arrow-right" 
-          class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
-        />
-      </a>
-    </div>
+    <a 
+      href={buttonLink} 
+      class="mt-8 md:hidden group flex items-center justify-center gap-3 w-full text-[#6ab29e] hover:text-[#5a9886] bg-white/80 hover:bg-white backdrop-blur-sm px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
+    >
+      <span class="font-medium">{buttonText}</span>
+      <Icon 
+        name="tabler:arrow-right" 
+        class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+      />
+    </a>
   </div>
 </section> 

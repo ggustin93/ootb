@@ -30,25 +30,19 @@ const {
 } = homepageData.premium;
 ---
 <section class="py-16 px-4 md:px-8 bg-[--ootb-turquoise] text-white relative overflow-hidden">
-  <div class="absolute inset-0 overflow-hidden">
-    <div class="absolute top-4 -right-4 w-[80px] h-[80px] md:w-[160px] md:h-[160px] z-20">
-      <Image
-        src={heroImage}
-        alt=""
-        class="w-full h-full object-contain transform scale-x-[-1] rotate-[-15deg]"
-        widths={[80, 160]}
-        sizes="(max-width: 768px) 80px, 160px"
-        aspectRatio="1:1"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-    <div class="absolute w-20 h-24 -rotate-12 top-[10%] left-[35%] opacity-20 transition-transform hover:-translate-y-2 duration-1000">
-      <Icon name="tabler:book-2" class="w-full h-full text-white filter drop-shadow-lg" />
-    </div>
-    <div class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000">
-      <Icon name="tabler:book" class="w-full h-full text-white filter drop-shadow-lg" />
-    </div>
+  <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+    <Image
+      src={heroImage}
+      alt=""
+      class="absolute top-4 -right-4 w-[80px] h-[80px] md:w-[160px] md:h-[160px] z-20 object-contain transform scale-x-[-1] rotate-[-15deg]"
+      widths={[80, 160]}
+      sizes="(max-width: 768px) 80px, 160px"
+      aspectRatio="1:1"
+      loading="lazy"
+      decoding="async"
+    />
+    <Icon name="tabler:book-2" class="absolute w-20 h-24 -rotate-12 top-[10%] left-[35%] opacity-20 transition-transform hover:-translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
+    <Icon name="tabler:book" class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
   </div>
 
   <div class="max-w-6xl mx-auto relative z-10">
@@ -63,21 +57,20 @@ const {
           <span class="heading-2 text-[var(--ootb-yellow)] italic">{secondLine}</span>
         </h2>
         
-        <div class="mb-4"></div>
         <p class="text-lg text-white mb-8 max-w-xl">
           {intro}
         </p>
         
-        <div class="space-y-4 mb-8">
+        <ul class="space-y-4 mb-8">
           {features.map(feature => (
-            <div class="flex items-center gap-3 group">
+            <li class="flex items-center gap-3 group">
               <span class="flex-shrink-0 w-5 h-5 rounded-full bg-[color-mix(in_srgb,var(--ootb-yellow)_20%,transparent)] flex items-center justify-center">
                 <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-yellow)]" />
               </span>
               <span class="text-base text-white group-hover:text-[var(--ootb-yellow)] transition-colors">{feature.text}</span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
         <div class="flex flex-col sm:flex-row gap-4">
           <Button
@@ -99,37 +92,34 @@ const {
 
       <div class="space-y-3 relative">
         {podcastHighlights.map(podcast => (
-          <div class="group relative bg-white/15 backdrop-blur-sm rounded-xl p-4 hover:bg-white/25 transition-all border border-white/20">
-            <div class="flex gap-4">
-              <div class="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-                <Image 
-                  src={podcast.image}
-                  alt=""
-                  class="w-full h-full object-cover"
-                  width={120}  // Augmenté de 100 à 120
-                  height={120} // Augmenté de 100 à 120
-                  widths={[120, 240]} // Augmenté de 100 à 120 et de 200 à 240
-                  sizes="120px" // Augmenté de 100px à 120px
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <Icon name="tabler:player-play" class="w-8 h-8 text-white" />
-                </div>
-              </div>
-              <div>
-                <div class="inline-flex items-center gap-1 bg-[color-mix(in_srgb,var(--ootb-yellow)_100%,transparent)] px-2 py-1 rounded-full text-xs font-medium mb-2 text-[color-mix(in_srgb,var(--ootb-turquoise)_50%,black)] backdrop-blur-sm">
-                  Hors-série
-                </div>
-                <h3 class="text-2xl font-bold mb-1 line-clamp-1">{podcast.title}</h3>
-                <p class="text-white/90 text-sm mb-2 line-clamp-2">{podcast.description}</p>
-                <div class="flex items-center gap-1 text-xs text-white/75">
-                  <Icon name="tabler:clock" class="w-3.5 h-3.5" />
-                  <span>{podcast.duration}</span>
-                </div>
+          <a href="#" class="group relative bg-white/15 backdrop-blur-sm rounded-xl p-4 hover:bg-white/25 transition-all border border-white/20 flex gap-4 block">
+            <Image 
+              src={podcast.image}
+              alt=""
+              class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 object-cover"
+              width={120}
+              height={120}
+              widths={[120, 240]}
+              sizes="120px"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <Icon name="tabler:player-play" class="w-8 h-8 text-white" />
+            </div>
+            
+            <div>
+              <span class="inline-flex items-center gap-1 bg-[color-mix(in_srgb,var(--ootb-yellow)_100%,transparent)] px-2 py-1 rounded-full text-xs font-medium mb-2 text-[color-mix(in_srgb,var(--ootb-turquoise)_50%,black)] backdrop-blur-sm">
+                Hors-série
+              </span>
+              <h3 class="text-2xl font-bold mb-1 line-clamp-1">{podcast.title}</h3>
+              <p class="text-white/90 text-sm mb-2 line-clamp-2">{podcast.description}</p>
+              <div class="flex items-center gap-1 text-xs text-white/75">
+                <Icon name="tabler:clock" class="w-3.5 h-3.5" />
+                <span>{podcast.duration}</span>
               </div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>

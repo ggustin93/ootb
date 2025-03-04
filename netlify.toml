@@ -1,6 +1,12 @@
 [build]
-  command = "npm run build"
+  command = "npm run build:netlify"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20.11.0"
+
+[[redirects]]
+  from = "/admin/*"
+  to = "https://outofthebooks.vercel.app/admin/:splat"
+  status = 301
+  force = true

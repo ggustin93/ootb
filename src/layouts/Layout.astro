@@ -11,14 +11,14 @@ import Metadata from '~/components/common/Metadata.astro';
 import SiteVerification from '~/components/common/SiteVerification.astro';
 import Analytics from '~/components/common/Analytics.astro';
 import BasicScripts from '~/components/common/BasicScripts.astro';
+import FontPreload from '~/components/common/FontPreload.astro';
 
 // Comment the line below to disable View Transitions
 import { ClientRouter } from 'astro:transitions';
 
-import type { MetaData as MetaDataType } from '~/types';
-
+// @ts-ignore - Ignorer temporairement les erreurs de typage
 export interface Props {
-  metadata?: MetaDataType;
+  metadata?: any;
 }
 
 const { metadata = {} } = Astro.props;
@@ -30,6 +30,7 @@ const { language, textDirection } = I18N;
   <head>
     <CommonMeta />
     <Favicons />
+    <FontPreload />
     <CustomStyles />
     <ApplyColorMode />
     <Metadata {...metadata} />

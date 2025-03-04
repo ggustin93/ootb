@@ -1,6 +1,17 @@
 [build]
-  command = "npm run build"
+  command = "npm run build:netlify"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20.11.0"
+
+# Redirections pour les routes API de Tina
+[[redirects]]
+  from = "/api/tina/*"
+  to = "/.netlify/functions/tina/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200

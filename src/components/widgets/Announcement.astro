@@ -56,34 +56,68 @@ const getContrastColor = (hexColor: string) => {
 };
 
 const textColor = getContrastColor(bgColor);
+
+// Déterminer si le texte est court ou long pour adapter l'affichage mobile
+const hasLongText = (announcement.content?.text?.length || 0) > 30;
 ---
 
 {shouldShow && (
   <div id="announcement-bar" class="relative">
     <a 
       href={announcement.content?.link?.href || '#'} 
-      class="block md:flex items-center justify-center gap-2 overflow-hidden px-4 py-2.5 relative text-ellipsis whitespace-nowrap shadow-sm transition-all hover:brightness-95"
+      class="block md:flex items-center justify-center gap-2 overflow-hidden px-3 md:px-4 py-1.5 md:py-2.5 relative text-sm md:text-base transition-all hover:brightness-95"
       style={`background-color: ${bgColor}; color: ${textColor};`}
     >
-      {announcement.content?.badge && (
-        <span
-          class="font-semibold px-2 py-0.5 text-xs rounded-full mr-1 rtl:mr-0 rtl:ml-1 inline-block"
-          style={`background-color: white; color: ${bgColor};`}
-        >{announcement.content.badge}</span>
-      )}
-      
-      {announcement.content?.text && (
-        <span class="font-medium">{announcement.content.text}</span>
-      )}
-      
-      {announcement.content?.link?.text && (
-        <span class="underline font-medium ml-1 inline-flex items-center">
-          {announcement.content.link.text}
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </span>
-      )}
+      <div class="flex flex-wrap md:flex-nowrap items-center justify-center gap-1 md:gap-2 w-full">
+        {announcement.content?.badge && (
+          <span
+            class="font-semibold px-2 py-0.5 text-xs rounded-full inline-block whitespace-nowrap flex-shrink-0"
+            style={`background-color: white; color: ${bgColor};`}
+          >{announcement.content.badge}</span>
+        )}
+        
+        {announcement.content?.text && (
+          <span class={`font-medium ${hasLongText ? 'text-center md:text-left line-clamp-1' : 'whitespace-nowrap'}`}>
+            {announcement.content.text}
+          </span>
+        )}
+        
+        {announcement.content?.link?.text && (
+          <span class="underline font-medium ml-0 md:ml-1 inline-flex items-center whitespace-nowrap flex-shrink-0">
+            {announcement.content.link.text}
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 md:h-4 md:w-4 ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        )}
+      </div>
     </a>
   </div>
 )}
+
+<style>
+  /* Animation subtile pour attirer l'attention */
+  #announcement-bar {
+    animation: gently-pulse 8s infinite;
+  }
+  
+  @keyframes gently-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.95; }
+  }
+  
+  /* Amélioration de la lisibilité sur mobile */
+  @media (max-width: 640px) {
+    #announcement-bar a {
+      text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  /* Assurer que le texte tronqué a des points de suspension */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

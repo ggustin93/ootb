@@ -239,17 +239,17 @@ import logo_blanc from '~/assets/images/logo_ootb_garcon_blanc.svg';
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">{partenaires.title}</SectionDivider>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {partenaires.liste.map(partenaire => (
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center hover:shadow-md relative group">
-              <div class="h-24 flex items-center justify-center">
-                <a href={partenaire.lien} target="_blank" rel="noopener noreferrer">
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 sm:p-6 text-center hover:shadow-md relative group flex items-center justify-center">
+              <div class="h-16 sm:h-20 md:h-24 flex items-center justify-center w-full">
+                <a href={partenaire.lien} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-full h-full">
                   <Image
                     src={partenaire.logo}
                     alt={`Logo ${partenaire.nom}`}
-                    class="max-h-full w-auto"
-                    widths={[200]}
-                    sizes="200px"
+                    class="max-h-14 sm:max-h-16 md:max-h-20 w-auto object-contain"
+                    widths={[100, 120, 200]}
+                    sizes="(max-width: 480px) 100px, (max-width: 640px) 120px, 200px"
                     loading="lazy"
                   />
                 </a>

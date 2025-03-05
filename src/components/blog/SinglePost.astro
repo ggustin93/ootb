@@ -3,8 +3,6 @@ import type { Post } from '~/types';
 import type { ImageMetadata } from 'astro';
 import { CONTENT_TYPES } from '~/config/content-types';
 import { getBlogPermalink } from '~/utils/permalinks';
-import { DEFAULT_IMAGES } from '~/config/images';
-import Button from '~/components/ui/Button.astro';
 
 // Import des composants média
 import PodcastPlayer from './media/PodcastPlayer.astro';
@@ -16,14 +14,32 @@ import PedagogicalSheet from './components/PedagogicalSheet.astro';
 import PostHeader from './components/PostHeader.astro';
 import PostDescription from './components/PostDescription.astro';
 import PostFooter from './components/PostFooter.astro';
+import Button from '~/components/ui/Button.astro';
 
 // Types
 interface Props {
   post: Post & {
+    image: ImageMetadata | string;
+    expert?: string;
+    duration?: string;
+    subtitle?: string;
+    // Ancienne structure
+    podcastUrl?: string;
     showId?: string;
     podcastId?: string;
-    image: ImageMetadata | string;
+    videoUrl?: string;
     tvcomUrl?: string;
+    // Nouvelle structure
+    media?: {
+      type: 'none' | 'podcast' | 'youtube' | 'tv';
+      podcastUrl?: string;
+      showId?: string;
+      podcastId?: string;
+      videoUrl?: string;
+      tvcomUrl?: string;
+      iframeCode?: string;
+      smartlinkUrl?: string;
+    };
     pedagogicalSheet?: {
       enseignement: string;
       section: string;
@@ -53,26 +69,46 @@ const blogLink = typeof getBlogPermalink === 'function' ? getBlogPermalink() : '
 
 // Configuration du type de contenu
 const contentType = typeof post.category === 'string' ? post.category : (post.category?.slug || 'actualite');
-const contentConfig = CONTENT_TYPES[contentType as keyof typeof CONTENT_TYPES];
+const contentConfigRaw = CONTENT_TYPES[contentType as keyof typeof CONTENT_TYPES];
 
-// Debug - Post Category
-/*console.log('Debug - Post Category:', {
-  rawCategory: post.category,
-  contentType,
-  contentConfig,
-  postData: {
-    tvcomUrl: post.tvcomUrl,
-    category: post.category,
-    title: post.title
-  }
-});*/
+// Image par défaut si aucune n'est spécifiée
+const defaultImage = '~/assets/images/ootb-logo.svg';
+
+// Vérifier si l'image est l'image par défaut
+const isDefaultImage = !post.image || post.image === defaultImage || 
+                      (typeof post.image === 'string' && post.image.includes('ootb-logo'));
+
+// Adapter le contentConfig pour qu'il corresponde à l'interface attendue par PostHeader
+const contentConfig = {
+  icon: contentConfigRaw.icon,
+  label: contentConfigRaw.label,
+  variant: contentType as 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite',
+  color: contentConfigRaw.color
+};
+
+// Récupérer les URLs et IDs (compatibilité avec ancienne et nouvelle structure)
+const mediaInfo = {
+  podcastUrl: post.media?.podcastUrl || post.podcastUrl,
+  showId: post.media?.showId || post.showId,
+  podcastId: post.media?.podcastId || post.podcastId,
+  iframeCode: post.media?.iframeCode,
+  smartlinkUrl: post.media?.smartlinkUrl,
+  videoUrl: post.media?.videoUrl || post.videoUrl,
+  tvcomUrl: post.media?.tvcomUrl || post.tvcomUrl,
+  type: post.media?.type || (
+    contentType === 'podcast' ? 'podcast' :
+    post.podcastUrl ? 'podcast' : 
+    post.videoUrl ? 'youtube' : 
+    post.tvcomUrl ? 'tv' : 'none'
+  )
+};
 
 // États du contenu
 const contentStates = {
   isLiveFacebook: contentType === 'live',
-  isPodcast: contentType === 'podcast',
-  isVideo: contentType === 'tv',
-  isTvContent: contentType === 'tv',
+  isPodcast: contentType === 'podcast' || mediaInfo.type === 'podcast',
+  isVideo: mediaInfo.type === 'youtube',
+  isTvContent: contentType === 'tv' || mediaInfo.type === 'tv',
   isPedagogicalSheet: contentType === 'fiche',
   hasExpertInfo: Boolean(post.expert),
   hasDuration: Boolean(post.duration),
@@ -81,21 +117,8 @@ const contentStates = {
   hasPedagogicalInfo: Boolean(post.pedagogicalSheet)
 };
 
-// Extraire l'ID YouTube pour les lives Facebook
-const getYouTubeThumbnail = (url: string | undefined) => {
-  if (!url) return undefined;
-  
-  // Extraire l'ID YouTube de l'URL
-  const regExp = /^.*((youtu.be\/)|(v\/)|(\/?v=)|(\/embed\/)|(watch\?))([\w\-]+)/;
-  const match = url.match(regExp);
-  if (!match || !match[7]) return undefined;
-  
-  // Retourner l'URL de la miniature HD
-  return `https://img.youtube.com/vi/${match[7]}/maxresdefault.jpg`;
-};
-
 // Gérer l'image à afficher
-const displayImage = post.image;
+const displayImage = post.image || defaultImage;
 
 // Styles conditionnels
 const styles = {
@@ -117,7 +140,8 @@ const styles = {
       "prose-h2:text-[color:var(--content-color)]",
       "prose-h3:text-gray-600 dark:prose-h3:text-gray-400"
     ].join(" ")
-  }
+  },
+  badgeClass: "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
 };
 
 // Classes pour le wrapper média
@@ -130,12 +154,17 @@ const mediaWrapperClasses = [
 ];
 
 // Debug info
-/* console.log('Debug TV content:', {
-  tvcomUrl: post.tvcomUrl,
-  isVideo: contentStates.isVideo,
-  category: post.category,
-  contentType: contentType
-});*/
+console.log('Debug media info détaillé:', {
+  contentType,
+  mediaType: mediaInfo.type,
+  isPodcast: contentStates.isPodcast,
+  podcastUrl: mediaInfo.podcastUrl,
+  iframeCode: mediaInfo.iframeCode ? `Longueur: ${mediaInfo.iframeCode.length}` : 'Absent',
+  smartlinkUrl: mediaInfo.smartlinkUrl ? `URL: ${mediaInfo.smartlinkUrl}` : 'Absent',
+  rawMediaObject: post.media ? 'Objet media présent' : 'Objet media absent',
+  mediaKeys: post.media ? Object.keys(post.media) : [],
+  conditionTest: !!(mediaInfo.podcastUrl || mediaInfo.iframeCode || mediaInfo.smartlinkUrl)
+});
 ---
 
 <section class="py-4 sm:py-8 mx-auto max-w-6xl px-4 sm:px-6">
@@ -169,37 +198,63 @@ const mediaWrapperClasses = [
           <PedagogicalSheet sheet={post.pedagogicalSheet} />
         )}
 
-        {/* Média */}
-        {(contentStates.isPodcast && post.podcastUrl) && (
-          <PodcastPlayer 
-            podcastUrl={post.podcastUrl}
-          />
+        {/* Média - Podcast */}
+        {contentStates.isPodcast && (
+          <div class="mb-8">
+            {/* Afficher le player uniquement si iframeCode est présent */}
+            {mediaInfo.iframeCode ? (
+              <PodcastPlayer 
+                podcastUrl={mediaInfo.podcastUrl}
+                showId={mediaInfo.showId}
+                podcastId={mediaInfo.podcastId}
+                iframeCode={mediaInfo.iframeCode}
+                smartlinkUrl={mediaInfo.smartlinkUrl}
+              />
+            ) : (
+              <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 text-center">
+                <p class="text-gray-600 dark:text-gray-400 font-medium">
+                  Aucun lecteur de podcast disponible
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                  Veuillez ajouter un code iframe dans le champ "iframeCode" pour afficher le lecteur de podcast.
+                </p>
+              </div>
+            )}
+          </div>
         )}
 
-        {/* Média */}
-        {contentStates.isLiveFacebook && post.videoUrl ? (
+        {/* Média - Vidéo YouTube */}
+        {(contentStates.isVideo && mediaInfo.videoUrl) ? (
           <div class:list={[...mediaWrapperClasses, "group"]}>
             <VideoPlayer 
-              videoUrl={post.videoUrl}
+              videoUrl={mediaInfo.videoUrl}
               title={post.title}
             />
           </div>
-        ) : (displayImage && !contentStates.isPodcast) && (
+        ) : (
+          // Ne montrer l'image que si:
+          // 1. C'est une image fournie explicitement (pas l'image par défaut) OU
+          // 2. C'est un contenu TV qui devrait avoir une image OU
+          // 3. C'est un contenu d'actualité (où les images sont pertinentes)
+          // ET pas pour les podcasts qui ont leur propre affichage
+          (post.image && !isDefaultImage && !contentStates.isPodcast) || 
+          (contentStates.isTvContent && mediaInfo.tvcomUrl) || 
+          (contentType === 'actualite' && post.image && !isDefaultImage && !contentStates.isPodcast)
+        ) && (
           <div class:list={[...mediaWrapperClasses, "group"]}>
             <FeaturedImage 
               image={displayImage}
               title={post.title}
             />
             {/* Overlay sombre et bouton TV Com */}
-            {contentType === 'tv' && post.tvcomUrl && (
+            {contentStates.isTvContent && mediaInfo.tvcomUrl && (
               <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all duration-300">
                 <Button
                   variant="outline-tv"
-                  href={post.tvcomUrl}
+                  href={mediaInfo.tvcomUrl}
                   icon="tabler:device-tv"
                   size="lg"
                   target="_blank"
-                  rel="noopener noreferrer"
                   class="group/btn hover:scale-105 transition-transform duration-300"
                 >
                   Voir l'émission sur TV Com
@@ -209,20 +264,18 @@ const mediaWrapperClasses = [
           </div>
         )}
 
-        {/* Video Player for TV content */}
-        {(contentStates.isTvContent && post.videoUrl) && (
+        {/* Video Player for TV content with YouTube video */}
+        {(contentStates.isTvContent && mediaInfo.videoUrl) && (
           <div class:list={[...mediaWrapperClasses, "mb-0 p-0"]}>
             <VideoPlayer 
-              videoUrl={post.videoUrl}
+              videoUrl={mediaInfo.videoUrl}
               title={post.title}
             />
           </div>
         )}
 
-
-
         {/* Contenu de l'article */}
-        <div class:list={[styles.prose.base, styles.prose.headings, styles.prose.facebook]}>
+        <div class:list={[styles.prose.base, styles.prose.headings]}>
           {post.Content ? <post.Content /> : <slot />}
         </div>
       </main>

@@ -1,41 +1,68 @@
 ---
 import { Icon } from 'astro-icon/components';
 import Button from '~/components/ui/Button.astro';
-import { generateAushaPlayer } from '~/utils/podcast';
 
 interface Props {
-  podcastUrl: string;
+  // Champ obligatoire pour afficher le lecteur
+  iframeCode?: string;
+  // Champ optionnel pour le bouton smartlink
+  smartlinkUrl?: string;
+  // Ancienne approche (fallback)
+  podcastUrl?: string;
+  showId?: string;
+  podcastId?: string;
 }
 
-const { podcastUrl } = Astro.props;
-const playerResult = generateAushaPlayer(podcastUrl);
+const { iframeCode, smartlinkUrl, podcastUrl } = Astro.props;
+
+// Déterminer la méthode à utiliser
+const hasIframeCode = !!iframeCode;
+const hasSmartlink = !!smartlinkUrl;
+const useLegacyMethod = !hasIframeCode && !!podcastUrl;
+
+// Logs pour le débogage
+console.log('PodcastPlayer - Configuration détaillée:', {
+  hasIframeCode,
+  hasSmartlink,
+  useLegacyMethod,
+  iframeCodeLength: iframeCode ? iframeCode.length : 0,
+  iframeCodeType: iframeCode ? typeof iframeCode : 'undefined',
+  iframeCodeFirstChars: iframeCode ? iframeCode.substring(0, 20) + '...' : '',
+  smartlinkUrlValue: smartlinkUrl,
+  smartlinkUrlType: smartlinkUrl ? typeof smartlinkUrl : 'undefined',
+  propsReceived: Object.keys(Astro.props)
+});
 ---
 
 <div class="space-y-6">
-  {/* Player Ausha */}
+  {/* Player Ausha - Afficher l'iframe si disponible */}
   <div class="ausha-podcast-player">
-    <iframe
-      name="Ausha Podcast Player"
-      frameborder="0"
-      loading="lazy"
-      id={playerResult.playerConfig.id}
-      height="220"
-      style="border: none; width:100%; height:220px"
-      src={playerResult.playerConfig.src}
-    />
-    <script src="https://player.ausha.co/ausha-player.js" />
+    {hasIframeCode ? (
+      <Fragment set:html={iframeCode} />
+    ) : (
+      <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
+        <p class="text-gray-600 dark:text-gray-400">
+          Aucun lecteur de podcast disponible
+        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">
+          Pour afficher le lecteur, ajoutez le code iframe d'Ausha dans le champ "iframeCode"
+        </p>
+      </div>
+    )}
   </div>
 
-  {/* Smart Button */}
-  <div class="flex justify-center">
-    <Button
-      variant="outline-podcast"
-      href={playerResult.smartlinkUrl}
-      target="_blank"
-      class="group"
-    >
-      <Icon name="tabler:headphones" class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110" />
-      Écouter sur votre plateforme préférée
-    </Button>
-  </div>
+  {/* Smart Button - Afficher le bouton smartlink si disponible */}
+  {hasSmartlink && (
+    <div class="flex justify-center">
+      <Button
+        variant="outline-podcast"
+        href={smartlinkUrl}
+        target="_blank"
+        class="group"
+      >
+        <Icon name="tabler:headphones" class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110" />
+        Écouter sur votre plateforme préférée
+      </Button>
+    </div>
+  )}
 </div>

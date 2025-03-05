@@ -1,0 +1,210 @@
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  mediaType?: 'none' | 'podcast' | 'youtube' | 'tv';
+  podcastUrl?: string;
+  showId?: string;
+  podcastId?: string;
+  iframeCode?: string;
+  smartlinkUrl?: string;
+  videoUrl?: string;
+  tvcomUrl?: string;
+}
+
+const { 
+  mediaType = 'none', 
+  podcastUrl = '', 
+  showId = '', 
+  podcastId = '',
+  iframeCode = '',
+  smartlinkUrl = '',
+  videoUrl = '', 
+  tvcomUrl = '' 
+} = Astro.props;
+
+<div class="space-y-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+    <Icon name="tabler:device-tv" class="w-6 h-6 mr-2" />
+    Média
+  </h3>
+
+  <div class="space-y-4">
+    <!-- Type de média -->
+    <div>
+      <label for="mediaType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        Type de média
+      </label>
+      <select
+        id="mediaType"
+        name="media.type"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+      >
+        <option value="none" selected={mediaType === 'none'}>Aucun</option>
+        <option value="podcast" selected={mediaType === 'podcast'}>Podcast</option>
+        <option value="youtube" selected={mediaType === 'youtube'}>Vidéo YouTube</option>
+        <option value="tv" selected={mediaType === 'tv'}>Émission TV</option>
+      </select>
+      {Astro.url.pathname.includes('/category/podcast') && (
+        <p class="mt-2 text-sm text-green-600 dark:text-green-400">
+          <Icon name="tabler:info-circle" class="w-4 h-4 inline-block mr-1" />
+          Pour les contenus de catégorie "podcast", le type de média est automatiquement défini.
+        </p>
+      )}
+    </div>
+
+    <!-- Champs pour Podcast -->
+    <div class={`space-y-4 ${mediaType === 'podcast' ? 'block' : 'hidden'}`} data-media-type="podcast">
+      <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
+        <p class="text-sm text-blue-700 dark:text-blue-300 flex items-start">
+          <Icon name="tabler:info-circle" class="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
+          <span>
+            Pour les podcasts, vous devez obligatoirement remplir les champs <strong>Code iframe Ausha</strong> et <strong>URL Smartlink Ausha</strong> dans la section "Méthode recommandée".
+          </span>
+        </p>
+      </div>
+      
+      <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+        <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Méthode recommandée</h4>
+        
+        <!-- Code iframe -->
+        <div class="mb-4">
+          <label for="iframeCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Code iframe Ausha
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-normal ml-1">
+              (Copier-coller depuis Ausha > Partager > Smartplayer)
+            </span>
+          </label>
+          <textarea
+            id="iframeCode"
+            name="media.iframeCode"
+            rows="4"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder='<iframe name="Ausha Podcast Player" frameborder="0" loading="lazy" id="ausha-FzFa" height="220" style="border: none; width:100%; height:220px" src="https://player.ausha.co/?showId=mw1jzt8lqP9L&color=%23751CBF&podcastId=k1E5AFYnQA1N&v=3&playerId=ausha-FzFa"></iframe><script src="https://player.ausha.co/ausha-player.js"></script>'
+          >{iframeCode}</textarea>
+        </div>
+
+        <!-- Smartlink URL -->
+        <div>
+          <label for="smartlinkUrl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            URL Smartlink Ausha
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-normal ml-1">
+              (Copier-coller depuis Ausha > Partager > Smartlink)
+            </span>
+          </label>
+          <input
+            type="url"
+            id="smartlinkUrl"
+            name="media.smartlinkUrl"
+            value={smartlinkUrl}
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="https://podcast.ausha.co/s/mw1jzt8lqP9L"
+          />
+        </div>
+      </div>
+
+      <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
+        <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Méthode alternative (ancienne)</h4>
+        
+        <!-- URL du podcast -->
+        <div class="mb-4">
+          <label for="podcastUrl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            URL du podcast Ausha
+          </label>
+          <input
+            type="url"
+            id="podcastUrl"
+            name="media.podcastUrl"
+            value={podcastUrl}
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="https://podcast.ausha.co/education-mode-d-emploi/09-philippe-tremblay-l-ecole-inclusive-mode-d-emploi"
+          />
+        </div>
+
+        <!-- ID du show (optionnel) -->
+        <div class="mb-4">
+          <label for="showId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            ID du show Ausha (optionnel)
+          </label>
+          <input
+            type="text"
+            id="showId"
+            name="media.showId"
+            value={showId}
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="mw1jzt8lqP9L"
+          />
+        </div>
+
+        <!-- ID du podcast (optionnel) -->
+        <div>
+          <label for="podcastId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            ID du podcast Ausha (optionnel)
+          </label>
+          <input
+            type="text"
+            id="podcastId"
+            name="media.podcastId"
+            value={podcastId}
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="YKOz3hxgD0OK"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Champs pour YouTube -->
+    <div class={`space-y-4 ${mediaType === 'youtube' ? 'block' : 'hidden'}`} data-media-type="youtube">
+      <div>
+        <label for="videoUrl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          URL de la vidéo YouTube
+        </label>
+        <input
+          type="url"
+          id="videoUrl"
+          name="media.videoUrl"
+          value={videoUrl}
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        />
+      </div>
+    </div>
+
+    <!-- Champs pour TV -->
+    <div class={`space-y-4 ${mediaType === 'tv' ? 'block' : 'hidden'}`} data-media-type="tv">
+      <div>
+        <label for="tvcomUrl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          URL de l'émission TV Com
+        </label>
+        <input
+          type="url"
+          id="tvcomUrl"
+          name="media.tvcomUrl"
+          value={tvcomUrl}
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="https://www.tvcom.be/video/info/societe/..."
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Afficher/masquer les champs en fonction du type de média sélectionné
+  const mediaTypeSelect = document.getElementById('mediaType');
+
+  if (mediaTypeSelect) {
+    mediaTypeSelect.addEventListener('change', function() {
+      const selectedValue = (this as HTMLSelectElement).value;
+      
+      // Masquer tous les champs
+      document.querySelectorAll('[data-media-type]').forEach(el => {
+        el.classList.add('hidden');
+      });
+      
+      // Afficher les champs correspondants au type sélectionné
+      if (selectedValue !== 'none') {
+        document.querySelector(`[data-media-type="${selectedValue}"]`)?.classList.remove('hidden');
+      }
+    });
+  }
+</script> 

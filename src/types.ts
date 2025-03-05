@@ -21,11 +21,28 @@ export interface Post {
   };
   tags?: Array<Tag>;
 
-  // Média
+  // Média (ancienne structure)
   image?: string;
   videoUrl?: string;
   podcastUrl?: string;
   tvcomUrl?: string;
+  showId?: string;
+  podcastId?: string;
+  
+  // Nouvelle structure média
+  media?: {
+    type: 'none' | 'podcast' | 'youtube' | 'tv';
+    // Champs pour les podcasts - nouvelle approche
+    iframeCode?: string;
+    smartlinkUrl?: string;
+    // Champs pour les podcasts - ancienne approche
+    podcastUrl?: string;
+    showId?: string;
+    podcastId?: string;
+    // Autres types de médias
+    videoUrl?: string;
+    tvcomUrl?: string;
+  };
 
   // Informations additionnelles
   expert?: string;

@@ -10,7 +10,7 @@
       "line2": "des pédagogies",
       "line3": "innovantes !"
     },
-    "image": "/images/assets/mascotte.png",
+    "image": "~/assets/images/ootb-logo.svg",
     "badges": [
       {
         "text": "Festival",

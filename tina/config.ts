@@ -43,6 +43,16 @@ export default defineConfig({
     ],
   },
 
+  // Configuration de la recherche (nécessite un token TinaCloud)
+  search: {
+    tina: {
+      indexerToken: process.env.TINA_SEARCH_TOKEN, // À obtenir depuis le tableau de bord TinaCloud
+      stopwordLanguages: ['fra', 'eng'], // Langues pour les mots vides (français et anglais)
+    },
+    indexBatchSize: 100, // Nombre de documents à indexer par requête
+    maxSearchIndexFieldLength: 200, // Limite de caractères pour les champs de texte variables
+  },
+
   // Configuration du fournisseur Git
   gitProvider: {
     name: 'github',
@@ -50,5 +60,5 @@ export default defineConfig({
     authProvider: 'github',
     autoCommit: true,
     autoMerge: true,
-  },
+  }
 });

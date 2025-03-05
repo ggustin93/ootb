@@ -45,22 +45,25 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   const { Content, remarkPluginFrontmatter } = await render(post);
 
   const {
-    publishDate: rawPublishDate = new Date(),
+    publishDate: rawPublishDate,
     updateDate: rawUpdateDate,
     title,
     description,
     image,
+    published = true,
+    draft,
     tags: rawTags = [],
     category: rawCategory,
+    metadata,
     expert,
-    draft = false,
-    metadata = {},
+    duration,
     videoUrl,
     tvcomUrl,
-    published = true,
-    duration,
     podcastUrl,
+    showId,
+    podcastId,
     pedagogicalSheet,
+    media: rawMedia,
   } = data;
 
   const slug = cleanSlug(id);
@@ -84,6 +87,23 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     title: tag,
   }));
 
+  // Extraire les données média avec type non-nullable
+  const media = rawMedia ? {
+    type: rawMedia.type || (
+      category.slug === 'podcast' ? 'podcast' :
+      rawMedia.podcastUrl ? 'podcast' : 
+      rawMedia.videoUrl ? 'youtube' : 
+      rawMedia.tvcomUrl ? 'tv' : 'none'
+    ),
+    podcastUrl: rawMedia.podcastUrl,
+    showId: rawMedia.showId,
+    podcastId: rawMedia.podcastId,
+    videoUrl: rawMedia.videoUrl,
+    tvcomUrl: rawMedia.tvcomUrl,
+    iframeCode: rawMedia.iframeCode,
+    smartlinkUrl: rawMedia.smartlinkUrl
+  } : undefined;
+
   return {
     id: id,
     slug: slug,
@@ -94,19 +114,22 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
 
     title: title,
     description: description,
-    image: image,
+    image: typeof image === 'string' ? image : undefined,
     videoUrl: videoUrl,
     tvcomUrl: tvcomUrl,
     podcastUrl: podcastUrl,
-
-    category: category,
-    tags: tags,
+    showId: showId,
+    podcastId: podcastId,
     expert: expert,
     duration: duration,
     pedagogicalSheet: pedagogicalSheet,
+    media: media,
+    
+    category: category,
+    tags: tags,
 
-    draft: draft,
-    published: published,
+    draft: draft !== undefined ? draft : !published,
+    published: published !== undefined ? published : !draft,
 
     metadata,
 
@@ -122,7 +145,7 @@ const load = async function (): Promise<Array<Post>> {
 
   const results = (await Promise.all(normalizedPosts))
     .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf())
-    .filter((post) => !post.draft);
+    .filter((post) => post.published);
 
   return results;
 };

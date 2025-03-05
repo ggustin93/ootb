@@ -7,6 +7,7 @@ interface Props {
   icon?: string;
   iconPosition?: 'left' | 'right';
   href?: string;
+  target?: string;
   class?: string;
   fullWidth?: boolean;
   disabled?: boolean;
@@ -19,6 +20,7 @@ const {
   icon,
   iconPosition = 'left',
   href,
+  target,
   class: className,
   fullWidth = false,
   disabled = false,
@@ -36,7 +38,7 @@ const sizes = {
 const variants = {
   primary: 'bg-white text-[--ootb-turquoise] hover:bg-[--ootb-turquoise] hover:text-white shadow-lg hover:shadow-xl',
   secondary: 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm border border-white/10 hover:border-white/20',
-  outline: 'bg-white border-2 border-[--ootb-turquoise] text-[--ootb-turquoise] hover:bg-[--ootb-turquoise] hover:text-white',
+  outline: 'bg-transparent border-2 border-[--ootb-turquoise] text-[--ootb-turquoise] hover:bg-[--ootb-turquoise] hover:text-white',
   ghost: 'bg-transparent text-current hover:bg-current/10',
   link: 'bg-transparent text-current hover:underline p-0',
   blue: 'bg-[--ootb-blue] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)] shadow-lg hover:shadow-xl',
@@ -59,6 +61,7 @@ const focusRings = {
   blue: 'focus:ring-[--ootb-blue]',
   'outline-blue': 'focus:ring-[--ootb-blue]',
   'outline-podcast': 'focus:ring-[--ootb-violet]',
+  'outline-tv': 'focus:ring-[--ootb-green]',
   'premium-primary': 'focus:ring-[--ootb-yellow]',
   'premium-secondary': 'focus:ring-white/50',
   'card': ''
@@ -80,6 +83,7 @@ const buttonClass = [
   fullWidth && 'w-full',
   disabled && disabledStyles,
   variant !== 'link' && variant !== 'card' && 'hover:-translate-y-0.5',
+  color && `text-[${color}]`,
   className
 ].filter(Boolean).join(' ');
 
@@ -96,6 +100,7 @@ const Element = href ? 'a' : 'button';
 
 <Element
   href={href}
+  target={target}
   class:list={[buttonClass, 'group']}
   disabled={disabled}
   {...disabled && { 'aria-disabled': true }}

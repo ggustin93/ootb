@@ -1,12 +1,12 @@
 // postsCollection.js
-import { mediaFields } from "./mediaFields";
+import { mediaFields, validateMediaByCategory, updateMediaTypeByCategory } from './mediaFields';
 
 const CONTENT_TYPES = {
   actualite: "Actualités",
   fiche: "Fiches",
   live: "Lives",
   podcast: "Podcasts",
-  tv: "Émissions",
+  tv: "Emissions TV",
   premium: "Premium",
 }
 
@@ -36,23 +36,15 @@ export const postsCollection = {
         {
           key: "_values.publishDate",
           name: "Date de publication",
-          render: (value) => {
-            if (!value) return '';
-            return new Date(value).toLocaleDateString('fr-FR', {
-              day: '2-digit',
-              month: '2-digit',
-              year: 'numeric'
-            });
-          }
+        },
+        {
+          key: "_values.category",
+          name: "Catégorie",
+          render: (value) => CONTENT_TYPES[value] || value
         },
         {
           key: "_values.title",
           name: "Titre"
-        },
-        {
-          key: "_values.category",
-          name: "Type",
-          render: (value) => CONTENT_TYPES[value] || value
         }
       ]
     },
@@ -90,218 +82,224 @@ export const postsCollection = {
           .replace(/ /g, '-')
           .replace(/[^a-zA-Z0-9-]/g, '')}`;
       },
+      description: "Le nom du fichier sera généré automatiquement à partir du titre. Il sera converti en minuscules, les espaces seront remplacés par des tirets et les caractères spéciaux seront supprimés.",
     },
+    itemProps: (item) => {
+      // Personnaliser l'affichage en fonction du type de média
+      let label = `Média: ${item?.type || 'Non défini'}`;
+      
+      if (item?.type === 'podcast') {
+        label = `🎙️ Podcast Ausha`;
+      } else if (item?.type === 'youtube') {
+        label = `🎬 Vidéo YouTube`;
+      } else if (item?.type === 'tv') {
+        label = `📺 Émission TV`;
+      }
+      
+      return { label };
+    },
+    validate: (data) => {
+      // Validation des champs média en fonction de la catégorie
+      const mediaValidation = validateMediaByCategory(data);
+      
+      // Si la validation retourne une chaîne, c'est une erreur
+      if (typeof mediaValidation === 'string') {
+        return mediaValidation;
+      }
+      
+      // Vérifications supplémentaires pour les podcasts
+      if (data.category === 'podcast') {
+        if (!data.media) {
+          return "⚠️ OBLIGATOIRE: Pour un podcast, vous devez configurer le média";
+        }
+        
+        // Les deux champs sont obligatoires pour les podcasts
+        if (!data.media.iframeCode) {
+          return "⚠️ OBLIGATOIRE: Pour un podcast, le code iframe est requis";
+        }
+        
+        if (!data.media.smartlinkUrl) {
+          return "⚠️ OBLIGATOIRE: Pour un podcast, l'URL Smartlink est requise";
+        }
+        
+        // Vérifier le format de l'URL Smartlink
+        if (data.media.smartlinkUrl && !data.media.smartlinkUrl.match(/^https:\/\/smartlink\.ausha\.co\//)) {
+          return "⚠️ L'URL Smartlink doit être au format https://smartlink.ausha.co/nom-du-podcast/numero-nom-episode";
+        }
+      }
+      
+      // Vérifications pour les lives
+      if (data.category === 'live') {
+        if (!data.media || !data.media.videoUrl) {
+          return "⚠️ OBLIGATOIRE: Pour un live, l'URL YouTube est obligatoire";
+        }
+        
+        // Vérifier le format de l'URL YouTube
+        if (data.media?.videoUrl && !data.media.videoUrl.match(/^https:\/\/(youtu\.be\/|www\.youtube\.com\/)/)) {
+          return "⚠️ L'URL doit être une URL YouTube valide";
+        }
+      }
+      
+      // Vérifications pour les émissions TV
+      if (data.category === 'tv') {
+        if (!data.media || !data.media.tvcomUrl) {
+          return "⚠️ OBLIGATOIRE: Pour une émission TV, l'URL TV Com est obligatoire";
+        }
+        
+        // Vérifier le format de l'URL TV Com
+        if (data.media?.tvcomUrl && !data.media.tvcomUrl.match(/^https:\/\/www\.tvcom\.be\/video\//)) {
+          return "⚠️ L'URL TV Com doit être au format https://www.tvcom.be/video/...";
+        }
+      }
+      
+      return true;
+    }
   },
   fields: [
-    {
-      type: "boolean",
-      name: "published",
-      label: "État de publication",
-      description: "Boule bleue = contenu visible sur le site",
-      required: true,
-      ui: {
-        defaultValue: false,
-      }
-    },
+    // Placer la catégorie en premier pour une meilleure expérience utilisateur
     {
       type: "string",
       name: "category",
-      label: "Type de contenu",
-      description: "Sélectionnez le type de contenu. Certains champs spécifiques apparaîtront selon votre sélection",
+      label: "Catégorie",
+      description: "Type de contenu",
       required: true,
       options: Object.entries(CONTENT_TYPES).map(([value, label]) => ({
         value,
-        label,
+        label
       })),
-      searchable: true,
+      ui: {
+        // Quand la catégorie change, mettre à jour automatiquement le type de média
+        onChange: updateMediaTypeByCategory
+      }
+    },
+    {
+      type: "boolean",
+      name: "published",
+      label: "Publié",
+      description: "Statut de publication du contenu (par défaut: publié)",
+      required: false,
+      ui: {
+        parse: (value) => value === undefined ? true : value,
+        format: (value) => value === undefined ? true : value,
+        description: "✅ ACTIVÉ = Le contenu est visible sur le site\n⚠️ DÉSACTIVÉ = Le contenu n'est pas visible"
+      },
+    },
+    {
+      type: "boolean",
+      name: "draft",
+      label: "Brouillon (Déprécié)",
+      description: "Champ technique - Ne pas modifier directement",
+      required: false,
+      ui: {
+        parse: (value, data) => !data.published, // Toujours l'inverse de published
+        format: (value) => !value,
+        component: "hidden", // Caché car géré automatiquement via published
+      },
     },
     {
       type: "string",
       name: "title",
-      label: "Titre du contenu",
-      description: "Le titre principal qui apparaîtra en haut de la page",
+      label: "Titre",
+      description: "Titre principal du contenu",
       required: true,
       isTitle: true,
-      searchable: true,
     },
     {
       type: "string",
       name: "description",
-      label: "Résumé",
-      description: "Un bref résumé qui apparaîtra dans les aperçus et en haut de la page",
+      label: "Description",
+      description: "Résumé court du contenu (150-200 caractères)",
       required: true,
       ui: {
-        component: "textarea",
-      },
-      searchable: true,
+        component: "textarea"
+      }
     },
     {
       type: "datetime",
       name: "publishDate",
       label: "Date de publication",
-      description: "Date à laquelle le contenu sera/a été publié",
       required: true,
-      ui: {
-        dateFormat: "DD/MM/YYYY",
-      },
-    },
-    {
-      type: "string",
-      name: "tags",
-      label: "Mots-clés",
-      description: "Ajoutez des mots-clés pour faciliter la recherche et le filtrage des contenus",
-      list: true,
-      ui: {
-        component: "tags",
-      },
-      searchable: true,
     },
     {
       type: "image",
       name: "image",
-      label: "Image de couverture",
-      description: "L'image principale qui apparaîtra en haut de la page et dans les aperçus",
-      required: true,
+      label: "Image principale",
+      description: "Image mise en avant (format 16:9 recommandé)",
     },
+    // Champs pour la compatibilité avec l'ancienne structure (masqués)
     {
-      type: "object",
-      name: "media",
-      label: "Média (Youtube, Ausha, lien TV com)",
-      description: "Liens vers les différents médias selon le type de contenu",
-      fields: mediaFields.fields,
-    },
-    {
-      type: "object",
-      name: "pedagogicalSheet",
-      label: "Fiche pédagogique",
-      description: "Informations spécifiques pour les fiches pédagogiques. Ces champs ne sont pertinents que si la catégorie est 'Fiches'.",
+      type: "string",
+      name: "videoUrl",
+      label: "URL de la vidéo (ancienne structure)",
+      description: "URL complète de la vidéo YouTube (utiliser de préférence la nouvelle structure media)",
       ui: {
-        description: "Ces champs ne s'afficheront que si la catégorie sélectionnée est 'Fiches'",
-        itemProps: (item) => {
-          return { className: item.category === 'fiche' ? '' : 'hidden' };
-        },
-      },
-      fields: [
-        {
-          type: "string",
-          name: "enseignement",
-          label: "Type d'enseignement",
-          description: "Le type d'enseignement concerné par cette fiche",
-          required: true,
-        },
-        {
-          type: "string",
-          name: "section",
-          label: "Section",
-          description: "La section d'études concernée",
-          required: true,
-        },
-        {
-          type: "object",
-          name: "responsable",
-          label: "Responsable du projet",
-          description: "Informations sur la personne responsable de cette fiche pédagogique",
-          fields: [
-            {
-              type: "string",
-              name: "prenom",
-              label: "Prénom",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "nom",
-              label: "Nom",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "email",
-              label: "Email",
-              description: "Adresse email de contact",
-              required: true,
-            },
-          ],
-        },
-        {
-          type: "string",
-          name: "description",
-          label: "Description pédagogique",
-          description: "Description détaillée des objectifs et du contenu pédagogique",
-          ui: {
-            component: "textarea",
-          },
-        },
-        {
-          type: "string",
-          list: true,
-          name: "objectifs",
-          label: "Objectifs",
-          description: "Listez les objectifs pédagogiques de cette fiche",
-        },
-        {
-          type: "string",
-          list: true,
-          name: "competences",
-          label: "Compétences développées",
-          description: "Listez les compétences que les élèves développeront grâce à cette fiche",
-        },
-        {
-          type: "object",
-          list: true,
-          name: "references",
-          label: "Pour aller plus loin",
-          description: "Ajoutez des ressources supplémentaires pour approfondir les connaissances",
-          fields: [
-            {
-              type: "string",
-              name: "type",
-              label: "Type",
-              options: [
-                { label: "Site web", value: "site" },
-                { label: "Vidéo", value: "video" },
-                { label: "Document", value: "document" },
-              ],
-            },
-            {
-              type: "string",
-              name: "url",
-              label: "URL",
-              description: "L'adresse URL de la ressource",
-            },
-            {
-              type: "string",
-              name: "description",
-              label: "Description",
-              description: "Une brève description de la ressource",
-            },
-          ],
-        },
-        {
-          type: "string",
-          name: "declinaisons",
-          label: "Déclinaisons possibles",
-          description: "Décrivez les différentes manières dont cette fiche peut être utilisée ou adaptée",
-          ui: {
-            component: "textarea",
-          },
-        },
-        {
-          type: "string",
-          name: "conseils",
-          label: "Conseils du créateur",
-          description: "Ajoutez des conseils ou des astuces pour les enseignants qui utiliseront cette fiche",
-          ui: {
-            component: "textarea",
-          },
-        },
-      ],
+        component: "hidden"
+      }
     },
+    {
+      type: "string",
+      name: "tvcomUrl",
+      label: "URL TV Com (ancienne structure)",
+      description: "URL complète de l'émission sur TV Com (utiliser de préférence la nouvelle structure media)",
+      ui: {
+        component: "hidden"
+      }
+    },
+    {
+      type: "string",
+      name: "podcastUrl",
+      label: "URL du podcast (ancienne structure - déprécié)",
+      description: "URL complète du podcast (utiliser de préférence la nouvelle structure media)",
+      ui: {
+        component: "hidden"
+      }
+    },
+    {
+      type: "string",
+      name: "showId",
+      label: "ID du show (ancienne structure)",
+      description: "Identifiant du show Ausha (utiliser de préférence la nouvelle structure media)",
+      ui: {
+        component: "hidden"
+      }
+    },
+    {
+      type: "string",
+      name: "podcastId",
+      label: "ID de l'épisode (ancienne structure)",
+      description: "Identifiant de l'épisode Ausha (utiliser de préférence la nouvelle structure media)",
+      ui: {
+        component: "hidden"
+      }
+    },
+    {
+      type: "string",
+      name: "expert",
+      label: "Expert",
+      description: "Nom de l'expert ou intervenant principal",
+    },
+    {
+      type: "string",
+      name: "duration",
+      label: "Durée",
+      description: "Durée du contenu (ex: 45min, 1h30)",
+    },
+    {
+      type: "string",
+      name: "tags",
+      label: "Tags",
+      description: "Mots-clés associés au contenu",
+      list: true,
+      ui: {
+        component: "tags",
+      }
+    },
+    // Utilisation de l'objet mediaFields importé
+    mediaFields,
     {
       type: "rich-text",
       name: "body",
-      label: "Contenu additionnel (optionnel)",
-      description: "Vous pouvez ajouter ici du contenu supplémentaire de type blog avec du formatage riche (titres, gras, italique, listes, etc.). Les médias (vidéos, podcasts) sont à gérer via la section 'Média' ci-dessus.",
+      label: "Contenu",
       isBody: true,
     },
   ],

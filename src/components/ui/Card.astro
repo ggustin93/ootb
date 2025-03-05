@@ -5,6 +5,9 @@ import { getPermalink } from '~/utils/permalinks';
 import Button from '~/components/ui/Button.astro';
 import { getFormattedDate } from '~/utils/utils';
 
+// Image par défaut à utiliser quand aucune n'est spécifiée
+const DEFAULT_IMAGE = 'https://res.cloudinary.com/dza0sg4uf/image/upload/w_480,c_fill,q_auto:good,f_auto,dpr_auto,g_auto/v1740649896/ootb-logo_yfscco';
+
 interface Meta {
   publishDate?: Date | string;
   isLive?: boolean;
@@ -23,7 +26,7 @@ interface Category {
 interface Props {
   title: string;
   description?: string;
-  image: string;
+  image?: string;
   badge?: string;
   href: string;
   type?: 'default' | 'actualite' | 'fiche' | 'live' | 'podcast' | 'tv' | 'premium';
@@ -41,12 +44,9 @@ const {
   href,
   type = 'default',
   category,
-  tags,
   meta,
   class: className = ''
 } = Astro.props;
-
-const displayedTags = tags || [];
 
 // Configuration des types de cartes avec les variables de couleur OOTB
 const typeConfig = {
@@ -95,8 +95,10 @@ const typeConfig = {
 } as const;
 
 // Détermine le type final en fonction de la catégorie ou du type explicite
-const finalType = category?.slug?.toLowerCase() in typeConfig 
-  ? category.slug.toLowerCase() as keyof typeof typeConfig
+const finalType = category?.slug?.toLowerCase() 
+  ? Object.keys(typeConfig).includes(category.slug.toLowerCase()) 
+    ? category.slug.toLowerCase() as keyof typeof typeConfig
+    : type
   : type;
 
 const config = typeConfig[finalType];
@@ -105,28 +107,50 @@ const config = typeConfig[finalType];
 const formatPublishDate = (date?: Date | string) => {
   if (!date) return null;
   try {
-    return getFormattedDate(date);
+    // Si la date est une chaîne, essayer de la parser en Date
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    
+    // Vérifier si la date est valide
+    if (isNaN(dateObj.getTime())) {
+      console.warn(`Date invalide: ${date}`);
+      return null;
+    }
+    
+    // Ajuster la date pour le fuseau horaire UTC+1 (Europe/Paris)
+    // Cela garantit que les dates à 23h00 UTC s'affichent correctement le jour suivant
+    const adjustedDate = new Date(dateObj);
+    
+    return getFormattedDate(adjustedDate);
   } catch (error) {
-    console.error('Erreur de formatage de date:', error);
+    console.error('Erreur de formatage de date:', error, 'Date reçue:', date);
     return null;
   }
 };
+
+// Image source - utiliser l'image fournie ou l'image par défaut
+const imageSource = image || DEFAULT_IMAGE;
+
+// Débogage pour identifier pourquoi certaines dates ne s'affichent pas
+console.log(`[CARD DEBUG ${title}] meta disponible:`, !!meta);
+console.log(`[CARD DEBUG ${title}] publishDate disponible:`, !!meta?.publishDate);
+console.log(`[CARD DEBUG ${title}] image disponible:`, !!image);
+console.log(`[CARD DEBUG ${title}] imageSource:`, imageSource);
+if (meta?.publishDate) {
+  console.log(`[CARD DEBUG ${title}] Valeur publishDate:`, meta.publishDate);
+  console.log(`[CARD DEBUG ${title}] Type publishDate:`, typeof meta.publishDate);
+}
 
 const formattedPublishDate = meta?.publishDate 
   ? formatPublishDate(meta.publishDate) 
   : null;
 
-// Options d'optimisation d'image spécifiques pour les miniatures
-const thumbnailImageOptions = {
-  width: 400, // Largeur adaptée pour les miniatures
-  height: 225, // Hauteur pour un ratio 16:9
-  quality: 75, // Qualité légèrement réduite pour les miniatures
-  format: 'webp', 
-  loading: 'lazy',
-  decoding: 'async',
-  maxWidth: 800, // Ajout d'une largeur maximale
-  maxHeight: 450, // Ajout d'une hauteur maximale correspondante en 16:9
-};
+// Plus de débogage sur le résultat
+console.log(`[CARD DEBUG ${title}] formattedPublishDate:`, formattedPublishDate);
+
+// Vérifier si la date a pu être formatée
+if (meta?.publishDate && !formattedPublishDate) {
+  console.warn(`Impossible de formater la date: ${meta.publishDate} pour "${title}"`);
+}
 
 ---
 
@@ -141,14 +165,15 @@ const thumbnailImageOptions = {
   ]}
 >
   <div class="relative aspect-[16/9] overflow-hidden">
-    {image && (
-      <Image 
-        src={image}
-        alt={title}
-        class="w-full h-full object-cover max-w-[800px] max-h-[450px]"
-        {...thumbnailImageOptions}
-      />
-    )}
+    <Image 
+      src={imageSource}
+      alt={title}
+      class="w-full h-full object-cover"
+      width={400}
+      height={225}
+      loading="lazy"
+      decoding="async"
+    />
     {(badge || category) && (
   <div class="absolute top-4 left-4 z-10">
     <span 
@@ -173,13 +198,49 @@ const thumbnailImageOptions = {
     </span>
   </div>
 )}
-    {formattedPublishDate && (
-      <div class="absolute bottom-4 right-4 z-10">
-        <span class="bg-black/60 text-white text-xs px-2.5 py-1 rounded-full font-medium">
-          {formattedPublishDate}
-        </span>
-      </div>
-    )}
+    <div class="absolute bottom-4 right-4 z-10">
+      <span class="bg-black/60 text-white text-xs px-2.5 py-1 rounded-full font-medium">
+        {(() => {
+          // Vérifier si la date est déjà une chaîne formatée (comme "24 févr. 2025")
+          if (meta?.publishDate && typeof meta.publishDate === 'string' && meta.publishDate.match(/^\d{1,2} [a-zéûôA-Z]{3,5}\.? \d{4}$/i)) {
+            // La date est déjà formatée, la retourner telle quelle
+            return meta.publishDate;
+          }
+          // Sinon, essayer de formater normalement
+          else if (meta?.publishDate) {
+            const dateObj = new Date(meta.publishDate);
+            
+            // Vérifier si la date est valide avant d'essayer d'extraire les parties
+            if (isNaN(dateObj.getTime())) {
+              console.warn(`Date invalide pour "${title}":`, meta.publishDate);
+              return 'Date invalide';
+            }
+            
+            const jour = dateObj.getDate();
+            const mois = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."][dateObj.getMonth()];
+            const annee = dateObj.getFullYear();
+            return `${jour} ${mois} ${annee}`;
+          } else if (formattedPublishDate) {
+            // Si formattedPublishDate existe mais a l'année tronquée, la corriger
+            const match = formattedPublishDate.match(/(\d{1,2} [a-zéûôA-Z]{3,5}\.?) (\d{1,4})/i);
+            if (match) {
+              try {
+                // Extraire l'année de la date originale
+                const dateObj = new Date(meta?.publishDate as string);
+                if (!isNaN(dateObj.getTime())) {
+                  const fullYear = dateObj.getFullYear();
+                  return `${match[1]} ${fullYear}`;
+                }
+              } catch (error) {
+                console.error("Erreur lors du traitement de la date:", error);
+              }
+            }
+            return formattedPublishDate;
+          }
+          return 'Date non disponible';
+        })()}
+      </span>
+    </div>
     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
   </div>
 

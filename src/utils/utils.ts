@@ -4,16 +4,41 @@ export const formatter: Intl.DateTimeFormat = new Intl.DateTimeFormat(I18N?.lang
   year: 'numeric',
   month: 'short',
   day: 'numeric',
-  timeZone: 'UTC',
+  timeZone: 'Europe/Paris',
 });
+
+// Noms des mois en français abrégés
+const MOIS_COURTS = [
+  'janv.',
+  'févr.',
+  'mars',
+  'avr.',
+  'mai',
+  'juin',
+  'juil.',
+  'août',
+  'sept.',
+  'oct.',
+  'nov.',
+  'déc.'
+];
 
 export const getFormattedDate = (date: string | Date | undefined): string => {
   if (!date) return '';
   try {
     const dateObj = typeof date === 'string' ? new Date(date) : date;
     if (isNaN(dateObj.getTime())) return '';
-    return formatter.format(dateObj);
-  } catch (e) {
+    
+    // Créer manuellement un format de date avec l'année complète
+    const jour = dateObj.getDate();
+    const mois = MOIS_COURTS[dateObj.getMonth()];
+    const anneeComplete = dateObj.getFullYear();
+    
+    // Format: "24 févr. 2025"
+    return `${jour} ${mois} ${anneeComplete}`;
+    
+  } catch {
+    // Ignorer l'erreur et retourner une chaîne vide
     return '';
   }
 };

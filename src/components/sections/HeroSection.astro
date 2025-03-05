@@ -4,7 +4,10 @@ import Image from '~/components/common/Image.astro';
 import type { ImageMetadata } from 'astro';
 import ActionBadge from '~/components/ui/ActionBadge.astro';
 import logo_blanc from '~/assets/images/logo_ootb_white.svg';
-import logo_garcon_blanc from '~/assets/images/logo_ootb_garcon_blanc.svg';
+// Import du logo garçon en format WebP au lieu de SVG pour meilleure compatibilité mobile
+import logo_garcon_blanc from '~/assets/images/logo_ootb_garcon_blanc.webp';
+// Garder le SVG comme fallback si nécessaire
+// import logo_garcon_blanc_svg from '~/assets/images/logo_ootb_garcon_blanc.svg';
 import GradientHeroSection from './GradientHeroSection.astro';
 import homepageData from '../../content/homepage/index.json';
 // Import du composant ScrollDownArrow
@@ -88,9 +91,9 @@ const displayBadges = hero?.badges || defaultHero.badges;
           <Image
             src={logo_garcon_blanc}
             alt="Out of the Books"
-            class="w-auto h-auto max-w-[85vw] mx-auto object-contain"
-            widths={[400, 600, 800]}
-            sizes="(max-width: 640px) 95vw, (max-width: 768px) 85vw, 600px"
+            class="w-[180px] h-auto mx-auto object-contain md:w-[240px]"
+            widths={[180, 240, 360]}
+            sizes="(max-width: 768px) 180px, 240px"
             loading="eager"
             decoding="async"
           />

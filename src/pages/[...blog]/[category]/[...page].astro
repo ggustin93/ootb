@@ -14,6 +14,7 @@ import CategoryInfo from '~/components/blog/CategoryInfo.astro';
 import Button from '~/components/ui/Button.astro';
 import { CONTENT_TYPES } from '~/config/content-types';
 import CategoryFilters from '~/components/blog/CategoryFilters.astro';
+import CategoryButton from '~/components/blog/CategoryButton.astro';
 
 // Import des données TinaCMS
 import sharedData from '~/content/blog/blog.json';
@@ -153,64 +154,28 @@ const metadata = {
             <!-- Filtres principaux -->
             <div class="flex flex-wrap gap-3 justify-center md:justify-start">
               {/* Bouton "TOUS" toujours présent */}
-              <a
-                href="/blog#category-content"
-                class:list={[
-                  'group relative inline-flex items-center gap-2',
-                  'transform skew-x-[-12deg]',
-                  'transition-all duration-300',
-                  'px-6 py-2.5',
-                  'ring-2',
-                  (!category.slug || category.slug === 'blog') ? [
-                    'bg-white text-gray-800 ring-gray-800',
-                    'scale-105',
-                    'shadow-lg'
-                  ] : [
-                    'bg-gray-800 text-white ring-gray-800 hover:bg-white',
-                    'hover:-translate-y-1'
-                  ]
-                ]}
-                style="--hover-text-color: #1f2937; --hover-ring-color: #1f2937;"
-              >
-                <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                  <Icon 
-                    name="tabler:layout-grid" 
-                    class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" 
-                  />
-                  <span class="text-sm font-bold uppercase tracking-wide italic group-hover:text-[var(--hover-text-color)]">Tous</span>
-                </span>
-              </a>
+              <CategoryButton
+                href="/blog"
+                icon="tabler:layout-grid"
+                label="Tous"
+                color="#1f2937"
+                isActive={!category.slug || category.slug === 'blog'}
+                withAnchor={true}
+              />
 
               {/* Autres filtres */}
               {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => {
                 const isActive = key.toLowerCase() === category.slug?.toLowerCase();
-                const colorVar = `--content-${key}`;
+                const colorVar = `var(--content-${key})`;
                 return (
-                  <a
-                    href={`/category/${key.toLowerCase()}#category-content`}
-                    class:list={[
-                      'group relative inline-flex items-center gap-2',
-                      'transform skew-x-[-12deg]',
-                      'transition-all duration-300',
-                      'px-6 py-2.5',
-                      'ring-2',
-                      isActive ? [
-                        'bg-white shadow-lg scale-105',
-                        `text-[${colorVar}] ring-[${colorVar}]`
-                      ] : [
-                        `bg-[${colorVar}] text-white ring-[${colorVar}] hover:bg-white hover:-translate-y-1`
-                      ]
-                    ]}
-                    style={`--hover-text-color: var(${colorVar}); --hover-ring-color: var(${colorVar});`}
-                  >
-                    <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                      <Icon 
-                        name={config.icon} 
-                        class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" 
-                      />
-                      <span class="text-sm font-bold uppercase tracking-wide italic group-hover:text-[var(--hover-text-color)]">{config.label}</span>
-                    </span>
-                  </a>
+                  <CategoryButton
+                    href={`/category/${key.toLowerCase()}`}
+                    icon={config.icon}
+                    label={config.label}
+                    color={colorVar}
+                    isActive={isActive}
+                    withAnchor={true}
+                  />
                 );
               })}
             </div>

@@ -1,0 +1,61 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  href: string;
+  icon: string;
+  label: string;
+  color?: string;
+  isActive?: boolean;
+  withAnchor?: boolean;
+}
+
+const { 
+  href, 
+  icon, 
+  label, 
+  color = '#1f2937', 
+  isActive = false,
+  withAnchor = false
+} = Astro.props;
+
+// Ajouter l'ancre si nécessaire
+const finalHref = withAnchor ? `${href}#category-content` : href;
+---
+
+<a
+  href={finalHref}
+  class:list={[
+    'group relative inline-flex items-center gap-2',
+    'transform skew-x-[-12deg]',
+    'transition-all duration-300',
+    'px-6 py-2.5 ring-2',
+    isActive ? [
+      'scale-105 shadow-lg'
+    ] : [
+      'hover:-translate-y-1'
+    ]
+  ]}
+  style={isActive 
+    ? `background-color: white; color: ${color}; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};` 
+    : `background-color: ${color}; color: white; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};`
+  }
+>
+  <span class="transform skew-x-[12deg] flex items-center gap-2.5">
+    <Icon 
+      name={icon} 
+      class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" 
+    />
+    <span class="text-sm font-bold uppercase tracking-wide italic transition-colors duration-300 group-hover:text-[var(--hover-text-color)]">
+      {label}
+    </span>
+  </span>
+</a>
+
+<style>
+  /* Inversion des couleurs au survol */
+  a:not(.scale-105):hover {
+    background-color: white !important;
+    color: var(--hover-text-color) !important;
+  }
+</style> 

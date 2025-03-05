@@ -10,6 +10,7 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import TagSearch from '~/components/common/TagSearch.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
+import CategoryButton from '~/components/blog/CategoryButton.astro';
 
 // Import des données TinaCMS
 import tagData from '~/content/blog/blog.json';
@@ -108,54 +109,24 @@ const metadata = {
 
             <!-- Filtres -->
             <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-              <a
-                href="/blog#category-content"
-                class:list={[
-                  'group relative inline-flex items-center gap-2',
-                  'transform skew-x-[-12deg]',
-                  'transition-all duration-300',
-                  'px-6 py-2.5 ring-2',
-                  !tag ? [
-                    'bg-white text-gray-800 ring-gray-800',
-                    'scale-105 shadow-lg'
-                  ] : [
-                    'bg-gray-800 text-white ring-gray-800 hover:bg-white',
-                    'hover:-translate-y-1'
-                  ]
-                ]}
-                style="--hover-text-color: #1f2937; --hover-ring-color: #1f2937;"
-              >
-                <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                  <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" />
-                  <span class="text-sm font-bold uppercase tracking-wide group-hover:text-[var(--hover-text-color)] italic">
-                    {CONTENT_TYPES.all.shortLabel}
-                  </span>
-                </span>
-              </a>
+              <CategoryButton 
+                href="/blog"
+                icon={CONTENT_TYPES.all.icon}
+                label={CONTENT_TYPES.all.shortLabel}
+                isActive={!tag}
+                withAnchor={true}
+              />
 
               {Object.entries(CONTENT_TYPES)
                 .filter(([key]) => key !== 'all')
                 .map(([key, config]) => (
-                  <a
-                    href={`/category/${key}#category-content`}
-                    class:list={[
-                      'group relative inline-flex items-center gap-2',
-                      'transform skew-x-[-12deg]',
-                      'transition-all duration-300',
-                      'px-6 py-2.5 ring-2',
-                      `bg-[${config.color}] text-white ring-[${config.color}]`,
-                      'hover:bg-white',
-                      'hover:-translate-y-1'
-                    ]}
-                    style={`--hover-text-color: ${config.color}; --hover-ring-color: ${config.color};`}
-                  >
-                    <span class="transform skew-x-[12deg] flex items-center gap-2.5">
-                      <Icon name={config.icon} class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" />
-                      <span class="text-sm font-bold uppercase tracking-wide group-hover:text-[var(--hover-text-color)] italic">
-                        {config.shortLabel}
-                      </span>
-                    </span>
-                  </a>
+                  <CategoryButton 
+                    href={`/category/${key}`}
+                    icon={config.icon}
+                    label={config.shortLabel}
+                    color={config.color}
+                    withAnchor={true}
+                  />
                 ))}
             </div>
           </div>

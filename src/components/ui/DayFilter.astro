@@ -17,12 +17,12 @@ const ITEMS_PER_PAGE = 6;
 const allEvents = Object.values(events).flat();
 ---
 
-<div class="space-y-12" data-items-per-page={ITEMS_PER_PAGE}>
+<div class="space-y-8 md:space-y-12" data-items-per-page={ITEMS_PER_PAGE}>
   <!-- Filtres -->
-  <div class="space-y-6">
+  <div class="space-y-4 md:space-y-6">
     <!-- Filtre par jour -->
     <div class="relative">
-      <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-4">
+      <div class="flex flex-col sm:flex-row justify-between items-start mb-3 md:mb-4 gap-3 md:gap-4">
         <div class="flex-1 w-full">
           <!-- Version mobile: menu déroulant -->
           <div class="sm:hidden w-full">
@@ -38,11 +38,11 @@ const allEvents = Object.values(events).flat();
           </div>
           
           <!-- Version desktop: boutons -->
-          <div class="hidden sm:flex overflow-x-auto gap-3 p-1" id="days-container">
+          <div class="hidden sm:flex overflow-x-auto gap-2 md:gap-3 p-1" id="days-container">
             <!-- Option "Tous les jours" -->
             <button
               class:list={[
-                "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
+                "day-filter-button min-w-[140px] py-2 md:py-3 px-3 md:px-4 rounded-xl font-medium transition-all duration-300",
                 "flex flex-col items-center justify-center border border-[#e4451e]/20",
                 "active bg-[#e4451e] text-white shadow-md"
               ]}
@@ -56,7 +56,7 @@ const allEvents = Object.values(events).flat();
             {days.map((day) => (
               <button
                 class:list={[
-                  "day-filter-button min-w-[140px] py-3 px-4 rounded-xl font-medium transition-all duration-300",
+                  "day-filter-button min-w-[140px] py-2 md:py-3 px-3 md:px-4 rounded-xl font-medium transition-all duration-300",
                   "flex flex-col items-center justify-center border border-[#e4451e]/20",
                   "bg-white text-[#e4451e] hover:bg-[#e4451e]/5 hover:border-[#e4451e]/40 hover:shadow-sm"
                 ]}
@@ -70,7 +70,7 @@ const allEvents = Object.values(events).flat();
           </div>
         </div>
         
-        <div class="w-full sm:w-auto sm:ml-4">
+        <div class="w-full sm:w-auto sm:ml-2 md:ml-4">
           <Button
             href="/programme.pdf"
             variant="outline"
@@ -86,12 +86,12 @@ const allEvents = Object.values(events).flat();
     </div>
 
     <!-- Filtre par type -->
-    <div class="flex flex-wrap gap-3" id="types-container">
+    <div class="flex flex-wrap gap-2 md:gap-3" id="types-container">
       <!-- Bouton "Tous les événements" -->
       <button
         class:list={[
-          "type-filter-button group px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
-          "flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start mb-2 sm:mb-0",
+          "type-filter-button group px-4 md:px-5 py-2 md:py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
+          "flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start mb-1 sm:mb-0",
           "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
           "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
         ]}
@@ -109,7 +109,7 @@ const allEvents = Object.values(events).flat();
       {eventTypes.map(type => (
         <button
           class:list={[
-            "type-filter-button px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
+            "type-filter-button px-4 md:px-5 py-2 md:py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
             "flex items-center gap-2 flex-1 sm:flex-none justify-center sm:justify-start",
             "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
             "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
@@ -135,7 +135,7 @@ const allEvents = Object.values(events).flat();
   </div>
 
   <!-- Contenu des événements -->
-  <div class="space-y-6" id="events-container">
+  <div class="space-y-4 md:space-y-6" id="events-container">
     {allEvents.map(event => (
       <div 
         class="event-card group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300"
@@ -162,10 +162,10 @@ const allEvents = Object.values(events).flat();
           </div>
 
           <!-- Contenu à droite -->
-          <div class="md:w-2/3 p-6 flex flex-col">
+          <div class="md:w-2/3 p-4 md:p-6 flex flex-col">
             <div class="flex-grow">
               <!-- En-tête avec heure, lieu et expert -->
-              <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-3">
+              <div class="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-500 mb-2 md:mb-3">
                 <div class="flex items-center">
                   <Icon name="tabler:calendar" class="w-4 h-4 mr-1" />
                   <span>{event.day} {dayDates[event.day as keyof typeof dayDates] || ''}</span>
@@ -187,12 +187,12 @@ const allEvents = Object.values(events).flat();
               </div>
 
               <!-- Titre -->
-              <h3 class="text-2xl font-bold text-sky-900 group-hover:text-[#e4451e] transition-colors mb-3">
+              <h3 class="text-xl md:text-2xl font-bold text-sky-900 group-hover:text-[#e4451e] transition-colors mb-2 md:mb-3">
                 {event.title}
               </h3>
 
               <!-- Description -->
-              <p class="text-gray-600 mb-4">{event.description}</p>
+              <p class="text-gray-600 mb-2 md:mb-4">{event.description}</p>
             </div>
 
             <div class="mt-auto">
@@ -205,15 +205,15 @@ const allEvents = Object.values(events).flat();
   </div>
 
   <!-- Pagination -->
-  <div class="flex justify-between items-center pt-6 border-t border-gray-100">
-    <button class="pagination-button flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white" id="prev-page" disabled>
-      <Icon name="tabler:chevron-left" class="w-5 h-5" />
+  <div class="flex justify-between items-center pt-4 md:pt-6 border-t border-gray-100">
+    <button class="pagination-button flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white" id="prev-page" disabled>
+      <Icon name="tabler:chevron-left" class="w-4 h-4 md:w-5 md:h-5" />
       <span class="hidden sm:inline">Précédent</span>
     </button>
     <span class="pagination-info text-sm text-gray-600">Page <span id="current-page">1</span> sur <span id="total-pages">1</span></span>
-    <button class="pagination-button flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white" id="next-page">
+    <button class="pagination-button flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white" id="next-page">
       <span class="hidden sm:inline">Suivant</span>
-      <Icon name="tabler:chevron-right" class="w-5 h-5" />
+      <Icon name="tabler:chevron-right" class="w-4 h-4 md:w-5 md:h-5" />
     </button>
   </div>
 </div>

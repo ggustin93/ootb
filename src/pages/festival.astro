@@ -50,23 +50,23 @@ const heroBackground = heroImage;
   </div>
 
   <!-- Section Introduction -->
-  <section id="about" class="pt-8 sm:pt-20 pb-16 bg-white relative">
+  <section id="about" class="pt-8 sm:pt-20 pb-4 md:pb-16 bg-white relative">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-16">
-        <SectionDivider variant="orange" class="mb-6">
+      <div class="text-center mb-8 md:mb-16">
+        <SectionDivider variant="orange" class="mb-4 md:mb-6">
           <Icon name="tabler:bulb" class="w-5 h-5" />
-          En bref
+          <span>En bref</span>
         </SectionDivider>
-        <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-sky-900">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-2 md:mb-6 text-sky-900">
           {about.title}
         </h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+        <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 md:mb-12">
           {about.description}
         </p>
       </div>
 
       <!-- Présentation en deux colonnes -->
-      <div class="grid md:grid-cols-2 gap-16 items-center mb-16">
+      <div class="grid md:grid-cols-2 gap-16 items-center mb-8 md:mb-16">
         <!-- Vidéo à gauche -->
         <div class="relative aspect-video">
           <div class="absolute -inset-4 bg-black rounded-[2rem] border-2 border-[--ootb-orange] shadow-[0_0_20px_rgba(228,69,30,0.3)]"></div>
@@ -99,15 +99,15 @@ const heroBackground = heroImage;
   </section>
 
   <!-- Galerie photos des éditions précédentes -->
-  <section id="gallery" class="bg-white relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-16">
-        <div class="text-center">
-          <SectionDivider variant="orange" class="mb-4">
+  <section id="gallery" class="bg-white relative overflow-hidden pt-0 pb-4 md:pt-0 md:pb-8 -mt-4 md:mt-0">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-0 md:py-8">
+        <div class="text-center mb-6 md:mb-12">
+          <SectionDivider variant="orange" class="mb-4 md:mb-6">
             <Icon name="tabler:camera" class="w-5 h-5" />
             <span>Rétrospective</span>
           </SectionDivider>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-4 text-sky-900">{gallery.title}</h2>
-          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mt-0 mb-2 md:mb-6 text-sky-900">{gallery.title}</h2>
+          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-4 md:mb-8">
             {gallery.description}
           </p>
         </div>
@@ -118,7 +118,7 @@ const heroBackground = heroImage;
         </div>
 
         <!-- Stats sur une ligne avec style amélioré -->
-        <div class="relative py-16 bg-[--ootb-turquoise] rounded-3xl overflow-hidden shadow-xl mt-16">
+        <div class="relative py-12 md:py-16 bg-[--ootb-turquoise] rounded-3xl overflow-hidden shadow-xl mt-6 md:mt-16">
           <!-- Éléments décoratifs -->
           <div class="absolute inset-0 overflow-hidden">
             <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
@@ -152,7 +152,7 @@ const heroBackground = heroImage;
   </section>
 
   <!-- Programme du festival -->
-  <section id="programme" class="pt-32 pb-8 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
+  <section id="programme" class="pt-16 md:pt-24 pb-8 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
     <!-- Éléments décoratifs -->
     <div class="absolute inset-0">
       <div class="absolute top-0 left-0 w-96 h-96 bg-[--ootb-orange]/5 rounded-full blur-3xl transform -translate-x-1/3 -translate-y-1/3"></div>
@@ -160,18 +160,18 @@ const heroBackground = heroImage;
     </div>
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="text-center mb-16 relative z-10">
-          <SectionDivider variant="orange" class="mb-8">
+        <div class="text-center mb-8 md:mb-16 relative z-10">
+          <SectionDivider variant="orange" class="mb-4 md:mb-6">
             <Icon name="tabler:calendar" class="w-5 h-5" />
             <span>Planning</span>
           </SectionDivider>
-          <h2 class="text-4xl md:text-5xl font-body font-bold mb-6 text-sky-900 tracking-tight">{programme.title}</h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto font-light tracking-wide leading-relaxed">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-2 md:mb-6 text-sky-900 tracking-tight">{programme.title}</h2>
+          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-4 md:mb-8 font-light tracking-wide leading-relaxed">
             {programme.description}
           </p>
         </div>
 
-        <div class="bg-white rounded-[32px] shadow-xl p-8 mb-16 transform hover:scale-[1.01] transition-all duration-300 relative z-10">
+        <div class="bg-white rounded-[32px] shadow-xl p-4 md:p-8 mb-16 transform hover:scale-[1.01] transition-all duration-300 relative z-10">
           <style>
             /* Style personnalisé pour les boutons du DayFilter */
             :global(.day-filter-button) {

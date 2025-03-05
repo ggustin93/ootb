@@ -11,6 +11,7 @@ import { Image } from 'astro:assets';
 import TagSearch from '~/components/common/TagSearch.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import CategoryButton from '~/components/blog/CategoryButton.astro';
+import CategoryFilters from '~/components/blog/CategoryFilters.astro';
 
 // Import des données TinaCMS
 import tagData from '~/content/blog/blog.json';
@@ -133,47 +134,39 @@ const metadata = {
   </GradientHeroSection>
 
   <ScrollDownArrow 
-    targetId="tag-content" 
+    targetId="category-content" 
     label={`Voir les contenus liés à "${tag.title}"`}
     position="left-[20%] bottom-[20%]"
     class="text-[--ootb-yellow] hidden md:flex"
   />
 
   <!-- Section contenu -->
-  <section id="tag-content" class="py-12 bg-white">
+  <section id="category-content" class="py-6 sm:py-8 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <!-- Filtres minimalistes -->
-        <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg mb-8">
-          <a
-            href="/blog#category-content"
-            class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900 group"
-          >
-            <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4 transition-all duration-300" />
-            <span class="text-xs sm:text-sm italic">{CONTENT_TYPES.all.shortLabel}</span>
-          </a>
-
-          {Object.entries(CONTENT_TYPES)
-            .filter(([key]) => key !== 'all')
-            .map(([key, config]) => (
-              <a
-                href={`/category/${key}#category-content`}
-                class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900 group"
-                style={`--hover-text-color: ${config.color};`}
-              >
-                <Icon name={config.icon} class="w-4 h-4 transition-all duration-300 group-hover:text-[var(--hover-text-color)]" />
-                <span class="text-xs sm:text-sm italic group-hover:text-[var(--hover-text-color)]">{config.shortLabel}</span>
-              </a>
-            ))}
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
+          <h2 class="hidden sm:flex text-3xl font-body font-semibold items-center gap-3">
+            {tag.slug && (
+              <span class="inline-flex items-center gap-3">
+                <span class="text-gray-600">Contenus liés à</span>
+                <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
+                  <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
+                  <span class="text-gray-800 font-medium">{tag.title}</span>
+                </span>
+              </span>
+            )}
+          </h2>
+          <CategoryFilters currentCategory="" blogConfig={tagData} isTagPage={true} />
         </div>
 
-        <!-- Tag title -->
-        <h2 class="text-3xl font-body font-semibold mb-12">
+        <!-- Tag title for mobile -->
+        <h2 class="sm:hidden text-2xl font-body font-semibold mb-6">
           {tag.slug && (
-            <span class="inline-flex items-center gap-3">
-              <span class="text-gray-600">Contenus liés à</span>
-              <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
-                <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
+            <span class="inline-flex items-center gap-2">
+              <span class="text-gray-600">Tag :</span>
+              <span class="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
+                <Icon name="tabler:tag" class="w-4 h-4 text-gray-500" />
                 <span class="text-gray-800 font-medium">{tag.title}</span>
               </span>
             </span>
@@ -245,6 +238,138 @@ const metadata = {
 </style>
 
 <script>
-  // ... script existant ...
+  // Script pour le défilement lisse
+  document.addEventListener('DOMContentLoaded', () => {
+    // Si l'URL contient une ancre, faire défiler la page en douceur
+    if (window.location.hash === '#category-content') {
+      const element = document.getElementById('category-content');
+      if (element) {
+        setTimeout(() => {
+          const yOffset = -100; 
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({top: y, behavior: 'smooth'});
+        }, 100);
+      }
+    }
+  });
+
+  // Solution ultra simplifiée - on va utiliser une approche native d'affichage/masquage
+  document.addEventListener('astro:page-load', () => {
+    console.log("Page Tag chargée");
+    
+    // Identifier les éléments DOM
+    const tagButton = document.getElementById('tag-category-button');
+    const tagDropdown = document.getElementById('tag-category-dropdown');
+    const tagOverlay = document.getElementById('tag-dropdown-overlay');
+    
+    console.log("Éléments pour dropdown:", {
+      button: !!tagButton, 
+      dropdown: !!tagDropdown, 
+      overlay: !!tagOverlay
+    });
+    
+    // Hack solution - création et injection directe d'un élément personnalisé
+    if (tagButton) {
+      // Créer un nouveau bouton et un nouveau dropdown qui remplaceront les originaux
+      const newButton = document.createElement('button');
+      newButton.id = "custom-tag-button";
+      newButton.innerHTML = tagButton.innerHTML;
+      newButton.className = tagButton.className;
+      newButton.setAttribute('aria-haspopup', 'listbox');
+      newButton.setAttribute('aria-expanded', 'false');
+      newButton.setAttribute('type', 'button');
+      
+      const newDropdown = document.createElement('div');
+      newDropdown.id = "custom-tag-dropdown";
+      newDropdown.style.display = 'none';
+      newDropdown.style.position = 'absolute';
+      newDropdown.style.zIndex = '50';
+      newDropdown.style.top = '100%';
+      newDropdown.style.left = '0';
+      newDropdown.style.right = '0';
+      newDropdown.style.background = 'white';
+      newDropdown.style.borderRadius = '8px';
+      newDropdown.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+      newDropdown.style.marginTop = '4px';
+      
+      // Contenu du dropdown
+      if (tagDropdown) {
+        newDropdown.innerHTML = tagDropdown.innerHTML;
+      } else {
+        // Fallback avec du contenu par défaut
+        newDropdown.innerHTML = `
+          <a href="/blog#category-content" class="flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors">
+            <span class="text-sm">Tous</span>
+          </a>
+          <a href="/category/actualite#category-content" class="flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors">
+            <span class="text-sm">Actualités</span>
+          </a>
+          <a href="/category/fiche#category-content" class="flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors">
+            <span class="text-sm">Fiches</span>
+          </a>
+        `;
+      }
+      
+      // Remplacer le bouton original
+      if (tagButton.parentNode) {
+        // Container parent
+        const container = document.createElement('div');
+        container.className = "sm:hidden relative";
+        container.style.position = "relative";
+        
+        // Ajouter les nouveaux éléments
+        container.appendChild(newButton);
+        container.appendChild(newDropdown);
+        
+        // Remplacer l'élément d'origine
+        tagButton.parentNode.replaceChild(container, tagButton);
+        
+        // Overlay pour les clics extérieurs
+        const newOverlay = document.createElement('div');
+        newOverlay.id = "custom-tag-overlay";
+        newOverlay.className = "fixed inset-0 z-10 bg-black/10 backdrop-blur-sm";
+        newOverlay.style.display = "none";
+        document.body.appendChild(newOverlay);
+        
+        // Variable pour suivre l'état du dropdown
+        let isOpen = false;
+        
+        // Fonction pour ouvrir/fermer le dropdown
+        function toggleDropdown() {
+          isOpen = !isOpen;
+          
+          if (isOpen) {
+            newDropdown.style.display = 'block';
+            newOverlay.style.display = 'block';
+            newButton.setAttribute('aria-expanded', 'true');
+          } else {
+            newDropdown.style.display = 'none';
+            newOverlay.style.display = 'none';
+            newButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+        
+        // Événement pour le nouveau bouton
+        newButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleDropdown();
+        });
+        
+        // Fermer lors d'un clic sur l'overlay
+        newOverlay.addEventListener('click', () => {
+          toggleDropdown();
+        });
+        
+        // Fermer lors d'un clic sur un élément du dropdown
+        const links = newDropdown.querySelectorAll('a');
+        links.forEach(link => {
+          link.addEventListener('click', () => {
+            toggleDropdown();
+          });
+        });
+      }
+    }
+  });
 </script>
 

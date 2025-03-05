@@ -8,6 +8,7 @@ interface Props {
   color?: string;
   isActive?: boolean;
   withAnchor?: boolean;
+  mobileIconOnly?: boolean;
 }
 
 const { 
@@ -16,7 +17,8 @@ const {
   label, 
   color = '#1f2937', 
   isActive = false,
-  withAnchor = false
+  withAnchor = false,
+  mobileIconOnly = false
 } = Astro.props;
 
 // Ajouter l'ancre si nécessaire
@@ -29,7 +31,10 @@ const finalHref = withAnchor ? `${href}#category-content` : href;
     'group relative inline-flex items-center gap-2',
     'transform skew-x-[-12deg]',
     'transition-all duration-300',
-    'px-6 py-2.5 ring-2',
+    'px-3 sm:px-6 py-2 sm:py-2.5',
+    'ring-2',
+    // Optimisation tactile pour mobile
+    'min-h-[40px]',
     isActive ? [
       'scale-105 shadow-lg'
     ] : [
@@ -40,13 +45,22 @@ const finalHref = withAnchor ? `${href}#category-content` : href;
     ? `background-color: white; color: ${color}; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};` 
     : `background-color: ${color}; color: white; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};`
   }
+  aria-current={isActive ? 'page' : undefined}
 >
-  <span class="transform skew-x-[12deg] flex items-center gap-2.5">
+  <span class="transform skew-x-[12deg] flex items-center gap-1.5 sm:gap-2.5">
     <Icon 
       name={icon} 
-      class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]" 
+      class:list={[
+        'transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]',
+        mobileIconOnly ? 'w-5 h-5' : 'w-4 h-4'
+      ]} 
     />
-    <span class="text-sm font-bold uppercase tracking-wide italic transition-colors duration-300 group-hover:text-[var(--hover-text-color)]">
+    <span 
+      class:list={[
+        'font-bold uppercase tracking-wide italic transition-colors duration-300 group-hover:text-[var(--hover-text-color)]',
+        mobileIconOnly ? 'hidden sm:inline' : 'text-xs sm:text-sm'
+      ]}
+    >
       {label}
     </span>
   </span>
@@ -57,5 +71,12 @@ const finalHref = withAnchor ? `${href}#category-content` : href;
   a:not(.scale-105):hover {
     background-color: white !important;
     color: var(--hover-text-color) !important;
+  }
+
+  /* Support tactile amélioré pour mobile */
+  @media (max-width: 640px) {
+    a {
+      touch-action: manipulation;
+    }
   }
 </style> 

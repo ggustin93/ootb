@@ -1,0 +1,66 @@
+import { Image } from 'astro:assets';
+import ootbLogo from '~/assets/images/ootb-logo.svg';
+
+interface Props {
+  size?: 'sm' | 'md' | 'lg';
+  position?: 'hero' | 'after-title' | 'floating';
+  mobileHidden?: boolean;
+  maxWidth?: string;
+  animation?: boolean;
+  class?: string;
+}
+
+const { 
+  size = 'md', 
+  position = 'hero',
+  mobileHidden = false,
+  maxWidth = '500px',
+  animation = true,
+  class: className = '',
+} = Astro.props;
+
+// Classes de taille
+const sizeClasses = {
+  sm: 'w-16 h-16 sm:w-24 sm:h-24',
+  md: 'w-32 h-32 sm:w-48 sm:h-48',
+  lg: 'w-full max-w-[500px]'
+};
+
+// Classes de position
+const positionClasses = {
+  hero: 'order-2 md:order-1 md:col-span-5 md:-mt-8',
+  'after-title': 'mx-auto mt-4 mb-8',
+  'floating': 'absolute -bottom-6 -right-6 z-10 rotate-6'
+};
+
+// Classes d'animation
+const animationClass = animation ? 'transform hover:-rotate-2 transition-transform duration-300' : '';
+
+// Classe pour cacher sur mobile
+const mobileVisibilityClass = mobileHidden ? 'hidden md:block' : '';
+
+<div class:list={[
+  positionClasses[position],
+  mobileVisibilityClass,
+  className
+]}>
+  <div class:list={[
+    "relative",
+    animationClass,
+    position === 'hero' ? 'w-full max-w-[500px] mx-auto' : '',
+    position === 'after-title' ? 'max-w-[100px] sm:max-w-[150px] mx-auto' : '',
+  ]}>
+    <Image
+      src={ootbLogo}
+      alt="Out of the Books Mascotte"
+      class:list={[
+        "object-contain drop-shadow-xl",
+        sizeClasses[size],
+        position === 'hero' ? 'w-full h-full' : '',
+      ]}
+      widths={[100, 200, 500]}
+      sizes="(max-width: 640px) 100px, (max-width: 768px) 200px, 500px"
+      loading={position === 'hero' ? 'eager' : 'lazy'}
+    />
+  </div>
+</div> 

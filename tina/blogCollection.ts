@@ -24,7 +24,7 @@ export const blogCollection: Collection = {
         orLabel: "ou",
         labels: {
           default: "Filtrer par type de contenu :",
-          category: "Autres types de contenus :"
+          category: "Filtrer par type de contenus :"
         },
         categoryFilters: {
           allLabel: "Tous",
@@ -35,7 +35,7 @@ export const blogCollection: Collection = {
         title: "Tous les contenus"
       },
       search: {
-        placeholder: "Ex: programme scolaire, math",
+        placeholder: "Ex: IA, Montessori, inclusion, ...",
         thematicLabel: "Rechercher par thématique :"
       }
     },

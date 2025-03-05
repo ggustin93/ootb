@@ -18,6 +18,14 @@ interface Props {
 
 const { currentCategory, blogConfig } = Astro.props;
 const { allLabel, mobileSelectLabel } = blogConfig.hero.filters.categoryFilters;
+
+// Vérification de sécurité pour l'accès aux propriétés dynamiques
+const getCurrentCategoryLabel = (category: string | undefined): string => {
+  if (!category || category === 'blog') return allLabel;
+  return category in CONTENT_TYPES 
+    ? (CONTENT_TYPES as Record<string, {label: string}>)[category]?.label
+    : mobileSelectLabel;
+};
 ---
 
 <div class="flex flex-col w-full sm:w-auto">
@@ -55,40 +63,198 @@ const { allLabel, mobileSelectLabel } = blogConfig.hero.filters.categoryFilters;
     ))}
   </div>
 
-  {/* Version Mobile - Menu déroulant */}
+  {/* Version Mobile - Menu personnalisé */}
   <div class="sm:hidden relative">
-    <select
-      id="category-select"
-      class="w-full appearance-none bg-gray-100/80 rounded-lg px-4 py-2.5 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+    <button
+      id="category-button"
+      type="button"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-labelledby="category-label"
+      class="flex items-center justify-between w-full bg-gray-100/80 rounded-lg px-4 py-2.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300"
     >
-      <option value="blog" selected={!currentCategory || currentCategory === 'blog'}>
-        {mobileSelectLabel}
-      </option>
+      <span class="flex items-center gap-2">
+        <Icon id="selected-icon" name="tabler:layout-grid" class="w-4 h-4" />
+        <span id="selected-category" class="text-sm font-medium">
+          {getCurrentCategoryLabel(currentCategory)}
+        </span>
+      </span>
+      <Icon 
+        id="dropdown-icon"
+        name="tabler:chevron-down" 
+        class="w-5 h-5 text-gray-500 transition-transform duration-300" 
+      />
+    </button>
+    
+    <div 
+      id="category-dropdown" 
+      role="listbox"
+      aria-labelledby="category-label"
+      class="absolute z-20 mt-1 w-full bg-white rounded-lg shadow-lg transform scale-y-0 origin-top opacity-0 transition-all duration-300 ease-in-out max-h-64 overflow-y-auto"
+    >
+      <a
+        href="/blog#blog-content"
+        role="option"
+        aria-selected={!currentCategory || currentCategory === 'blog'}
+        class={[
+          'flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors',
+          (!currentCategory || currentCategory === 'blog') 
+            ? 'bg-gray-50 text-gray-900 font-medium' 
+            : 'text-gray-600'
+        ].join(' ')}
+        data-value="blog"
+        data-icon="tabler:layout-grid"
+        tabindex="0"
+      >
+        <Icon name="tabler:layout-grid" class="w-4 h-4" />
+        <span class="text-sm">{allLabel}</span>
+      </a>
+
       {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
-        <option 
-          value={key} 
-          selected={key.toLowerCase() === currentCategory?.toLowerCase()}
+        <a
+          href={`/category/${key}#category-content`}
+          role="option"
+          aria-selected={key.toLowerCase() === currentCategory?.toLowerCase()}
+          class={[
+            'flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors',
+            key.toLowerCase() === currentCategory?.toLowerCase() 
+              ? 'bg-gray-50 font-medium' 
+              : 'text-gray-600'
+          ].join(' ')}
+          data-value={key}
+          data-icon={config.icon}
+          data-color={config.color}
+          tabindex="0"
+          style={key.toLowerCase() === currentCategory?.toLowerCase() ? `color: ${config.color};` : ''}
         >
-          {config.label}
-        </option>
+          <Icon name={config.icon} class="w-4 h-4" />
+          <span class="text-sm">{config.label}</span>
+        </a>
       ))}
-    </select>
-    <Icon 
-      name="tabler:chevron-down" 
-      class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" 
-    />
+    </div>
+    
+    {/* Overlay pour fermer le menu en cliquant ailleurs */}
+    <div id="dropdown-overlay" class="fixed inset-0 z-10 bg-black/10 hidden backdrop-blur-sm"></div>
   </div>
 </div>
 
 <script>
   function initializeMobileFilter() {
-    const select = document.getElementById('category-select') as HTMLSelectElement;
+    const button = document.getElementById('category-button');
+    const dropdown = document.getElementById('category-dropdown');
+    const overlay = document.getElementById('dropdown-overlay');
+    const dropdownIcon = document.getElementById('dropdown-icon');
+    const selectedCategory = document.getElementById('selected-category');
+    const selectedIcon = document.getElementById('selected-icon');
+    const options = document.querySelectorAll('#category-dropdown a[role="option"]');
     
-    if (select) {
-      select.addEventListener('change', (e) => {
-        const value = (e.target as HTMLSelectElement).value;
-        const url = value === 'blog' ? '/blog#blog-content' : `/category/${value}#category-content`;
-        window.location.href = url;
+    function closeDropdown() {
+      if (dropdown && overlay && button && dropdownIcon) {
+        dropdown.classList.remove('scale-y-100', 'opacity-100');
+        dropdown.classList.add('scale-y-0', 'opacity-0');
+        overlay.classList.add('hidden');
+        button.setAttribute('aria-expanded', 'false');
+        dropdownIcon.classList.remove('rotate-180');
+      }
+    }
+    
+    function openDropdown() {
+      if (dropdown && overlay && button && dropdownIcon) {
+        dropdown.classList.remove('scale-y-0', 'opacity-0');
+        dropdown.classList.add('scale-y-100', 'opacity-100');
+        overlay.classList.remove('hidden');
+        button.setAttribute('aria-expanded', 'true');
+        dropdownIcon.classList.add('rotate-180');
+      }
+    }
+    
+    // Toggle dropdown when button is clicked
+    button?.addEventListener('click', () => {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+    
+    // Close dropdown when overlay is clicked
+    overlay?.addEventListener('click', closeDropdown);
+    
+    // Handle keyboard navigation
+    button?.addEventListener('keydown', (e) => {
+      const event = e as KeyboardEvent;
+      if (event.key === 'Escape') {
+        closeDropdown();
+      } else if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+        e.preventDefault();
+        openDropdown();
+        (options[0] as HTMLElement)?.focus();
+      }
+    });
+    
+    // Update selected option when an option is clicked
+    options?.forEach(option => {
+      option.addEventListener('click', () => {
+        if (selectedCategory && selectedIcon) {
+          selectedCategory.textContent = option.querySelector('span')?.textContent || '';
+          const iconName = option.getAttribute('data-icon') || 'tabler:layout-grid';
+          selectedIcon.setAttribute('name', iconName);
+          
+          // Appliquer la couleur si disponible
+          const color = option.getAttribute('data-color');
+          if (color && selectedCategory) {
+            selectedCategory.style.color = color;
+          } else {
+            selectedCategory.style.color = '';
+          }
+        }
+        closeDropdown();
+      });
+      
+      // Handle keyboard navigation within dropdown
+      option.addEventListener('keydown', (e) => {
+        const event = e as KeyboardEvent;
+        if (event.key === 'Escape') {
+          closeDropdown();
+          button?.focus();
+        } else if (event.key === 'ArrowDown') {
+          e.preventDefault();
+          const nextOption = option.nextElementSibling as HTMLElement;
+          if (nextOption) nextOption.focus();
+        } else if (event.key === 'ArrowUp') {
+          e.preventDefault();
+          const prevOption = option.previousElementSibling as HTMLElement;
+          if (prevOption) prevOption.focus();
+          else button?.focus();
+        } else if (event.key === 'Enter' || event.key === ' ') {
+          e.preventDefault();
+          (option as HTMLElement).click();
+        }
+      });
+    });
+    
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (
+        dropdown && 
+        button && 
+        !dropdown.contains(target) && 
+        !button.contains(target) && 
+        button.getAttribute('aria-expanded') === 'true'
+      ) {
+        closeDropdown();
+      }
+    });
+    
+    // Support for reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const transitionElements = [dropdown, dropdownIcon];
+      transitionElements.forEach(el => {
+        if (el) {
+          el.classList.remove('transition-all', 'transition-transform', 'duration-300');
+        }
       });
     }
   }

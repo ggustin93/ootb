@@ -8,7 +8,7 @@
     "defaultSocialImage": "/images/assets/ootb-social-card.jpg"
   },
   "announcement": {
-    "enabled": true,
+    "enabled": false,
     "color": "#e7461c",
     "content": {
       "badge": "NOUVEAU",

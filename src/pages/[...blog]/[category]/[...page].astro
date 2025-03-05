@@ -207,8 +207,8 @@ const metadata = {
                     Contenu premium
                   </h2>
 
-                  {/* Filtres minimalistes */}
-                  <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg">
+                  {/* Filtres minimalistes - version desktop uniquement */}
+                  <div class="hidden sm:flex gap-1 bg-gray-100/80 p-1 rounded-lg">
                     <a
                       href="/blog#category-content"
                       class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
@@ -235,6 +235,11 @@ const metadata = {
                         <span class="text-xs sm:text-sm">{config.label}</span>
                       </a>
                     ))}
+                  </div>
+                  
+                  {/* Version mobile pour Premium - utilise le composant CategoryFilters */}
+                  <div class="sm:hidden">
+                    <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
                   </div>
                 </div>
 

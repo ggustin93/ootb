@@ -33,7 +33,7 @@ Le traitement des données personnelles collectées par le biais du site web est
 
 ## Cookies
 
-Le site outofthebooks.com utilise des cookies techniques et fonctionnels nécessaires au bon fonctionnement du site. Pour plus d'informations, consultez notre politique de cookies incluse dans notre Politique de confidentialité.
+Le site outofthebooks.com utilise des cookies techniques et fonctionnels nécessaires au bon fonctionnement du site. Pour plus d'informations, consultez notre [politique de cookies incluse dans notre Politique de confidentialité](/privacy).
 
 ## Responsabilité
 
@@ -45,6 +45,20 @@ Les présentes mentions légales sont régies par le droit belge. En cas de diff
 
 ## Crédits
 
-Le site outofthebooks.com a été créé par Guillaume Gustin, opérant sous l'activité Pwablo (pwablo.be) et guillaumegustin.com, via la coopérative Smart. Pour toute question technique liée au développement initial du site, vous pouvez le contacter à l'adresse guillaume.gustin.9@gmail.com.
+Le site [outofthebooks.com](https://outofthebooks.com) a été créé par Guillaume Gustin, opérant sous l'activité [Pwablo](https://pwablo.be) et [guillaumegustin.com](https://guillaumegustin.com), via la coopérative Smart. Pour toute question technique liée au développement initial du site, vous pouvez le contacter à l'adresse hello@pwablo.be.
 
 L'ajout de contenu dans le CMS est géré par OUT OF THE BOOKS ASBL. Pour toute question liée à l'ajout de contenu, veuillez contacter alexia@festivalootb.com.
+
+## Ressources tierces
+
+Ce site utilise les ressources tierces suivantes :
+
+* [AstroWind](https://github.com/onwidget/astrowind) - Template Astro qui a servi de squelette initial et a été fortement personnalisé et adapté pour les besoins spécifiques de ce site
+* [Tabler Icons](https://tabler-icons.io/) - Icônes open-source gratuites
+* Des images provenant de [Unsplash](https://unsplash.com/) sous licence gratuite
+* Polices de caractères :
+  * Bebas Neue
+  * Raleway Variable
+  * Caveat Variable
+
+Nous remercions les créateurs de ces ressources qui nous permettent d'améliorer l'expérience utilisateur de notre site.

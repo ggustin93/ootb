@@ -1,65 +1,64 @@
 ---
 import { Icon } from 'astro-icon/components';
-import SectionDivider from '~/components/ui/SectionDivider.astro';
 import homepageData from '../../content/homepage/index.json';
 
-interface Props {
-  class?: string;
-}
-
-interface StatItem {
+interface Stat {
   number: string;
   label: string;
   sublabel: string;
   icon: string;
 }
 
-const { class: className } = Astro.props;
-const { stats } = homepageData;
-const items = stats.items as StatItem[];
+interface Props {
+  stats?: Stat[];
+}
 
-// Titre et description par défaut si non fournis
-const title = "Nos chiffres clés";
-const description = "Découvrez l'impact de notre communauté éducative à travers ces statistiques.";
+// Get homepage data from JSON
+const homeStats = homepageData.stats;
+
+// Default stats if no Tina data is available
+const defaultStats = [
+  { 
+    number: "9000", 
+    label: "Membres actifs", 
+    sublabel: "dans la communauté",
+    icon: "tabler:users-group"
+  },
+  { 
+    number: "3000", 
+    label: "Participants", 
+    sublabel: "au festival annuel",
+    icon: "tabler:ticket"
+  },
+  { 
+    number: "80+", 
+    label: "Contenus", 
+    sublabel: "pédagogiques",
+    icon: "tabler:device-tv"
+  }
+];
+
+const { stats: propStats } = Astro.props;
+
+// Use props if provided, otherwise use Tina data with fallback
+const displayStats = propStats || (homeStats?.items ?? defaultStats);
+
 ---
 
-<section class={`py-8 md:py-20 px-4 md:px-8 bg-gradient-to-b from-white to-[--ootb-turquoise]/5 ${className}`}>
-  <div class="max-w-6xl mx-auto">
-    <div class="flex flex-col items-center text-center mb-6 md:mb-16">
-      <SectionDivider variant="turquoise" class="mb-3 md:mb-6">
-        <Icon name="tabler:chart-bar" class="w-4 h-4 mr-1" />
-        Nos chiffres
-      </SectionDivider>
-      
-      <h2 class="font-body text-3xl md:text-4xl font-bold text-[--ootb-blue] mb-3 md:mb-6 max-w-3xl">
-        {title}
-      </h2>
-      
-      <p class="text-lg text-gray-600 max-w-3xl">
-        {description}
-      </p>
-    </div>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-      {items.map((item: StatItem) => (
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-[--ootb-turquoise]/10 hover:border-[--ootb-turquoise]/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group text-center">
-          <div class="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-xl bg-[--ootb-turquoise]/10 text-[--ootb-turquoise] mb-2 md:mb-4 group-hover:bg-[--ootb-turquoise] group-hover:text-white transition-colors duration-300">
-            <Icon name={item.icon} class="w-5 h-5 md:w-8 md:h-8" />
-          </div>
-          
-          <h3 class="font-display text-2xl md:text-4xl font-bold text-[--ootb-blue] mb-1 md:mb-2">
-            {item.number}
-          </h3>
-          
-          <p class="text-gray-600 text-sm md:text-base font-medium">
-            {item.label}
-          </p>
-          
-          <p class="text-gray-500 text-xs md:text-sm">
-            {item.sublabel}
-          </p>
+<div class="mt-12 md:mt-24 max-w-6xl mx-auto px-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+    {displayStats.map(({ number, label, sublabel, icon }) => (
+      <div class="group relative">
+        <div class="relative p-8 md:p-10 text-center rounded-2xl transition-all duration-300 bg-white/10 backdrop-blur-sm border border-[--ootb-turquoise]/10 hover:border-[--ootb-turquoise]/20">
+          <Icon 
+            name={icon} 
+            class="w-8 h-8 md:w-10 md:h-10 mx-auto mb-3 md:mb-4 text-[--ootb-turquoise] opacity-40 group-hover:opacity-100 transition-opacity duration-300" 
+          />
+          <div class="text-4xl md:text-6xl font-bold text-[--ootb-turquoise] mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300" style="text-shadow: none;">{number}</div>
+          <div class="text-base md:text-lg font-medium text-gray-800">{label}</div>
+          <div class="text-sm md:text-base text-gray-600 mt-1">{sublabel}</div>
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </div>
-</section> 
+</div> 

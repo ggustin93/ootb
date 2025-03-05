@@ -47,7 +47,7 @@ const {
     href: post.permalink,
     title: post.title,
     description: post.description,
-    image: post.image || `/src/assets/images/default-${post.category.slug}.jpg`,
+    image: post.image,
     badge: CATEGORY_LABELS[post.category.slug as keyof typeof CATEGORY_LABELS] || post.category.slug,
     type: post.category.slug === 'podcast' ? 'podcast' : 
            post.category.slug === 'tv' ? 'tv' : 'default',

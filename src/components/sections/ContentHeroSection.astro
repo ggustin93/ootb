@@ -94,16 +94,18 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="text-center md:text-left px-4 md:px-0 space-y-6 md:space-y-8">
-          <h1 class="text-left pb-8">
-            <Image
-              src={logo}
-              alt="Out of the Books"
-              class={`${logoClass} max-w-full`}
-              widths={[200, 300]}
-              sizes="(max-width: 768px) 200px, 300px"
-              loading="eager"
-              decoding="async"
-            />
+          <h1 class="text-center md:text-left pb-8 mx-auto md:mx-0 px-20">
+            <div class="transform scale-150 md:scale-100 mx-auto md:mx-0">
+              <Image
+                src={logo}
+                alt="Out of the Books"
+                class={logoClass}
+                widths={[200, 300]}
+                sizes="(max-width: 768px) 200px, 300px"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
           </h1>
           <blockquote class="text-lg md:text-xl lg:text-2xl text-white/90 font-light border-l-4 pl-4 md:pl-6 leading-relaxed max-w-3xl mt-10 md:mt-12" style={`border-color: var(${quoteColor})`}>
             {quote}

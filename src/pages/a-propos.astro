@@ -12,21 +12,25 @@ const { metadata, hero, quiSommesNous, vision, actions, missions, valeurs, equip
 
 // Utiliser les assets locaux pour les images qui sont des chemins locaux
 import teamImage from '~/assets/images/ootb_team.webp';
-import logo_blanc from '~/assets/images/logo_ootb_garcon_blanc.svg';
+// Import du logo en format WebP au lieu de SVG pour meilleure compatibilité mobile
+import logo_blanc from '~/assets/images/logo_ootb_garcon_blanc.webp';
+// Garder le SVG comme fallback si nécessaire
+// import logo_blanc_svg from '~/assets/images/logo_ootb_garcon_blanc.svg';
 
 ---
 
 <Layout {metadata}>
   <ContentHeroSection
     logo={logo_blanc}
-    logoClass="w-[400px] h-auto mx-auto md:w-[400px] md:mx-0 md:transform md:scale-150 md:origin-left"
+    logoClass="w-[90px] h-auto object-contain mx-auto md:w-[130px] md:mx-0 md:origin-left"
     heroImage={teamImage}
     quote={hero.quote}
     scrollTargetId="qui-sommes-nous"
     scrollLabel={hero.scrollLabel}
     showScrollArrow={true}
     showScrollArrowOnMobile={false}
-  />
+  >
+  </ContentHeroSection>
 
   <!-- Qui sommes-nous -->
   <section id="qui-sommes-nous" class="pb-16 bg-white relative overflow-hidden">

@@ -6,6 +6,9 @@ import SectionDivider from '~/components/ui/SectionDivider.astro';
 import Button from '~/components/ui/Button.astro';
 import homepageData from '../../content/homepage/index.json';
 
+// Import de l'image locale comme fallback
+import teamImage from '~/assets/images/ootb_team.webp';
+
 interface Props {
   image?: ImageMetadata;
   features?: string[];
@@ -34,8 +37,16 @@ const defaultMission = {
   }
 };
 
+// Détermine si l'image du JSON est une URL Cloudinary
+const isCloudinaryUrl = mission?.image && (
+  mission.image.includes('cloudinary.com') || 
+  mission.image.startsWith('https://') || 
+  mission.image.startsWith('http://')
+);
+
 // Use props if provided, otherwise use Tina data with fallback
-const displayImage = propImage || mission?.image;
+// Si l'image du JSON est une URL Cloudinary, l'utiliser directement
+const displayImage = propImage || (isCloudinaryUrl ? mission.image : teamImage);
 const displayFeatures = propFeatures || mission?.features?.map(f => f.text) || defaultMission.features.map(f => f.text);
 const displayTitle = mission?.title || defaultMission.title;
 const displayDescription = mission?.description || defaultMission.description;

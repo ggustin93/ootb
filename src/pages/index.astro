@@ -7,12 +7,6 @@ import FeaturedContentSection from '~/components/sections/FeaturedContentSection
 import PremiumSection from '~/components/sections/PremiumSection.astro';
 import NewsletterSection from '~/components/sections/NewsletterSection.astro';
 
-import {
-  heroContent,
-  images,
-  aboutFeatures,
-} from '~/data/education';
-
 // Import des données depuis les fichiers JSON gérés par Tina CMS
 import homepageData from '../content/homepage/index.json';
 import siteSettings from '../content/site/settings.json';
@@ -27,10 +21,10 @@ const metadata = {
 ---
 
 <Layout {metadata}>
-  <HeroSection {...heroContent} scrollTargetId="mission-section" />
+  <HeroSection scrollTargetId="mission-section" />
   
   <div class="w-full relative z-[100]">
-    <MissionSection image={images.about} features={aboutFeatures} />
+    <MissionSection />
   </div>
   
   <div class="relative -mt-16 sm:-mt-20 md:-mt-24 pb-12 sm:pb-16 overflow-hidden">

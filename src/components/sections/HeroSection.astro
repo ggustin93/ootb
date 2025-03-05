@@ -8,16 +8,29 @@ import logo_garcon_blanc from '~/assets/images/logo_ootb_garcon_blanc.svg';
 import GradientHeroSection from './GradientHeroSection.astro';
 import homepageData from '../../content/homepage/index.json';
 // Import du composant ScrollDownArrow
-import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
+// Le composant ScrollDownArrow n'est plus utilisé directement
 
 interface Props {
   image?: ImageMetadata;
   scrollTargetId?: string; // ID de la section cible pour le défilement
+  /**
+   * Contrôle si la flèche de défilement doit être affichée
+   * @default true
+   */
+  showScrollArrow?: boolean;
+  
+  /**
+   * Contrôle si la flèche de défilement doit être affichée sur mobile
+   * @default false
+   */
+  showScrollArrowOnMobile?: boolean;
 }
 
 const { 
   image: propImage, 
-  scrollTargetId = "mission-section"
+  scrollTargetId = "mission-section",
+  showScrollArrow = true,
+  showScrollArrowOnMobile = false
 } = Astro.props;
 
 // Get homepage data from JSON
@@ -135,7 +148,7 @@ const displayBadges = hero?.badges || defaultHero.badges;
       </div>
     </div>
 
-    <!-- Image principale (desktop) -->
+    <!-- Image principale (desktop) avec flèche repositionnée -->
     <div class="relative hidden md:block px-8">
       <Image
         src={displayImage}
@@ -147,15 +160,158 @@ const displayBadges = hero?.badges || defaultHero.badges;
         loading="eager"
         decoding="async"
       />
+      
       <!-- Cercle décoratif -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-white/10 blur-2xl z-10"></div>
+      
+      <!-- ScrollDownArrow toujours en bas à droite de l'image (desktop) -->
+      {showScrollArrow && (
+        <div class="hidden md:block absolute z-30 bottom-0 left-1/2 transform translate-y-[100%] translate-x-[-50%]">
+          <div class="flex flex-col items-center group cursor-pointer" data-target-id={scrollTargetId}>
+            <!-- Applique le fond flou uniquement sur le texte -->
+            <p class="font-handwritten text-white text-2xl md:text-3xl mb-3 transform -rotate-3 relative group-hover:text-[--ootb-yellow] transition-colors duration-300">
+              <span class="absolute inset-0 bg-white/10 backdrop-blur-md rounded-xl -z-10 scale-110 px-8"></span>
+              Explorer l'univers
+            </p>
+            
+            <!-- La flèche est sans flou -->
+            <div class="arrow-animation hover:scale-110 transition-all duration-300">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke-width="2.5" 
+                stroke="currentColor" 
+                class="w-8 h-8 md:w-10 md:h-10 text-white group-hover:text-[--ootb-yellow] transition-colors duration-300 drop-shadow-md"
+              >
+                <path 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   </div>
   
-  <!-- Utilisation du composant ScrollDownArrow -->
-  <ScrollDownArrow 
-    targetId={scrollTargetId} 
-    label="Explorer l'univers" 
-    hideOnMobile={true}
-  />
+  <!-- ScrollDownArrow pour mobile (en bas) -->
+  {showScrollArrow && showScrollArrowOnMobile && (
+    <div class="md:hidden relative mt-8 mb-4">
+      <div class="flex flex-col items-center mx-auto w-max group cursor-pointer" data-target-id={scrollTargetId}>
+        <!-- Applique le fond flou uniquement sur le texte (mobile) -->
+        <p class="font-handwritten text-white text-2xl mb-3 transform -rotate-3 relative group-hover:text-[--ootb-yellow] transition-colors duration-300">
+          <span class="absolute inset-0 bg-white/10 backdrop-blur-md rounded-xl -z-10 scale-110 px-8"></span>
+          Explorer l'univers
+        </p>
+        
+        <!-- La flèche est sans flou (mobile) -->
+        <div class="arrow-animation hover:scale-110 transition-all duration-300">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke-width="2.5" 
+            stroke="currentColor" 
+            class="w-8 h-8 text-white group-hover:text-[--ootb-yellow] transition-colors duration-300 drop-shadow-md"
+          >
+            <path 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  )}
 </GradientHeroSection>
+
+<style>
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .arrow-animation {
+    animation: float 2s ease-in-out infinite;
+  }
+
+  .arrow-animation:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .arrow-animation {
+      animation: none;
+    }
+  }
+</style>
+
+<script define:vars={{ scrollTargetId }}>
+  // Observer la hauteur de la fenêtre et ajuster la position des éléments si nécessaire
+  const adjustHeroLayout = () => {
+    // Hauteur de la fenêtre
+    const windowHeight = window.innerHeight;
+    const heroSection = document.querySelector('.grid');
+    
+    // Si la hauteur de la fenêtre est trop petite, ajuster les espacements
+    if (windowHeight < 700 && heroSection) {
+      // Réduire les marges internes pour les petits écrans
+      heroSection.classList.add('md:pt-16', 'pt-8');
+      heroSection.classList.remove('md:pt-32', 'pt-12');
+    } else if (heroSection) {
+      // Restaurer les marges normales
+      heroSection.classList.remove('md:pt-16', 'pt-8');
+      heroSection.classList.add('md:pt-32', 'pt-12');
+    }
+  };
+
+  // Ajouter la fonctionnalité de scroll lors du clic
+  const setupScrollArrow = () => {
+    const arrowContainers = document.querySelectorAll('.flex.flex-col.items-center.group.cursor-pointer');
+    
+    arrowContainers.forEach(container => {
+      // Récupérer l'ID cible depuis l'attribut data-target-id
+      const targetId = container.getAttribute('data-target-id') || scrollTargetId;
+      
+      if (!targetId) return;
+      
+      container.addEventListener('click', () => {
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          const headerOffset = 100;
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        } else {
+          const defaultScrollDistance = window.innerHeight * 0.8;
+          const currentPosition = window.pageYOffset;
+          window.scrollTo({
+            top: currentPosition + defaultScrollDistance,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  };
+
+  // Exécuter au chargement et au redimensionnement
+  window.addEventListener('resize', adjustHeroLayout);
+  document.addEventListener('DOMContentLoaded', () => {
+    adjustHeroLayout();
+    setupScrollArrow();
+  });
+  document.addEventListener('astro:after-swap', () => {
+    adjustHeroLayout();
+    setupScrollArrow();
+  });
+</script>

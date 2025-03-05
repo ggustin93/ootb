@@ -5,6 +5,8 @@ import ProjectSubmissionForm from '~/components/forms/ProjectSubmissionForm.astr
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
 import logoTalent from '~/assets/images/logo_talent.avif';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 // Import des données depuis le fichier JSON géré par Tina
 import appelProjetData from '~/content/appel_projet/index.json';
@@ -31,9 +33,15 @@ const criteria = criteres.items.map(item => ({
 
 // Préparation des boutons avec les propriétés size pour ContentHeroSection
 const heroButtons = hero.buttons.map(button => ({
-  ...button,
+  href: button.href,
+  icon: button.icon,
+  label: button.label,
+  variant: button.variant,
   size: 'lg'
 }));
+
+// Import de l'image directement depuis l'URL dans le JSON
+const heroImageUrl = hero.heroImage;
 
 ---
 
@@ -41,16 +49,14 @@ const heroButtons = hero.buttons.map(button => ({
   <ContentHeroSection
     logo={logoTalent}
     logoClass="w-[350px] md:w-[500px] h-auto mx-auto md:mx-0"
-    heroImage={hero.heroImage}
+    heroImage={heroImageUrl}
     quote={hero.quote}
     quoteColor="--ootb-blue"
     buttons={heroButtons}
-    scroll={{
-      targetId: hero.scroll.targetId,
-      label: hero.scroll.label,
-      position: "bottom-[25%] left-[55%]",
-      hideOnMobile: true
-    }}
+    scrollTargetId={hero.scroll.targetId}
+    scrollLabel={hero.scroll.label}
+    showScrollArrow={true}
+    showScrollArrowOnMobile={false}
     imageBackgroundColor="--ootb-blue"
   />
 

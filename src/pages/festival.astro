@@ -10,7 +10,6 @@ import YouTubePlayer from '~/components/common/YouTubePlayer.astro';
 import ootbLogo from '~/assets/images/ootb-logo.svg';
 import Carousel from '~/components/ui/Carousel.astro';
 import Button from '~/components/ui/Button.astro';
-import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import ActivityCards from '~/components/sections/ActivityCards.astro';
 
 // Import du contenu depuis le fichier JSON
@@ -35,13 +34,11 @@ const heroBackground = heroImage;
     date={hero.date}
     location={hero.location}
     description={hero.description}
+    showScrollArrow={true}
+    showScrollArrowOnMobile={false}
+    scrollTargetId="features"
+    scrollLabel="En savoir plus"
   >
-    <ScrollDownArrow 
-      targetId="features" 
-      label="En savoir plus"
-      position="bottom-[25%] right-[5%]"
-      class="text-white"
-    />
   </FestivalHeroSection>
 
   <!-- Cartes d'activités adaptées pour mobile - Utilisation unique -->
@@ -75,7 +72,6 @@ const heroBackground = heroImage;
               videoId={about.videoId}
               title={about.videoTitle}
               className="w-full aspect-video"
-              autoplay={false}
               muted={false}
               controls={true}
             />

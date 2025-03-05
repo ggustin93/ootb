@@ -19,15 +19,13 @@ import logo_blanc from '~/assets/images/logo_ootb_garcon_blanc.svg';
 <Layout {metadata}>
   <ContentHeroSection
     logo={logo_blanc}
-    logoClass="w-[200px] md:w-[300px] h-auto mx-auto md:mx-0 md:transform md:scale-150 md:origin-left"
+    logoClass="w-[400px] h-auto mx-auto md:w-[400px] md:mx-0 md:transform md:scale-150 md:origin-left"
     heroImage={teamImage}
     quote={hero.quote}
-    scroll={{
-      targetId: "qui-sommes-nous",
-      label: hero.scrollLabel,
-      position: "left-[20%] bottom-[33%]",
-      hideOnMobile: true
-    }}
+    scrollTargetId="qui-sommes-nous"
+    scrollLabel={hero.scrollLabel}
+    showScrollArrow={true}
+    showScrollArrowOnMobile={false}
   />
 
   <!-- Qui sommes-nous -->

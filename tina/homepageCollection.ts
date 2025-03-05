@@ -27,6 +27,11 @@ export const homepageCollection: Collection = {
     },
   },
   defaultItem: () => ({
+    metadata: {
+      title: "Out of the Books | Plateforme collaborative pour l'éducation",
+      description: "Contenus experts et événements inspirants pour les acteurs de l'éducation. Rejoignez une communauté de 3000+ innovateurs qui réinventent l'éducation.",
+      image: "/images/assets/ootb-social-card.jpg"
+    },
     stats: {
       items: [
         { 
@@ -55,6 +60,42 @@ export const homepageCollection: Collection = {
     }
   }),
   fields: [
+    {
+      type: "object",
+      name: "metadata",
+      label: "Métadonnées",
+      ui: {
+        itemProps: (_item) => {
+          return { label: "Métadonnées SEO" };
+        },
+      },
+      fields: [
+        {
+          type: "string",
+          name: "title",
+          label: "Titre SEO",
+          description: "Titre qui apparaît dans les résultats de recherche (50-60 caractères). Ne pas inclure '| Out of the Books' car il sera ajouté automatiquement.",
+          required: false,
+        },
+        {
+          type: "string",
+          name: "description",
+          label: "Description SEO",
+          description: "Courte description pour les résultats de recherche (150-160 caractères recommandés).",
+          ui: {
+            component: "textarea",
+          },
+          required: false,
+        },
+        {
+          type: "image",
+          name: "image",
+          label: "Image de partage",
+          description: "Image utilisée lors du partage sur les réseaux sociaux (1200x630px recommandé).",
+          required: false,
+        },
+      ],
+    },
     {
       type: "object",
       name: "hero",

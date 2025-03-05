@@ -1,4 +1,12 @@
 {
+  "seo": {
+    "siteName": "Out of the Books",
+    "titleTemplate": "%s | Out of the Books",
+    "defaultTitle": "Out of the Books | Plateforme collaborative pour l'éducation",
+    "defaultDescription": "Out of the Books ASBL : l'éducation et le bien-être de l'enfant au cœur des priorités. Une plateforme collaborative pour transformer l'éducation en Belgique francophone.",
+    "language": "fr",
+    "defaultSocialImage": "/images/assets/ootb-social-card.jpg"
+  },
   "announcement": {
     "enabled": true,
     "color": "#e7461c",

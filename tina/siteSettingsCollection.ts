@@ -11,7 +11,84 @@ export const siteSettingsCollection: Collection = {
       delete: false,
     },
   },
+  defaultItem: () => ({
+    seo: {
+      siteName: "Out of the Books",
+      titleTemplate: "%s | Out of the Books",
+      defaultTitle: "Out of the Books | Plateforme collaborative pour l'éducation",
+      defaultDescription: "Out of the Books ASBL : l'éducation et le bien-être de l'enfant au cœur des priorités. Une plateforme collaborative pour transformer l'éducation en Belgique francophone.",
+      language: "fr",
+      defaultSocialImage: "/images/assets/ootb-social-card.jpg"
+    },
+    announcement: {
+      enabled: true,
+      color: "#e7461c",
+      content: {
+        badge: "NOUVEAU",
+        text: "Le Festival Out of the Books revient en 2025 !",
+        link: {
+          text: "En savoir plus »",
+          href: "/festival"
+        }
+      },
+      showOnPages: ["all"],
+      hideOnPages: ["festival"]
+    }
+  }),
   fields: [
+    {
+      type: "object",
+      name: "seo",
+      label: "Paramètres SEO globaux",
+      description: "Configuration SEO globale pour tout le site",
+      fields: [
+        {
+          type: "string",
+          name: "siteName",
+          label: "Nom du site",
+          description: "Nom utilisé dans les balises meta et le titre des pages",
+          required: true,
+        },
+        {
+          type: "string",
+          name: "titleTemplate",
+          label: "Template de titre",
+          description: "Format du titre des pages. Utilisez %s pour l'emplacement du titre spécifique de la page",
+          required: true,
+        },
+        {
+          type: "string",
+          name: "defaultTitle",
+          label: "Titre par défaut",
+          description: "Titre utilisé quand aucun titre spécifique n'est fourni",
+          required: true,
+        },
+        {
+          type: "string",
+          name: "defaultDescription",
+          label: "Description par défaut",
+          description: "Description utilisée quand aucune description spécifique n'est fournie",
+          required: true,
+          ui: {
+            component: "textarea"
+          }
+        },
+        {
+          type: "string",
+          name: "language",
+          label: "Langue principale",
+          description: "Code de langue principal du site (ex: fr, en)",
+          required: true,
+        },
+        {
+          type: "image",
+          name: "defaultSocialImage",
+          label: "Image sociale par défaut",
+          description: "Image utilisée pour les partages sociaux quand aucune image spécifique n'est fournie (1200x630px recommandé)",
+          required: false,
+        }
+      ]
+    },
     {
       type: "object",
       name: "announcement",

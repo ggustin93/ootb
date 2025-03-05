@@ -8,11 +8,22 @@ import PremiumSection from '~/components/sections/PremiumSection.astro';
 import NewsletterSection from '~/components/sections/NewsletterSection.astro';
 
 import {
-  metadata,
   heroContent,
   images,
   aboutFeatures,
 } from '~/data/education';
+
+// Import des données depuis les fichiers JSON gérés par Tina CMS
+import homepageData from '../content/homepage/index.json';
+import siteSettings from '../content/site/settings.json';
+
+// Fusion des métadonnées globales et spécifiques à la page d'accueil
+// Les métadonnées spécifiques ont priorité sur les métadonnées globales
+const metadata = {
+  title: homepageData.metadata?.title || siteSettings.seo.defaultTitle,
+  description: homepageData.metadata?.description || siteSettings.seo.defaultDescription,
+  image: homepageData.metadata?.image || siteSettings.seo.defaultSocialImage,
+};
 ---
 
 <Layout {metadata}>

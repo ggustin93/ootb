@@ -1,4 +1,9 @@
 {
+  "metadata": {
+    "title": "Plateforme collaborative pour l'éducation",
+    "description": "Contenus experts et événements inspirants pour les acteurs de l'éducation. Rejoignez une communauté de 3000+ innovateurs qui réinventent l'éducation.",
+    "image": "/images/assets/ootb-social-card.jpg"
+  },
   "hero": {
     "title": {
       "line1": "La plateforme",
@@ -77,7 +82,10 @@
   },
   "premium": {
     "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1740649896/ootb-logo_yfscco.svg",
-    "title": {},
+    "title": {
+      "firstLine": "Passez au niveau",
+      "secondLine": "premium"
+    },
     "intro": "Accédez à nos contenus experts et analyses approfondies pour transformer votre approche pédagogique!",
     "features": [
       {
@@ -90,6 +98,18 @@
         "text": "Ressources pédagogiques premium"
       }
     ],
+    "buttons": {
+      "primary": {
+        "text": "Découvrir Premium",
+        "href": "category/premium#category-content",
+        "icon": "tabler:crown"
+      },
+      "secondary": {
+        "text": "Écouter un extrait",
+        "href": "category/premium#category-content",
+        "icon": "tabler:player-play"
+      }
+    },
     "podcastHighlights": [
       {
         "title": "Les neurosciences en classe",

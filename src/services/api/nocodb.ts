@@ -35,8 +35,50 @@ export interface NocoDBStand {
   Jours: number;
 }
 
+// Interface pour les conférences et ateliers
+export interface NocoDBSession {
+  ID: number;
+  Titre: string;
+  Description: string;
+  Jour: string;
+  Heure: string;
+  Lieu: string;
+  Intervenant: string;
+  Type: 'Conférences' | 'Ateliers';
+  Image: Array<{
+    id: string;
+    url: string;
+    title: string;
+    mimetype: string;
+    size: number;
+    width: number;
+    height: number;
+    thumbnails: {
+      tiny: { signedUrl: string };
+      small: { signedUrl: string };
+      card_cover: { signedUrl: string };
+    };
+    signedUrl: string;
+  }>;
+  Statut: string;
+}
+
 export interface NocoDBResponse {
   list: NocoDBStand[];
+  pageInfo: {
+    totalRows: number;
+    page: number;
+    pageSize: number;
+    isFirstPage: boolean;
+    isLastPage: boolean;
+  };
+  stats: {
+    dbQueryTime: string;
+  };
+}
+
+export interface NocoDBSessionsResponse {
+  list: NocoDBSession[];
   pageInfo: {
     totalRows: number;
     page: number;
@@ -112,6 +154,70 @@ export async function fetchStands(): Promise<NocoDBResponse> {
   }
 }
 
+// Fonction pour récupérer les conférences et ateliers depuis l'API NocoDB
+export async function fetchSessions(): Promise<NocoDBSessionsResponse> {
+  const apiToken = import.meta.env.NOCODB_API_TOKEN;
+  
+  try {
+    console.log('Initialisation de l\'API NocoDB avec le token:', apiToken ? 'Token présent' : 'Token manquant');
+    
+    // Initialisation de l'API NocoDB avec le SDK
+    const api = new Api({
+      baseURL: "https://app.nocodb.com",
+      headers: {
+        "xc-token": apiToken
+      }
+    });
+    
+    console.log('Appel à l\'API NocoDB pour récupérer les sessions...');
+    
+    // Appel à l'API pour récupérer les données
+    // Note: Remplacer les valeurs par les identifiants corrects de la table des sessions
+    const response = await api.dbTableRow.list(
+      "noco",
+      "pocv8knemg3rcok",
+      "sessions_table_id", // À remplacer par l'ID réel de la table des sessions
+      {
+        offset: 0,
+        limit: 50,
+        where: ""
+      }
+    );
+    
+    console.log(`Données récupérées avec succès: ${response.list.length} sessions trouvées`);
+    
+    // Formatage de la réponse
+    return {
+      list: response.list as NocoDBSession[],
+      pageInfo: {
+        totalRows: response.pageInfo?.totalRows || 0,
+        page: response.pageInfo?.page || 1,
+        pageSize: response.pageInfo?.pageSize || 50,
+        isFirstPage: response.pageInfo?.isFirstPage || true,
+        isLastPage: response.pageInfo?.isLastPage || true
+      },
+      stats: { 
+        dbQueryTime: "0"
+      }
+    };
+  } catch (error) {
+    console.error('Erreur lors de la récupération des sessions:', error);
+    return { 
+      list: [], 
+      pageInfo: { 
+        totalRows: 0, 
+        page: 1, 
+        pageSize: 50, 
+        isFirstPage: true, 
+        isLastPage: true 
+      }, 
+      stats: { 
+        dbQueryTime: "0" 
+      } 
+    };
+  }
+}
+
 // Fonction pour convertir les stands en événements
 export function convertStandsToEvents(stands: NocoDBStand[]): Event[] {
   const defaultImage = '/images/default-stand.jpg'; // Image par défaut pour les stands
@@ -150,6 +256,32 @@ export function convertStandsToEvents(stands: NocoDBStand[]): Event[] {
       target: stand["À qui s'adresse le stand ?"],
       level: stand["Niveau d'enseignement"],
       teachingType: stand["Type d'enseignement"]
+    };
+  });
+}
+
+// Fonction pour convertir les sessions (conférences et ateliers) en événements
+export function convertSessionsToEvents(sessions: NocoDBSession[]): Event[] {
+  const defaultConferenceImage = '/images/default-conference.jpg';
+  const defaultWorkshopImage = '/images/default-workshop.jpg';
+  
+  return sessions.map(session => {
+    // Récupérer l'URL de l'image ou utiliser l'image par défaut selon le type
+    const defaultImage = session.Type === 'Conférences' ? defaultConferenceImage : defaultWorkshopImage;
+    const imageUrl = session.Image?.length > 0 
+      ? session.Image[0].signedUrl 
+      : defaultImage;
+    
+    return {
+      id: `session-${session.ID}`,
+      title: session.Titre,
+      description: session.Description,
+      day: session.Jour as 'Lundi' | 'Mardi' | 'Mercredi' | 'Jeudi' | 'Vendredi' | 'Samedi', // Type plus précis
+      time: session.Heure,
+      location: session.Lieu,
+      speaker: session.Intervenant,
+      type: session.Type,
+      image: imageUrl
     };
   });
 }

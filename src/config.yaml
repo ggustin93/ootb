@@ -1,5 +1,5 @@
 site:
-  name: AstroWind
+  name: Out of the Books
   site: 'https://outofthebooks.netlify.app/'
   base: '/'
   trailingSlash: false

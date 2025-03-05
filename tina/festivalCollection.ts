@@ -25,82 +25,25 @@ export const festivalCollection: Collection = {
         {
           type: "string",
           name: "title",
-          label: "Titre de la page",
+          label: "Titre SEO",
+          description: "Titre qui apparaît dans les résultats de recherche (50-60 caractères). Ne pas inclure '| Out of the Books' car il sera ajouté automatiquement.",
           required: true,
         },
         {
           type: "string",
           name: "description",
           label: "Description SEO",
+          description: "Courte description pour les résultats de recherche (150-160 caractères recommandés).",
           ui: {
             component: "textarea",
           },
           required: true,
         },
         {
-          type: "string",
-          name: "canonical",
-          label: "URL canonique",
-        },
-        {
-          type: "object",
+          type: "image",
           name: "image",
-          label: "Image principale",
-          fields: [
-            {
-              type: "image",
-              name: "src",
-              label: "Image",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "alt",
-              label: "Texte alternatif",
-              required: true,
-            },
-          ],
-        },
-        {
-          type: "object",
-          name: "openGraph",
-          label: "Open Graph (partage réseaux sociaux)",
-          fields: [
-            {
-              type: "string",
-              name: "title",
-              label: "Titre Open Graph",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "description",
-              label: "Description Open Graph",
-              ui: {
-                component: "textarea",
-              },
-              required: true,
-            },
-            {
-              type: "image",
-              name: "image",
-              label: "Image Open Graph",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "type",
-              label: "Type",
-              options: ["website", "article"],
-              required: true,
-            },
-            {
-              type: "string",
-              name: "site_name",
-              label: "Nom du site",
-              required: true,
-            },
-          ],
+          label: "Image de partage",
+          description: "Image utilisée lors du partage sur les réseaux sociaux (1200x630px recommandé).",
         },
       ],
     },

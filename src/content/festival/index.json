@@ -1,19 +1,8 @@
 {
   "metadata": {
     "title": "Festival Out of the Books",
-    "description": "Le Festival Out of the Books est un événement dédié à la littérature et à l'édition indépendante.",
-    "canonical": "https://outofthebooks.org/festival",
-    "image": {
-      "src": "~/assets/images/banniere_festival.jpeg",
-      "alt": "Festival Out of the Books 2025"
-    },
-    "openGraph": {
-      "title": "Festival Out of the Books 2025 | Innovation en Éducation",
-      "description": "Trois jours dédiés à l'innovation pédagogique",
-      "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070",
-      "type": "website",
-      "site_name": "Festival Out of the Books"
-    }
+    "description": "Le Festival Out of the Books est un événement dédié à l'innovation pédagogique avec des conférences, ateliers et rencontres pour repenser l'éducation de demain.",
+    "image": "~/assets/images/banniere_festival.jpeg"
   },
   "hero": {
     "logo": "~/assets/images/logo_festival_white.svg",

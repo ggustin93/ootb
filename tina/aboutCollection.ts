@@ -11,25 +11,46 @@ export const aboutCollection: Collection = {
       delete: false,
     },
   },
+  defaultItem: () => ({
+    metadata: {
+      title: "À propos | Out of the Books",
+      description: "Découvrez l'équipe et la mission d'Out of the Books, une ASBL dédiée à l'innovation pédagogique et au bien-être des enfants en Belgique francophone."
+    }
+  }),
   fields: [
     {
       type: "object",
       name: "metadata",
       label: "Métadonnées",
+      ui: {
+        itemProps: (_item) => {
+          return { label: "Métadonnées SEO" };
+        },
+      },
       fields: [
         {
           type: "string",
           name: "title",
-          label: "Titre de la page",
-          required: true,
+          label: "Titre SEO",
+          description: "Titre qui apparaît dans les résultats de recherche (50-60 caractères). Ne pas inclure '| Out of the Books' car il sera ajouté automatiquement.",
+          required: false,
         },
         {
           type: "string",
           name: "description",
           label: "Description SEO",
+          description: "Courte description pour les résultats de recherche (150-160 caractères recommandés).",
           ui: {
             component: "textarea",
           },
+          required: false,
+        },
+        {
+          type: "image",
+          name: "image",
+          label: "Image de partage",
+          description: "Image utilisée lors du partage sur les réseaux sociaux (1200x630px recommandé).",
+          required: false,
         },
       ],
     },

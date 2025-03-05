@@ -58,6 +58,7 @@
         "lodash.merge": "^4.6.2",
         "lucide-react": "^0.469.0",
         "next-tinacms-cloudinary": "^13.0.0",
+        "nocodb-sdk": "^0.262.1",
         "swiper": "^11.2.2",
         "tailwindcss-animate": "^1.0.7",
         "tina-graphql": "^0.2.0",

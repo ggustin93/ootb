@@ -6,6 +6,10 @@ export type Event = {
   description: string;
   location: string;
   speaker?: string;
-  day: 'Lundi' | 'Mardi' | 'Mercredi' | 'Jeudi' | 'Vendredi';
+  day: 'Lundi' | 'Mardi' | 'Mercredi' | 'Jeudi' | 'Vendredi' | 'Samedi';
   image?: string;
+  url?: string;
+  target?: string;
+  level?: string;
+  teachingType?: string;
 }; 

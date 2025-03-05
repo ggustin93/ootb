@@ -1,6 +1,6 @@
 ---
 interface Props {
-    variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow' | 'turquoise' | 'blue';
+    variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow' | 'turquoise' | 'blue' | 'white';
     class?: string;
 }
 
@@ -11,6 +11,10 @@ const variants = {
   primary: `
     text-[--ootb-violet]
     border-[--ootb-violet]
+  `,
+  secondary: `
+    text-[--ootb-blue]
+    border-[--ootb-blue]
   `,
   turquoise: `
     text-[--ootb-turquoise]
@@ -35,6 +39,10 @@ const variants = {
   yellow: `
     text-yellow-500
     border-yellow-500
+  `,
+  white: `
+    text-white
+    border-white
   `
 } as const;
 ---

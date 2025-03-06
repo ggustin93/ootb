@@ -52,7 +52,7 @@ interface Props {
 
 const { 
   logo, 
-  logoClass = "w-[250px] md:w-[350px] h-auto mx-auto md:mx-0",
+  logoClass = "w-[160px] md:w-[350px] h-auto mx-auto md:mx-0 px-5 md:px-2",
   heroImage, 
   quote,
   quoteColor = '--ootb-yellow',
@@ -73,28 +73,31 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
 };
 
 // Vérifier si l'image est une URL ou un objet ImageMetadata
-const isStringUrl = (src: any): src is string => typeof src === 'string';
+const isStringUrl = (src: string | ImageMetadata): src is string => typeof src === 'string';
 ---
 
 <GradientHeroSection>
   <div class="max-w-6xl mx-auto relative z-10 px-4 pt-6 md:pt-10">
     <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
       <div class="text-center md:text-left space-y-3 md:space-y-5 md:flex md:flex-col md:justify-center">
-        <h1 class="text-left pb-3 md:pb-5">
+        <h1 class="flex justify-center md:justify-start pb-3 md:pb-5 px-4">
           {isStringUrl(logo) ? (
-            <img
+            <Image
               src={logo}
               alt="Out of the Books"
-              class={`${logoClass} max-w-full`}
+              class={`${logoClass} max-w-[200px] md:max-w-[320px]`} 
+              widths={[320, 640]}
+              sizes="(max-width: 768px) 200px, 320px"
               loading="eager"
+              decoding="async"
             />
           ) : (
             <Image
               src={logo}
-              alt="Out of the Books"
-              class={`${logoClass} max-w-full`}
-              widths={[200, 300, 400]}
-              sizes="(max-width: 768px) 200px, (max-width: 1024px) 300px, 400px"
+              alt="Out of the Books" 
+              class={`${logoClass} max-w-[200px] md:max-w-[320px]`}
+              widths={[320, 640]}
+              sizes="(max-width: 768px) 200px, 320px"
               loading="eager"
               decoding="async"
             />

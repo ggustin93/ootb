@@ -1,6 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
 import ProjectSubmissionForm from '~/components/forms/ProjectSubmissionForm.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
@@ -29,10 +30,13 @@ const criteria = criteres.items.map(item => ({
   description: item.description
 }));
 
-// Préparation des boutons avec les propriétés size pour ContentHeroSection
+// Préparation des boutons avec les propriétés correctes pour ContentHeroSection
 const heroButtons = hero.buttons.map(button => ({
-  ...button,
-  size: 'md'
+  href: button.href,
+  icon: button.icon,
+  label: button.label,
+  variant: button.variant === 'outline-blue' ? 'outline-blue' : 'secondary',
+  size: 'lg'
 }));
 
 ---

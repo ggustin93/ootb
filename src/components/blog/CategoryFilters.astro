@@ -20,12 +20,29 @@ interface Props {
 const { currentCategory, blogConfig, isTagPage = false } = Astro.props;
 const { allLabel, mobileSelectLabel } = blogConfig.hero.filters.categoryFilters;
 
-// Vérification de sécurité pour l'accès aux propriétés dynamiques
+// Créer la liste complète de toutes les catégories, y compris premium
+const allCategories = [
+  ...Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all'),
+  // Ajouter explicitement premium s'il n'est pas déjà dans CONTENT_TYPES
+  ...(!('premium' in CONTENT_TYPES) ? [['premium', {
+    icon: 'tabler:crown',
+    label: 'PREMIUM',
+    shortLabel: 'Premium',
+    color: 'var(--content-premium)'
+  }]] : [])
+];
+
+// Amélioration de la vérification de sécurité pour l'accès aux propriétés dynamiques
 const getCurrentCategoryLabel = (category: string | undefined): string => {
   if (!category || category === 'blog') return allLabel;
-  return category in CONTENT_TYPES 
-    ? (CONTENT_TYPES as Record<string, {label: string}>)[category]?.label
-    : mobileSelectLabel;
+  
+  // Chercher la catégorie dans notre liste complète
+  const foundCategory = allCategories.find(([key]) => key === category.toLowerCase());
+  if (foundCategory) {
+    return (foundCategory[1] as { shortLabel: string }).shortLabel;
+  }
+  
+  return mobileSelectLabel;
 };
 
 // Générer des IDs uniques si nous sommes sur la page des tags
@@ -53,23 +70,27 @@ const selectedIconId = isTagPage ? "tag-selected-icon" : "selected-icon";
       <span class="text-sm">{allLabel}</span>
     </a>
 
-    {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
-      <a
-        href={`/category/${key}#category-content`}
-        class={[
-          'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
-          key.toLowerCase() === currentCategory?.toLowerCase() 
-            ? [
-                'bg-white shadow-sm',
-                `text-[${config.color}]`
-              ].join(' ')
-            : 'text-gray-600 hover:text-gray-900'
-        ].join(' ')}
-      >
-        <Icon name={config.icon} class="w-4 h-4" />
-        <span class="text-sm">{config.shortLabel}</span>
-      </a>
-    ))}
+    {allCategories.map(([key, config]) => {
+      // S'assurer que config est correctement typé
+      const safeConfig = config as { icon: string, shortLabel: string, color: string };
+      return (
+        <a
+          href={`/category/${key}#category-content`}
+          class={[
+            'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+            currentCategory?.toLowerCase() === key 
+              ? [
+                  'bg-white shadow-sm',
+                  `text-[${safeConfig.color}]`
+                ].join(' ')
+              : 'text-gray-600 hover:text-gray-900'
+          ].join(' ')}
+        >
+          <Icon name={safeConfig.icon || 'tabler:file'} class="w-4 h-4" />
+          <span class="text-sm">{safeConfig.shortLabel || key}</span>
+        </a>
+      );
+    })}
   </div>
 
   {/* Version Mobile - Menu personnalisé */}
@@ -87,7 +108,8 @@ const selectedIconId = isTagPage ? "tag-selected-icon" : "selected-icon";
         <span class="flex items-center gap-2">
           <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4" />
           <span id={selectedCategoryId} class="text-sm font-medium">
-Rechercher par catégorie          </span>
+            Rechercher par catégorie
+          </span>
         </span>
         <Icon 
           id={dropdownIconId}
@@ -105,7 +127,20 @@ Rechercher par catégorie          </span>
         class="flex items-center justify-between w-full bg-gray-100/80 rounded-lg px-4 py-2.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300"
       >
         <span class="flex items-center gap-2">
-          <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4" />
+          {/* Trouver l'icône de la catégorie courante */}
+          {(() => {
+            if (!currentCategory || currentCategory === 'blog') {
+              return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4" />;
+            }
+            
+            const foundCategory = allCategories.find(([key]) => key === currentCategory.toLowerCase());
+            if (foundCategory) {
+              return <Icon id={selectedIconId} name={(foundCategory[1] as {icon: string}).icon} class="w-4 h-4" />;
+            }
+            
+            return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4" />;
+          })()}
+          
           <span id={selectedCategoryId} class="text-sm font-medium">
             {getCurrentCategoryLabel(currentCategory)}
           </span>
@@ -142,27 +177,32 @@ Rechercher par catégorie          </span>
         <span class="text-sm">{allLabel}</span>
       </a>
 
-      {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
-        <a
-          href={`/category/${key}#category-content`}
-          role="option"
-          aria-selected={key.toLowerCase() === currentCategory?.toLowerCase()}
-          class={[
-            'flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors',
-            key.toLowerCase() === currentCategory?.toLowerCase() 
-              ? 'bg-gray-50 font-medium' 
-              : 'text-gray-600'
-          ].join(' ')}
-          data-value={key}
-          data-icon={config.icon}
-          data-color={config.color}
-          tabindex="0"
-          style={key.toLowerCase() === currentCategory?.toLowerCase() ? `color: ${config.color};` : ''}
-        >
-          <Icon name={config.icon} class="w-4 h-4" />
-          <span class="text-sm">{config.label}</span>
-        </a>
-      ))}
+      {/* Afficher toutes les catégories dans une seule boucle */}
+      {allCategories.map(([key, config]) => {
+        // S'assurer que config est correctement typé
+        const safeConfig = config as { icon: string, label: string, color: string };
+        return (
+          <a
+            href={`/category/${key}#category-content`}
+            role="option"
+            aria-selected={currentCategory?.toLowerCase() === key}
+            class={[
+              'flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors',
+              currentCategory?.toLowerCase() === key 
+                ? 'bg-gray-50 font-medium' 
+                : 'text-gray-600'
+            ].join(' ')}
+            data-value={key}
+            data-icon={safeConfig.icon || 'tabler:file'}
+            data-color={safeConfig.color}
+            tabindex="0"
+            style={currentCategory?.toLowerCase() === key ? `color: ${safeConfig.color};` : ''}
+          >
+            <Icon name={safeConfig.icon || 'tabler:file'} class="w-4 h-4" />
+            <span class="text-sm">{safeConfig.label || key}</span>
+          </a>
+        );
+      })}
     </div>
     
     {/* Overlay pour fermer le menu en cliquant ailleurs */}
@@ -171,69 +211,78 @@ Rechercher par catégorie          </span>
 </div>
 
 <script>
-  // Script simplifié directement injecté sur la page, sans variables define:vars
-  document.addEventListener('astro:page-load', () => {
-    // Fonction pour les pages de catégories
-    initCategoryDropdown('category-button', 'category-dropdown', 'dropdown-overlay', 'dropdown-icon');
-    
-    // Fonction pour les pages de tags 
-    initCategoryDropdown('tag-category-button', 'tag-category-dropdown', 'tag-dropdown-overlay', 'tag-dropdown-icon');
-    
-    function initCategoryDropdown(buttonId: string, dropdownId: string, overlayId: string, iconId: string) {
-      const button = document.getElementById(buttonId);
-      const dropdown = document.getElementById(dropdownId);
-      const overlay = document.getElementById(overlayId);
-      const icon = document.getElementById(iconId);
-      
-      console.log(`Initialisation: ${buttonId} existe:`, !!button);
-      console.log(`Initialisation: ${dropdownId} existe:`, !!dropdown);
-      
-      if (!button || !dropdown) return;
-      
-      // Forcer une attente pour s'assurer que tout est bien chargé
-      setTimeout(() => {
-        // Ajouter un clic global qui fonctionnera même si les autres événements ne fonctionnent pas
-        document.body.addEventListener('click', (e) => {
-          if (!e.target || !button || !dropdown) return;
-          
-          const target = e.target as Node;
-          
-          // Si on clique sur le bouton ou un de ses enfants
-          if (button.contains(target)) {
-            console.log("Clic détecté sur le bouton", buttonId);
-            
-            const isOpen = dropdown.classList.contains('scale-y-100');
-            if (isOpen) {
-              dropdown.classList.remove('scale-y-100', 'opacity-100');
-              dropdown.classList.add('scale-y-0', 'opacity-0');
-              overlay?.classList.add('hidden');
-              button.setAttribute('aria-expanded', 'false');
-              icon?.classList.remove('rotate-180');
-            } else {
-              dropdown.classList.remove('scale-y-0', 'opacity-0');
-              dropdown.classList.add('scale-y-100', 'opacity-100');
-              overlay?.classList.remove('hidden');
-              button.setAttribute('aria-expanded', 'true');
-              icon?.classList.add('rotate-180');
-            }
-            e.stopPropagation();
-          } 
-          // Si on clique ailleurs et que le menu est ouvert
-          else if (!dropdown.contains(target) && dropdown.classList.contains('scale-y-100')) {
-            dropdown.classList.remove('scale-y-100', 'opacity-100');
-            dropdown.classList.add('scale-y-0', 'opacity-0');
-            overlay?.classList.add('hidden');
-            button.setAttribute('aria-expanded', 'false');
-            icon?.classList.remove('rotate-180');
-          }
-        });
-      }, 500); // Attendre 500ms pour s'assurer que tout est chargé
-    }
-  });
+  // Script amélioré pour garantir le fonctionnement du menu déroulant
+  document.addEventListener('astro:page-load', initializeDropdowns);
+  document.addEventListener('DOMContentLoaded', initializeDropdowns);
   
-  // Exécuter également au chargement initial
-  document.addEventListener('DOMContentLoaded', () => {
-    const event = new Event('astro:page-load');
-    document.dispatchEvent(event);
-  });
+  function initializeDropdowns() {
+    // Initialiser les deux types de dropdown
+    setupDropdown('category-button', 'category-dropdown', 'dropdown-overlay', 'dropdown-icon');
+    setupDropdown('tag-category-button', 'tag-category-dropdown', 'tag-dropdown-overlay', 'tag-dropdown-icon');
+  }
+  
+  function setupDropdown(buttonId: string, dropdownId: string, overlayId: string, iconId: string) {
+    const button = document.getElementById(buttonId);
+    const dropdown = document.getElementById(dropdownId);
+    const overlay = document.getElementById(overlayId);
+    const icon = document.getElementById(iconId);
+    
+    // Si les éléments n'existent pas sur cette page, on s'arrête
+    if (!button || !dropdown) return;
+    
+    console.log(`Initialisation du dropdown: ${buttonId}`);
+    
+    // Fonction pour ouvrir le dropdown
+    const openDropdown = () => {
+      dropdown.classList.remove('scale-y-0', 'opacity-0');
+      dropdown.classList.add('scale-y-100', 'opacity-100');
+      overlay?.classList.remove('hidden');
+      button.setAttribute('aria-expanded', 'true');
+      icon?.classList.add('rotate-180');
+    };
+    
+    // Fonction pour fermer le dropdown
+    const closeDropdown = () => {
+      dropdown.classList.remove('scale-y-100', 'opacity-100');
+      dropdown.classList.add('scale-y-0', 'opacity-0');
+      overlay?.classList.add('hidden');
+      button.setAttribute('aria-expanded', 'false');
+      icon?.classList.remove('rotate-180');
+    };
+    
+    // Gestion du clic sur le bouton
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const isOpen = dropdown.classList.contains('scale-y-100');
+      if (isOpen) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+    
+    // Fermer le dropdown si on clique ailleurs
+    document.addEventListener('click', (e) => {
+      const target = e.target as Node;
+      if (button && dropdown && !button.contains(target) && !dropdown.contains(target)) {
+        closeDropdown();
+      }
+    });
+    
+    // Fermer le dropdown si on clique sur l'overlay
+    overlay?.addEventListener('click', () => {
+      closeDropdown();
+    });
+    
+    // Gestion des options du dropdown
+    const options = dropdown.querySelectorAll('a[role="option"]');
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        // On peut ajouter une logique ici si nécessaire
+        closeDropdown();
+      });
+    });
+  }
 </script> 

@@ -4,8 +4,9 @@ import Image from '~/components/common/Image.astro';
 import GradientHeroSection from './GradientHeroSection.astro';
 import ScrollDownArrow from '../ui/ScrollDownArrow.astro';
 import Button from '../ui/Button.astro';
+import type { ImageMetadata } from 'astro';
 
-interface Button {
+interface ButtonProps {
   href: string;
   icon?: string;
   label: string;
@@ -32,13 +33,13 @@ interface FloatingIcon {
 }
 
 interface Props {
-  logo: ImageMetadata;
+  logo: ImageMetadata | string;
   logoClass?: string;
-  heroImage: ImageMetadata;
+  heroImage: ImageMetadata | string;
   quote: string;
   quoteColor?: string;
   stats?: Array<Stat>;
-  buttons?: Array<Button>;
+  buttons?: Array<ButtonProps>;
   floatingIcons?: Array<FloatingIcon>;
   scroll?: {
     targetId: string;
@@ -70,82 +71,102 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
     case 'lg': return 'w-24 h-32';
   }
 };
+
+// Vérifier si l'image est une URL ou un objet ImageMetadata
+const isStringUrl = (src: any): src is string => typeof src === 'string';
 ---
 
 <GradientHeroSection>
-  <div class="relative z-10 container mx-auto px-4 pt-6 md:pt-10">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
-        <div class="text-center md:text-left px-4 md:px-0 space-y-3 md:space-y-5">
-          <h1 class="text-left pb-3 md:pb-5">
+  <div class="max-w-6xl mx-auto relative z-10 px-4 pt-6 md:pt-10">
+    <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+      <div class="text-center md:text-left space-y-3 md:space-y-5 md:flex md:flex-col md:justify-center">
+        <h1 class="text-left pb-3 md:pb-5">
+          {isStringUrl(logo) ? (
+            <img
+              src={logo}
+              alt="Out of the Books"
+              class={`${logoClass} max-w-full`}
+              loading="eager"
+            />
+          ) : (
             <Image
               src={logo}
               alt="Out of the Books"
               class={`${logoClass} max-w-full`}
-              widths={[200, 300]}
-              sizes="(max-width: 768px) 200px, 300px"
+              widths={[200, 300, 400]}
+              sizes="(max-width: 768px) 200px, (max-width: 1024px) 300px, 400px"
               loading="eager"
               decoding="async"
             />
-          </h1>
-          <blockquote class="text-lg md:text-xl lg:text-2xl text-white/90 font-light border-l-4 pl-4 md:pl-6 leading-relaxed max-w-3xl mt-3 md:mt-5" style={`border-color: var(${quoteColor})`}>
-            {quote}
-          </blockquote>
-
-          {stats.length > 0 && (
-            <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start mt-4">
-              {stats.map(({ icon, value }) => (
-                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
-                  <Icon name={icon} class="w-5 h-5 text-white" />
-                  <span class="text-white text-sm md:text-base">{value}</span>
-                </div>
-              ))}
-            </div>
           )}
+        </h1>
+        <blockquote class="text-lg md:text-xl lg:text-2xl text-white/90 font-light border-l-4 pl-4 md:pl-6 leading-relaxed max-w-3xl mt-3 md:mt-5" style={`border-color: var(${quoteColor})`}>
+          {quote}
+        </blockquote>
 
-          {buttons.length > 0 && (
-            <div class="flex flex-wrap gap-2 md:gap-3 justify-center md:justify-start mt-4">
-              {buttons.map(({ href, icon, label, variant = 'primary', size = 'md' }) => (
-                <Button {href} {variant} {size} {icon} class="whitespace-nowrap text-sm md:text-base px-4 py-2">
-                  {label}
-                </Button>
-              ))}
-            </div>
-          )}
-        </div>
+        {stats.length > 0 && (
+          <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start mt-4">
+            {stats.map(({ icon, value }) => (
+              <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
+                <Icon name={icon} class="w-5 h-5 text-white" />
+                <span class="text-white text-sm md:text-base">{value}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
-        <!-- Image/Logo -->
-        <div class="relative mt-6 md:mt-0 md:block">
-          <div class="relative z-10">
+        {buttons.length > 0 && (
+          <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start mt-4">
+            {buttons.map(({ href, icon, label, variant = 'primary', size = 'md' }) => (
+              <Button {href} {variant} {size} {icon} class="whitespace-nowrap w-full sm:w-auto justify-center">
+                {label}
+              </Button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <!-- Image/Logo -->
+      <div class="relative mt-6 md:mt-0 max-w-md mx-auto md:max-w-full md:ml-6">
+        <div class="relative z-10">
+          {isStringUrl(heroImage) ? (
+            <img
+              src={heroImage}
+              alt="Hero image"
+              class="rounded-2xl shadow-xl w-full"
+              loading="eager"
+              style={`aspect-ratio: ${imageAspectRatio}`}
+            />
+          ) : (
             <Image
               src={heroImage}
               alt="Hero image"
               class="rounded-2xl shadow-xl w-full"
-              widths={[400, 800]}
-              sizes="(max-width: 768px) 100vw, 800px"
+              widths={[400, 700]}
+              sizes="(max-width: 768px) 100vw, 700px"
               aspectRatio={imageAspectRatio}
               loading="eager"
               decoding="async"
             />
-          </div>
-          <!-- Élément décoratif derrière l'image -->
-          <div 
-            class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"
-            style={`background-color: var(${imageBackgroundColor})`}
-          ></div>
-          
-          {scroll && (
-            <div class="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 z-30">
-              <ScrollDownArrow 
-                targetId={scroll.targetId}
-                label={scroll.label}
-                position=""
-                hideOnMobile={scroll.hideOnMobile}
-                class="text-white"
-              />
-            </div>
           )}
         </div>
+        <!-- Élément décoratif derrière l'image -->
+        <div 
+          class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"
+          style={`background-color: var(${imageBackgroundColor})`}
+        ></div>
+        
+        {scroll && (
+          <div class="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 z-30">
+            <ScrollDownArrow 
+              targetId={scroll.targetId}
+              label={scroll.label}
+              position=""
+              hideOnMobile={scroll.hideOnMobile}
+              class="text-white"
+            />
+          </div>
+        )}
       </div>
     </div>
   </div>

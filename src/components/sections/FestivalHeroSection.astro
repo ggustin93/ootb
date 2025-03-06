@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import GradientHeroSection from './GradientHeroSection.astro';
 import TicketingButton from '../ui/TicketingButton';
+import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import type { ImageMetadata } from 'astro';
 
 interface Button {
@@ -77,11 +78,11 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
 ---
 
 <GradientHeroSection>
-  <div class="relative z-10 container mx-auto px-4 pt-12 md:pt-16">
+  <div class="relative z-10 container mx-auto px-4 pt-8 md:pt-12">
     <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div class="text-center md:text-left px-4 md:px-0">
-          <h1 class="text-left mb-12 pr-12">
+          <h1 class="text-left mb-8 pr-12">
             <Image
               src={logo}
               alt="Out of the Books Festival"
@@ -92,19 +93,19 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
               decoding="async"
             />
           </h1>
-          <blockquote class="text-xl md:text-2xl text-white/90 font-light mt-8 md:mt-12 mb-12 md:mb-16 border-l-4 pl-6 md:pl-8 leading-relaxed max-w-3xl" style={`border-color: var(--ootb-orange)`}>
-            <div class="flex items-center gap-3 mb-4">
+          <blockquote class="text-xl md:text-2xl text-white/90 font-light mt-4 md:mt-6 mb-8 md:mb-10 border-l-4 pl-6 md:pl-8 leading-relaxed max-w-3xl" style={`border-color: var(--ootb-orange)`}>
+            <div class="flex items-center gap-3 mb-3">
               <Icon name="tabler:calendar" class="w-6 h-6 text-white/80" />
               <p>{date}</p>
             </div>
-            <div class="flex items-center gap-3 mb-8">
+            <div class="flex items-center gap-3 mb-6">
               <Icon name="tabler:map-pin" class="w-6 h-6 text-white/80" />
               <p>{location}</p>
             </div>
             <p class="text-xl md:text-2xl font-light leading-relaxed opacity-95">{description}</p>
           </blockquote>
 
-          <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start">
+          <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start mt-4">
             {buttons.map(({ href, icon, label, variant }) => {
               const isTicketButton = href === '#tickets';
               if (isTicketButton) {
@@ -146,6 +147,15 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
             class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"
             style={`background-color: var(${imageBackgroundColor})`}
           ></div>
+          
+          <!-- ScrollDownArrow ajouté -->
+          <div class="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 z-30">
+            <ScrollDownArrow 
+              targetId="features"
+              label="En savoir plus"
+              hideOnMobile={true}
+            />
+          </div>
         </div>
       </div>
     </div>

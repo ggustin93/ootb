@@ -54,9 +54,11 @@ const {
     className
   ]}
 >
-  <p class="font-handwritten text-white text-2xl md:text-3xl mb-3 transform -rotate-3 drop-shadow-md">
-    {label}
-  </p>
+  <div class="relative">
+    <p class="font-handwritten text-white text-2xl md:text-3xl mb-3 whitespace-nowrap transform -rotate-3 drop-shadow-md px-4 py-1 bg-white/10 backdrop-blur-sm rounded-full">
+      {label}
+    </p>
+  </div>
   <div class="arrow-container">
     <svg 
       xmlns="http://www.w3.org/2000/svg" 

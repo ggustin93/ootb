@@ -43,15 +43,15 @@ interface Props {
   scroll?: {
     targetId: string;
     label?: string;
-    position?: string;
     hideOnMobile?: boolean;
   };
   imageBackgroundColor?: string;
+  imageAspectRatio?: string;
 }
 
 const { 
   logo, 
-  logoClass = "w-[280px] md:w-[400px] h-auto mx-auto md:mx-0",
+  logoClass = "w-[250px] md:w-[350px] h-auto mx-auto md:mx-0",
   heroImage, 
   quote,
   quoteColor = '--ootb-yellow',
@@ -59,7 +59,8 @@ const {
   buttons = [],
   floatingIcons = [],
   scroll,
-  imageBackgroundColor = '--ootb-yellow'
+  imageBackgroundColor = '--ootb-yellow',
+  imageAspectRatio = '4:3'
 } = Astro.props;
 
 const getIconSize = (size: 'sm' | 'md' | 'lg') => {
@@ -72,11 +73,11 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
 ---
 
 <GradientHeroSection>
-  <div class="relative z-10 container mx-auto px-4 pt-12 md:pt-20">
+  <div class="relative z-10 container mx-auto px-4 pt-6 md:pt-10">
     <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="text-center md:text-left px-4 md:px-0 space-y-6 md:space-y-8">
-          <h1 class="text-left pb-8">
+      <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
+        <div class="text-center md:text-left px-4 md:px-0 space-y-3 md:space-y-5">
+          <h1 class="text-left pb-3 md:pb-5">
             <Image
               src={logo}
               alt="Out of the Books"
@@ -87,12 +88,12 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
               decoding="async"
             />
           </h1>
-          <blockquote class="text-lg md:text-xl lg:text-2xl text-white/90 font-light border-l-4 pl-4 md:pl-6 leading-relaxed max-w-3xl mt-10 md:mt-12" style={`border-color: var(${quoteColor})`}>
+          <blockquote class="text-lg md:text-xl lg:text-2xl text-white/90 font-light border-l-4 pl-4 md:pl-6 leading-relaxed max-w-3xl mt-3 md:mt-5" style={`border-color: var(${quoteColor})`}>
             {quote}
           </blockquote>
 
           {stats.length > 0 && (
-            <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
+            <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start mt-4">
               {stats.map(({ icon, value }) => (
                 <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
                   <Icon name={icon} class="w-5 h-5 text-white" />
@@ -103,9 +104,9 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
           )}
 
           {buttons.length > 0 && (
-            <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
-              {buttons.map(({ href, icon, label, variant = 'primary', size = 'lg' }) => (
-                <Button {href} {variant} {size} {icon}>
+            <div class="flex flex-wrap gap-2 md:gap-3 justify-center md:justify-start mt-4">
+              {buttons.map(({ href, icon, label, variant = 'primary', size = 'md' }) => (
+                <Button {href} {variant} {size} {icon} class="whitespace-nowrap text-sm md:text-base px-4 py-2">
                   {label}
                 </Button>
               ))}
@@ -114,7 +115,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
         </div>
 
         <!-- Image/Logo -->
-        <div class="relative mt-8 md:mt-0 md:block">
+        <div class="relative mt-6 md:mt-0 md:block">
           <div class="relative z-10">
             <Image
               src={heroImage}
@@ -122,7 +123,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
               class="rounded-2xl shadow-xl w-full"
               widths={[400, 800]}
               sizes="(max-width: 768px) 100vw, 800px"
-              aspectRatio="4:3"
+              aspectRatio={imageAspectRatio}
               loading="eager"
               decoding="async"
             />
@@ -132,22 +133,24 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
             class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"
             style={`background-color: var(${imageBackgroundColor})`}
           ></div>
+          
+          {scroll && (
+            <div class="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 z-30">
+              <ScrollDownArrow 
+                targetId={scroll.targetId}
+                label={scroll.label}
+                position=""
+                hideOnMobile={scroll.hideOnMobile}
+                class="text-white"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
   </div>
 
   <slot />
-
-  {scroll && (
-      <ScrollDownArrow 
-        targetId={scroll.targetId}
-        label={scroll.label}
-        position={scroll.position}
-        hideOnMobile={scroll.hideOnMobile}
-        class="text-white"
-      />
-  )}
 
   <!-- Icônes flottantes -->
   {floatingIcons.map(({ name, size, position, rotate, animation }) => (

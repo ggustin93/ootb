@@ -32,7 +32,7 @@ const criteria = criteres.items.map(item => ({
 // Préparation des boutons avec les propriétés size pour ContentHeroSection
 const heroButtons = hero.buttons.map(button => ({
   ...button,
-  size: 'lg'
+  size: 'md'
 }));
 
 ---
@@ -40,7 +40,7 @@ const heroButtons = hero.buttons.map(button => ({
 <Layout {metadata}>
   <ContentHeroSection
     logo={logoTalent}
-    logoClass="w-[350px] md:w-[500px] h-auto mx-auto md:mx-0"
+    logoClass="w-[250px] md:w-[350px] h-auto mx-auto md:mx-0"
     heroImage={hero.heroImage}
     quote={hero.quote}
     quoteColor="--ootb-blue"
@@ -48,7 +48,6 @@ const heroButtons = hero.buttons.map(button => ({
     scroll={{
       targetId: hero.scroll.targetId,
       label: hero.scroll.label,
-      position: "bottom-[25%] left-[55%]",
       hideOnMobile: true
     }}
     imageBackgroundColor="--ootb-blue"

@@ -149,13 +149,15 @@ const displayBadges = hero?.badges || defaultHero.badges;
       />
       <!-- Cercle décoratif -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-white/10 blur-2xl z-10"></div>
+      
+      <!-- ScrollDownArrow repositionné -->
+      <div class="absolute bottom-[-3rem] left-1/2 transform -translate-x-1/2 z-30">
+        <ScrollDownArrow 
+          targetId={scrollTargetId} 
+          label="Explorer l'univers" 
+          hideOnMobile={true}
+        />
+      </div>
     </div>
   </div>
-  
-  <!-- Utilisation du composant ScrollDownArrow -->
-  <ScrollDownArrow 
-    targetId={scrollTargetId} 
-    label="Explorer l'univers" 
-    hideOnMobile={true}
-  />
 </GradientHeroSection>

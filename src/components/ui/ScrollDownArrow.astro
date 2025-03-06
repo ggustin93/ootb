@@ -20,7 +20,7 @@
   
   /**
    * Position verticale de la flèche (optionnel)
-   * @default "bottom-[15%] md:bottom-[20%] lg:bottom-[25%]"
+   * @default "bottom-[20%] md:bottom-[25%]"
    */
   position?: string;
   
@@ -34,66 +34,46 @@
    * @default true
    */
   hideOnMobile?: boolean;
-
-  /**
-   * Espacement vertical autour de la flèche (optionnel)
-   * @default "my-4 md:my-6 lg:my-8"
-   */
-  spacing?: string;
-
-  /**
-   * Marge de sécurité pour éviter les chevauchements (optionnel)
-   * @default "16"
-   */
-  safetyMargin?: number;
 }
 
 const { 
   targetId, 
   label = "Découvrir", 
-  position = "bottom-[15%] md:bottom-[20%] lg:bottom-[25%]",
+  position = "bottom-[15%] md:bottom-[25%]",
   class: className = "",
-  hideOnMobile = true,
-  spacing = "my-4 md:my-6 lg:my-8",
-  safetyMargin = 16
+  hideOnMobile = true
 } = Astro.props;
 ---
 
 <div 
   id="scroll-down-arrow" 
   class:list={[
-    "absolute left-1/2 transform -translate-x-1/2 z-40 cursor-pointer hover:scale-105 transition-all duration-300",
+    "absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center z-40 cursor-pointer hover:scale-105 transition-all duration-300",
     hideOnMobile ? "hidden md:flex" : "flex",
     position,
-    spacing,
     className
   ]}
-  data-safety-margin={safetyMargin}
 >
-  <div class="flex flex-col items-center relative group">
-    <!-- Texte avec son propre flou -->
-    <p class="font-handwritten text-white text-2xl md:text-3xl mb-3 transform -rotate-3 relative drop-shadow-md group-hover:text-[--ootb-yellow] transition-colors duration-300">
-      <span class="absolute inset-0 bg-white/10 backdrop-blur-md rounded-xl -z-10 scale-110 px-8"></span>
+  <div class="relative">
+    <p class="font-handwritten text-white text-2xl md:text-3xl mb-3 whitespace-nowrap transform -rotate-3 drop-shadow-md px-4 py-1 bg-white/10 backdrop-blur-sm rounded-full">
       {label}
     </p>
-    
-    <!-- La flèche sans flou -->
-    <div class="arrow-container">
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        fill="none" 
-        viewBox="0 0 24 24" 
-        stroke-width="2.5" 
-        stroke="currentColor" 
-        class="w-8 h-8 md:w-10 md:h-10 text-white group-hover:text-[--ootb-yellow] transition-colors duration-300 drop-shadow-md"
-      >
-        <path 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
-        />
-      </svg>
-    </div>
+  </div>
+  <div class="arrow-container">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      fill="none" 
+      viewBox="0 0 24 24" 
+      stroke-width="2.5" 
+      stroke="currentColor" 
+      class="w-8 h-8 md:w-10 md:h-10 text-white hover:text-[--ootb-yellow] transition-colors duration-300 drop-shadow-md"
+    >
+      <path 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
+      />
+    </svg>
   </div>
 </div>
 
@@ -125,13 +105,12 @@ const {
   }
 </style>
 
-<script define:vars={{ targetId, safetyMargin }}>
+<script define:vars={{ targetId }}>
   // Fonction de cleanup
   const cleanup = () => {
     const oldArrow = document.getElementById('scroll-down-arrow');
     if (oldArrow) {
       oldArrow.removeEventListener('click', handleClick);
-      window.removeEventListener('resize', adjustPosition);
     }
   };
 
@@ -158,46 +137,6 @@ const {
     }
   };
 
-  // Fonction pour ajuster la position en fonction des éléments adjacents
-  const adjustPosition = () => {
-    const scrollArrow = document.getElementById('scroll-down-arrow');
-    if (!scrollArrow) return;
-    
-    const arrowRect = scrollArrow.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const margin = safetyMargin || 16; // Marge de sécurité
-
-    // Vérifier si la flèche est trop proche du bas de l'écran
-    if (arrowRect.bottom > viewportHeight - margin) {
-      const newBottomPosition = (viewportHeight - arrowRect.height - margin) / viewportHeight * 100;
-      scrollArrow.style.bottom = `${newBottomPosition}%`;
-    }
-
-    // Vérifier les chevauchements avec d'autres éléments
-    const otherElements = document.querySelectorAll('header, footer, [data-avoid-overlap="true"]');
-    let needsAdjustment = false;
-    
-    otherElements.forEach(element => {
-      if (element === scrollArrow) return;
-      
-      const elementRect = element.getBoundingClientRect();
-      
-      // Vérifier si les rectangles se chevauchent
-      if (!(arrowRect.right < elementRect.left || 
-            arrowRect.left > elementRect.right || 
-            arrowRect.bottom < elementRect.top || 
-            arrowRect.top > elementRect.bottom)) {
-        needsAdjustment = true;
-      }
-    });
-    
-    if (needsAdjustment) {
-      // Ajuster la position verticale pour éviter le chevauchement
-      const newBottomPosition = Math.max(10, (arrowRect.bottom / viewportHeight * 100) + 5);
-      scrollArrow.style.bottom = `${newBottomPosition}%`;
-    }
-  };
-
   // Cleanup avant initialisation pour éviter les doublons
   cleanup();
 
@@ -206,9 +145,6 @@ const {
     const scrollArrow = document.getElementById('scroll-down-arrow');
     if (scrollArrow) {
       scrollArrow.addEventListener('click', handleClick);
-      window.addEventListener('resize', adjustPosition);
-      // Ajuster la position initiale après un court délai pour s'assurer que la page est complètement chargée
-      setTimeout(adjustPosition, 150);
     }
   };
 

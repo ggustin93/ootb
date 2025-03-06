@@ -22,7 +22,14 @@ const {
 } = Astro.props;
 
 // Ajouter l'ancre si nécessaire
-const finalHref = withAnchor ? `${href}#category-content` : href;
+const isPremium = href.includes('/premium');
+const finalHref = withAnchor 
+  ? isPremium 
+    ? `${href}#premium-section-top` 
+    : href.includes('/blog') 
+      ? `${href}#blog-filters`
+      : `${href}#category-filters` 
+  : href;
 ---
 
 <a

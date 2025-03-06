@@ -116,6 +116,7 @@ const { filters, contentSection, search } = hero;
                 icon={CONTENT_TYPES.all.icon}
                 label={CONTENT_TYPES.all.shortLabel}
                 isActive={true}
+                withAnchor={true}
               />
 
               {Object.entries(CONTENT_TYPES)
@@ -126,6 +127,7 @@ const { filters, contentSection, search } = hero;
                     icon={config.icon}
                     label={config.shortLabel}
                     color={config.color}
+                    withAnchor={true}
                   />
                 ))}
             </div>
@@ -136,7 +138,7 @@ const { filters, contentSection, search } = hero;
   </GradientHeroSection>
 
   <ScrollDownArrow 
-    targetId="blog-content" 
+    targetId="blog-filters" 
     label="Voir les contenus"
     position="left-[20%] bottom-[20%]"
     class="text-white hidden md:flex"
@@ -152,7 +154,9 @@ const { filters, contentSection, search } = hero;
           <h2 class="hidden sm:block text-2xl sm:text-3xl font-body font-semibold">
             {contentSection.title}
           </h2>
-          <CategoryFilters blogConfig={sharedData} />
+          <div id="blog-filters">
+            <CategoryFilters blogConfig={sharedData} />
+          </div>
         </div>
 
         <BlogList posts={page.data} />
@@ -250,3 +254,61 @@ const { filters, contentSection, search } = hero;
     ring-color: var(--hover-ring-color) !important;
   }
 </style>
+
+<script>
+  // Fonction directement inspirée de ScrollDownArrow.astro
+  function scrollToElement(elementId: string) {
+    const targetElement = document.getElementById(elementId);
+    
+    if (targetElement) {
+      const headerOffset = 100;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    } else {
+      // Fallback comme dans ScrollDownArrow si l'élément n'est pas trouvé
+      const defaultScrollDistance = window.innerHeight * 0.8;
+      const currentPosition = window.pageYOffset;
+      window.scrollTo({
+        top: currentPosition + defaultScrollDistance,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  function scrollToBlogFilters() {
+    scrollToElement('blog-filters');
+  }
+
+  // Gestionnaire pour les liens avec ancre
+  function handleAnchorClick(e: Event) {
+    const target = e.currentTarget as HTMLAnchorElement;
+    const href = target.getAttribute('href');
+    
+    if (href?.includes('/category/premium')) {
+      // Si on clique sur le lien premium, on stocke l'info pour le défilement après redirection
+      localStorage.setItem('scrollToPremium', 'true');
+    } else if (href?.includes('#blog-filters') || href?.includes('#blog-content')) {
+      e.preventDefault();
+      scrollToBlogFilters();
+    }
+  }
+
+  // Initialisation
+  document.addEventListener('DOMContentLoaded', () => {
+    // Vérifier le hash initial
+    const hash = window.location.hash;
+    if (hash === '#blog-filters' || hash === '#blog-content') {
+      setTimeout(() => scrollToBlogFilters(), 100);
+    }
+
+    // Ajout des écouteurs d'événements sur les liens
+    document.querySelectorAll('a[href*="#blog-filters"], a[href*="#blog-content"], a[href*="/category/premium"]').forEach(link => {
+      link.addEventListener('click', handleAnchorClick);
+    });
+  });
+</script>

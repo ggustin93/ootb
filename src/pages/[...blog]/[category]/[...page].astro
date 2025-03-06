@@ -183,7 +183,7 @@ const metadata = {
   </GradientHeroSection>
 
   <ScrollDownArrow 
-    targetId="category-content" 
+    targetId="category-filters" 
     label={category.slug 
       ? CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.actionLabel 
       : "Voir tous les contenus"
@@ -197,112 +197,107 @@ const metadata = {
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         {category.slug === 'premium' ? (
-          <section id="category-content" class="py-4 -mt-8 bg-white relative z-10">
-            <div class="container mx-auto px-4">
-              <div class="max-w-6xl mx-auto">
-                {/* En-tête avec titre et filtres */}
-                <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
-                  <h2 class="text-2xl sm:text-3xl font-body font-semibold flex items-center gap-3">
-                    <Icon name="tabler:crown" class="w-8 h-8 text-[--ootb-yellow]" />
-                    Contenu premium
-                  </h2>
+          <>
+            <div id="premium-section-top" class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
+              <h2 class="text-2xl sm:text-3xl font-body font-semibold flex items-center gap-3">
+                <Icon name="tabler:crown" class="w-8 h-8 text-[--ootb-yellow]" />
+                Contenu premium
+              </h2>
 
-                  {/* Filtres minimalistes - version desktop uniquement */}
-                  <div class="hidden sm:flex gap-1 bg-gray-100/80 p-1 rounded-lg">
-                    <a
-                      href="/blog#category-content"
-                      class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
-                    >
-                      <Icon name={FILTER_TYPES.all.icon} class="w-4 h-4" />
-                      <span class="text-xs sm:text-sm">{FILTER_TYPES.all.label}</span>
-                    </a>
+              {/* Filtres minimalistes - version desktop uniquement */}
+              <div class="hidden sm:flex gap-1 bg-gray-100/80 p-1 rounded-lg">
+                <a
+                  href="/blog#category-content"
+                  class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
+                >
+                  <Icon name={FILTER_TYPES.all.icon} class="w-4 h-4" />
+                  <span class="text-xs sm:text-sm">{FILTER_TYPES.all.label}</span>
+                </a>
 
-                    {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
-                      <a
-                        href={`/category/${key.toLowerCase()}#category-content`}
-                        class:list={[
-                          'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
-                          'transition-all duration-300',
-                          key === 'premium' ? [
-                            'bg-white shadow-sm',
-                            'text-[--ootb-yellow]'
-                          ] : [
-                            'text-gray-600 hover:text-gray-900'
-                          ]
-                        ]}
-                      >
-                        <Icon name={config.icon} class="w-4 h-4" />
-                        <span class="text-xs sm:text-sm">{config.label}</span>
-                      </a>
-                    ))}
-                  </div>
-                  
-                  {/* Version mobile pour Premium - utilise le composant CategoryFilters */}
-                  <div class="sm:hidden">
-                    <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
-                  </div>
-                </div>
+                {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
+                  <a
+                    href={`/category/${key.toLowerCase()}#category-content`}
+                    class:list={[
+                      'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+                      'transition-all duration-300',
+                      key === 'premium' ? [
+                        'bg-white shadow-sm',
+                        'text-[--ootb-yellow]'
+                      ] : [
+                        'text-gray-600 hover:text-gray-900'
+                      ]
+                    ]}
+                  >
+                    <Icon name={config.icon} class="w-4 h-4" />
+                    <span class="text-xs sm:text-sm">{config.label}</span>
+                  </a>
+                ))}
+              </div>
+              
+              {/* Version mobile pour Premium - utilise le composant CategoryFilters */}
+              <div class="sm:hidden">
+                <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
+              </div>
+            </div>
 
-                {/* Encart explicatif */}
-                <div class="bg-gradient-to-br from-amber-50 to-transparent p-8 rounded-2xl mb-12">
-                  <div class="max-w-3xl mx-auto">
-                    <p class="text-gray-700 text-lg mb-6">
-                      Les contenus premium seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.
+            {/* Encart explicatif */}
+            <div class="bg-gradient-to-br from-amber-50 to-transparent p-8 rounded-2xl mb-12">
+              <div class="max-w-3xl mx-auto">
+                <p class="text-gray-700 text-lg mb-6">
+                  Les contenus premium seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-8 justify-between">
+                  <div class="space-y-4 flex-1">
+                    <p class="text-gray-700">
+                      En devenant contributeur premium sur <Button 
+                        href="https://buymeacoffee.com/outofthebooks" 
+                        variant="link" 
+                        size="sm"
+                        icon="tabler:coffee"
+                        class="text-[--ootb-yellow] hover:text-amber-500 font-semibold"
+                      >Buy Me a Coffee</Button>, vous recevrez automatiquement accès à notre newsletter exclusive.
+                    </p>
+                    <p class="text-gray-600">
+                      Celle-ci vous donnera accès à du contenu hors-série et en avant-première !
+                      <span class="text-amber-600 font-medium">Plus d'informations à venir.</span>
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row items-center gap-8 justify-between">
-                      <div class="space-y-4 flex-1">
-                        <p class="text-gray-700">
-                          En devenant contributeur premium sur <Button 
-                            href="https://buymeacoffee.com/outofthebooks" 
-                            variant="link" 
-                            size="sm"
-                            icon="tabler:coffee"
-                            class="text-[--ootb-yellow] hover:text-amber-500 font-semibold"
-                          >Buy Me a Coffee</Button>, vous recevrez automatiquement accès à notre newsletter exclusive.
-                        </p>
-                        <p class="text-gray-600">
-                          Celle-ci vous donnera accès à du contenu hors-série et en avant-première !
-                          <span class="text-amber-600 font-medium">Plus d'informations à venir.</span>
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-4 mt-6">
-                          <Button 
-                            href="https://buymeacoffee.com/outofthebooks" 
-                            variant="premium-primary"
-                            icon="tabler:coffee"
-                          >
-                            Faire un don
-                          </Button>
-                          <Button 
-                            href="/blog#category-content" 
-                            variant="premium-secondary"
-                            icon="tabler:arrow-left"
-                          >
-                            Retour aux contenus
-                          </Button>
-                        </div>
-                      </div>
+                    <div class="flex flex-wrap gap-4 mt-6">
+                      <Button 
+                        href="https://buymeacoffee.com/outofthebooks" 
+                        variant="premium-primary"
+                        icon="tabler:coffee"
+                      >
+                        Faire un don
+                      </Button>
+                      <Button 
+                        href="/blog#category-content" 
+                        variant="premium-secondary"
+                        icon="tabler:arrow-left"
+                      >
+                        Retour aux contenus
+                      </Button>
+                    </div>
+                  </div>
 
-                      {/* QR Code */}
-                      <div class="transform hover:scale-105 transition-all duration-300">
-                        <div class="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-                          <Image
-                            src={import('~/assets/images/bmc_qr.png')}
-                            alt="QR Code Buy Me a Coffee"
-                            width={160}
-                            height={160}
-                            class="w-full h-auto"
-                          />
-                          <p class="text-xs text-gray-500 mt-2 text-center">Scanner pour contribuer</p>
-                        </div>
-                      </div>
+                  {/* QR Code */}
+                  <div class="transform hover:scale-105 transition-all duration-300">
+                    <div class="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <Image
+                        src={import('~/assets/images/bmc_qr.png')}
+                        alt="QR Code Buy Me a Coffee"
+                        width={160}
+                        height={160}
+                        class="w-full h-auto"
+                      />
+                      <p class="text-xs text-gray-500 mt-2 text-center">Scanner pour contribuer</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </>
         ) : (
           <>
             {/* En-tête avec titre et filtres */}
@@ -322,7 +317,9 @@ const metadata = {
                   </span>
                 )}
               </h2>
-              <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
+              <div id="category-filters">
+                <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
+              </div>
             </div>
 
             {/* Encart explicatif conditionnel selon la catégorie */}
@@ -395,42 +392,73 @@ const metadata = {
 </style>
 
 <script>
-  // Amélioration de la fonction de défilement
-  function scrollToFilters() {
-    const element = document.getElementById('category-content');
-    if (element) {
+  // Fonction directement inspirée de ScrollDownArrow.astro
+  function scrollToElement(elementId: string) {
+    const targetElement = document.getElementById(elementId);
+    
+    if (targetElement) {
       const headerOffset = 100;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
       window.scrollTo({
         top: offsetPosition,
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        behavior: 'smooth'
+      });
+    } else {
+      // Fallback comme dans ScrollDownArrow si l'élément n'est pas trouvé
+      const defaultScrollDistance = window.innerHeight * 0.8;
+      const currentPosition = window.pageYOffset;
+      window.scrollTo({
+        top: currentPosition + defaultScrollDistance,
+        behavior: 'smooth'
       });
     }
   }
 
+  function scrollToFilters() {
+    scrollToElement('category-filters');
+  }
+
+  function scrollToPremiumTop() {
+    scrollToElement('premium-section-top');
+  }
+
   // Gestionnaire pour les liens avec ancre
   function handleAnchorClick(e: Event) {
+    e.preventDefault();
     const target = e.currentTarget as HTMLAnchorElement;
     const href = target.getAttribute('href');
-    if (href?.includes('#category-content')) {
-      setTimeout(() => {
-        scrollToFilters();
-      }, 100);
+    
+    if (href?.includes('#category-filters')) {
+      scrollToFilters();
+    } else if (href?.includes('#premium-section-top')) {
+      scrollToPremiumTop();
+    } else if (href?.includes('#category-content')) {
+      // Compatibilité avec les anciens liens
+      scrollToFilters();
     }
   }
 
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.hash === '#category-content') {
-      requestAnimationFrame(() => scrollToFilters());
+    // Vérifier le hash initial
+    const hash = window.location.hash;
+    if (hash === '#category-filters' || hash === '#category-content') {
+      setTimeout(() => scrollToFilters(), 100);
+    } else if (hash === '#premium-section-top') {
+      setTimeout(() => scrollToPremiumTop(), 100);
+    }
+    
+    // Vérifier si une demande de défilement vers premium-section-top a été faite depuis la page principale
+    const shouldScrollToPremium = localStorage.getItem('scrollToPremium');
+    if (shouldScrollToPremium === 'true' && window.location.pathname.includes('/premium')) {
+      setTimeout(() => scrollToPremiumTop(), 100);
+      localStorage.removeItem('scrollToPremium'); // Nettoyer après utilisation
     }
 
     // Ajout des écouteurs d'événements sur les liens
-    document.querySelectorAll('a[href*="#category-content"]').forEach(link => {
+    document.querySelectorAll('a[href*="#category-filters"], a[href*="#premium-section-top"], a[href*="#category-content"]').forEach(link => {
       link.addEventListener('click', handleAnchorClick);
     });
   });

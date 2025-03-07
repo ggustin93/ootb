@@ -2,98 +2,587 @@
 import type { ImageMetadata } from 'astro';
 import Image from '~/components/common/Image.astro';
 import { Icon } from 'astro-icon/components';
-import SectionDivider from './SectionDivider.astro';
+import { getDefaultImage, getDefaultSpeakerImage } from '~/services/events';
+import type { FestivalDay } from '~/services/events';
+import type { Event as FestivalEvent } from '~/types/festival';
 
 interface Props {
-  title: string;
-  description: string;
-  date: string;
-  image: ImageMetadata | string;
-  badge: string;
-  badgeColor: 'purple' | 'blue';
-  link: string;
+  // Prend soit un objet Event complet, soit des propriétés individuelles
+  event?: FestivalEvent;
+  title?: string;
+  description?: string;
+  date?: string;
+  time?: string;
+  location?: string;
+  speaker?: string;
+  speakerImage?: string | ImageMetadata;
+  image?: ImageMetadata | string;
+  badge?: string;
+  badgeColor?: 'purple' | 'blue';
+  link?: string;
+  day?: FestivalDay;
   cols?: number;
+  eventType?: 'Conférences' | 'Ateliers' | 'Stands';
+  target?: string;
+  level?: string;
+  teachingType?: string;
+  url?: string;
 }
 
 const { 
-  title, 
-  description, 
-  date,
-  image,
-  badge,
-  badgeColor,
-  link,
-  cols = 1
+  event,
+  title: propTitle, 
+  description: propDescription, 
+  date: propDate,
+  time: propTime,
+  location: propLocation,
+  speaker: propSpeaker,
+  speakerImage: propSpeakerImage,
+  image: propImage,
+  badge: propBadge,
+  badgeColor = 'blue',
+  link: propLink,
+  day: propDay,
+  cols = 1,
+  eventType: propEventType = 'Conférences',
+  target: propTarget,
+  level: propLevel,
+  teachingType: propTeachingType,
+  url: propUrl
 } = Astro.props;
 
-const badgeIcons = {
+// Utiliser les propriétés de l'objet Event s'il est fourni, sinon utiliser les props individuelles
+const title = event?.title || propTitle || '';
+const description = event?.description || propDescription || '';
+const date = event?.day || propDate || '';
+const time = event?.time || propTime || '';
+const location = event?.location || propLocation || '';
+const speaker = event?.speaker || propSpeaker || '';
+const speakerImage = event?.speakerImage || propSpeakerImage;
+const originalImage = event?.image || propImage;
+const badge = propBadge || '';
+const link = event?.url || propLink || '#';
+
+// Normaliser le jour pour garantir la cohérence
+let day = event?.day || propDay;
+// S'assurer que le jour est une des valeurs acceptées
+if (day) {
+  const dayLower = day.toString().trim().toLowerCase();
+  if (dayLower.includes('vendredi')) {
+    day = 'Vendredi';
+  } else if (dayLower.includes('jeudi')) {
+    day = 'Jeudi';
+  } else if (dayLower.includes('mercredi')) {
+    day = 'Mercredi';
+  }
+}
+
+// Log pour débogage des événements du vendredi
+if (day && day.toString().toLowerCase().includes('vendredi')) {
+  console.log(`[DEBUG VENDREDI] Événement du vendredi détecté: "${title}" - jour original="${event?.day || propDay}", normalisé="${day}"`);
+}
+
+const eventType = event?.type || propEventType;
+const target = event?.target || propTarget;
+const level = event?.level || propLevel;
+const teachingType = event?.teachingType || propTeachingType;
+const url = event?.url || propUrl;
+
+const badgeIcons: Record<string, string> = {
   'Festival 2025': 'tabler:confetti',
-  'Live Facebook': 'tabler:brand-facebook'
+  'Live Facebook': 'tabler:brand-facebook',
+  'Conférences': 'tabler:presentation',
+  'Ateliers': 'tabler:tool',
+  'Stands': 'tabler:building-store'
+};
+
+/**
+ * Vérifie si une URL d'image est problématique (susceptible de causer des erreurs CORS)
+ * @param url L'URL à vérifier
+ * @returns true si l'URL est problématique, false sinon
+ */
+const isProblematicUrl = (url: string): boolean => {
+  // Cas 1: Format CSV de NocoDB - nom_fichier.extension(url...)
+  if (url.match(/\.(jpg|jpeg|png|webp|gif|svg)\(/i)) {
+    return true;
+  }
+  
+  // Cas 2: URL signée Amazon S3 avec paramètres de signature
+  if (url.includes('X-Amz-Signature=') || 
+      url.includes('X-Amz-Algorithm=') || 
+      url.includes('X-Amz-Credential=')) {
+    return true;
+  }
+  
+  // Cas 3: URL de NocoDB spécifique
+  if (url.includes('nocohub-001-prod-app-attachments') || 
+      (url.includes('amazonaws.com') && url.includes('/uploads/'))) {
+    return true;
+  }
+  
+  return false;
+};
+
+/**
+ * Vérifie si une image est fournie et valide
+ * @param img L'image à vérifier
+ * @returns true si l'image est valide, false sinon
+ */
+const isValidImage = (img?: ImageMetadata | string): boolean => {
+  if (!img) return false;
+  
+  // Pour les images de type string (URLs)
+  if (typeof img === 'string') {
+    // Vérifier si l'URL est problématique
+    if (isProblematicUrl(img)) {
+      return false;
+    }
+    
+    // Vérifier si l'URL a une extension d'image valide
+    const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(img);
+    if (!hasImageExtension) {
+      return false;
+    }
+    
+    return true;
+  }
+  
+  // Pour les images de type ImageMetadata (importées)
+  return true;
+};
+
+/**
+ * Obtient l'image à utiliser pour l'événement
+ * Utilise des fonds de couleur avec icônes pour chaque type d'événement
+ * @returns L'image à utiliser
+ */
+const getImage = () => {
+  // Configuration des couleurs et icônes par type d'événement
+  const eventBackgrounds = {
+    'Conférences': {
+      color: '#fff5f2', // Fond orangé très clair
+      icon: 'tabler:presentation',
+      iconColor: '#e4451e' // Rouge/orange du thème
+    },
+    'Ateliers': {
+      color: '#f0f7ff', // Fond bleu très clair
+      icon: 'tabler:tool',
+      iconColor: '#2563eb' // Bleu
+    },
+    'Stands': {
+      color: '#f0fff4', // Fond vert très clair
+      icon: 'tabler:building-store',
+      iconColor: '#16a34a' // Vert
+    }
+  };
+
+  // Vérifier si l'image originale est problématique ou non valide
+  if (!originalImage || isProblematicUrl(originalImage)) {
+    // Sélectionner le fond et l'icône basés sur le type d'événement
+    const background = eventBackgrounds[eventType] || eventBackgrounds['Conférences'];
+    
+    return {
+      type: 'background',
+      src: '', // Pas d'image source, nous utilisons un fond de couleur
+      backgroundColor: background.color,
+      icon: background.icon,
+      iconColor: background.iconColor
+    };
+  }
+
+  // Si l'image originale est valide, l'utiliser
+  return {
+    type: 'custom',
+    src: originalImage,
+    backgroundColor: eventBackgrounds[eventType]?.color || '#f8f9fa' // Fond par défaut pour les images réelles
+  };
+};
+
+/**
+ * Obtient l'image du conférencier
+ * @returns L'image du conférencier à utiliser
+ */
+const getSpeakerImg = () => {
+  // Image placeholder d'avatar générique pour les conférenciers
+  const speakerPlaceholder = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png';
+  
+  if (speakerImage && isValidImage(speakerImage)) {
+    return speakerImage;
+  }
+  
+  return speakerPlaceholder;
+};
+
+// Obtenir l'image à utiliser
+const image = getImage();
+const speakerImg = getSpeakerImg();
+
+// Configuration des types d'événements avec icônes et couleurs
+const eventTypeConfig: Record<string, {
+  icon: string;
+  color: string;
+  bgClass: string;
+  textClass: string;
+}> = {
+  'Festival 2025': {
+    icon: 'tabler:confetti',
+    color: 'var(--content-premium)',
+    bgClass: 'bg-[color-mix(in_srgb,var(--content-premium)_30%,white)]',
+    textClass: 'text-[var(--content-premium)]'
+  },
+  'Live Facebook': {
+    icon: 'tabler:broadcast',
+    color: 'var(--content-live)',
+    bgClass: 'bg-[color-mix(in_srgb,var(--content-live)_30%,white)]',
+    textClass: 'text-[var(--content-live)]'
+  },
+  'Conférences': {
+    icon: 'tabler:presentation',
+    color: 'var(--content-actualite)',
+    bgClass: 'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]',
+    textClass: 'text-[var(--content-actualite)]'
+  },
+  'Ateliers': {
+    icon: 'tabler:tool',
+    color: 'var(--content-podcast)',
+    bgClass: 'bg-[color-mix(in_srgb,var(--content-podcast)_30%,white)]',
+    textClass: 'text-[var(--content-podcast)]'
+  },
+  'Stands': {
+    icon: 'tabler:building-store',
+    color: 'var(--content-tv)',
+    bgClass: 'bg-[color-mix(in_srgb,var(--content-tv)_30%,white)]',
+    textClass: 'text-[var(--content-tv)]'
+  }
+};
+
+// Obtenir la configuration pour ce type d'événement ou badge
+const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
+  icon: 'tabler:calendar-event',
+  color: 'var(--content-actualite)',
+  bgClass: 'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]',
+  textClass: 'text-[var(--content-actualite)]'
+};
+
+// Créer un objet de débogage pour l'attribut data-debug
+const debugInfo = {
+  title,
+  originalImageType: typeof originalImage,
+  originalImageValue: typeof originalImage === 'string' ? originalImage : 'ImageMetadata',
+  imageValid: isValidImage(originalImage),
+  imageType: image.type,
+  badge,
+  eventType,
+  icon: config.icon
 };
 ---
 
-<a 
-  href={link}
-  class:list={[
-    'group relative bg-white rounded-2xl overflow-hidden transition-all duration-300',
-    'hover:shadow-2xl hover:-translate-y-1',
-    'min-h-[320px] flex items-stretch',
-    cols === 2 ? 'md:col-span-2' : ''
-  ]}
+<!-- Version complète pour l'affichage en liste dans DayFilter -->
+<div 
+  class="event-card group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300"
+  data-type={eventType}
+  data-day={day}
+  data-time={time}
 >
-  <!-- Image de fond -->
-  <div class="absolute inset-0 w-full h-full">
-    <Image
-      src={image}
-      alt=""
-      class="w-full h-full object-cover transition-all duration-500 scale-100 group-hover:scale-110"
-      widths={[400, 900]}
-      sizes="(max-width: 900px) 400px, 900px"
-      aspectRatio="16:9"
-      format={typeof image === 'string' ? ['webp'] : undefined}
-    />
-  </div>
+  <div class="md:flex h-full">
+    <!-- Image à gauche (sur desktop) ou en haut (sur mobile) -->
+    <div class="md:w-1/3 relative overflow-hidden md:rounded-l-xl" style={`background-color: ${image.backgroundColor}`}>
+      <div class="h-48 md:h-full transition-transform duration-500 group-hover:scale-105">
+        {image.type === 'custom' ? (
+          <Image
+            src={image.src}
+            alt={title}
+            class="w-full h-full object-cover"
+            widths={[300, 600, 900]}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 300px, (max-width: 1024px) 600px, 900px"
+            aspectRatio="4:3"
+            loading="lazy"
+            decoding="async"
+            format="webp"
+            fetchpriority="low"
+          />
+        ) : (
+          <div class="w-full h-full flex items-center justify-center">
+            <Icon name={image.icon} class="w-24 h-24" style={`color: ${image.iconColor}`} />
+          </div>
+        )}
+      </div>
+      <!-- Badge du type d'événement (visible uniquement sur mobile) -->
+      <div class="absolute top-3 right-3 md:hidden inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-sky-100/90 text-sky-700 backdrop-blur-sm shadow-sm">
+        <Icon name={config.icon} class="w-3.5 h-3.5" />
+        {eventType}
+      </div>
+    </div>
 
-  <!-- Gradient overlay -->
-  <div class="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-900/50 to-gray-900/80 mix-blend-multiply transition-opacity duration-300 group-hover:opacity-75" />
+    <!-- Contenu à droite (sur desktop) ou en bas (sur mobile) -->
+    <div class="md:w-2/3 p-4 md:p-6 flex flex-col">
+      <div class="flex-grow">
+        <!-- En-tête avec heure, lieu et expert - Version desktop -->
+        <div class="hidden md:flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-500 mb-2 md:mb-3">
+          {day && (
+            <div class="flex items-center">
+              <Icon name="tabler:calendar" class="w-4 h-4 mr-1" />
+              <span>{day}</span>
+            </div>
+          )}
+          {time && (
+            <div class="flex items-center">
+              <Icon name="tabler:clock" class="w-4 h-4 mr-1" />
+              <span>{time}</span>
+            </div>
+          )}
+          {location && (
+            <div class="flex items-center">
+              <Icon name="tabler:map-pin" class="w-4 h-4 mr-1" />
+              <span>{location}</span>
+            </div>
+          )}
+          {speaker && (
+            <div class="flex items-center">
+              <Icon name="tabler:user" class="w-4 h-4 mr-1" />
+              <span class="font-medium text-gray-500">{speaker}</span>
+            </div>
+          )}
+        </div>
+
+        <!-- En-tête simplifié pour mobile -->
+        <div class="flex md:hidden flex-wrap items-center gap-2 text-sm text-gray-500 mb-2">
+          {day && (
+            <div class="flex items-center">
+              <Icon name="tabler:calendar" class="w-4 h-4 mr-1" />
+              <span>{day}</span>
+            </div>
+          )}
+          {time && (
+            <div class="flex items-center">
+              <Icon name="tabler:clock" class="w-4 h-4 mr-1" />
+              <span>{time}</span>
+            </div>
+          )}
+        </div>
+
+        <!-- Photo du conférencier (uniquement pour les conférences) -->
+        {eventType === 'Conférences' && speaker && (
+          <div class="mb-3 hidden md:flex items-center">
+            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-[#e4451e]/20 mr-3 flex-shrink-0">
+              <Image
+                src={speakerImg}
+                alt={speaker || "Conférencier"}
+                class="w-full h-full object-cover"
+                width={64}
+                height={64}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="text-sm text-gray-600">
+              <p class="font-medium text-[#e4451e]">{speaker}</p>
+              <p class="italic">Conférencier</p>
+            </div>
+          </div>
+        )}
+
+        <!-- Titre -->
+        <h3 class="text-xl md:text-2xl font-bold text-sky-900 group-hover:text-[#e4451e] transition-colors mb-2 md:mb-3">
+          {title}
+        </h3>
+
+        <!-- Description avec accordéon pour les textes longs - Version desktop -->
+        <div class="description-container relative hidden md:block">
+          <p class="text-gray-600 mb-2 md:mb-4 description-text line-clamp-4 pr-16">{description}</p>
+          {description && description.length > 280 && (
+            <button 
+              class="text-[#e4451e] text-sm font-medium flex items-center gap-1.5 description-toggle hover:bg-[#e4451e]/10 transition-all duration-300 absolute bottom-0 right-0 px-2 py-1 rounded-md"
+              aria-expanded="false"
+            >
+              <span class="show-more inline-flex items-center">
+                <span></span>
+                <Icon name="tabler:chevron-down" class="w-4 h-4 ml-1 description-icon transition-transform duration-300" />
+              </span>
+              <span class="show-less hidden inline-flex items-center">
+                <span>Voir moins</span>
+                <Icon name="tabler:chevron-up" class="w-4 h-4 ml-1 transition-transform duration-300" />
+              </span>
+            </button>
+          )}
+        </div>
+
+        <!-- Informations supplémentaires - Version desktop -->
+        <div class="hidden md:grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 mb-3">
+          {target && (
+            <div class="flex items-start text-sm text-gray-600">
+              <Icon name="tabler:users" class="w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5" />
+              <span><span class="font-medium">Public:</span> {target}</span>
+            </div>
+          )}
+          {level && (
+            <div class="flex items-start text-sm text-gray-600">
+              <Icon name="tabler:school" class="w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5" />
+              <span><span class="font-medium">Niveau:</span> {level}</span>
+            </div>
+          )}
+          {teachingType && (
+            <div class="flex items-start text-sm text-gray-600">
+              <Icon name="tabler:book" class="w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5" />
+              <span><span class="font-medium">Type:</span> {teachingType}</span>
+            </div>
+          )}
+        </div>
+
+        <!-- Bouton "Voir les détails" pour mobile -->
+        <div class="md:hidden mt-4">
+          <button 
+            class="details-toggle w-full py-3 px-4 text-base font-medium text-[#e4451e] border border-[#e4451e]/20 rounded-lg flex items-center justify-center gap-2 hover:bg-[#e4451e]/5 transition-all duration-300"
+            aria-expanded="false"
+          >
+            <span class="show-details">Voir les détails</span>
+            <span class="hide-details hidden">Masquer les détails</span>
+            <Icon name="tabler:chevron-down" class="w-5 h-5 details-icon transition-transform duration-300" />
+          </button>
+        </div>
+
+        <!-- Détails supplémentaires pour mobile (masqués par défaut) -->
+        <div class="mobile-details hidden md:hidden mt-4 space-y-4 border-t border-gray-100 pt-4">
+          <!-- Description complète pour mobile -->
+          <div class="text-gray-600">
+            <p class="text-base">{description}</p>
+          </div>
+          
+          <!-- Informations sur le lieu et l'intervenant -->
+          <div class="flex flex-col gap-3 text-base">
+            {location && (
+              <div class="flex items-start gap-2">
+                <Icon name="tabler:map-pin" class="w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5" />
+                <span class="text-gray-600">{location}</span>
+              </div>
+            )}
+            {speaker && (
+              <div class="flex items-start gap-2">
+                <Icon name="tabler:user" class="w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5" />
+                <span class="text-gray-600 font-medium">{speaker}</span>
+              </div>
+            )}
+          </div>
+
+          <!-- Photo du conférencier pour mobile -->
+          {eventType === 'Conférences' && speaker && (
+            <div class="flex items-center mt-4">
+              <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-[#e4451e]/20 mr-3">
+                <Image
+                  src={speakerImg}
+                  alt={speaker || "Conférencier"}
+                  class="w-full h-full object-cover"
+                  width={48}
+                  height={48}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="text-sm text-gray-600">
+                <p class="font-medium text-[#e4451e]">{speaker}</p>
+                <p class="italic">Conférencier</p>
+              </div>
+            </div>
+          )}
+
+          <!-- Informations supplémentaires pour mobile -->
+          <div class="grid grid-cols-1 gap-3">
+            {target && (
+              <div class="flex items-start text-base text-gray-600">
+                <Icon name="tabler:users" class="w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5" />
+                <span><span class="font-medium">Public:</span> {target}</span>
+              </div>
+            )}
+            {level && (
+              <div class="flex items-start text-base text-gray-600">
+                <Icon name="tabler:school" class="w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5" />
+                <span><span class="font-medium">Niveau:</span> {level}</span>
+              </div>
+            )}
+            {teachingType && (
+              <div class="flex items-start text-base text-gray-600">
+                <Icon name="tabler:book" class="w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5" />
+                <span><span class="font-medium">Type:</span> {teachingType}</span>
+              </div>
+            )}
+          </div>
+          
+          <!-- Lien vers le site web dans les détails pour mobile -->
+          {url && (
+            <div class="flex items-center mt-4 pt-2 border-t border-gray-100">
+              <a 
+                href={url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-[#e4451e] hover:bg-[#e4451e]/10 transition-colors w-full justify-center border border-[#e4451e]/20"
+              >
+                <Icon name="tabler:external-link" class="w-4 h-4" />
+                Visiter le site web
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div class="mt-auto flex flex-wrap items-center justify-between gap-2">
+       
+        <!-- Badge du type d'événement (visible sur desktop et mobile) -->
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium shadow-sm" 
+             style={`
+               background-color: ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.15)' : 
+                                  eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.15)' : 
+                                  'rgba(22, 163, 74, 0.15)'};
+               color: ${eventType === 'Conférences' ? '#e4451e' : 
+                       eventType === 'Ateliers' ? '#2563eb' : 
+                       '#16a34a'};
+               border: 1px solid ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.3)' : 
+                                  eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.3)' : 
+                                  'rgba(22, 163, 74, 0.3)'};
+             `}
+        >
+          <Icon name={config.icon} class="w-3.5 h-3.5" />
+          {eventType}
+        </div>
+        
+        <!-- Lien vers le site web (visible uniquement sur desktop) -->
+        {url && (
+          <a 
+            href={url} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#e4451e]/10 text-[#e4451e] hover:bg-[#e4451e]/20 transition-colors"
+          >
+            <Icon name="tabler:external-link" class="w-3.5 h-3.5" />
+            Site web
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</div> 
+
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+  const descriptionContainers = document.querySelectorAll('.description-container');
   
-  <div class="relative z-10 p-8 flex flex-col justify-between w-full">
-    <div>
-      <!-- SectionDivider -->
-      <div class:list={[
-        'inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm',
-        badgeColor === 'purple' ? 'bg-purple-100/80 text-purple-700' : 'bg-sky-100/80 text-sky-700'
-      ]}>
-        <Icon name={badgeIcons[badge]} class="w-4 h-4" />
-        {badge}
-      </div>
-
-      <!-- Title & Description -->
-      <h3 class="text-2xl md:text-3xl font-bold text-white mt-6 mb-3 drop-shadow-sm">
-        {title}
-      </h3>
-      <p class="text-gray-200 line-clamp-2 mb-6 max-w-xl drop-shadow-sm">
-        {description}
-      </p>
-    </div>
-
-    <div class="flex items-center justify-between">
-      <!-- Date -->
-      <div class="flex items-center gap-3 text-gray-200 backdrop-blur-sm bg-black/20 px-4 py-2 rounded-full">
-        <Icon name="tabler:calendar-event" class="w-5 h-5" />
-        <time datetime={date} class="text-sm">
-          {new Date(date).toLocaleDateString('fr-FR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
-        </time>
-      </div>
-
-      <!-- Arrow indicator -->
-      <div class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm text-white flex items-center justify-center transform translate-x-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-        <Icon name="tabler:arrow-right" class="w-5 h-5" />
-      </div>
-    </div>
-  </div>
-</a> 
+  descriptionContainers.forEach(container => {
+    const descriptionText = container.querySelector('.description-text');
+    const toggleButton = container.querySelector('.description-toggle');
+    const showMoreSpan = container.querySelector('.show-more');
+    const showLessSpan = container.querySelector('.show-less');
+    const descriptionIcon = container.querySelector('.description-icon');
+    
+    if (toggleButton && descriptionText) {
+      toggleButton.addEventListener('click', () => {
+        const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
+        
+        toggleButton.setAttribute('aria-expanded', !isExpanded);
+        descriptionText.classList.toggle('line-clamp-4');
+        showMoreSpan.classList.toggle('hidden');
+        showLessSpan.classList.toggle('hidden');
+        descriptionIcon.classList.toggle('rotate-180');
+      });
+    }
+  });
+});
+</script>

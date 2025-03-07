@@ -1,3 +1,5 @@
+import { FestivalDay } from '~/services/events';
+
 export type Event = {
   id: string;
   time: string;
@@ -6,8 +8,9 @@ export type Event = {
   description: string;
   location: string;
   speaker?: string;
-  day: 'Lundi' | 'Mardi' | 'Mercredi' | 'Jeudi' | 'Vendredi' | 'Samedi';
+  day: FestivalDay;
   image?: string;
+  speakerImage?: string;
   url?: string;
   target?: string;
   level?: string;

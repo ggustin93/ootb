@@ -5,7 +5,7 @@ import Image from '~/components/common/Image.astro';
 import FestivalHeroSection from '~/components/sections/FestivalHeroSection.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import DayFilter from '~/components/ui/DayFilter.astro';
-import { eventsByDay } from '~/data/festival';
+import { getEventsByDay } from '~/services/events';
 import YouTubePlayer from '~/components/common/YouTubePlayer.astro';
 import ootbLogo from '~/assets/images/ootb-logo.svg';
 import Carousel from '~/components/ui/Carousel.astro';
@@ -25,6 +25,9 @@ import heroImage from '~/assets/images/festival_hero.webp';
 // Préparation des images pour le composant FestivalHeroSection
 const heroLogo = logoFestival;
 const heroBackground = heroImage;
+
+// Récupération des événements depuis l'API NocoDB
+const eventsByDay = await getEventsByDay();
 ---
 
 <Layout metadata={metadata} currentPage="festival">
@@ -68,8 +71,6 @@ const heroBackground = heroImage;
               videoId={about.videoId}
               title={about.videoTitle}
               className="w-full aspect-video"
-              autoplay={false}
-              muted={false}
               controls={true}
             />
             <!-- Effet de reflet -->

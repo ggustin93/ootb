@@ -5,7 +5,7 @@ import {
   convertStandsToEvents, 
   convertSessionsToEvents 
 } from './api/nocodb';
-import { TEST_MODE, events as dummyEvents } from '~/data/festival';
+import { TEST_MODE, events as dummyEvents } from '~/config/festival';
 import { NOCODB_CONFIG, calculateSimilarity } from '~/config/nocodb';
 
 // Jours du festival avec leurs dates

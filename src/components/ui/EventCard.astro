@@ -308,7 +308,19 @@ const debugInfo = {
         )}
       </div>
       <!-- Badge du type d'événement (visible uniquement sur mobile) -->
-      <div class="absolute top-3 right-3 md:hidden inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-sky-100/90 text-sky-700 backdrop-blur-sm shadow-sm">
+      <div class="absolute top-3 right-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm"
+           style={`
+             background-color: ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.15)' : 
+                                eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.15)' : 
+                                'rgba(22, 163, 74, 0.15)'};
+             color: ${eventType === 'Conférences' ? '#e4451e' : 
+                     eventType === 'Ateliers' ? '#2563eb' : 
+                     '#16a34a'};
+             border: 1px solid ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.3)' : 
+                                eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.3)' : 
+                                'rgba(22, 163, 74, 0.3)'};
+           `}
+      >
         <Icon name={config.icon} class="w-3.5 h-3.5" />
         {eventType}
       </div>
@@ -526,36 +538,7 @@ const debugInfo = {
 
       <div class="mt-auto flex flex-wrap items-center justify-between gap-2">
        
-        <!-- Badge du type d'événement (visible sur desktop et mobile) -->
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium shadow-sm" 
-             style={`
-               background-color: ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.15)' : 
-                                  eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.15)' : 
-                                  'rgba(22, 163, 74, 0.15)'};
-               color: ${eventType === 'Conférences' ? '#e4451e' : 
-                       eventType === 'Ateliers' ? '#2563eb' : 
-                       '#16a34a'};
-               border: 1px solid ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.3)' : 
-                                  eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.3)' : 
-                                  'rgba(22, 163, 74, 0.3)'};
-             `}
-        >
-          <Icon name={config.icon} class="w-3.5 h-3.5" />
-          {eventType}
-        </div>
-        
-        <!-- Lien vers le site web (visible uniquement sur desktop) -->
-        {url && (
-          <a 
-            href={url} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            class="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#e4451e]/10 text-[#e4451e] hover:bg-[#e4451e]/20 transition-colors"
-          >
-            <Icon name="tabler:external-link" class="w-3.5 h-3.5" />
-            Site web
-          </a>
-        )}
+        <!-- Lien vers le site web supprimé du bas de la carte -->
       </div>
     </div>
   </div>

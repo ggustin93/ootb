@@ -1,0 +1,574 @@
+{
+  "list": [
+    {
+      "ID": 1,
+      "Prénom": "Thibault",
+      "Nom": "Mathieu",
+      "Email": "thibaultmathieu792@gmail.com",
+      "GSM": "0475792751",
+      "Site internet": "www.universitedepaix.org",
+      "Choisissez un titre court": "Université de Paix - Des formations et programmes éducatifs pour gérer les conflits et améliorer le vivre ensemble",
+      "À qui s'adresse le stand ?": "Professeurs, parents et enfants",
+      "Niveau d'enseignement": "Maternelle-primaire et secondaire",
+      "Type d'enseignement": "Enseignement ordinaire",
+      "Décrivez brièvement votre stand pour les visiteurs": "Sur notre stand, explorez une multitude d'outils didactiques, feuilletez et reprenez  nos catalogues de formations et nos brochures de présentation pour en savoir plus sur nos programmes. 🎓✨\n\nEt pour célébrer les 65 ans de l’asbl, participez à notre concours spécial et tentez votre chance pour remporter une surprise ! 🎁🥳",
+      "Envoyez votre logo": [
+        {
+          "id": "atjlop73x3yjynbe",
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/14/60e65c63f9091a580cbaec91b037645612f9eb7e/Université de Paix ASBL - Logo bleu_2yiYT.png",
+          "title": "Université de Paix ASBL - Logo bleu.png",
+          "mimetype": "image/png",
+          "size": 90396,
+          "width": 4310,
+          "height": 1241,
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/14/60e65c63f9091a580cbaec91b037645612f9eb7e/Universit%C3%A9%20de%20Paix%20ASBL%20-%20Logo%20bleu_2yiYT.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=1dcd161f001abbe82636065b12fb297c846e52de5fe23771daeabc72ef74d2b0&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Universit%C3%A9%20de%20Paix%20ASBL%20-%20Logo%20bleu.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/14/60e65c63f9091a580cbaec91b037645612f9eb7e/Universit%C3%A9%20de%20Paix%20ASBL%20-%20Logo%20bleu_2yiYT.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=1082791b25eadade0b75fec0ede46073451294189f5550e3de48c0e11a1e7a97&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Universit%C3%A9%20de%20Paix%20ASBL%20-%20Logo%20bleu.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/14/60e65c63f9091a580cbaec91b037645612f9eb7e/Universit%C3%A9%20de%20Paix%20ASBL%20-%20Logo%20bleu_2yiYT.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=bcbdddc720a46601e7766438de9ad00ee8a01e54c84af69e4d4c540b0193c7a4&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Universit%C3%A9%20de%20Paix%20ASBL%20-%20Logo%20bleu.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/14/60e65c63f9091a580cbaec91b037645612f9eb7e/Universit%C3%A9%20de%20Paix%20ASBL%20-%20Logo%20bleu_2yiYT.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=8d3e3c2b1e0aae05f682740b0b8f4c5dfa7657af2cf45c65b85f4b4c5d972491&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Universit%C3%A9%20de%20Paix%20ASBL%20-%20Logo%20bleu.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 1,
+      "CreatedAt": "2025-02-25 13:12:40+00:00",
+      "UpdatedAt": "2025-02-28 08:53:01+00:00",
+      "Espaces": {
+        "Id": 1,
+        "Title": "Cafétéria"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 1,
+          "Jours_id": 1
+        },
+        {
+          "Stands - Vue table_id": 1,
+          "Jours_id": 2
+        }
+      ],
+      "Thématique liée": {
+        "Id": 1,
+        "Title": "Thématique 1"
+      },
+      "Jours": 2
+    },
+    {
+      "ID": 2,
+      "Prénom": "Virginie",
+      "Nom": "TYOU",
+      "Email": "virginie.tyou@cliky.eu",
+      "GSM": "0032477205088",
+      "Site internet": "www.cliky.eu",
+      "Choisissez un titre court": "Éduquer au numérique  - La Philosophie Cliky",
+      "À qui s'adresse le stand ?": "Professeurs, parents et enfants",
+      "Niveau d'enseignement": "Maternelle-primaire et secondaire",
+      "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+      "Décrivez brièvement votre stand pour les visiteurs": "Éduquer au numérique par les émotions et la perception. La Philosophie Cliky est une démarche d’éducation à la citoyenneté numérique (ECN) intergénérationnelle et spécifiquement dédiée aux  enfants de 5 à 13 ans .  Venez découvrir notre méthode innovante et nos différents outils !",
+      "Envoyez votre logo": [
+        {
+          "id": "at5vgajnm67sc9rb",
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/ÉDuquer au numérique_YaD-G.png",
+          "title": "ÉDuquer au numérique.png",
+          "mimetype": "image/png",
+          "size": 635905,
+          "width": 3375,
+          "height": 6000,
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/E%CC%81Duquer%20au%20nume%CC%81rique_YaD-G.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=43fc4c9fc730e4c4816b6b54fc7be6390940fa5bc492a1fc0181ea99a9e8db59&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22E%3FDuquer%20au%20nume%3Frique.png%22%3B%20filename%2A%3DUTF-8%27%27E%25CC%2581Duquer%2520au%2520nume%25CC%2581rique.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/E%CC%81Duquer%20au%20nume%CC%81rique_YaD-G.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=d7bfced6a922240a4dcd7e25f8e22647ad5af0ce452d196782b87917826d35a5&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22E%3FDuquer%20au%20nume%3Frique.png%22%3B%20filename%2A%3DUTF-8%27%27E%25CC%2581Duquer%2520au%2520nume%25CC%2581rique.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/E%CC%81Duquer%20au%20nume%CC%81rique_YaD-G.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=2f4ee34d633fb4ed1f8869ea86575cbe0aefad9c00c2c304b2727cdbec36497a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22E%3FDuquer%20au%20nume%3Frique.png%22%3B%20filename%2A%3DUTF-8%27%27E%25CC%2581Duquer%2520au%2520nume%25CC%2581rique.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/E%CC%81Duquer%20au%20nume%CC%81rique_YaD-G.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=772cf9e6e1e9eabc623de32a7d702fe5cd51773d1718d9bb028af3fbd484fb02&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22E%3FDuquer%20au%20nume%3Frique.png%22%3B%20filename%2A%3DUTF-8%27%27E%25CC%2581Duquer%2520au%2520nume%25CC%2581rique.png&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 2,
+      "CreatedAt": "2025-02-25 13:12:40+00:00",
+      "UpdatedAt": "2025-02-28 08:53:06+00:00",
+      "Espaces": {
+        "Id": 2,
+        "Title": "Espace 2"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 2,
+          "Jours_id": 3
+        },
+        {
+          "Stands - Vue table_id": 2,
+          "Jours_id": 1
+        }
+      ],
+      "Thématique liée": {
+        "Id": 2,
+        "Title": "Thématique 2"
+      },
+      "Jours": 2
+    },
+    {
+      "ID": 3,
+      "Prénom": "Catherine",
+      "Nom": "Sztencel",
+      "Email": "direction@odysseeasbl.be",
+      "GSM": "0476/26 19 98",
+      "Site internet": "www.odysseeasbl.be",
+      "Choisissez un titre court": "Lutter contre le décrochage scolaire et redevenir acteurs de notre avenir",
+      "À qui s'adresse le stand ?": "Professeurs, parents et enfants",
+      "Niveau d'enseignement": "Secondaire",
+      "Type d'enseignement": "Enseignement ordinaire",
+      "Décrivez brièvement votre stand pour les visiteurs": "Sur notre stand, les professeurs, parents, ados et professionnels de l'éducation pourront consulter nos ouvrages, nos syllabus et partir avec des flyers expliquant nos activités. Nos intervenants seront présents pour leur parler de nos accompagnements mais aussi leur faire vivre quelques petites expériences en lien avec l'estime de soi, la confiance en soi, la confiance en l'autre, la motivation, etc. qu'il est nécessaire d'acquérir pour une scolarité plus harmonieuse. ",
+      "Envoyez votre logo": [
+        {
+          "id": "at9ugu48bxk3uyh9",
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Odyssee_logo_v_orange_a_EMy.png",
+          "title": "Odyssee_logo_v_orange.png",
+          "mimetype": "image/png",
+          "size": 77056,
+          "width": 2531,
+          "height": 1780,
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Odyssee_logo_v_orange_a_EMy.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=dbfa19b659c561d7da1b612ee0d0276d82fa46f7655715fcbe11b6fd354049ef&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Odyssee_logo_v_orange.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Odyssee_logo_v_orange_a_EMy.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=94342d77c73b7336acfdbeba2c7fa0a98ea976d17f017d51c2362072965315db&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Odyssee_logo_v_orange.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Odyssee_logo_v_orange_a_EMy.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=649c9ef008b227323854cc483eb7d1549b32ee7d5c25521bc4127f7d3aa35a70&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Odyssee_logo_v_orange.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Odyssee_logo_v_orange_a_EMy.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=fedf4230efe8545b0715fede92ba77158f10d1780fde95ee6d92b0e7b0c5fbca&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Odyssee_logo_v_orange.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 2,
+      "CreatedAt": "2025-02-25 13:12:40+00:00",
+      "UpdatedAt": "2025-02-28 00:33:02+00:00",
+      "Espaces": {
+        "Id": 2,
+        "Title": "Espace 2"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 3,
+          "Jours_id": 2
+        }
+      ],
+      "Thématique liée": null,
+      "Jours": 1
+    },
+    {
+      "ID": 4,
+      "Prénom": "Véronique",
+      "Nom": "Van den Abeele",
+      "Email": "direction@tradanim.be",
+      "GSM": "+32475941641",
+      "Site internet": "www.tradanim.be",
+      "Choisissez un titre court": "Facilitez-vous les langues en classe !",
+      "À qui s'adresse le stand ?": "Professionnels",
+      "Niveau d'enseignement": "Maternelle et primaire",
+      "Type d'enseignement": "Enseignement ordinaire",
+      "Décrivez brièvement votre stand pour les visiteurs": "Éveil aux langues en maternelles et P1-P2 ? Apprentissage de la seconde langue en P3-P4 ? Venez découvrir nos outils joyeux, concrets et efficaces pour intégrer les langues en classe sans stress !\n\n🎯 Objectif : Vous faire gagner du temps et de l’énergie, tout en rendant cet apprentissage plus fluide, ludique et agréable pour vous et vos élèves.\n\n📍 Rendez-vous sur notre stand pour tester nos solutions et échanger avec nous !",
+      "Envoyez votre logo": [
+        {
+          "id": "at8dxbz0faj62h62",
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo_Tradanim-sans fond 2_k-i14.png",
+          "title": "Logo_Tradanim-sans fond 2.png",
+          "mimetype": "image/png",
+          "size": 48155,
+          "width": 920,
+          "height": 120,
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo_Tradanim-sans%20fond%202_k-i14.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=5b39e2a2fa0972df58d38654b15cde35444f032998ede4b2f637d10cf9d43132&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo_Tradanim-sans%20fond%202.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo_Tradanim-sans%20fond%202_k-i14.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=505806c78452ec622e06a324fc8bbc792882c53695fbcc16bd8ddca4f4e06ddd&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo_Tradanim-sans%20fond%202.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo_Tradanim-sans%20fond%202_k-i14.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=20de182da51d3d031465e0af2c9f7e61bfa39591df5a5e4608fc6c54dfd2d8bc&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo_Tradanim-sans%20fond%202.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/21/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo_Tradanim-sans%20fond%202_k-i14.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=1a2a0a497498e212dc260984100ce68d5331874b788d72ad1a96bc212223967f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo_Tradanim-sans%20fond%202.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 3,
+      "CreatedAt": "2025-02-25 13:12:40+00:00",
+      "UpdatedAt": "2025-02-28 00:33:06+00:00",
+      "Espaces": {
+        "Id": 3,
+        "Title": "Espace 3"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 4,
+          "Jours_id": 1
+        }
+      ],
+      "Thématique liée": null,
+      "Jours": 1
+    },
+    {
+      "ID": 5,
+      "Prénom": "Astrid",
+      "Nom": "BUISSET",
+      "Email": "astrid@etoilium.com",
+      "GSM": "+33663691082",
+      "Site internet": "www.etoilium.com",
+      "Choisissez un titre court": "Etoilium, le jeu éducatif pour travailler la concentration, la motivation et l'autonomie ! ",
+      "À qui s'adresse le stand ?": "Professeurs, parents et enfants",
+      "Niveau d'enseignement": "Maternelle et primaire",
+      "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+      "Décrivez brièvement votre stand pour les visiteurs": "L’Etoilium est jeu éducatif pour les enfants de la Petite Section au CM2, complètement magique : il est sans pile, sans onde et sans écran !\n\nCombiné avec des fiches d'exercices (vendus séparément), L'Etoilium permet aux enfants de travailler en autonomie dans toutes les matières scolaires, motivés par la récompense. Dès que les 10 réponses d’une fiche sont correctes, le réservoir d’étoiles s’ouvre et l'enfant peut récupérer une pièce d'or, c'est à dire une gommette à gratter .  Idéal pour rallumer des étoiles dans les yeux des enfants qui travaillent !",
+      "Envoyez votre logo": [
+        {
+          "id": "atlwpenixhur64k3",
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo Etoilium by astres et cie_RCPwn.jpg",
+          "title": "logo Etoilium by astres et cie.jpg",
+          "mimetype": "image/jpeg",
+          "size": 1518712,
+          "width": 6250,
+          "height": 4419,
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_RCPwn.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=9852c2d81833f730e6bfe0ea7029047889705c2c9a0c74556b881b29143551d7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_RCPwn.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=cb6c426cbf60fb81ba422f4bea6e7ae158f963c0b303e8d7fae2a0a91203b53f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_RCPwn.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=b695fbe30529233bceb0c184dbeeff51e5991d1a0695152d3278824bc3e9a500&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_RCPwn.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=99fae6d765ceb26c7e057033e6d70f61adf4c2cc5c37a086c32b1020b9319838&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 1,
+      "CreatedAt": "2025-02-25 13:12:40+00:00",
+      "UpdatedAt": "2025-02-28 00:31:31+00:00",
+      "Espaces": {
+        "Id": 1,
+        "Title": "Cafétéria"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 5,
+          "Jours_id": 2
+        }
+      ],
+      "Thématique liée": null,
+      "Jours": 1
+    },
+    {
+      "ID": 6,
+      "Prénom": "Sophie",
+      "Nom": "Courault",
+      "Email": "sophie.courault@esf-scienceshumaines.fr",
+      "GSM": "+33630496348",
+      "Site internet": "www.esf-scienceshumaines.fr",
+      "Choisissez un titre court": "Editions ESF sciences humaines ",
+      "À qui s'adresse le stand ?": "Professeurs",
+      "Niveau d'enseignement": "Maternelle-primaire et secondaire",
+      "Type d'enseignement": "Enseignement ordinaire",
+      "Décrivez brièvement votre stand pour les visiteurs": "ESF sciences humaines propose aux acteurs de l’éducation - enseignants, formateurs, animateurs, éducateurs et parents - des ouvrages de référence associant la réflexion et l’instrumentation pratique en pédagogie. ",
+      "Envoyez votre logo": [
+        {
+          "id": "atcfjidrkld6p8mu",
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_esf-SH_RVB-détouré_CJCca.png",
+          "title": "logo_esf-SH_RVB-détouré.png",
+          "mimetype": "image/png",
+          "size": 126206,
+          "width": 444,
+          "height": 562,
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_esf-SH_RVB-d%C3%A9tour%C3%A9_CJCca.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=5c8735bea4b398bdba3cb2e25e2c1d0b240010bff7837539bf5d6c8f83f643a4&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_esf-SH_RVB-d%C3%A9tour%C3%A9.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_esf-SH_RVB-d%C3%A9tour%C3%A9_CJCca.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=cedce42f01fb40ac6a8663ec5c0fa9663fab7b9a576a26dc6cf1410997175085&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_esf-SH_RVB-d%C3%A9tour%C3%A9.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_esf-SH_RVB-d%C3%A9tour%C3%A9_CJCca.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=035735c35bc1d41c1340310957ac885b9e9461a92a8ccdf23d8d5707e205faa1&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_esf-SH_RVB-d%C3%A9tour%C3%A9.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_esf-SH_RVB-d%C3%A9tour%C3%A9_CJCca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=47ecb7a6e0638806a3d3dc1fdff3e0d176b59b1f63351c020ba9d464670c012f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_esf-SH_RVB-d%C3%A9tour%C3%A9.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 3,
+      "CreatedAt": "2025-02-25 13:12:40+00:00",
+      "UpdatedAt": "2025-02-28 00:31:40+00:00",
+      "Espaces": {
+        "Id": 3,
+        "Title": "Espace 3"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 6,
+          "Jours_id": 1
+        }
+      ],
+      "Thématique liée": null,
+      "Jours": 1
+    },
+    {
+      "ID": 34,
+      "Prénom": "Benjamin ",
+      "Nom": "Stevens",
+      "Email": "benjamin.stevens@apili.fr",
+      "GSM": "+33.630.51.72.96",
+      "Site internet": "www.apili.fr",
+      "Choisissez un titre court": "Apili, apprendre grâce à l'humour !",
+      "À qui s'adresse le stand ?": "Professeurs, parents et enfants",
+      "Niveau d'enseignement": "Maternelle et primaire",
+      "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+      "Décrivez brièvement votre stand pour les visiteurs": "Apili propose des ouvrages et jeux pédagogiques fondés sur l'humour.\nIls sont particulièrement efficaces avec les enfants, même les plus en difficulté ! \n\n\n   \n",
+      "Envoyez votre logo": [
+        {
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Visus Produits_KOEpX.jpg",
+          "title": "Visus Produits.jpg",
+          "mimetype": "image/jpeg",
+          "size": 2461368,
+          "width": 2480,
+          "height": 1789,
+          "id": "atpuob0t7p0cplcu",
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Visus%20Produits_KOEpX.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=9fea13b7d28bbd66d91bd8dd818ff1428c0c33254bd6212f83239e0d300de1ec&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Visus%20Produits.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Visus%20Produits_KOEpX.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=c37fcb7b40bd9fcc80988c94e41eebad612503447c2531d9b205795a9c0feaeb&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Visus%20Produits.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Visus%20Produits_KOEpX.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=c62c28ffa05f5e8dc6157ac4f52ccda58a231fee4e395eb7ce0ee6e3e8635487&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Visus%20Produits.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Visus%20Produits_KOEpX.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=7d0ccef964b549a3c7318978952f1e85e482a7602484c9e386c0791d7d0b8ebf&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Visus%20Produits.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        },
+        {
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Apili_Souris_ZXPp1.png",
+          "title": "Apili_Souris.png",
+          "mimetype": "image/png",
+          "size": 82913,
+          "width": 2480,
+          "height": 748,
+          "id": "atv67e1wogzeb0qw",
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Apili_Souris_ZXPp1.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=ef8178e99036220eff1c8568e58ac27a6ca8822505d2fa50ec175d37df8f7f5f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apili_Souris.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Apili_Souris_ZXPp1.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=4ad4d837f8a4302944315f8d55559ef89440b1dad69520c45ffc4a9475fb6d4c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apili_Souris.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Apili_Souris_ZXPp1.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=2dfb74849ff71ce8c7a95ee62c29a08dbaf3a5d64d86d87d66acb7dc51a45992&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apili_Souris.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/26/60e65c63f9091a580cbaec91b037645612f9eb7e/Apili_Souris_ZXPp1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=7643465e9b12f0722a4f335190fba783f5ec0337356a832d206dbc5fb6fba196&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apili_Souris.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 2,
+      "CreatedAt": "2025-02-26 14:15:09+00:00",
+      "UpdatedAt": "2025-02-28 00:31:44+00:00",
+      "Espaces": {
+        "Id": 2,
+        "Title": "Espace 2"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 34,
+          "Jours_id": 1
+        }
+      ],
+      "Thématique liée": null,
+      "Jours": 1
+    },
+    {
+      "ID": 67,
+      "Prénom": "Guillaume ",
+      "Nom": "Bousquet",
+      "Email": "pedagovie@gmail.com",
+      "GSM": "+33609613896",
+      "Site internet": "https://pedagovie.fr",
+      "Choisissez un titre court": "Apprendre à mobiliser le corps et le cerveau pour des apprentissages durables",
+      "À qui s'adresse le stand ?": "Professeurs, parents et enfants",
+      "Niveau d'enseignement": "Maternelle-primaire et secondaire",
+      "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+      "Décrivez brièvement votre stand pour les visiteurs": "Bouge ton corps et booste ton cerveau pour des apprentissages durables et structurants ! Découvrez les outils dynamiques et ludiques proposés par Pédago'Vie. Les méthodes MULTI'MOUV®, ORTHO'GAFFES et RéEDUK'action sont autant de solutions créées par Guillaume Bousquet pour redonner Vie aux apprentissages scolaires et rendre les apprentissages conscients. Des fondations cognitives (merci les neurosciences) aux compétences fondamentales (lecture, écriture, langage, orthographe, grammaire), vous trouverez des outils adaptés pour la classe et la séance individuelle.",
+      "Envoyez votre logo": [
+        {
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_pédagovie_YTj7G.png",
+          "title": "logo_pédagovie.png",
+          "mimetype": "image/png",
+          "size": 47673,
+          "width": 1500,
+          "height": 845,
+          "id": "atiysnq40dpchjlu",
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_p%C3%A9dagovie_YTj7G.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=4e065f6776a00d5b5dd3d533c6f615a85ea0ad3c08734124f1e86d05ad3ed025&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_p%C3%A9dagovie.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_p%C3%A9dagovie_YTj7G.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=04d35b7b4bab3fcfdef9b32ce357a38758de2b71905cd2f27ce3091fe72781a8&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_p%C3%A9dagovie.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_p%C3%A9dagovie_YTj7G.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=37d1723bf0d0b97b184b1d1819ad8038352f5e08d594eced0fc8761dc2a08904&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_p%C3%A9dagovie.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_p%C3%A9dagovie_YTj7G.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=0343633e8caf5914a533e6823f686891ba6b38338609ce6138a88ccd2da30c60&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_p%C3%A9dagovie.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 3,
+      "CreatedAt": "2025-02-28 06:58:11+00:00",
+      "UpdatedAt": "2025-03-07 13:15:01+00:00",
+      "Espaces": {
+        "Id": 3,
+        "Title": "Espace 3"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 67,
+          "Jours_id": 3
+        }
+      ],
+      "Thématique liée": null,
+      "Jours": 1
+    },
+    {
+      "ID": 100,
+      "Prénom": "Alain",
+      "Nom": "Thiry",
+      "Email": "alainthiry@interactif.be",
+      "GSM": "0478380335",
+      "Site internet": "www.interactif.be",
+      "Choisissez un titre court": "Les stratégies PNL d'apprentissage",
+      "À qui s'adresse le stand ?": "Professeurs",
+      "Niveau d'enseignement": "Primaire et secondaire",
+      "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+      "Décrivez brièvement votre stand pour les visiteurs": "Les stratégies PNL d'apprentissage décrivent avec précision ce que les jeunes doivent faire dans leur tête pour comprendre, mémoriser, réfléchir et s'exprimer. C'est apprendre à apprendre avant de donner des contenus. Elles donnent au final des méthodes d'étude particulièrement efficaces.",
+      "Envoyez votre logo": [
+        {
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/04/60e65c63f9091a580cbaec91b037645612f9eb7e/10- InterActif-LOGO-(300)Q_fYwG1.jpg",
+          "title": "10- InterActif-LOGO-(300)Q.jpg",
+          "mimetype": "image/jpeg",
+          "size": 432747,
+          "width": 1435,
+          "height": 756,
+          "id": "atjro3ktl2xvrrmy",
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/04/60e65c63f9091a580cbaec91b037645612f9eb7e/10-%20InterActif-LOGO-%28300%29Q_fYwG1.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=cdbcd55c4dfea538c19e0096b14db2de8639ad965c470fc3f8015c6047f72c83&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%2210-%20InterActif-LOGO-%28300%29Q.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/04/60e65c63f9091a580cbaec91b037645612f9eb7e/10-%20InterActif-LOGO-%28300%29Q_fYwG1.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=0c11e0bd651e6a900ac99ec6613539da78d275b51639a89e47f774b7a98bb10e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%2210-%20InterActif-LOGO-%28300%29Q.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/04/60e65c63f9091a580cbaec91b037645612f9eb7e/10-%20InterActif-LOGO-%28300%29Q_fYwG1.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=7b8d3405464e044a45f6b07cc0bec0fa3d3c7e9c594a7552e63d924398fc0433&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%2210-%20InterActif-LOGO-%28300%29Q.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/04/60e65c63f9091a580cbaec91b037645612f9eb7e/10-%20InterActif-LOGO-%28300%29Q_fYwG1.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=550a2fe79a994966c83e6466749cbeebffb5baea1b9b27c5f34b80d7b516119d&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%2210-%20InterActif-LOGO-%28300%29Q.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": 3,
+      "CreatedAt": "2025-03-04 13:37:58+00:00",
+      "UpdatedAt": "2025-03-07 13:15:07+00:00",
+      "Espaces": {
+        "Id": 3,
+        "Title": "Espace 3"
+      },
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 100,
+          "Jours_id": 3
+        }
+      ],
+      "Thématique liée": null,
+      "Jours": 1
+    },
+    {
+      "ID": 133,
+      "Prénom": "ALINE",
+      "Nom": "CARDOT",
+      "Email": "editions@callicephale.fr",
+      "GSM": "0033646410900",
+      "Site internet": "www.callicephale.fr",
+      "Choisissez un titre court": "Callicéphale éditions",
+      "À qui s'adresse le stand ?": "Professeurs, parents et enfants",
+      "Niveau d'enseignement": "Maternelle et primaire",
+      "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+      "Décrivez brièvement votre stand pour les visiteurs": "Entre album et théâtre, les éditions Callicéphale proposent des kamishibaï. Outil de lecture collective, le kamishibaï permet de jouer avec l'attention des spectateurs, d'intégrer les enfants à la lecture. Venez découvrir nos titres spécialement conçus pour ce type de lecture.",
+      "Envoyez votre logo": [
+        {
+          "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/07/60e65c63f9091a580cbaec91b037645612f9eb7e/calli enseigne_omtd-.pdf",
+          "title": "calli enseigne.pdf",
+          "mimetype": "application/pdf",
+          "size": 121338,
+          "icon": "mdi-pdf-box",
+          "id": "at9138jrgdam3puf",
+          "thumbnails": {
+            "tiny": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/07/60e65c63f9091a580cbaec91b037645612f9eb7e/calli%20enseigne_omtd-.pdf/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=f60773bcdce643a391f42ea2e23ce6fb4f768d22cfc3c48a0f860c81467799ff&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22calli%20enseigne.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "small": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/07/60e65c63f9091a580cbaec91b037645612f9eb7e/calli%20enseigne_omtd-.pdf/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=03182932ecdcd30622c700e9911eed1fe0a84e506aa8d7a3d441adcd889ca065&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22calli%20enseigne.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            },
+            "card_cover": {
+              "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/07/60e65c63f9091a580cbaec91b037645612f9eb7e/calli%20enseigne_omtd-.pdf/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=7f28f612c0be169f408ab37da02a05b761b21d09e73deda3883189b999cc683c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22calli%20enseigne.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            }
+          },
+          "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/07/60e65c63f9091a580cbaec91b037645612f9eb7e/calli%20enseigne_omtd-.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250308%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250308T230013Z&X-Amz-Expires=7787&X-Amz-Signature=95f6c8c926db53c23a1d3b45f0f3d4b0d7233548f41cf6b5e27b575a4c06e3dc&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22calli%20enseigne.pdf%22&response-content-type=application%2Fpdf&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        }
+      ],
+      "Statut": "A valider",
+      "Espaces_id": null,
+      "CreatedAt": "2025-03-07 09:23:17+00:00",
+      "UpdatedAt": "2025-03-08 21:45:29+00:00",
+      "Espaces": null,
+      "_nc_m2m_Jours_Stands - Vue ta": [
+        {
+          "Stands - Vue table_id": 133,
+          "Jours_id": 3
+        },
+        {
+          "Stands - Vue table_id": 133,
+          "Jours_id": 2
+        },
+        {
+          "Stands - Vue table_id": 133,
+          "Jours_id": 1
+        }
+      ],
+      "Thématique liée": null,
+      "Jours": 3
+    }
+  ],
+  "pageInfo": {
+    "totalRows": 10,
+    "page": 1,
+    "pageSize": 25,
+    "isFirstPage": true,
+    "isLastPage": true
+  },
+  "stats": {
+    "dbQueryTime": "12.115",
+    "apiHandlingTime": "64.380"
+  }
+}

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Event } from '~/data/festival';
+import type { Event } from '~/types/festival';
 
 interface EventsResponse {
   [key: string]: Event[];

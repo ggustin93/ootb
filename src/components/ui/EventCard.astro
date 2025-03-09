@@ -6,6 +6,12 @@ import { getDefaultImage, getDefaultSpeakerImage } from '~/services/events';
 import type { FestivalDay } from '~/services/events';
 import type { Event as FestivalEvent } from '~/types/festival';
 
+// Interface étendue pour les événements avec des propriétés supplémentaires
+interface ProcessedEvent extends FestivalEvent {
+  imageDownloaded?: boolean;
+  speakerImageDownloaded?: boolean;
+}
+
 interface Props {
   // Prend soit un objet Event complet, soit des propriétés individuelles
   event?: FestivalEvent;
@@ -50,6 +56,11 @@ const {
   teachingType: propTeachingType,
   url: propUrl
 } = Astro.props;
+
+// Vérifier si l'événement a des images téléchargées
+const processedEvent = event as ProcessedEvent | undefined;
+const hasDownloadedImage = processedEvent?.imageDownloaded === true;
+const hasDownloadedSpeakerImage = processedEvent?.speakerImageDownloaded === true;
 
 // Utiliser les propriétés de l'objet Event s'il est fourni, sinon utiliser les props individuelles
 const title = event?.title || propTitle || '';
@@ -104,19 +115,18 @@ const badgeIcons: Record<string, string> = {
 const isProblematicUrl = (url: string): boolean => {
   // Cas 1: Format CSV de NocoDB - nom_fichier.extension(url...)
   if (url.match(/\.(jpg|jpeg|png|webp|gif|svg)\(/i)) {
+    console.log(`⚠️ URL problématique (format CSV): ${url}`);
     return true;
   }
   
-  // Cas 2: URL signée Amazon S3 avec paramètres de signature
-  if (url.includes('X-Amz-Signature=') || 
-      url.includes('X-Amz-Algorithm=') || 
-      url.includes('X-Amz-Credential=')) {
-    return true;
-  }
+  // Note: Les URLs signées Amazon S3 sont en fait valides à télécharger
+  // Nous ne les considérons plus comme problématiques
   
-  // Cas 3: URL de NocoDB spécifique
-  if (url.includes('nocohub-001-prod-app-attachments') || 
-      (url.includes('amazonaws.com') && url.includes('/uploads/'))) {
+  // Cas 3: URL sans extension d'image valide
+  const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(url);
+  if (!hasImageExtension && !url.includes('X-Amz-Signature=')) {
+    // Exception pour les URLs S3 signées qui peuvent ne pas avoir d'extension visible
+    console.log(`⚠️ URL problématique (sans extension): ${url}`);
     return true;
   }
   
@@ -133,23 +143,130 @@ const isValidImage = (img?: ImageMetadata | string): boolean => {
   
   // Pour les images de type string (URLs)
   if (typeof img === 'string') {
+    // Si c'est un chemin vers une image téléchargée dans src/assets
+    if (img.startsWith('~/assets/')) {
+      return true;
+    }
+    
     // Vérifier si l'URL est problématique
     if (isProblematicUrl(img)) {
       return false;
     }
     
-    // Vérifier si l'URL a une extension d'image valide
-    const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(img);
-    if (!hasImageExtension) {
-      return false;
+    // Les URLs S3 signées sont considérées comme valides même sans extension visible
+    if (img.includes('X-Amz-Signature=')) {
+      return true;
     }
     
-    return true;
+    // Pour les autres URLs, vérifier l'extension
+    const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(img);
+    return hasImageExtension;
   }
   
   // Pour les images de type ImageMetadata (importées)
   return true;
 };
+
+// Importer dynamiquement l'image si elle a été téléchargée
+let importedImage: ImageMetadata | null = null;
+let importedSpeakerImage: ImageMetadata | null = null;
+
+if (hasDownloadedImage && typeof originalImage === 'string' && originalImage.startsWith('~/assets/')) {
+  try {
+    // Utiliser un import dynamique pour charger l'image
+    // Note: Cette partie sera exécutée côté serveur lors du build
+    // Correction du chemin d'importation pour éviter les erreurs de chemin
+    const importPath = originalImage.replace('~/', '../../');
+    console.log(`🔍 Tentative d'import de l'image: ${importPath} (type: ${eventType}, titre: ${title}, ID: ${event?.id || 'inconnu'})`);
+    
+    try {
+      // Essayer d'abord avec le chemin original
+      const imageModule = await import(importPath);
+      importedImage = imageModule.default;
+      console.log(`✅ Image importée avec succès: ${originalImage} (type: ${eventType}, ID: ${event?.id || 'inconnu'})`);
+    } catch (initialError) {
+      // Si l'importation échoue, essayer avec un chemin normalisé
+      // (éliminer la redondance dans le nom du fichier, ex: atelier-atelier-XX -> atelier-XX)
+      console.log(`⚠️ Échec de l'import avec le chemin original. Tentative avec chemin normalisé...`);
+      
+      // Extraire les composants du chemin
+      const pathParts = importPath.split('/');
+      const filename = pathParts.pop() || '';
+      const directory = pathParts.join('/');
+      
+      // Normaliser le nom de fichier pour éliminer la redondance
+      // Ex: conference-conference-34.webp -> conference-34.webp
+      const eventTypePrefix = eventType.toLowerCase().replace(/s$/, ''); // Enlever le 's' final (Conférences -> conference)
+      const normalizedFilename = filename.replace(`${eventTypePrefix}-${eventTypePrefix}-`, `${eventTypePrefix}-`);
+      
+      const normalizedPath = `${directory}/${normalizedFilename}`;
+      console.log(`🔍 Tentative avec chemin normalisé: ${normalizedPath}`);
+      
+      try {
+        const normalizedModule = await import(normalizedPath);
+        importedImage = normalizedModule.default;
+        console.log(`✅ Image importée avec succès (chemin normalisé): ${normalizedPath}`);
+      } catch (normalizedError) {
+        // Si les deux échouent, consigner l'erreur
+        console.error(`❌ Échec de l'import avec les deux chemins:`, { 
+          original: importPath, 
+          normalized: normalizedPath 
+        });
+        // Ne pas relancer l'erreur pour éviter de bloquer le rendu
+        console.error(`   Erreur: ${initialError.message}`);
+      }
+    }
+  } catch (error) {
+    console.error(`❌ Erreur lors de l'import de l'image: ${originalImage}`, error);
+    console.error(`   Titre: ${title}, Type: ${eventType}, ID: ${event?.id || 'inconnu'}`);
+    importedImage = null;
+  }
+}
+
+if (hasDownloadedSpeakerImage && typeof speakerImage === 'string' && speakerImage.startsWith('~/assets/')) {
+  try {
+    // Utiliser un import dynamique pour charger l'image du conférencier
+    const importPath = speakerImage.replace('~/', '../../');
+    
+    try {
+      // Essayer d'abord avec le chemin original
+      const imageModule = await import(importPath);
+      importedSpeakerImage = imageModule.default;
+      console.log(`✅ Image de conférencier importée avec succès: ${speakerImage}`);
+    } catch (initialError) {
+      // Si l'importation échoue, essayer avec un chemin normalisé
+      console.log(`⚠️ Échec de l'import de l'image de conférencier avec le chemin original. Tentative avec chemin normalisé...`);
+      
+      // Extraire les composants du chemin
+      const pathParts = importPath.split('/');
+      const filename = pathParts.pop() || '';
+      const directory = pathParts.join('/');
+      
+      // Normaliser le nom de fichier
+      const eventTypePrefix = eventType.toLowerCase().replace(/s$/, '');
+      const normalizedFilename = filename.replace(`${eventTypePrefix}-${eventTypePrefix}-`, `${eventTypePrefix}-`);
+      
+      const normalizedPath = `${directory}/${normalizedFilename}`;
+      console.log(`🔍 Tentative avec chemin normalisé pour l'image de conférencier: ${normalizedPath}`);
+      
+      try {
+        const normalizedModule = await import(normalizedPath);
+        importedSpeakerImage = normalizedModule.default;
+        console.log(`✅ Image de conférencier importée avec succès (chemin normalisé): ${normalizedPath}`);
+      } catch (normalizedError) {
+        console.error(`❌ Échec de l'import de l'image de conférencier avec les deux chemins:`, { 
+          original: importPath, 
+          normalized: normalizedPath 
+        });
+        // Ne pas relancer l'erreur pour éviter de bloquer le rendu
+        console.error(`   Erreur: ${initialError.message}`);
+      }
+    }
+  } catch (error) {
+    console.error(`❌ Erreur lors de l'import de l'image de conférencier: ${speakerImage}`, error);
+    importedSpeakerImage = null;
+  }
+}
 
 /**
  * Obtient l'image à utiliser pour l'événement
@@ -175,6 +292,15 @@ const getImage = () => {
       iconColor: '#16a34a' // Vert
     }
   };
+
+  // Si nous avons une image importée, l'utiliser
+  if (importedImage) {
+    return {
+      type: 'imported',
+      src: importedImage,
+      backgroundColor: eventBackgrounds[eventType]?.color || '#f8f9fa'
+    };
+  }
 
   // Vérifier si l'image originale est problématique ou non valide
   if (!originalImage || isProblematicUrl(originalImage)) {
@@ -203,6 +329,11 @@ const getImage = () => {
  * @returns L'image du conférencier à utiliser
  */
 const getSpeakerImg = () => {
+  // Si nous avons une image de conférencier importée, l'utiliser
+  if (importedSpeakerImage) {
+    return importedSpeakerImage;
+  }
+
   // Image placeholder d'avatar générique pour les conférenciers
   const speakerPlaceholder = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png';
   
@@ -286,16 +417,29 @@ const debugInfo = {
 >
   <div class="md:flex h-full">
     <!-- Image à gauche (sur desktop) ou en haut (sur mobile) -->
-    <div class="md:w-1/3 relative overflow-hidden md:rounded-l-xl" style={`background-color: ${image.backgroundColor}`}>
-      <div class="h-48 md:h-full transition-transform duration-500 group-hover:scale-105">
-        {image.type === 'custom' ? (
+    <div class="md:w-1/3 relative overflow-hidden md:rounded-l-xl p-6" style={`background-color: ${image.backgroundColor}`}>
+      <div class="h-56 md:h-full flex items-center justify-center">
+        {image.type === 'imported' ? (
           <Image
             src={image.src}
             alt={title}
-            class="w-full h-full object-cover"
-            widths={[300, 600, 900]}
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 300px, (max-width: 1024px) 600px, 900px"
-            aspectRatio="4:3"
+            class="max-w-full max-h-full object-contain"
+            widths={[300, 600]}
+            sizes="(max-width: 640px) 300px, 600px"
+            aspectRatio="auto"
+            loading="lazy"
+            decoding="async"
+            format="webp"
+            fetchpriority="low"
+          />
+        ) : image.type === 'custom' ? (
+          <Image
+            src={image.src}
+            alt={title}
+            class="max-w-full max-h-full object-contain"
+            widths={[300, 600]}
+            sizes="(max-width: 640px) 300px, 600px"
+            aspectRatio="auto"
             loading="lazy"
             decoding="async"
             format="webp"
@@ -376,15 +520,16 @@ const debugInfo = {
         <!-- Photo du conférencier (uniquement pour les conférences) -->
         {eventType === 'Conférences' && speaker && (
           <div class="mb-3 hidden md:flex items-center">
-            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-[#e4451e]/20 mr-3 flex-shrink-0">
+            <div class="w-20 h-20 rounded-full overflow-hidden mr-3 flex-shrink-0 bg-white border border-gray-200 p-0">
               <Image
                 src={speakerImg}
                 alt={speaker || "Conférencier"}
                 class="w-full h-full object-cover"
-                width={64}
-                height={64}
+                width={160}
+                height={160}
                 loading="lazy"
                 decoding="async"
+                format="webp"
               />
             </div>
             <div class="text-sm text-gray-600">
@@ -479,15 +624,16 @@ const debugInfo = {
           <!-- Photo du conférencier pour mobile -->
           {eventType === 'Conférences' && speaker && (
             <div class="flex items-center mt-4">
-              <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-[#e4451e]/20 mr-3">
+              <div class="w-16 h-16 rounded-full overflow-hidden mr-3 flex-shrink-0 bg-white border border-gray-200 p-0">
                 <Image
                   src={speakerImg}
                   alt={speaker || "Conférencier"}
                   class="w-full h-full object-cover"
-                  width={48}
-                  height={48}
+                  width={128}
+                  height={128}
                   loading="lazy"
                   decoding="async"
+                  format="webp"
                 />
               </div>
               <div class="text-sm text-gray-600">

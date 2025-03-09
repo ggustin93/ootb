@@ -5,6 +5,269 @@ import { FestivalDay } from '~/services/events';
 import fs from 'fs';
 import path from 'path';
 
+// Configuration du cache
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes en millisecondes
+const FORCE_REFRESH = false; // Mettre à true pour forcer le rafraîchissement du cache
+const AUTO_REFRESH_INTERVAL = 15 * 60 * 1000; // 15 minutes en millisecondes
+const MAX_CACHE_AGE = 60 * 60 * 1000; // 1 heure en millisecondes (durée maximale avant rafraîchissement forcé)
+const LIGHT_CHECK_INTERVAL = 3 * 60 * 1000; // 3 minutes en millisecondes (intervalle pour les vérifications légères)
+
+// Cache pour les différentes requêtes
+const standsCache = { timestamp: 0, data: null as NocoDBResponse | null, count: 0 };
+const ateliersCache = { timestamp: 0, data: null as NocoDBSessionsResponse | null, count: 0 };
+const conferencesCache = { timestamp: 0, data: null as NocoDBSessionsResponse | null, count: 0 };
+const sessionsCache = { timestamp: 0, data: null as NocoDBSessionsResponse | null, count: 0 };
+
+// Variables pour suivre les mises à jour
+let autoRefreshActive = false;
+let lastFullRefresh = 0; // Timestamp du dernier rafraîchissement complet
+let lastLightCheck = 0; // Timestamp de la dernière vérification légère
+let updateDetected = false; // Indique si une mise à jour a été détectée
+
+/**
+ * Vérifie si les données en cache sont encore valides
+ * @param cache Objet de cache à vérifier
+ * @returns true si le cache est valide, false sinon
+ */
+function isCacheValid<T>(cache: { timestamp: number, data: T | null }): boolean {
+  if (FORCE_REFRESH) return false;
+  if (!cache.data) return false;
+  
+  const now = Date.now();
+  const age = now - cache.timestamp;
+  
+  // Si le cache est trop vieux (plus de MAX_CACHE_AGE), on le considère comme invalide
+  if (age > MAX_CACHE_AGE) {
+    console.log(`🕒 Cache trop ancien (${Math.round(age / 1000 / 60)} minutes), rafraîchissement forcé`);
+    return false;
+  }
+  
+  // Sinon, on vérifie si le cache est encore valide selon la durée normale
+  return age < CACHE_DURATION;
+}
+
+/**
+ * Met à jour le cache avec de nouvelles données
+ * @param cache Objet de cache à mettre à jour
+ * @param data Données à stocker en cache
+ * @param name Nom du cache pour les logs
+ */
+function updateCache<T>(cache: { timestamp: number, data: T | null }, data: T, name: string): void {
+  cache.timestamp = Date.now();
+  cache.data = data;
+  console.log(`🔄 Cache mis à jour pour "${name}" à ${new Date().toLocaleTimeString()}`);
+}
+
+/**
+ * Vide tous les caches pour forcer un rafraîchissement des données
+ */
+export function clearAllCaches(): void {
+  standsCache.timestamp = 0;
+  standsCache.data = null;
+  
+  ateliersCache.timestamp = 0;
+  ateliersCache.data = null;
+  
+  conferencesCache.timestamp = 0;
+  conferencesCache.data = null;
+  
+  sessionsCache.timestamp = 0;
+  sessionsCache.data = null;
+  
+  console.log(`🧹 Tous les caches ont été vidés`);
+}
+
+/**
+ * Effectue une vérification légère pour détecter les nouvelles données
+ * Cette fonction ne récupère que le nombre d'éléments pour chaque type de données
+ * et compare avec les valeurs en cache pour détecter les mises à jour
+ */
+export async function checkForUpdates(): Promise<boolean> {
+  const now = Date.now();
+  
+  // Limiter la fréquence des vérifications légères
+  if (now - lastLightCheck < LIGHT_CHECK_INTERVAL) {
+    console.log(`⏱️ Dernière vérification légère il y a ${Math.round((now - lastLightCheck) / 1000)} secondes, attente...`);
+    return updateDetected;
+  }
+  
+  lastLightCheck = now;
+  console.log('🔍 Vérification légère des mises à jour...');
+  
+  try {
+    const api = initNocoDBApi();
+    let hasUpdates = false;
+    
+    // Vérifier les stands
+    if (standsCache.data) {
+      const standsCount = await getItemCount(api, NOCODB_CONFIG.tables.stands);
+      if (standsCount !== standsCache.count) {
+        console.log(`🔄 Mise à jour détectée pour les stands: ${standsCache.count} -> ${standsCount}`);
+        standsCache.count = standsCount;
+        hasUpdates = true;
+      }
+    }
+    
+    // Vérifier les ateliers
+    if (ateliersCache.data) {
+      const ateliersCount = await getItemCount(api, NOCODB_CONFIG.tables.ateliers);
+      if (ateliersCount !== ateliersCache.count) {
+        console.log(`🔄 Mise à jour détectée pour les ateliers: ${ateliersCache.count} -> ${ateliersCount}`);
+        ateliersCache.count = ateliersCount;
+        hasUpdates = true;
+      }
+    }
+    
+    // Vérifier les conférences
+    if (conferencesCache.data) {
+      const conferencesCount = await getItemCount(api, NOCODB_CONFIG.tables.conferences);
+      if (conferencesCount !== conferencesCache.count) {
+        console.log(`🔄 Mise à jour détectée pour les conférences: ${conferencesCache.count} -> ${conferencesCount}`);
+        conferencesCache.count = conferencesCount;
+        hasUpdates = true;
+      }
+    }
+    
+    // Si des mises à jour sont détectées, rafraîchir les données
+    if (hasUpdates) {
+      console.log('🔄 Mises à jour détectées, rafraîchissement des données...');
+      updateDetected = true;
+      
+      // Rafraîchir les données avec un délai pour éviter de surcharger l'API
+      setTimeout(() => {
+        forceRefreshAllData().catch(error => {
+          console.error('❌ Erreur lors du rafraîchissement des données après détection de mises à jour:', error);
+        });
+      }, 1000);
+    } else {
+      console.log('✅ Aucune mise à jour détectée');
+    }
+    
+    return hasUpdates;
+  } catch (error) {
+    console.error('❌ Erreur lors de la vérification des mises à jour:', error);
+    return false;
+  }
+}
+
+/**
+ * Récupère le nombre d'éléments pour une table donnée
+ * @param api Instance de l'API NocoDB
+ * @param table Nom de la table
+ * @returns Nombre d'éléments dans la table
+ */
+async function getItemCount(api: Api<unknown>, table: string): Promise<number> {
+  try {
+    // Utiliser une requête légère qui ne récupère qu'une seule ligne
+    // mais qui renvoie le nombre total d'éléments
+    const response = await api.dbTableRow.list(
+      "noco",
+      NOCODB_CONFIG.projectId,
+      table,
+      {
+        limit: 1,
+        offset: 0
+      }
+    );
+    
+    return response.pageInfo?.totalRows || 0;
+  } catch (error) {
+    console.error(`❌ Erreur lors de la récupération du nombre d'éléments pour ${table}:`, error);
+    return 0;
+  }
+}
+
+/**
+ * Force le rafraîchissement de toutes les données
+ * @returns Promise qui se résout lorsque toutes les données sont rafraîchies
+ */
+export async function forceRefreshAllData(): Promise<void> {
+  const now = Date.now();
+  const timeSinceLastRefresh = now - lastFullRefresh;
+  
+  // Limiter la fréquence des rafraîchissements complets (pas plus d'une fois par minute)
+  if (timeSinceLastRefresh < 60 * 1000) {
+    console.log(`⏱️ Dernier rafraîchissement il y a ${Math.round(timeSinceLastRefresh / 1000)} secondes, attente...`);
+    return;
+  }
+  
+  console.log('🔄 Forçage du rafraîchissement de toutes les données...');
+  lastFullRefresh = now;
+  updateDetected = false; // Réinitialiser le drapeau de détection de mise à jour
+  
+  // Vider tous les caches
+  clearAllCaches();
+  
+  try {
+    // Récupérer toutes les données en parallèle
+    const [stands, ateliers, conferences, sessions] = await Promise.all([
+      fetchStands(),
+      fetchAteliers(),
+      fetchConferences(),
+      fetchSessions()
+    ]);
+    
+    // Mettre à jour les compteurs
+    standsCache.count = stands.list.length;
+    ateliersCache.count = ateliers.list.length;
+    conferencesCache.count = conferences.list.length;
+    sessionsCache.count = sessions.list.length;
+    
+    console.log('✅ Toutes les données ont été rafraîchies avec succès');
+  } catch (error) {
+    console.error('❌ Erreur lors du rafraîchissement des données:', error);
+    throw error;
+  }
+}
+
+/**
+ * Démarre le rafraîchissement automatique des données
+ * @param interval Intervalle de rafraîchissement en millisecondes (par défaut: 15 minutes)
+ */
+export function startAutoRefresh(interval: number = AUTO_REFRESH_INTERVAL): void {
+  if (autoRefreshActive) {
+    console.log('⚠️ Le rafraîchissement automatique est déjà actif');
+    return;
+  }
+  
+  console.log(`🔄 Démarrage du rafraîchissement automatique toutes les ${interval / 60000} minutes`);
+  
+  // Rafraîchir immédiatement les données
+  forceRefreshAllData().catch(error => {
+    console.error('❌ Erreur lors du rafraîchissement initial des données:', error);
+  });
+  
+  // Configurer le rafraîchissement périodique complet
+  setInterval(() => {
+    console.log('⏰ Rafraîchissement automatique des données...');
+    forceRefreshAllData().catch(error => {
+      console.error('❌ Erreur lors du rafraîchissement automatique des données:', error);
+    });
+  }, interval);
+  
+  // Configurer les vérifications légères plus fréquentes
+  setInterval(() => {
+    checkForUpdates().catch(error => {
+      console.error('❌ Erreur lors de la vérification légère des mises à jour:', error);
+    });
+  }, LIGHT_CHECK_INTERVAL);
+  
+  autoRefreshActive = true;
+}
+
+/**
+ * Vérifie si les données sont déjà en cache
+ * @returns true si toutes les données sont en cache, false sinon
+ */
+export function isDataCached(): boolean {
+  return Boolean(
+    standsCache.data && 
+    ateliersCache.data && 
+    conferencesCache.data && 
+    sessionsCache.data
+  );
+}
+
 // Types pour les données NocoDB
 export interface NocoDBStand {
   ID: number;
@@ -196,8 +459,17 @@ function saveRawData(data: unknown, filename: string): void {
   }
 }
 
-// Fonction pour récupérer les stands depuis l'API NocoDB
+/**
+ * Récupère les stands depuis l'API NocoDB
+ * @returns Réponse contenant la liste des stands
+ */
 export async function fetchStands(): Promise<NocoDBResponse> {
+  // Vérifier si les données sont en cache et valides
+  if (isCacheValid(standsCache)) {
+    console.log('📦 Utilisation des données en cache pour les stands');
+    return standsCache.data!;
+  }
+  
   try {
     const api = initNocoDBApi();
     
@@ -217,7 +489,7 @@ export async function fetchStands(): Promise<NocoDBResponse> {
     saveRawData(response, 'stands_response.json');
     
     // Formatage de la réponse pour correspondre à l'interface NocoDBResponse
-    return {
+    const formattedResponse = {
       list: response.list as NocoDBStand[],
       pageInfo: {
         totalRows: response.pageInfo?.totalRows || 0,
@@ -230,26 +502,28 @@ export async function fetchStands(): Promise<NocoDBResponse> {
         dbQueryTime: "0" // Valeur par défaut car stats n'existe pas dans la réponse
       }
     };
+    
+    // Mettre à jour le cache
+    updateCache(standsCache, formattedResponse, 'stands');
+    
+    return formattedResponse;
   } catch (error) {
     console.error('Erreur lors de la récupération des stands:', error);
-    return { 
-      list: [], 
-      pageInfo: { 
-        totalRows: 0, 
-        page: 1, 
-        pageSize: 25, 
-        isFirstPage: true, 
-        isLastPage: true 
-      }, 
-      stats: { 
-        dbQueryTime: "0" 
-      } 
-    };
+    throw error;
   }
 }
 
-// Fonction pour récupérer les ateliers depuis l'API NocoDB
+/**
+ * Récupère les ateliers depuis l'API NocoDB
+ * @returns Réponse contenant la liste des ateliers
+ */
 export async function fetchAteliers(): Promise<NocoDBSessionsResponse> {
+  // Vérifier si les données sont en cache et valides
+  if (isCacheValid(ateliersCache)) {
+    console.log('📦 Utilisation des données en cache pour les ateliers');
+    return ateliersCache.data!;
+  }
+  
   try {
     const api = initNocoDBApi();
     
@@ -268,52 +542,48 @@ export async function fetchAteliers(): Promise<NocoDBSessionsResponse> {
     // Sauvegarder la réponse complète
     saveRawData(response, 'ateliers_response.json');
     
-    // Formatage de la réponse
-    return {
-      list: response.list as NocoDBAtelier[],
+    // Formatage de la réponse pour correspondre à l'interface NocoDBSessionsResponse
+    const formattedResponse = {
+      list: response.list as NocoDBSession[],
       pageInfo: {
         totalRows: response.pageInfo?.totalRows || 0,
         page: response.pageInfo?.page || 1,
-        pageSize: response.pageInfo?.pageSize || 50,
+        pageSize: response.pageInfo?.pageSize || 25,
         isFirstPage: response.pageInfo?.isFirstPage || true,
         isLastPage: response.pageInfo?.isLastPage || true
       },
       stats: { 
-        dbQueryTime: "0"
+        dbQueryTime: "0" // Valeur par défaut car stats n'existe pas dans la réponse
       }
     };
+    
+    // Mettre à jour le cache
+    updateCache(ateliersCache, formattedResponse, 'ateliers');
+    
+    return formattedResponse;
   } catch (error) {
     console.error('Erreur lors de la récupération des ateliers:', error);
-    return { 
-      list: [], 
-      pageInfo: { 
-        totalRows: 0, 
-        page: 1, 
-        pageSize: 50, 
-        isFirstPage: true, 
-        isLastPage: true 
-      }, 
-      stats: { 
-        dbQueryTime: "0" 
-      } 
-    };
+    throw error;
   }
 }
 
-// Fonction pour récupérer les conférences depuis l'API NocoDB
+/**
+ * Récupère les conférences depuis l'API NocoDB
+ * @returns Réponse contenant la liste des conférences
+ */
 export async function fetchConferences(): Promise<NocoDBSessionsResponse> {
+  // Vérifier si les données sont en cache et valides
+  if (isCacheValid(conferencesCache)) {
+    console.log('📦 Utilisation des données en cache pour les conférences');
+    return conferencesCache.data!;
+  }
+  
   try {
-    console.log('🔍 Début de la récupération des conférences');
-    console.log('📋 Configuration NocoDB utilisée:');
-    console.log(`   - URL de base: ${NOCODB_BASE_URL}`);
-    console.log(`   - ID du projet: ${NOCODB_CONFIG.projectId}`);
-    console.log(`   - Table des conférences: ${NOCODB_CONFIG.tables.conferences}`);
-    console.log(`   - Paramètres de requête: ${JSON.stringify(NOCODB_CONFIG.defaultQueryParams.conferences, null, 2)}`);
-
     const api = initNocoDBApi();
-    console.log('✅ API NocoDB initialisée avec succès');
     
-    console.log('🚀 Appel à l\'API pour récupérer les conférences...');
+    console.log('Appel à l\'API NocoDB pour récupérer les conférences...');
+    
+    // Appel à l'API pour récupérer les données
     const response = await api.dbTableRow.list(
       "noco",
       NOCODB_CONFIG.projectId,
@@ -321,76 +591,59 @@ export async function fetchConferences(): Promise<NocoDBSessionsResponse> {
       NOCODB_CONFIG.defaultQueryParams.conferences
     );
     
-    console.log(`📊 Résultat de la récupération:`);
-    console.log(`   - Nombre total de conférences: ${response.list.length}`);
-    console.log(`   - Informations de pagination:`, JSON.stringify(response.pageInfo, null, 2));
-
-    if (response.list.length > 0) {
-      console.log('🔬 Détails de la première conférence:');
-      const firstConference = response.list[0] as unknown as NocoDBConference;
-      Object.entries(firstConference).forEach(([key, value]) => {
-        console.log(`   - ${key}: ${JSON.stringify(value)}`);
-      });
-    } else {
-      console.warn('⚠️ Aucune conférence trouvée dans la réponse');
-    }
+    console.log(`Données récupérées avec succès: ${response.list.length} conférences trouvées`);
     
     // Sauvegarder la réponse complète
     saveRawData(response, 'conferences_response.json');
     
-    // Formatage de la réponse
-    return {
-      list: response.list as NocoDBConference[],
+    // Formatage de la réponse pour correspondre à l'interface NocoDBSessionsResponse
+    const formattedResponse = {
+      list: response.list as NocoDBSession[],
       pageInfo: {
         totalRows: response.pageInfo?.totalRows || 0,
         page: response.pageInfo?.page || 1,
-        pageSize: response.pageInfo?.pageSize || 50,
+        pageSize: response.pageInfo?.pageSize || 25,
         isFirstPage: response.pageInfo?.isFirstPage || true,
         isLastPage: response.pageInfo?.isLastPage || true
       },
       stats: { 
-        dbQueryTime: "0"
+        dbQueryTime: "0" // Valeur par défaut car stats n'existe pas dans la réponse
       }
     };
-  } catch (error) {
-    console.error('❌ Erreur lors de la récupération des conférences:');
-    console.error('   - Type d\'erreur:', error instanceof Error ? error.name : 'Unknown error type');
-    console.error('   - Message:', error instanceof Error ? error.message : error);
     
-    if (error instanceof Error && error.stack) {
-      console.error('   - Trace de la pile:');
-      console.error(error.stack.split('\n').slice(0, 5).join('\n')); // Limiter à 5 premières lignes de la trace
-    }
-
-    return { 
-      list: [], 
-      pageInfo: { 
-        totalRows: 0, 
-        page: 1, 
-        pageSize: 50, 
-        isFirstPage: true, 
-        isLastPage: true 
-      }, 
-      stats: { 
-        dbQueryTime: "0" 
-      } 
-    };
+    // Mettre à jour le cache
+    updateCache(conferencesCache, formattedResponse, 'conferences');
+    
+    return formattedResponse;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des conférences:', error);
+    throw error;
   }
 }
 
-// Fonction pour récupérer toutes les sessions (ateliers et conférences)
+/**
+ * Récupère toutes les sessions (ateliers et conférences) depuis l'API NocoDB
+ * @returns Réponse contenant la liste des sessions
+ */
 export async function fetchSessions(): Promise<NocoDBSessionsResponse> {
+  // Vérifier si les données sont en cache et valides
+  if (isCacheValid(sessionsCache)) {
+    console.log('📦 Utilisation des données en cache pour les sessions');
+    return sessionsCache.data!;
+  }
+  
   try {
-    // Récupérer les ateliers et les conférences en parallèle
-    const [ateliersResponse, conferencesResponse] = await Promise.all([
-      fetchAteliers(),
-      fetchConferences()
-    ]);
+    // Récupérer les ateliers et les conférences
+    const ateliers = await fetchAteliers();
+    const conferences = await fetchConferences();
     
     // Combiner les résultats
-    const combinedList = [...ateliersResponse.list, ...conferencesResponse.list];
+    const combinedList = [...ateliers.list, ...conferences.list];
     
-    return {
+    console.log(`Sessions combinées: ${combinedList.length} sessions au total (${ateliers.list.length} ateliers + ${conferences.list.length} conférences)`);
+    
+    // Formatage de la réponse pour correspondre à l'interface NocoDBSessionsResponse
+    const formattedResponse = {
       list: combinedList,
       pageInfo: {
         totalRows: combinedList.length,
@@ -403,21 +656,14 @@ export async function fetchSessions(): Promise<NocoDBSessionsResponse> {
         dbQueryTime: "0"
       }
     };
+    
+    // Mettre à jour le cache
+    updateCache(sessionsCache, formattedResponse, 'sessions');
+    
+    return formattedResponse;
   } catch (error) {
     console.error('Erreur lors de la récupération des sessions:', error);
-    return { 
-      list: [], 
-      pageInfo: { 
-        totalRows: 0, 
-        page: 1, 
-        pageSize: 50, 
-        isFirstPage: true, 
-        isLastPage: true 
-      }, 
-      stats: { 
-        dbQueryTime: "0" 
-      } 
-    };
+    throw error;
   }
 }
 

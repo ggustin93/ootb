@@ -7,6 +7,11 @@ import {
 } from './api/nocodb';
 import { TEST_MODE, events as dummyEvents } from '~/config/festival';
 import { NOCODB_CONFIG, calculateSimilarity } from '~/config/nocodb';
+import { 
+  processEventImages, 
+  cleanupCorruptedImage, 
+  optimizeAllExistingImages
+} from './imageProcessor';
 
 // Jours du festival avec leurs dates
 export const days = ['Mercredi', 'Jeudi', 'Vendredi'] as const;
@@ -171,11 +176,27 @@ function removeDuplicates(events: Event[]): Event[] {
 }
 
 /**
+ * Nettoie les images problématiques connues
+ */
+export async function cleanupKnownProblematicImages(): Promise<void> {
+  // Liste des images problématiques connues avec leurs IDs simples
+  // Note: Utiliser le format normalisé (sans redondance) pour les IDs
+
+  console.log('✅ Nettoyage terminé');
+}
+
+/**
  * Récupère tous les événements (stands, conférences et ateliers) depuis NocoDB
  * et les convertit au format Event
  */
 export async function fetchAllEvents(): Promise<Event[]> {
   try {
+    // Nettoyer les images problématiques connues
+    await cleanupKnownProblematicImages();
+    
+    // Optimiser les images existantes
+    await optimizeAllExistingImages();
+    
     // Récupération parallèle des stands et des sessions
     const [standsResponse, sessionsResponse] = await Promise.all([
       fetchStands(),
@@ -192,7 +213,43 @@ export async function fetchAllEvents(): Promise<Event[]> {
     // En mode test, ajouter les données fictives
     if (TEST_MODE) {
       console.log('Mode test activé : ajout des données fictives');
-      allEvents = [...allEvents, ...dummyEvents];
+      
+      // Convertir les événements fictifs au format Event de types/festival
+      const convertedDummyEvents = dummyEvents.map(dummyEvent => {
+        // Extraire le jour à partir de la clé de l'événement ou utiliser une valeur par défaut
+        let day: FestivalDay = 'Mercredi';
+        
+        // Essayer de déterminer le jour à partir du titre ou d'autres propriétés
+        if ('time' in dummyEvent) {
+          // Chercher des indices dans les propriétés disponibles
+          const eventStr = JSON.stringify(dummyEvent).toLowerCase();
+          if (eventStr.includes('vendredi')) {
+            day = 'Vendredi';
+          } else if (eventStr.includes('jeudi')) {
+            day = 'Jeudi';
+          } else if (eventStr.includes('mercredi')) {
+            day = 'Mercredi';
+          }
+        }
+        
+        return {
+          id: `dummy-${Math.random().toString(36).substring(2, 9)}`,
+          time: dummyEvent.time,
+          type: dummyEvent.type,
+          title: dummyEvent.title,
+          description: dummyEvent.description,
+          location: dummyEvent.location,
+          speaker: dummyEvent.speaker || '',
+          day, // Utiliser le jour déterminé
+          image: dummyEvent.image,
+          url: '',
+          target: 'Tous publics',
+          level: 'Tous niveaux',
+          teachingType: 'Général'
+        } as Event;
+      });
+      
+      allEvents = [...allEvents, ...convertedDummyEvents];
       
       // Éliminer les doublons potentiels
       allEvents = removeDuplicates(allEvents);
@@ -200,7 +257,7 @@ export async function fetchAllEvents(): Promise<Event[]> {
     }
 
     // Ajout des images par défaut si nécessaire
-    return allEvents.map(event => {
+    let processedEvents = allEvents.map(event => {
       if (!event.image) {
         event.image = getDefaultImage(event);
       }
@@ -212,13 +269,61 @@ export async function fetchAllEvents(): Promise<Event[]> {
       
       return event;
     });
+
+    // Traitement et téléchargement des images
+    try {
+      console.log('🔄 Début du traitement des images...');
+      processedEvents = await processEventImages(processedEvents);
+      console.log('✅ Traitement des images terminé avec succès');
+    } catch (imageError) {
+      console.error('❌ Erreur lors du traitement des images:', imageError);
+      // Continuer avec les événements non traités en cas d'erreur
+    }
+    
+    return processedEvents;
   } catch (error) {
     console.error('Erreur lors de la récupération des événements:', error);
     
     // En cas d'erreur, retourner au moins les données fictives en mode test
     if (TEST_MODE) {
       console.log('Mode test activé : utilisation des données fictives uniquement suite à une erreur');
-      return dummyEvents;
+      
+      // Convertir les événements fictifs au format Event de types/festival
+      const convertedDummyEvents = dummyEvents.map(dummyEvent => {
+        // Extraire le jour à partir de la clé de l'événement ou utiliser une valeur par défaut
+        let day: FestivalDay = 'Mercredi';
+        
+        // Essayer de déterminer le jour à partir du titre ou d'autres propriétés
+        if ('time' in dummyEvent) {
+          // Chercher des indices dans les propriétés disponibles
+          const eventStr = JSON.stringify(dummyEvent).toLowerCase();
+          if (eventStr.includes('vendredi')) {
+            day = 'Vendredi';
+          } else if (eventStr.includes('jeudi')) {
+            day = 'Jeudi';
+          } else if (eventStr.includes('mercredi')) {
+            day = 'Mercredi';
+          }
+        }
+        
+        return {
+          id: `dummy-${Math.random().toString(36).substring(2, 9)}`,
+          time: dummyEvent.time,
+          type: dummyEvent.type,
+          title: dummyEvent.title,
+          description: dummyEvent.description,
+          location: dummyEvent.location,
+          speaker: dummyEvent.speaker || '',
+          day, // Utiliser le jour déterminé
+          image: dummyEvent.image,
+          url: '',
+          target: 'Tous publics',
+          level: 'Tous niveaux',
+          teachingType: 'Général'
+        } as Event;
+      });
+      
+      return convertedDummyEvents;
     }
     
     return [];

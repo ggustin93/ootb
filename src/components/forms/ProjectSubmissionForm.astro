@@ -8,9 +8,14 @@ const { personal, project } = appelProjetData.formulaire;
 // Utilisation des données du JSON pour les types d'enseignement et les sections
 const teachingTypes = project.teachingTypes;
 const sections = project.sections;
+
+// Configuration de l'API NocoDB
+const NOCODB_API_URL = import.meta.env.PUBLIC_NOCODB_API_URL || 'https://votre-instance-nocodb.com';
+const NOCODB_TABLE_ID = import.meta.env.PUBLIC_NOCODB_TABLE_ID || 'votre-table-id';
+const NOCODB_API_KEY = import.meta.env.PUBLIC_NOCODB_API_KEY || '';
 ---
 
-<form class="space-y-8 max-w-4xl mx-auto -mt-12">
+<form id="projectSubmissionForm" class="space-y-8 max-w-4xl mx-auto -mt-12">
   <!-- Informations personnelles -->
   <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/60 hover:shadow-xl transition-all duration-300">
     <div class="flex items-center gap-4 mb-8">
@@ -222,10 +227,14 @@ const sections = project.sections;
         </p>
       </div>
 
+      <!-- Message de statut -->
+      <div id="formStatus" class="hidden p-4 rounded-xl text-center"></div>
+
       <!-- Bouton de soumission -->
       <div class="flex justify-end pt-8">
         <button
           type="submit"
+          id="submitButton"
           class="group inline-flex items-center gap-3 text-lg px-8 py-4 bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 rounded-xl"
         >
           <Icon name="tabler:send" class="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
@@ -235,6 +244,89 @@ const sections = project.sections;
     </div>
   </div>
 </form>
+
+<script define:vars={{ NOCODB_API_URL, NOCODB_TABLE_ID, NOCODB_API_KEY }}>
+  // Fonction pour soumettre le formulaire à NocoDB
+  document.getElementById('projectSubmissionForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitButton = document.getElementById('submitButton');
+    const formStatus = document.getElementById('formStatus');
+    
+    // Désactiver le bouton pendant la soumission
+    submitButton.disabled = true;
+    submitButton.classList.add('opacity-70');
+    
+    // Récupérer les données du formulaire
+    const formData = new FormData(this);
+    const formDataObj = {};
+    
+    // Convertir FormData en objet
+    formData.forEach((value, key) => {
+      formDataObj[key] = value;
+    });
+    
+    try {
+      // URL de l'API NocoDB v2
+      const apiUrl = `${NOCODB_API_URL}/api/v2/tables/${NOCODB_TABLE_ID}/records`;
+      
+      // Envoi des données à NocoDB
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'xc-token': NOCODB_API_KEY // Utilisation du token API pour l'API v2
+        },
+        body: JSON.stringify(formDataObj)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erreur lors de la soumission du formulaire à NocoDB');
+      }
+      
+      // Option: Envoi des données à la fonction Netlify pour générer la fiche MDX
+      // Décommentez ce bloc si vous souhaitez utiliser cette fonctionnalité
+      try {
+        const netlifyResponse = await fetch('/api/submit-project', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formDataObj)
+        });
+        
+        if (!netlifyResponse.ok) {
+          console.warn('Note: La fiche MDX n\'a pas pu être générée automatiquement');
+        }
+      } catch (netlifyError) {
+        console.warn('Erreur lors de la génération de la fiche MDX:', netlifyError);
+        // On ne bloque pas le processus si cette partie échoue
+      }
+      
+      // Afficher un message de succès
+      formStatus.textContent = 'Votre projet a été soumis avec succès !';
+      formStatus.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+      formStatus.classList.add('bg-green-100', 'text-green-700');
+      
+      // Réinitialiser le formulaire
+      this.reset();
+      
+    } catch (error) {
+      // Afficher un message d'erreur
+      formStatus.textContent = `Erreur: ${error.message}`;
+      formStatus.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+      formStatus.classList.add('bg-red-100', 'text-red-700');
+    } finally {
+      // Réactiver le bouton
+      submitButton.disabled = false;
+      submitButton.classList.remove('opacity-70');
+      
+      // Faire défiler jusqu'au message de statut
+      formStatus.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>
 
 <style>
   .form-input,

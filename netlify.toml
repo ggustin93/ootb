@@ -1,7 +1,7 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  functions = "netlify/functions"
+  # functions = "netlify/functions"
 
 [dev]
   command = "npm run dev"
@@ -9,25 +9,25 @@
   targetPort = 4321
   framework = "astro"
 
-[functions]
-  node_bundler = "esbuild"
+# [functions]
+#   node_bundler = "esbuild"
 
 # Variables d'environnement pour le développement local
 # Pour la production, configurez-les dans l'interface Netlify
-[build.environment]
-  GITHUB_OWNER = ""
-  GITHUB_REPO = ""
-  GITHUB_TOKEN = ""
-  GITHUB_BRANCH = "main"
-  TRIGGER_NETLIFY_BUILD = "false"
-  NETLIFY_BUILD_HOOK = ""
+# [build.environment]
+#   GITHUB_OWNER = ""
+#   GITHUB_REPO = ""
+#   GITHUB_TOKEN = ""
+#   GITHUB_BRANCH = "main"
+#   TRIGGER_NETLIFY_BUILD = "false"
+#   NETLIFY_BUILD_HOOK = ""
 
 # Configuration pour la fonction nocodb-to-mdx
-[[redirects]]
-  from = "/api/submit-project"
-  to = "/.netlify/functions/nocodb-to-mdx"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "/api/submit-project"
+#   to = "/.netlify/functions/nocodb-to-mdx"
+#   status = 200
+#   force = true
 
 [[redirects]]
   from = "/admin"

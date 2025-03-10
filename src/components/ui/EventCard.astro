@@ -84,67 +84,79 @@ let importedSpeakerImage: ImageMetadata | null = null;
 // Optimisation : Utiliser getDefaultImage pour obtenir le chemin de l'image
 // Cette fonction utilise déjà notre système de cache
 if (event && typeof originalImage === 'string') {
-  try {
-    // Vérifier si l'image est au format ~/assets/ (ancien format) ou /assets/ (nouveau format)
-    let importPath = originalImage.startsWith('~/assets/') 
-      ? originalImage.replace('~/', '../../')
-      : originalImage.startsWith('/assets/') 
-        ? `../../${originalImage.substring(1)}` 
-        : null;
-    
-    // Convertir les chemins JPG en WebP pour éviter les problèmes avec les images corrompues
-    if (importPath && importPath.endsWith('.jpg')) {
-      importPath = importPath.replace('.jpg', '.webp');
-    }
-    
-    if (importPath) {
-      try {
-        // Essayer d'importer l'image
-        const imageModule = await import(importPath);
-        importedImage = imageModule.default;
-      } catch {
-        // Si l'importation échoue, on utilisera un fond coloré par défaut
-        console.log(`⚠️ Utilisation d'un fond coloré pour remplacer l'image: ${importPath}`);
-        importedImage = null;
-      }
-    }
-  } catch {
-    // En cas d'erreur, on utilisera un fond coloré par défaut
-    console.log(`⚠️ Utilisation d'un fond coloré pour remplacer l'image de l'événement`);
+  // Si l'image est dans le dossier /images/ (généré par build-data.js), ne pas essayer de l'importer
+  if (originalImage.startsWith('/images/')) {
+    // Utiliser directement le chemin sans importation
     importedImage = null;
+  } else {
+    try {
+      // Vérifier si l'image est au format ~/assets/ (ancien format) ou /assets/ (nouveau format)
+      let importPath = originalImage.startsWith('~/assets/') 
+        ? originalImage.replace('~/', '../../')
+        : originalImage.startsWith('/assets/') 
+          ? `../../${originalImage.substring(1)}` 
+          : null;
+      
+      // Convertir les chemins JPG en WebP pour éviter les problèmes avec les images corrompues
+      if (importPath && importPath.endsWith('.jpg')) {
+        importPath = importPath.replace('.jpg', '.webp');
+      }
+      
+      if (importPath) {
+        try {
+          // Essayer d'importer l'image
+          const imageModule = await import(importPath);
+          importedImage = imageModule.default;
+        } catch {
+          // Si l'importation échoue, on utilisera un fond coloré par défaut
+          console.log(`⚠️ Utilisation d'un fond coloré pour remplacer l'image: ${importPath}`);
+          importedImage = null;
+        }
+      }
+    } catch {
+      // En cas d'erreur, on utilisera un fond coloré par défaut
+      console.log(`⚠️ Utilisation d'un fond coloré pour remplacer l'image de l'événement`);
+      importedImage = null;
+    }
   }
 }
 
 // Optimisation : Utiliser getDefaultSpeakerImage pour obtenir le chemin de l'image du conférencier
 if (event && typeof speakerImage === 'string') {
-  try {
-    // Vérifier si l'image est au format ~/assets/ (ancien format) ou /assets/ (nouveau format)
-    let importPath = speakerImage.startsWith('~/assets/') 
-      ? speakerImage.replace('~/', '../../')
-      : speakerImage.startsWith('/assets/') 
-        ? `../../${speakerImage.substring(1)}` 
-        : null;
-    
-    // Convertir les chemins JPG en WebP pour éviter les problèmes avec les images corrompues
-    if (importPath && importPath.endsWith('.jpg')) {
-      importPath = importPath.replace('.jpg', '.webp');
-    }
-    
-    if (importPath) {
-      try {
-        // Essayer d'importer l'image
-        const imageModule = await import(importPath);
-        importedSpeakerImage = imageModule.default;
-      } catch {
-        // Si l'importation échoue, on utilisera une image d'avatar générique
-        console.log(`⚠️ Utilisation d'un avatar générique pour remplacer l'image du conférencier: ${importPath}`);
-        importedSpeakerImage = null;
-      }
-    }
-  } catch {
-    // En cas d'erreur, on utilisera une image d'avatar générique
-    console.log(`⚠️ Utilisation d'un avatar générique pour remplacer l'image du conférencier`);
+  // Si l'image est dans le dossier /images/ (généré par build-data.js), ne pas essayer de l'importer
+  if (speakerImage.startsWith('/images/')) {
+    // Utiliser directement le chemin sans importation
     importedSpeakerImage = null;
+  } else {
+    try {
+      // Vérifier si l'image est au format ~/assets/ (ancien format) ou /assets/ (nouveau format)
+      let importPath = speakerImage.startsWith('~/assets/') 
+        ? speakerImage.replace('~/', '../../')
+        : speakerImage.startsWith('/assets/') 
+          ? `../../${speakerImage.substring(1)}` 
+          : null;
+      
+      // Convertir les chemins JPG en WebP pour éviter les problèmes avec les images corrompues
+      if (importPath && importPath.endsWith('.jpg')) {
+        importPath = importPath.replace('.jpg', '.webp');
+      }
+      
+      if (importPath) {
+        try {
+          // Essayer d'importer l'image
+          const imageModule = await import(importPath);
+          importedSpeakerImage = imageModule.default;
+        } catch {
+          // Si l'importation échoue, on utilisera une image d'avatar générique
+          console.log(`⚠️ Utilisation d'un avatar générique pour remplacer l'image du conférencier: ${importPath}`);
+          importedSpeakerImage = null;
+        }
+      }
+    } catch {
+      // En cas d'erreur, on utilisera une image d'avatar générique
+      console.log(`⚠️ Utilisation d'un avatar générique pour remplacer l'image du conférencier`);
+      importedSpeakerImage = null;
+    }
   }
 }
 
@@ -159,7 +171,47 @@ const isImageValid = (image: unknown): boolean => {
   if (typeof image !== 'string') return false;
   
   // Vérifier les chemins d'images valides
-  return image.startsWith('~/assets/') || image.startsWith('/assets/') || image.startsWith('http');
+  return image.startsWith('~/assets/') || 
+         image.startsWith('/assets/') || 
+         image.startsWith('/images/') ||
+         image.startsWith('http');
+};
+
+/**
+ * Normalise un chemin d'image pour s'assurer qu'il fonctionne correctement en production
+ * @param imagePath Le chemin d'image à normaliser
+ * @returns Le chemin normalisé
+ */
+const normalizeImagePath = (imagePath: string | ImageMetadata): string | ImageMetadata => {
+  // Si c'est déjà un objet ImageMetadata, le retourner tel quel
+  if (typeof imagePath !== 'string') {
+    return imagePath;
+  }
+  
+  // Si c'est une URL absolue (http/https), la retourner telle quelle
+  if (imagePath.startsWith('http')) {
+    return imagePath;
+  }
+  
+  // Pour les chemins /images/ générés par build-data.js
+  if (imagePath.startsWith('/images/')) {
+    // S'assurer que le chemin commence par un slash
+    return imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+  }
+  
+  // Pour les chemins /assets/ ou ~/assets/
+  if (imagePath.startsWith('/assets/') || imagePath.startsWith('~/assets/')) {
+    // Convertir ~/assets/ en /assets/ si nécessaire
+    const normalizedPath = imagePath.startsWith('~/') 
+      ? imagePath.replace('~/', '/') 
+      : imagePath;
+    
+    // S'assurer que le chemin commence par un slash
+    return normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`;
+  }
+  
+  // Pour tout autre chemin, s'assurer qu'il commence par un slash
+  return imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
 };
 
 /**
@@ -210,10 +262,19 @@ const getImage = () => {
     };
   }
 
+  // Si l'image originale est un chemin /images/ (généré par build-data.js)
+  if (typeof originalImage === 'string' && originalImage.startsWith('/images/')) {
+    return {
+      type: 'custom',
+      src: normalizeImagePath(originalImage),
+      backgroundColor: eventBackgrounds[eventType as keyof typeof eventBackgrounds]?.color || '#f8f9fa'
+    };
+  }
+
   // Si l'image originale est valide, l'utiliser
   return {
     type: 'custom',
-    src: originalImage,
+    src: typeof originalImage === 'string' ? normalizeImagePath(originalImage) : originalImage,
     backgroundColor: eventBackgrounds[eventType as keyof typeof eventBackgrounds]?.color || '#f8f9fa' // Fond par défaut pour les images réelles
   };
 };
@@ -233,7 +294,11 @@ const getSpeakerImg = () => {
   
   // Vérifier si l'image du conférencier est valide
   if (speakerImage && isImageValid(speakerImage)) {
-    return speakerImage;
+    // Si c'est un chemin /images/ (généré par build-data.js), l'utiliser directement
+    if (typeof speakerImage === 'string' && speakerImage.startsWith('/images/')) {
+      return normalizeImagePath(speakerImage);
+    }
+    return typeof speakerImage === 'string' ? normalizeImagePath(speakerImage) : speakerImage;
   }
   
   return speakerPlaceholder;
@@ -242,6 +307,14 @@ const getSpeakerImg = () => {
 // Obtenir l'image à utiliser
 const image = getImage();
 const speakerImg = getSpeakerImg();
+
+// Journalisation des chemins d'images pour le débogage en production
+if (import.meta.env.PROD) {
+  console.log(`[EventCard] Type d'image: ${image.type}, Chemin: ${typeof image.src === 'string' ? image.src : 'ImageMetadata'}`);
+  if (typeof speakerImg === 'string') {
+    console.log(`[EventCard] Image du conférencier: ${speakerImg}`);
+  }
+}
 
 // Configuration des types d'événements avec icônes et couleurs
 const eventTypeConfig: Record<string, {
@@ -310,6 +383,20 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
             widths={[200, 400]}
             sizes="(max-width: 640px) 200px, 400px"
             aspectRatio="auto"
+            loading="lazy"
+            decoding="async"
+            format="webp"
+            fetchpriority="low"
+          />
+        ) : image.type === 'custom' && typeof image.src === 'string' && image.src.startsWith('/images/') ? (
+          <Image
+            src={image.src}
+            alt={title}
+            class="max-w-full max-h-full object-contain"
+            width={400}
+            height={400}
+            widths={[200, 400]}
+            sizes="(max-width: 640px) 200px, 400px"
             loading="lazy"
             decoding="async"
             format="webp"
@@ -404,16 +491,29 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
         {eventType === 'Conférences' && speaker && (
           <div class="mb-3 hidden md:flex items-center">
             <div class="w-20 h-20 rounded-full overflow-hidden mr-3 flex-shrink-0 bg-white border border-gray-200 p-0">
-              <Image
-                src={speakerImg}
-                alt={speaker || "Conférencier"}
-                class="w-full h-full object-cover object-[center_25%]"
-                width={160}
-                height={160}
-                loading="lazy"
-                decoding="async"
-                format="webp"
-              />
+              {typeof speakerImg === 'string' && speakerImg.startsWith('/images/') ? (
+                <Image
+                  src={speakerImg}
+                  alt={speaker || "Conférencier"}
+                  class="w-full h-full object-cover object-[center_25%]"
+                  width={160}
+                  height={160}
+                  loading="lazy"
+                  decoding="async"
+                  format="webp"
+                />
+              ) : (
+                <Image
+                  src={speakerImg}
+                  alt={speaker || "Conférencier"}
+                  class="w-full h-full object-cover object-[center_25%]"
+                  width={160}
+                  height={160}
+                  loading="lazy"
+                  decoding="async"
+                  format="webp"
+                />
+              )}
             </div>
             <div class="text-sm text-gray-600">
               <p class="font-medium text-[#e4451e]">{speaker}</p>
@@ -508,16 +608,29 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
           {eventType === 'Conférences' && speaker && (
             <div class="flex items-center mt-4">
               <div class="w-16 h-16 rounded-full overflow-hidden mr-3 flex-shrink-0 bg-white border border-gray-200 p-0">
-                <Image
-                  src={speakerImg}
-                  alt={speaker || "Conférencier"}
-                  class="w-full h-full object-cover object-[center_25%]"
-                  width={128}
-                  height={128}
-                  loading="lazy"
-                  decoding="async"
-                  format="webp"
-                />
+                {typeof speakerImg === 'string' && speakerImg.startsWith('/images/') ? (
+                  <Image
+                    src={speakerImg}
+                    alt={speaker || "Conférencier"}
+                    class="w-full h-full object-cover object-[center_25%]"
+                    width={128}
+                    height={128}
+                    loading="lazy"
+                    decoding="async"
+                    format="webp"
+                  />
+                ) : (
+                  <Image
+                    src={speakerImg}
+                    alt={speaker || "Conférencier"}
+                    class="w-full h-full object-cover object-[center_25%]"
+                    width={128}
+                    height={128}
+                    loading="lazy"
+                    decoding="async"
+                    format="webp"
+                  />
+                )}
               </div>
               <div class="text-sm text-gray-600">
                 <p class="font-medium text-[#e4451e]">{speaker}</p>

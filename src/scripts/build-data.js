@@ -96,8 +96,8 @@ if (!fs.existsSync(RAW_DATA_DIR)) {
 
 // Fonction pour générer le chemin d'image en fonction du mode
 function getImagePath(eventType, fileName) {
-  // IMPORTANT: Sur Netlify, nous utilisons TOUJOURS le chemin /images/
-  // car les fichiers dans public/ sont copiés à la racine du site
+  // Sur Netlify avec Astro, nous devons utiliser un chemin qui sera accessible
+  // après le build. Les fichiers dans public/ sont copiés à la racine du site.
   return `/images/events/${eventType}/${fileName}.webp`;
 }
 
@@ -222,6 +222,9 @@ async function main() {
     // Vérifier les chemins d'images
     console.log('🔍 Vérification des chemins d\'images...');
     await verifyProductionImagePaths(eventsByDay);
+    
+    // Créer un fichier README pour expliquer comment utiliser les images
+    await createImagesReadme();
     
     console.log('✅ Génération des données statiques terminée !');
   } catch (error) {
@@ -1032,6 +1035,81 @@ async function verifyProductionImagePaths(eventsByDay) {
   console.log('   Les chemins d\'images dans le JSON sont définis comme:');
   console.log(`   ${getImagePath('example', 'example').replace('example/example.webp', '')}`);
   console.log('   Assurez-vous que ces chemins sont accessibles sur Netlify.');
+  console.log('\n⚠️ NOTE POUR ASTRO:');
+  console.log('   Si vous utilisez ces images dans des composants Astro, vous avez deux options:');
+  console.log('   1. Utiliser la balise <img> standard avec le chemin exact du JSON:');
+  console.log('      <img src="/images/events/stands/stand-123.webp" alt="..." />');
+  console.log('   2. Utiliser le composant Image d\'Astro avec une URL absolue:');
+  console.log('      <Image src="/images/events/stands/stand-123.webp" width="400" height="400" alt="..." />');
+  console.log('   Évitez d\'importer ces images avec import car Astro les traiterait différemment.');
+}
+
+// Créer un fichier README pour expliquer comment utiliser les images
+async function createImagesReadme() {
+  const readmePath = path.join(IMAGES_PUBLIC_DIR, 'README.md');
+  
+  const readmeContent = `# Images des événements
+
+Ce dossier contient les images optimisées pour les événements du festival.
+
+## Structure
+
+Les images sont organisées par type d'événement :
+- \`/stands\` : Images des stands
+- \`/ateliers\` : Images des ateliers
+- \`/conferences\` : Images des conférences
+
+## Utilisation dans Astro
+
+### Option 1 : Balise HTML standard (recommandé)
+
+\`\`\`astro
+---
+// Importer les données JSON
+import events from '../content/festival/events.json';
+---
+
+{events.Mercredi.map(event => (
+  <div>
+    <h2>{event.title}</h2>
+    {event.image && <img src={event.image} alt={event.title} />}
+  </div>
+))}
+\`\`\`
+
+### Option 2 : Composant Image d'Astro avec URL
+
+\`\`\`astro
+---
+// Importer les données JSON et le composant Image
+import { Image } from 'astro:assets';
+import events from '../content/festival/events.json';
+---
+
+{events.Mercredi.map(event => (
+  <div>
+    <h2>{event.title}</h2>
+    {event.image && (
+      <Image 
+        src={event.image} 
+        width={400} 
+        height={400} 
+        alt={event.title} 
+      />
+    )}
+  </div>
+))}
+\`\`\`
+
+### ⚠️ Important
+
+- N'essayez PAS d'importer ces images avec \`import\` car Astro les traiterait différemment
+- Les chemins dans le JSON sont déjà optimisés pour fonctionner en production sur Netlify
+- Utilisez toujours les chemins exacts fournis dans le JSON
+`;
+
+  await fs.promises.writeFile(readmePath, readmeContent, 'utf8');
+  console.log(`📝 Fichier README créé : ${readmePath}`);
 }
 
 // Exécuter la fonction principale

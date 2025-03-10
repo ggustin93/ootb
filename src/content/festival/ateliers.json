@@ -1,0 +1,392 @@
+[
+  {
+    "id": "atelier-2",
+    "title": "Les algorithmes dès la maternelle",
+    "description": "Cet atelier vise à explorer la manière dont les concepts d’algorithmes peuvent être introduits et enseignés dès le plus jeune âge notamment à travers des activités débranchées et l’utilisation de la robotique pédagogique. Les participants découvriront et expérimenteront des activités ludiques et adaptées pour développer les compétences numériques des enfants dès la maternelle, en mettant l’accent sur la logique, la pensée informatique et la résolution de problèmes.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "14:00",
+    "location": "À définir",
+    "speaker": "Sonia Trichili",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-2.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.codenplay.be",
+    "contact": {
+      "email": "sonia@codenplay.be",
+      "phone": "0474935440"
+    }
+  },
+  {
+    "id": "atelier-4",
+    "title": "Introduction de techniques psychocorporelles en classe : quels sont les bénéfices pour l'enseignant et pour les élèves ?",
+    "description": "Présentation et explications des bénéfices de quelques techniques psychocorporelles adaptées aux différents âges et milieux scolaires + Application et mise en pratique de quelques unes de ces pratiques au quotidien.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Roxane Geerinckx",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-4.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.ammassado.com   -   https://abme.be",
+    "contact": {
+      "email": "roxane.geerinckx@gmail.com",
+      "phone": "0472 04 08 15"
+    }
+  },
+  {
+    "id": "atelier-6",
+    "title": "Vous reprendrez bien un peu d'estime de soi?",
+    "description": "Estime de soi, confiance en soi, affirmation de soi.\nKésaco??\nVenez le découvrir lors d'un atelier ludo-pédagogique!\nLeurs différences, leurs similitudes et comment développer chacune d'elles afin de se sentir à sa place partout où on se trouve.\n",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Christelle Rasez Doublon",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-6.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.coeurdonniere.com",
+    "contact": {
+      "email": "christellerasez@coeurdonniere.com",
+      "phone": "0472/403.756"
+    }
+  },
+  {
+    "id": "atelier-7",
+    "title": "Renforcer la concentration et l'autonomie sans écran en stimulant la motivation avec Etoilium !",
+    "description": "Etoilium, lancé par Astrid BUISSET et Amicie de Colonges, vise à renforcer la concentration et réduire l’addiction aux écrans des enfants.\nConçu pour les 5-11 ans, Etoilium stimule la motivation et l'autonomie dans l’apprentissage.\nDifférenciation pédagogique, ateliers, classe mobile ... de nombreuses possibilités sont possibles avec cet outil.\nVenez découvrir et tester son fonctionnement ainsi que la e-bibilotheque qui permet un usage 100% sur mesure pour les élèves belges. \nUn temps de questions/réponses est prévu à la fin de l'atelier avec les co-fondatrices.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Astrid Buisset",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-7.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.etoilium.com",
+    "contact": {
+      "email": "astrid@etoilium.com",
+      "phone": "+33663691082"
+    }
+  },
+  {
+    "id": "atelier-34",
+    "title": "L’ipad au service des élèves à besoins pédagogiques particuliers ",
+    "description": "L’atelier se déroulera sous forme de questions-réponses afin de répondre à vos craintes dans l’arrivée de l’outil iPad dans la scolarité de votre élève. \nAfin de répondre à vos questions, nous aurons des iPad à disposition pour vous faire une petite démo de certaines fonctionnalités. ",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Sophie Leclère",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-34.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.asblcoeuracorps.net ",
+    "contact": {
+      "email": "asblcoeuracorps@gmail.com",
+      "phone": "0497156430"
+    }
+  },
+  {
+    "id": "atelier-67",
+    "title": "Utilisation des jeux Cat's Family en français et mathématiques",
+    "description": "Présentation des principaux jeux de la gamme pour l'apprentissage du français(conjugaison, grammaire, orthographe, consignes, lecture, vocabulaire) et des mathématiques (calcul, dénombrement, fractions, problèmes, conversions, heure), de la moyenne section au secondaire.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "François Petit",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-67.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "http://www.catsfamily.net",
+    "contact": {
+      "email": "contact@catsfamily.net",
+      "phone": "0033781171311"
+    }
+  },
+  {
+    "id": "atelier-101",
+    "title": "Kit Simeo - La ludopédagogie pour apprendre aux jeunes à s'orienter (11-14 ans)",
+    "description": "Vous souhaitez explorer des outils pédagogiques interactifs pour préparer les jeunes de 11 à 14 ans à faire des choix d’orientation scolaire ? Découvrez le Kit Siméo. Cette mallette pédagogique comprend une bande dessinée, le jeu Métiers Secrets, deux carnets pédagogiques et un carnet personnel. L’atelier vous offrira l’opportunité de prendre en main le matériel tout en vous présentant ses objectifs pédagogiques et ses applications concrètes.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Fabienne Effinier",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-101.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professionnels",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://portail.siep.be/publication  (éducation à l'orientation)",
+    "contact": {
+      "email": "fabeffinier@gmail.com",
+      "phone": "0472793081"
+    }
+  },
+  {
+    "id": "atelier-133",
+    "title": "La bricolothérapie à la rescousse des apprentissages",
+    "description": "Découvrez' un concept ludique et novateur pour aider les enfants à mieux rentrer dans les apprentissages",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "sophie LAPLAZE",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-133.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.bricolotherapie.com",
+    "contact": {
+      "email": "laplaze.sophie@wanadoo.fr",
+      "phone": "0677189840"
+    }
+  },
+  {
+    "id": "atelier-134",
+    "title": "Découvrir en pratique l'outil gratuit \"Lecteur immersif\" de Microsoft pour favoriser l'apprentissage de la lecture et l'accessibilité dans les supports écrits d'apprentissage.",
+    "description": "Découvrez le Lecteur Immersif de Microsoft, un outil révolutionnaire conçu pour rendre la lecture et l’écriture accessibles à tous. Dans cet atelier, explorez comment il peut transformer l’apprentissage en aidant à surmonter les défis liés à la dyslexie, à la compréhension ou à la concentration. Vous repartirez avec des astuces pratiques pour intégrer cet outil dans vos pratiques pédagogiques et offrir à vos élèves une expérience inclusive et engageante.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Sébastien Place",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-134.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "splace@microsoft.com",
+      "phone": "0479823712"
+    }
+  },
+  {
+    "id": "atelier-135",
+    "title": "Découvrir en pratique les outils gratuits \"Accélérateurs d'apprentissage\" de Microsoft : Expression orale et Mathématiques",
+    "description": "Découvrez les **Accélérateurs d'apprentissage de Microsoft**, des outils conçus pour transformer l’éducation. Dans cet atelier, explorez **Progrès en Mathématiques** pour personnaliser l’apprentissage de l'algèbre et **Progrès en élocution** pour développer les compétences orales des élèves. Repartez avec des stratégies concrètes pour engager vos apprenants, suivre leurs progrès et favoriser leur réussite grâce à des solutions inclusives et innovantes.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Sébastien Place",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-135.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "splace@microsoft.com",
+      "phone": "0479823712"
+    }
+  },
+  {
+    "id": "atelier-136",
+    "title": "Ecole du dehors - Chouette, on sort !",
+    "description": "Cindy Franchimont, autrice principale de la mallette pédagogique \"École du dehors - Chouette, on sort !\" animera cet atelier pour vous faure découvrir les pratiques qu'elle a mises en place pendant plusieurs années avec ses élèves. Elle partagera son expérience de terrain et vous livrera quelques conseils et astuces pour mettre en place  des activités régulières avec votre classe pour découvrir le vivant, apprendre autrement, différencier, créer des liens... Vous repartirez convaincu.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Cindy Franchimont",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-136.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.bayardmilan.be",
+    "contact": {
+      "email": "g.bragard@bayard.be",
+      "phone": "0473/420762"
+    }
+  },
+  {
+    "id": "atelier-137",
+    "title": "Apprendre les fractions en s'amusant",
+    "description": "Deux activités distinctes. Un restaurant des Pizzas et l'usine des fractions. Il faut une bonne heure par activités,  ou les deux activités le même jour, une durée d 1h30 - 1h45 L'idée de mettre les participants dans la peau des élèves et de vivre concrètement l'approche de la fraction à travers ces deux activités données en 3ème P et 4ème P",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "DOMINIQUE PAQUOT",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-137.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "dominiquepaq@gmail.com",
+      "phone": "0474416871"
+    }
+  },
+  {
+    "id": "atelier-138",
+    "title": "Projet inter classe, de la P2 à la P5 : le concours de marrons ",
+    "description": "A partir d'un concours de marrons, comment travailler la numération en P2, l'addition écrire en P3, l'aire en P4 et le volume en P5. Comment créer un projet d'école où chaque élève est mobilisé ? Ce projet d'école permet à partir du concret de comprendre des notions mathématiques compliquées. De plus, toutes les classes sont mobilisées durant 15 jours. ",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "DOMINIQUE PAQUOT",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-138.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "dominiquepaq@gmail.com",
+      "phone": "0474416871"
+    }
+  },
+  {
+    "id": "atelier-1",
+    "title": "Babaoo : Atelier découverte d'un outil digital pour développer ses fonctions exécutives",
+    "description": "Plus que jamais, les enfants ont besoin de comprendre le fonctionnement de leur cerveau, pour l'utiliser correctement !\nVenez découvrir Babaoo, l'outil digital qui apprend aux enfants à développer leur fonctions exécutives !\nDe manière ludique, et avec des missions à réaliser avec les copains dans la vraie vie, les enfants développent de nouveaux réflexes cognitifs, pour appliquer de nouvelles stratégies !",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "11:00",
+    "location": "À définir",
+    "speaker": "Alexandra VOLCKAERT",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-1.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professionnels",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.babaoo.com",
+    "contact": {
+      "email": "alexandra@babaoo.com",
+      "phone": "0478 700 701"
+    }
+  },
+  {
+    "id": "atelier-3",
+    "title": "Créer des exercices numériques avec BookWidgets",
+    "description": "Envie de rendre vos leçons plus interactives ? Vous cherchez un moyen simple de captiver vos élèves ?\n\nDécouvrez BookWidgets, un outil puissant qui transforme vos cours en expériences ludiques et engageantes ! Lors de notre animation, explorez en direct comment créer facilement des quiz dynamiques, exercices interactifs, petits jeux numériques et bien plus encore.\n\nVenez tester par vous-même et repartez avec des idées concrètes pour enrichir votre enseignement !",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Dimitri Bongers",
+    "organization": "",
+    "image": "/assets/images/events/ateliers/atelier-3.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.bookwidgets.com/fr",
+    "contact": {
+      "email": "dimitri@bookwidgets.com",
+      "phone": "0470043443"
+    }
+  }
+]

@@ -113,7 +113,11 @@ export default defineConfig({
      'cdn.pixabay.com', 
      'image.ausha.co',  
      'images.unsplash.com',
-     'res.cloudinary.com'
+     'res.cloudinary.com',
+     // Domaines S3 de NocoDB
+     'nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com',
+     's3.us-east-2.amazonaws.com',
+     's3.amazonaws.com'
    ],
    service: {
      entrypoint: 'astro/assets/services/sharp',

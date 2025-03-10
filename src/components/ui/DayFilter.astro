@@ -1,44 +1,88 @@
 ---
-import { days, dayDates, eventTypes } from '~/data/festival';
-import type { Event } from '~/types/festival';
+import { days, dayDates, eventTypes } from '~/services/events';
+import type { EventsByDay } from '~/types/festival';
 import { Icon } from 'astro-icon/components';
-import Button from '~/components/ui/Button.astro';
-import Image from '~/components/common/Image.astro';
+import EventCard from '~/components/ui/EventCard.astro';
 
 interface Props {
-  events: Record<string, Event[]>;
+  events: EventsByDay;
 }
 
 const { events } = Astro.props;
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 10;
 
 // Créer un tableau plat de tous les événements pour la pagination
 const allEvents = Object.values(events).flat();
+
+// Compter le nombre d'événements par type
+const eventCounts: Record<string, number> = {
+  'all': allEvents.length,
+  'programme': allEvents.filter(evt => evt.type === 'Conférences' || evt.type === 'Ateliers').length,
+  'Conférences': allEvents.filter(evt => evt.type === 'Conférences').length,
+  'Ateliers': allEvents.filter(evt => evt.type === 'Ateliers').length,
+  'Stands': allEvents.filter(evt => evt.type === 'Stands').length
+};
+
+// Afficher des logs pour le débogage des filtres
+console.log(`Nombre total d'événements: ${allEvents.length}`);
+console.log(`Événements par type:`, eventCounts);
 ---
 
 <div class="space-y-8 md:space-y-12" data-items-per-page={ITEMS_PER_PAGE}>
-  <!-- Filtres -->
+  <!-- Filtres et navigation -->
   <div class="space-y-4 md:space-y-6">
-    <!-- Filtre par jour -->
-    <div class="relative">
-      <div class="flex flex-col sm:flex-row justify-between items-start mb-3 md:mb-4 gap-3 md:gap-4">
-        <div class="flex-1 w-full">
-          <!-- Version mobile: menu déroulant -->
-          <div class="sm:hidden w-full">
-            <select 
-              id="mobile-day-selector" 
-              class="w-full py-3 px-4 rounded-xl font-medium border border-[#e4451e]/20 bg-white text-[#e4451e] focus:outline-none focus:ring-2 focus:ring-[#e4451e]/30"
-            >
-              <option value="all">Tous les jours</option>
-              {days.map((day) => (
-                <option value={day}>{day}</option>
-              ))}
-            </select>
+    <!-- Version mobile: menus déroulants simplifiés -->
+    <div class="sm:hidden space-y-4">
+      <!-- Sélecteur de jour -->
+      <div class="w-full">
+        <label for="mobile-day-selector" class="block text-sm font-medium text-gray-700 mb-1">
+          Jour
+        </label>
+        <div class="relative">
+          <select 
+            id="mobile-day-selector" 
+            class="w-full py-3 px-4 rounded-xl font-medium border border-[#e4451e]/20 bg-white text-[#e4451e] focus:outline-none focus:ring-2 focus:ring-[#e4451e]/30 appearance-none"
+          >
+            <option value="all">Tous les jours du festival</option>
+            {days.map((day) => (
+              <option value={day}>{day} ({dayDates[day]})</option>
+            ))}
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#e4451e]">
+            <Icon name="tabler:chevron-down" class="w-5 h-5" />
           </div>
-          
+        </div>
+      </div>
+      
+      <!-- Sélecteur de type -->
+      <div class="w-full">
+        <label for="mobile-type-selector" class="block text-sm font-medium text-gray-700 mb-1">
+          Type d'événement
+        </label>
+        <div class="relative">
+          <select 
+            id="mobile-type-selector" 
+            class="w-full py-3 px-4 rounded-xl font-medium border border-[#e4451e]/20 bg-white text-[#e4451e] focus:outline-none focus:ring-2 focus:ring-[#e4451e]/30 appearance-none"
+          >
+            <option value="all">Tous les types</option>
+            {eventTypes.map((type) => (
+              <option value={type}>{type}</option>
+            ))}
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#e4451e]">
+            <Icon name="tabler:chevron-down" class="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtre par jour - Version desktop avec sélection multiple -->
+    <div class="relative hidden sm:block">
+      <div class="flex justify-between items-center mb-3 md:mb-4 gap-3 md:gap-4">
+        <div class="flex-1 overflow-x-auto">
           <!-- Version desktop: boutons -->
-          <div class="hidden sm:flex overflow-x-auto gap-2 md:gap-3 p-1" id="days-container">
+          <div class="flex gap-2 md:gap-3 p-1" id="days-container">
             <!-- Option "Tous les jours" -->
             <button
               class:list={[
@@ -47,7 +91,9 @@ const allEvents = Object.values(events).flat();
                 "active bg-[#e4451e] text-white shadow-md"
               ]}
               data-day="all"
+              data-state="active"
               type="button"
+              aria-label="Afficher tous les jours du festival"
             >
               <span class="text-sm text-current opacity-75">Vue globale</span>
               <span class="text-lg mt-1 font-semibold text-current">Tous les jours</span>
@@ -61,7 +107,9 @@ const allEvents = Object.values(events).flat();
                   "bg-white text-[#e4451e] hover:bg-[#e4451e]/5 hover:border-[#e4451e]/40 hover:shadow-sm"
                 ]}
                 data-day={day}
+                data-state="inactive"
                 type="button"
+                aria-label={`Afficher uniquement les événements du ${day} ${dayDates[day]}`}
               >
                 <span class="text-sm text-current opacity-75">{day}</span>
                 <span class="text-lg font-semibold text-current">{dayDates[day]}</span>
@@ -70,151 +118,176 @@ const allEvents = Object.values(events).flat();
           </div>
         </div>
         
-        <div class="w-full sm:w-auto sm:ml-2 md:ml-4">
-          <Button
-            href="/programme.pdf"
-            variant="outline"
-            size="sm"
-            icon="tabler:file-download"
-            iconPosition="left"
-            class="w-full sm:w-auto justify-center"
-          >
-            Programme PDF
-          </Button>
+        <!-- Boutons de navigation desktop -->
+        <div class="hidden sm:flex flex-col items-center gap-2">
+          <div class="flex items-center gap-2">
+            <button 
+              class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+              id="prev-page" 
+              disabled
+              aria-label="Page précédente"
+            >
+              <Icon name="tabler:chevron-left" class="w-8 h-8" />
+              <span class="sr-only">Page précédente</span>
+            </button>
+            
+            <button 
+              class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+              id="next-page"
+              aria-label="Page suivante"
+            >
+              <Icon name="tabler:chevron-right" class="w-8 h-8" />
+              <span class="sr-only">Page suivante</span>
+            </button>
+          </div>
+          
+          <div class="flex items-center gap-2 text-center">
+            <span class="pagination-info text-sm text-gray-500">
+              Page <span id="current-page">1</span> sur <span id="total-pages">3</span>
+            </span>
+            <span class="text-sm text-gray-400 hidden md:inline" id="events-count"></span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Filtre par type -->
-    <div class="flex flex-wrap gap-2 md:gap-3" id="types-container">
-      <!-- Bouton "Tous les événements" -->
+    <!-- Filtre par type - Version desktop avec sélection multiple -->
+    <div class="hidden sm:flex flex-wrap gap-2 md:gap-3" id="types-container">
+      <!-- Bouton "Tous les types" -->
       <button
         class:list={[
-          "type-filter-button group px-4 md:px-5 py-2 md:py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
-          "flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start mb-1 sm:mb-0",
+          "all-filter-button group px-3 md:px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300",
+          "flex items-center gap-1.5 flex-1 sm:flex-none justify-center",
           "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
           "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
         ]}
-        data-type="all"
+        id="all-types-button"
         data-state="active"
         type="button"
+        aria-label="Afficher tous les types d'événements"
       >
-        <Icon name="tabler:layout-grid" class="w-5 h-5" />
-        <span>Tous les événements</span>
-        <span class="ml-2 px-2 py-0.5 rounded-full text-xs bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white/20 group-data-[state=active]:text-white">
-          {Object.values(events).flat().filter(event => event.type === 'Conférences' || event.type === 'Ateliers').length}
+        <Icon name="tabler:layout-grid" class="w-4 h-4 md:w-5 md:h-5" />
+        <span class="hidden xs:inline">Tous les types</span>
+        <span class="ml-1 px-1.5 py-0.5 rounded-full text-xs bg-[#e4451e]/10 text-[#e4451e] 
+               group-data-[state=active]:bg-white 
+               group-data-[state=active]:text-[#e4451e]"
+          data-state="active"
+        >
+          {eventCounts.all}
         </span>
       </button>
 
       {eventTypes.map(type => (
         <button
           class:list={[
-            "type-filter-button px-4 md:px-5 py-2 md:py-2.5 rounded-lg font-medium text-sm transition-all duration-300",
-            "flex items-center gap-2 flex-1 sm:flex-none justify-center sm:justify-start",
+            "type-filter-button group px-3 md:px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300",
+            "flex items-center gap-1.5 flex-1 sm:flex-none justify-center",
             "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
             "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
           ]}
           data-type={type}
           data-state="inactive"
           type="button"
+          aria-label={`Afficher uniquement les ${type}`}
         >
           <Icon name={
             type === 'Conférences' ? 'tabler:presentation' :
             type === 'Ateliers' ? 'tabler:hammer' : 'tabler:building-store'
-          } class="w-5 h-5" />
-          <span>{type}</span>
+          } class="w-4 h-4 md:w-5 md:h-5" />
+          <span class="hidden xs:inline">{type}</span>
           <span 
-            class="ml-2 px-2 py-0.5 rounded-full text-xs bg-[#e4451e]/10 text-[#e4451e] data-[state=active]:bg-white/20 data-[state=active]:text-white"
-            data-state={type === eventTypes[0] ? 'active' : 'inactive'}
+            class="ml-1 px-1.5 py-0.5 rounded-full text-xs 
+                   bg-[#e4451e]/10 text-[#e4451e] 
+                   group-data-[state=active]:bg-white 
+                   group-data-[state=active]:text-[#e4451e]"
+            data-state="inactive"
           >
-            {Object.values(events).flat().filter(event => event.type === type).length}
+            {type === 'Conférences' ? eventCounts.Conférences : 
+             type === 'Ateliers' ? eventCounts.Ateliers : 
+             eventCounts.Stands}
           </span>
         </button>
       ))}
     </div>
   </div>
 
-  <!-- Contenu des événements -->
-  <div class="space-y-4 md:space-y-6" id="events-container">
-    {allEvents.map(event => (
-      <div 
-        class="event-card group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300"
-        data-type={event.type}
-        data-day={event.day}
-      >
-        <div class="md:flex h-full">
-          <!-- Image à gauche -->
-          <div class="md:w-1/3 relative overflow-hidden rounded-l-xl">
-            <div class="h-full transition-transform duration-500 group-hover:scale-105">
-              <Image
-                src={event.image}
-                alt={event.title}
-                class="w-full h-full object-cover"
-                widths={[300, 600, 900]}
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 300px, (max-width: 1024px) 600px, 900px"
-                aspectRatio="4:3"
-                loading="lazy"
-                decoding="async"
-                format="webp"
-                fetchpriority="low"
-              />
-            </div>
-          </div>
-
-          <!-- Contenu à droite -->
-          <div class="md:w-2/3 p-4 md:p-6 flex flex-col">
-            <div class="flex-grow">
-              <!-- En-tête avec heure, lieu et expert -->
-              <div class="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-500 mb-2 md:mb-3">
-                <div class="flex items-center">
-                  <Icon name="tabler:calendar" class="w-4 h-4 mr-1" />
-                  <span>{event.day} {dayDates[event.day as keyof typeof dayDates] || ''}</span>
-                </div>
-                <div class="flex items-center">
-                  <Icon name="tabler:clock" class="w-4 h-4 mr-1" />
-                  <span>{event.time}</span>
-                </div>
-                <div class="flex items-center">
-                  <Icon name="tabler:map-pin" class="w-4 h-4 mr-1" />
-                  <span>{event.location}</span>
-                </div>
-                {event.speaker && (
-                  <div class="flex items-center">
-                    <Icon name="tabler:user" class="w-4 h-4 mr-1" />
-                    <span class="font-medium text-gray-500">{event.speaker}</span>
-                  </div>
-                )}
-              </div>
-
-              <!-- Titre -->
-              <h3 class="text-xl md:text-2xl font-bold text-sky-900 group-hover:text-[#e4451e] transition-colors mb-2 md:mb-3">
-                {event.title}
-              </h3>
-
-              <!-- Description -->
-              <p class="text-gray-600 mb-2 md:mb-4">{event.description}</p>
-            </div>
-
-            <div class="mt-auto">
-
-            </div>
-          </div>
-        </div>
+  <!-- Titre des filtres actifs et info pagination -->
+  <div id="filters-title-container" class="flex justify-between items-center py-4 md:py-6 border-t border-gray-100">
+    <h3 id="active-filters-title" class="text-2xl md:text-3xl font-handwritten text-[#e4451e] opacity-90 hidden sm:block"></h3>
+    
+    <!-- Navigation mobile en bas de page -->
+    <div class="sm:hidden w-full flex flex-col items-center">
+      <div class="flex items-center justify-center gap-4 w-full">
+        <button 
+          class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+          id="prev-page-mobile" 
+          disabled
+          aria-label="Page précédente"
+        >
+          <Icon name="tabler:chevron-left" class="w-6 h-6" />
+          <span class="sr-only">Page précédente</span>
+        </button>
+        
+        <span class="pagination-info text-sm text-gray-500 min-w-[100px] text-center">
+          Page <span id="current-page-mobile">1</span> sur <span id="total-pages-mobile">3</span>
+        </span>
+        
+        <button 
+          class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+          id="next-page-mobile"
+          aria-label="Page suivante"
+        >
+          <Icon name="tabler:chevron-right" class="w-6 h-6" />
+          <span class="sr-only">Page suivante</span>
+        </button>
       </div>
-    ))}
+    </div>
   </div>
 
-  <!-- Pagination -->
-  <div class="flex justify-between items-center pt-4 md:pt-6 border-t border-gray-100">
-    <button class="pagination-button flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white" id="prev-page" disabled>
-      <Icon name="tabler:chevron-left" class="w-4 h-4 md:w-5 md:h-5" />
-      <span class="hidden sm:inline">Précédent</span>
-    </button>
-    <span class="pagination-info text-sm text-gray-600">Page <span id="current-page">1</span> sur <span id="total-pages">1</span></span>
-    <button class="pagination-button flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white" id="next-page">
-      <span class="hidden sm:inline">Suivant</span>
-      <Icon name="tabler:chevron-right" class="w-4 h-4 md:w-5 md:h-5" />
-    </button>
+  <!-- Contenu des événements -->
+  <div id="events-container" class="relative space-y-4 md:space-y-6">
+    {Object.values(events).flat().map(event => (
+      <EventCard event={event} />
+    ))}
+
+    <!-- Message "Pas d'événements" -->
+    <div id="no-events-message" class="hidden">
+      <div class="flex flex-col items-center justify-center py-12 px-4 text-center">
+        <Icon name="tabler:calendar-off" class="w-16 h-16 text-gray-300 mb-4" />
+        <h4 class="text-xl font-medium text-gray-900 mb-2">Aucun événement trouvé</h4>
+        <p id="no-events-details" class="text-gray-500">
+          Pas d'événements correspondant à vos critères de recherche.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination desktop en bas de la liste -->
+  <div class="hidden sm:flex flex-col items-center gap-4 mt-8 pt-8 border-t border-gray-100">
+    <div class="flex items-center gap-4">
+      <button 
+        class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+        id="prev-page-bottom" 
+        disabled
+        aria-label="Page précédente"
+      >
+        <Icon name="tabler:chevron-left" class="w-8 h-8" />
+        <span class="sr-only">Page précédente</span>
+      </button>
+      
+      <span class="pagination-info text-sm text-gray-500">
+        Page <span id="current-page-bottom">1</span> sur <span id="total-pages-bottom">3</span>
+      </span>
+      
+      <button 
+        class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+        id="next-page-bottom"
+        aria-label="Page suivante"
+      >
+        <Icon name="tabler:chevron-right" class="w-8 h-8" />
+        <span class="sr-only">Page suivante</span>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -251,42 +324,349 @@ const allEvents = Object.values(events).flat();
   .accordion-trigger[aria-expanded="true"] .accordion-icon {
     transform: rotate(180deg);
   }
+
+  /* Styles pour l'accordéon de description */
+  .description-text {
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .description-text.expanded {
+    display: block;
+    line-clamp: none;
+    -webkit-line-clamp: unset;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .description-text.not-truncated {
+    padding-bottom: 0;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+  }
+
+  .description-container {
+    position: relative;
+    padding-bottom: 1.5rem;
+  }
+
+  .description-toggle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+  }
+  
+  .description-toggle:hover {
+    background-color: rgba(228, 69, 30, 0.1);
+  }
+
+  .description-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .description-toggle[aria-expanded="true"] .description-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Amélioration de la responsivité mobile */
+  @media (max-width: 640px) {
+    .event-card {
+      @apply shadow-sm;
+    }
+    
+    .event-card .md\:w-1\/3 {
+      height: auto;
+    }
+    
+    /* Ajustements pour les petits écrans */
+    .event-card h3 {
+      @apply text-xl font-bold;
+    }
+
+    .mobile-details {
+      @apply text-base;
+    }
+  }
+
+  /* Ajout de styles pour les petits écrans */
+  @media (max-width: 480px) {
+    .xs\:inline {
+      display: none;
+    }
+  }
+  
+  @media (min-width: 481px) {
+    .hidden.xs\:inline {
+      display: inline;
+    }
+  }
+
+  /* Styles pour les boutons actifs */
+  .day-filter-button[data-state="active"] {
+    @apply bg-[#e4451e] text-white shadow-md;
+  }
+  
+  .day-filter-button[data-state="inactive"] {
+    @apply bg-white text-[#e4451e];
+  }
+
+  /* Style pour le titre des filtres actifs */
+  #active-filters-title {
+    text-shadow: 0 1px 2px rgba(228, 69, 30, 0.1);
+  }
+  
+  /* Style amélioré pour les boutons de pagination */
+  .pagination-button {
+    transition: all 0.3s ease;
+  }
+  
+  .pagination-button:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
 </style>
 
 <script>
   let currentPage = 1;
-  const itemsPerPage = parseInt(document.querySelector('[data-items-per-page]')?.getAttribute('data-items-per-page') || '6');
+  const itemsPerPage = parseInt(document.querySelector('[data-items-per-page]')?.getAttribute('data-items-per-page') || '10');
   let filteredEvents: HTMLElement[] = [];
   
+  // Variables pour la gestion des filtres
+  let activeDays: string[] = []; // Jours actifs (vide = tous)
+  let activeTypes: string[] = []; // Types actifs (vide = tous)
+  let isAllDaysActive = true; // État du bouton "Tous les jours"
+  let isAllTypesActive = true; // État du bouton "Tous" (types)
+
+  // Fonction pour trier les événements chronologiquement
+  function sortEventsByTime(events: HTMLElement[]): HTMLElement[] {
+    return [...events].sort((a, b) => {
+      // Les stands sont toujours en dernier
+      const aType = a.getAttribute('data-type');
+      const bType = b.getAttribute('data-type');
+      if (aType === 'Stands' && bType !== 'Stands') return 1;
+      if (aType !== 'Stands' && bType === 'Stands') return -1;
+
+      // Si un événement a une heure définie et l'autre non, celui avec l'heure définie passe en premier
+      const aTime = a.getAttribute('data-time') || '';
+      const bTime = b.getAttribute('data-time') || '';
+      if (aTime !== 'À définir' && bTime === 'À définir') return -1;
+      if (aTime === 'À définir' && bTime !== 'À définir') return 1;
+
+      // Si les deux événements ont une heure définie et différente de "À définir" et "Tous les jours"
+      if (aTime !== 'À définir' && bTime !== 'À définir' && 
+          aTime !== 'Tous les jours' && bTime !== 'Tous les jours') {
+        return aTime.localeCompare(bTime);
+      }
+
+      // Si les deux sont "À définir", trier par type
+      if (aType === bType) return 0;
+      if (aType === 'Conférences') return -1;
+      if (bType === 'Conférences') return 1;
+      if (aType === 'Ateliers') return -1;
+      if (bType === 'Ateliers') return 1;
+      return 0;
+    });
+  }
+
+  // Fonction pour normaliser les noms des jours (supprimer les espaces, minuscules)
+  function normalizeDay(day: string | null): string {
+    if (!day) return '';
+    return day.trim().toLowerCase();
+  }
+  
+  // Fonction pour réinitialiser la pagination
+  function resetPagination() {
+    currentPage = 1;
+    updatePagination();
+  }
+  
+  // Fonction pour mettre à jour le titre des filtres actifs
+  function updateActiveFiltersTitle() {
+    const titleElement = document.getElementById('active-filters-title');
+    const titleContainer = document.getElementById('filters-title-container');
+    if (!titleElement || !titleContainer) return;
+    
+    // Déboguer les valeurs actuelles
+    console.log("Mise à jour du titre des filtres actifs:");
+    console.log("isAllDaysActive:", isAllDaysActive);
+    console.log("isAllTypesActive:", isAllTypesActive);
+    console.log("activeDays:", activeDays);
+    console.log("activeTypes:", activeTypes);
+    
+    let title = '';
+    
+    // Si tous les filtres sont actifs, ne pas afficher de titre et masquer le conteneur
+    if (isAllDaysActive && isAllTypesActive) {
+      titleElement.textContent = '';
+      titleContainer.classList.add('hidden');
+      return;
+    } else {
+      titleContainer.classList.remove('hidden');
+    }
+    
+    // Construire le titre en fonction des filtres actifs
+    if (!isAllTypesActive && activeTypes.length > 0) {
+      // Vérifier si les types sont correctement formatés
+      title = activeTypes.join(' & ');
+    }
+    
+    if (!isAllDaysActive && activeDays.length > 0) {
+      if (title) {
+        title += ' - ';
+      }
+      title += activeDays.join(' & ');
+    }
+    
+    console.log("Titre final:", title);
+    titleElement.textContent = title;
+  }
+  
+  // Fonction pour mettre à jour la pagination
   function updatePagination() {
     const events = Array.from(document.querySelectorAll('.event-card')) as HTMLElement[];
-    const activeDay = document.querySelector('.day-filter-button.active')?.getAttribute('data-day');
-    const activeType = document.querySelector('.type-filter-button[data-state="active"]')?.getAttribute('data-type');
+    
+    console.log(`Filtrage - Jours actifs: ${activeDays.length ? activeDays.join(', ') : 'Tous'}`);
+    console.log(`Filtrage - Types actifs: ${activeTypes.length ? activeTypes.join(', ') : 'Tous'}`);
+    console.log(`Nombre total d'événements à filtrer: ${events.length}`);
     
     // Filtrer les événements
     events.forEach(event => {
-      const dayMatch = activeDay === 'all' || event.getAttribute('data-day') === activeDay;
-      const typeMatch = activeType === 'all' || event.getAttribute('data-type') === activeType;
-      event.style.display = dayMatch && typeMatch ? 'block' : 'none';
+      // Masquer tous les événements initialement - ils seront affichés selon la pagination
+      event.style.display = 'none';
     });
     
     // Mettre à jour la liste des événements filtrés
     filteredEvents = events.filter(event => {
-      const dayMatch = activeDay === 'all' || event.getAttribute('data-day') === activeDay;
-      const typeMatch = activeType === 'all' || event.getAttribute('data-type') === activeType;
+      const eventType = event.getAttribute('data-type');
+      const eventDay = event.getAttribute('data-day');
+      
+      // Appliquer les mêmes règles de filtrage
+      const typeMatch = isAllTypesActive || (eventType && activeTypes.includes(eventType));
+      
+      const dayMatch = isAllDaysActive || 
+                      (eventDay && activeDays.some(day => normalizeDay(day) === normalizeDay(eventDay)));
+      
       return dayMatch && typeMatch;
     });
 
-    // Calculer les pages
-    const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-    document.getElementById('current-page')!.textContent = currentPage.toString();
-    document.getElementById('total-pages')!.textContent = totalPages.toString();
+    // Trier les événements filtrés chronologiquement
+    filteredEvents = sortEventsByTime(filteredEvents);
 
-    // Activer/désactiver les boutons
-    const prevButton = document.getElementById('prev-page') as HTMLButtonElement;
-    const nextButton = document.getElementById('next-page') as HTMLButtonElement;
-    if (prevButton) prevButton.disabled = currentPage === 1;
-    if (nextButton) nextButton.disabled = currentPage === totalPages;
+    // Réorganiser les événements dans le DOM
+    const container = document.getElementById('events-container');
+    if (container) {
+      // Supprimer l'en-tête existant s'il y en a un
+      const existingHeader = document.getElementById('event-type-header');
+      if (existingHeader) {
+        container.removeChild(existingHeader);
+      }
+      
+      // Mettre à jour le titre des filtres actifs
+      updateActiveFiltersTitle();
+      
+      // Réorganiser les événements (sans tri supplémentaire)
+      filteredEvents.forEach(event => {
+        container.appendChild(event);
+      });
+    }
+
+    // Gérer l'affichage du message "Pas d'événements correspondants"
+    const noEventsMessage = document.getElementById('no-events-message');
+    const noEventsDetails = document.getElementById('no-events-details');
+    
+    if (filteredEvents.length === 0) {
+      // Personnaliser le message en fonction des filtres sélectionnés
+      let message = "Pas d'événements correspondant à vos critères de recherche.";
+      
+      if (!isAllDaysActive && !isAllTypesActive) {
+        const dayNames = activeDays.join(' et ');
+        const typeNames = activeTypes.join(' ou ');
+        message = `Pas de ${typeNames.toLowerCase()} ${dayNames.toLowerCase()}.`;
+      } else if (!isAllDaysActive) {
+        const dayNames = activeDays.join(' et ');
+        message = `Pas d'événements programmés ${dayNames.toLowerCase()}.`;
+      } else if (!isAllTypesActive) {
+        const typeNames = activeTypes.join(' ou ');
+        message = `Pas de ${typeNames.toLowerCase()} dans le programme.`;
+      }
+      
+      if (noEventsDetails) {
+        noEventsDetails.textContent = message;
+      }
+      
+      // Afficher le message
+      if (noEventsMessage) {
+        noEventsMessage.classList.remove('hidden');
+      }
+      
+      // Masquer les paginations
+      const paginationContainers = document.querySelectorAll('.pagination-info');
+      paginationContainers.forEach(container => {
+        const paginationDiv = container.closest('div');
+        if (paginationDiv) {
+          paginationDiv.classList.add('hidden');
+        }
+      });
+      
+      // Masquer les boutons de pagination
+      document.querySelectorAll('.pagination-button').forEach(button => {
+        button.classList.add('hidden');
+      });
+    } else {
+      // Masquer le message s'il y a des événements
+      if (noEventsMessage) {
+        noEventsMessage.classList.add('hidden');
+      }
+      
+      // Afficher les paginations
+      const paginationContainers = document.querySelectorAll('.pagination-info');
+      paginationContainers.forEach(container => {
+        const paginationDiv = container.closest('div');
+        if (paginationDiv) {
+          paginationDiv.classList.remove('hidden');
+        }
+      });
+      
+      // Afficher les boutons de pagination
+      document.querySelectorAll('.pagination-button').forEach(button => {
+        button.classList.remove('hidden');
+      });
+    }
+    
+    // Calculer les pages
+    const totalPages = Math.max(1, Math.ceil(filteredEvents.length / itemsPerPage));
+    
+    // Mettre à jour les compteurs de page
+    document.querySelectorAll('#current-page, #current-page-mobile, #current-page-bottom').forEach(el => {
+      el.textContent = currentPage.toString();
+    });
+    
+    document.querySelectorAll('#total-pages, #total-pages-mobile, #total-pages-bottom').forEach(el => {
+      el.textContent = totalPages.toString();
+    });
+
+    // Réinitialiser la page courante si elle dépasse le nombre total de pages
+    if (currentPage > totalPages) {
+      currentPage = 1;
+    }
+
+    // Activer/désactiver les boutons de pagination
+    const prevButtons = document.querySelectorAll('#prev-page, #prev-page-mobile, #prev-page-bottom');
+    const nextButtons = document.querySelectorAll('#next-page, #next-page-mobile, #next-page-bottom');
+    
+    prevButtons.forEach(button => {
+      (button as HTMLButtonElement).disabled = currentPage === 1;
+    });
+    
+    nextButtons.forEach(button => {
+      (button as HTMLButtonElement).disabled = currentPage === totalPages;
+    });
 
     // Afficher les événements de la page courante
     const start = (currentPage - 1) * itemsPerPage;
@@ -295,87 +675,407 @@ const allEvents = Object.values(events).flat();
     filteredEvents.forEach((event, index) => {
       event.style.display = index >= start && index < end ? 'block' : 'none';
     });
+    
+    // Mettre à jour le compteur d'événements dans l'interface
+    const eventsCount = document.getElementById('events-count');
+    if (eventsCount) {
+      eventsCount.textContent = '';
+      eventsCount.classList.add('hidden');
+    }
+
+    // Mettre à jour les compteurs d'événements dans les pastilles
+    updateEventCounts();
   }
 
-  // Gestionnaires d'événements pour la pagination
-  document.getElementById('prev-page')?.addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      updatePagination();
-    }
-  });
-
-  document.getElementById('next-page')?.addEventListener('click', () => {
-    const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-    if (currentPage < totalPages) {
-      currentPage++;
-      updatePagination();
-    }
-  });
-
-  // Gestionnaires d'événements pour les filtres
-  document.querySelectorAll('.day-filter-button').forEach(button => {
-    button.addEventListener('click', () => {
-      document.querySelectorAll('.day-filter-button').forEach(b => {
-        b.classList.remove('active');
-        b.classList.remove('bg-[#e4451e]', 'text-white', 'shadow-md');
-        b.classList.add('bg-white', 'text-[#e4451e]');
-      });
-      button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-      button.classList.remove('bg-white', 'text-[#e4451e]');
-      currentPage = 1;
-      updatePagination();
-    });
-  });
-
-  document.querySelectorAll('.type-filter-button').forEach(button => {
-    button.addEventListener('click', () => {
-      document.querySelectorAll('.type-filter-button').forEach(b => {
-        b.setAttribute('data-state', 'inactive');
-        // Mettre à jour l'état de la pastille
-        b.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-      });
-      button.setAttribute('data-state', 'active');
-      // Mettre à jour l'état de la pastille
-      button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-      currentPage = 1;
-      updatePagination();
-    });
-  });
-
-  // Gestionnaire d'événement pour le sélecteur mobile
-  document.getElementById('mobile-day-selector')?.addEventListener('change', (e) => {
-    const target = e.target as HTMLSelectElement;
-    const selectedDay = target.value;
+  // Compter le nombre d'événements par type et jour pour les pastilles
+  function updateEventCounts() {
+    const events = Array.from(document.querySelectorAll('.event-card')) as HTMLElement[];
     
-    // Simuler un clic sur le bouton correspondant
-    const dayButton = document.querySelector(`.day-filter-button[data-day="${selectedDay}"]`);
-    if (dayButton) {
-      (dayButton as HTMLElement).click();
+    // Récupérer tous les stands et éliminer les doublons par titre
+    const standsSet = new Set<string>();
+    events.filter(event => event.getAttribute('data-type') === 'Stands').forEach(stand => {
+      const standTitle = stand.querySelector('h3')?.textContent || '';
+      standsSet.add(standTitle);
+    });
+    
+    // Compter les événements par type
+    const typeCounts = {
+      'Conférences': events.filter(event => event.getAttribute('data-type') === 'Conférences').length,
+      'Ateliers': events.filter(event => event.getAttribute('data-type') === 'Ateliers').length,
+      'Stands': standsSet.size // Nombre unique de stands
+    };
+    
+    // Mettre à jour les pastilles de comptage
+    document.querySelectorAll('.type-filter-button').forEach(button => {
+      const type = button.getAttribute('data-type');
+      if (type) {
+        const countBadge = button.querySelector('span:last-child');
+        if (countBadge) {
+          countBadge.textContent = typeCounts[type as keyof typeof typeCounts].toString();
+        }
+      }
+    });
+    
+    // Mettre à jour la pastille "Tous les types"
+    const allTypesBadge = document.querySelector('#all-types-button span:last-child');
+    if (allTypesBadge) {
+      // Calculer le total en additionnant les conférences, ateliers et stands uniques
+      const total = typeCounts.Conférences + typeCounts.Ateliers + typeCounts.Stands;
+      allTypesBadge.textContent = total.toString();
     }
-  });
+  }
 
   // Initialisation
-  document.addEventListener('DOMContentLoaded', () => {
-    // Activer le premier jour et "Tous les événements" par défaut
-    const firstDayButton = document.querySelector('.day-filter-button[data-day="all"]');
-    const allEventsButton = document.querySelector('.type-filter-button[data-type="all"]');
+  function initializeFilters() {
+    // Activer "Tous les jours" et "Tous" par défaut
+    isAllDaysActive = true;
+    isAllTypesActive = true;
+    activeDays = [];
+    activeTypes = [];
     
-    if (firstDayButton) {
-      firstDayButton.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-      firstDayButton.classList.remove('bg-white', 'text-[#e4451e]');
-    }
-
-    if (allEventsButton) {
-      allEventsButton.setAttribute('data-state', 'active');
+    // Initialiser l'apparence des boutons
+    document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
+    document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+    document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
+    
+    document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
+    document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+    
+    // Initialiser les sélecteurs mobiles
+    const mobileDaySelector = document.getElementById('mobile-day-selector') as HTMLSelectElement;
+    if (mobileDaySelector) {
+      mobileDaySelector.value = 'all';
     }
     
-    // Initialiser le sélecteur mobile avec la valeur par défaut
-    const mobileSelector = document.getElementById('mobile-day-selector') as HTMLSelectElement;
-    if (mobileSelector) {
-      mobileSelector.value = 'all';
+    const mobileTypeSelector = document.getElementById('mobile-type-selector') as HTMLSelectElement;
+    if (mobileTypeSelector) {
+      mobileTypeSelector.value = 'all';
     }
     
     updatePagination();
+    
+    // Initialiser les boutons d'accordéon une fois que les événements sont chargés
+    document.querySelectorAll('.description-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const container = toggle.closest('.description-container');
+        const text = container?.querySelector('.description-text');
+        const showMore = toggle.querySelector('.show-more');
+        const showLess = toggle.querySelector('.show-less');
+        
+        if (toggle.getAttribute('aria-expanded') === 'false') {
+          toggle.setAttribute('aria-expanded', 'true');
+          text?.classList.add('expanded');
+          text?.classList.remove('line-clamp-4');
+          showMore?.classList.add('hidden');
+          showLess?.classList.remove('hidden');
+        } else {
+          toggle.setAttribute('aria-expanded', 'false');
+          text?.classList.remove('expanded');
+          text?.classList.add('line-clamp-4');
+          showMore?.classList.remove('hidden');
+          showLess?.classList.add('hidden');
+        }
+      });
+    });
+    
+    // Initialiser les boutons "Voir les détails" sur mobile
+    document.querySelectorAll('.details-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const card = toggle.closest('.event-card');
+        const details = card?.querySelector('.mobile-details');
+        const showDetails = toggle.querySelector('.show-details');
+        const hideDetails = toggle.querySelector('.hide-details');
+        const icon = toggle.querySelector('.details-icon');
+        
+        if (toggle.getAttribute('aria-expanded') === 'false') {
+          toggle.setAttribute('aria-expanded', 'true');
+          details?.classList.remove('hidden');
+          showDetails?.classList.add('hidden');
+          hideDetails?.classList.remove('hidden');
+          icon?.classList.add('rotate-180');
+        } else {
+          toggle.setAttribute('aria-expanded', 'false');
+          details?.classList.add('hidden');
+          showDetails?.classList.remove('hidden');
+          hideDetails?.classList.add('hidden');
+          icon?.classList.remove('rotate-180');
+        }
+      });
+    });
+
+    // Ajouter un en-tête pour clarifier le type d'événements affichés
+    updateActiveFiltersTitle();
+
+    // Mettre à jour les compteurs d'événements dans les pastilles
+    updateEventCounts();
+  }
+  
+  // Fonction pour attacher les écouteurs d'événements
+  function attachEventListeners() {
+    // Nettoyer les écouteurs précédents si nécessaire
+    
+    // Sélecteur de jour mobile
+    const mobileDaySelector = document.getElementById('mobile-day-selector');
+    if (mobileDaySelector) {
+      mobileDaySelector.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+        const selectedDay = target.value;
+        
+        // Réinitialiser les jours actifs
+        activeDays = [];
+        isAllDaysActive = false;
+        
+        // Mettre à jour l'apparence des boutons de jour (pour la version desktop)
+        document.querySelectorAll('.day-filter-button').forEach(button => {
+          const dayValue = button.getAttribute('data-day');
+          if (dayValue === 'all') {
+            if (selectedDay === 'all') {
+              isAllDaysActive = true;
+              button.setAttribute('data-state', 'active');
+              button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+              button.classList.remove('bg-white', 'text-[#e4451e]');
+            } else {
+              button.setAttribute('data-state', 'inactive');
+              button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+              button.classList.add('bg-white', 'text-[#e4451e]');
+            }
+          } else if (dayValue && dayValue === selectedDay) {
+            button.setAttribute('data-state', 'active');
+            button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            button.classList.remove('bg-white', 'text-[#e4451e]');
+            activeDays.push(dayValue);
+          } else {
+            button.setAttribute('data-state', 'inactive');
+            button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            button.classList.add('bg-white', 'text-[#e4451e]');
+          }
+        });
+        
+        // Si "all" est sélectionné
+        if (selectedDay === 'all') {
+          isAllDaysActive = true;
+          activeDays = [];
+        }
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    }
+    
+    // Sélecteur de type mobile
+    const mobileTypeSelector = document.getElementById('mobile-type-selector');
+    if (mobileTypeSelector) {
+      mobileTypeSelector.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+        const selectedType = target.value;
+        
+        console.log("Sélection mobile - Type sélectionné:", selectedType);
+        
+        // Réinitialiser les types actifs
+        activeTypes = [];
+        isAllTypesActive = false;
+        
+        // Mettre à jour l'apparence des boutons de type (pour la version desktop)
+        if (selectedType === 'all') {
+          isAllTypesActive = true;
+          document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
+          document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+          
+          document.querySelectorAll('.type-filter-button').forEach(button => {
+            button.setAttribute('data-state', 'inactive');
+            button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+          });
+        } else {
+          document.getElementById('all-types-button')?.setAttribute('data-state', 'inactive');
+          document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+          
+          // Ajouter directement le type sélectionné à activeTypes
+          activeTypes.push(selectedType);
+          console.log("Type ajouté directement:", selectedType);
+          
+          // Mettre à jour l'apparence des boutons desktop
+          document.querySelectorAll('.type-filter-button').forEach(button => {
+            const typeValue = button.getAttribute('data-type');
+            if (typeValue === selectedType) {
+              button.setAttribute('data-state', 'active');
+              button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+            } else {
+              button.setAttribute('data-state', 'inactive');
+              button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+            }
+          });
+        }
+        
+        console.log("Types actifs après sélection mobile:", activeTypes);
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    }
+    
+    // Filtres par jour (desktop)
+    document.querySelectorAll('.day-filter-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const dayValue = button.getAttribute('data-day');
+        if (!dayValue) return;
+        
+        const currentState = button.getAttribute('data-state');
+        
+        if (dayValue === 'all') {
+          // Bouton "Tous les jours"
+          isAllDaysActive = true;
+          activeDays = [];
+          
+          // Mettre à jour l'apparence des boutons
+          document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
+          document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+          document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
+          
+          document.querySelectorAll('.day-filter-button:not([data-day="all"])').forEach(btn => {
+            btn.setAttribute('data-state', 'inactive');
+            btn.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            btn.classList.add('bg-white', 'text-[#e4451e]');
+          });
+        } else {
+          // Jours spécifiques
+          if (currentState === 'active') {
+            // Désactiver le jour si ce n'est pas le dernier actif
+            if (activeDays.length > 1) {
+              button.setAttribute('data-state', 'inactive');
+              button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+              button.classList.add('bg-white', 'text-[#e4451e]');
+              activeDays = activeDays.filter(day => day !== dayValue);
+            }
+          } else {
+            // Activer le jour et désactiver "Tous les jours"
+            isAllDaysActive = false;
+            document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'inactive');
+            document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('bg-white', 'text-[#e4451e]');
+            
+            button.setAttribute('data-state', 'active');
+            button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            button.classList.remove('bg-white', 'text-[#e4451e]');
+            
+            if (!activeDays.includes(dayValue)) {
+              activeDays.push(dayValue);
+            }
+          }
+          
+          // Si aucun jour n'est actif, réactiver "Tous les jours"
+          if (activeDays.length === 0) {
+            isAllDaysActive = true;
+            document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
+            document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
+          }
+        }
+        
+        console.log(`Jours actifs après clic: ${activeDays.join(', ')}`);
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    });
+    
+    // Bouton "Tous les types" (desktop)
+    const allTypesButton = document.getElementById('all-types-button');
+    if (allTypesButton) {
+      allTypesButton.addEventListener('click', () => {
+        // Activer le bouton "Tous" et désactiver tous les autres
+        isAllTypesActive = true;
+        activeTypes = [];
+        
+        // Mettre à jour l'apparence des boutons
+        document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
+        document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+        
+        document.querySelectorAll('.type-filter-button').forEach(button => {
+          button.setAttribute('data-state', 'inactive');
+          button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+        });
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    }
+    
+    // Filtres de type (desktop)
+    document.querySelectorAll('.type-filter-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const filterType = button.getAttribute('data-type');
+        if (!filterType) return;
+        
+        // Désactiver le bouton "Tous" quand on clique sur un type spécifique
+        isAllTypesActive = false;
+        document.getElementById('all-types-button')?.setAttribute('data-state', 'inactive');
+        document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+        
+        const currentState = button.getAttribute('data-state');
+        
+        // Inverser l'état du bouton
+        if (currentState === 'active') {
+          // Désactiver le type
+          button.setAttribute('data-state', 'inactive');
+          button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+          activeTypes = activeTypes.filter(type => type !== filterType);
+          
+          // Si tous les types sont désactivés, réactiver "Tous"
+          if (activeTypes.length === 0) {
+            isAllTypesActive = true;
+            document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
+            document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+          }
+        } else {
+          // Activer le type
+          button.setAttribute('data-state', 'active');
+          button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+          if (!activeTypes.includes(filterType)) {
+            activeTypes.push(filterType);
+          }
+        }
+        
+        console.log(`Types actifs après clic: ${activeTypes.join(', ')}`);
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    });
+    
+    // Boutons de pagination
+    document.querySelectorAll('#prev-page, #prev-page-mobile, #prev-page-bottom').forEach(button => {
+      button.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          updatePagination();
+        }
+      });
+    });
+    
+    document.querySelectorAll('#next-page, #next-page-mobile, #next-page-bottom').forEach(button => {
+      button.addEventListener('click', () => {
+        const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          updatePagination();
+        }
+      });
+    });
+  }
+
+  // Utiliser astro:page-load pour la compatibilité avec View Transitions
+  document.addEventListener('astro:page-load', () => {
+    console.log("Initialisation du filtre d'événements");
+    attachEventListeners();
+    initializeFilters();
+  });
+  
+  // Conserver DOMContentLoaded pour la compatibilité avec le chargement initial sans ViewTransitions
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!document.body.classList.contains('astro-transition')) {
+      console.log("Initialisation du filtre d'événements (chargement initial)");
+      attachEventListeners();
+      initializeFilters();
+    }
   });
 </script>

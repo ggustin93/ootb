@@ -18,8 +18,19 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '../..');
 
 // Déterminer si nous sommes en mode production
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-console.log(`🔧 Mode de build: ${IS_PRODUCTION ? 'production' : 'développement'}`);
+// Vérifier plusieurs variables d'environnement que Netlify pourrait définir
+const IS_NETLIFY = process.env.NETLIFY === 'true';
+const FORCE_PRODUCTION = process.env.FORCE_PRODUCTION === 'true';
+const NODE_ENV_PRODUCTION = process.env.NODE_ENV === 'production';
+
+// Si nous sommes sur Netlify ou si le mode production est forcé ou si NODE_ENV est production
+const IS_PRODUCTION = IS_NETLIFY || FORCE_PRODUCTION || NODE_ENV_PRODUCTION;
+
+console.log(`🔧 Environnement de build:`);
+console.log(`   - Netlify: ${IS_NETLIFY ? 'Oui' : 'Non'}`);
+console.log(`   - NODE_ENV: ${process.env.NODE_ENV || 'non défini'}`);
+console.log(`   - Force production: ${FORCE_PRODUCTION ? 'Oui' : 'Non'}`);
+console.log(`   - Mode final: ${IS_PRODUCTION ? 'PRODUCTION' : 'DÉVELOPPEMENT'}`);
 
 // Configuration NocoDB (basée sur src/config/nocodb.ts)
 const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || "https://app.nocodb.com";
@@ -62,20 +73,37 @@ const IMAGES_PUBLIC_DIR = path.join(ROOT_DIR, 'public', 'images', 'events');
 const OUTPUT_DIR = path.join(ROOT_DIR, 'src', 'content', 'festival');
 const RAW_DATA_DIR = path.join(ROOT_DIR, 'src', 'content', 'festival', 'raw-data');
 
+// Vérifier si les répertoires existent et les créer si nécessaire
+if (!fs.existsSync(IMAGES_SRC_DIR)) {
+  fs.mkdirSync(IMAGES_SRC_DIR, { recursive: true });
+  console.log(`📁 Répertoire créé : ${IMAGES_SRC_DIR}`);
+}
+
+if (!fs.existsSync(IMAGES_PUBLIC_DIR)) {
+  fs.mkdirSync(IMAGES_PUBLIC_DIR, { recursive: true });
+  console.log(`📁 Répertoire créé : ${IMAGES_PUBLIC_DIR}`);
+}
+
+if (!fs.existsSync(OUTPUT_DIR)) {
+  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  console.log(`📁 Répertoire créé : ${OUTPUT_DIR}`);
+}
+
+if (!fs.existsSync(RAW_DATA_DIR)) {
+  fs.mkdirSync(RAW_DATA_DIR, { recursive: true });
+  console.log(`📁 Répertoire créé : ${RAW_DATA_DIR}`);
+}
+
 // Fonction pour générer le chemin d'image en fonction du mode
 function getImagePath(eventType, fileName) {
-  if (IS_PRODUCTION) {
-    // En production, utiliser le chemin public qui sera copié dans dist
-    return `/images/events/${eventType}/${fileName}.webp`;
-  } else {
-    // En développement, utiliser le chemin src/assets
-    return `/assets/images/events/${eventType}/${fileName}.webp`;
-  }
+  // IMPORTANT: Sur Netlify, nous utilisons TOUJOURS le chemin /images/
+  // car les fichiers dans public/ sont copiés à la racine du site
+  return `/images/events/${eventType}/${fileName}.webp`;
 }
 
 // Afficher un message au démarrage pour indiquer le mode et les chemins d'images
 console.log(`🖼️ Chemins d'images en mode ${IS_PRODUCTION ? 'production' : 'développement'}:`);
-console.log(`   - ${IS_PRODUCTION ? 'Production' : 'Développement'}: ${getImagePath('example', 'example').replace('example/example.webp', '')}`);
+console.log(`   - Chemin des images dans JSON: ${getImagePath('example', 'example').replace('example/example.webp', '')}`);
 console.log(`   - Images source: ${IMAGES_SRC_DIR}`);
 console.log(`   - Images public: ${IMAGES_PUBLIC_DIR}`);
 
@@ -143,78 +171,44 @@ function formatTime(time) {
 // Fonction principale
 async function main() {
   try {
-    console.log('🚀 Démarrage de la génération des données statiques...');
-    
-    // Vérifier les options de ligne de commande
-    const fetchOnly = process.argv.includes('--fetch-only');
-    const noReset = process.argv.includes('--no-reset');
-    const resetJson = !noReset; // On réinitialise par défaut, sauf si --no-reset est spécifié
+    console.log('🚀 Début de la génération des données statiques...');
     
     // Créer les répertoires nécessaires
     await createDirectories();
     
-    // Réinitialiser les fichiers JSON si demandé
-    if (resetJson) {
-      await resetJsonFiles();
-    } else {
-      console.log('⏭️ Conservation des fichiers JSON existants (--no-reset)');
-    }
+    // Réinitialiser les fichiers JSON
+    await resetJsonFiles();
     
     // Récupérer les données depuis NocoDB
     console.log('📊 Récupération des données depuis NocoDB...');
     
     // Récupérer les stands
+    console.log('🏢 Récupération des stands...');
     const standsResponse = await fetchStands();
-    const stands = standsResponse && standsResponse.list ? standsResponse.list : [];
-    console.log(`Données récupérées avec succès: ${stands.length} stands trouvés`);
-    saveRawData(standsResponse, 'stands_response.json');
     
     // Récupérer les ateliers
+    console.log('🧪 Récupération des ateliers...');
     const ateliersResponse = await fetchAteliers();
-    const ateliers = ateliersResponse && ateliersResponse.list ? ateliersResponse.list : [];
-    console.log(`Données récupérées avec succès: ${ateliers.length} ateliers trouvés`);
-    saveRawData(ateliersResponse, 'ateliers_response.json');
     
     // Récupérer les conférences
+    console.log('🎤 Récupération des conférences...');
     const conferencesResponse = await fetchConferences();
-    const conferences = conferencesResponse && conferencesResponse.list ? conferencesResponse.list : [];
-    console.log(`Données récupérées avec succès: ${conferences.length} conférences trouvées`);
-    saveRawData(conferencesResponse, 'conferences_response.json');
-    
-    // Si l'option --fetch-only est présente, arrêter ici
-    if (fetchOnly) {
-      console.log('✅ Récupération des données terminée (mode fetch-only)');
-      return;
-    }
     
     // Convertir les données en événements
     console.log('🔄 Conversion des données en événements...');
-    
-    // Vérifier que les données sont bien des tableaux avant de les convertir
-    if (!Array.isArray(stands)) {
-      console.error('❌ Les données de stands ne sont pas un tableau:', stands);
-      process.exit(1);
-    }
-    
-    if (!Array.isArray(ateliers)) {
-      console.error('❌ Les données d\'ateliers ne sont pas un tableau:', ateliers);
-      process.exit(1);
-    }
-    
-    if (!Array.isArray(conferences)) {
-      console.error('❌ Les données de conférences ne sont pas un tableau:', conferences);
-      process.exit(1);
-    }
-    
-    const standsEvents = convertStandsToEvents(stands);
-    const ateliersEvents = convertAteliersToEvents(ateliers);
-    const conferencesEvents = convertConferencesToEvents(conferences);
+    const standsEvents = convertStandsToEvents(standsResponse.list);
+    const ateliersEvents = convertAteliersToEvents(ateliersResponse.list);
+    const conferencesEvents = convertConferencesToEvents(conferencesResponse.list);
     
     // Fusionner tous les événements
-    const allEvents = [...standsEvents, ...ateliersEvents, ...conferencesEvents];
+    const allEvents = [
+      ...standsEvents,
+      ...ateliersEvents,
+      ...conferencesEvents
+    ];
     
     // Télécharger et traiter les images
-    console.log('🖼️ Téléchargement et traitement des images...');
+    console.log('🖼️ Traitement des images...');
     const eventsWithImages = await processEventImages(allEvents);
     
     // Organiser les événements par jour
@@ -224,6 +218,10 @@ async function main() {
     // Générer le fichier JSON
     console.log('💾 Génération du fichier JSON...');
     await saveEventsToJson(eventsByDay);
+    
+    // Vérifier les chemins d'images
+    console.log('🔍 Vérification des chemins d\'images...');
+    await verifyProductionImagePaths(eventsByDay);
     
     console.log('✅ Génération des données statiques terminée !');
   } catch (error) {
@@ -694,11 +692,20 @@ async function downloadAndOptimizeImage(
       const fitOption = isSpeakerImage ? 'cover' : 'inside';
       const positionOption = isSpeakerImage ? 'north' : 'center';
       
-      // En mode production, nous n'avons besoin que des images dans le dossier public
-      // En mode développement, nous générons les deux versions
+      // Générer la version principale (400px) dans le dossier public
+      await originalImage
+        .resize(400, 400, { 
+          fit: fitOption,
+          position: positionOption,
+          withoutEnlargement: true,
+          background: whiteBackground
+        })
+        .webp({ quality: 80 })
+        .toFile(path.join(publicDir, `${fileName}.webp`));
       
+      // Générer également une version dans src/assets pour le développement local
+      // Cette étape est optionnelle mais peut être utile pour le développement
       if (!IS_PRODUCTION) {
-        // Générer la version principale (400px) pour le développement
         await originalImage
           .resize(400, 400, { 
             fit: fitOption,
@@ -708,30 +715,6 @@ async function downloadAndOptimizeImage(
           })
           .webp({ quality: 80 })
           .toFile(path.join(srcDir, `${fileName}.webp`));
-      }
-      
-      // Générer la version thumbnail (200px) - toujours nécessaire
-      await originalImage
-        .resize(200, 200, { 
-          fit: fitOption,
-          position: positionOption,
-          withoutEnlargement: true,
-          background: whiteBackground
-        })
-        .webp({ quality: 80 })
-        .toFile(path.join(publicDir, `${fileName}.webp`));
-      
-      // En mode production, générer également une version 400px dans le dossier public
-      if (IS_PRODUCTION) {
-        await originalImage
-          .resize(400, 400, { 
-            fit: fitOption,
-            position: positionOption,
-            withoutEnlargement: true,
-            background: whiteBackground
-          })
-          .webp({ quality: 80 })
-          .toFile(path.join(publicDir, `${fileName}.webp`));
       }
       
       // Stocker le chemin dans le cache
@@ -769,15 +752,13 @@ async function createPlaceholderImage(srcDir, publicDir, fileName, eventType, im
     .webp({ quality: 80 })
     .toBuffer();
     
-    // En mode production, nous n'avons besoin que des images dans le dossier public
-    // En mode développement, nous générons les deux versions
-    if (!IS_PRODUCTION) {
-      // Sauvegarder l'image de remplacement dans le dossier src
-      await fs.promises.writeFile(path.join(srcDir, `${fileName}.webp`), placeholderImage);
-    }
-    
     // Toujours sauvegarder dans le dossier public
     await fs.promises.writeFile(path.join(publicDir, `${fileName}.webp`), placeholderImage);
+    
+    // Optionnellement sauvegarder dans le dossier src pour le développement
+    if (!IS_PRODUCTION) {
+      await fs.promises.writeFile(path.join(srcDir, `${fileName}.webp`), placeholderImage);
+    }
     
     // Stocker le chemin dans le cache
     const fallbackPath = getImagePath(eventType, fileName);
@@ -858,8 +839,6 @@ function organizeEventsByDay(events) {
         } else {
           console.warn(`⚠️ Doublon détecté et ignoré: ${event.id} (${event.title}) pour le jour ${normalizedDay}`);
         }
-      } else {
-        console.warn(`⚠️ Jour non reconnu ignoré: ${event.day} pour l'événement ${event.id} (${event.title})`);
       }
     }
   }
@@ -996,6 +975,63 @@ async function resetJsonFiles() {
       }
     }
   }
+}
+
+// Vérifier que les chemins d'images en production sont corrects
+async function verifyProductionImagePaths(eventsByDay) {
+  let imageCount = 0;
+  let missingCount = 0;
+  
+  console.log('🔍 Vérification des chemins d\'images...');
+  
+  // Parcourir tous les événements
+  for (const day in eventsByDay) {
+    for (const event of eventsByDay[day]) {
+      // Vérifier l'image principale
+      if (event.image) {
+        imageCount++;
+        
+        // Extraire le chemin relatif de l'image (sans le / initial)
+        const relativePath = event.image.startsWith('/') ? event.image.substring(1) : event.image;
+        
+        // Vérifier si l'image existe dans le dossier public
+        const publicPath = path.join(ROOT_DIR, 'public', relativePath);
+        if (!fs.existsSync(publicPath)) {
+          console.error(`⚠️ Image manquante: ${publicPath}`);
+          missingCount++;
+        }
+      }
+      
+      // Vérifier l'image du conférencier
+      if (event.speakerImage) {
+        imageCount++;
+        
+        // Extraire le chemin relatif de l'image (sans le / initial)
+        const relativePath = event.speakerImage.startsWith('/') ? event.speakerImage.substring(1) : event.speakerImage;
+        
+        // Vérifier si l'image existe dans le dossier public
+        const publicPath = path.join(ROOT_DIR, 'public', relativePath);
+        if (!fs.existsSync(publicPath)) {
+          console.error(`⚠️ Image de conférencier manquante: ${publicPath}`);
+          missingCount++;
+        }
+      }
+    }
+  }
+  
+  console.log(`📊 Vérification des images terminée: ${imageCount} images vérifiées, ${missingCount} manquantes`);
+  
+  if (missingCount > 0) {
+    console.warn(`⚠️ Attention: ${missingCount} images sont manquantes dans le dossier public. Les chemins dans le JSON pourraient être incorrects.`);
+  } else {
+    console.log('✅ Toutes les images sont présentes dans le dossier public.');
+  }
+  
+  // Afficher un rappel important
+  console.log('\n🔔 RAPPEL IMPORTANT:');
+  console.log('   Les chemins d\'images dans le JSON sont définis comme:');
+  console.log(`   ${getImagePath('example', 'example').replace('example/example.webp', '')}`);
+  console.log('   Assurez-vous que ces chemins sont accessibles sur Netlify.');
 }
 
 // Exécuter la fonction principale

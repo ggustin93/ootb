@@ -28,6 +28,21 @@ const imageUrlCache = new Map<string, string>();
 // Clé: chemin du fichier, Valeur: booléen indiquant si le fichier existe
 const fileExistsCache = new Map<string, boolean>();
 
+// Variable pour suivre si les images ont déjà été traitées dans la session courante
+let imagesProcessedInSession = false;
+
+// Cache pour les chemins d'images résolus
+// Clé: eventId-type-isSpeaker, Valeur: chemin de l'image
+const resolvedImagePathsCache = new Map<string, string>();
+
+// Cache pour les vérifications d'URLs problématiques
+// Clé: URL, Valeur: booléen indiquant si l'URL est problématique
+const problematicUrlCache = new Map<string, boolean>();
+
+// Cache pour les vérifications d'images valides
+// Clé: URL, Valeur: booléen indiquant si l'image est valide
+const validImageCache = new Map<string, boolean>();
+
 // Fonction pour vérifier si un fichier existe avec mise en cache
 const fileExistsWithCache = (filePath: string): boolean => {
   // Vérifier si le résultat est déjà en cache
@@ -54,14 +69,30 @@ const clearFileExistsCache = (): void => {
 setInterval(clearFileExistsCache, 5 * 60 * 1000);
 
 /**
+ * Réinitialise le flag de traitement des images pour une nouvelle session
+ */
+export const resetImageProcessingSession = (): void => {
+  imagesProcessedInSession = false;
+  // Ne pas vider le cache des chemins d'images résolus pour optimiser les performances
+  // Ne pas vider le cache des URLs problématiques pour optimiser les performances
+  console.log('🔄 Session de traitement d\'images réinitialisée');
+};
+
+/**
  * Vérifie si une URL d'image est problématique (susceptible de causer des erreurs CORS)
  * @param url L'URL à vérifier
  * @returns true si l'URL est problématique, false sinon
  */
 export const isProblematicUrl = (url: string): boolean => {
+  // Vérifier si l'URL a déjà été vérifiée
+  if (problematicUrlCache.has(url)) {
+    return problematicUrlCache.get(url)!;
+  }
+  
   // Cas 1: Format CSV de NocoDB - nom_fichier.extension(url...)
   if (url.match(/\.(jpg|jpeg|png|webp|gif|svg)\(/i)) {
     console.log(`⚠️ URL problématique (format CSV): ${url}`);
+    problematicUrlCache.set(url, true);
     return true;
   }
   
@@ -71,20 +102,25 @@ export const isProblematicUrl = (url: string): boolean => {
   // Les URLs S3 signées sont considérées comme valides même sans extension visible
   if (url.includes('X-Amz-Signature=')) {
     console.log(`✅ URL S3 signée valide: ${url}`);
+    problematicUrlCache.set(url, false);
     return false;
   }
   
   // Cas 3: URL sans extension mais avec "image" dans le chemin
   if (!hasImageExtension && (url.includes('/image/') || url.includes('/images/'))) {
     console.log(`✅ URL sans extension mais avec "image" dans le chemin, considérée valide: ${url}`);
+    problematicUrlCache.set(url, false);
     return false;
   }
   
   if (!hasImageExtension) {
     console.log(`⚠️ URL problématique (sans extension): ${url}`);
+    problematicUrlCache.set(url, true);
     return true;
   }
   
+  // URL valide
+  problematicUrlCache.set(url, false);
   return false;
 };
 
@@ -96,18 +132,26 @@ export const isProblematicUrl = (url: string): boolean => {
 export const isValidImage = (img?: string): boolean => {
   if (!img) return false;
   
+  // Vérifier si l'image a déjà été vérifiée
+  if (validImageCache.has(img)) {
+    return validImageCache.get(img)!;
+  }
+  
   // Vérifier si l'URL est problématique
   if (isProblematicUrl(img)) {
+    validImageCache.set(img, false);
     return false;
   }
   
   // Les URLs S3 signées sont considérées comme valides même sans extension visible
   if (img.includes('X-Amz-Signature=')) {
+    validImageCache.set(img, true);
     return true;
   }
   
   // Pour les autres URLs, vérifier l'extension
   const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(img);
+  validImageCache.set(img, hasImageExtension);
   return hasImageExtension;
 };
 
@@ -720,6 +764,12 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
   // Créer les répertoires nécessaires
   await createImageDirectories();
   
+  // Vérifier si les images ont déjà été traitées dans cette session
+  const skipDownloads = imagesProcessedInSession;
+  if (skipDownloads) {
+    console.log('ℹ️ Images déjà traitées dans cette session, téléchargements ignorés');
+  }
+  
   // NOTE: Nous ne normalisons plus automatiquement les noms à chaque traitement
   // car les nouvelles images seront toujours créées avec le bon format.
   // La fonction normalizeImageFilenames reste disponible pour la migration initiale.
@@ -734,11 +784,6 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
         try {
           // Vérifier si l'image a déjà un chemin local
           if (event.image.startsWith('~/assets/')) {
-            // Normaliser le chemin pour éviter les redondances
-            const pathParts = event.image.split('/');
-            const filename = pathParts.pop() || '';
-            const directory = pathParts.join('/');
-            
             // Extraire le préfixe de base pour le nom de fichier
             let basePrefix;
             if (event.type === 'Conférences') {
@@ -749,81 +794,46 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
               basePrefix = 'stand';
             } else {
               // Convertir le type en string pour éviter l'erreur "toLowerCase n'existe pas sur le type 'never'"
-              const typeStr = String(event.type).toLowerCase();
-              basePrefix = typeStr.endsWith('s') 
-                ? typeStr.slice(0, -1) 
-                : typeStr;
+              const typeStr = String(event.type);
+              basePrefix = typeStr.toLowerCase();
             }
             
-            // Vérifier si le nom de fichier contient une redondance
-            const redundantPrefix = `${basePrefix}-${basePrefix}-`;
-            if (filename.startsWith(redundantPrefix)) {
-              // Extraire l'ID numérique si possible
-              const idMatch = filename.match(new RegExp(`${redundantPrefix}(\\d+)`));
-              if (idMatch && idMatch[1]) {
-                // Utiliser uniquement l'ID numérique avec le préfixe correct
-                const correctedFilename = `${basePrefix}-${idMatch[1]}${path.extname(filename)}`;
-                const correctedPath = `${directory}/${correctedFilename}`;
-                
-                console.log(`🔄 Correction de redondance de type: ${filename} -> ${correctedFilename}`);
-                
-                // Vérifier si le fichier existe avec le nouveau nom
-                const normalizedPath = correctedPath.replace('~/', 'src/');
-                const originalPath = event.image.replace('~/', 'src/');
-                
-                if (fs.existsSync(normalizedPath)) {
-                  // Utiliser le chemin corrigé
-                  eventCopy.image = correctedPath;
-                  eventCopy.imageDownloaded = true;
-                  console.log(`✅ Chemin d'image corrigé: ${correctedPath}`);
-                } else if (fs.existsSync(originalPath)) {
-                  // Garder le chemin original si le fichier existe
-                  eventCopy.image = event.image;
-                  eventCopy.imageDownloaded = true;
-                  console.log(`⚠️ Fichier trouvé avec l'ancien chemin: ${event.image}`);
-                } else {
-                  // Aucun fichier trouvé, essayer de télécharger à nouveau
-                  console.log(`⚠️ Aucun fichier trouvé, tentative de téléchargement: ${event.image}`);
-                  const downloadedImagePath = await downloadImage(
-                    event.image,
-                    event.type,
-                    event.id,
-                    false,
-                    event.title,
-                    event.day
-                  );
-                  
-                  if (downloadedImagePath) {
-                    eventCopy.image = downloadedImagePath;
-                    eventCopy.imageDownloaded = true;
-                  }
-                }
-              }
-            } else {
-              // Le chemin est déjà correct
-              eventCopy.image = event.image;
+            // Vérifier si l'image existe déjà en utilisant le cache
+            const existingImagePath = getImagePath(event.id, basePrefix, false);
+            if (existingImagePath) {
+              eventCopy.image = existingImagePath;
               eventCopy.imageDownloaded = true;
             }
           } else {
-            // Télécharger l'image si elle n'a pas encore été téléchargée
-            const downloadedImagePath = await downloadImage(
-              event.image,
-              event.type,
-              event.id,
-              false,
-              event.title,
-              event.day
-            );
-            
-            if (downloadedImagePath) {
-              eventCopy.image = downloadedImagePath;
+            // Vérifier si l'image existe déjà en utilisant le cache
+            const existingImagePath = getImagePath(event.id, event.type, false);
+            if (existingImagePath) {
+              eventCopy.image = existingImagePath;
               eventCopy.imageDownloaded = true;
+            } 
+            // Télécharger l'image seulement si nécessaire et si on ne saute pas les téléchargements
+            else if (!skipDownloads) {
+              const downloadedImagePath = await downloadImage(
+                event.image,
+                event.type,
+                event.id,
+                false,
+                event.title,
+                event.day
+              );
+              
+              if (downloadedImagePath) {
+                eventCopy.image = downloadedImagePath;
+                eventCopy.imageDownloaded = true;
+                
+                // Mettre à jour le cache avec le nouveau chemin
+                const cacheKey = `${event.id}-${event.type}-false`;
+                resolvedImagePathsCache.set(cacheKey, downloadedImagePath);
+              }
             }
           }
         } catch (error) {
-          console.error(`❌ Erreur lors du traitement de l'image pour ${event.id}:`, error);
-          // Nettoyer l'image corrompue si elle existe
-          await cleanupCorruptedImage(event.id, event.type, false);
+          console.error(`❌ Erreur lors du traitement de l'image pour l'événement ${event.id}:`, formatError(error));
         }
       }
       
@@ -832,96 +842,42 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
         try {
           // Vérifier si l'image a déjà un chemin local
           if (event.speakerImage.startsWith('~/assets/')) {
-            // Normaliser le chemin pour éviter les redondances
-            const pathParts = event.speakerImage.split('/');
-            const filename = pathParts.pop() || '';
-            const directory = pathParts.join('/');
-            
-            // Extraire le préfixe de base pour le nom de fichier
-            let basePrefix;
-            if (event.type === 'Conférences') {
-              basePrefix = 'conference';
-            } else if (event.type === 'Ateliers') {
-              basePrefix = 'atelier';
-            } else if (event.type === 'Stands') {
-              basePrefix = 'stand';
-            } else {
-              // Convertir le type en string pour éviter l'erreur "toLowerCase n'existe pas sur le type 'never'"
-              const typeStr = String(event.type).toLowerCase();
-              basePrefix = typeStr.endsWith('s') 
-                ? typeStr.slice(0, -1) 
-                : typeStr;
-            }
-            
-            // Vérifier si le nom de fichier contient une redondance
-            const redundantPrefix = `${basePrefix}-${basePrefix}-`;
-            if (filename.startsWith(redundantPrefix)) {
-              // Extraire l'ID numérique si possible
-              const idMatch = filename.match(new RegExp(`${redundantPrefix}(\\d+)`));
-              if (idMatch && idMatch[1]) {
-                // Utiliser uniquement l'ID numérique avec le préfixe correct
-                const correctedFilename = `${basePrefix}-${idMatch[1]}${path.extname(filename)}`;
-                const correctedPath = `${directory}/${correctedFilename}`;
-                
-                console.log(`🔄 Correction de redondance de type: ${filename} -> ${correctedFilename}`);
-                
-                // Vérifier si le fichier existe avec le nouveau nom
-                const normalizedPath = correctedPath.replace('~/', 'src/');
-                const originalPath = event.speakerImage.replace('~/', 'src/');
-                
-                if (fs.existsSync(normalizedPath)) {
-                  // Utiliser le chemin corrigé
-                  eventCopy.speakerImage = correctedPath;
-                  eventCopy.speakerImageDownloaded = true;
-                  console.log(`✅ Chemin d'image de conférencier corrigé: ${correctedPath}`);
-                } else if (fs.existsSync(originalPath)) {
-                  // Garder le chemin original si le fichier existe
-                  eventCopy.speakerImage = event.speakerImage;
-                  eventCopy.speakerImageDownloaded = true;
-                  console.log(`⚠️ Fichier de conférencier trouvé avec l'ancien chemin: ${event.speakerImage}`);
-                } else {
-                  // Aucun fichier trouvé, essayer de télécharger à nouveau
-                  console.log(`⚠️ Aucun fichier de conférencier trouvé, tentative de téléchargement: ${event.speakerImage}`);
-                  const downloadedSpeakerImagePath = await downloadImage(
-                    event.speakerImage,
-                    event.type,
-                    event.id,
-                    true,
-                    event.title,
-                    event.day
-                  );
-                  
-                  if (downloadedSpeakerImagePath) {
-                    eventCopy.speakerImage = downloadedSpeakerImagePath;
-                    eventCopy.speakerImageDownloaded = true;
-                  }
-                }
-              }
-            } else {
-              // Le chemin est déjà correct
-              eventCopy.speakerImage = event.speakerImage;
+            // Vérifier si l'image existe déjà en utilisant le cache
+            const existingImagePath = getImagePath(event.id, event.type, true);
+            if (existingImagePath) {
+              eventCopy.speakerImage = existingImagePath;
               eventCopy.speakerImageDownloaded = true;
             }
           } else {
-            // Télécharger l'image si elle n'a pas encore été téléchargée
-            const downloadedSpeakerImagePath = await downloadImage(
-              event.speakerImage,
-              event.type,
-              event.id,
-              true,
-              event.title,
-              event.day
-            );
-            
-            if (downloadedSpeakerImagePath) {
-              eventCopy.speakerImage = downloadedSpeakerImagePath;
+            // Vérifier si l'image existe déjà en utilisant le cache
+            const existingImagePath = getImagePath(event.id, event.type, true);
+            if (existingImagePath) {
+              eventCopy.speakerImage = existingImagePath;
               eventCopy.speakerImageDownloaded = true;
+            } 
+            // Télécharger l'image seulement si nécessaire et si on ne saute pas les téléchargements
+            else if (!skipDownloads) {
+              const downloadedImagePath = await downloadImage(
+                event.speakerImage,
+                event.type,
+                event.id,
+                true,
+                event.title,
+                event.day
+              );
+              
+              if (downloadedImagePath) {
+                eventCopy.speakerImage = downloadedImagePath;
+                eventCopy.speakerImageDownloaded = true;
+                
+                // Mettre à jour le cache avec le nouveau chemin
+                const cacheKey = `${event.id}-${event.type}-true`;
+                resolvedImagePathsCache.set(cacheKey, downloadedImagePath);
+              }
             }
           }
         } catch (error) {
-          console.error(`❌ Erreur lors du traitement de l'image de conférencier pour ${event.id}:`, error);
-          // Nettoyer l'image corrompue si elle existe
-          await cleanupCorruptedImage(event.id, event.type, true);
+          console.error(`❌ Erreur lors du traitement de l'image du conférencier pour l'événement ${event.id}:`, formatError(error));
         }
       }
       
@@ -929,7 +885,10 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
     })
   );
   
-  console.log(`✅ Traitement des images terminé pour ${processedEvents.length} événements`);
+  // Marquer les images comme traitées pour cette session
+  imagesProcessedInSession = true;
+  console.log('✅ Images traitées et mises en cache pour cette session');
+  
   return processedEvents;
 };
 
@@ -1541,4 +1500,33 @@ export const normalizeImageFilenames = async (): Promise<number> => {
     console.error("❌ Erreur lors de la normalisation des noms de fichiers:", formatError(error));
     return 0;
   }
+};
+
+/**
+ * Récupère le chemin d'une image depuis le cache ou le résout
+ * @param eventId Identifiant de l'événement
+ * @param eventType Type d'événement
+ * @param isSpeakerImage Indique s'il s'agit d'une image de conférencier
+ * @returns Le chemin de l'image ou null si non trouvée
+ */
+export const getImagePath = (
+  eventId: string,
+  eventType: string,
+  isSpeakerImage: boolean = false
+): string | null => {
+  // Créer une clé unique pour le cache
+  const cacheKey = `${eventId}-${eventType}-${isSpeakerImage}`;
+  
+  // Vérifier si le chemin est déjà en cache
+  if (resolvedImagePathsCache.has(cacheKey)) {
+    return resolvedImagePathsCache.get(cacheKey) || null;
+  }
+  
+  // Résoudre le chemin
+  const imagePath = isImageAlreadyDownloaded(eventId, eventType, isSpeakerImage);
+  
+  // Mettre en cache le résultat (même si null)
+  resolvedImagePathsCache.set(cacheKey, imagePath || '');
+  
+  return imagePath;
 }; 

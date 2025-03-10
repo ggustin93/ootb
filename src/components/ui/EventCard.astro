@@ -2,7 +2,7 @@
 import type { ImageMetadata } from 'astro';
 import Image from '~/components/common/Image.astro';
 import { Icon } from 'astro-icon/components';
-import { getDefaultImage, getDefaultSpeakerImage } from '~/services/events';
+import { isValidImage } from '~/services/imageProcessor';
 import type { FestivalDay } from '~/services/events';
 import type { Event as FestivalEvent } from '~/types/festival';
 
@@ -39,17 +39,13 @@ const {
   event,
   title: propTitle, 
   description: propDescription, 
-  date: propDate,
   time: propTime,
   location: propLocation,
   speaker: propSpeaker,
   speakerImage: propSpeakerImage,
   image: propImage,
   badge: propBadge,
-  badgeColor = 'blue',
-  link: propLink,
   day: propDay,
-  cols = 1,
   eventType: propEventType = 'Conférences',
   target: propTarget,
   level: propLevel,
@@ -65,14 +61,12 @@ const hasDownloadedSpeakerImage = processedEvent?.speakerImageDownloaded === tru
 // Utiliser les propriétés de l'objet Event s'il est fourni, sinon utiliser les props individuelles
 const title = event?.title || propTitle || '';
 const description = event?.description || propDescription || '';
-const date = event?.day || propDate || '';
 const time = event?.time || propTime || '';
 const location = event?.location || propLocation || '';
 const speaker = event?.speaker || propSpeaker || '';
 const speakerImage = event?.speakerImage || propSpeakerImage;
 const originalImage = event?.image || propImage;
 const badge = propBadge || '';
-const link = event?.url || propLink || '#';
 
 // Normaliser le jour pour garantir la cohérence
 let day = event?.day || propDay;
@@ -88,10 +82,6 @@ if (day) {
   }
 }
 
-// Log pour débogage des événements du vendredi
-if (day && day.toString().toLowerCase().includes('vendredi')) {
-  console.log(`[DEBUG VENDREDI] Événement du vendredi détecté: "${title}" - jour original="${event?.day || propDay}", normalisé="${day}"`);
-}
 
 const eventType = event?.type || propEventType;
 const target = event?.target || propTarget;
@@ -99,94 +89,23 @@ const level = event?.level || propLevel;
 const teachingType = event?.teachingType || propTeachingType;
 const url = event?.url || propUrl;
 
-const badgeIcons: Record<string, string> = {
-  'Festival 2025': 'tabler:confetti',
-  'Live Facebook': 'tabler:brand-facebook',
-  'Conférences': 'tabler:presentation',
-  'Ateliers': 'tabler:tool',
-  'Stands': 'tabler:building-store'
-};
-
-/**
- * Vérifie si une URL d'image est problématique (susceptible de causer des erreurs CORS)
- * @param url L'URL à vérifier
- * @returns true si l'URL est problématique, false sinon
- */
-const isProblematicUrl = (url: string): boolean => {
-  // Cas 1: Format CSV de NocoDB - nom_fichier.extension(url...)
-  if (url.match(/\.(jpg|jpeg|png|webp|gif|svg)\(/i)) {
-    console.log(`⚠️ URL problématique (format CSV): ${url}`);
-    return true;
-  }
-  
-  // Note: Les URLs signées Amazon S3 sont en fait valides à télécharger
-  // Nous ne les considérons plus comme problématiques
-  
-  // Cas 3: URL sans extension d'image valide
-  const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(url);
-  if (!hasImageExtension && !url.includes('X-Amz-Signature=')) {
-    // Exception pour les URLs S3 signées qui peuvent ne pas avoir d'extension visible
-    console.log(`⚠️ URL problématique (sans extension): ${url}`);
-    return true;
-  }
-  
-  return false;
-};
-
-/**
- * Vérifie si une image est fournie et valide
- * @param img L'image à vérifier
- * @returns true si l'image est valide, false sinon
- */
-const isValidImage = (img?: ImageMetadata | string): boolean => {
-  if (!img) return false;
-  
-  // Pour les images de type string (URLs)
-  if (typeof img === 'string') {
-    // Si c'est un chemin vers une image téléchargée dans src/assets
-    if (img.startsWith('~/assets/')) {
-      return true;
-    }
-    
-    // Vérifier si l'URL est problématique
-    if (isProblematicUrl(img)) {
-      return false;
-    }
-    
-    // Les URLs S3 signées sont considérées comme valides même sans extension visible
-    if (img.includes('X-Amz-Signature=')) {
-      return true;
-    }
-    
-    // Pour les autres URLs, vérifier l'extension
-    const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(img);
-    return hasImageExtension;
-  }
-  
-  // Pour les images de type ImageMetadata (importées)
-  return true;
-};
-
 // Importer dynamiquement l'image si elle a été téléchargée
 let importedImage: ImageMetadata | null = null;
 let importedSpeakerImage: ImageMetadata | null = null;
 
-if (hasDownloadedImage && typeof originalImage === 'string' && originalImage.startsWith('~/assets/')) {
+// Optimisation : Utiliser getDefaultImage pour obtenir le chemin de l'image
+// Cette fonction utilise déjà notre système de cache
+if (event && hasDownloadedImage && typeof originalImage === 'string' && originalImage.startsWith('~/assets/')) {
   try {
     // Utiliser un import dynamique pour charger l'image
-    // Note: Cette partie sera exécutée côté serveur lors du build
-    // Correction du chemin d'importation pour éviter les erreurs de chemin
     const importPath = originalImage.replace('~/', '../../');
-    console.log(`🔍 Tentative d'import de l'image: ${importPath} (type: ${eventType}, titre: ${title}, ID: ${event?.id || 'inconnu'})`);
     
     try {
       // Essayer d'abord avec le chemin original
       const imageModule = await import(importPath);
       importedImage = imageModule.default;
-      console.log(`✅ Image importée avec succès: ${originalImage} (type: ${eventType}, ID: ${event?.id || 'inconnu'})`);
-    } catch (initialError) {
+    } catch (error) {
       // Si l'importation échoue, essayer avec un chemin normalisé
-      // (éliminer la redondance dans le nom du fichier, ex: atelier-atelier-XX -> atelier-XX)
       console.log(`⚠️ Échec de l'import avec le chemin original. Tentative avec chemin normalisé...`);
       
       // Extraire les composants du chemin
@@ -195,35 +114,30 @@ if (hasDownloadedImage && typeof originalImage === 'string' && originalImage.sta
       const directory = pathParts.join('/');
       
       // Normaliser le nom de fichier pour éliminer la redondance
-      // Ex: conference-conference-34.webp -> conference-34.webp
       const eventTypePrefix = eventType.toLowerCase().replace(/s$/, ''); // Enlever le 's' final (Conférences -> conference)
       const normalizedFilename = filename.replace(`${eventTypePrefix}-${eventTypePrefix}-`, `${eventTypePrefix}-`);
       
       const normalizedPath = `${directory}/${normalizedFilename}`;
-      console.log(`🔍 Tentative avec chemin normalisé: ${normalizedPath}`);
       
       try {
         const normalizedModule = await import(normalizedPath);
         importedImage = normalizedModule.default;
-        console.log(`✅ Image importée avec succès (chemin normalisé): ${normalizedPath}`);
-      } catch (normalizedError) {
+      } catch {
         // Si les deux échouent, consigner l'erreur
         console.error(`❌ Échec de l'import avec les deux chemins:`, { 
           original: importPath, 
           normalized: normalizedPath 
         });
-        // Ne pas relancer l'erreur pour éviter de bloquer le rendu
-        console.error(`   Erreur: ${initialError.message}`);
       }
     }
   } catch (error) {
     console.error(`❌ Erreur lors de l'import de l'image: ${originalImage}`, error);
-    console.error(`   Titre: ${title}, Type: ${eventType}, ID: ${event?.id || 'inconnu'}`);
     importedImage = null;
   }
 }
 
-if (hasDownloadedSpeakerImage && typeof speakerImage === 'string' && speakerImage.startsWith('~/assets/')) {
+// Optimisation : Utiliser getDefaultSpeakerImage pour obtenir le chemin de l'image du conférencier
+if (event && hasDownloadedSpeakerImage && typeof speakerImage === 'string' && speakerImage.startsWith('~/assets/')) {
   try {
     // Utiliser un import dynamique pour charger l'image du conférencier
     const importPath = speakerImage.replace('~/', '../../');
@@ -232,8 +146,7 @@ if (hasDownloadedSpeakerImage && typeof speakerImage === 'string' && speakerImag
       // Essayer d'abord avec le chemin original
       const imageModule = await import(importPath);
       importedSpeakerImage = imageModule.default;
-      console.log(`✅ Image de conférencier importée avec succès: ${speakerImage}`);
-    } catch (initialError) {
+    } catch (error) {
       // Si l'importation échoue, essayer avec un chemin normalisé
       console.log(`⚠️ Échec de l'import de l'image de conférencier avec le chemin original. Tentative avec chemin normalisé...`);
       
@@ -247,19 +160,15 @@ if (hasDownloadedSpeakerImage && typeof speakerImage === 'string' && speakerImag
       const normalizedFilename = filename.replace(`${eventTypePrefix}-${eventTypePrefix}-`, `${eventTypePrefix}-`);
       
       const normalizedPath = `${directory}/${normalizedFilename}`;
-      console.log(`🔍 Tentative avec chemin normalisé pour l'image de conférencier: ${normalizedPath}`);
       
       try {
         const normalizedModule = await import(normalizedPath);
         importedSpeakerImage = normalizedModule.default;
-        console.log(`✅ Image de conférencier importée avec succès (chemin normalisé): ${normalizedPath}`);
-      } catch (normalizedError) {
+      } catch {
         console.error(`❌ Échec de l'import de l'image de conférencier avec les deux chemins:`, { 
           original: importPath, 
           normalized: normalizedPath 
         });
-        // Ne pas relancer l'erreur pour éviter de bloquer le rendu
-        console.error(`   Erreur: ${initialError.message}`);
       }
     }
   } catch (error) {
@@ -302,8 +211,9 @@ const getImage = () => {
     };
   }
 
-  // Vérifier si l'image originale est problématique ou non valide
-  if (!originalImage || isProblematicUrl(originalImage)) {
+  // Vérifier si l'image originale est valide
+  // Utiliser la fonction isValidImage du service imageProcessor qui utilise le cache
+  if (!originalImage || (typeof originalImage === 'string' && !isValidImage(originalImage))) {
     // Sélectionner le fond et l'icône basés sur le type d'événement
     const background = eventBackgrounds[eventType] || eventBackgrounds['Conférences'];
     
@@ -337,7 +247,8 @@ const getSpeakerImg = () => {
   // Image placeholder d'avatar générique pour les conférenciers
   const speakerPlaceholder = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png';
   
-  if (speakerImage && isValidImage(speakerImage)) {
+  // Utiliser la fonction isValidImage du service imageProcessor qui utilise le cache
+  if (speakerImage && (typeof speakerImage !== 'string' || isValidImage(speakerImage))) {
     return speakerImage;
   }
   

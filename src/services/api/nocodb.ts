@@ -792,10 +792,6 @@ export function convertAteliersToEvents(ateliers: NocoDBAtelier[]): Event[] {
     // Déterminer le jour
     const day = getEventDay(atelier.Jours);
     
-    // Log spécifique pour les événements du vendredi
-    if (day === 'Vendredi') {
-      console.log(`[DEBUG VENDREDI] Atelier du vendredi trouvé: "${atelier["Choisissez un titre court"] || 'Sans titre'}" - Jours=${JSON.stringify(atelier.Jours)}`);
-    }
     
     // Récupérer l'URL de l'image ou utiliser l'image par défaut
     const imageUrl = atelier["Envoyez votre logo"]?.length > 0 
@@ -863,11 +859,6 @@ export function convertConferencesToEvents(conferences: NocoDBConference[]): Eve
     try {
       // Déterminer le jour
       const day = getEventDay(conference.Jours);
-      
-      // Log spécifique pour les événements du vendredi
-      if (day === 'Vendredi') {
-        console.log(`[DEBUG VENDREDI] Conférence du vendredi trouvée: "${conference["Choisissez un titre pour la conférence"] || 'Sans titre'}" - Jours=${JSON.stringify(conference.Jours)}`);
-      }
       
       // Image URL extraction
       const imageUrl = conference["Envoyez votre logo"]?.length > 0 

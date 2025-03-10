@@ -745,227 +745,8 @@ allEvents.forEach(event => {
     updateEventCounts();
   }
 
-  // Gestionnaire d'événement pour le sélecteur de jour mobile
-  document.getElementById('mobile-day-selector')?.addEventListener('change', (e) => {
-    const target = e.target as HTMLSelectElement;
-    const selectedDay = target.value;
-    
-    // Réinitialiser les jours actifs
-    activeDays = [];
-    isAllDaysActive = false;
-    
-    // Mettre à jour l'apparence des boutons de jour (pour la version desktop)
-    document.querySelectorAll('.day-filter-button').forEach(button => {
-      const dayValue = button.getAttribute('data-day');
-      if (dayValue === 'all') {
-        if (selectedDay === 'all') {
-          isAllDaysActive = true;
-          button.setAttribute('data-state', 'active');
-          button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-          button.classList.remove('bg-white', 'text-[#e4451e]');
-        } else {
-          button.setAttribute('data-state', 'inactive');
-          button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-          button.classList.add('bg-white', 'text-[#e4451e]');
-        }
-      } else if (dayValue && dayValue === selectedDay) {
-        button.setAttribute('data-state', 'active');
-        button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-        button.classList.remove('bg-white', 'text-[#e4451e]');
-        activeDays.push(dayValue);
-      } else {
-        button.setAttribute('data-state', 'inactive');
-        button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-        button.classList.add('bg-white', 'text-[#e4451e]');
-      }
-    });
-    
-    // Si "all" est sélectionné
-    if (selectedDay === 'all') {
-      isAllDaysActive = true;
-      activeDays = [];
-    }
-    
-    // Réinitialiser la pagination et mettre à jour l'affichage
-    resetPagination();
-  });
-
-  // Gestionnaire d'événement pour le sélecteur de type mobile
-  document.getElementById('mobile-type-selector')?.addEventListener('change', (e) => {
-    const target = e.target as HTMLSelectElement;
-    const selectedType = target.value;
-    
-    console.log("Sélection mobile - Type sélectionné:", selectedType);
-    
-    // Réinitialiser les types actifs
-    activeTypes = [];
-    isAllTypesActive = false;
-    
-    // Mettre à jour l'apparence des boutons de type (pour la version desktop)
-    if (selectedType === 'all') {
-      isAllTypesActive = true;
-      document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
-      document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-      
-      document.querySelectorAll('.type-filter-button').forEach(button => {
-        button.setAttribute('data-state', 'inactive');
-        button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-      });
-    } else {
-      document.getElementById('all-types-button')?.setAttribute('data-state', 'inactive');
-      document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-      
-      // Ajouter directement le type sélectionné à activeTypes
-      activeTypes.push(selectedType);
-      console.log("Type ajouté directement:", selectedType);
-      
-      // Mettre à jour l'apparence des boutons desktop
-      document.querySelectorAll('.type-filter-button').forEach(button => {
-        const typeValue = button.getAttribute('data-type');
-        if (typeValue === selectedType) {
-          button.setAttribute('data-state', 'active');
-          button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-        } else {
-          button.setAttribute('data-state', 'inactive');
-          button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-        }
-      });
-    }
-    
-    console.log("Types actifs après sélection mobile:", activeTypes);
-    
-    // Réinitialiser la pagination et mettre à jour l'affichage
-    resetPagination();
-  });
-
-  // Gestionnaires d'événements pour les filtres par jour (sélection multiple)
-  document.querySelectorAll('.day-filter-button').forEach(button => {
-    button.addEventListener('click', () => {
-      const dayValue = button.getAttribute('data-day');
-      if (!dayValue) return;
-      
-      const currentState = button.getAttribute('data-state');
-      
-      if (dayValue === 'all') {
-        // Bouton "Tous les jours"
-        isAllDaysActive = true;
-        activeDays = [];
-        
-        // Mettre à jour l'apparence des boutons
-        document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
-        document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-        document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
-        
-        document.querySelectorAll('.day-filter-button:not([data-day="all"])').forEach(btn => {
-          btn.setAttribute('data-state', 'inactive');
-          btn.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-          btn.classList.add('bg-white', 'text-[#e4451e]');
-        });
-      } else {
-        // Jours spécifiques
-        if (currentState === 'active') {
-          // Désactiver le jour si ce n'est pas le dernier actif
-          if (activeDays.length > 1) {
-            button.setAttribute('data-state', 'inactive');
-            button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-            button.classList.add('bg-white', 'text-[#e4451e]');
-            activeDays = activeDays.filter(day => day !== dayValue);
-          }
-        } else {
-          // Activer le jour et désactiver "Tous les jours"
-          isAllDaysActive = false;
-          document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'inactive');
-          document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-          document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('bg-white', 'text-[#e4451e]');
-          
-          button.setAttribute('data-state', 'active');
-          button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-          button.classList.remove('bg-white', 'text-[#e4451e]');
-          
-          if (!activeDays.includes(dayValue)) {
-            activeDays.push(dayValue);
-          }
-        }
-        
-        // Si aucun jour n'est actif, réactiver "Tous les jours"
-        if (activeDays.length === 0) {
-          isAllDaysActive = true;
-          document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
-          document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-          document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
-        }
-      }
-      
-      console.log(`Jours actifs après clic: ${activeDays.join(', ')}`);
-      
-      // Réinitialiser la pagination et mettre à jour l'affichage
-      resetPagination();
-    });
-  });
-
-  // Gestionnaire d'événement pour le bouton "Tous" (types)
-  document.getElementById('all-types-button')?.addEventListener('click', () => {
-    // Activer le bouton "Tous" et désactiver tous les autres
-    isAllTypesActive = true;
-    activeTypes = [];
-    
-    // Mettre à jour l'apparence des boutons
-    document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
-    document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-    
-    document.querySelectorAll('.type-filter-button').forEach(button => {
-      button.setAttribute('data-state', 'inactive');
-      button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-    });
-    
-    // Réinitialiser la pagination et mettre à jour l'affichage
-    resetPagination();
-  });
-
-  // Gestionnaires d'événements pour les filtres de type (sélection multiple)
-  document.querySelectorAll('.type-filter-button').forEach(button => {
-    button.addEventListener('click', () => {
-      const filterType = button.getAttribute('data-type');
-      if (!filterType) return;
-      
-      // Désactiver le bouton "Tous" quand on clique sur un type spécifique
-      isAllTypesActive = false;
-      document.getElementById('all-types-button')?.setAttribute('data-state', 'inactive');
-      document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-      
-      const currentState = button.getAttribute('data-state');
-      
-      // Inverser l'état du bouton
-      if (currentState === 'active') {
-        // Désactiver le type
-        button.setAttribute('data-state', 'inactive');
-        button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-        activeTypes = activeTypes.filter(type => type !== filterType);
-        
-        // Si tous les types sont désactivés, réactiver "Tous"
-        if (activeTypes.length === 0) {
-          isAllTypesActive = true;
-          document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
-          document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-        }
-      } else {
-        // Activer le type
-        button.setAttribute('data-state', 'active');
-        button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-        if (!activeTypes.includes(filterType)) {
-          activeTypes.push(filterType);
-        }
-      }
-      
-      console.log(`Types actifs après clic: ${activeTypes.join(', ')}`);
-      
-      // Réinitialiser la pagination et mettre à jour l'affichage
-      resetPagination();
-    });
-  });
-
   // Initialisation
-  document.addEventListener('DOMContentLoaded', () => {
+  function initializeFilters() {
     // Activer "Tous les jours" et "Tous" par défaut
     isAllDaysActive = true;
     isAllTypesActive = true;
@@ -990,26 +771,6 @@ allEvents.forEach(event => {
     if (mobileTypeSelector) {
       mobileTypeSelector.value = 'all';
     }
-    
-    // Ajouter des gestionnaires d'événements pour les boutons de pagination
-    document.querySelectorAll('#prev-page, #prev-page-mobile').forEach(button => {
-      button.addEventListener('click', () => {
-        if (currentPage > 1) {
-          currentPage--;
-          updatePagination();
-        }
-      });
-    });
-    
-    document.querySelectorAll('#next-page, #next-page-mobile').forEach(button => {
-      button.addEventListener('click', () => {
-        const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-        if (currentPage < totalPages) {
-          currentPage++;
-          updatePagination();
-        }
-      });
-    });
     
     updatePagination();
     
@@ -1067,5 +828,274 @@ allEvents.forEach(event => {
 
     // Mettre à jour les compteurs d'événements dans les pastilles
     updateEventCounts();
+  }
+  
+  // Fonction pour attacher les écouteurs d'événements
+  function attachEventListeners() {
+    // Nettoyer les écouteurs précédents si nécessaire
+    
+    // Sélecteur de jour mobile
+    const mobileDaySelector = document.getElementById('mobile-day-selector');
+    if (mobileDaySelector) {
+      mobileDaySelector.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+        const selectedDay = target.value;
+        
+        // Réinitialiser les jours actifs
+        activeDays = [];
+        isAllDaysActive = false;
+        
+        // Mettre à jour l'apparence des boutons de jour (pour la version desktop)
+        document.querySelectorAll('.day-filter-button').forEach(button => {
+          const dayValue = button.getAttribute('data-day');
+          if (dayValue === 'all') {
+            if (selectedDay === 'all') {
+              isAllDaysActive = true;
+              button.setAttribute('data-state', 'active');
+              button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+              button.classList.remove('bg-white', 'text-[#e4451e]');
+            } else {
+              button.setAttribute('data-state', 'inactive');
+              button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+              button.classList.add('bg-white', 'text-[#e4451e]');
+            }
+          } else if (dayValue && dayValue === selectedDay) {
+            button.setAttribute('data-state', 'active');
+            button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            button.classList.remove('bg-white', 'text-[#e4451e]');
+            activeDays.push(dayValue);
+          } else {
+            button.setAttribute('data-state', 'inactive');
+            button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            button.classList.add('bg-white', 'text-[#e4451e]');
+          }
+        });
+        
+        // Si "all" est sélectionné
+        if (selectedDay === 'all') {
+          isAllDaysActive = true;
+          activeDays = [];
+        }
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    }
+    
+    // Sélecteur de type mobile
+    const mobileTypeSelector = document.getElementById('mobile-type-selector');
+    if (mobileTypeSelector) {
+      mobileTypeSelector.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+        const selectedType = target.value;
+        
+        console.log("Sélection mobile - Type sélectionné:", selectedType);
+        
+        // Réinitialiser les types actifs
+        activeTypes = [];
+        isAllTypesActive = false;
+        
+        // Mettre à jour l'apparence des boutons de type (pour la version desktop)
+        if (selectedType === 'all') {
+          isAllTypesActive = true;
+          document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
+          document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+          
+          document.querySelectorAll('.type-filter-button').forEach(button => {
+            button.setAttribute('data-state', 'inactive');
+            button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+          });
+        } else {
+          document.getElementById('all-types-button')?.setAttribute('data-state', 'inactive');
+          document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+          
+          // Ajouter directement le type sélectionné à activeTypes
+          activeTypes.push(selectedType);
+          console.log("Type ajouté directement:", selectedType);
+          
+          // Mettre à jour l'apparence des boutons desktop
+          document.querySelectorAll('.type-filter-button').forEach(button => {
+            const typeValue = button.getAttribute('data-type');
+            if (typeValue === selectedType) {
+              button.setAttribute('data-state', 'active');
+              button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+            } else {
+              button.setAttribute('data-state', 'inactive');
+              button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+            }
+          });
+        }
+        
+        console.log("Types actifs après sélection mobile:", activeTypes);
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    }
+    
+    // Filtres par jour (desktop)
+    document.querySelectorAll('.day-filter-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const dayValue = button.getAttribute('data-day');
+        if (!dayValue) return;
+        
+        const currentState = button.getAttribute('data-state');
+        
+        if (dayValue === 'all') {
+          // Bouton "Tous les jours"
+          isAllDaysActive = true;
+          activeDays = [];
+          
+          // Mettre à jour l'apparence des boutons
+          document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
+          document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+          document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
+          
+          document.querySelectorAll('.day-filter-button:not([data-day="all"])').forEach(btn => {
+            btn.setAttribute('data-state', 'inactive');
+            btn.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            btn.classList.add('bg-white', 'text-[#e4451e]');
+          });
+        } else {
+          // Jours spécifiques
+          if (currentState === 'active') {
+            // Désactiver le jour si ce n'est pas le dernier actif
+            if (activeDays.length > 1) {
+              button.setAttribute('data-state', 'inactive');
+              button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+              button.classList.add('bg-white', 'text-[#e4451e]');
+              activeDays = activeDays.filter(day => day !== dayValue);
+            }
+          } else {
+            // Activer le jour et désactiver "Tous les jours"
+            isAllDaysActive = false;
+            document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'inactive');
+            document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('bg-white', 'text-[#e4451e]');
+            
+            button.setAttribute('data-state', 'active');
+            button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            button.classList.remove('bg-white', 'text-[#e4451e]');
+            
+            if (!activeDays.includes(dayValue)) {
+              activeDays.push(dayValue);
+            }
+          }
+          
+          // Si aucun jour n'est actif, réactiver "Tous les jours"
+          if (activeDays.length === 0) {
+            isAllDaysActive = true;
+            document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
+            document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
+          }
+        }
+        
+        console.log(`Jours actifs après clic: ${activeDays.join(', ')}`);
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    });
+    
+    // Bouton "Tous les types" (desktop)
+    const allTypesButton = document.getElementById('all-types-button');
+    if (allTypesButton) {
+      allTypesButton.addEventListener('click', () => {
+        // Activer le bouton "Tous" et désactiver tous les autres
+        isAllTypesActive = true;
+        activeTypes = [];
+        
+        // Mettre à jour l'apparence des boutons
+        document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
+        document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+        
+        document.querySelectorAll('.type-filter-button').forEach(button => {
+          button.setAttribute('data-state', 'inactive');
+          button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+        });
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    }
+    
+    // Filtres de type (desktop)
+    document.querySelectorAll('.type-filter-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const filterType = button.getAttribute('data-type');
+        if (!filterType) return;
+        
+        // Désactiver le bouton "Tous" quand on clique sur un type spécifique
+        isAllTypesActive = false;
+        document.getElementById('all-types-button')?.setAttribute('data-state', 'inactive');
+        document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+        
+        const currentState = button.getAttribute('data-state');
+        
+        // Inverser l'état du bouton
+        if (currentState === 'active') {
+          // Désactiver le type
+          button.setAttribute('data-state', 'inactive');
+          button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
+          activeTypes = activeTypes.filter(type => type !== filterType);
+          
+          // Si tous les types sont désactivés, réactiver "Tous"
+          if (activeTypes.length === 0) {
+            isAllTypesActive = true;
+            document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
+            document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+          }
+        } else {
+          // Activer le type
+          button.setAttribute('data-state', 'active');
+          button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+          if (!activeTypes.includes(filterType)) {
+            activeTypes.push(filterType);
+          }
+        }
+        
+        console.log(`Types actifs après clic: ${activeTypes.join(', ')}`);
+        
+        // Réinitialiser la pagination et mettre à jour l'affichage
+        resetPagination();
+      });
+    });
+    
+    // Boutons de pagination
+    document.querySelectorAll('#prev-page, #prev-page-mobile').forEach(button => {
+      button.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          updatePagination();
+        }
+      });
+    });
+    
+    document.querySelectorAll('#next-page, #next-page-mobile').forEach(button => {
+      button.addEventListener('click', () => {
+        const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          updatePagination();
+        }
+      });
+    });
+  }
+
+  // Utiliser astro:page-load pour la compatibilité avec View Transitions
+  document.addEventListener('astro:page-load', () => {
+    console.log("Initialisation du filtre d'événements");
+    attachEventListeners();
+    initializeFilters();
+  });
+  
+  // Conserver DOMContentLoaded pour la compatibilité avec le chargement initial sans ViewTransitions
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!document.body.classList.contains('astro-transition')) {
+      console.log("Initialisation du filtre d'événements (chargement initial)");
+      attachEventListeners();
+      initializeFilters();
+    }
   });
 </script>

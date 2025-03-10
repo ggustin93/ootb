@@ -8,9 +8,10 @@ import {
 import { TEST_MODE, events as dummyEvents } from '~/config/festival';
 import { NOCODB_CONFIG, calculateSimilarity } from '~/config/nocodb';
 import { 
-  processEventImages, 
-  cleanupCorruptedImage, 
-  optimizeAllExistingImages
+  processEventImages,
+  optimizeAllExistingImages,
+  resetImageProcessingSession,
+  getImagePath
 } from './imageProcessor';
 
 // Jours du festival avec leurs dates
@@ -26,13 +27,6 @@ export const dayDates: Record<typeof days[number], string> = {
 // Types d'événements
 export const eventTypes = ['Conférences', 'Ateliers', 'Stands'];
 
-// Images par défaut pour chaque type d'événement
-const defaultImages = {
-  'Conférences': '/images/default-conference.jpg',
-  'Ateliers': '/images/default-workshop.jpg',
-  'Stands': '/images/default-stand.jpg'
-};
-
 // Couleurs par défaut pour chaque type d'événement - commenté car non utilisé pour l'instant
 // const typeColors = {
 //   'Conférences': '#3b82f6', // blue-500
@@ -47,35 +41,58 @@ const defaultImages = {
 //   'Stands': 'tabler:building-store'
 // };
 
+// Variable pour suivre si les images ont déjà été optimisées dans cette session
+let imagesOptimizedInSession = false;
+
 /**
- * Génère une URL d'image par défaut pour un événement
- * Cette fonction peut être utilisée pour générer des images dynamiques via un service comme Cloudinary
- * ou pour retourner des chemins d'images statiques
- * @param event L'événement pour lequel générer une image par défaut
- * @returns L'URL de l'image par défaut
+ * Récupère l'image par défaut pour un événement
+ * @param event L'événement
+ * @returns Le chemin de l'image par défaut
  */
 export function getDefaultImage(event: Event): string {
-  // Pour l'instant, on retourne simplement les images statiques par défaut
-  return defaultImages[event.type];
+  // Si l'événement a déjà une image, la retourner
+  if (event.image && typeof event.image === 'string') {
+    return event.image;
+  }
   
-  // Exemple d'implémentation future avec Cloudinary ou un service similaire:
-  /*
-  const eventType = encodeURIComponent(event.type);
-  const eventTitle = encodeURIComponent(event.title);
-  const color = typeColors[event.type].replace('#', '');
-  const icon = typeIcons[event.type].replace('tabler:', '');
+  // Essayer de trouver une image existante pour cet événement
+  const cachedImagePath = getImagePath(event.id, event.type, false);
+  if (cachedImagePath) {
+    return cachedImagePath;
+  }
   
-  return `https://res.cloudinary.com/your-cloud-name/image/upload/w_800,h_450,c_fill,q_auto,f_auto/l_text:Montserrat_48_bold:${eventTitle},co_white,g_center,y_-50/l_text:Montserrat_32:${eventType},co_white,g_center,y_50/b_rgb:${color},o_80/l_icon:${icon},w_120,g_center,y_-80,co_white/v1/festival-backgrounds/bg-${event.type.toLowerCase()}`;
-  */
+  // Sinon, retourner une image par défaut en fonction du type d'événement
+  if (event.type === 'Conférences') {
+    return '~/assets/images/defaults/conference-default.webp';
+  } else if (event.type === 'Ateliers') {
+    return '~/assets/images/defaults/atelier-default.webp';
+  } else if (event.type === 'Stands') {
+    return '~/assets/images/defaults/stand-default.webp';
+  }
+  
+  // Image par défaut générique
+  return '~/assets/images/defaults/event-default.webp';
 }
 
 /**
- * Génère une URL d'image par défaut pour un conférencier
- * @param _event L'événement pour lequel générer une image de conférencier par défaut (non utilisé pour l'instant)
- * @returns L'URL de l'image par défaut du conférencier
+ * Récupère l'image du conférencier par défaut pour un événement
+ * @param event L'événement
+ * @returns Le chemin de l'image du conférencier par défaut
  */
-export function getDefaultSpeakerImage(_event: Event): string {
-  return '/images/default-speaker.jpg';
+export function getDefaultSpeakerImage(event: Event): string {
+  // Si l'événement a déjà une image de conférencier, la retourner
+  if (event.speakerImage && typeof event.speakerImage === 'string') {
+    return event.speakerImage;
+  }
+  
+  // Essayer de trouver une image existante pour ce conférencier
+  const cachedImagePath = getImagePath(event.id, event.type, true);
+  if (cachedImagePath) {
+    return cachedImagePath;
+  }
+  
+  // Image par défaut pour les conférenciers
+  return '~/assets/images/defaults/speaker-default.webp';
 }
 
 /**
@@ -191,11 +208,19 @@ export async function cleanupKnownProblematicImages(): Promise<void> {
  */
 export async function fetchAllEvents(): Promise<Event[]> {
   try {
-    // Nettoyer les images problématiques connues
-    await cleanupKnownProblematicImages();
-    
-    // Optimiser les images existantes
-    await optimizeAllExistingImages();
+    // Nettoyer les images problématiques connues seulement si nécessaire
+    if (!imagesOptimizedInSession) {
+      console.log('🔄 Première exécution dans cette session, nettoyage et optimisation des images...');
+      await cleanupKnownProblematicImages();
+      
+      // Optimiser les images existantes (seulement la première fois)
+      await optimizeAllExistingImages();
+      
+      // Marquer les images comme optimisées pour cette session
+      imagesOptimizedInSession = true;
+    } else {
+      console.log('ℹ️ Images déjà optimisées dans cette session, optimisation ignorée');
+    }
     
     // Récupération parallèle des stands et des sessions
     const [standsResponse, sessionsResponse] = await Promise.all([
@@ -360,4 +385,22 @@ export function filterEventsByType(events: Event[], type: string): Event[] {
 export async function getEventsByDay(): Promise<Record<string, Event[]>> {
   const events = await fetchAllEvents();
   return organizeEventsByDay(events);
+}
+
+/**
+ * Force le traitement des images en réinitialisant le flag de session
+ */
+export async function forceImageProcessing(): Promise<void> {
+  console.log('🔄 Forçage du traitement des images...');
+  resetImageProcessingSession();
+  await fetchAllEvents();
+  console.log('✅ Traitement forcé des images terminé');
+}
+
+/**
+ * Réinitialise le flag d'optimisation des images pour forcer une nouvelle optimisation
+ */
+export function resetImageOptimizationFlag(): void {
+  imagesOptimizedInSession = false;
+  console.log('🔄 Flag d\'optimisation des images réinitialisé');
 } 

@@ -5,6 +5,7 @@
  */
 
 import { startAutoRefresh, isDataCached } from './api/nocodb';
+import { resetImageProcessingSession } from './imageProcessor';
 
 // Configuration
 const ENABLE_AUTO_REFRESH = true; // Activer le rafraîchissement automatique
@@ -15,6 +16,9 @@ const AUTO_REFRESH_INTERVAL = 15 * 60 * 1000; // 15 minutes en millisecondes
  */
 export function initCache(): void {
   console.log('🚀 Initialisation du cache...');
+  
+  // Réinitialiser le flag de traitement des images
+  resetImageProcessingSession();
   
   if (ENABLE_AUTO_REFRESH) {
     if (!isDataCached()) {

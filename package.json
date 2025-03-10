@@ -22,14 +22,15 @@
         "fix:eslint": "eslint --fix .",
         "fix:prettier": "prettier -w .",
         "create-collection": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/createDirectusCollection.ts",
-        "clean": "rm -rf dist .astro",
+        "clean": "rm -rf dist .astro && rm -f src/assets/images/events/logs/*.log",
         "prebuild": "npm run clean",
         "tina": "tinacms dev",
         "tina:build": "tinacms build",
         "check-images": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/check-images.ts",
         "normalize-images": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/normalize-images.ts",
         "fix-conference-images": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/fix-conference-images.ts",
-        "fix-conference-filenames": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/fix-conference-filenames.ts"
+        "fix-conference-filenames": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/fix-conference-filenames.ts",
+        "clean:logs": "rm -f src/assets/images/events/logs/*.log && echo 'Logs supprimés avec succès'"
     },
     "dependencies": {
         "@astrojs/react": "^4.1.2",

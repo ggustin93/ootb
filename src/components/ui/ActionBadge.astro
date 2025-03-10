@@ -1,6 +1,6 @@
 ---
 interface Props {
-  variant?: 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite';
+  variant?: 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite' | 'fiche';
   class?: string;
 }
 
@@ -12,7 +12,8 @@ const variants = {
   emission: 'bg-[var(--ootb-green)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-green)_90%,black)]',
   appel: 'bg-[var(--ootb-blue)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)]',
   live: 'bg-[#1877F2] text-white hover:bg-[color-mix(in_srgb,#1877F2_90%,black)]',
-  actualite: 'bg-gray-700 text-white hover:bg-gray-800'
+  actualite: 'bg-gray-700 text-white hover:bg-gray-800',
+  fiche: 'bg-[var(--ootb-blue)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)]'
 };
 
 ---
@@ -20,12 +21,12 @@ const variants = {
 <span
   class:list={[
     'inline-flex italic items-center justify-center',
-    'text-sm font-bold uppercase tracking-wide',
+    'text-base font-bold uppercase tracking-wide',
     'transform skew-x-[-12deg]',
     'shadow-sm hover:shadow-md',
     'transition-all duration-300',
     'whitespace-nowrap',
-    'px-6 py-2.5',
+    'px-7 py-3',
     variants[variant],
     className
   ]}

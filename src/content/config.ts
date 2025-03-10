@@ -55,6 +55,7 @@ const post = defineCollection({
         email: z.string().email()
       }),
       description: z.string().optional(),
+      destinataire: z.string().optional(),
       objectifs: z.array(z.string()),
       competences: z.array(z.string()),
       declinaisons: z.string().optional(),

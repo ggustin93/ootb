@@ -49,6 +49,7 @@ interface Props {
         email: string;
       };
       description?: string;
+      destinataire?: string;
       objectifs: string[];
       competences: string[];
       declinaisons?: string;
@@ -82,7 +83,7 @@ const isDefaultImage = !post.image || post.image === defaultImage ||
 const contentConfig = {
   icon: contentConfigRaw.icon,
   label: contentConfigRaw.label,
-  variant: contentType as 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite',
+  variant: contentType === 'fiche' ? 'fiche' : contentType as 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite',
   color: contentConfigRaw.color
 };
 
@@ -195,7 +196,7 @@ console.log('Debug media info détaillé:', {
 
         {/* Fiche pédagogique */}
         {contentStates.isPedagogicalSheet && post.pedagogicalSheet && (
-          <PedagogicalSheet sheet={post.pedagogicalSheet} />
+          <PedagogicalSheet sheet={post.pedagogicalSheet} tags={post.tags} />
         )}
 
         {/* Média - Podcast */}

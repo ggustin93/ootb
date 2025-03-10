@@ -249,6 +249,70 @@ Pour mettre à jour les données du festival :
 3. Vérifier que les images sont correctement téléchargées et optimisées
 4. Construire le site avec `npm run build`
 
+# Fiches pédagogiques
+
+## Génération des fiches pédagogiques
+
+Le site utilise un script de génération automatique des fiches pédagogiques à partir des données NocoDB. Ce processus permet de :
+- Récupérer les fiches pédagogiques depuis la base de données NocoDB
+- Convertir ces fiches au format MDX pour l'affichage sur le site
+- Générer des fichiers statiques pour une performance optimale
+
+### Fonctionnalités principales
+
+1. **Vérification intelligente des modifications** : Le script ne régénère les fichiers MDX que si des modifications ont été détectées dans les données
+2. **Comparaison automatique** : Comparaison des données récupérées avec les données précédentes pour éviter les générations inutiles
+3. **Optimisation de la performance** : Réduction des temps de build en évitant les régénérations redondantes
+4. **Sauvegarde des données brutes** : Conservation des données JSON pour référence et comparaisons futures
+
+### Processus de génération
+
+Le script `build-fiches-pedagogiques.js` suit les étapes suivantes :
+1. Récupération des fiches pédagogiques depuis l'API NocoDB
+2. Vérification des modifications par rapport aux données précédemment sauvegardées
+3. Sauvegarde des nouvelles données brutes pour référence future
+4. Si des modifications sont détectées :
+   - Nettoyage du répertoire des fiches
+   - Conversion des fiches au format MDX
+   - Sauvegarde des fiches en fichiers MDX
+5. Si aucune modification n'est détectée, aucune action n'est effectuée
+
+### Commandes
+
+```bash
+# Générer les fiches pédagogiques
+node src/scripts/build-fiches-pedagogiques.js
+
+# Build complet (incluant les fiches pédagogiques)
+npm run build
+```
+
+### Configuration
+
+Le script utilise les variables d'environnement suivantes pour se connecter à NocoDB :
+- `NOCODB_BASE_URL` : URL de base de l'API NocoDB
+- `NOCODB_API_TOKEN` : Token d'API pour NocoDB
+- `NOCODB_ORG_ID` : ID de l'organisation dans NocoDB
+- `NOCODB_PROJECT_ID` : ID du projet dans NocoDB
+- `NOCODB_BASE_ID` : ID de la base dans NocoDB
+- `NOCODB_TABLE_ID` : ID de la table des fiches pédagogiques
+
+Ces variables peuvent être définies dans un fichier `.env` à la racine du projet pour le développement local.
+
+## Maintenance des fiches pédagogiques
+
+Pour mettre à jour les fiches pédagogiques :
+1. Mettre à jour les entrées dans NocoDB
+2. Exécuter `node src/scripts/build-fiches-pedagogiques.js` pour générer les fiches
+3. Les modifications seront automatiquement détectées et les fiches seront régénérées uniquement si nécessaire
+4. Construire le site avec `npm run build`
+
+### Conseils d'optimisation
+
+- Effectuez des mises à jour par lots dans NocoDB plutôt que des modifications individuelles fréquentes
+- Utilisez le script dans le cadre du processus de build plutôt que manuellement pour maintenir la cohérence
+- Vérifiez les messages du script pour vous assurer que les fiches ont été correctement générées
+
 ## Dépendances
 
 - Node.js pour l'exécution du script

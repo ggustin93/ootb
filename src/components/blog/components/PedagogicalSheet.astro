@@ -9,6 +9,7 @@ interface Props {
       email: string;
     };
     description?: string;
+    destinataire?: string;
     objectifs: string[];
     competences: string[];
     declinaisons?: string;
@@ -19,49 +20,82 @@ interface Props {
       description?: string;
     }>;
   };
+  tags?: Array<{ title: string; slug: string; }>;
 }
 
-const { sheet } = Astro.props;
+const { sheet, tags } = Astro.props;
+
+// Filtrer et grouper les tags pour l'affichage
+const yearTag = tags?.find(tag => /^\d{4}$/.test(tag.title));
+const year = yearTag?.title || '';
+const otherTags = tags?.filter(tag => !/^\d{4}$/.test(tag.title) && !/^thème \d+$/i.test(tag.title)) || [];
 ---
 
-<div class="pedagogical-sheet bg-gradient-to-br from-white to-ootb-blue/5 p-8 rounded-xl mb-8 border border-ootb-blue/20 shadow-lg hover:shadow-xl transition-all duration-300">
-  <h2 class="text-3xl font-bold mb-8 pb-3 border-b-2 border-ootb-blue/20" style="color: var(--content-fiche);">Fiche pédagogique</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <div class="bg-white/90 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Enseignement</h3>
+<div class="pedagogical-sheet bg-gradient-to-br from-white to-ootb-blue/5 p-4 sm:p-8 rounded-xl mb-8 border border-ootb-blue/20 shadow-lg hover:shadow-xl transition-all duration-300">
+  <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-4 pb-3 border-b-2 border-ootb-blue/20 text-[var(--ootb-blue)]">Fiche pédagogique</h2>
+  
+  {/* Métadonnées regroupées sur une ligne */}
+  {(year || otherTags.length > 0) && (
+    <div class="flex items-center overflow-x-auto whitespace-nowrap mb-6 pb-2 scrollbar-hide">
+      {year && (
+        <span class="inline-flex flex-shrink-0 items-center px-3 py-1.5 rounded-full text-sm font-medium bg-[var(--ootb-blue)] text-white mr-2">
+          Édition {year}
+        </span>
+      )}
+      {otherTags.map(tag => (
+        <a 
+          href={`/tag/${tag.slug}`}
+          class="inline-flex flex-shrink-0 items-center px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors duration-200 mr-2"
+        >
+          {tag.title}
+        </a>
+      ))}
+    </div>
+  )}
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+    <div class="bg-white/90 p-4 sm:p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Enseignement</h3>
       <p class="text-gray-600 leading-relaxed">{sheet.enseignement}</p>
     </div>
-    <div class="bg-white/90 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Section</h3>
+    <div class="bg-white/90 p-4 sm:p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Section</h3>
       <p class="text-gray-600 leading-relaxed">{sheet.section}</p>
     </div>
   </div>
 
   <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
-    <h3 class="text-xl font-semibold mb-2" style="color: var(--content-fiche);">Responsable du projet</h3>
-    <p class="text-gray-600">
+    <h3 class="text-xl sm:text-2xl font-handwritten mb-2 text-[var(--ootb-blue)]">Responsable du projet</h3>
+    <p class="text-gray-600 break-words">
       {sheet.responsable.prenom} {sheet.responsable.nom}<br />
-      <a href={`mailto:${sheet.responsable.email}`} class="text-primary-600 hover:underline">
+      <a href={`mailto:${sheet.responsable.email}`} class="text-primary-600 hover:underline break-all">
         {sheet.responsable.email}
       </a>
     </p>
   </div>
 
+  {sheet.destinataire && (
+    <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Destinataires</h3>
+      <div class="text-gray-600 whitespace-pre-wrap">{sheet.destinataire}</div>
+    </div>
+  )}
+
   {sheet.description && (
     <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Description</h3>
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Description</h3>
       <div class="text-gray-600 whitespace-pre-wrap">{sheet.description}</div>
     </div>
   )}
 
   {sheet.objectifs && sheet.objectifs.length > 0 && (
     <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Objectifs</h3>
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Objectifs</h3>
       <ul class="list-none space-y-3 text-gray-600">
         <style>
           .custom-bullet::before {
             content: '•';
-            color: var(--content-fiche);
+            color: var(--ootb-blue);
             font-weight: bold;
             display: inline-block;
             width: 1em;
@@ -69,7 +103,7 @@ const { sheet } = Astro.props;
           }
         </style>
         {sheet.objectifs.map((objectif) => (
-          <li class="pl-4 custom-bullet leading-relaxed hover:translate-x-1 transition-transform duration-200">{objectif}</li>
+          <li class="pl-4 custom-bullet leading-relaxed">{objectif}</li>
         ))}
       </ul>
     </div>
@@ -77,12 +111,12 @@ const { sheet } = Astro.props;
 
   {sheet.competences && sheet.competences.length > 0 && (
     <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Compétences développées</h3>
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Compétences développées</h3>
       <ul class="list-none space-y-3 text-gray-600">
         <style>
           .custom-bullet::before {
             content: '•';
-            color: var(--content-fiche);
+            color: var(--ootb-blue);
             font-weight: bold;
             display: inline-block;
             width: 1em;
@@ -90,7 +124,7 @@ const { sheet } = Astro.props;
           }
         </style>
         {sheet.competences.map((competence) => (
-          <li class="pl-4 custom-bullet leading-relaxed hover:translate-x-1 transition-transform duration-200">{competence}</li>
+          <li class="pl-4 custom-bullet leading-relaxed">{competence}</li>
         ))}
       </ul>
     </div>
@@ -98,30 +132,30 @@ const { sheet } = Astro.props;
 
   {sheet.declinaisons && (
     <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Déclinaisons possibles</h3>
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Déclinaisons possibles</h3>
       <p class="text-gray-600 leading-relaxed">{sheet.declinaisons}</p>
     </div>
   )}
 
   {sheet.conseils && (
     <div class="mb-6 bg-white p-4 rounded-md shadow-sm">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Conseils du créateur</h3>
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Conseils du créateur</h3>
       <p class="text-gray-600 leading-relaxed">{sheet.conseils}</p>
     </div>
   )}
 
   {sheet.references && sheet.references.length > 0 && (
-    <div class="bg-white/90 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2 tracking-tight" style="color: var(--content-fiche);">Pour aller plus loin...</h3>
+    <div class="bg-white/90 p-4 sm:p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+      <h3 class="text-xl sm:text-2xl font-handwritten mb-2 sm:mb-3 flex items-center gap-2 tracking-tight text-[var(--ootb-blue)]">Pour aller plus loin...</h3>
       <ul class="space-y-3">
         {sheet.references.map((ref) => (
-          <li class="flex items-start space-x-2">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+          <li class="flex flex-col sm:flex-row items-start gap-2">
+            <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 mb-1 sm:mb-0 w-fit">
               {ref.type === 'site' ? 'Site web' : ref.type === 'video' ? 'Vidéo' : 'Document'}
             </span>
-            <span class="text-gray-600">
+            <span class="text-gray-600 break-words">
               {ref.url ? (
-                <a href={ref.url} class="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                <a href={ref.url} class="text-primary-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">
                   {ref.description || ref.url}
                 </a>
               ) : (

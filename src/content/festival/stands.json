@@ -1,0 +1,262 @@
+[
+  {
+    "id": "stand-1",
+    "title": "Université de Paix - Des formations et programmes éducatifs pour gérer les conflits et améliorer le vivre ensemble",
+    "description": "Sur notre stand, explorez une multitude d'outils didactiques, feuilletez et reprenez  nos catalogues de formations et nos brochures de présentation pour en savoir plus sur nos programmes. 🎓✨\n\nEt pour célébrer les 65 ans de l’asbl, participez à notre concours spécial et tentez votre chance pour remporter une surprise ! 🎁🥳",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Cafétéria",
+    "speaker": "Thibault Mathieu",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-1.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.universitedepaix.org",
+    "contact": {
+      "email": "thibaultmathieu792@gmail.com",
+      "phone": "0475792751"
+    }
+  },
+  {
+    "id": "stand-2",
+    "title": "Éduquer au numérique  - La Philosophie Cliky",
+    "description": "Éduquer au numérique par les émotions et la perception. La Philosophie Cliky est une démarche d’éducation à la citoyenneté numérique (ECN) intergénérationnelle et spécifiquement dédiée aux  enfants de 5 à 13 ans .  Venez découvrir notre méthode innovante et nos différents outils !",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Espace 2",
+    "speaker": "Virginie TYOU",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-2.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.cliky.eu",
+    "contact": {
+      "email": "virginie.tyou@cliky.eu",
+      "phone": "0032477205088"
+    }
+  },
+  {
+    "id": "stand-3",
+    "title": "Lutter contre le décrochage scolaire et redevenir acteurs de notre avenir",
+    "description": "Sur notre stand, les professeurs, parents, ados et professionnels de l'éducation pourront consulter nos ouvrages, nos syllabus et partir avec des flyers expliquant nos activités. Nos intervenants seront présents pour leur parler de nos accompagnements mais aussi leur faire vivre quelques petites expériences en lien avec l'estime de soi, la confiance en soi, la confiance en l'autre, la motivation, etc. qu'il est nécessaire d'acquérir pour une scolarité plus harmonieuse. ",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Espace 2",
+    "speaker": "Catherine Sztencel",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-3.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.odysseeasbl.be",
+    "contact": {
+      "email": "direction@odysseeasbl.be",
+      "phone": "0476/26 19 98"
+    }
+  },
+  {
+    "id": "stand-4",
+    "title": "Facilitez-vous les langues en classe !",
+    "description": "Éveil aux langues en maternelles et P1-P2 ? Apprentissage de la seconde langue en P3-P4 ? Venez découvrir nos outils joyeux, concrets et efficaces pour intégrer les langues en classe sans stress !\n\n🎯 Objectif : Vous faire gagner du temps et de l’énergie, tout en rendant cet apprentissage plus fluide, ludique et agréable pour vous et vos élèves.\n\n📍 Rendez-vous sur notre stand pour tester nos solutions et échanger avec nous !",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Espace 3",
+    "speaker": "Véronique Van den Abeele",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-4.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professionnels",
+      "Maternelle et primaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professionnels",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.tradanim.be",
+    "contact": {
+      "email": "direction@tradanim.be",
+      "phone": "+32475941641"
+    }
+  },
+  {
+    "id": "stand-5",
+    "title": "Etoilium, le jeu éducatif pour travailler la concentration, la motivation et l'autonomie ! ",
+    "description": "L’Etoilium est jeu éducatif pour les enfants de la Petite Section au CM2, complètement magique : il est sans pile, sans onde et sans écran !\n\nCombiné avec des fiches d'exercices (vendus séparément), L'Etoilium permet aux enfants de travailler en autonomie dans toutes les matières scolaires, motivés par la récompense. Dès que les 10 réponses d’une fiche sont correctes, le réservoir d’étoiles s’ouvre et l'enfant peut récupérer une pièce d'or, c'est à dire une gommette à gratter .  Idéal pour rallumer des étoiles dans les yeux des enfants qui travaillent !",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Cafétéria",
+    "speaker": "Astrid BUISSET",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-5.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.etoilium.com",
+    "contact": {
+      "email": "astrid@etoilium.com",
+      "phone": "+33663691082"
+    }
+  },
+  {
+    "id": "stand-6",
+    "title": "Editions ESF sciences humaines ",
+    "description": "ESF sciences humaines propose aux acteurs de l’éducation - enseignants, formateurs, animateurs, éducateurs et parents - des ouvrages de référence associant la réflexion et l’instrumentation pratique en pédagogie. ",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Espace 3",
+    "speaker": "Sophie Courault",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-6.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.esf-scienceshumaines.fr",
+    "contact": {
+      "email": "sophie.courault@esf-scienceshumaines.fr",
+      "phone": "+33630496348"
+    }
+  },
+  {
+    "id": "stand-34",
+    "title": "Apili, apprendre grâce à l'humour !",
+    "description": "Apili propose des ouvrages et jeux pédagogiques fondés sur l'humour.\nIls sont particulièrement efficaces avec les enfants, même les plus en difficulté ! \n\n\n   \n",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Espace 2",
+    "speaker": "Benjamin  Stevens",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-34.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.apili.fr",
+    "contact": {
+      "email": "benjamin.stevens@apili.fr",
+      "phone": "+33.630.51.72.96"
+    }
+  },
+  {
+    "id": "stand-67",
+    "title": "Apprendre à mobiliser le corps et le cerveau pour des apprentissages durables",
+    "description": "Bouge ton corps et booste ton cerveau pour des apprentissages durables et structurants ! Découvrez les outils dynamiques et ludiques proposés par Pédago'Vie. Les méthodes MULTI'MOUV®, ORTHO'GAFFES et RéEDUK'action sont autant de solutions créées par Guillaume Bousquet pour redonner Vie aux apprentissages scolaires et rendre les apprentissages conscients. Des fondations cognitives (merci les neurosciences) aux compétences fondamentales (lecture, écriture, langage, orthographe, grammaire), vous trouverez des outils adaptés pour la classe et la séance individuelle.",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Espace 3",
+    "speaker": "Guillaume  Bousquet",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-67.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://pedagovie.fr",
+    "contact": {
+      "email": "pedagovie@gmail.com",
+      "phone": "+33609613896"
+    }
+  },
+  {
+    "id": "stand-100",
+    "title": "Les stratégies PNL d'apprentissage",
+    "description": "Les stratégies PNL d'apprentissage décrivent avec précision ce que les jeunes doivent faire dans leur tête pour comprendre, mémoriser, réfléchir et s'exprimer. C'est apprendre à apprendre avant de donner des contenus. Elles donnent au final des méthodes d'étude particulièrement efficaces.",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "Espace 3",
+    "speaker": "Alain Thiry",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-100.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.interactif.be",
+    "contact": {
+      "email": "alainthiry@interactif.be",
+      "phone": "0478380335"
+    }
+  },
+  {
+    "id": "stand-133",
+    "title": "Callicéphale éditions",
+    "description": "Entre album et théâtre, les éditions Callicéphale proposent des kamishibaï. Outil de lecture collective, le kamishibaï permet de jouer avec l'attention des spectateurs, d'intégrer les enfants à la lecture. Venez découvrir nos titres spécialement conçus pour ce type de lecture.",
+    "type": "Stands",
+    "day": "Mercredi",
+    "time": "Tous les jours",
+    "location": "À définir",
+    "speaker": "ALINE CARDOT",
+    "organization": "",
+    "image": "/assets/images/events/stands/stand-133.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.callicephale.fr",
+    "contact": {
+      "email": "editions@callicephale.fr",
+      "phone": "0033646410900"
+    }
+  }
+]

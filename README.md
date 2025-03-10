@@ -111,3 +111,147 @@ AstroWind is a free and open-source template originally created by [onWidget](ht
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE.md) file for details.
+
+## Processus de build
+
+### Génération des données statiques
+
+Le projet utilise un processus de build en deux étapes :
+
+1. **Génération des données statiques** : Le script `src/scripts/build-data.js` est exécuté avant le build Astro pour :
+   - Récupérer les données depuis l'API NocoDB
+   - Télécharger et optimiser les images des événements
+   - Générer un fichier JSON statique dans `src/content/festival/events.json`
+
+2. **Build Astro** : Astro utilise les données statiques générées pour construire le site.
+
+Ce processus permet :
+- Une meilleure performance (pas de requêtes API au runtime)
+- Une fiabilité accrue (pas de dépendance à l'API en production)
+- Une optimisation des images (redimensionnement, conversion en WebP)
+
+### Commandes
+
+```bash
+# Exécuter uniquement la génération des données
+node src/scripts/build-data.js
+
+# Build complet (génération des données + build Astro)
+npm run build
+```
+
+# Out of the Books - Festival
+
+Ce projet est le site web du festival Out of the Books, développé avec Astro et TailwindCSS.
+
+## Architecture des données
+
+Le site utilise une architecture statique pour les données du festival, ce qui permet d'optimiser les performances et la fiabilité. Voici comment les données sont gérées :
+
+### Génération des données statiques
+
+1. **Source des données** : Les données proviennent de NocoDB (stands, ateliers, conférences)
+2. **Processus de génération** : Un script Node.js (`src/scripts/build-data.js`) récupère les données et génère des fichiers JSON statiques
+3. **Stockage** : Les fichiers JSON sont stockés dans `src/content/festival/`
+
+### Fichiers JSON générés
+
+- `events.json` : Tous les événements organisés par jour
+- `stands.json` : Liste des stands uniquement
+- `ateliers.json` : Liste des ateliers uniquement
+- `conferences.json` : Liste des conférences uniquement
+
+### Tri des événements
+
+Les événements sont triés selon une logique précise dans la fonction `compareEvents` du script `build-data.js` :
+
+1. **Priorité par type** : Les stands sont toujours placés après les ateliers et conférences
+2. **Priorité par heure** : 
+   - Les événements avec une heure définie (ex: "10:00") apparaissent en premier, triés chronologiquement
+   - Les événements marqués "À définir" apparaissent ensuite
+   - Les stands marqués "Tous les jours" apparaissent en dernier
+3. **Priorité par catégorie** : À heure égale, les conférences sont affichées avant les ateliers
+
+Cette logique de tri est appliquée lors de la génération des données et ne nécessite pas de tri supplémentaire côté client, ce qui améliore les performances du site, particulièrement avec un grand nombre d'événements.
+
+> **Optimisation importante** : La fonction de tri a été déplacée du composant `DayFilter.astro` vers le script de pré-build `build-data.js`. Cette modification permet d'éviter un tri redondant côté client, réduisant ainsi la charge de travail du navigateur et améliorant significativement les performances, surtout sur les appareils mobiles.
+
+## Commandes disponibles
+
+```bash
+# Récupérer les données depuis NocoDB et générer les fichiers JSON
+npm run build:events
+
+# Récupérer uniquement les données sans traitement d'images
+npm run fetch:events
+
+# Tester la génération des données d'événements
+npm run test:events
+```
+
+## Script de génération des données
+
+Le script `build-data.js` est responsable de la récupération et du traitement des données du festival. Voici ses principales fonctionnalités :
+
+### Fonctionnalités principales
+
+1. **Récupération des données** : Connexion à l'API NocoDB pour récupérer les stands, ateliers et conférences
+2. **Conversion en événements** : Transformation des données brutes en format unifié d'événements
+3. **Traitement des images** : Téléchargement, optimisation et stockage des images des événements et des conférenciers
+4. **Organisation par jour** : Regroupement des événements par jour pour faciliter l'affichage
+5. **Génération de JSON** : Création de fichiers JSON statiques pour l'utilisation dans le site
+
+### Options du script
+
+- `--reset` : Réinitialise les fichiers JSON avant de générer de nouvelles données
+- `--fetch-only` : Récupère uniquement les données sans traiter les images
+- `--no-images` : Génère les données sans télécharger ni traiter les images
+
+### Traitement des images
+
+Le script télécharge et optimise automatiquement les images :
+- Redimensionnement à 400px max pour les grandes images
+- Création de thumbnails de 200px pour les affichages mobiles
+- Fond blanc pour les images avec transparence
+- Traitement spécial pour les images des conférenciers (cadrage optimisé pour les visages)
+- Stockage dans `public/assets/images/events/` et `src/assets/images/events/`
+
+## État du projet
+
+Le script de pré-build des données est désormais pleinement opérationnel et optimisé. Les principales améliorations incluent :
+
+1. **Tri optimisé des événements** : Implémentation d'une logique de tri robuste dans le script de pré-build, éliminant le besoin de tri côté client
+2. **Gestion efficace des images** : Téléchargement, optimisation et mise en cache automatiques des images
+3. **Performances améliorées** : Réduction significative du temps de chargement et de la consommation de ressources côté client
+4. **Fiabilité accrue** : Meilleure gestion des erreurs et des cas particuliers (données manquantes, formats d'images non supportés)
+
+Ces optimisations permettent au site de gérer efficacement un grand nombre d'événements tout en maintenant d'excellentes performances, même sur des appareils à faibles ressources.
+
+## Structure des composants
+
+Les principaux composants pour l'affichage des événements sont :
+
+- `src/pages/festival.astro` : Page principale du festival
+- `src/components/festival/EventsByDay.astro` : Affichage des événements par jour
+- `src/components/ui/EventCard.astro` : Carte d'événement individuelle
+
+## Workflow de développement
+
+1. Modifier les données dans NocoDB
+2. Exécuter `npm run build:events` pour générer les fichiers JSON
+3. Les modifications sont automatiquement reflétées dans le site
+
+## Maintenance
+
+Pour mettre à jour les données du festival :
+1. Mettre à jour les entrées dans NocoDB
+2. Exécuter `npm run build:events --reset` pour régénérer complètement les données
+3. Vérifier que les images sont correctement téléchargées et optimisées
+4. Construire le site avec `npm run build`
+
+## Dépendances
+
+- Node.js pour l'exécution du script
+- Sharp pour le traitement des images
+- Fetch pour les requêtes API
+- fs-extra pour la manipulation de fichiers

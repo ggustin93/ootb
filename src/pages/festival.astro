@@ -5,7 +5,8 @@ import Image from '~/components/common/Image.astro';
 import FestivalHeroSection from '~/components/sections/FestivalHeroSection.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import DayFilter from '~/components/ui/DayFilter.astro';
-import { getEventsByDay } from '~/services/events';
+import eventsData from '../content/festival/events.json';
+import type { EventsByDay } from '~/types/festival';
 import YouTubePlayer from '~/components/common/YouTubePlayer.astro';
 import ootbLogo from '~/assets/images/ootb-logo.svg';
 import Carousel from '~/components/ui/Carousel.astro';
@@ -29,8 +30,8 @@ import heroImage from '~/assets/images/festival_hero.webp';
 const heroLogo = logoFestival;
 const heroBackground = heroImage;
 
-// Récupération des événements depuis l'API NocoDB
-const eventsByDay = await getEventsByDay();
+// Utiliser directement les données statiques au lieu d'appeler getEventsByDay()
+const eventsByDay = eventsData as EventsByDay;
 ---
 
 <Layout metadata={metadata} currentPage="festival">
@@ -168,19 +169,21 @@ const eventsByDay = await getEventsByDay();
           </p>
           <div class="flex justify-center">
             <Button
-              href="/programme.pdf"
-              variant="outline"
+              href="https://indd.adobe.com/view/7bf541a0-d836-436c-b34a-68b6431b8fd0"
+              variant="outline" 
               size="md"
-              icon="tabler:file-download"
-              iconPosition="left"
+              icon="tabler:external-link"
+              iconPosition="right"
               class="mx-auto"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Télécharger le programme complet (PDF)
+              Voir le programme complet
             </Button>
           </div>
         </div>
 
-        <div class="bg-white rounded-[32px] shadow-xl p-4 md:p-8 mb-16 transform hover:scale-[1.01] transition-all duration-300 relative z-10">
+        <div class="bg-white rounded-[32px] shadow-xl p-4 md:p-8 mb-16 relative z-10">
           <style>
             /* Style personnalisé pour les boutons du DayFilter */
             :global(.day-filter-button) {

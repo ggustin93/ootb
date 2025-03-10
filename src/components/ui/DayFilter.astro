@@ -1,11 +1,11 @@
 ---
 import { days, dayDates, eventTypes } from '~/services/events';
-import type { Event } from '~/types/festival';
+import type { EventsByDay } from '~/types/festival';
 import { Icon } from 'astro-icon/components';
 import EventCard from '~/components/ui/EventCard.astro';
 
 interface Props {
-  events: Record<string, Event[]>;
+  events: EventsByDay;
 }
 
 const { events } = Astro.props;
@@ -18,18 +18,15 @@ const allEvents = Object.values(events).flat();
 // Compter le nombre d'événements par type
 const eventCounts: Record<string, number> = {
   'all': allEvents.length,
-  'programme': allEvents.filter(event => event.type === 'Conférences' || event.type === 'Ateliers').length,
-  'Conférences': allEvents.filter(event => event.type === 'Conférences').length,
-  'Ateliers': allEvents.filter(event => event.type === 'Ateliers').length,
-  'Stands': allEvents.filter(event => event.type === 'Stands').length
+  'programme': allEvents.filter(evt => evt.type === 'Conférences' || evt.type === 'Ateliers').length,
+  'Conférences': allEvents.filter(evt => evt.type === 'Conférences').length,
+  'Ateliers': allEvents.filter(evt => evt.type === 'Ateliers').length,
+  'Stands': allEvents.filter(evt => evt.type === 'Stands').length
 };
 
 // Afficher des logs pour le débogage des filtres
 console.log(`Nombre total d'événements: ${allEvents.length}`);
 console.log(`Événements par type:`, eventCounts);
-allEvents.forEach(event => {
-  // console.log(`Événement: "${event.title}" (Type: ${event.type}, Jour: ${event.day})`);
-});
 ---
 
 <div class="space-y-8 md:space-y-12" data-items-per-page={ITEMS_PER_PAGE}>
@@ -248,22 +245,48 @@ allEvents.forEach(event => {
   </div>
 
   <!-- Contenu des événements -->
-  <div class="space-y-4 md:space-y-6" id="events-container">
-    {allEvents.map(event => (
+  <div id="events-container" class="relative space-y-4 md:space-y-6">
+    {Object.values(events).flat().map(event => (
       <EventCard event={event} />
     ))}
-    
-    <!-- Message "Pas d'événements correspondants" -->
-    <div id="no-events-message" class="hidden py-12 px-6 bg-gray-50 rounded-xl border border-gray-100 text-center">
-      <div class="flex flex-col items-center justify-center gap-4">
-        <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
-          <Icon name="tabler:calendar-off" class="w-8 h-8 text-gray-400" />
-        </div>
-        <div class="space-y-2">
-          <h3 class="text-xl font-bold text-gray-700">Aucun événement trouvé</h3>
-          <p class="text-gray-500" id="no-events-details">Pas d'événements correspondant à vos critères de recherche.</p>
-        </div>
+
+    <!-- Message "Pas d'événements" -->
+    <div id="no-events-message" class="hidden">
+      <div class="flex flex-col items-center justify-center py-12 px-4 text-center">
+        <Icon name="tabler:calendar-off" class="w-16 h-16 text-gray-300 mb-4" />
+        <h4 class="text-xl font-medium text-gray-900 mb-2">Aucun événement trouvé</h4>
+        <p id="no-events-details" class="text-gray-500">
+          Pas d'événements correspondant à vos critères de recherche.
+        </p>
       </div>
+    </div>
+  </div>
+
+  <!-- Pagination desktop en bas de la liste -->
+  <div class="hidden sm:flex flex-col items-center gap-4 mt-8 pt-8 border-t border-gray-100">
+    <div class="flex items-center gap-4">
+      <button 
+        class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+        id="prev-page-bottom" 
+        disabled
+        aria-label="Page précédente"
+      >
+        <Icon name="tabler:chevron-left" class="w-8 h-8" />
+        <span class="sr-only">Page précédente</span>
+      </button>
+      
+      <span class="pagination-info text-sm text-gray-500">
+        Page <span id="current-page-bottom">1</span> sur <span id="total-pages-bottom">3</span>
+      </span>
+      
+      <button 
+        class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+        id="next-page-bottom"
+        aria-label="Page suivante"
+      >
+        <Icon name="tabler:chevron-right" class="w-8 h-8" />
+        <span class="sr-only">Page suivante</span>
+      </button>
     </div>
   </div>
 </div>
@@ -414,18 +437,42 @@ allEvents.forEach(event => {
   const itemsPerPage = parseInt(document.querySelector('[data-items-per-page]')?.getAttribute('data-items-per-page') || '10');
   let filteredEvents: HTMLElement[] = [];
   
-  // Définir l'ordre des jours pour le tri
-  const dayOrder = {
-    'Mercredi': 1,
-    'Jeudi': 2,
-    'Vendredi': 3
-  };
-
   // Variables pour la gestion des filtres
   let activeDays: string[] = []; // Jours actifs (vide = tous)
   let activeTypes: string[] = []; // Types actifs (vide = tous)
   let isAllDaysActive = true; // État du bouton "Tous les jours"
   let isAllTypesActive = true; // État du bouton "Tous" (types)
+
+  // Fonction pour trier les événements chronologiquement
+  function sortEventsByTime(events: HTMLElement[]): HTMLElement[] {
+    return [...events].sort((a, b) => {
+      // Les stands sont toujours en dernier
+      const aType = a.getAttribute('data-type');
+      const bType = b.getAttribute('data-type');
+      if (aType === 'Stands' && bType !== 'Stands') return 1;
+      if (aType !== 'Stands' && bType === 'Stands') return -1;
+
+      // Si un événement a une heure définie et l'autre non, celui avec l'heure définie passe en premier
+      const aTime = a.getAttribute('data-time') || '';
+      const bTime = b.getAttribute('data-time') || '';
+      if (aTime !== 'À définir' && bTime === 'À définir') return -1;
+      if (aTime === 'À définir' && bTime !== 'À définir') return 1;
+
+      // Si les deux événements ont une heure définie et différente de "À définir" et "Tous les jours"
+      if (aTime !== 'À définir' && bTime !== 'À définir' && 
+          aTime !== 'Tous les jours' && bTime !== 'Tous les jours') {
+        return aTime.localeCompare(bTime);
+      }
+
+      // Si les deux sont "À définir", trier par type
+      if (aType === bType) return 0;
+      if (aType === 'Conférences') return -1;
+      if (bType === 'Conférences') return 1;
+      if (aType === 'Ateliers') return -1;
+      if (bType === 'Ateliers') return 1;
+      return 0;
+    });
+  }
 
   // Fonction pour normaliser les noms des jours (supprimer les espaces, minuscules)
   function normalizeDay(day: string | null): string {
@@ -480,111 +527,6 @@ allEvents.forEach(event => {
     titleElement.textContent = title;
   }
   
-  // Fonction améliorée pour trier les événements chronologiquement
-  function sortEventsByTime(events: HTMLElement[]) {
-    return events.sort((a, b) => {
-      const dayA = a.getAttribute('data-day') || '';
-      const dayB = b.getAttribute('data-day') || '';
-      const timeA = a.getAttribute('data-time') || '';
-      const timeB = b.getAttribute('data-time') || '';
-      
-      // Trier d'abord par jour (Mercredi, Jeudi, Vendredi)
-      const dayOrderA = dayOrder[dayA as keyof typeof dayOrder] || 999;
-      const dayOrderB = dayOrder[dayB as keyof typeof dayOrder] || 999;
-      
-      if (dayOrderA !== dayOrderB) {
-        return dayOrderA - dayOrderB;
-      }
-      
-      // Convertir les heures en minutes pour faciliter la comparaison
-      const getMinutes = (timeStr: string): number => {
-        if (!timeStr || timeStr === "Toute la journée" || timeStr === "Horaire à définir") {
-          return -1; // Placer les événements sans heure précise au début
-        }
-        
-        // Format attendu: "10:00" ou "14h30"
-        let hours = 0;
-        let minutes = 0;
-        
-        if (timeStr.includes(':')) {
-          const [h, m] = timeStr.split(':').map(Number);
-          hours = h || 0;
-          minutes = m || 0;
-        } else if (timeStr.includes('h')) {
-          const [h, m] = timeStr.split('h');
-          hours = parseInt(h) || 0;
-          minutes = parseInt(m) || 0;
-        }
-        
-        return hours * 60 + minutes;
-      };
-      
-      const minutesA = getMinutes(timeA);
-      const minutesB = getMinutes(timeB);
-      
-      // Si les deux événements ont une heure définie, les comparer
-      if (minutesA >= 0 && minutesB >= 0) {
-        return minutesA - minutesB;
-      }
-      
-      // Placer les événements sans heure précise à la fin
-      if (minutesA < 0 && minutesB >= 0) return 1;
-      if (minutesA >= 0 && minutesB < 0) return -1;
-      
-      // Si aucun n'a d'heure précise, trier par type puis par titre
-      const typeA = a.getAttribute('data-type') || '';
-      const typeB = b.getAttribute('data-type') || '';
-      
-      if (typeA !== typeB) {
-        // Mettre les conférences avant les ateliers
-        return typeA === 'Conférences' ? -1 : 1;
-      }
-      
-      // En dernier recours, trier par titre
-      const titleA = a.querySelector('h3')?.textContent || '';
-      const titleB = b.querySelector('h3')?.textContent || '';
-      return titleA.localeCompare(titleB);
-    });
-  }
-
-  // Compter le nombre d'événements par type et jour pour les pastilles
-  function updateEventCounts() {
-    const events = Array.from(document.querySelectorAll('.event-card')) as HTMLElement[];
-    
-    // Récupérer tous les stands et éliminer les doublons par titre
-    const standsSet = new Set<string>();
-    events.filter(event => event.getAttribute('data-type') === 'Stands').forEach(stand => {
-      const standTitle = stand.querySelector('h3')?.textContent || '';
-      standsSet.add(standTitle);
-    });
-    
-    // Compter les événements par type
-    const typeCounts = {
-      'Conférences': events.filter(event => event.getAttribute('data-type') === 'Conférences').length,
-      'Ateliers': events.filter(event => event.getAttribute('data-type') === 'Ateliers').length,
-      'Stands': standsSet.size // Nombre unique de stands
-    };
-    
-    // Mettre à jour les pastilles de comptage
-    document.querySelectorAll('.type-filter-button').forEach(button => {
-      const type = button.getAttribute('data-type');
-      if (type) {
-        const countBadge = button.querySelector('span:last-child');
-        if (countBadge) {
-          countBadge.textContent = typeCounts[type as keyof typeof typeCounts].toString();
-        }
-      }
-    });
-    
-    // Mettre à jour la pastille "Tous les types"
-    const allTypesBadge = document.querySelector('#all-types-button span:last-child');
-    if (allTypesBadge) {
-      // Calculer le total en additionnant les conférences, ateliers et stands uniques
-      const total = typeCounts.Conférences + typeCounts.Ateliers + typeCounts.Stands;
-      allTypesBadge.textContent = total.toString();
-    }
-  }
-
   // Fonction pour mettre à jour la pagination
   function updatePagination() {
     const events = Array.from(document.querySelectorAll('.event-card')) as HTMLElement[];
@@ -613,10 +555,10 @@ allEvents.forEach(event => {
       return dayMatch && typeMatch;
     });
 
-    // Tri chronologique amélioré des événements
+    // Trier les événements filtrés chronologiquement
     filteredEvents = sortEventsByTime(filteredEvents);
-    
-    // Réorganiser les événements dans le DOM selon le tri
+
+    // Réorganiser les événements dans le DOM
     const container = document.getElementById('events-container');
     if (container) {
       // Supprimer l'en-tête existant s'il y en a un
@@ -628,7 +570,7 @@ allEvents.forEach(event => {
       // Mettre à jour le titre des filtres actifs
       updateActiveFiltersTitle();
       
-      // Réorganiser les événements
+      // Réorganiser les événements (sans tri supplémentaire)
       filteredEvents.forEach(event => {
         container.appendChild(event);
       });
@@ -743,6 +685,44 @@ allEvents.forEach(event => {
 
     // Mettre à jour les compteurs d'événements dans les pastilles
     updateEventCounts();
+  }
+
+  // Compter le nombre d'événements par type et jour pour les pastilles
+  function updateEventCounts() {
+    const events = Array.from(document.querySelectorAll('.event-card')) as HTMLElement[];
+    
+    // Récupérer tous les stands et éliminer les doublons par titre
+    const standsSet = new Set<string>();
+    events.filter(event => event.getAttribute('data-type') === 'Stands').forEach(stand => {
+      const standTitle = stand.querySelector('h3')?.textContent || '';
+      standsSet.add(standTitle);
+    });
+    
+    // Compter les événements par type
+    const typeCounts = {
+      'Conférences': events.filter(event => event.getAttribute('data-type') === 'Conférences').length,
+      'Ateliers': events.filter(event => event.getAttribute('data-type') === 'Ateliers').length,
+      'Stands': standsSet.size // Nombre unique de stands
+    };
+    
+    // Mettre à jour les pastilles de comptage
+    document.querySelectorAll('.type-filter-button').forEach(button => {
+      const type = button.getAttribute('data-type');
+      if (type) {
+        const countBadge = button.querySelector('span:last-child');
+        if (countBadge) {
+          countBadge.textContent = typeCounts[type as keyof typeof typeCounts].toString();
+        }
+      }
+    });
+    
+    // Mettre à jour la pastille "Tous les types"
+    const allTypesBadge = document.querySelector('#all-types-button span:last-child');
+    if (allTypesBadge) {
+      // Calculer le total en additionnant les conférences, ateliers et stands uniques
+      const total = typeCounts.Conférences + typeCounts.Ateliers + typeCounts.Stands;
+      allTypesBadge.textContent = total.toString();
+    }
   }
 
   // Initialisation
@@ -1063,7 +1043,7 @@ allEvents.forEach(event => {
     });
     
     // Boutons de pagination
-    document.querySelectorAll('#prev-page, #prev-page-mobile').forEach(button => {
+    document.querySelectorAll('#prev-page, #prev-page-mobile, #prev-page-bottom').forEach(button => {
       button.addEventListener('click', () => {
         if (currentPage > 1) {
           currentPage--;
@@ -1072,7 +1052,7 @@ allEvents.forEach(event => {
       });
     });
     
-    document.querySelectorAll('#next-page, #next-page-mobile').forEach(button => {
+    document.querySelectorAll('#next-page, #next-page-mobile, #next-page-bottom').forEach(button => {
       button.addEventListener('click', () => {
         const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
         if (currentPage < totalPages) {

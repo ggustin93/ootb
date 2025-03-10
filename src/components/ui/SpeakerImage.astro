@@ -1,0 +1,66 @@
+---
+import Image from '~/components/common/Image.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: string | ImageMetadata;
+  alt: string;
+  className?: string;
+  width?: number;
+  height?: number;
+  widths?: number[];
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  format?: string;
+}
+
+const { 
+  src, 
+  alt,
+  className = "w-full h-full object-cover object-[center_25%]",
+  width = 160,
+  height = 160,
+  widths = [80, 160, 240],
+  sizes = "(max-width: 640px) 80px, (max-width: 1024px) 160px, 240px",
+  loading = "lazy",
+  decoding = "async",
+  format = "webp"
+} = Astro.props;
+
+// Détermine si nous devons utiliser une balise img standard ou le composant Image
+const isExternalImage = typeof src === 'string' && (
+  src.startsWith('/images/') || 
+  src.startsWith('http://') || 
+  src.startsWith('https://')
+);
+
+// Image placeholder d'avatar générique pour les conférenciers
+const placeholderImage = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png';
+const finalSrc = src || placeholderImage;
+---
+
+{isExternalImage ? (
+  <img
+    src={finalSrc as string}
+    alt={alt}
+    class={className}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding={decoding}
+  />
+) : (
+  <Image
+    src={finalSrc}
+    alt={alt}
+    class={className}
+    width={width}
+    height={height}
+    widths={widths}
+    sizes={sizes}
+    loading={loading}
+    decoding={decoding}
+    format={format}
+  />
+)}

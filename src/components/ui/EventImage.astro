@@ -1,0 +1,76 @@
+---
+import Image from '~/components/common/Image.astro';
+import { Icon } from 'astro-icon/components';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src?: string | ImageMetadata;
+  alt: string;
+  className?: string;
+  icon?: string;
+  iconColor?: string;
+  widths?: number[];
+  sizes?: string;
+  aspectRatio?: string;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  format?: string;
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const { 
+  src, 
+  alt, 
+  className = "max-w-full max-h-full object-contain",
+  icon,
+  iconColor,
+  widths = [200, 400, 600],
+  sizes = "(max-width: 640px) 200px, (max-width: 1024px) 400px, 600px",
+  aspectRatio = "1:1",
+  loading = "lazy",
+  decoding = "async",
+  format = "webp",
+  fetchpriority = "low"
+} = Astro.props;
+
+// Détermine si nous devons utiliser une balise img standard ou le composant Image
+const isExternalImage = typeof src === 'string' && (
+  src.startsWith('/images/') || 
+  src.startsWith('http://') || 
+  src.startsWith('https://')
+);
+
+// Si nous n'avons pas d'image, on affiche une icône
+const hasNoImage = !src && icon;
+---
+{hasNoImage && (
+  <div class="w-full h-full flex items-center justify-center">
+    <Icon name={icon || 'tabler:photo'} class="w-24 h-24" style={`color: ${iconColor || '#e4451e'}`} />
+  </div>
+)}
+
+{isExternalImage && (
+  <img
+    src={src as string}
+    alt={alt}
+    class={className}
+    loading={loading}
+    decoding={decoding}
+    fetchpriority={fetchpriority}
+  />
+)}
+
+{!hasNoImage && !isExternalImage && src && (
+  <Image
+    src={src}
+    alt={alt}
+    class={className}
+    widths={widths}
+    sizes={sizes}
+    aspectRatio={aspectRatio}
+    loading={loading}
+    decoding={decoding}
+    format={format}
+    fetchpriority={fetchpriority}
+  />
+)}

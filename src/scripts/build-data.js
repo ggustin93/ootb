@@ -17,6 +17,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '../..');
 
+// Déterminer si nous sommes en mode production
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+console.log(`🔧 Mode de build: ${IS_PRODUCTION ? 'production' : 'développement'}`);
+
 // Configuration NocoDB (basée sur src/config/nocodb.ts)
 const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || "https://app.nocodb.com";
 const NOCODB_API_TOKEN = process.env.NOCODB_API_TOKEN || "";
@@ -57,6 +61,23 @@ const IMAGES_SRC_DIR = path.join(ROOT_DIR, 'src', 'assets', 'images', 'events');
 const IMAGES_PUBLIC_DIR = path.join(ROOT_DIR, 'public', 'images', 'events');
 const OUTPUT_DIR = path.join(ROOT_DIR, 'src', 'content', 'festival');
 const RAW_DATA_DIR = path.join(ROOT_DIR, 'src', 'content', 'festival', 'raw-data');
+
+// Fonction pour générer le chemin d'image en fonction du mode
+function getImagePath(eventType, fileName) {
+  if (IS_PRODUCTION) {
+    // En production, utiliser le chemin public qui sera copié dans dist
+    return `/images/events/${eventType}/${fileName}.webp`;
+  } else {
+    // En développement, utiliser le chemin src/assets
+    return `/assets/images/events/${eventType}/${fileName}.webp`;
+  }
+}
+
+// Afficher un message au démarrage pour indiquer le mode et les chemins d'images
+console.log(`🖼️ Chemins d'images en mode ${IS_PRODUCTION ? 'production' : 'développement'}:`);
+console.log(`   - ${IS_PRODUCTION ? 'Production' : 'Développement'}: ${getImagePath('example', 'example').replace('example/example.webp', '')}`);
+console.log(`   - Images source: ${IMAGES_SRC_DIR}`);
+console.log(`   - Images public: ${IMAGES_PUBLIC_DIR}`);
 
 // Jours du festival
 const DAYS = ['Mercredi', 'Jeudi', 'Vendredi'];
@@ -673,18 +694,23 @@ async function downloadAndOptimizeImage(
       const fitOption = isSpeakerImage ? 'cover' : 'inside';
       const positionOption = isSpeakerImage ? 'north' : 'center';
       
-      // Générer la version principale (400px)
-      await originalImage
-        .resize(400, 400, { 
-          fit: fitOption,
-          position: positionOption,
-          withoutEnlargement: true,
-          background: whiteBackground
-        })
-        .webp({ quality: 80 })
-        .toFile(path.join(srcDir, `${fileName}.webp`));
+      // En mode production, nous n'avons besoin que des images dans le dossier public
+      // En mode développement, nous générons les deux versions
       
-      // Générer la version thumbnail (200px)
+      if (!IS_PRODUCTION) {
+        // Générer la version principale (400px) pour le développement
+        await originalImage
+          .resize(400, 400, { 
+            fit: fitOption,
+            position: positionOption,
+            withoutEnlargement: true,
+            background: whiteBackground
+          })
+          .webp({ quality: 80 })
+          .toFile(path.join(srcDir, `${fileName}.webp`));
+      }
+      
+      // Générer la version thumbnail (200px) - toujours nécessaire
       await originalImage
         .resize(200, 200, { 
           fit: fitOption,
@@ -695,8 +721,21 @@ async function downloadAndOptimizeImage(
         .webp({ quality: 80 })
         .toFile(path.join(publicDir, `${fileName}.webp`));
       
+      // En mode production, générer également une version 400px dans le dossier public
+      if (IS_PRODUCTION) {
+        await originalImage
+          .resize(400, 400, { 
+            fit: fitOption,
+            position: positionOption,
+            withoutEnlargement: true,
+            background: whiteBackground
+          })
+          .webp({ quality: 80 })
+          .toFile(path.join(publicDir, `${fileName}.webp`));
+      }
+      
       // Stocker le chemin dans le cache
-      const optimizedPath = `/assets/images/events/${eventType}/${fileName}.webp`;
+      const optimizedPath = getImagePath(eventType, fileName);
       imageUrlCache.set(imageUrl, optimizedPath);
       
       return optimizedPath;
@@ -730,12 +769,18 @@ async function createPlaceholderImage(srcDir, publicDir, fileName, eventType, im
     .webp({ quality: 80 })
     .toBuffer();
     
-    // Sauvegarder l'image de remplacement
-    await fs.promises.writeFile(path.join(srcDir, `${fileName}.webp`), placeholderImage);
+    // En mode production, nous n'avons besoin que des images dans le dossier public
+    // En mode développement, nous générons les deux versions
+    if (!IS_PRODUCTION) {
+      // Sauvegarder l'image de remplacement dans le dossier src
+      await fs.promises.writeFile(path.join(srcDir, `${fileName}.webp`), placeholderImage);
+    }
+    
+    // Toujours sauvegarder dans le dossier public
     await fs.promises.writeFile(path.join(publicDir, `${fileName}.webp`), placeholderImage);
     
     // Stocker le chemin dans le cache
-    const fallbackPath = `/assets/images/events/${eventType}/${fileName}.webp`;
+    const fallbackPath = getImagePath(eventType, fileName);
     imageUrlCache.set(imageUrl, fallbackPath);
     
     console.log(`✅ Image de remplacement créée pour ${fileName}`);

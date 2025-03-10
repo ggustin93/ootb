@@ -3,7 +3,7 @@ import type { Collection } from "tinacms";
 export const festivalCollection: Collection = {
   name: "festival",
   label: "📄 Page - Festival",
-  path: "src/content/festival",
+  path: "src/content/festival/tina/",
   format: "json",
   ui: {
     allowedActions: {

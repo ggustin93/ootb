@@ -2,6 +2,7 @@
 import Layout from '~/layouts/PageLayout.astro';
 import { Icon } from 'astro-icon/components';
 import { getHomePermalink } from '~/utils/permalinks';
+import Button from '~/components/ui/Button.astro';
 import '~/assets/styles/handwritten.css';
 
 const title = `Merci pour votre message`;
@@ -11,43 +12,43 @@ const description = `Votre message a bien été envoyé. Nous vous répondrons d
 <Layout metadata={{ title, description }}>
   <section class="flex items-center min-h-[70vh] p-8 md:p-16">
     <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
-      <div class="max-w-md text-center">
-        <div class="mb-8 flex justify-center">
-          <div class="bg-[--ootb-blue] text-white p-6 rounded-full">
+      <div class="max-w-2xl text-center">
+        <div class="mb-12 flex justify-center">
+          <div class="bg-[--ootb-blue] text-white p-6 rounded-full shadow-lg">
             <Icon name="tabler:mail-check" class="w-16 h-16" />
           </div>
         </div>
         
-        <h1 class="text-4xl md:text-5xl font-handwritten mb-4 text-[--ootb-blue]">
+        <h1 class="text-4xl md:text-5xl font-handwritten mb-8 text-[--ootb-blue] leading-tight">
           Message bien reçu !
         </h1>
         
-        <p class="mt-4 mb-6 text-lg text-gray-600">
+        <p class="text-xl md:text-2xl mb-12 text-gray-700 leading-relaxed max-w-xl mx-auto">
           Merci de nous avoir contactés. Votre message a bien été envoyé et nous vous répondrons dans les plus brefs délais.
         </p>
         
-        <p class="mb-8 text-base text-gray-500">
-          Notre équipe s'efforce de répondre à toutes les demandes sous 48 heures ouvrées.
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a 
-            rel="noopener noreferrer" 
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+          <Button 
+            variant="blue" 
+            size="lg" 
             href={getHomePermalink()} 
-            class="inline-flex items-center justify-center gap-2 font-medium rounded-full px-6 py-3 bg-[--ootb-blue] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)] shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[--ootb-blue] hover:-translate-y-0.5"
+            icon="tabler:home" 
+            iconPosition="left"
+            class="min-h-[60px]"
           >
-            <Icon name="tabler:home" class="w-5 h-5" />
-            <span>Retour à l'accueil</span>
-          </a>
+            Retour à l'accueil
+          </Button>
           
-          <a 
-            rel="noopener noreferrer" 
+          <Button 
+            variant="outline-blue" 
+            size="lg" 
             href="/a-propos" 
-            class="inline-flex items-center justify-center gap-2 font-medium rounded-full px-6 py-3 bg-white text-[--ootb-blue] border border-[--ootb-blue]/20 hover:border-[--ootb-blue]/40 shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[--ootb-blue] hover:-translate-y-0.5"
+            icon="tabler:info-circle" 
+            iconPosition="left"
+            class="min-h-[60px]"
           >
-            <Icon name="tabler:info-circle" class="w-5 h-5" />
-            <span>En savoir plus sur nous</span>
-          </a>
+            En savoir plus sur nous
+          </Button>
         </div>
       </div>
     </div>

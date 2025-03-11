@@ -10,6 +10,11 @@ import '~/assets/styles/handwritten.css';
 import contactData from '~/content/contact/index.json';
 
 const { metadata, hero, form, contactInfo } = contactData;
+
+// Vérifier si le token API est présent et non vide
+const NOCODB_API_TOKEN = import.meta.env.NOCODB_API_TOKEN;
+const isTokenValid = NOCODB_API_TOKEN && NOCODB_API_TOKEN.trim() !== '';
+console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TEST'}`);
 ---
 
 <Layout metadata={metadata}>
@@ -64,7 +69,7 @@ const { metadata, hero, form, contactInfo } = contactData;
         <div class="grid md:grid-cols-3 gap-6 md:gap-8">
           {/* Formulaire */}
           <div class="md:col-span-2">
-            <form class="space-y-5 relative z-0" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/merci-contact">
+            <form id="contact-form" class="space-y-5 relative z-0">
               <input type="hidden" name="form-name" value="contact" />
               <p class="hidden">
                 <label>
@@ -82,9 +87,13 @@ const { metadata, hero, form, contactInfo } = contactData;
                     id="name"
                     name="name"
                     placeholder={form.name.placeholder}
-                    class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                    class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900 peer"
                     required
+                    minlength="2"
                   />
+                  <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+                    Veuillez entrer un nom valide (2 caractères minimum)
+                  </p>
                 </div>
                 <div>
                   <label class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2" for="email">
@@ -95,10 +104,31 @@ const { metadata, hero, form, contactInfo } = contactData;
                     id="email"
                     name="email"
                     placeholder={form.email.placeholder}
-                    class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                    class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900 peer"
                     required
                   />
+                  <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+                    Veuillez entrer une adresse email valide
+                  </p>
                 </div>
+              </div>
+
+              <div>
+                <label class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2" for="subject">
+                  Sujet
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  placeholder="Sujet de votre message"
+                  class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900 peer"
+                  required
+                  minlength="3"
+                />
+                <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+                  Veuillez entrer un sujet valide (3 caractères minimum)
+                </p>
               </div>
 
               <div>
@@ -110,15 +140,29 @@ const { metadata, hero, form, contactInfo } = contactData;
                   name="message"
                   placeholder={form.message.placeholder}
                   rows="5"
-                  class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900"
+                  class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900 peer"
                   required
+                  minlength="10"
                 ></textarea>
+                <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+                  Veuillez entrer un message valide (10 caractères minimum)
+                </p>
+              </div>
+
+              <!-- Message de statut -->
+              <div id="formStatus" class="my-4 p-4 rounded-xl text-center hidden transition-all duration-300 transform">
+                <div class="flex items-center justify-center gap-3">
+                  <span id="statusIcon" class="text-2xl"></span>
+                  <span id="statusMessage" class="text-lg font-medium"></span>
+                </div>
               </div>
 
               <div class="pt-2">
                 <button 
-                  type="submit"
+                  type="button"
+                  id="submit-button"
                   class="inline-flex items-center justify-center gap-2 font-medium rounded-full px-8 py-3 bg-[--ootb-blue] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)] shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[--ootb-blue] hover:-translate-y-0.5 w-full md:w-auto text-base"
+                  onclick="console.log('Bouton cliqué directement via onclick')"
                 >
                   {form.button}
                 </button>
@@ -177,3 +221,251 @@ const { metadata, hero, form, contactInfo } = contactData;
     </div>
   </div>
 </Layout>
+
+<style>
+  /* Styles pour les messages de statut */
+  #formStatus:not(.hidden) {
+    @apply my-6 p-4 rounded-xl text-center;
+  }
+
+  #formStatus.error {
+    @apply bg-rose-50 text-rose-700 border border-rose-200;
+  }
+
+  #formStatus.processing {
+    @apply bg-sky-50 text-sky-700 border border-sky-200;
+  }
+
+  /* Animation de pulsation pour le traitement */
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.03);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Styles pour les champs invalides */
+  input:invalid:not(:placeholder-shown), 
+  textarea:invalid:not(:placeholder-shown) {
+    @apply border-rose-300 focus:border-rose-500 focus:ring-rose-500/20;
+  }
+
+  input:valid:not(:placeholder-shown), 
+  textarea:valid:not(:placeholder-shown) {
+    @apply border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500/20;
+  }
+
+  /* Styles pour les messages d'erreur sous les champs */
+  .peer:invalid:not(:placeholder-shown) ~ .validation-message {
+    @apply visible opacity-100 translate-y-0;
+  }
+</style>
+
+<script is:inline>
+  console.log('🔄 Script de contact chargé');
+  
+  // Fonction pour initialiser le formulaire après le chargement du DOM
+  function initContactForm() {
+    console.log('🔄 Initialisation du formulaire de contact...');
+    
+    // Éléments DOM
+    const form = document.getElementById('contact-form');
+    const submitButton = document.getElementById('submit-button');
+    const formStatus = document.getElementById('formStatus');
+    const statusIcon = document.getElementById('statusIcon');
+    const statusMessage = document.getElementById('statusMessage');
+    
+    console.log('🔍 Éléments DOM trouvés:', {
+      form: !!form,
+      submitButton: !!submitButton,
+      formStatus: !!formStatus,
+      statusIcon: !!statusIcon,
+      statusMessage: !!statusMessage
+    });
+    
+    if (!form || !submitButton || !formStatus) {
+      console.error('❌ Éléments du formulaire non trouvés');
+      return;
+    }
+    
+    // Ajouter des placeholders vides à tous les champs pour que :not(:placeholder-shown) fonctionne
+    const inputFields = form.querySelectorAll('input[type="text"], input[type="email"], textarea[required]');
+    inputFields.forEach(field => {
+      if (!field.placeholder) {
+        field.placeholder = " ";
+      }
+      
+      // Ajouter des écouteurs d'événements pour afficher les messages d'erreur
+      field.addEventListener('invalid', function() {
+        const errorMessage = this.nextElementSibling;
+        if (errorMessage && errorMessage.classList.contains('validation-message')) {
+          errorMessage.classList.add('visible', 'opacity-100', 'translate-y-0');
+        }
+      });
+      
+      field.addEventListener('input', function() {
+        const errorMessage = this.nextElementSibling;
+        if (errorMessage && errorMessage.classList.contains('validation-message')) {
+          if (this.validity.valid) {
+            errorMessage.classList.remove('visible', 'opacity-100', 'translate-y-0');
+          } else {
+            errorMessage.classList.add('visible', 'opacity-100', 'translate-y-0');
+          }
+        }
+      });
+    });
+    
+    // Fonctions pour afficher les messages de statut
+    function showStatus(message, type) {
+      console.log(`🔔 Affichage du message de statut (${type}): ${message}`);
+      
+      // Réinitialiser les classes
+      formStatus.className = 'my-6 p-6 rounded-xl text-center transition-all duration-300 transform';
+      
+      // Ajouter la classe correspondant au type
+      formStatus.classList.add(type);
+      
+      // Définir l'icône et le message
+      if (type === 'error') {
+        statusIcon.innerHTML = '❌';
+        statusMessage.textContent = message;
+        // Animation pour erreur
+        formStatus.classList.add('scale-100', 'translate-y-0');
+      } else if (type === 'processing') {
+        statusIcon.innerHTML = '⏳';
+        statusMessage.textContent = message;
+        // Animation pour traitement
+        formStatus.classList.add('pulse');
+      }
+      
+      // Rendre visible
+      formStatus.classList.remove('hidden');
+      
+      // Désactiver le bouton pendant le traitement
+      if (type === 'processing') {
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="animate-pulse">Traitement en cours...</span>';
+      } else {
+        // Réactiver le bouton pour les autres types
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Envoyer';
+      }
+      
+      // Faire défiler jusqu'au message
+      formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    function showError(message) {
+      showStatus(message, 'error');
+    }
+    
+    // Gestion de la soumission du formulaire
+    function handleSubmit() {
+      console.log('🔄 Fonction handleSubmit appelée');
+      
+      console.log('🔍 Validation du formulaire...');
+      
+      // Vérifier manuellement chaque champ et afficher les messages d'erreur
+      let isValid = true;
+      inputFields.forEach(field => {
+        if (!field.validity.valid) {
+          isValid = false;
+          const errorMessage = field.nextElementSibling;
+          if (errorMessage && errorMessage.classList.contains('validation-message')) {
+            errorMessage.classList.add('visible', 'opacity-100', 'translate-y-0');
+          }
+        }
+      });
+      
+      if (!form.checkValidity() || !isValid) {
+        console.error('❌ Validation échouée: formulaire invalide');
+        form.reportValidity();
+        return;
+      }
+      
+      console.log('✅ Formulaire valide, préparation de la soumission...');
+      
+      try {
+        // Afficher le message de traitement
+        showStatus('Traitement en cours...', 'processing');
+        
+        // Préparer les données du formulaire au format JSON
+        const formData = new FormData(form);
+        
+        // Convertir FormData en objet JSON
+        const jsonData = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          subject: formData.get('subject'),
+          message: formData.get('message')
+        };
+        
+        console.log('🚀 Soumission du formulaire à l\'API...');
+        console.log('📝 Données envoyées:', jsonData);
+        
+        // Envoyer les données à l'endpoint API sécurisé
+        fetch('/api/submit-contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(jsonData)
+        })
+        .then(response => {
+          console.log('📥 Réponse reçue:', response);
+          return response.json();
+        })
+        .then(result => {
+          console.log('📄 Données de réponse:', result);
+          
+          if (result.success) {
+            console.log('✅ Soumission réussie:', result);
+            
+            // Rediriger vers la page de confirmation au lieu d'afficher un message
+            window.location.href = '/merci-contact';
+          } else {
+            console.error('❌ Erreur lors de la soumission:', result);
+            showError(result.message || 'Une erreur est survenue lors de la soumission du formulaire.');
+          }
+        })
+        .catch(error => {
+          console.error('❌ Erreur lors de la soumission:', error);
+          showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
+        });
+      } catch (error) {
+        console.error('❌ Erreur lors de la soumission:', error);
+        showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
+      }
+    }
+    
+    // Attacher l'événement click au bouton
+    console.log('🔄 Attachement de l\'événement click au bouton...');
+    submitButton.addEventListener('click', function(_event) {
+      console.log('🖱️ Événement click détecté sur le bouton');
+      handleSubmit();
+    });
+    
+    console.log('✅ Initialisation du formulaire terminée');
+  }
+  
+  // Attacher l'initialisation au chargement du DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContactForm);
+    console.log('🔄 Événement DOMContentLoaded attaché');
+  } else {
+    console.log('🔄 DOM déjà chargé, initialisation immédiate');
+    initContactForm();
+  }
+</script>

@@ -69,19 +69,24 @@ const { url, title, blogLink, contentStates } = Astro.props;
   
   function setupBackButton() {
     const backButtons = document.querySelectorAll('.back-button');
+    const validPaths = ['/blog', '/tag', '/category'];
     
     backButtons.forEach(button => {
       button.addEventListener('click', (e) => {
-        // Vérifier s'il y a un historique de navigation
         const referrer = document.referrer;
         
-        // Si on a un referrer et qu'il est sur le même domaine
-        if (referrer && referrer.includes(window.location.hostname)) {
+        // Vérifier si le referrer existe et s'il contient un chemin valide
+        if (referrer && referrer.includes(window.location.hostname) && 
+            validPaths.some(path => referrer.includes(path))) {
           e.preventDefault();
-          // Revenir à la page précédente
           window.history.back();
+        } else {
+          // Si pas de referrer valide, rediriger vers le chemin par défaut (/blog)
+          const defaultPath = button.getAttribute('href') || '/blog';
+          if (!e.defaultPrevented) {
+            window.location.href = defaultPath;
+          }
         }
-        // Sinon, laisser le lien href par défaut fonctionner (vers /blog)
       });
     });
   }

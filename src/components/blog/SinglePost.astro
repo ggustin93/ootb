@@ -157,18 +157,6 @@ const mediaWrapperClasses = [
   contentType === 'actualite' && "ring-4 ring-[var(--content-actualite)]/20"
 ];
 
-// Debug info
-console.log('Debug media info détaillé:', {
-  contentType,
-  mediaType: mediaInfo.type,
-  isPodcast: contentStates.isPodcast,
-  podcastUrl: mediaInfo.podcastUrl,
-  iframeCode: mediaInfo.iframeCode ? `Longueur: ${mediaInfo.iframeCode.length}` : 'Absent',
-  smartlinkUrl: mediaInfo.smartlinkUrl ? `URL: ${mediaInfo.smartlinkUrl}` : 'Absent',
-  rawMediaObject: post.media ? 'Objet media présent' : 'Objet media absent',
-  mediaKeys: post.media ? Object.keys(post.media) : [],
-  conditionTest: !!(mediaInfo.podcastUrl || mediaInfo.iframeCode || mediaInfo.smartlinkUrl)
-});
 ---
 
 <section class="py-4 sm:py-8 mx-auto max-w-6xl px-4 sm:px-6">

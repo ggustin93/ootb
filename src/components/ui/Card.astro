@@ -133,22 +133,10 @@ const formatPublishDate = (date?: Date | string) => {
 // Image source - utiliser l'image fournie ou afficher un fond coloré
 const useCustomImage = hasCustomImage(image);
 
-// Débogage pour identifier pourquoi certaines dates ne s'affichent pas
-console.log(`[CARD DEBUG ${title}] meta disponible:`, !!meta);
-console.log(`[CARD DEBUG ${title}] publishDate disponible:`, !!meta?.publishDate);
-console.log(`[CARD DEBUG ${title}] image disponible:`, !!image);
-console.log(`[CARD DEBUG ${title}] useCustomImage:`, useCustomImage);
-if (meta?.publishDate) {
-  console.log(`[CARD DEBUG ${title}] Valeur publishDate:`, meta.publishDate);
-  console.log(`[CARD DEBUG ${title}] Type publishDate:`, typeof meta.publishDate);
-}
-
 const formattedPublishDate = meta?.publishDate 
   ? formatPublishDate(meta.publishDate) 
   : null;
 
-// Plus de débogage sur le résultat
-console.log(`[CARD DEBUG ${title}] formattedPublishDate:`, formattedPublishDate);
 
 // Vérifier si la date a pu être formatée
 if (meta?.publishDate && !formattedPublishDate) {

@@ -217,24 +217,45 @@ function convertFichesToMDX(fiches) {
         `${edition}-${baseSlug}-${fiche.Id}` : 
         `${edition}-${baseSlug}-${index + 1}`;
       
-      // Construction de la date de publication en fonction de l'année d'édition avec date aléatoire
-      const publishYear = parseInt(edition) || new Date().getFullYear();
+      // Déterminer la date de publication en fonction de l'édition
+      let publishDate;
       
-      // Génération d'une date aléatoire dans l'année d'édition
-      const randomMonth = Math.floor(Math.random() * 12) + 1; // Mois entre 1 et 12
-      const maxDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][randomMonth - 1]; // Jours par mois
-      const randomDay = Math.floor(Math.random() * maxDay) + 1; // Jour entre 1 et max pour le mois
-      
-      // Format de la date avec padding pour mois et jours à 2 chiffres
-      const paddedMonth = randomMonth.toString().padStart(2, '0');
-      const paddedDay = randomDay.toString().padStart(2, '0');
-      
-      // Construction de la date ISO avec heure aléatoire 
-      const randomHour = Math.floor(Math.random() * 24);
-      const randomMinute = Math.floor(Math.random() * 60);
-      const randomSecond = Math.floor(Math.random() * 60);
-      
-      const publishDate = `${publishYear}-${paddedMonth}-${paddedDay}T${randomHour.toString().padStart(2, '0')}:${randomMinute.toString().padStart(2, '0')}:${randomSecond.toString().padStart(2, '0')}.001Z`;
+      // Si l'édition est 2025 ou non définie/égale à l'année courante, utiliser la date courante
+      if (parseInt(edition) >= 2025 || !fiche.Edition) {
+        // Utiliser la date actuelle ou la date de création de la fiche si disponible
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = (now.getMonth() + 1).toString().padStart(2, '0');
+        const day = now.getDate().toString().padStart(2, '0');
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        
+        publishDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.001Z`;
+        
+        console.log(`📅 Fiche "${fiche.Title || 'sans titre'}" (édition ${edition}): date courante utilisée: ${publishDate}`);
+      } else {
+        // Pour les éditions 2024 et antérieures, conserver le système de date aléatoire
+        const publishYear = parseInt(edition) || new Date().getFullYear();
+        
+        // Génération d'une date aléatoire dans l'année d'édition
+        const randomMonth = Math.floor(Math.random() * 12) + 1; // Mois entre 1 et 12
+        const maxDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][randomMonth - 1]; // Jours par mois
+        const randomDay = Math.floor(Math.random() * maxDay) + 1; // Jour entre 1 et max pour le mois
+        
+        // Format de la date avec padding pour mois et jours à 2 chiffres
+        const paddedMonth = randomMonth.toString().padStart(2, '0');
+        const paddedDay = randomDay.toString().padStart(2, '0');
+        
+        // Construction de la date ISO avec heure aléatoire 
+        const randomHour = Math.floor(Math.random() * 24);
+        const randomMinute = Math.floor(Math.random() * 60);
+        const randomSecond = Math.floor(Math.random() * 60);
+        
+        publishDate = `${publishYear}-${paddedMonth}-${paddedDay}T${randomHour.toString().padStart(2, '0')}:${randomMinute.toString().padStart(2, '0')}:${randomSecond.toString().padStart(2, '0')}.001Z`;
+        
+        console.log(`📅 Fiche "${fiche.Title || 'sans titre'}" (édition ${edition}): date aléatoire générée: ${publishDate}`);
+      }
       
       // Construction des tags (incluant la section et le type d'enseignement)
       const tags = [];
@@ -247,55 +268,39 @@ function convertFichesToMDX(fiches) {
       // Ajouter les thèmes aux tags
       if (fiche.Thèmes) {
         try {
+          // Vérifier si le thème est au format JSON
           const themes = JSON.parse(fiche.Thèmes);
+          
+          // Fonction pour vérifier si un thème doit être ignoré (format "thème X" où X est un chiffre)
+          const shouldIgnoreTheme = (theme) => /^thème \d+$/i.test(theme);
+          
           if (Array.isArray(themes)) {
+            // Si c'est un tableau de thèmes, traiter chaque thème
             themes.forEach(theme => {
-              // Ignorer les thèmes au format "thème X" où X est un chiffre
-              if (!(/^thème \d+$/i.test(theme))) {
+              if (!shouldIgnoreTheme(theme)) {
+                console.log(`🏷️ Ajout du thème "${theme}" aux tags pour la fiche "${fiche.Title || 'sans titre'}"`);
                 tags.push(theme.toLowerCase());
+              } else {
+                console.log(`⏭️ Ignoré le thème "${theme}" (format 'thème X') pour la fiche "${fiche.Title || 'sans titre'}"`);
               }
             });
-          } else {
-            // Ignorer les thèmes au format "thème X" où X est un chiffre
-            if (!(/^thème \d+$/i.test(themes))) {
+          } else if (typeof themes === 'string') {
+            // Si c'est une seule chaîne de caractères
+            if (!shouldIgnoreTheme(themes)) {
+              console.log(`🏷️ Ajout du thème "${themes}" aux tags pour la fiche "${fiche.Title || 'sans titre'}"`);
               tags.push(themes.toLowerCase());
+            } else {
+              console.log(`⏭️ Ignoré le thème "${themes}" (format 'thème X') pour la fiche "${fiche.Title || 'sans titre'}"`);
             }
           }
         } catch {
-          // Si ce n'est pas un JSON valide, l'ajouter tel quel si ce n'est pas "thème X"
-          if (!(/^thème \d+$/i.test(fiche.Thèmes))) {
+          // Si ce n'est pas un JSON valide, traiter comme une chaîne simple
+          if (!/^thème \d+$/i.test(fiche.Thèmes)) {
+            console.log(`🏷️ Ajout du thème "${fiche.Thèmes}" (format non-JSON) aux tags pour la fiche "${fiche.Title || 'sans titre'}"`);
             tags.push(fiche.Thèmes.toLowerCase());
-          }
-        }
-      }
-      
-      // Traiter "Type enseignement" qui peut être au format JSON string
-      if (fiche["Type enseignement"]) {
-        try {
-          const typeEnseignement = JSON.parse(fiche["Type enseignement"]);
-          if (Array.isArray(typeEnseignement)) {
-            typeEnseignement.forEach(type => tags.push(type.toLowerCase()));
           } else {
-            tags.push(typeEnseignement.toLowerCase());
+            console.log(`⏭️ Ignoré le thème "${fiche.Thèmes}" (format 'thème X') pour la fiche "${fiche.Title || 'sans titre'}"`);
           }
-        } catch {
-          // Si ce n'est pas un JSON valide, l'ajouter tel quel
-          tags.push(fiche["Type enseignement"].toLowerCase());
-        }
-      }
-      
-      // Traiter "Section" qui peut être au format JSON string
-      if (fiche.Section) {
-        try {
-          const section = JSON.parse(fiche.Section);
-          if (Array.isArray(section)) {
-            section.forEach(s => tags.push(s.toLowerCase()));
-          } else {
-            tags.push(section.toLowerCase());
-          }
-        } catch {
-          // Si ce n'est pas un JSON valide, l'ajouter tel quel
-          tags.push(fiche.Section.toLowerCase());
         }
       }
       

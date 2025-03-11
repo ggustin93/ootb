@@ -7,7 +7,6 @@ interface Props {
   label: string;
   color?: string;
   isActive?: boolean;
-  withAnchor?: boolean;
   mobileIconOnly?: boolean;
 }
 
@@ -17,22 +16,19 @@ const {
   label, 
   color = '#1f2937', 
   isActive = false,
-  withAnchor = false,
   mobileIconOnly = false
 } = Astro.props;
 
-// Ajouter l'ancre si nécessaire
-const isPremium = href.includes('/premium');
-const finalHref = withAnchor 
-  ? isPremium 
-    ? `${href}#premium-section-top` 
-    : href.includes('/blog') 
-      ? `${href}#blog-filters`
-      : `${href}#category-filters` 
-  : href;
+// Utiliser le href tel quel, sans ajouter d'ancre
+// Cela permet de maintenir la position Y lors du changement de catégorie
+const finalHref = href + (href === '/blog' || href.startsWith('/category/') ? '#category-content' : '');
+
+// Générer un ID unique pour ce bouton
+const buttonId = `category-btn-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
 <a
+  id={buttonId}
   href={finalHref}
   class:list={[
     'group relative inline-flex items-center gap-2',
@@ -53,6 +49,7 @@ const finalHref = withAnchor
     : `background-color: ${color}; color: white; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};`
   }
   aria-current={isActive ? 'page' : undefined}
+  data-category-button
 >
   <span class="transform skew-x-[12deg] flex items-center gap-1.5 sm:gap-2.5">
     <Icon 
@@ -86,4 +83,31 @@ const finalHref = withAnchor
       touch-action: manipulation;
     }
   }
-</style> 
+</style>
+
+<script define:vars={{ buttonId, href }}>
+  // Initialiser le bouton de catégorie
+  document.addEventListener('astro:page-load', () => {
+    initCategoryButton(buttonId, href);
+  });
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    initCategoryButton(buttonId, href);
+  });
+  
+  function initCategoryButton(id, _href) {
+    const button = document.getElementById(id);
+    if (!button) return;
+    
+    button.addEventListener('click', (e) => {
+      // Si on est déjà sur la page active, ne rien faire
+      if (button.getAttribute('aria-current') === 'page') {
+        e.preventDefault();
+        return;
+      }
+      
+      // Pour les autres cas, laisser la navigation se faire normalement
+      // L'ancre dans le href s'occupera du défilement
+    });
+  }
+</script> 

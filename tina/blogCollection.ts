@@ -36,7 +36,7 @@ export const blogCollection: Collection = {
       },
       search: {
         placeholder: "Ex: IA, Montessori, inclusion, ...",
-        thematicLabel: "Rechercher par thématique :"
+        thematicLabel: "Rechercher par thématique ou titre d'article :"
       }
     },
     contentTypes: {

@@ -11,13 +11,14 @@ interface Props {
   contentStates: {
     isLiveFacebook: boolean;
     hasTags: boolean;
+    isPodcast?: boolean;
   };
   contentConfig: {
     color: string;
   };
 }
 
-const { tags, url, title, blogLink, contentStates, contentConfig } = Astro.props;
+const { url, title, blogLink, contentStates } = Astro.props;
 ---
 
 <footer class="max-w-3xl mx-auto mt-16 pt-12 border-t border-gray-200 dark:border-gray-700">
@@ -30,7 +31,8 @@ const { tags, url, title, blogLink, contentStates, contentConfig } = Astro.props
         "inline-flex items-center gap-2",
         "group hover:-translate-x-1",
         "transition-all duration-300",
-        "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+        "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200",
+        "back-button"
       ]}
     >
       <Icon 
@@ -54,8 +56,33 @@ const { tags, url, title, blogLink, contentStates, contentConfig } = Astro.props
         url={url} 
         text={title} 
         class="flex items-center gap-4"
-        contentStates={contentStates}
+        contentStates={contentStates as { isLiveFacebook: boolean; isPodcast: boolean; }}
       />
     </div>
   </div>
 </footer>
+
+<script>
+  // Initialisation du bouton de retour
+  document.addEventListener('astro:page-load', setupBackButton);
+  document.addEventListener('DOMContentLoaded', setupBackButton);
+  
+  function setupBackButton() {
+    const backButtons = document.querySelectorAll('.back-button');
+    
+    backButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        // Vérifier s'il y a un historique de navigation
+        const referrer = document.referrer;
+        
+        // Si on a un referrer et qu'il est sur le même domaine
+        if (referrer && referrer.includes(window.location.hostname)) {
+          e.preventDefault();
+          // Revenir à la page précédente
+          window.history.back();
+        }
+        // Sinon, laisser le lien href par défaut fonctionner (vers /blog)
+      });
+    });
+  }
+</script>

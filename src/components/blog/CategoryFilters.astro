@@ -15,9 +15,10 @@ interface Props {
     }
   }
   isTagPage?: boolean;
+  currentTag?: { slug: string; title: string; };
 }
 
-const { currentCategory, blogConfig, isTagPage = false } = Astro.props;
+const { currentCategory, blogConfig, isTagPage = false, currentTag } = Astro.props;
 const { allLabel, mobileSelectLabel } = blogConfig.hero.filters.categoryFilters;
 
 // Créer la liste complète de toutes les catégories, y compris premium
@@ -52,13 +53,20 @@ const overlayId = isTagPage ? "tag-dropdown-overlay" : "dropdown-overlay";
 const dropdownIconId = isTagPage ? "tag-dropdown-icon" : "dropdown-icon";
 const selectedCategoryId = isTagPage ? "tag-selected-category" : "selected-category";
 const selectedIconId = isTagPage ? "tag-selected-icon" : "selected-icon";
+
+// Texte adapté pour la version mobile
+const mobileButtonText = isTagPage 
+  ? currentTag 
+    ? `Filtrer "${currentTag.title.length > 12 ? currentTag.title.substring(0, 10) + '...' : currentTag.title}"`
+    : "Filtrer par catégorie" 
+  : getCurrentCategoryLabel(currentCategory);
 ---
 
 <div class="flex flex-col w-full sm:w-auto">
   {/* Version Desktop */}
   <div class="hidden sm:flex gap-1 bg-gray-100/80 p-1 rounded-lg">
     <a
-      href="/blog#blog-content"
+      href="/blog#category-content"
       class={[
         'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
         (!currentCategory || currentCategory === 'blog') 
@@ -95,63 +103,50 @@ const selectedIconId = isTagPage ? "tag-selected-icon" : "selected-icon";
 
   {/* Version Mobile - Menu personnalisé */}
   <div class="sm:hidden relative">
-    {/* Si nous sommes sur une page de tag, afficher un texte différent */}
-    {isTagPage ? (
-      <button
-        id={buttonId}
-        type="button"
-        aria-haspopup="listbox"
-        aria-expanded="false"
-        aria-labelledby="category-label"
-        class="flex items-center justify-between w-full bg-gray-100/80 rounded-lg px-4 py-2.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300"
-      >
-        <span class="flex items-center gap-2">
-          <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4" />
-          <span id={selectedCategoryId} class="text-sm font-medium">
-            Rechercher par catégorie
-          </span>
-        </span>
-        <Icon 
-          id={dropdownIconId}
-          name="tabler:chevron-down" 
-          class="w-5 h-5 text-gray-500 transition-transform duration-300" 
-        />
-      </button>
-    ) : (
-      <button
-        id={buttonId}
-        type="button"
-        aria-haspopup="listbox"
-        aria-expanded="false"
-        aria-labelledby="category-label"
-        class="flex items-center justify-between w-full bg-gray-100/80 rounded-lg px-4 py-2.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300"
-      >
-        <span class="flex items-center gap-2">
-          {/* Trouver l'icône de la catégorie courante */}
-          {(() => {
-            if (!currentCategory || currentCategory === 'blog') {
-              return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4" />;
-            }
+    <button
+      id={buttonId}
+      type="button"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-labelledby="category-label"
+      class="flex items-center justify-between w-full bg-gray-100/80 rounded-lg px-4 py-2.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300"
+    >
+      <span class="flex items-center gap-2 truncate max-w-[80%]">
+        {isTagPage ? (
+          <>
+            <Icon id={selectedIconId} name="tabler:tag" class="w-4 h-4 flex-shrink-0" />
+            <span id={selectedCategoryId} class="text-sm font-medium truncate">
+              {mobileButtonText}
+            </span>
+          </>
+        ) : (
+          <>
+            {/* Trouver l'icône de la catégorie courante */}
+            {(() => {
+              if (!currentCategory || currentCategory === 'blog') {
+                return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4 flex-shrink-0" />;
+              }
+              
+              const foundCategory = allCategories.find(([key]) => key === currentCategory.toLowerCase());
+              if (foundCategory) {
+                return <Icon id={selectedIconId} name={(foundCategory[1] as {icon: string}).icon} class="w-4 h-4 flex-shrink-0" />;
+              }
+              
+              return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4 flex-shrink-0" />;
+            })()}
             
-            const foundCategory = allCategories.find(([key]) => key === currentCategory.toLowerCase());
-            if (foundCategory) {
-              return <Icon id={selectedIconId} name={(foundCategory[1] as {icon: string}).icon} class="w-4 h-4" />;
-            }
-            
-            return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4" />;
-          })()}
-          
-          <span id={selectedCategoryId} class="text-sm font-medium">
-            {getCurrentCategoryLabel(currentCategory)}
-          </span>
-        </span>
-        <Icon 
-          id={dropdownIconId}
-          name="tabler:chevron-down" 
-          class="w-5 h-5 text-gray-500 transition-transform duration-300" 
-        />
-      </button>
-    )}
+            <span id={selectedCategoryId} class="text-sm font-medium truncate">
+              {mobileButtonText}
+            </span>
+          </>
+        )}
+      </span>
+      <Icon 
+        id={dropdownIconId}
+        name="tabler:chevron-down" 
+        class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0" 
+      />
+    </button>
     
     <div 
       id={dropdownId} 
@@ -280,7 +275,7 @@ const selectedIconId = isTagPage ? "tag-selected-icon" : "selected-icon";
     const options = dropdown.querySelectorAll('a[role="option"]');
     options.forEach(option => {
       option.addEventListener('click', () => {
-        // On peut ajouter une logique ici si nécessaire
+        // Fermer le dropdown quand une option est sélectionnée
         closeDropdown();
       });
     });

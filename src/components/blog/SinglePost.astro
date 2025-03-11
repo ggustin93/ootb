@@ -15,6 +15,7 @@ import PostHeader from './components/PostHeader.astro';
 import PostDescription from './components/PostDescription.astro';
 import PostFooter from './components/PostFooter.astro';
 import Button from '~/components/ui/Button.astro';
+import { Icon } from 'astro-icon/components';
 
 // Types
 interface Props {
@@ -83,7 +84,9 @@ const isDefaultImage = !post.image || post.image === defaultImage ||
 const contentConfig = {
   icon: contentConfigRaw.icon,
   label: contentConfigRaw.label,
-  variant: contentType === 'fiche' ? 'fiche' : contentType as 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite',
+  variant: (contentType === 'fiche' ? 'fiche' : 
+           contentType === 'tv' ? 'emission' :
+           contentType) as 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite' | 'fiche',
   color: contentConfigRaw.color
 };
 
@@ -180,7 +183,6 @@ console.log('Debug media info détaillé:', {
         duration={post.duration}
         tags={post.tags}
         contentConfig={contentConfig}
-        styles={styles}
         contentStates={contentStates}
       />
 
@@ -249,14 +251,69 @@ console.log('Debug media info détaillé:', {
             />
             {/* Overlay sombre et bouton TV Com */}
             {contentStates.isTvContent && mediaInfo.tvcomUrl && (
-              <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all duration-300">
+              <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60 group-hover:from-black/50 group-hover:to-black/70 transition-all duration-300">
                 <Button
                   variant="outline-tv"
                   href={mediaInfo.tvcomUrl}
                   icon="tabler:device-tv"
                   size="lg"
                   target="_blank"
-                  class="group/btn hover:scale-105 transition-transform duration-300"
+                  class="group/btn hover:scale-105 transition-transform duration-300 shadow-lg"
+                >
+                  Voir l'émission sur TV Com
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Fond par défaut si aucune image n'est fournie et pas de média spécifique */}
+        {(!post.image || isDefaultImage) && !contentStates.isPodcast && !contentStates.isVideo && !mediaInfo.videoUrl && !contentStates.isPedagogicalSheet && (
+          <div class:list={[...mediaWrapperClasses, "group"]}>
+            <div 
+              class:list={[
+                'w-full h-full flex items-center justify-center aspect-video',
+                {
+                  'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]': contentType === 'actualite',
+                  'bg-[color-mix(in_srgb,var(--content-live)_30%,white)]': contentType === 'live',
+                  'bg-[color-mix(in_srgb,var(--content-fiche)_30%,white)]': contentType === 'fiche',
+                  'bg-[color-mix(in_srgb,var(--content-podcast)_30%,white)]': contentType === 'podcast',
+                  'bg-[color-mix(in_srgb,var(--content-tv)_30%,white)]': contentType === 'tv',
+                  'bg-[color-mix(in_srgb,var(--content-premium)_30%,white)]': contentType === 'premium',
+                  'bg-gray-200': contentType !== 'actualite' && contentType !== 'live' && 
+                                contentType !== 'fiche' && contentType !== 'podcast' && 
+                                contentType !== 'tv' && contentType !== 'premium'
+                }
+              ]}
+            >
+              <Icon 
+                name={contentConfigRaw.icon} 
+                class:list={[
+                  'w-24 h-24 opacity-90',
+                  {
+                    'text-[var(--content-actualite)]': contentType === 'actualite',
+                    'text-[var(--content-live)]': contentType === 'live',
+                    'text-[var(--content-fiche)]': contentType === 'fiche',
+                    'text-[var(--content-podcast)]': contentType === 'podcast',
+                    'text-[var(--content-tv)]': contentType === 'tv',
+                    'text-[var(--content-premium)]': contentType === 'premium',
+                    'text-gray-700': contentType !== 'actualite' && contentType !== 'live' && 
+                                    contentType !== 'fiche' && contentType !== 'podcast' && 
+                                    contentType !== 'tv' && contentType !== 'premium'
+                  }
+                ]}
+              />
+            </div>
+            {/* Overlay sombre et bouton TV Com pour les émissions TV */}
+            {contentStates.isTvContent && mediaInfo.tvcomUrl && (
+              <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60 group-hover:from-black/50 group-hover:to-black/70 transition-all duration-300">
+                <Button
+                  variant="outline-tv"
+                  href={mediaInfo.tvcomUrl}
+                  icon="tabler:device-tv"
+                  size="lg"
+                  target="_blank"
+                  class="group/btn hover:scale-105 transition-transform duration-300 shadow-lg"
                 >
                   Voir l'émission sur TV Com
                 </Button>

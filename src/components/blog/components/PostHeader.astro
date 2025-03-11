@@ -94,7 +94,9 @@ const { title, subtitle, publishDate, expert, duration, tags, contentConfig, con
           ? "text-[var(--content-fiche)]"
           : contentConfig.variant === 'fiche'
             ? "text-[var(--content-fiche)]"
-            : "text-current"
+            : contentConfig.variant === 'emission'
+              ? "text-[var(--content-tv)]"
+              : "text-current"
   ]}>
     {title}
   </h1>

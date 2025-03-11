@@ -407,7 +407,7 @@ export async function findTags(): Promise<Taxonomy[]> {
 
 export const findDiverseLatestPosts = async ({ count = 3 }: { count?: number } = {}): Promise<Post[]> => {
   const allPosts = await getCollection('post', (post) => 
-    post.data.published && post.data.category !== 'fiche'
+    post.data.published
   );
 
   // Convert to normalized posts
@@ -420,7 +420,7 @@ export const findDiverseLatestPosts = async ({ count = 3 }: { count?: number } =
     .sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime());
 
   // Prioritize diversity of content types
-  const contentTypes = ['actualite', 'podcast', 'tv', 'live', 'premium'];
+  const contentTypes = ['actualite', 'podcast', 'tv', 'live', 'premium', 'fiche'];
   const diversePosts: Post[] = [];
   const usedTypes = new Set<string>();
 

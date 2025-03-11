@@ -16,8 +16,17 @@ const {
 // Configuration de l'intégration - À personnaliser même si non présent dans homepageData
 const formName = "newsletter-homepage"; // Nom du formulaire pour Netlify
 const redirectSuccess = "/merci-inscription"; // Page de redirection après succès
-const listId = "1"; // ID de la liste Brevo (à remplacer par votre ID réel)
-const n8nWebhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || ""; // URL du webhook n8n (à définir dans .env)
+
+// Configuration NocoDB - sécurisée car exécutée côté serveur uniquement
+const NOCODB_API_TOKEN = import.meta.env.NOCODB_API_TOKEN;
+const isTokenValid = NOCODB_API_TOKEN && NOCODB_API_TOKEN.trim() !== '';
+console.log(`Mode détecté côté serveur pour newsletter: ${isTokenValid ? 'PRODUCTION' : 'TEST'}`);
+
+// Configuration NocoDB mise à jour avec les informations fournies
+const NOCODB_ORG_ID = "noco";
+const NOCODB_PROJECT_ID = "p41z6qweidro6nu";
+const NOCODB_TABLE_ID = "m6hnpjey4laav0z";
+const NOCODB_VIEW_ID = "vwcs0f92mc8rh0s5";
 
 const defaultSocialLinks = [
   {
@@ -96,39 +105,30 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
         </div>
 
         <!-- 
-          CONFIGURATION HYBRIDE NETLIFY FORMS + n8n
+          CONFIGURATION NOCODB
           ----------------------------------------
-          Ce formulaire utilise deux approches complémentaires :
+          Ce formulaire utilise l'API NocoDB pour stocker les abonnés à la newsletter
           
-          1. NETLIFY FORMS (solution de secours)
-             - Capture automatiquement les soumissions
-             - Fournit une protection anti-spam
-             - Stocke les données dans le dashboard Netlify
-          
-          2. n8n WEBHOOK (solution principale)
-             - Le script JavaScript ci-dessous intercepte la soumission
-             - Envoie les données au webhook n8n configuré
-             - Permet des workflows personnalisés (Brevo, etc.)
-             
           CONFIGURATION REQUISE :
-          1. Créer une variable d'environnement PUBLIC_N8N_WEBHOOK_URL
-          2. Configurer un workflow n8n qui reçoit les données et les envoie à Brevo
+          1. Créer les variables d'environnement NOCODB_* dans .env
+          2. Configurer l'API endpoint /api/submit-newsletter.ts
         -->
         <form 
           id="newsletter-form"
-          class="flex flex-col sm:flex-row gap-3 md:gap-4 max-w-md mx-auto group mb-8 md:mb-12" 
+          class="flex flex-col gap-3 md:gap-4 max-w-md mx-auto group mb-8 md:mb-12" 
           name={formName}
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
           action={redirectSuccess}
-          data-n8n-webhook={n8nWebhookUrl}
+          data-button-text={buttonText}
         >
           <!-- Champ honeypot anti-spam -->
           <p class="hidden">
             <label>Ne pas remplir si vous êtes humain: <input name="bot-field" /></label>
           </p>
           
+          <!-- Champ email -->
           <div class="flex-1 relative">
             <Icon 
               name="tabler:at" 
@@ -139,30 +139,59 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
               name="email"
               placeholder={placeholder}
               required
-              class="w-full h-14 pl-14 pr-6 rounded-full text-base bg-white/80 backdrop-blur-sm border border-gray-200 focus:border-[--ootb-blue] focus:ring-2 focus:ring-[--ootb-blue]/20 outline-none transition-all placeholder:text-gray-400"
+              class="w-full h-14 pl-14 pr-6 rounded-full text-base bg-white/80 backdrop-blur-sm border border-gray-200 focus:border-[--ootb-blue] focus:ring-2 focus:ring-[--ootb-blue]/20 outline-none transition-all placeholder:text-gray-400 peer"
             />
+            <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+              Veuillez entrer une adresse email valide
+            </p>
             
-            <!-- Champs cachés pour Brevo et n8n -->
+            <!-- Champs cachés pour NocoDB -->
             <input type="hidden" name="form-name" value={formName}>
-            <input type="hidden" name="list_id" value={listId}>
             <input type="hidden" name="source" value="website">
             <input type="hidden" name="tags" value="site-web,newsletter">
             <input type="hidden" name="redirect_url" value={redirectSuccess}>
             <input type="hidden" name="timestamp" value="">
+            <input type="hidden" name="nocodb_org_id" value={NOCODB_ORG_ID}>
+            <input type="hidden" name="nocodb_project_id" value={NOCODB_PROJECT_ID}>
+            <input type="hidden" name="nocodb_table_id" value={NOCODB_TABLE_ID}>
+            <input type="hidden" name="nocodb_view_id" value={NOCODB_VIEW_ID}>
           </div>
+          
+          <!-- Case à cocher pour la politique de confidentialité - Style amélioré -->
+          <div class="flex items-center justify-center mt-3 mb-4">
+            <div class="flex items-center">
+              <input
+                id="privacy-policy"
+                name="privacy-policy"
+                type="checkbox"
+                required
+                class="w-5 h-5 border border-gray-300 rounded bg-white/80 focus:ring-2 focus:ring-[--ootb-blue]/20 text-[--ootb-blue] cursor-pointer"
+              />
+              <label for="privacy-policy" class="ml-3 text-sm md:text-base text-gray-600 cursor-pointer">
+                J'ai lu et j'accepte la <a href="/privacy" class="text-[--ootb-blue] hover:underline">politique de confidentialité</a>
+              </label>
+            </div>
+          </div>
+          <p id="privacy-error" class="mt-1 text-xs md:text-sm text-rose-500 text-center hidden">
+            Vous devez accepter la politique de confidentialité
+          </p>
           
           <!-- Bouton de soumission -->
           <button 
-            type="submit"
+            type="button"
+            id="newsletter-submit"
             class="h-14 px-8 rounded-full bg-[--ootb-blue] text-white hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 newsletter-submit"
           >
             <span>{buttonText}</span>
             <Icon name="tabler:arrow-right" class="w-5 h-5" />
           </button>
           
-          <!-- Message de statut (visible uniquement en cas d'erreur) -->
-          <div class="newsletter-status hidden absolute left-0 right-0 bottom-[-30px] text-center">
-            <p class="newsletter-error text-red-500 font-medium hidden">Une erreur est survenue. Veuillez réessayer.</p>
+          <!-- Message de statut -->
+          <div id="newsletter-status" class="hidden mt-4 p-4 rounded-xl text-center transition-all duration-300 transform">
+            <div class="flex items-center justify-center gap-3">
+              <span id="newsletter-status-icon" class="text-2xl"></span>
+              <span id="newsletter-status-message" class="text-base font-medium"></span>
+            </div>
           </div>
         </form>
 
@@ -194,90 +223,270 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
   </div>
 </section>
 
-<!-- Script pour l'intégration n8n -->
-<script>
+<!-- Script pour l'intégration NocoDB -->
+<script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('newsletter-form') as HTMLFormElement;
-    if (!form) return;
+    console.log('🔄 Script de newsletter chargé');
     
-    // Récupérer l'URL du webhook n8n
-    const n8nWebhookUrl = form.getAttribute('data-n8n-webhook');
-    if (!n8nWebhookUrl) return; // Si pas de webhook configuré, utiliser Netlify Forms par défaut
+    const form = document.getElementById('newsletter-form');
+    const submitButton = document.getElementById('newsletter-submit');
+    const statusContainer = document.getElementById('newsletter-status');
+    const statusIcon = document.getElementById('newsletter-status-icon');
+    const statusMessage = document.getElementById('newsletter-status-message');
+    const originalButtonText = submitButton?.querySelector('span')?.textContent || "S'inscrire";
+    const privacyCheckbox = document.getElementById('privacy-policy');
+    const privacyError = document.getElementById('privacy-error');
     
-    // Ajouter un timestamp au moment de la soumission
-    const timestampField = form.querySelector('input[name="timestamp"]') as HTMLInputElement;
-    if (timestampField) {
-      timestampField.value = new Date().toISOString();
+    if (!form || !submitButton || !statusContainer) {
+      console.error('❌ Éléments du formulaire non trouvés');
+      return;
     }
     
-    form.addEventListener('submit', async function handleSubmit(e) {
-      // Empêcher la soumission normale du formulaire
-      e.preventDefault();
+    console.log('🔍 Éléments DOM trouvés:', {
+      form: !!form,
+      submitButton: !!submitButton,
+      statusContainer: !!statusContainer,
+      statusIcon: !!statusIcon,
+      statusMessage: !!statusMessage,
+      originalButtonText,
+      privacyCheckbox: !!privacyCheckbox,
+      privacyError: !!privacyError
+    });
+    
+    // Formater la date au format ISO avec timezone
+    function formatDateForNocoDB(date) {
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const hours = String(d.getHours()).padStart(2, '0');
+      const minutes = String(d.getMinutes()).padStart(2, '0');
+      const seconds = String(d.getSeconds()).padStart(2, '0');
       
-      // Récupérer les données du formulaire
-      const formData = new FormData(form);
-      const submitButton = form.querySelector('.newsletter-submit') as HTMLButtonElement;
-      const errorMessage = form.querySelector('.newsletter-error');
-      const statusContainer = form.querySelector('.newsletter-status');
+      // Calculer le décalage horaire en heures et minutes
+      const timezoneOffset = -d.getTimezoneOffset();
+      const offsetHours = Math.floor(Math.abs(timezoneOffset) / 60);
+      const offsetMinutes = Math.abs(timezoneOffset) % 60;
+      const timezoneString = `${timezoneOffset >= 0 ? '+' : '-'}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`;
       
-      // Désactiver le bouton pendant la soumission
-      if (submitButton) {
-        submitButton.setAttribute('disabled', 'true');
-        submitButton.classList.add('opacity-70');
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}${timezoneString}`;
+    }
+    
+    // Ajouter un timestamp au moment de la soumission
+    const timestampField = form.querySelector('input[name="timestamp"]');
+    if (timestampField) {
+      const now = new Date();
+      timestampField.value = now.toISOString();
+    }
+    
+    // Fonction pour réinitialiser tous les messages
+    function resetAllMessages() {
+      // Masquer le message de statut
+      statusContainer.classList.add('hidden');
+      
+      // Masquer le message d'erreur de politique
+      if (privacyError) {
+        privacyError.classList.add('hidden');
       }
+      
+      // Réinitialiser le bouton
+      submitButton.disabled = false;
+      submitButton.innerHTML = `<span>${originalButtonText}</span><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>`;
+    }
+    
+    // Fonctions pour afficher les messages de statut
+    function showStatus(message, type) {
+      console.log(`🔔 Affichage du message de statut (${type}): ${message}`);
+      
+      // Masquer le message d'erreur de politique
+      if (privacyError) {
+        privacyError.classList.add('hidden');
+      }
+      
+      // Réinitialiser les classes
+      statusContainer.className = 'mt-4 p-4 rounded-xl text-center transition-all duration-300 transform';
+      
+      // Ajouter la classe correspondant au type
+      if (type === 'error') {
+        statusContainer.classList.add('bg-rose-50', 'text-rose-700', 'border', 'border-rose-200');
+        statusIcon.innerHTML = '❌';
+        statusMessage.textContent = message;
+        
+        // Réactiver le bouton en cas d'erreur
+        submitButton.disabled = false;
+        submitButton.innerHTML = `<span>${originalButtonText}</span><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>`;
+      } else if (type === 'processing') {
+        statusContainer.classList.add('bg-sky-50', 'text-sky-700', 'border', 'border-sky-200', 'pulse');
+        statusIcon.innerHTML = '⏳';
+        statusMessage.textContent = message;
+        
+        // Désactiver le bouton pendant le traitement
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="animate-pulse">Traitement en cours...</span>';
+      } else if (type === 'success') {
+        statusContainer.classList.add('bg-emerald-50', 'text-emerald-700', 'border', 'border-emerald-200');
+        statusIcon.innerHTML = '✅';
+        statusMessage.textContent = message;
+        
+        // Réactiver le bouton après succès
+        submitButton.disabled = false;
+        submitButton.innerHTML = `<span>${originalButtonText}</span><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>`;
+      }
+      
+      // Rendre visible
+      statusContainer.classList.remove('hidden');
+      
+      // Faire défiler jusqu'au message
+      statusContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    function showError(message) {
+      showStatus(message, 'error');
+    }
+    
+    // Validation des champs
+    const emailInput = form.querySelector('input[name="email"]');
+    
+    if (emailInput) {
+      emailInput.addEventListener('invalid', function() {
+        const errorMessage = this.nextElementSibling;
+        if (errorMessage && errorMessage.classList.contains('validation-message')) {
+          errorMessage.classList.add('visible', 'opacity-100', 'translate-y-0');
+        }
+      });
+      
+      emailInput.addEventListener('input', function() {
+        const errorMessage = this.nextElementSibling;
+        if (errorMessage && errorMessage.classList.contains('validation-message')) {
+          if (this.validity.valid) {
+            errorMessage.classList.remove('visible', 'opacity-100', 'translate-y-0');
+          } else {
+            errorMessage.classList.add('visible', 'opacity-100', 'translate-y-0');
+          }
+        }
+        
+        // Réinitialiser les messages lors de la saisie
+        resetAllMessages();
+      });
+    }
+    
+    // Gestion de la case à cocher politique de confidentialité
+    if (privacyCheckbox && privacyError) {
+      privacyCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+          privacyError.classList.add('hidden');
+          // Réinitialiser les messages lors du changement
+          resetAllMessages();
+        }
+      });
+    }
+    
+    // Gestion de la soumission du formulaire
+    function handleSubmit() {
+      console.log('🔄 Fonction handleSubmit appelée');
+      
+      // Si le bouton est désactivé (traitement en cours), ne rien faire
+      if (submitButton.disabled) {
+        console.log('⚠️ Soumission ignorée: traitement déjà en cours');
+        return;
+      }
+      
+      console.log('🔍 Validation du formulaire...');
+      
+      // Vérifier spécifiquement la case à cocher
+      if (privacyCheckbox && !privacyCheckbox.checked) {
+        console.error('❌ Politique de confidentialité non acceptée');
+        privacyError.classList.remove('hidden');
+        privacyCheckbox.focus();
+        return;
+      }
+      
+      if (!form.checkValidity()) {
+        console.error('❌ Validation échouée: formulaire invalide');
+        form.reportValidity();
+        return;
+      }
+      
+      console.log('✅ Formulaire valide, préparation de la soumission...');
       
       try {
-        // Convertir FormData en objet
-        const formDataObj: Record<string, string> = {};
-        formData.forEach((value, key) => {
-          if (typeof value === 'string') {
-            formDataObj[key] = value;
-          }
-        });
+        // Afficher le message de traitement
+        showStatus('Traitement en cours...', 'processing');
         
-        // Envoyer les données au webhook n8n
-        const response = await fetch(n8nWebhookUrl, {
+        // Préparer les données du formulaire au format JSON
+        const formData = new FormData(form);
+        const now = new Date();
+        const formattedDate = formatDateForNocoDB(now);
+        
+        // Convertir FormData en objet JSON
+        const jsonData = {
+          email: formData.get('email'),
+          source: formData.get('source') || 'website',
+          tags: formData.get('tags') || 'site-web,newsletter',
+          timestamp: formData.get('timestamp') || now.toISOString(),
+          "Date d'inscription": formattedDate,
+          privacyAccepted: formData.get('privacy-policy') === 'on',
+          nocodb_org_id: formData.get('nocodb_org_id'),
+          nocodb_project_id: formData.get('nocodb_project_id'),
+          nocodb_table_id: formData.get('nocodb_table_id'),
+          nocodb_view_id: formData.get('nocodb_view_id')
+        };
+        
+        console.log('🚀 Soumission du formulaire à l\'API...');
+        console.log('📝 Données envoyées:', jsonData);
+        
+        // Envoyer les données à l'endpoint API sécurisé
+        fetch('/api/submit-newsletter', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(formDataObj),
-        });
-        
-        if (response.ok) {
-          // Rediriger vers la page de succès
-          const redirectUrl = formDataObj['redirect_url'] || form.getAttribute('action');
-          if (redirectUrl) {
-            window.location.href = redirectUrl;
+          body: JSON.stringify(jsonData)
+        })
+        .then(response => {
+          console.log('📥 Réponse reçue:', response);
+          return response.json();
+        })
+        .then(result => {
+          console.log('📄 Données de réponse:', result);
+          
+          if (result.success) {
+            console.log('✅ Soumission réussie:', result);
+            
+            // Rediriger directement vers la page de confirmation sans afficher de message de succès
+            const redirectUrl = form.getAttribute('action');
+            if (redirectUrl) {
+              // Afficher un message bref pendant la redirection
+              showStatus('Redirection...', 'processing');
+              
+              // Rediriger après un court délai
+              setTimeout(() => {
+                window.location.href = redirectUrl;
+              }, 500);
+            }
+          } else {
+            console.error('❌ Erreur lors de la soumission:', result);
+            showError(result.message || 'Une erreur est survenue lors de l\'inscription.');
           }
-        } else {
-          // En cas d'erreur avec n8n, soumettre le formulaire à Netlify comme fallback
-          console.warn('Erreur avec n8n, utilisation de Netlify Forms comme fallback');
-          form.removeEventListener('submit', handleSubmit);
-          form.submit();
-        }
+        })
+        .catch(error => {
+          console.error('❌ Erreur lors de la soumission:', error);
+          showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
+        });
       } catch (error) {
-        console.error('Erreur lors de l\'inscription:', error);
-        
-        // Afficher le message d'erreur
-        if (statusContainer && errorMessage) {
-          statusContainer.classList.remove('hidden');
-          errorMessage.classList.remove('hidden');
-        }
-        
-        // Soumettre à Netlify comme fallback après un délai
-        setTimeout(() => {
-          form.removeEventListener('submit', handleSubmit);
-          form.submit();
-        }, 1000);
-      } finally {
-        // Réactiver le bouton
-        if (submitButton) {
-          submitButton.removeAttribute('disabled');
-          submitButton.classList.remove('opacity-70');
-        }
+        console.error('❌ Erreur lors de la soumission:', error);
+        showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
       }
+    }
+    
+    // Attacher l'événement click au bouton
+    console.log('🔄 Attachement de l\'événement click au bouton...');
+    submitButton.addEventListener('click', function(_event) {
+      console.log('🖱️ Événement click détecté sur le bouton');
+      handleSubmit();
     });
+    
+    console.log('✅ Initialisation du formulaire newsletter terminée');
   });
 </script>
 
@@ -299,6 +508,31 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
 
   .animate-gentle-pulse {
     animation: gentle-pulse 4s ease-in-out infinite;
+  }
+  
+  /* Animation de pulsation pour le traitement */
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.03);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Styles pour les messages d'erreur sous les champs */
+  .peer:invalid:not(:placeholder-shown) ~ .validation-message {
+    @apply visible opacity-100 translate-y-0;
   }
 </style>
 

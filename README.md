@@ -86,13 +86,44 @@ PUBLIC_N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/...
 1. Go to Netlify dashboard > Site > Settings > Environment variables
 2. Add a variable named `PUBLIC_N8N_WEBHOOK_URL` with your n8n webhook URL
 
+### NocoDB API (Formulaires)
+
+Pour permettre la soumission des fiches pédagogiques :
+
+```bash
+# Configuration NocoDB pour les formulaires
+NOCODB_BASE_URL=https://app.nocodb.com
+NOCODB_API_TOKEN=votre_clé_api_nocodb
+NOCODB_ORG_ID=noco
+NOCODB_PROJECT_ID=votre_project_id
+NOCODB_TABLE_ID=votre_table_id
+```
+
+#### Comment obtenir les identifiants NocoDB
+1. Connectez-vous à votre compte NocoDB
+2. Créez un token API dans les paramètres de votre compte
+3. Notez l'ID de votre projet et de votre table dans l'URL de NocoDB
+
+#### Configuration sur Netlify
+1. Accédez au tableau de bord Netlify > Site > Settings > Environment variables
+2. Ajoutez les variables avec les valeurs correspondantes
+
+> **Note importante**: Ces variables sont utilisées exclusivement côté serveur grâce à l'architecture API endpoint d'Astro, garantissant que les clés API ne sont jamais exposées côté client.
+
 ### Local Development Variables
 
 For local development, create a `.env` file at the project root with the necessary variables:
 
 ```bash
 # Brevo API key (recommended)
-BREVO_API_KEY=your_brevo_api_key
+BREVO_API_KEY=votre_clé_api_brevo
+
+# Configuration NocoDB (pour les formulaires)
+NOCODB_BASE_URL=https://app.nocodb.com
+NOCODB_API_TOKEN=votre_clé_api_nocodb
+NOCODB_ORG_ID=noco
+NOCODB_PROJECT_ID=votre_project_id
+NOCODB_TABLE_ID=votre_table_id
 
 # n8n webhook URL (optional - not recommended)
 PUBLIC_N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/...
@@ -319,3 +350,39 @@ Pour mettre à jour les fiches pédagogiques :
 - Sharp pour le traitement des images
 - Fetch pour les requêtes API
 - fs-extra pour la manipulation de fichiers
+
+## Système de formulaire
+
+Le projet inclut un système de formulaire sécurisé pour la soumission des fiches pédagogiques, conçu selon une architecture client-serveur moderne.
+
+### Architecture
+
+Le système de formulaire est divisé en deux composants principaux :
+
+1. **Composant Astro (`ProjectSubmissionForm.astro`)**
+   - Interface utilisateur du formulaire
+   - Validation des données côté client
+   - Envoi des données au format JSON à l'API endpoint
+
+2. **API Endpoint (`/api/submit-pedagogical-sheet.ts`)**
+   - Exécuté exclusivement côté serveur
+   - Gestion sécurisée des variables d'environnement
+   - Communication avec l'API NocoDB
+
+### Modes de fonctionnement
+
+Le système prend en charge deux modes :
+
+- **Mode Test** : Activé automatiquement lorsque la clé API NocoDB est absente ou invalide
+- **Mode Production** : Activé lorsqu'une clé API NocoDB valide est configurée
+
+### Documentation détaillée
+
+Pour plus d'informations sur le système de formulaire, consultez :
+
+- [Architecture du formulaire](./docs/forms/form-architecture.md)
+- [Soumission des fiches pédagogiques](./docs/forms/pedagogical-sheet-submission.md)
+
+### Configuration requise
+
+Pour que le système de formulaire fonctionne correctement, vous devez configurer les variables d'environnement NocoDB comme indiqué dans la section "Environment Variables Configuration".

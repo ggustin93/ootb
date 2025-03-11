@@ -10,8 +10,8 @@
       "location": "À définir",
       "speaker": "Jeremy  Clément",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-2.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-2.webp",
+      "image": "/images/events/conferences/conference-2.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-2.webp",
       "tags": [
         "Professeurs, parents et enfants",
         "Maternelle-primaire et secondaire",
@@ -36,7 +36,7 @@
       "location": "À définir",
       "speaker": "Sonia Trichili",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-2.webp",
+      "image": "/images/events/ateliers/atelier-2.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -62,8 +62,8 @@
       "location": "À définir",
       "speaker": "Alain Thiry",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-3.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-3.webp",
+      "image": "/images/events/conferences/conference-3.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-3.webp",
       "tags": [
         "Professionnels",
         "Primaire et secondaire",
@@ -88,8 +88,8 @@
       "location": "À définir",
       "speaker": "Alexandre Castanheira",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-7.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-7.webp",
+      "image": "/images/events/conferences/conference-7.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-7.webp",
       "tags": [
         "Professionnels",
         "Secondaire",
@@ -114,8 +114,8 @@
       "location": "À définir",
       "speaker": "Yves Khordoc",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-8.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-8.webp",
+      "image": "/images/events/conferences/conference-8.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-8.webp",
       "tags": [
         "Professeurs",
         "Maternelle-primaire et secondaire",
@@ -140,8 +140,8 @@
       "location": "À définir",
       "speaker": "Marina Blanchart",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-9.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-9.webp",
+      "image": "/images/events/conferences/conference-9.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-9.webp",
       "tags": [
         "Parents",
         "Maternelle-primaire et secondaire",
@@ -166,8 +166,8 @@
       "location": "À définir",
       "speaker": "Virginie TYOU",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-10.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-10.webp",
+      "image": "/images/events/conferences/conference-10.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-10.webp",
       "tags": [
         "Professeurs, parents et enfants",
         "Maternelle-primaire et secondaire",
@@ -192,8 +192,8 @@
       "location": "À définir",
       "speaker": "Véronique Van den Abeele",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-11.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-11.webp",
+      "image": "/images/events/conferences/conference-11.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-11.webp",
       "tags": [
         "Professionnels",
         "Maternelle et primaire",
@@ -218,8 +218,8 @@
       "location": "À définir",
       "speaker": "Christophe Vanderroost",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-12.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-12.webp",
+      "image": "/images/events/conferences/conference-12.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-12.webp",
       "tags": [
         "Professeurs, parents et enfants",
         "Primaire et secondaire",
@@ -244,8 +244,8 @@
       "location": "À définir",
       "speaker": "Marina Blanchart",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-13.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-13.webp",
+      "image": "/images/events/conferences/conference-13.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-13.webp",
       "tags": [
         "Parents",
         "Maternelle-primaire et secondaire",
@@ -270,8 +270,8 @@
       "location": "À définir",
       "speaker": "Isabelle et Daphnée Smedts et Visée",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-14.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-14.webp",
+      "image": "/images/events/conferences/conference-14.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-14.webp",
       "tags": [
         "Professeurs, parents et enfants",
         "Maternelle-primaire et secondaire",
@@ -296,8 +296,8 @@
       "location": "À définir",
       "speaker": "Benjamin Stevens",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-34.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-34.webp",
+      "image": "/images/events/conferences/conference-34.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-34.webp",
       "tags": [
         "Professeurs",
         "Primaire",
@@ -322,8 +322,8 @@
       "location": "À définir",
       "speaker": "Aurore et Stéphanie Leblicq et Masse",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-35.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-35.webp",
+      "image": "/images/events/conferences/conference-35.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-35.webp",
       "tags": [
         "Professeurs, parents et enfants",
         "Primaire et secondaire",
@@ -348,8 +348,8 @@
       "location": "À définir",
       "speaker": "Guillaume Bousquet",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-67.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-67.webp",
+      "image": "/images/events/conferences/conference-67.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-67.webp",
       "tags": [
         "Professeurs, parents et enfants",
         "Maternelle-primaire et secondaire",
@@ -374,8 +374,8 @@
       "location": "À définir",
       "speaker": "John Rizzo",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-134.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-134.webp",
+      "image": "/images/events/conferences/conference-134.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-134.webp",
       "tags": [
         "Professeurs",
         "Maternelle-primaire et secondaire",
@@ -400,8 +400,8 @@
       "location": "À définir",
       "speaker": "Luc  de Brabandere",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-166.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-166.webp",
+      "image": "/images/events/conferences/conference-166.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-166.webp",
       "tags": [
         "Professeurs",
         "Secondaire",
@@ -426,8 +426,8 @@
       "location": "À définir",
       "speaker": "Sophie Vanden Plas",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-167.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-167.webp",
+      "image": "/images/events/conferences/conference-167.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-167.webp",
       "tags": [
         "Professeurs",
         "Primaire et secondaire",
@@ -452,8 +452,8 @@
       "location": "À définir",
       "speaker": "Mélissa et Loïc  Johnen et Sartieaux",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-199.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-199.webp",
+      "image": "/images/events/conferences/conference-199.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-199.webp",
       "tags": [
         "Professeurs",
         "Primaire et secondaire",
@@ -478,8 +478,8 @@
       "location": "À définir",
       "speaker": "Centre RéSIS Belgique Centre RéSIS Belgique",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-232.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-232.webp",
+      "image": "/images/events/conferences/conference-232.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-232.webp",
       "tags": [
         "Professionnels",
         "Maternelle-primaire et secondaire",
@@ -504,8 +504,8 @@
       "location": "À définir",
       "speaker": "Mélanie Olivier",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-233.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-233.webp",
+      "image": "/images/events/conferences/conference-233.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-233.webp",
       "tags": [
         "Professeurs",
         "Maternelle et primaire",
@@ -530,8 +530,8 @@
       "location": "À définir",
       "speaker": "Mélanie Bilodeau",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-234.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-234.webp",
+      "image": "/images/events/conferences/conference-234.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-234.webp",
       "tags": [
         "Professionnels",
         "Maternelle",
@@ -556,8 +556,8 @@
       "location": "À définir",
       "speaker": "Danielle HENUSET",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-265.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-265.webp",
+      "image": "/images/events/conferences/conference-265.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-265.webp",
       "tags": [
         "Professeurs, parents et enfants",
         "Maternelle-primaire et secondaire",
@@ -582,8 +582,8 @@
       "location": "À définir",
       "speaker": "Graziella Deleuze",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-298.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-298.webp",
+      "image": "/images/events/conferences/conference-298.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-298.webp",
       "tags": [
         "Professeurs",
         "Primaire",
@@ -608,8 +608,8 @@
       "location": "À définir",
       "speaker": "Sébastien Place",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-299.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-299.webp",
+      "image": "/images/events/conferences/conference-299.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-299.webp",
       "tags": [
         "Professeurs",
         "Maternelle-primaire et secondaire",
@@ -634,8 +634,8 @@
       "location": "À définir",
       "speaker": "Catherine Sztencel",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-300.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-300.webp",
+      "image": "/images/events/conferences/conference-300.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-300.webp",
       "tags": [
         "Professionnels",
         "Secondaire",
@@ -660,8 +660,8 @@
       "location": "À définir",
       "speaker": "Elodie Lamarque",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-331.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-331.webp",
+      "image": "/images/events/conferences/conference-331.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-331.webp",
       "tags": [
         "Professeurs, parents et enfants",
         "Primaire",
@@ -686,8 +686,8 @@
       "location": "À définir",
       "speaker": "Sylvain  Connac",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-332.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-332.webp",
+      "image": "/images/events/conferences/conference-332.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-332.webp",
       "tags": [
         "Professeurs",
         "Maternelle-primaire et secondaire",
@@ -703,6 +703,32 @@
       }
     },
     {
+      "id": "conference-364",
+      "title": "Aborder le (cyber)harcèlement en classe",
+      "description": "Vos élèves vous partagent des problèmes qu’ils ont pu avoir en ligne mais vous ne savez pas toujours comment y répondre ? Vous prenez connaissance de cas s’apparentant à du (cyber)harcèlement mais ne savez pas comment traiter le sujet avec vos élèves ?\nDurant cet atelier, nous aborderons la thématique du (cyber)harcèlement : comment l'aborder en classe, comment sensibiliser vos élèves à celui-ci... Nous vous présenterons plusieurs activités à réaliser en classe et des conseils pratiques.",
+      "type": "Conférences",
+      "day": "Mercredi",
+      "time": "À définir",
+      "location": "À définir",
+      "speaker": "Brieuc Tollenaere",
+      "organization": "",
+      "image": "/images/events/conferences/conference-364.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-364.webp",
+      "tags": [
+        "Professeurs",
+        "Primaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "www.bibliosansfrontieres.be",
+      "contact": {
+        "email": "brieuc.tollenaere@bibliosansfrontieres.be",
+        "phone": "0472654341"
+      }
+    },
+    {
       "id": "atelier-4",
       "title": "Introduction de techniques psychocorporelles en classe : quels sont les bénéfices pour l'enseignant et pour les élèves ?",
       "description": "Présentation et explications des bénéfices de quelques techniques psychocorporelles adaptées aux différents âges et milieux scolaires + Application et mise en pratique de quelques unes de ces pratiques au quotidien.",
@@ -712,7 +738,7 @@
       "location": "À définir",
       "speaker": "Roxane Geerinckx",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-4.webp",
+      "image": "/images/events/ateliers/atelier-4.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -738,7 +764,7 @@
       "location": "À définir",
       "speaker": "Christelle Rasez Doublon",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-6.webp",
+      "image": "/images/events/ateliers/atelier-6.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -764,7 +790,7 @@
       "location": "À définir",
       "speaker": "Astrid Buisset",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-7.webp",
+      "image": "/images/events/ateliers/atelier-7.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -790,7 +816,7 @@
       "location": "À définir",
       "speaker": "Sophie Leclère",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-34.webp",
+      "image": "/images/events/ateliers/atelier-34.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -816,7 +842,7 @@
       "location": "À définir",
       "speaker": "François Petit",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-67.webp",
+      "image": "/images/events/ateliers/atelier-67.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -842,7 +868,7 @@
       "location": "À définir",
       "speaker": "Fabienne Effinier",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-101.webp",
+      "image": "/images/events/ateliers/atelier-101.webp",
       "speakerImage": null,
       "tags": [
         "Professionnels",
@@ -868,7 +894,7 @@
       "location": "À définir",
       "speaker": "sophie LAPLAZE",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-133.webp",
+      "image": "/images/events/ateliers/atelier-133.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -894,7 +920,7 @@
       "location": "À définir",
       "speaker": "Sébastien Place",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-134.webp",
+      "image": "/images/events/ateliers/atelier-134.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -920,7 +946,7 @@
       "location": "À définir",
       "speaker": "Sébastien Place",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-135.webp",
+      "image": "/images/events/ateliers/atelier-135.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -946,7 +972,7 @@
       "location": "À définir",
       "speaker": "Cindy Franchimont",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-136.webp",
+      "image": "/images/events/ateliers/atelier-136.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -972,7 +998,7 @@
       "location": "À définir",
       "speaker": "DOMINIQUE PAQUOT",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-137.webp",
+      "image": "/images/events/ateliers/atelier-137.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -998,7 +1024,7 @@
       "location": "À définir",
       "speaker": "DOMINIQUE PAQUOT",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-138.webp",
+      "image": "/images/events/ateliers/atelier-138.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -1015,6 +1041,32 @@
       }
     },
     {
+      "id": "atelier-166",
+      "title": "Optimiser la lisibilité des supports pédagogiques : bonnes pratiques et outils ",
+      "description": "La lisibilité des supports de cours joue un rôle essentiel dans l’apprentissage, en particulier pour les élèves à besoins spécifiques. Cet atelier mettra en lumière les critères à privilégier pour choisir une police d’écriture adaptée et pour garantir une mise en page claire et accessible. Des outils et astuces pratiques seront présentés afin d’adapter vos supports pédagogiques et d’en améliorer la lisibilité pour tous les apprenants",
+      "type": "Ateliers",
+      "day": "Mercredi",
+      "time": "À définir",
+      "location": "À définir",
+      "speaker": "Geoffroy d'Aspremont",
+      "organization": "",
+      "image": "/images/events/ateliers/atelier-166.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.apeda.be",
+      "contact": {
+        "email": "geoffroy@apeda.be",
+        "phone": "0497508914"
+      }
+    },
+    {
       "id": "stand-1",
       "title": "Université de Paix - Des formations et programmes éducatifs pour gérer les conflits et améliorer le vivre ensemble",
       "description": "Sur notre stand, explorez une multitude d'outils didactiques, feuilletez et reprenez  nos catalogues de formations et nos brochures de présentation pour en savoir plus sur nos programmes. 🎓✨\n\nEt pour célébrer les 65 ans de l’asbl, participez à notre concours spécial et tentez votre chance pour remporter une surprise ! 🎁🥳",
@@ -1024,7 +1076,7 @@
       "location": "Cafétéria",
       "speaker": "Thibault Mathieu",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-1.webp",
+      "image": "/images/events/stands/stand-1.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1050,7 +1102,7 @@
       "location": "Espace 2",
       "speaker": "Virginie TYOU",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-2.webp",
+      "image": "/images/events/stands/stand-2.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1076,7 +1128,7 @@
       "location": "Espace 2",
       "speaker": "Catherine Sztencel",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-3.webp",
+      "image": "/images/events/stands/stand-3.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1102,7 +1154,7 @@
       "location": "Espace 3",
       "speaker": "Véronique Van den Abeele",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-4.webp",
+      "image": "/images/events/stands/stand-4.webp",
       "speakerImage": null,
       "tags": [
         "Professionnels",
@@ -1128,7 +1180,7 @@
       "location": "Cafétéria",
       "speaker": "Astrid BUISSET",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-5.webp",
+      "image": "/images/events/stands/stand-5.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1154,7 +1206,7 @@
       "location": "Espace 3",
       "speaker": "Sophie Courault",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-6.webp",
+      "image": "/images/events/stands/stand-6.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -1180,7 +1232,7 @@
       "location": "Espace 2",
       "speaker": "Benjamin  Stevens",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-34.webp",
+      "image": "/images/events/stands/stand-34.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1206,7 +1258,7 @@
       "location": "Espace 3",
       "speaker": "Guillaume  Bousquet",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-67.webp",
+      "image": "/images/events/stands/stand-67.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1232,7 +1284,7 @@
       "location": "Espace 3",
       "speaker": "Alain Thiry",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-100.webp",
+      "image": "/images/events/stands/stand-100.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -1258,7 +1310,7 @@
       "location": "À définir",
       "speaker": "ALINE CARDOT",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-133.webp",
+      "image": "/images/events/stands/stand-133.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1286,7 +1338,7 @@
       "location": "À définir",
       "speaker": "Alexandra VOLCKAERT",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-1.webp",
+      "image": "/images/events/ateliers/atelier-1.webp",
       "speakerImage": null,
       "tags": [
         "Professionnels",
@@ -1312,8 +1364,8 @@
       "location": "Cafétéria",
       "speaker": "Elise Verstraeten",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-1.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-1.webp",
+      "image": "/images/events/conferences/conference-1.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-1.webp",
       "tags": [
         "Parents",
         "Maternelle et primaire",
@@ -1338,8 +1390,8 @@
       "location": "À définir",
       "speaker": "Alexandra VOLCKAERT",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-4.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-4.webp",
+      "image": "/images/events/conferences/conference-4.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-4.webp",
       "tags": [
         "Professionnels",
         "Primaire et secondaire",
@@ -1364,7 +1416,7 @@
       "location": "Cafétéria",
       "speaker": "Thibault Mathieu",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-1.webp",
+      "image": "/images/events/stands/stand-1.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1390,7 +1442,7 @@
       "location": "Espace 2",
       "speaker": "Virginie TYOU",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-2.webp",
+      "image": "/images/events/stands/stand-2.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1416,7 +1468,7 @@
       "location": "Espace 2",
       "speaker": "Catherine Sztencel",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-3.webp",
+      "image": "/images/events/stands/stand-3.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1442,7 +1494,7 @@
       "location": "Espace 3",
       "speaker": "Véronique Van den Abeele",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-4.webp",
+      "image": "/images/events/stands/stand-4.webp",
       "speakerImage": null,
       "tags": [
         "Professionnels",
@@ -1468,7 +1520,7 @@
       "location": "Cafétéria",
       "speaker": "Astrid BUISSET",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-5.webp",
+      "image": "/images/events/stands/stand-5.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1494,7 +1546,7 @@
       "location": "Espace 3",
       "speaker": "Sophie Courault",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-6.webp",
+      "image": "/images/events/stands/stand-6.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -1520,7 +1572,7 @@
       "location": "Espace 2",
       "speaker": "Benjamin  Stevens",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-34.webp",
+      "image": "/images/events/stands/stand-34.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1546,7 +1598,7 @@
       "location": "Espace 3",
       "speaker": "Guillaume  Bousquet",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-67.webp",
+      "image": "/images/events/stands/stand-67.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1572,7 +1624,7 @@
       "location": "Espace 3",
       "speaker": "Alain Thiry",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-100.webp",
+      "image": "/images/events/stands/stand-100.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -1598,7 +1650,7 @@
       "location": "À définir",
       "speaker": "ALINE CARDOT",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-133.webp",
+      "image": "/images/events/stands/stand-133.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1626,8 +1678,8 @@
       "location": "À définir",
       "speaker": "Steve Masson",
       "organization": "",
-      "image": "/assets/images/events/conferences/conference-6.webp",
-      "speakerImage": "/assets/images/events/conferences/speaker-conference-6.webp",
+      "image": "/images/events/conferences/conference-6.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-6.webp",
       "tags": [
         "Professionnels",
         "Maternelle-primaire et secondaire",
@@ -1652,7 +1704,7 @@
       "location": "À définir",
       "speaker": "Dimitri Bongers",
       "organization": "",
-      "image": "/assets/images/events/ateliers/atelier-3.webp",
+      "image": "/images/events/ateliers/atelier-3.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -1678,7 +1730,7 @@
       "location": "Cafétéria",
       "speaker": "Thibault Mathieu",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-1.webp",
+      "image": "/images/events/stands/stand-1.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1704,7 +1756,7 @@
       "location": "Espace 2",
       "speaker": "Virginie TYOU",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-2.webp",
+      "image": "/images/events/stands/stand-2.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1730,7 +1782,7 @@
       "location": "Espace 2",
       "speaker": "Catherine Sztencel",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-3.webp",
+      "image": "/images/events/stands/stand-3.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1756,7 +1808,7 @@
       "location": "Espace 3",
       "speaker": "Véronique Van den Abeele",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-4.webp",
+      "image": "/images/events/stands/stand-4.webp",
       "speakerImage": null,
       "tags": [
         "Professionnels",
@@ -1782,7 +1834,7 @@
       "location": "Cafétéria",
       "speaker": "Astrid BUISSET",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-5.webp",
+      "image": "/images/events/stands/stand-5.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1808,7 +1860,7 @@
       "location": "Espace 3",
       "speaker": "Sophie Courault",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-6.webp",
+      "image": "/images/events/stands/stand-6.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -1834,7 +1886,7 @@
       "location": "Espace 2",
       "speaker": "Benjamin  Stevens",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-34.webp",
+      "image": "/images/events/stands/stand-34.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1860,7 +1912,7 @@
       "location": "Espace 3",
       "speaker": "Guillaume  Bousquet",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-67.webp",
+      "image": "/images/events/stands/stand-67.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",
@@ -1886,7 +1938,7 @@
       "location": "Espace 3",
       "speaker": "Alain Thiry",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-100.webp",
+      "image": "/images/events/stands/stand-100.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
@@ -1912,7 +1964,7 @@
       "location": "À définir",
       "speaker": "ALINE CARDOT",
       "organization": "",
-      "image": "/assets/images/events/stands/stand-133.webp",
+      "image": "/images/events/stands/stand-133.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs, parents et enfants",

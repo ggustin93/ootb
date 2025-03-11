@@ -9,7 +9,7 @@
     "location": "À définir",
     "speaker": "Sonia Trichili",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-2.webp",
+    "image": "/images/events/ateliers/atelier-2.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs",
@@ -35,7 +35,7 @@
     "location": "À définir",
     "speaker": "Roxane Geerinckx",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-4.webp",
+    "image": "/images/events/ateliers/atelier-4.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs, parents et enfants",
@@ -61,7 +61,7 @@
     "location": "À définir",
     "speaker": "Christelle Rasez Doublon",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-6.webp",
+    "image": "/images/events/ateliers/atelier-6.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs, parents et enfants",
@@ -87,7 +87,7 @@
     "location": "À définir",
     "speaker": "Astrid Buisset",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-7.webp",
+    "image": "/images/events/ateliers/atelier-7.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs, parents et enfants",
@@ -113,7 +113,7 @@
     "location": "À définir",
     "speaker": "Sophie Leclère",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-34.webp",
+    "image": "/images/events/ateliers/atelier-34.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs, parents et enfants",
@@ -139,7 +139,7 @@
     "location": "À définir",
     "speaker": "François Petit",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-67.webp",
+    "image": "/images/events/ateliers/atelier-67.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs, parents et enfants",
@@ -165,7 +165,7 @@
     "location": "À définir",
     "speaker": "Fabienne Effinier",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-101.webp",
+    "image": "/images/events/ateliers/atelier-101.webp",
     "speakerImage": null,
     "tags": [
       "Professionnels",
@@ -191,7 +191,7 @@
     "location": "À définir",
     "speaker": "sophie LAPLAZE",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-133.webp",
+    "image": "/images/events/ateliers/atelier-133.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs, parents et enfants",
@@ -217,7 +217,7 @@
     "location": "À définir",
     "speaker": "Sébastien Place",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-134.webp",
+    "image": "/images/events/ateliers/atelier-134.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs",
@@ -243,7 +243,7 @@
     "location": "À définir",
     "speaker": "Sébastien Place",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-135.webp",
+    "image": "/images/events/ateliers/atelier-135.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs",
@@ -269,7 +269,7 @@
     "location": "À définir",
     "speaker": "Cindy Franchimont",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-136.webp",
+    "image": "/images/events/ateliers/atelier-136.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs",
@@ -295,7 +295,7 @@
     "location": "À définir",
     "speaker": "DOMINIQUE PAQUOT",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-137.webp",
+    "image": "/images/events/ateliers/atelier-137.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs, parents et enfants",
@@ -321,7 +321,7 @@
     "location": "À définir",
     "speaker": "DOMINIQUE PAQUOT",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-138.webp",
+    "image": "/images/events/ateliers/atelier-138.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs",
@@ -338,6 +338,32 @@
     }
   },
   {
+    "id": "atelier-166",
+    "title": "Optimiser la lisibilité des supports pédagogiques : bonnes pratiques et outils ",
+    "description": "La lisibilité des supports de cours joue un rôle essentiel dans l’apprentissage, en particulier pour les élèves à besoins spécifiques. Cet atelier mettra en lumière les critères à privilégier pour choisir une police d’écriture adaptée et pour garantir une mise en page claire et accessible. Des outils et astuces pratiques seront présentés afin d’adapter vos supports pédagogiques et d’en améliorer la lisibilité pour tous les apprenants",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "À définir",
+    "location": "À définir",
+    "speaker": "Geoffroy d'Aspremont",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-166.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.apeda.be",
+    "contact": {
+      "email": "geoffroy@apeda.be",
+      "phone": "0497508914"
+    }
+  },
+  {
     "id": "atelier-1",
     "title": "Babaoo : Atelier découverte d'un outil digital pour développer ses fonctions exécutives",
     "description": "Plus que jamais, les enfants ont besoin de comprendre le fonctionnement de leur cerveau, pour l'utiliser correctement !\nVenez découvrir Babaoo, l'outil digital qui apprend aux enfants à développer leur fonctions exécutives !\nDe manière ludique, et avec des missions à réaliser avec les copains dans la vraie vie, les enfants développent de nouveaux réflexes cognitifs, pour appliquer de nouvelles stratégies !",
@@ -347,7 +373,7 @@
     "location": "À définir",
     "speaker": "Alexandra VOLCKAERT",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-1.webp",
+    "image": "/images/events/ateliers/atelier-1.webp",
     "speakerImage": null,
     "tags": [
       "Professionnels",
@@ -373,7 +399,7 @@
     "location": "À définir",
     "speaker": "Dimitri Bongers",
     "organization": "",
-    "image": "/assets/images/events/ateliers/atelier-3.webp",
+    "image": "/images/events/ateliers/atelier-3.webp",
     "speakerImage": null,
     "tags": [
       "Professeurs",

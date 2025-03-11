@@ -15,6 +15,10 @@ Ce dossier contient la documentation technique du projet Out of the Books. Chaqu
 - [Structure du projet](./architecture/structure.md) - Vue d'ensemble de la structure du projet
 - [Collections de contenu](./architecture/collections.md) - Description des collections de contenu Astro
 
+### Formulaires et soumission
+- [Architecture du système de formulaire](./forms/form-architecture.md) - Séparation des responsabilités dans le système de formulaire
+- [Soumission des fiches pédagogiques](./forms/pedagogical-sheet-submission.md) - Processus de soumission des fiches pédagogiques
+
 ### Déploiement
 - [Processus de déploiement](./deployment/process.md) - Documentation sur le processus de déploiement
 - [Variables d'environnement](./deployment/environment.md) - Liste des variables d'environnement requises

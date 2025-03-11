@@ -49,6 +49,12 @@ const allTags = await findTags().then(tags => {
 const MAX_VISIBLE_TAGS = 15;
 const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
 
+// Préparer les posts pour la recherche
+const searchablePosts = page.data.map(post => ({
+  slug: post.slug,
+  title: post.title || ''
+}));
+
 // Configuration des filtres
 const FILTER_TYPES = {
   all: {
@@ -136,7 +142,12 @@ const metadata = {
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch tags={initialTags} placeholder={search.placeholder} />
+            <TagSearch 
+              tags={initialTags} 
+              posts={searchablePosts}
+              placeholder={search.placeholder} 
+              label={search.thematicLabel}
+            />
 
             <!-- Séparateur discret -->
             <div class="mb-4 text-center md:text-left">
@@ -150,17 +161,16 @@ const metadata = {
 
             <!-- Filtres principaux -->
             <div class="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start mb-4">
-              {/* Bouton "TOUS" toujours présent */}
+              <!-- Bouton "TOUS" toujours présent -->
               <CategoryButton
                 href="/blog"
                 icon="tabler:layout-grid"
                 label="Tous"
                 color="#1f2937"
                 isActive={!category.slug || category.slug === 'blog'}
-                withAnchor={true}
               />
 
-              {/* Autres filtres */}
+              <!-- Autres filtres -->
               {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => {
                 const isActive = key.toLowerCase() === category.slug?.toLowerCase();
                 const colorVar = `var(--content-${key})`;
@@ -171,7 +181,6 @@ const metadata = {
                     label={config.label}
                     color={colorVar}
                     isActive={isActive}
-                    withAnchor={true}
                   />
                 );
               })}
@@ -275,8 +284,9 @@ const metadata = {
                         href="/blog#category-content" 
                         variant="premium-secondary"
                         icon="tabler:arrow-left"
+                        class="back-button"
                       >
-                        Retour aux contenus
+                        Retour
                       </Button>
                     </div>
                   </div>
@@ -389,6 +399,17 @@ const metadata = {
   .group:hover {
     ring-color: var(--hover-ring-color) !important;
   }
+  
+  /* Animation de surbrillance pour le défilement */
+  @keyframes highlightPulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+    50% { box-shadow: 0 0 20px 0 rgba(0, 128, 128, 0.2); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+  }
+  
+  .scroll-highlight {
+    animation: highlightPulse 1s ease-in-out;
+  }
 </style>
 
 <script>
@@ -420,47 +441,128 @@ const metadata = {
     scrollToElement('category-filters');
   }
 
+  function scrollToContent() {
+    // Utiliser requestAnimationFrame pour s'assurer que le DOM est prêt
+    requestAnimationFrame(() => {
+      const targetElement = document.getElementById('category-content');
+      
+      if (targetElement) {
+        const headerOffset = 100;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Ajouter un effet visuel subtil pour attirer l'attention
+        targetElement.classList.add('scroll-highlight');
+        setTimeout(() => {
+          targetElement.classList.remove('scroll-highlight');
+        }, 1000);
+      } else {
+        // Fallback si l'élément n'est pas trouvé
+        const defaultScrollDistance = window.innerHeight * 0.8;
+        window.scrollTo({
+          top: defaultScrollDistance,
+          behavior: 'smooth'
+        });
+      }
+    });
+  }
+
   function scrollToPremiumTop() {
     scrollToElement('premium-section-top');
   }
 
   // Gestionnaire pour les liens avec ancre
   function handleAnchorClick(e: Event) {
-    e.preventDefault();
     const target = e.currentTarget as HTMLAnchorElement;
     const href = target.getAttribute('href');
     
-    if (href?.includes('#category-filters')) {
-      scrollToFilters();
-    } else if (href?.includes('#premium-section-top')) {
-      scrollToPremiumTop();
-    } else if (href?.includes('#category-content')) {
-      // Compatibilité avec les anciens liens
-      scrollToFilters();
+    // Vérifier si le lien pointe vers une autre catégorie
+    if (href && (href.startsWith('/category/') || href === '/blog')) {
+      // Si le lien contient un ancre mais pointe vers une autre page, laisser la navigation se faire normalement
+      const currentPath = window.location.pathname;
+      const targetPath = href.split('#')[0];
+      
+      // Si on est déjà sur la même page, empêcher la navigation et faire défiler vers l'ancre
+      if (currentPath === targetPath) {
+        e.preventDefault();
+        if (href?.includes('#category-filters')) {
+          scrollToFilters();
+        } else if (href?.includes('#premium-section-top')) {
+          scrollToPremiumTop();
+        } else if (href?.includes('#category-content')) {
+          scrollToContent();
+        }
+      }
+      // Sinon, laisser la navigation se faire normalement
+      // La gestion de la position Y est maintenant dans CategoryFilters.astro
+    } else {
+      // Pour les autres liens avec ancre (non-catégorie), empêcher la navigation et faire défiler
+      if (href?.includes('#')) {
+        e.preventDefault();
+        if (href?.includes('#category-filters')) {
+          scrollToFilters();
+        } else if (href?.includes('#premium-section-top')) {
+          scrollToPremiumTop();
+        } else if (href?.includes('#category-content')) {
+          scrollToContent();
+        }
+      }
     }
   }
 
   // Initialisation
   document.addEventListener('DOMContentLoaded', () => {
-    // Vérifier le hash initial
+    // Vérifier si nous avons un hash dans l'URL
     const hash = window.location.hash;
-    if (hash === '#category-filters' || hash === '#category-content') {
-      setTimeout(() => scrollToFilters(), 100);
-    } else if (hash === '#premium-section-top') {
-      setTimeout(() => scrollToPremiumTop(), 100);
-    }
     
-    // Vérifier si une demande de défilement vers premium-section-top a été faite depuis la page principale
-    const shouldScrollToPremium = localStorage.getItem('scrollToPremium');
-    if (shouldScrollToPremium === 'true' && window.location.pathname.includes('/premium')) {
-      setTimeout(() => scrollToPremiumTop(), 100);
-      localStorage.removeItem('scrollToPremium'); // Nettoyer après utilisation
+    // Traiter le hash pour le défilement
+    if (hash) {
+      setTimeout(() => {
+        if (hash === '#category-content') {
+          scrollToContent();
+        } else if (hash === '#category-filters') {
+          scrollToFilters();
+        } else if (hash === '#premium-section-top') {
+          scrollToPremiumTop();
+        }
+      }, 300);
     }
 
-    // Ajout des écouteurs d'événements sur les liens
+    // Ajout des écouteurs d'événements sur les liens avec ancre
     document.querySelectorAll('a[href*="#category-filters"], a[href*="#premium-section-top"], a[href*="#category-content"]').forEach(link => {
       link.addEventListener('click', handleAnchorClick);
     });
+    
+    // Gestion du bouton de retour
+    setupBackButton();
   });
+  
+  // Configuration du bouton de retour
+  function setupBackButton() {
+    const backButtons = document.querySelectorAll('.back-button');
+    
+    backButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Vérifier s'il y a un historique de navigation
+        const referrer = document.referrer;
+        
+        // Si on a un referrer et qu'il est sur le même domaine
+        if (referrer && referrer.includes(window.location.hostname)) {
+          // Revenir à la page précédente
+          window.history.back();
+        } else {
+          // Si pas d'historique ou referrer externe, rediriger vers la page principale
+          window.location.href = '/blog';
+        }
+      });
+    });
+  }
 </script>
 

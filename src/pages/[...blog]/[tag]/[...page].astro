@@ -11,6 +11,7 @@ import { Image } from 'astro:assets';
 import TagSearch from '~/components/common/TagSearch.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import CategoryButton from '~/components/blog/CategoryButton.astro';
+import CategoryFilters from '~/components/blog/CategoryFilters.astro';
 
 // Import des données TinaCMS
 import tagData from '~/content/blog/blog.json';
@@ -42,6 +43,12 @@ const allTags = await findTags().then(tags => {
 // Limiter le nombre de tags affichés initialement
 const MAX_VISIBLE_TAGS = 15;
 const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
+
+// Préparer les posts pour la recherche
+const searchablePosts = page.data.map(post => ({
+  slug: post.slug,
+  title: post.title || ''
+}));
 
 // Extraction correcte des données du JSON
 const { hero } = tagData;
@@ -92,7 +99,13 @@ const metadata = {
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch tags={initialTags} placeholder={search.placeholder} />
+            <TagSearch 
+              tags={initialTags} 
+              posts={searchablePosts}
+              placeholder={search.placeholder} 
+              label={search.thematicLabel}
+              currentTag={tag}
+            />
 
             <!-- Séparateur discret -->
             <div class="mb-4 text-center md:text-left">
@@ -144,41 +157,25 @@ const metadata = {
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <!-- Filtres minimalistes -->
-        <div class="flex gap-1 bg-gray-100/80 p-1 rounded-lg mb-8">
-          <a
-            href="/blog#category-content"
-            class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900 group"
-          >
-            <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4 transition-all duration-300" />
-            <span class="text-xs sm:text-sm italic">{CONTENT_TYPES.all.shortLabel}</span>
-          </a>
-
-          {Object.entries(CONTENT_TYPES)
-            .filter(([key]) => key !== 'all')
-            .map(([key, config]) => (
-              <a
-                href={`/category/${key}#category-content`}
-                class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900 group"
-                style={`--hover-text-color: ${config.color};`}
-              >
-                <Icon name={config.icon} class="w-4 h-4 transition-all duration-300 group-hover:text-[var(--hover-text-color)]" />
-                <span class="text-xs sm:text-sm italic group-hover:text-[var(--hover-text-color)]">{config.shortLabel}</span>
-              </a>
-            ))}
-        </div>
-
-        <!-- Tag title -->
-        <h2 class="text-3xl font-body font-semibold mb-12">
-          {tag.slug && (
-            <span class="inline-flex items-center gap-3">
-              <span class="text-gray-600">Contenus liés à</span>
-              <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
-                <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
-                <span class="text-gray-800 font-medium">{tag.title}</span>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
+          <h2 class="text-3xl font-body font-semibold">
+            {tag.slug && (
+              <span class="inline-flex items-center gap-3">
+                <span class="text-gray-600">Contenus liés à</span>
+                <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
+                  <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
+                  <span class="text-gray-800 font-medium">{tag.title}</span>
+                </span>
               </span>
-            </span>
-          )}
-        </h2>
+            )}
+          </h2>
+          <CategoryFilters 
+            currentCategory="" 
+            blogConfig={tagData} 
+            isTagPage={true} 
+            currentTag={tag}
+          />
+        </div>
 
         <BlogList posts={page.data} />
         <div class="mt-12">

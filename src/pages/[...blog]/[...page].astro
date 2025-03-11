@@ -4,7 +4,7 @@ import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
 import Layout from '~/layouts/PageLayout.astro';
 import BlogList from '~/components/blog/List.astro';
 import Pagination from '~/components/blog/Pagination.astro';
-import { findTags } from '~/utils/blog';
+import { findTags, fetchPosts } from '~/utils/blog';
 
 import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
 import { CONTENT_TYPES } from '~/config/content-types';
@@ -42,6 +42,14 @@ const allTags = await findTags().then(tags => {
 
 // Limiter le nombre de tags affichés initialement
 const initialTags = allTags.slice(0, 15);
+
+// Récupérer TOUS les posts pour la recherche
+const allPosts = await fetchPosts();
+const searchablePosts = allPosts.map(post => ({
+  slug: post.slug,
+  title: post.title,
+  category: post.category?.slug
+}));
 
 const metadata = {
   title: `Blog${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
@@ -97,7 +105,12 @@ const { filters, contentSection, search } = hero;
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch tags={initialTags} placeholder={search.placeholder} />
+            <TagSearch 
+              tags={initialTags} 
+              posts={searchablePosts}
+              placeholder={search.placeholder} 
+              label={search.thematicLabel}
+            />
 
             <!-- Séparateur discret -->
             <div class="mb-4 text-center md:text-left">

@@ -8,5 +8,25 @@
         "source": "/admin/(.*)",
         "destination": "/admin/index.html"
       }
-    ]
+    ],
+    "routes": [
+      {
+        "handle": "filesystem"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/404.html",
+        "status": 404
+      }
+    ],
+    "buildCommand": "npm run build:vercel",
+    "outputDirectory": "dist",
+    "framework": "astro",
+    "env": {
+      "LIGHTNINGCSS_SKIP_BINARY_DOWNLOAD": "1",
+      "CSS_TRANSFORMER": "postcss",
+      "SHARP_IGNORE_GLOBAL_LIBVIPS": "1",
+      "ROLLUP_SKIP_OPTIONAL": "true",
+      "NODE_OPTIONS": "--max-old-space-size=4096"
+    }
   }

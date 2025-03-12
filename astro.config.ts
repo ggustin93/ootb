@@ -12,28 +12,15 @@ import react from '@astrojs/react';
 import astrowind from './vendor/integration';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 import netlify from '@astrojs/netlify';
-import vercel from '@astrojs/vercel/serverless';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const hasExternalScripts = false;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) => 
  hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
-// Détecter si nous sommes sur Vercel (pour Tina) ou Netlify (principal)
-const isVercel = process.env.VERCEL === '1';
-
 export default defineConfig({
- site: 'https://outofthebooks.org',
  output: 'server',
- adapter: isVercel 
-   ? vercel({
-       webAnalytics: {
-         enabled: true,
-       },
-       imageService: true,
-       devImageService: 'sharp',
-     })
-   : netlify(),
+ adapter: netlify(),
  build: {
    inlineStylesheets: 'auto',
  },

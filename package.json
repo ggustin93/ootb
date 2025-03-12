@@ -11,7 +11,8 @@
         "dev": "astro dev && tinacms dev",
         "start": "astro dev",
         "build": "astro build && npx tinacms build",
-        "build:netlify": "astro build",
+        "build:netlify": "npm install --os=linux --cpu=x64 sharp && astro build",
+        "build:vercel": "FORCE_RESOLUTIONS=true npm install --legacy-peer-deps && tinacms build",
         "preview": "astro preview",
         "astro": "astro",
         "check": "npm run check:astro && npm run check:eslint && npm run check:prettier",
@@ -25,7 +26,7 @@
         "clean": "rm -rf dist .astro && rm -f src/assets/images/events/logs/*.log",
         "prebuild": "npm run clean && node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js",
         "tina": "tinacms dev",
-        "tina:build": "tinacms build",
+        "tina:build": "FORCE_RESOLUTIONS=true npm install --legacy-peer-deps && tinacms build",
         "check-images": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/check-images.ts",
         "normalize-images": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/normalize-images.ts",
         "fix-conference-images": "NODE_OPTIONS=\"--loader ts-node/esm\" ts-node-esm src/scripts/fix-conference-images.ts",
@@ -72,6 +73,7 @@
         "next-tinacms-cloudinary": "^13.0.0",
         "nocodb-sdk": "^0.262.1",
         "node-fetch": "^2.7.0",
+        "sharp": "^0.33.5",
         "slugify": "^1.6.6",
         "swiper": "^11.2.2",
         "tailwindcss-animate": "^1.0.7",
@@ -107,12 +109,14 @@
         "prettier": "^3.4.2",
         "prettier-plugin-astro": "^0.14.1",
         "reading-time": "^1.5.0",
-        "sharp": "^0.33.5",
         "tailwind-merge": "^2.6.0",
         "tailwindcss": "^3.4.17",
         "ts-node": "^10.9.2",
         "typescript": "^5.7.2",
         "typescript-eslint": "^8.17.0",
         "unist-util-visit": "^5.0.0"
+    },
+    "resolutions": {
+        "astro": "^5.1.8"
     }
 }

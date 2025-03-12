@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "npm run build"
+  command = "npm run build:netlify"
 
 [dev]
   command = "npm run dev"
@@ -30,7 +30,8 @@
 
 [build.environment]
   NODE_VERSION = "20.11.0"
-  NPM_FLAGS = "--platform=linux --arch=x64"
+  SHARP_IGNORE_GLOBAL_LIBVIPS = "1"
+  NETLIFY = "true"
 
 [[redirects]]
   from = "/admin"

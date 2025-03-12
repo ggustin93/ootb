@@ -1,7 +1,6 @@
 [build]
-  command = "npm run build:netlify"
   publish = "dist"
-  # functions = "netlify/functions"
+  command = "npm run build"
 
 [dev]
   command = "npm run dev"
@@ -30,13 +29,8 @@
 #   force = true
 
 [build.environment]
-  SHARP_IGNORE_GLOBAL_LIBVIPS = "1"
-  ROLLUP_SKIP_OPTIONAL = "true"
-  NPM_FLAGS = "--include=optional"
-  NODE_OPTIONS = "--max-old-space-size=4096"
-
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
+  NODE_VERSION = "20.11.0"
+  NPM_FLAGS = "--platform=linux --arch=x64"
 
 [[redirects]]
   from = "/admin"
@@ -45,7 +39,7 @@
   force = true
 
 [[redirects]]
-  from = "/admin/:splat"
+  from = "/admin/*"
   to = "https://outofthebooks.vercel.app/admin/:splat"
   status = 301
   force = true

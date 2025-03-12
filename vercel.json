@@ -9,17 +9,9 @@
         "destination": "/admin/index.html"
       }
     ],
-    "routes": [
-      {
-        "handle": "filesystem"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/404.html",
-        "status": 404
-      }
-    ],
-    "buildCommand": "npm run build:vercel",
-    "outputDirectory": "dist",
-    "framework": "astro"
+    "buildCommand": "npm run tina:build",
+    "devCommand": "npm run tina",
+    "installCommand": "npm install",
+    "framework": "astro",
+    "outputDirectory": "dist"
   }

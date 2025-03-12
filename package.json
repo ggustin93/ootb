@@ -11,7 +11,7 @@
         "dev": "astro dev && tinacms dev",
         "start": "astro dev",
         "build": "astro build && npx tinacms build",
-        "build:netlify": "npm run clean && node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js && npm run build",
+        "build:netlify": "LIGHTNINGCSS_SKIP_BINARY_DOWNLOAD=1 CSS_TRANSFORMER=postcss npm run clean && LIGHTNINGCSS_SKIP_BINARY_DOWNLOAD=1 CSS_TRANSFORMER=postcss node src/scripts/build-festival-data.js && LIGHTNINGCSS_SKIP_BINARY_DOWNLOAD=1 CSS_TRANSFORMER=postcss node src/scripts/build-fiches-pedagogiques.js && LIGHTNINGCSS_SKIP_BINARY_DOWNLOAD=1 CSS_TRANSFORMER=postcss npm run build",
         "build:vercel": "npm run clean && node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js && npm run build",
         "preview": "astro preview",
         "astro": "astro",

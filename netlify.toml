@@ -31,6 +31,9 @@
 
 [build.environment]
   SHARP_IGNORE_GLOBAL_LIBVIPS = "1"
+  ROLLUP_SKIP_OPTIONAL = "true"
+  NPM_FLAGS = "--include=optional"
+  NODE_OPTIONS = "--max-old-space-size=4096"
 
 [[plugins]]
   package = "@netlify/plugin-lighthouse"

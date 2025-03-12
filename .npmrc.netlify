@@ -1,13 +1,16 @@
-# Expose Astro dependencies for `pnpm` users
-shamefully-hoist=true
-
 # Configuration npm pour Netlify
 engine-strict=false
 legacy-peer-deps=true
+optional=true
+ignore-scripts=false
+fund=false
+audit=false
+loglevel=error
+
+# Configuration pour Sharp
 sharp_binary_host=https://npmmirror.com/mirrors/sharp
 sharp_libvips_binary_host=https://npmmirror.com/mirrors/sharp-libvips
 
 # Configuration pour Rollup
 rollup_binary_host=https://npmmirror.com/mirrors/rollup
-rollup_binary_host_mirror=https://npmmirror.com/mirrors/rollup
-optional=true
+rollup_binary_host_mirror=https://npmmirror.com/mirrors/rollup 

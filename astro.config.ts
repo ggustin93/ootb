@@ -11,7 +11,7 @@ import type { AstroIntegration } from 'astro';
 import react from '@astrojs/react';
 import astrowind from './vendor/integration';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
-import netlify from '@astrojs/netlify';
+import vercel from '@astrojs/vercel/serverless';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const hasExternalScripts = false;
@@ -20,16 +20,21 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
  output: 'server',
- adapter: netlify(),
+ adapter: vercel({
+   webAnalytics: {
+     enabled: true,
+   },
+ }),
  build: {
    inlineStylesheets: 'auto',
  },
  experimental: {
    clientPrerender: true
  },
- /*redirects: {
-   '/admin': '/admin/index.html'
- },*/
+ redirects: {
+   '/admin': '/admin/index.html',
+   '/admin/*': '/admin/index.html'
+ },
  integrations: [
    sitemap(),
    tailwind({

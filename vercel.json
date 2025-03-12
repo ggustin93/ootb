@@ -1,17 +1,11 @@
 {
-    "rewrites": [
-      {
-        "source": "/admin",
-        "destination": "/admin/index.html"
-      },
-      {
-        "source": "/admin/(.*)",
-        "destination": "/admin/index.html"
-      }
-    ],
-    "buildCommand": "npm run tina:build",
-    "devCommand": "npm run tina",
-    "installCommand": "npm install",
-    "framework": "astro",
-    "outputDirectory": "dist"
-  }
+  "buildCommand": "npm run tina:build",
+  "outputDirectory": ".tina/__generated__",
+  "framework": "other",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/admin"
+    }
+  ]
+}

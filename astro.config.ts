@@ -23,9 +23,11 @@ export default defineConfig({
  adapter: netlify(),
  build: {
    inlineStylesheets: 'auto',
+   format: 'file',
+   assets: 'assets',
  },
  experimental: {
-   clientPrerender: true
+   clientPrerender: true,
  },
  /*redirects: {
    '/admin': '/admin/index.html'
@@ -88,7 +90,8 @@ export default defineConfig({
      })
    ),
    compress({
-     CSS: true,
+     // CSS déjà optimisé par Tailwind et Vite, pas besoin de double optimisation
+     CSS: false,
      HTML: {
        'html-minifier-terser': {
          removeAttributeQuotes: false,
@@ -101,9 +104,14 @@ export default defineConfig({
          minifyCSS: true,
        },
      },
-     Image: true,
+     // Désactivé car les images sont déjà optimisées par le service Sharp d'Astro
+     // Évite une double optimisation qui ralentit considérablement le build
+     Image: false,
+     // Minification JS complémentaire à celle de Vite
      JavaScript: true,
+     // Optimisation des SVG pour réduire leur taille
      SVG: true,
+     // Niveau de log modéré pour voir les informations importantes sans être submergé
      Logger: 1,
    }),
    astrowind({

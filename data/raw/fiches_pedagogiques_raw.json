@@ -1228,7 +1228,7 @@
     "isLastPage": true
   },
   "stats": {
-    "dbQueryTime": "5.677",
-    "apiHandlingTime": "20.962"
+    "dbQueryTime": "7.946",
+    "apiHandlingTime": "17.348"
   }
 }

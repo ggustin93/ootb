@@ -729,6 +729,32 @@
       }
     },
     {
+      "id": "conference-365",
+      "title": "Inclusion et diversité cognitive",
+      "description": "Cette conférence présentera les grands principes favorisant l'inclusion des élèves ayant un diagnostic de troubles du neurodéveloppement, tels qu'ils ont été proposés dans le livre \"Pareils, pas pareils\", co-écrit avec Isabelle Filliozat (Nathan, 2025)",
+      "type": "Conférences",
+      "day": "Mercredi",
+      "time": "À définir",
+      "location": "À définir",
+      "speaker": "faby cazalis-judet de la combe",
+      "organization": "",
+      "image": "/images/events/conferences/conference-365.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-365.webp",
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "",
+      "contact": {
+        "email": "fabienne.cazalis@icloud.com",
+        "phone": "+33769008923"
+      }
+    },
+    {
       "id": "atelier-4",
       "title": "Introduction de techniques psychocorporelles en classe : quels sont les bénéfices pour l'enseignant et pour les élèves ?",
       "description": "Présentation et explications des bénéfices de quelques techniques psychocorporelles adaptées aux différents âges et milieux scolaires + Application et mise en pratique de quelques unes de ces pratiques au quotidien.",

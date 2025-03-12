@@ -347,13 +347,17 @@ function generateMdxContent(videoInfo, expertName = '') {
       expertName = detectExpert(title) || ''; // Garantir une chaîne vide si la détection échoue
     }
     
+    // Échapper les guillemets dans les chaînes pour éviter les problèmes YAML
+    const escapedTitle = title.replace(/"/g, '');
+    const escapedExpertName = expertName.replace(/"/g, '');
+    
     // Génération de la description si elle est vide
     let description = videoInfo.description.trim();
     if (!description) {
       if (expertName) {
-        description = `Découvrez notre live avec ${expertName}. Une session riche en conseils et informations pour vous aider dans votre parcours.`;
+        description = `Découvrez notre live avec ${escapedExpertName}. Une session riche en conseils et informations pour vous aider dans votre parcours.`;
       } else {
-        description = `Découvrez notre live sur ${title}. Une session riche en conseils et informations pour vous aider dans votre parcours.`;
+        description = `Découvrez notre live sur ${escapedTitle}. Une session riche en conseils et informations pour vous aider dans votre parcours.`;
       }
     }
     
@@ -362,6 +366,9 @@ function generateMdxContent(videoInfo, expertName = '') {
     if (shortDescription.length > 160) {
       shortDescription = shortDescription.substring(0, 157) + '...';
     }
+    
+    // Échapper les guillemets dans la description
+    shortDescription = shortDescription.replace(/"/g, '');
     
     // Formatage des tags
     let tags = [...(videoInfo.tags || [])]; // Garantir que tags est un tableau, même si videoInfo.tags est undefined
@@ -389,16 +396,16 @@ function generateMdxContent(videoInfo, expertName = '') {
     
     // Construction du contenu MDX
     const mdxContent = `---
-expert: "${expertName}"
+expert: "${escapedExpertName}"
 metadata:
-  title: "${title} - Out of the Books"
+  title: "${escapedTitle} - Out of the Books"
   description: >-
     ${shortDescription}
   robots:
     index: true
     follow: true
 published: true
-title: "${title}"
+title: "${escapedTitle}"
 description: >-
   ${shortDescription}
 publishDate: ${publishDate}T00:00:00.000Z

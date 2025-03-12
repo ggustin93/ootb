@@ -1,11 +1,12 @@
 {
-  "buildCommand": "npm run tina:build",
+  "buildCommand": "npm run build:vercel",
   "outputDirectory": ".tina/__generated__",
-  "framework": "other",
+  "framework": "astro",
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/admin"
     }
-  ]
+  ],
+  "installCommand": "npm install --legacy-peer-deps"
 }

@@ -135,7 +135,7 @@
   "categoryInfo": {
     "tv": {
       "colorVariable": "var(--ootb-green)",
-      "logo": "https://static.wixstatic.com/media/e57c2b_df52671ae61441c381d84bc2e805a342~mv2.png",
+      "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1741786364/e57c2b_df52671ae61441c381d84bc2e805a342_mv2_zmzxqf.webp",
       "title": "Pédagoscope, une émission éducative diffusée tous les 15 jours sur TVCOM",
       "description": [
         "Tous les 15 jours, suivez Renaud Keymeulen et Sophie Vanden Plas alors qu'ils explorent la transition de l'école à la maison. Ensemble, ils vous offriront des idées novatrices à partir de thèmes captivants.",
@@ -148,7 +148,7 @@
     },
     "podcast": {
       "colorVariable": "var(--ootb-violet)",
-      "logo": "https://static.wixstatic.com/media/e57c2b_58dc80b3802d4b3d803e2f8fd41d125b~mv2.jpg/v1/fill/w_756,h_374,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/LOGO_EDUCATION_MODE-EMPLOI_HORIZONTAL_COLOR.jpg",
+      "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1741786365/LOGO_EDUCATION_MODE-EMPLOI_HORIZONTAL_COLOR_bhg5fl.avif",
       "title": "Éducation : mode d'emploi",
       "description": [
         "Bienvenue dans Éducation : mode d'emploi, votre nouveau Podcast pour la rentrée.",

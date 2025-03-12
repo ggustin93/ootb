@@ -43,9 +43,3 @@
   to = "https://outofthebooks.vercel.app/admin"
   status = 301
   force = true
-
-[[redirects]]
-  from = "/admin/*"
-  to = "https://outofthebooks.vercel.app/admin/:splat"
-  status = 301
-  force = true

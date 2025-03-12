@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm run build:netlify"
   publish = "dist"
   # functions = "netlify/functions"
 
@@ -28,6 +28,12 @@
 #   to = "/.netlify/functions/nocodb-to-mdx"
 #   status = 200
 #   force = true
+
+[build.environment]
+  SHARP_IGNORE_GLOBAL_LIBVIPS = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
 
 [[redirects]]
   from = "/admin"

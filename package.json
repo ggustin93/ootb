@@ -11,7 +11,7 @@
         "dev": "astro dev && tinacms dev",
         "start": "astro dev",
         "build": "astro build && npx tinacms build",
-        "build:netlify": "astro build",
+        "build:netlify": "npm install --os=linux --cpu=x64 sharp && npm run clean && node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js && npm run build",
         "preview": "astro preview",
         "astro": "astro",
         "check": "npm run check:astro && npm run check:eslint && npm run check:prettier",
@@ -38,7 +38,8 @@
         "build:fiches": "node src/scripts/build-fiches-pedagogiques.js",
         "build:lives": "node src/scripts/build-live-videos.js",
         "build:lives:clean": "CLEAN_DIRECTORY=true node src/scripts/build-live-videos.js",
-        "build:lives:force": "FORCE_REGENERATE=true node src/scripts/build-live-videos.js"
+        "build:lives:force": "FORCE_REGENERATE=true node src/scripts/build-live-videos.js",
+        "postinstall": "npm install --include=optional sharp"
     },
     "dependencies": {
         "@astrojs/netlify": "^6.2.3",

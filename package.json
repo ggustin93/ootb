@@ -12,7 +12,6 @@
         "start": "astro dev",
         "build": "astro build && npx tinacms build",
         "build:netlify": "rm -rf node_modules && FORCE_RESOLUTIONS=true npm install --legacy-peer-deps && npm install --os=linux --cpu=x64 sharp && astro build",
-        "build:vercel": "FORCE_RESOLUTIONS=true npm install --legacy-peer-deps && tinacms build",
         "preview": "astro preview",
         "astro": "astro",
         "check": "npm run check:astro && npm run check:eslint && npm run check:prettier",

@@ -26,8 +26,46 @@ const MOIS_COURTS = [
 export const getFormattedDate = (date: string | Date | undefined): string => {
   if (!date) return '';
   try {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    if (isNaN(dateObj.getTime())) return '';
+    // Si c'est déjà une chaîne formatée comme "24 févr. 2023", la retourner directement
+    if (typeof date === 'string' && date.match(/^\d{1,2} [a-zéûôA-Z]{3,5}\.? \d{4}$/i)) {
+      return date;
+    }
+    
+    let dateObj: Date;
+    
+    // Gestion spéciale pour les formats de date français (ex: "24 mai 2023")
+    if (typeof date === 'string') {
+      // Essayer de détecter et parser un format français
+      const frenchDateRegex = /^(\d{1,2}) (janv\.|févr\.|mars|avr\.|mai|juin|juil\.|août|sept\.|oct\.|nov\.|déc\.) (\d{4})$/i;
+      const match = date.match(frenchDateRegex);
+      
+      if (match) {
+        const jour = parseInt(match[1], 10);
+        const moisStr = match[2].toLowerCase();
+        const annee = parseInt(match[3], 10);
+        
+        // Convertir le mois en index (0-11)
+        const moisIndex = MOIS_COURTS.findIndex(m => 
+          m.toLowerCase() === moisStr || 
+          m.toLowerCase().replace('.', '') === moisStr.replace('.', '')
+        );
+        
+        if (moisIndex !== -1 && !isNaN(jour) && !isNaN(annee)) {
+          dateObj = new Date(annee, moisIndex, jour);
+        } else {
+          dateObj = new Date(date);
+        }
+      } else {
+        dateObj = new Date(date);
+      }
+    } else {
+      dateObj = date;
+    }
+    
+    if (isNaN(dateObj.getTime())) {
+      console.warn(`Date invalide dans getFormattedDate: ${date}`);
+      return '';
+    }
     
     // Créer manuellement un format de date avec l'année complète
     const jour = dateObj.getDate();
@@ -37,8 +75,8 @@ export const getFormattedDate = (date: string | Date | undefined): string => {
     // Format: "24 févr. 2025"
     return `${jour} ${mois} ${anneeComplete}`;
     
-  } catch {
-    // Ignorer l'erreur et retourner une chaîne vide
+  } catch (error) {
+    console.error(`Erreur lors du formatage de la date: ${date}`, error);
     return '';
   }
 };

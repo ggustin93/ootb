@@ -34,9 +34,6 @@
   ROLLUP_SKIP_OPTIONAL = "true"
   NPM_FLAGS = "--include=optional"
   NODE_OPTIONS = "--max-old-space-size=4096"
-  # Désactiver lightningcss pour éviter les problèmes de compilation
-  LIGHTNINGCSS_SKIP_BINARY_DOWNLOAD = "1"
-  CSS_TRANSFORMER = "postcss"
 
 [[plugins]]
   package = "@netlify/plugin-lighthouse"

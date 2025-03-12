@@ -1,19 +1,19 @@
 ---
-title: 'Mentions légales'
-layout: '~/layouts/MarkdownLayout.astro'
+title: Mentions légales
+layout: ~/layouts/MarkdownLayout.astro
 ---
 
-_Dernière mise à jour_: 4 mars 2025
+*Dernière mise à jour*: 5 mars 2025
 
 ## Éditeur
 
 Le site outofthebooks.com est édité par :
 
-OUT OF THE BOOKS ASBL  
-La Closière 13  
-1332 Rixensart (BE)  
-Numéro d'entreprise : BE0732.513.217  
-Email : alexia@festivalootb.com
+OUT OF THE BOOKS ASBL\
+La Closière 13\
+1332 Rixensart (BE)\
+Numéro d'entreprise : BE0732.513.217\
+Email : [alexia@festivalootb.com](mailto:alexia@festivalootb.com)
 
 ## Hébergeur
 
@@ -21,7 +21,7 @@ Le site web est hébergé par Netlify, Inc., dont le siège social est situé au
 
 ## Contact
 
-Pour toute question ou demande concernant le site, vous pouvez contacter l'éditeur à l'adresse mail suivante : alexia@festivalootb.com
+Pour toute question ou demande concernant le site, vous pouvez contacter l'éditeur à l'adresse mail suivante : [alexia@festivalootb.com](mailto:alexia@festivalootb.com)
 
 ## Propriété intellectuelle
 
@@ -45,9 +45,9 @@ Les présentes mentions légales sont régies par le droit belge. En cas de diff
 
 ## Crédits
 
-Le site [outofthebooks.com](https://outofthebooks.com) a été créé par Guillaume Gustin, opérant sous l'activité [Pwablo](https://pwablo.be) et [guillaumegustin.com](https://guillaumegustin.com), via la coopérative Smart. Pour toute question technique liée au développement initial du site, vous pouvez le contacter à l'adresse hello@pwablo.be.
+Le site [outofthebooks.com](https://outofthebooks.com) a été créé par Guillaume Gustin, opérant sous l'activité [Pwablo](https://pwablo.be) et [guillaumegustin.com](https://guillaumegustin.com), via la coopérative Smart. Pour toute question technique liée au développement initial du site, vous pouvez le contacter à l'adresse [hello@pwablo.be](mailto:hello@pwablo.be).
 
-L'ajout de contenu dans le CMS est géré par OUT OF THE BOOKS ASBL. Pour toute question liée à l'ajout de contenu, veuillez contacter alexia@festivalootb.com.
+L'ajout de contenu dans le CMS est géré par OUT OF THE BOOKS ASBL. Pour toute question liée à l'ajout de contenu, veuillez contacter [alexia@festivalootb.com](mailto:alexia@festivalootb.com).
 
 ## Ressources tierces
 

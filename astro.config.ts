@@ -32,8 +32,7 @@ export default defineConfig({
    clientPrerender: true
  },
  redirects: {
-   '/admin': '/admin/index.html',
-   '/admin/*': '/admin/index.html'
+   '/admin': '/admin/index.html'
  },
  integrations: [
    sitemap(),

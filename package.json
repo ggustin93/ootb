@@ -11,7 +11,7 @@
         "dev": "astro dev && tinacms dev",
         "start": "astro dev",
         "build": "astro build && npx tinacms build",
-        "build:netlify": "cp .npmrc.netlify .npmrc && npm install --include=optional sharp && npm install --include=optional @rollup/rollup-linux-x64-gnu && npm run clean && node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js && npm run build",
+        "build:netlify": "npm run clean && node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js && npm run build",
         "build:vercel": "npm run clean && node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js && npm run build",
         "preview": "astro preview",
         "astro": "astro",
@@ -121,5 +121,8 @@
         "typescript": "^5.7.2",
         "typescript-eslint": "^8.17.0",
         "unist-util-visit": "^5.0.0"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "4.9.5"
     }
 }

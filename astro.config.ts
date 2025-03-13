@@ -1,17 +1,16 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig } from 'astro/config';
+import astrowind from './vendor/integration';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
-import compress from 'astro-compress';
 import type { AstroIntegration } from 'astro';
 import react from '@astrojs/react';
-import astrowind from './vendor/integration';
-import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 import netlify from '@astrojs/netlify';
+import { readingTimeRemarkPlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const hasExternalScripts = false;
@@ -20,14 +19,13 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
  output: 'server',
- adapter: netlify(),
+ adapter: netlify({
+ }),
  build: {
    inlineStylesheets: 'auto',
-   format: 'file',
-   assets: 'assets',
  },
  experimental: {
-   clientPrerender: true,
+   clientPrerender: true
  },
  /*redirects: {
    '/admin': '/admin/index.html'
@@ -39,16 +37,16 @@ export default defineConfig({
    }),
    mdx({
     extendMarkdownConfig: true,
-    optimize: true,
+    optimize: false,
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'github-dark',
+      wrap: true
     },
     remarkPlugins: [
       readingTimeRemarkPlugin
     ],
     rehypePlugins: [
-      responsiveTablesRehypePlugin, 
       lazyImagesRehypePlugin
     ]
   }),
@@ -89,31 +87,6 @@ export default defineConfig({
        config: { forward: ['dataLayer.push'] },
      })
    ),
-   compress({
-     // CSS déjà optimisé par Tailwind et Vite, pas besoin de double optimisation
-     CSS: false,
-     HTML: {
-       'html-minifier-terser': {
-         removeAttributeQuotes: false,
-         collapseWhitespace: true,
-         removeComments: true,
-         removeRedundantAttributes: true,
-         removeScriptTypeAttributes: true,
-         removeStyleLinkTypeAttributes: true,
-         minifyJS: true,
-         minifyCSS: true,
-       },
-     },
-     // Désactivé car les images sont déjà optimisées par le service Sharp d'Astro
-     // Évite une double optimisation qui ralentit considérablement le build
-     Image: false,
-     // Minification JS complémentaire à celle de Vite
-     JavaScript: true,
-     // Optimisation des SVG pour réduire leur taille
-     SVG: true,
-     // Niveau de log modéré pour voir les informations importantes sans être submergé
-     Logger: 1,
-   }),
    astrowind({
      config: './src/config.yaml',
    }),
@@ -132,9 +105,9 @@ export default defineConfig({
    service: {
      entrypoint: 'astro/assets/services/sharp',
      config: {
-       quality: 80,
-       format: ['avif', 'webp', 'jpeg'],
-       cacheDir: './node_modules/.sharp-cache',
+       quality: 75,
+       format: ['webp', 'jpeg'],
+       cacheDir: './.cache/image',
      },
    },
  },
@@ -146,7 +119,8 @@ export default defineConfig({
      conditions: ['astro']
    },
    optimizeDeps: {
-     exclude: ['astro:*']
+     exclude: ['astro:*'],
+     include: ['react', 'react-dom']
    },
    build: {
      assetsInlineLimit: 4096,
@@ -169,7 +143,9 @@ export default defineConfig({
          entryFileNames: 'entries/[name].[hash].mjs',
          manualChunks: {
            'youtube-api': ['./src/components/common/YouTubePlayer.astro'],
-         },
+           'vendor': [/node_modules\/(?!@astrojs)/],
+           'astro-vendor': [/node_modules\/@astrojs/]
+         }
        }
      }
    },

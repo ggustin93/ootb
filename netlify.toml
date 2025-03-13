@@ -32,6 +32,32 @@
   NODE_VERSION = "20.11.0"
   SHARP_IGNORE_GLOBAL_LIBVIPS = "1"
   NETLIFY = "true"
+  # Optimisations de cache pour réduire le temps de build
+  NETLIFY_USE_YARN_CACHE = "true"
+  NETLIFY_CACHE_FOLDER = ".cache"
+  # Optimisations de performance
+  NODE_OPTIONS = "--max-old-space-size=4096"
+
+# Configuration du cache pour les assets statiques
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[redirects]]
   from = "/admin"
@@ -44,3 +70,17 @@
   to = "https://outofthebooks.vercel.app/admin/:splat"
   status = 301
   force = true
+
+# Compression Brotli pour une meilleure performance
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = true
+  minify = true
+[build.processing.html]
+  pretty_urls = true
+[build.processing.images]
+  compress = true

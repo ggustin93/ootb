@@ -19,9 +19,6 @@ const { image: propImage, features: propFeatures } = Astro.props;
 // Get homepage data from JSON
 const mission = homepageData.mission;
 
-// Définition de isMobile dans le frontmatter
-const isMobile = Astro.request.headers.get('user-agent')?.includes('Mobile') ?? false;
-
 // Fallback values if no Tina data is available
 const defaultMission = {
   title: "Innover pour l'éducation de demain",
@@ -54,9 +51,7 @@ const displayCta = mission?.cta || defaultMission.cta;
 
 // Dimensions optimales pour l'image de mission
 const mobileWidth = 480;  // Largeur optimale pour mobile
-const desktopWidth = 800; // Largeur optimale pour desktop
 const mobileHeight = 480; // Hauteur optimale pour mobile (ratio 1:1)
-const desktopHeight = 1067; // Hauteur optimale pour desktop (ratio 3:4)
 ---
 <section class="md:pb-16 md:pt-12 pb-8 px-4 md:px-8 bg-[#FFFFFF] relative isolate md:-mt-32" id="mission-section">
   <!-- Base layer avec z-index très élevé -->
@@ -91,10 +86,10 @@ const desktopHeight = 1067; // Hauteur optimale pour desktop (ratio 3:4)
           alt="L'équipe Out of the Books en action"
           class="relative z-[3] rounded-xl md:rounded-2xl shadow-xl transform transition-all duration-300 group-hover:scale-[1.02] w-full object-cover"
           widths={[320, 480, 640, 800]}
-          width={isMobile ? mobileWidth : desktopWidth}
-          height={isMobile ? mobileHeight : desktopHeight}
+          width={mobileWidth}
+          height={mobileHeight}
           sizes="(max-width: 768px) 100vw, 40vw"
-          aspectRatio={isMobile ? "1:1" : "3:4"}
+          aspectRatio="1:1"
           loading="eager"
           decoding="async"
         />

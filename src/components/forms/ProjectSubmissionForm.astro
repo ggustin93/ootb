@@ -11,35 +11,6 @@ const NOCODB_API_TOKEN = import.meta.env.NOCODB_API_TOKEN;
 const isTokenValid = NOCODB_API_TOKEN && NOCODB_API_TOKEN.trim() !== '';
 console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TEST'}`);
 
-// Thèmes du festival
-const themes = [
-  {
-    id: "pedagogies-actives",
-    label: "Pédagogies actives",
-    description: "Faire découvrir des écoles, des structures d'aide et d'accompagnement moins « traditionnelles »."
-  },
-  {
-    id: "classe-autrement",
-    label: "La classe autrement & les besoins spécifiques",
-    description: "Faire découvrir de nouvelles approches méthodologiques (intelligences multiples, gestion mentale, PNL...)"
-  },
-  {
-    id: "ludopedagogie",
-    label: "La ludopédagogie en classe & à la maison",
-    description: "Faire découvrir des techniques d'apprentissage par le jeu."
-  },
-  {
-    id: "nouvelles-technologies",
-    label: "Les nouvelles technologies",
-    description: "Faire découvrir des approches innovantes avec les nouvelles technologies."
-  },
-  {
-    id: "education-positive",
-    label: "L'éducation positive & le bien-être",
-    description: "Faire découvrir des outils de communication positive et de gestion du stress."
-  }
-];
-
 // Public cible
 const publicCible = [
   "Jeunes enfants",
@@ -254,27 +225,18 @@ const publicCible = [
       <div class="hidden">
         <div class="form-group">
           <label class="flex items-center justify-between">
-            <span>Public cible *</span>
+            <span>Public cible</span>
           </label>
           <div>
-            {publicCible.map(item => (
+            {publicCible.map((item, index) => (
               <label>
-                <input type="radio" name="Destinataire" value={item} required />
+                <input 
+                  type="radio" 
+                  name="Destinataire" 
+                  value={item} 
+                  checked={index === 0} 
+                />
                 <span>{item}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="flex items-center justify-between">
-            <span>Thématiques *</span>
-          </label>
-          <div>
-            {themes.map(theme => (
-              <label>
-                <input type="checkbox" name="Thèmes" value={theme.label} class="theme-checkbox" />
-                <span>{theme.label}</span>
               </label>
             ))}
           </div>
@@ -413,17 +375,13 @@ const publicCible = [
     const formStatus = document.getElementById('formStatus') as HTMLDivElement;
     const statusIcon = document.getElementById('statusIcon') as HTMLSpanElement;
     const statusMessage = document.getElementById('statusMessage') as HTMLSpanElement;
-    const themeCheckboxes = document.querySelectorAll('.theme-checkbox') as NodeListOf<HTMLInputElement>;
-    const themesError = document.getElementById('themes-error') as HTMLParagraphElement;
     
     console.log('🔍 Éléments DOM trouvés:', {
       form: !!form,
       submitButton: !!submitButton,
       formStatus: !!formStatus,
       statusIcon: !!statusIcon,
-      statusMessage: !!statusMessage,
-      themeCheckboxes: themeCheckboxes.length,
-      themesError: !!themesError
+      statusMessage: !!statusMessage
     });
     
     if (!form || !submitButton || !formStatus) {
@@ -481,15 +439,6 @@ const publicCible = [
     
     function showError(message: string) {
       showStatus(message, 'error');
-    }
-    
-    // Validation des thématiques (au moins une sélectionnée)
-    function validateThemes() {
-      const isValid = Array.from(themeCheckboxes).some(checkbox => checkbox.checked);
-      if (themesError) {
-        themesError.hidden = isValid;
-      }
-      return isValid;
     }
     
     // Fonction pour afficher/masquer les messages d'erreur
@@ -576,30 +525,75 @@ const publicCible = [
         return false;
       }
       
-      // Continuer avec la soumission du formulaire
-      // Convertir FormData en objet JSON
-      const formData = new FormData(form);
-      const jsonData = {
-        Title: formData.get('Title'),
-        Description: formData.get('Description'),
-        TypeEnseignement: teachingTypes,
-        Section: sections,
-        Destinataire: "Non renseigné", // Valeur par défaut explicite
-        Themes: [], // Tableau vide pour les thèmes
-        Objectifs: formData.get('Objectifs'),
-        Competences: formData.get('Competences'),
-        prenom: formData.get('prenom'),
-        nom: formData.get('nom'),
-        email: formData.get('email'),
-        telephone: formData.get('telephone') || '',
-        ecole: formData.get('ecole'),
-        Declinaisons: formData.get('Déclinaisons') || '',
-        Conseils: formData.get('Conseils') || '',
-        Liens: formData.get('Liens') || '',
-        LiensVIDEO: formData.get('LienVideo') || ''
-      };
-      
-      // ... existing code ...
+      try {
+        // Afficher le message de traitement
+        showStatus('Traitement en cours...', 'processing');
+        
+        // Récupérer la valeur du destinataire sélectionné ou utiliser la valeur par défaut
+        const destinataireValue = form.querySelector('input[name="Destinataire"]:checked')?.value || "Non renseigné";
+        
+        // Préparer les données du formulaire au format JSON
+        const formData = new FormData(form);
+        
+        // Récupérer les types d'enseignement sélectionnés
+        const teachingTypes = Array.from(
+          form.querySelectorAll('input[name="Type enseignement"]:checked')
+        ).map(checkbox => (checkbox as HTMLInputElement).value);
+
+        // Récupérer les sections sélectionnées
+        const sections = Array.from(
+          form.querySelectorAll('input[name="Section"]:checked')
+        ).map(checkbox => (checkbox as HTMLInputElement).value);
+        
+        // Convertir FormData en objet JSON
+        const jsonData = {
+          Title: formData.get('Title'),
+          Description: formData.get('Description'),
+          TypeEnseignement: teachingTypes,
+          Section: sections,
+          Destinataire: destinataireValue,
+          Themes: [], // Tableau vide pour les thèmes
+          Objectifs: formData.get('Objectifs'),
+          Competences: formData.get('Competences'),
+          prenom: formData.get('prenom'),
+          nom: formData.get('nom'),
+          email: formData.get('email'),
+          telephone: formData.get('telephone') || '',
+          ecole: formData.get('ecole'),
+          Declinaisons: formData.get('Déclinaisons') || '',
+          Conseils: formData.get('Conseils') || '',
+          Liens: formData.get('Liens') || '',
+          LiensVIDEO: formData.get('LienVideo') || ''
+        };
+        
+        console.log('🚀 Soumission du formulaire à l\'API...');
+        console.log('📝 Données envoyées:', jsonData);
+        
+        // Envoyer les données à l'endpoint API sécurisé
+        const response = await fetch('/api/submit-pedagogical-sheet', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(jsonData)
+        });
+        
+        // Traiter la réponse
+        const result = await response.json();
+        
+        if (result.success) {
+          console.log('✅ Soumission réussie:', result);
+          
+          // Rediriger vers la page de confirmation au lieu d'afficher un message
+          window.location.href = '/merci-soumission';
+        } else {
+          console.error('❌ Erreur lors de la soumission:', result);
+          showError(result.message || 'Une erreur est survenue lors de la soumission du formulaire.');
+        }
+      } catch (error) {
+        console.error('❌ Erreur lors de la soumission:', error);
+        showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
+      }
     });
   });
 </script>

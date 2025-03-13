@@ -14,7 +14,7 @@ import BasicScripts from '~/components/common/BasicScripts.astro';
 import FontPreload from '~/components/common/FontPreload.astro';
 
 // Comment the line below to disable View Transitions
-import { ClientRouter } from 'astro:transitions';
+// import { ClientRouter } from 'astro:transitions';
 
 // @ts-ignore - Ignorer temporairement les erreurs de typage
 export interface Props {
@@ -38,7 +38,7 @@ const { language, textDirection } = I18N;
     <Analytics />
 
     <!-- Comment the line below to disable View Transitions -->
-    <ClientRouter fallback="swap" />
+    <!-- <ClientRouter fallback="swap" /> -->
   </head>
 
   <body class="antialiased text-default bg-page tracking-tight">

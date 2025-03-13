@@ -1,7 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig } from 'astro/config';
-import astrowind from './vendor/integration';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
@@ -10,6 +9,7 @@ import icon from 'astro-icon';
 import type { AstroIntegration } from 'astro';
 import react from '@astrojs/react';
 import netlify from '@astrojs/netlify';
+import astrowind from './vendor/integration';
 import { readingTimeRemarkPlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -18,11 +18,12 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
  hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
- output: 'server',
+ output: 'static',
  adapter: netlify({
+   edgeMiddleware: true
  }),
  build: {
-   inlineStylesheets: 'auto',
+   inlineStylesheets: 'never',
  },
  experimental: {
    clientPrerender: true
@@ -141,10 +142,11 @@ export default defineConfig({
          format: 'esm',
          chunkFileNames: 'chunks/[name].[hash].mjs',
          entryFileNames: 'entries/[name].[hash].mjs',
-         manualChunks: {
-           'youtube-api': ['./src/components/common/YouTubePlayer.astro'],
-           'vendor': [/node_modules\/(?!@astrojs)/],
-           'astro-vendor': [/node_modules\/@astrojs/]
+         manualChunks: (id) => {
+           if (id.includes('./src/components/common/YouTubePlayer.astro')) return 'youtube-api';
+           if (id.includes('node_modules/@astrojs')) return 'astro-vendor';
+           if (id.includes('node_modules/')) return 'vendor';
+           return null;
          }
        }
      }

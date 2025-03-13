@@ -21,12 +21,26 @@
 #   TRIGGER_NETLIFY_BUILD = "false"
 #   NETLIFY_BUILD_HOOK = ""
 
-# Configuration pour la fonction nocodb-to-mdx
-# [[redirects]]
-#   from = "/api/submit-project"
-#   to = "/.netlify/functions/nocodb-to-mdx"
-#   status = 200
-#   force = true
+# Configuration pour la fonction submit-pedagogical-sheet
+[[redirects]]
+  from = "/api/submit-pedagogical-sheet"
+  to = "/.netlify/functions/submit-pedagogical-sheet"
+  status = 200
+  force = true
+
+# Configuration pour la fonction submit-newsletter
+[[redirects]]
+  from = "/api/submit-newsletter"
+  to = "/.netlify/functions/submit-newsletter"
+  status = 200
+  force = true
+
+# Configuration pour la fonction submit-contact
+[[redirects]]
+  from = "/api/submit-contact"
+  to = "/.netlify/functions/submit-contact"
+  status = 200
+  force = true
 
 [build.environment]
   NODE_VERSION = "20.11.0"

@@ -8,7 +8,6 @@ import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import type { AstroIntegration } from 'astro';
 import react from '@astrojs/react';
-import netlify from '@astrojs/netlify';
 import astrowind from './vendor/integration';
 import { readingTimeRemarkPlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
@@ -19,11 +18,8 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
  output: 'static',
- adapter: netlify({
-   edgeMiddleware: true
- }),
  build: {
-   inlineStylesheets: 'never',
+   inlineStylesheets: 'auto',
  },
  experimental: {
    clientPrerender: true

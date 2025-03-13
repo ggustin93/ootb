@@ -133,12 +133,15 @@ const isStringUrl = (src: string | ImageMetadata): src is string => typeof src =
       <div class="relative mt-6 md:mt-0 max-w-md mx-auto md:max-w-full md:ml-6">
         <div class="relative z-10">
           {isStringUrl(heroImage) ? (
-            <img
+            <Image
               src={heroImage}
               alt="Hero image"
               class="rounded-2xl shadow-xl w-full"
+              widths={[400, 700]}
+              sizes="(max-width: 768px) 100vw, 700px"
+              aspectRatio={imageAspectRatio}
               loading="eager"
-              style={`aspect-ratio: ${imageAspectRatio}`}
+              decoding="async"
             />
           ) : (
             <Image

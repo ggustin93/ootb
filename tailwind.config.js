@@ -53,7 +53,15 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+        content: {
+          actualite: 'var(--content-actualite)',
+          live: 'var(--content-live)',
+          fiche: 'var(--content-fiche)',
+          podcast: 'var(--content-podcast)',
+          tv: 'var(--content-tv)',
+          premium: 'var(--content-premium)'
+        }
   		},
   		fontFamily: {
   			display: ['Plus Jakarta Sans', ...defaultTheme.fontFamily.sans],

@@ -122,6 +122,47 @@ const post = defineCollection({
   )
 });
 
+// Définition des collections auto-générées
+const about = defineCollection({
+  type: 'content',
+});
+
+const appel_projet = defineCollection({
+  type: 'content',
+});
+
+const blog = defineCollection({
+  type: 'content',
+});
+
+const contact = defineCollection({
+  type: 'content',
+});
+
+const festival = defineCollection({
+  type: 'content',
+});
+
+const homepage = defineCollection({
+  type: 'content',
+});
+
+const navigation = defineCollection({
+  type: 'content',
+});
+
+const site = defineCollection({
+  type: 'content',
+});
+
 export const collections = {
   post: post,
+  about: about,
+  appel_projet: appel_projet,
+  blog: blog,
+  contact: contact,
+  festival: festival,
+  homepage: homepage,
+  navigation: navigation,
+  site: site,
 }; 

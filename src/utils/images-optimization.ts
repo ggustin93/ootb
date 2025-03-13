@@ -24,6 +24,7 @@ export interface ImageProps extends Omit<HTMLAttributes<'img'>, 'src'> {
   objectPosition?: string;
 
   format?: string;
+  formats?: string[];
 }
 
 export type ImagesOptimizer = (
@@ -31,8 +32,9 @@ export type ImagesOptimizer = (
   breakpoints: number[],
   width?: number,
   height?: number,
-  format?: string
-) => Promise<Array<{ src: string; width: number }>>;
+  format?: string,
+  formats?: string[]
+) => Promise<Array<{ src: string; width: number; height?: number; format?: string }>>;
 
 /* ******* */
 const config = {
@@ -217,12 +219,43 @@ export const astroAsseetsOptimizer: ImagesOptimizer = async (
   breakpoints,
   _width,
   _height,
-  format = undefined
+  format = undefined,
+  formats = undefined
 ) => {
   if (!image) {
     return [];
   }
 
+  // Si formats est défini, générer des images pour chaque format
+  if (formats && Array.isArray(formats) && formats.length > 0) {
+    const results = [];
+    
+    for (const fmt of formats) {
+      const formatResults = await Promise.all(
+        breakpoints.map(async (w: number) => {
+          const result = await getImage({ 
+            src: image, 
+            width: w, 
+            inferSize: true, 
+            format: fmt as "png" | "jpg" | "jpeg" | "tiff" | "webp" | "gif" | "svg" | "avif"
+          });
+
+          return {
+            src: result?.src,
+            width: result?.attributes?.width ?? w,
+            height: result?.attributes?.height,
+            format: fmt
+          };
+        })
+      );
+      
+      results.push(...formatResults);
+    }
+    
+    return results;
+  }
+
+  // Comportement par défaut si formats n'est pas défini
   return Promise.all(
     breakpoints.map(async (w: number) => {
       const result = await getImage({ src: image, width: w, inferSize: true, ...(format ? { format: format } : {}) });
@@ -231,6 +264,7 @@ export const astroAsseetsOptimizer: ImagesOptimizer = async (
         src: result?.src,
         width: result?.attributes?.width ?? w,
         height: result?.attributes?.height,
+        format: format
       };
     })
   );
@@ -285,6 +319,7 @@ export async function getImagesOptimized(
     layout = 'constrained',
     style = '',
     format,
+    formats,
     ...rest
   }: ImageProps,
   transform: ImagesOptimizer = () => Promise.resolve([])
@@ -327,7 +362,15 @@ export async function getImagesOptimized(
   let breakpoints = getBreakpoints({ width: width, breakpoints: widths, layout: layout });
   breakpoints = [...new Set(breakpoints)].sort((a, b) => a - b);
 
-  const srcset = (await transform(image, breakpoints, Number(width) || undefined, Number(height) || undefined, format))
+  // Utiliser formats s'il est défini, sinon utiliser format
+  const srcset = (await transform(
+    image, 
+    breakpoints, 
+    Number(width) || undefined, 
+    Number(height) || undefined, 
+    format,
+    formats
+  ))
     .map(({ src, width }) => `${src} ${width}w`)
     .join(', ');
 

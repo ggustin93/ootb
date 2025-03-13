@@ -121,13 +121,6 @@ const eventsByDay = eventsData as EventsByDay;
           <div class="absolute inset-0 overflow-hidden">
             <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
             <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2"></div>
-            <!-- Icônes flottantes -->
-            <div class="absolute w-8 h-8 top-[20%] left-[10%] text-white/20 animate-float">
-              <Icon name="tabler:chart-dots" class="w-full h-full" />
-            </div>
-            <div class="absolute bottom-4 left-[30%] w-8 h-8 text-white/20 animate-float-delayed">
-              <Icon name="tabler:chart-bar" class="w-full h-full" />
-            </div>
           </div>
 
           <div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-6xl mx-auto">
@@ -441,25 +434,6 @@ const eventsByDay = eventsData as EventsByDay;
   .theme-description {
     color: #5d7186;
     @apply tracking-wide font-normal leading-relaxed;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes float-delayed {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .animate-float-delayed {
-    animation: float-delayed 3s ease-in-out infinite;
-    animation-delay: 1.5s;
   }
 </style>
 

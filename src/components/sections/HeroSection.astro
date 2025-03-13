@@ -4,7 +4,7 @@ import Image from '~/components/common/Image.astro';
 import type { ImageMetadata } from 'astro';
 import ActionBadge from '~/components/ui/ActionBadge.astro';
 import logo_blanc from '~/assets/images/logo_ootb_white.svg';
-import logo_garcon_blanc from '~/assets/images/logo_ootb_garcon_blanc.webp';
+import logo_garcon_blanc from '~/assets/images/logo_ootb_garcon_blanc.avif';
 import GradientHeroSection from './GradientHeroSection.astro';
 import homepageData from '../../content/homepage/index.json';
 // Import du composant ScrollDownArrow
@@ -60,6 +60,9 @@ const displayTitle = hero?.title || defaultHero.title;
 const displayBadges = hero?.badges || defaultHero.badges;
 ---
 
+<!-- Préchargement de l'image LCP pour améliorer les performances -->
+<link rel="preload" href={logo_garcon_blanc.src} as="image" fetchpriority="high" />
+
 <GradientHeroSection>
   <!-- Éléments décoratifs flottants optimisés -->
   <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -67,18 +70,20 @@ const displayBadges = hero?.badges || defaultHero.badges;
     <Icon name="tabler:book" class="absolute w-12 md:w-14 h-20 md:h-20 rotate-45 top-[35%] md:top-[40%] right-[5%] md:right-[12%] opacity-30 transition-transform hover:translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
   </div>
 
-  <div class="relative z-20 grid md:grid-cols-2 gap-8 md:gap-12 items-center max-w-6xl mx-auto px-4 md:px-8 pt-12 md:pt-32 w-full">
+  <div class="relative z-20 grid md:grid-cols-2 gap-8 md:gap-12 items-start max-w-6xl mx-auto px-4 md:px-8 pt-12 md:pt-32 w-full">
     <div class="text-center md:text-left flex flex-col">
-      <!-- Sur mobile: logo_garcon_blanc en haut de la page -->
+      <!-- Sur mobile: logo_garcon_blanc en haut de la page - OPTIMISÉ -->
       <div class="md:hidden mb-2 p-4 flex justify-center">
         <Image
           src={logo_garcon_blanc}
           alt="Out of the Books"
-          class="w-full h-auto max-w-[200px] mx-auto transition-all duration-300" 
-          widths={[150, 200, 250]}
-          sizes="(max-width: 360px) 150px, (max-width: 480px) 200px, 250px"
+          class="w-full h-auto max-w-[180px] mx-auto" 
+          widths={[120, 180]}
+          sizes="(max-width: 360px) 120px, 180px"
           loading="eager"
-          decoding="async"
+          decoding="sync"
+          fetchpriority="high"
+          formats={["avif", "webp"]}
         />
       </div> 
 
@@ -136,22 +141,22 @@ const displayBadges = hero?.badges || defaultHero.badges;
     </div>
 
     <!-- Image principale (desktop) -->
-    <div class="relative hidden md:block px-8">
-      <Image
-        src={displayImage}
-        alt="Illustration principale"
-        class="relative z-20 transform hover:-rotate-2 transition-transform duration-300 w-full max-w-[600px] mx-auto object-contain h-auto"
-        widths={[400, 600]}
-        sizes="(max-width: 600px) 400px, 600px"
-        aspectRatio="auto"
-        loading="eager"
-        decoding="async"
-      />
-      <!-- Cercle décoratif -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-white/10 blur-2xl z-10"></div>
+    <div class="relative hidden md:block px-8 pt-0 mt-[-2rem] mb-16">
+      <div class="relative max-w-[500px] mx-auto">
+        <Image
+          src={displayImage}
+          alt="Illustration principale"
+          class="relative z-20 transform hover:-rotate-2 transition-transform duration-300 w-full object-contain h-auto"
+          widths={[400, 600]}
+          sizes="(max-width: 768px) 400px, 600px"
+          aspectRatio="auto"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
       
       <!-- ScrollDownArrow repositionné -->
-      <div class="absolute bottom-[-3rem] left-1/2 transform -translate-x-1/2 z-30">
+      <div class="absolute bottom-[-8rem] left-1/2 transform -translate-x-1/2 z-30">
         <ScrollDownArrow 
           targetId={scrollTargetId} 
           label="Explorer l'univers" 

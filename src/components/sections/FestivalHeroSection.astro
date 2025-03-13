@@ -131,25 +131,25 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
         </div>
 
         <div class="relative md:ml-6 mt-8 md:mt-0 block">
-          <div class="relative z-10 transform hover:scale-[1.02] transition-transform duration-500">
+          <div class="relative z-10 transform hover:scale-[1.02] transition-transform duration-500 max-w-[550px] mx-auto">
             <Image
               src={heroImage}
               alt="Festival Out of the Books"
               class="rounded-2xl shadow-xl w-full"
-              widths={[400, 800, 1200]}
-              sizes="(max-width: 768px) 400px, (max-width: 1200px) 800px, 1200px"
+              widths={[350, 500, 800]}
+              sizes="(max-width: 768px) 350px, (max-width: 1200px) 500px, 800px"
               aspectRatio="4:3"
               loading="eager"
               decoding="async"
             />
           </div>
           <div 
-            class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"
+            class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10 max-w-[550px] mx-auto"
             style={`background-color: var(${imageBackgroundColor})`}
           ></div>
           
           <!-- ScrollDownArrow ajouté -->
-          <div class="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 z-30">
+          <div class="absolute bottom-[-8rem] left-1/2 transform -translate-x-1/2 z-30">
             <ScrollDownArrow 
               targetId="features"
               label="En savoir plus"

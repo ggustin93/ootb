@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
 import appelProjetData from '~/content/appel_projet/index.json';
 
 const { personal, project } = appelProjetData.formulaire;
@@ -50,229 +51,234 @@ const publicCible = [
 ];
 ---
 
-<form id="pedagogical-sheet-form" class="space-y-8 max-w-4xl mx-auto" onsubmit="return false;">
+<form id="pedagogical-sheet-form" class="space-y-12 max-w-4xl mx-auto" onsubmit="return false;">
   <!-- Informations personnelles -->
   <section class="form-section">
-    <h3 class="section-title">
-      <Icon name="tabler:user" class="w-6 h-6" />
-      {personal.title}
+    <h3 class="section-title text-[#1e5f74] text-2xl font-medium mb-8">
+      À propos de vous <span class="text-rose-500">*</span>
     </h3>
 
-    <div class="grid md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="form-group">
-        <label for="prenom" class="flex items-center justify-between">
-          <span>Prénom *</span>
-          <span class="text-xs text-gray-500">2 caractères min.</span>
-        </label>
         <input type="text" id="prenom" name="prenom" required minlength="2" 
-               class="peer" placeholder=" " />
-        <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
-          Veuillez entrer un prénom valide (2 caractères minimum)
-        </p>
+               class="w-full p-4 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all" 
+               placeholder="Prénom" />
+        <div class="error-message hidden mt-1 text-xs text-rose-500">
+          Veuillez entrer un prénom valide
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="nom" class="flex items-center justify-between">
-          <span>Nom *</span>
-          <span class="text-xs text-gray-500">2 caractères min.</span>
-        </label>
         <input type="text" id="nom" name="nom" required minlength="2" 
-               class="peer" placeholder=" " />
-        <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
-          Veuillez entrer un nom valide (2 caractères minimum)
-        </p>
+               class="w-full p-4 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all" 
+               placeholder="Nom" />
+        <div class="error-message hidden mt-1 text-xs text-rose-500">
+          Veuillez entrer un nom valide
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="email" class="flex items-center justify-between">
-          <span>Email *</span>
-          <span class="text-xs text-gray-500">Format: exemple@domaine.com</span>
-        </label>
+        <input type="text" id="ecole" name="ecole" required minlength="2" 
+               class="w-full p-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition-all" 
+               placeholder="École" />
+        <div class="error-message hidden mt-1 text-xs text-rose-500">
+          Veuillez entrer le nom de votre école
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+      <div class="form-group">
         <input type="email" id="email" name="email" required 
-               class="peer" placeholder=" " />
-        <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
+               class="w-full p-4 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all" 
+               placeholder="Email" />
+        <div class="error-message hidden mt-1 text-xs text-rose-500">
           Veuillez entrer une adresse email valide
-        </p>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="telephone" class="flex items-center justify-between">
-          <span>Téléphone</span>
-          <span class="text-xs text-gray-500">Optionnel</span>
-        </label>
         <input type="tel" id="telephone" name="telephone" 
-               placeholder="+32 123 45 67 89" />
+               class="w-full p-4 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all" 
+               placeholder="Téléphone" />
+        <p class="mt-1 text-xs text-gray-500">
+          Optionnel
+        </p>
       </div>
     </div>
   </section>
 
   <!-- Informations du projet -->
-  <section class="form-section">
-    <h3 class="section-title">
-      <Icon name="tabler:bulb" class="w-6 h-6" />
-      {project.title}
+  <section class="form-section mt-16">
+    <h3 class="section-title text-lime-500 text-2xl font-medium mb-8">
+      Décrivez votre projet:
     </h3>
 
-    <div class="space-y-6">
+    <div class="space-y-8">
       <div class="form-group">
-        <label for="titre" class="flex items-center justify-between">
-          <span>Titre du projet *</span>
-          <span class="text-xs text-gray-500">5 caractères min.</span>
+        <label for="titre" class="block text-gray-700 mb-2 font-medium">
+          Titre de votre projet*
         </label>
         <input type="text" id="titre" name="Title" required minlength="5" 
-               class="peer" placeholder=" " />
+               class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all" 
+               placeholder="Quels est le titre du projet ? (80 caractères max.)" />
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
           Veuillez entrer un titre de projet valide (5 caractères minimum)
         </p>
       </div>
 
       <div class="form-group">
-        <label class="flex items-center justify-between">
-          <span>Type d'enseignement *</span>
-          <span class="text-xs text-gray-500">Sélection multiple possible</span>
+        <label for="objectifs" class="block text-gray-700 mb-2 font-medium">
+          Objectifs du projet*
         </label>
-        <div class="grid md:grid-cols-3 gap-4">
-          {teachingTypes.map(type => (
-            <label class="option-card">
-              <input type="checkbox" name="Type enseignement" value={type.label} class="teaching-type-checkbox" />
-              <span>{type.label}</span>
-            </label>
-          ))}
-        </div>
-        <p class="mt-1 text-xs text-rose-500" id="type-error" hidden>
-          Veuillez sélectionner au moins un type d'enseignement
-        </p>
-      </div>
-
-      <div class="form-group">
-        <label class="flex items-center justify-between">
-          <span>Section *</span>
-          <span class="text-xs text-gray-500">Sélection multiple possible</span>
-        </label>
-        <div class="grid md:grid-cols-3 gap-4">
-          {sections.map(section => (
-            <label class="option-card">
-              <input type="checkbox" name="Section" value={section.label} class="section-checkbox" />
-              <span>{section.label}</span>
-            </label>
-          ))}
-        </div>
-        <p class="mt-1 text-xs text-rose-500" id="section-error" hidden>
-          Veuillez sélectionner au moins une section
-        </p>
-      </div>
-
-      <div class="form-group">
-        <label for="ecole" class="flex items-center justify-between">
-          <span>École / Institution *</span>
-          <span class="text-xs text-gray-500">2 caractères min.</span>
-        </label>
-        <input type="text" id="ecole" name="ecole" required minlength="2" 
-               class="peer" placeholder=" " />
+        <textarea id="objectifs" name="Objectifs" rows="8" required minlength="10"
+          class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+          placeholder="Quels sont les objectifs du projet ?"></textarea>
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
-          Veuillez entrer le nom de votre école ou institution
+          Veuillez décrire les objectifs du projet (10 caractères minimum)
         </p>
       </div>
 
-      <div class="form-group">
-        <label class="flex items-center justify-between">
-          <span>Public cible *</span>
-          <span class="text-xs text-gray-500">Sélection obligatoire</span>
-        </label>
-        <div class="grid md:grid-cols-3 gap-4">
-          {publicCible.map(item => (
-            <label class="option-card">
-              <input type="radio" name="Destinataire" value={item} required />
-              <span>{item}</span>
+      <!-- Section "À qui s'adresse votre projet" -->
+      <div class="form-group mt-12">
+        <h4 class="text-xl font-medium text-gray-800 mb-6">
+          À qui s'adresse votre projet ? (Plusieurs choix possibles)
+        </h4>
+        
+        <div class="space-y-8 pl-4 border-l-4 border-blue-200">
+          <div class="form-group">
+            <label class="block text-gray-700 mb-3 font-medium flex items-center">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-md mr-2 text-sm">1</span>
+              Type d'enseignement *
             </label>
-          ))}
-        </div>
-        <p class="mt-1 text-xs text-rose-500" id="public-error" hidden>
-          Veuillez sélectionner un public cible
-        </p>
-      </div>
-
-      <div class="form-group">
-        <label class="flex items-center justify-between">
-          <span>Thématiques *</span>
-          <span class="text-xs text-gray-500">Au moins une thématique</span>
-        </label>
-        <div class="grid md:grid-cols-2 gap-4">
-          {themes.map(theme => (
-            <label class="theme-card">
-              <input type="checkbox" name="Thèmes" value={theme.label} class="theme-checkbox" />
-              <div>
-                <strong>{theme.label}</strong>
-                <p class="text-sm text-gray-600 mt-1">{theme.description}</p>
-              </div>
+            <div class="flex flex-wrap gap-3">
+              {teachingTypes.map(type => (
+                <label class="inline-flex items-center px-4 py-2 rounded-full border-2 border-blue-300 bg-white hover:bg-blue-50 cursor-pointer transition-all">
+                  <input type="checkbox" name="Type enseignement" value={type.label} class="teaching-type-checkbox hidden" />
+                  <span class="text-blue-500 font-medium">{type.label}</span>
+                </label>
+              ))}
+            </div>
+            <p class="mt-1 text-xs text-rose-500" id="type-error" hidden>
+              Veuillez sélectionner au moins un type d'enseignement
+            </p>
+          </div>
+          
+          <div class="form-group">
+            <label class="block text-gray-700 mb-3 font-medium flex items-center">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-md mr-2 text-sm">2</span>
+              Section *
             </label>
-          ))}
+            <div class="flex flex-wrap gap-3">
+              {sections.map(section => (
+                <label class="inline-flex items-center px-4 py-2 rounded-full border-2 border-blue-300 bg-white hover:bg-blue-50 cursor-pointer transition-all">
+                  <input type="checkbox" name="Section" value={section.label} class="section-checkbox hidden" />
+                  <span class="text-blue-500 font-medium">{section.label}</span>
+                </label>
+              ))}
+            </div>
+            <p class="mt-1 text-xs text-rose-500" id="section-error" hidden>
+              Veuillez sélectionner au moins une section
+            </p>
+          </div>
         </div>
-        <p class="mt-1 text-xs text-rose-500" id="themes-error" hidden>
-          Veuillez sélectionner au moins une thématique
-        </p>
       </div>
 
-      <div class="form-group">
-        <label for="description" class="flex items-center justify-between">
-          <span>Description *</span>
-          <span class="text-xs text-gray-500">40 caractères min.</span>
+      <div class="form-group mt-8">
+        <label for="description" class="block text-gray-700 mb-2 font-medium">
+          Description du projet*
         </label>
-        <textarea id="description" name="Description" rows="4" required minlength="40" 
-                  class="peer" placeholder=" "></textarea>
+        <textarea id="description" name="Description" rows="6" required minlength="40"
+          class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+          placeholder="Brève présentation de votre projet"></textarea>
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
-          Veuillez entrer une description détaillée (40 caractères minimum)
+          Veuillez décrire votre projet (40 caractères minimum)
         </p>
       </div>
 
-      <div class="form-group">
-        <label for="objectifs" class="flex items-center justify-between">
-          <span>Objectifs pédagogiques *</span>
-          <span class="text-xs text-gray-500">10 caractères min.</span>
+      <div class="form-group mt-8">
+        <label for="competences" class="block text-gray-700 mb-2 font-medium">
+          Compétences développées*
         </label>
-        <textarea id="objectifs" name="Objectifs" rows="3" required minlength="10"
-          placeholder="- Premier objectif&#10;- Deuxième objectif"
-          class="peer"></textarea>
+        <textarea id="competences" name="Competences" rows="6" required minlength="10"
+          class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+          placeholder="Quelles compétences vos projet permet-il de développer ?"></textarea>
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
-          Veuillez entrer au moins un objectif pédagogique
+          Veuillez décrire les compétences développées (10 caractères minimum)
         </p>
       </div>
 
-      <div class="form-group">
-        <label for="competences" class="flex items-center justify-between">
-          <span>Compétences visées *</span>
-          <span class="text-xs text-gray-500">10 caractères min.</span>
+      <div class="form-group mt-8">
+        <label for="declinaisons" class="block text-gray-700 mb-2 font-medium">
+          Déclinaisons du projet*
         </label>
-        <textarea id="competences" name="Competences" rows="3" required minlength="10"
-          placeholder="- Première compétence&#10;- Deuxième compétence"
-          class="peer"></textarea>
-        <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
-          Veuillez entrer au moins une compétence visée
-        </p>
+        <textarea id="declinaisons" name="Déclinaisons" rows="6"
+          class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+          placeholder="Quelles sont les déclinaisons possibles du projet ?"></textarea>
       </div>
 
-      <div class="form-group">
-        <label for="declinaisons" class="flex items-center justify-between">
-          <span>Déclinaisons possibles</span>
-          <span class="text-xs text-gray-500">Optionnel</span>
+      <div class="form-group mt-8">
+        <label for="conseils" class="block text-gray-700 mb-2 font-medium">
+          Que conseillez-vous ?*
         </label>
-        <textarea id="declinaisons" name="Déclinaisons" rows="3"></textarea>
+        <textarea id="conseils" name="Conseils" rows="6"
+          class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+          placeholder="Votre conseil en tant que créateur du projet ?"></textarea>
       </div>
 
-      <div class="form-group">
-        <label for="conseils" class="flex items-center justify-between">
-          <span>Conseils d'implémentation</span>
-          <span class="text-xs text-gray-500">Optionnel</span>
+      <div class="form-group mt-8">
+        <label for="liens" class="block text-gray-700 mb-2 font-medium">
+          Liens utiles
         </label>
-        <textarea id="conseils" name="Conseils" rows="3"></textarea>
+        <textarea id="liens" name="Liens" rows="5"
+          class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+          placeholder="Site web de référence, pages Facebook, comptes sociaux, ..."></textarea>
+   
       </div>
 
-      <div class="form-group">
-        <label for="liens" class="flex items-center justify-between">
-          <span>Liens et références</span>
-          <span class="text-xs text-gray-500">Optionnel</span>
+      <div class="form-group mt-8">
+        <label for="lien-video" class="block text-gray-700 mb-2 font-medium">
+          Lien vidéo
         </label>
-        <textarea id="liens" name="Liens" rows="2"></textarea>
+        <input type="url" id="lien-video" name="LienVideo" 
+               class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+               placeholder="Vous avez une vidéo ? Indiquer le lien pour la visionner" />
+        
+      </div>
+
+      <div class="mt-8 text-gray-600">
+        *Champs obligatoires
+      </div>
+
+      <!-- Garder la div cachée pour les champs qui ne sont pas visibles dans l'UI mais nécessaires pour le backend -->
+      <div class="hidden">
+        <div class="form-group">
+          <label class="flex items-center justify-between">
+            <span>Public cible *</span>
+          </label>
+          <div>
+            {publicCible.map(item => (
+              <label>
+                <input type="radio" name="Destinataire" value={item} required />
+                <span>{item}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="flex items-center justify-between">
+            <span>Thématiques *</span>
+          </label>
+          <div>
+            {themes.map(theme => (
+              <label>
+                <input type="checkbox" name="Thèmes" value={theme.label} class="theme-checkbox" />
+                <span>{theme.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -286,11 +292,16 @@ const publicCible = [
   </div>
 
   <!-- Bouton de soumission -->
-  <div class="flex justify-end pt-8">
-    <button type="button" id="submit-button" class="btn-primary">
-      <Icon name="tabler:send" class="w-6 h-6" />
-      <span>Soumettre</span>
-    </button>
+  <div class="flex justify-end pt-4">
+    <Button 
+      id="submit-button" 
+      variant="primary" 
+      size="lg" 
+      icon="tabler:send" 
+      iconPosition="right"
+    >
+      Envoyer
+    </Button>
   </div>
 </form>
 
@@ -312,15 +323,6 @@ const publicCible = [
     @apply block text-sm font-medium text-gray-700;
   }
 
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  textarea {
-    @apply w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50
-           focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 focus:bg-white
-           transition-all duration-200;
-  }
-
   /* Modifier les styles pour ne pas afficher l'erreur sur les champs vides */
   input:invalid:not(:placeholder-shown), 
   textarea:invalid:not(:placeholder-shown) {
@@ -332,69 +334,14 @@ const publicCible = [
     @apply border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500/20;
   }
 
-  .option-card {
-    @apply relative flex items-center p-4 rounded-xl border-2 border-gray-200 bg-white 
-           hover:border-sky-200 cursor-pointer transition-all;
-  }
-
-  .option-card input:checked + span {
-    @apply text-sky-600 font-medium;
-  }
-
-  .option-card:has(input:checked) {
-    @apply border-sky-500 bg-sky-50/50;
-  }
-
-  .theme-card {
-    @apply relative flex items-start gap-4 p-4 rounded-xl border-2 border-gray-200 bg-white 
-           hover:border-sky-200 cursor-pointer transition-all;
-  }
-
-  .theme-card input:checked + div strong {
-    @apply text-sky-600;
-  }
-
-  .theme-card:has(input:checked) {
-    @apply border-sky-500 bg-sky-50/50;
-  }
-
-  .alert-warning {
-    @apply flex items-center gap-3 p-4 rounded-xl bg-amber-50 text-amber-700 text-sm;
+  /* Style pour les boutons de sélection arrondis */
+  input[type="checkbox"]:checked + span {
+    @apply font-medium text-blue-700;
   }
   
-  .alert-success {
-    @apply flex items-center gap-3 p-4 rounded-xl bg-emerald-50 text-emerald-700 text-sm;
-  }
-
-  .btn-primary {
-    @apply inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-br from-sky-500 to-sky-600 
-           text-white font-medium rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 
-           transition-all duration-300;
-  }
-
-  .error {
-    @apply border-red-300 ring-2 ring-red-500/20;
-  }
-
-  #formStatus:not(.hidden) {
-    @apply my-6 p-4 rounded-xl text-center;
-  }
-
-  #formStatus.error {
-    @apply bg-red-50 text-red-700;
-  }
-
-  /* Styles améliorés pour les messages de statut */
-  #formStatus {
-    @apply shadow-lg border;
-  }
-
-  #formStatus.error {
-    @apply bg-rose-50 text-rose-700 border-rose-200;
-  }
-
-  #formStatus.processing {
-    @apply bg-sky-50 text-sky-700 border-sky-200;
+  label:has(input[type="checkbox"]:checked) {
+    @apply bg-blue-100 border-blue-600 shadow-sm;
+    transform: translateY(-1px);
   }
 
   /* Animation de pulsation pour le traitement */
@@ -417,6 +364,19 @@ const publicCible = [
     }
   }
 
+  /* Styles améliorés pour les messages de statut */
+  #formStatus {
+    @apply shadow-lg border;
+  }
+
+  #formStatus.error {
+    @apply bg-rose-50 text-rose-700 border-rose-200;
+  }
+
+  #formStatus.processing {
+    @apply bg-sky-50 text-sky-700 border-sky-200;
+  }
+
   /* Animations pour les messages de statut */
   #statusIcon {
     @apply inline-block text-2xl;
@@ -424,6 +384,22 @@ const publicCible = [
 
   #statusMessage {
     @apply inline-block text-lg font-medium;
+  }
+
+  /* Style pour les messages d'erreur */
+  .error-visible {
+    @apply block text-rose-500 text-xs mt-1;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Animation de sélection */
+  label:has(input[type="checkbox"]) {
+    transition: all 0.2s ease-in-out;
   }
 </style>
 
@@ -496,7 +472,7 @@ const publicCible = [
       } else {
         // Réactiver le bouton pour les autres types
         submitButton.disabled = false;
-        submitButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14l11 -11"></path><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"></path></svg><span>Soumettre</span>';
+        submitButton.innerHTML = '<span>ENVOYER</span>';
       }
       
       // Faire défiler jusqu'au message
@@ -516,133 +492,114 @@ const publicCible = [
       return isValid;
     }
     
+    // Fonction pour afficher/masquer les messages d'erreur
+    function toggleErrorMessage(element, show) {
+      if (!element) return;
+      
+      if (show) {
+        element.classList.add('error-visible');
+        element.hidden = false;
+      } else {
+        element.classList.remove('error-visible');
+        element.hidden = true;
+      }
+    }
+    
     // Validation des types d'enseignement
-    const teachingTypeCheckboxes = document.querySelectorAll('.teaching-type-checkbox') as NodeListOf<HTMLInputElement>;
-    const typeError = document.getElementById('type-error') as HTMLParagraphElement;
-
+    const teachingTypeCheckboxes = document.querySelectorAll('.teaching-type-checkbox');
+    const typeError = document.getElementById('type-error');
+    
     function validateTeachingTypes() {
       const isValid = Array.from(teachingTypeCheckboxes).some(checkbox => checkbox.checked);
-      if (typeError) {
-        typeError.hidden = isValid;
-      }
+      toggleErrorMessage(typeError, !isValid);
       return isValid;
     }
-
-    // Validation des sections
-    const sectionCheckboxes = document.querySelectorAll('.section-checkbox') as NodeListOf<HTMLInputElement>;
-    const sectionError = document.getElementById('section-error') as HTMLParagraphElement;
-
-    function validateSections() {
-      const isValid = Array.from(sectionCheckboxes).some(checkbox => checkbox.checked);
-      if (sectionError) {
-        sectionError.hidden = isValid;
-      }
-      return isValid;
-    }
-
-    // Ajouter les validations
+    
     teachingTypeCheckboxes.forEach(checkbox => {
       checkbox.addEventListener('change', validateTeachingTypes);
     });
-
+    
+    // Validation des sections
+    const sectionCheckboxes = document.querySelectorAll('.section-checkbox');
+    const sectionError = document.getElementById('section-error');
+    
+    function validateSections() {
+      const isValid = Array.from(sectionCheckboxes).some(checkbox => checkbox.checked);
+      toggleErrorMessage(sectionError, !isValid);
+      return isValid;
+    }
+    
     sectionCheckboxes.forEach(checkbox => {
       checkbox.addEventListener('change', validateSections);
     });
     
+    // Validation des champs texte
+    const requiredInputs = document.querySelectorAll('input[required], textarea[required]');
+    
+    requiredInputs.forEach(input => {
+      const errorMessage = input.nextElementSibling;
+      
+      input.addEventListener('blur', () => {
+        const isValid = input.validity.valid || input.value === '';
+        toggleErrorMessage(errorMessage, !isValid);
+      });
+      
+      input.addEventListener('input', () => {
+        if (input.validity.valid) {
+          toggleErrorMessage(errorMessage, false);
+        }
+      });
+    });
+    
     // Gestion de la soumission du formulaire
     submitButton.addEventListener('click', async () => {
-      console.log('🔄 Clic sur le bouton de soumission détecté');
+      // Valider tous les champs
+      let isFormValid = true;
       
-      console.log('🔍 Validation du formulaire...');
-      
-      // Valider les thématiques
-      const themesValid = validateThemes();
-      const teachingTypesValid = validateTeachingTypes();
-      const sectionsValid = validateSections();
-
-      if (!themesValid || !teachingTypesValid || !sectionsValid) {
-        console.error('❌ Validation échouée: sélections manquantes');
-        return;
-      }
-      
-      if (!form.checkValidity()) {
-        console.error('❌ Validation échouée: formulaire invalide');
-        form.reportValidity();
-        return;
-      }
-      
-      console.log('✅ Formulaire valide, préparation de la soumission...');
-      
-      try {
-        // Afficher le message de traitement
-        showStatus('Traitement en cours...', 'processing');
-        
-        // Préparer les données du formulaire au format JSON
-        const formData = new FormData(form);
-        
-        // Récupérer les thèmes sélectionnés (checkboxes)
-        const themes = Array.from(
-          form.querySelectorAll('input[name="Thèmes"]:checked')
-        ).map(checkbox => (checkbox as HTMLInputElement).value);
-
-        // Récupérer les types d'enseignement sélectionnés
-        const teachingTypes = Array.from(
-          form.querySelectorAll('input[name="Type enseignement"]:checked')
-        ).map(checkbox => (checkbox as HTMLInputElement).value);
-
-        // Récupérer les sections sélectionnées
-        const sections = Array.from(
-          form.querySelectorAll('input[name="Section"]:checked')
-        ).map(checkbox => (checkbox as HTMLInputElement).value);
-        
-        // Convertir FormData en objet JSON
-        const jsonData = {
-          Title: formData.get('Title'),
-          Description: formData.get('Description'),
-          TypeEnseignement: teachingTypes,
-          Section: sections,
-          Destinataire: formData.get('Destinataire'),
-          Themes: themes,
-          Objectifs: formData.get('Objectifs'),
-          Competences: formData.get('Competences'),
-          prenom: formData.get('prenom'),
-          nom: formData.get('nom'),
-          email: formData.get('email'),
-          telephone: formData.get('telephone'),
-          ecole: formData.get('ecole'),
-          Declinaisons: formData.get('Déclinaisons'),
-          Conseils: formData.get('Conseils'),
-          Liens: formData.get('Liens')
-        };
-        
-        console.log('🚀 Soumission du formulaire à l\'API...');
-        console.log('📝 Données envoyées:', jsonData);
-        
-        // Envoyer les données à l'endpoint API sécurisé
-        const response = await fetch('/api/submit-pedagogical-sheet', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(jsonData)
-        });
-        
-        // Traiter la réponse
-        const result = await response.json();
-        
-        if (result.success) {
-          console.log('✅ Soumission réussie:', result);
-          
-          // Rediriger vers la page de confirmation au lieu d'afficher un message
-          window.location.href = '/merci-soumission';
-        } else {
-          console.error('❌ Erreur lors de la soumission:', result);
-          showError(result.message || 'Une erreur est survenue lors de la soumission du formulaire.');
+      requiredInputs.forEach(input => {
+        if (!input.validity.valid && input.value !== '') {
+          const errorMessage = input.nextElementSibling;
+          toggleErrorMessage(errorMessage, true);
+          isFormValid = false;
         }
-      } catch (error) {
-        console.error('❌ Erreur lors de la soumission:', error);
-        showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
+      });
+      
+      isFormValid = validateTeachingTypes() && isFormValid;
+      isFormValid = validateSections() && isFormValid;
+      
+      if (!isFormValid) {
+        // Faire défiler jusqu'au premier message d'erreur
+        const firstError = document.querySelector('.error-visible');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return false;
       }
+      
+      // Continuer avec la soumission du formulaire
+      // Convertir FormData en objet JSON
+      const formData = new FormData(form);
+      const jsonData = {
+        Title: formData.get('Title'),
+        Description: formData.get('Description'),
+        TypeEnseignement: teachingTypes,
+        Section: sections,
+        Destinataire: "Non renseigné", // Valeur par défaut explicite
+        Themes: [], // Tableau vide pour les thèmes
+        Objectifs: formData.get('Objectifs'),
+        Competences: formData.get('Competences'),
+        prenom: formData.get('prenom'),
+        nom: formData.get('nom'),
+        email: formData.get('email'),
+        telephone: formData.get('telephone') || '',
+        ecole: formData.get('ecole'),
+        Declinaisons: formData.get('Déclinaisons') || '',
+        Conseils: formData.get('Conseils') || '',
+        Liens: formData.get('Liens') || '',
+        LiensVIDEO: formData.get('LienVideo') || ''
+      };
+      
+      // ... existing code ...
     });
   });
 </script>

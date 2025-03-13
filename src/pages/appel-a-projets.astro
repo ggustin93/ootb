@@ -6,6 +6,7 @@ import ProjectSubmissionForm from '~/components/forms/ProjectSubmissionForm.astr
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
 import logoTalent from '~/assets/images/logo_talent.avif';
+import bgVideo from '~/assets/images/bg-video.avif';
 
 // Import des données depuis le fichier JSON géré par Tina
 import appelProjetData from '~/content/appel_projet/index.json';
@@ -102,11 +103,17 @@ const heroButtons = hero.buttons.map(button => ({
         </div>
 
         <!-- Vidéo ou image inspirante -->
-        <div class="mt-16 p-6 relative rounded-2xl overflow-hidden shadow-2xl group">
+        <div class="mt-16 p-6 relative rounded-2xl overflow-hidden shadow-2xl group border-2 border-[--ootb-blue]">
           <div class="aspect-video relative">
-            <img
+            <Image
               src={criteres.inspirationImage}
               alt="Enseignants collaborant sur un projet innovant"
+              widths={[400, 900]}
+              sizes="(max-width: 900px) 400px, 900px"
+              aspectRatio="16:9"
+              formats={['avif', 'webp', 'jpg']}
+              loading="lazy"
+              decoding="async"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />            
           </div>
@@ -155,10 +162,28 @@ const heroButtons = hero.buttons.map(button => ({
           <!-- Image à droite -->
           <div class="relative order-first md:order-last h-full">
             <div class="h-full">
-              <div class="aspect-[9/16] w-full">
+              <div class="aspect-[9/16] w-full relative">
+                <!-- Image de couverture -->
+                <div id="video-cover" class="absolute inset-0 z-10 cursor-pointer">
+                  <img 
+                    src={bgVideo.src} 
+                    alt="Aperçu de la vidéo" 
+                    class="rounded-2xl shadow-xl w-full h-full object-cover"
+                    width={bgVideo.width}
+                    height={bgVideo.height}
+                  />
+                  <!-- Icône de lecture -->
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-black/30 backdrop-blur-sm rounded-full flex items-center justify-center transition-transform hover:scale-110">
+                      <Icon name="tabler:player-play-filled" class="w-8 h-8 md:w-10 md:h-10 text-white" />
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Vidéo -->
                 <video
+                  id="project-video"
                   class="rounded-2xl shadow-xl w-full h-full object-cover"
-                  controls
                   preload="metadata"
                 >
                   <source 
@@ -254,3 +279,31 @@ const heroButtons = hero.buttons.map(button => ({
     background: linear-gradient(135deg, white, rgba(var(--ootb-blue-rgb), 0.05));
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const videoCover = document.getElementById('video-cover');
+    const video = document.getElementById('project-video');
+    
+    if (videoCover && video) {
+      videoCover.addEventListener('click', () => {
+        // Masquer la couverture
+        videoCover.style.display = 'none';
+        
+        // Lancer la vidéo
+        video.controls = true;
+        video.play().catch(error => {
+          console.error('Erreur lors de la lecture de la vidéo:', error);
+          // En cas d'erreur, réafficher la couverture
+          videoCover.style.display = 'block';
+        });
+      });
+      
+      // Réafficher la couverture lorsque la vidéo se termine
+      video.addEventListener('ended', () => {
+        videoCover.style.display = 'block';
+        video.controls = false;
+      });
+    }
+  });
+</script>

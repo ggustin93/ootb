@@ -12,7 +12,7 @@ import astrowind from './vendor/integration';
 import { readingTimeRemarkPlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const hasExternalScripts = false;
+const hasExternalScripts = true;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) => 
  hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
@@ -81,7 +81,15 @@ export default defineConfig({
    }),
    ...whenExternalScripts(() =>
      partytown({
-       config: { forward: ['dataLayer.push'] },
+       config: { 
+         forward: ['dataLayer.push'],
+         resolveUrl: (url) => {
+           // Rediriger les requêtes Umami vers leur domaine d'origine
+           if (url.hostname === 'cloud.umami.is') {
+             return url;
+           }
+         },
+       },
      })
    ),
    astrowind({

@@ -13,9 +13,27 @@ import { ANALYTICS } from 'astrowind:config';
   ) : null
 }
 
-{/* Umami Analytics */}
+{/* Umami Analytics - Optimisé pour les performances avec Partytown */}
 <script 
+  type="text/partytown"
+  async
   defer 
   src="https://cloud.umami.is/script.js" 
   data-website-id="62126ce8-7e42-4260-811a-2aeaf88cca6a"
+  data-cache="true"
+  data-domains="outofthebooks.com,outofthebooks.netlify.app"
+  data-auto-track="false"
 ></script>
+
+{/* Script d'initialisation différé pour Umami */}
+<script is:inline>
+  // Initialiser Umami après le chargement complet de la page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Attendre un court délai pour permettre au contenu principal de s'afficher
+    setTimeout(function() {
+      if (window.umami) {
+        window.umami.track('page-view');
+      }
+    }, 1000);
+  });
+</script>

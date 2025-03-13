@@ -20,18 +20,6 @@ const hasIframeCode = !!iframeCode;
 const hasSmartlink = !!smartlinkUrl;
 const useLegacyMethod = !hasIframeCode && !!podcastUrl;
 
-// Logs pour le débogage
-console.log('PodcastPlayer - Configuration détaillée:', {
-  hasIframeCode,
-  hasSmartlink,
-  useLegacyMethod,
-  iframeCodeLength: iframeCode ? iframeCode.length : 0,
-  iframeCodeType: iframeCode ? typeof iframeCode : 'undefined',
-  iframeCodeFirstChars: iframeCode ? iframeCode.substring(0, 20) + '...' : '',
-  smartlinkUrlValue: smartlinkUrl,
-  smartlinkUrlType: smartlinkUrl ? typeof smartlinkUrl : 'undefined',
-  propsReceived: Object.keys(Astro.props)
-});
 ---
 
 <div class="space-y-6">

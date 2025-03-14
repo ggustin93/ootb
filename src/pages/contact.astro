@@ -1,4 +1,3 @@
----
 import Layout from '~/layouts/PageLayout.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import { Image } from 'astro:assets';
@@ -274,11 +273,11 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
 </style>
 
 <script is:inline>
-  console.log('🔄 Script de contact chargé');
+  // console.log('🔄 Script de contact chargé');
   
   // Fonction pour initialiser le formulaire après le chargement du DOM
   function initContactForm() {
-    console.log('🔄 Initialisation du formulaire de contact...');
+    // console.log('🔄 Initialisation du formulaire de contact...');
     
     // Éléments DOM
     const form = document.getElementById('contact-form');
@@ -287,13 +286,13 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
     const statusIcon = document.getElementById('statusIcon');
     const statusMessage = document.getElementById('statusMessage');
     
-    console.log('🔍 Éléments DOM trouvés:', {
-      form: !!form,
-      submitButton: !!submitButton,
-      formStatus: !!formStatus,
-      statusIcon: !!statusIcon,
-      statusMessage: !!statusMessage
-    });
+    // console.log('🔍 Éléments DOM trouvés:', {
+    //   form: !!form,
+    //   submitButton: !!submitButton,
+    //   formStatus: !!formStatus,
+    //   statusIcon: !!statusIcon,
+    //   statusMessage: !!statusMessage
+    // });
     
     if (!form || !submitButton || !formStatus) {
       console.error('❌ Éléments du formulaire non trouvés');
@@ -329,7 +328,7 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
     
     // Fonctions pour afficher les messages de statut
     function showStatus(message, type) {
-      console.log(`🔔 Affichage du message de statut (${type}): ${message}`);
+      // console.log(`🔔 Affichage du message de statut (${type}): ${message}`);
       
       // Réinitialiser les classes
       formStatus.className = 'my-6 p-6 rounded-xl text-center transition-all duration-300 transform';
@@ -373,9 +372,9 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
     
     // Gestion de la soumission du formulaire
     function handleSubmit() {
-      console.log('🔄 Fonction handleSubmit appelée');
+      // console.log('🔄 Fonction handleSubmit appelée');
       
-      console.log('🔍 Validation du formulaire...');
+      // console.log('🔍 Validation du formulaire...');
       
       // Vérifier manuellement chaque champ et afficher les messages d'erreur
       let isValid = true;
@@ -395,7 +394,7 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
         return;
       }
       
-      console.log('✅ Formulaire valide, préparation de la soumission...');
+      // console.log('✅ Formulaire valide, préparation de la soumission...');
       
       try {
         // Afficher le message de traitement
@@ -412,8 +411,8 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
           message: formData.get('message')
         };
         
-        console.log('🚀 Soumission du formulaire à l\'API...');
-        console.log('📝 Données envoyées:', jsonData);
+        // console.log('🚀 Soumission du formulaire à l\'API...');
+        // console.log('📝 Données envoyées:', jsonData);
         
         // Envoyer les données à l'endpoint API sécurisé
         fetch('/api/submit-contact', {
@@ -424,48 +423,48 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
           body: JSON.stringify(jsonData)
         })
         .then(response => {
-          console.log('📥 Réponse reçue:', response);
+          // console.log('📥 Réponse reçue:', response);
           return response.json();
         })
         .then(result => {
-          console.log('📄 Données de réponse:', result);
+          // console.log('📄 Données de réponse:', result);
           
           if (result.success) {
-            console.log('✅ Soumission réussie:', result);
+            // console.log('✅ Soumission réussie:', result);
             
             // Rediriger vers la page de confirmation au lieu d'afficher un message
             window.location.href = '/merci-contact';
           } else {
-            console.error('❌ Erreur lors de la soumission:', result);
+            console.error('❌ Erreur lors de la soumission');
             showError(result.message || 'Une erreur est survenue lors de la soumission du formulaire.');
           }
         })
         .catch(error => {
-          console.error('❌ Erreur lors de la soumission:', error);
+          console.error('❌ Erreur lors de la soumission');
           showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
         });
       } catch (error) {
-        console.error('❌ Erreur lors de la soumission:', error);
+        console.error('❌ Erreur lors de la soumission');
         showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
       }
     }
     
     // Attacher l'événement click au bouton
-    console.log('🔄 Attachement de l\'événement click au bouton...');
+    // console.log('🔄 Attachement de l\'événement click au bouton...');
     submitButton.addEventListener('click', function(_event) {
-      console.log('🖱️ Événement click détecté sur le bouton');
+      // console.log('🖱️ Événement click détecté sur le bouton');
       handleSubmit();
     });
     
-    console.log('✅ Initialisation du formulaire terminée');
+    // console.log('✅ Initialisation du formulaire terminée');
   }
   
   // Attacher l'initialisation au chargement du DOM
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initContactForm);
-    console.log('🔄 Événement DOMContentLoaded attaché');
+    // console.log('🔄 Événement DOMContentLoaded attaché');
   } else {
-    console.log('🔄 DOM déjà chargé, initialisation immédiate');
+    // console.log('🔄 DOM déjà chargé, initialisation immédiate');
     initContactForm();
   }
 </script>

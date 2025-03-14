@@ -180,16 +180,22 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
           <button 
             type="button"
             id="newsletter-submit"
-            class="h-14 px-8 rounded-full bg-[--ootb-blue] text-white hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 newsletter-submit"
+            class="h-14 px-8 rounded-full bg-[--ootb-blue] text-white hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden"
           >
-            <span>{buttonText}</span>
-            <Icon name="tabler:arrow-right" class="w-5 h-5" />
+            <span id="submit-text" class="relative z-10">{buttonText}</span>
+            <Icon name="tabler:arrow-right" class="w-5 h-5 relative z-10" />
+            <div id="submit-loader" class="absolute inset-0 flex items-center justify-center bg-[--ootb-blue] opacity-0 transition-opacity duration-300">
+              <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
           </button>
           
-          <!-- Message de statut -->
-          <div id="newsletter-status" class="hidden mt-4 p-4 rounded-xl text-center transition-all duration-300 transform">
+          <!-- Message de statut (uniquement pour les erreurs) -->
+          <div id="newsletter-status" class="hidden mt-4 p-4 rounded-xl text-center transition-all duration-300 transform bg-rose-50 text-rose-700 border border-rose-200">
             <div class="flex items-center justify-center gap-3">
-              <span id="newsletter-status-icon" class="text-2xl"></span>
+              <span id="newsletter-status-icon" class="text-2xl">❌</span>
               <span id="newsletter-status-message" class="text-base font-medium"></span>
             </div>
           </div>
@@ -226,7 +232,7 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
 <!-- Script pour l'intégration NocoDB -->
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('🔄 Script de newsletter chargé');
+    // console.log('🔄 Script de newsletter chargé');
     
     const form = document.getElementById('newsletter-form');
     const submitButton = document.getElementById('newsletter-submit');
@@ -242,16 +248,16 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
       return;
     }
     
-    console.log('🔍 Éléments DOM trouvés:', {
-      form: !!form,
-      submitButton: !!submitButton,
-      statusContainer: !!statusContainer,
-      statusIcon: !!statusIcon,
-      statusMessage: !!statusMessage,
-      originalButtonText,
-      privacyCheckbox: !!privacyCheckbox,
-      privacyError: !!privacyError
-    });
+    // console.log('🔍 Éléments DOM trouvés:', {
+    //   form: !!form,
+    //   submitButton: !!submitButton,
+    //   statusContainer: !!statusContainer,
+    //   statusIcon: !!statusIcon,
+    //   statusMessage: !!statusMessage,
+    //   originalButtonText,
+    //   privacyCheckbox: !!privacyCheckbox,
+    //   privacyError: !!privacyError
+    // });
     
     // Formater la date au format ISO avec timezone
     function formatDateForNocoDB(date) {
@@ -279,69 +285,32 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
       timestampField.value = now.toISOString();
     }
     
-    // Fonction pour réinitialiser tous les messages
-    function resetAllMessages() {
-      // Masquer le message de statut
-      statusContainer.classList.add('hidden');
+    // Fonction pour afficher uniquement les erreurs
+    function showError(message) {
+      // console.log(`🔔 Affichage du message d'erreur: ${message}`);
       
-      // Masquer le message d'erreur de politique
-      if (privacyError) {
-        privacyError.classList.add('hidden');
-      }
+      // Définir le message
+      statusMessage.textContent = message;
       
       // Réinitialiser le bouton
       submitButton.disabled = false;
-      submitButton.innerHTML = `<span>${originalButtonText}</span><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>`;
-    }
-    
-    // Fonctions pour afficher les messages de statut
-    function showStatus(message, type) {
-      console.log(`🔔 Affichage du message de statut (${type}): ${message}`);
-      
-      // Masquer le message d'erreur de politique
-      if (privacyError) {
-        privacyError.classList.add('hidden');
-      }
-      
-      // Réinitialiser les classes
-      statusContainer.className = 'mt-4 p-4 rounded-xl text-center transition-all duration-300 transform';
-      
-      // Ajouter la classe correspondant au type
-      if (type === 'error') {
-        statusContainer.classList.add('bg-rose-50', 'text-rose-700', 'border', 'border-rose-200');
-        statusIcon.innerHTML = '❌';
-        statusMessage.textContent = message;
-        
-        // Réactiver le bouton en cas d'erreur
-        submitButton.disabled = false;
-        submitButton.innerHTML = `<span>${originalButtonText}</span><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>`;
-      } else if (type === 'processing') {
-        statusContainer.classList.add('bg-sky-50', 'text-sky-700', 'border', 'border-sky-200', 'pulse');
-        statusIcon.innerHTML = '⏳';
-        statusMessage.textContent = message;
-        
-        // Désactiver le bouton pendant le traitement
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<span class="animate-pulse">Traitement en cours...</span>';
-      } else if (type === 'success') {
-        statusContainer.classList.add('bg-emerald-50', 'text-emerald-700', 'border', 'border-emerald-200');
-        statusIcon.innerHTML = '✅';
-        statusMessage.textContent = message;
-        
-        // Réactiver le bouton après succès
-        submitButton.disabled = false;
-        submitButton.innerHTML = `<span>${originalButtonText}</span><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>`;
-      }
+      document.getElementById('submit-text').classList.remove('opacity-0');
+      document.getElementById('submit-loader').classList.remove('opacity-100');
       
       // Rendre visible
       statusContainer.classList.remove('hidden');
-      
-      // Faire défiler jusqu'au message
-      statusContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     
-    function showError(message) {
-      showStatus(message, 'error');
+    // Fonction simplifiée pour activer le mode chargement du bouton
+    function setButtonLoading(isLoading) {
+      submitButton.disabled = isLoading;
+      const loader = document.getElementById('submit-loader');
+      
+      if (isLoading) {
+        loader.classList.add('opacity-100');
+      } else {
+        loader.classList.remove('opacity-100');
+      }
     }
     
     // Validation des champs
@@ -366,7 +335,7 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
         }
         
         // Réinitialiser les messages lors de la saisie
-        resetAllMessages();
+        statusContainer.classList.add('hidden');
       });
     }
     
@@ -376,22 +345,22 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
         if (this.checked) {
           privacyError.classList.add('hidden');
           // Réinitialiser les messages lors du changement
-          resetAllMessages();
+          statusContainer.classList.add('hidden');
         }
       });
     }
     
     // Gestion de la soumission du formulaire
     function handleSubmit() {
-      console.log('🔄 Fonction handleSubmit appelée');
+      // console.log('🔄 Fonction handleSubmit appelée');
       
       // Si le bouton est désactivé (traitement en cours), ne rien faire
       if (submitButton.disabled) {
-        console.log('⚠️ Soumission ignorée: traitement déjà en cours');
+        // console.log('⚠️ Soumission ignorée: traitement déjà en cours');
         return;
       }
       
-      console.log('🔍 Validation du formulaire...');
+      // console.log('🔍 Validation du formulaire...');
       
       // Vérifier spécifiquement la case à cocher
       if (privacyCheckbox && !privacyCheckbox.checked) {
@@ -407,11 +376,14 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
         return;
       }
       
-      console.log('✅ Formulaire valide, préparation de la soumission...');
+      // console.log('✅ Formulaire valide, préparation de la soumission...');
+      
+      // Masquer les messages d'erreur précédents
+      statusContainer.classList.add('hidden');
       
       try {
-        // Afficher le message de traitement
-        showStatus('Traitement en cours...', 'processing');
+        // Activer le mode chargement du bouton
+        setButtonLoading(true);
         
         // Préparer les données du formulaire au format JSON
         const formData = new FormData(form);
@@ -432,8 +404,8 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
           nocodb_view_id: formData.get('nocodb_view_id')
         };
         
-        console.log('🚀 Soumission du formulaire à l\'API...');
-        console.log('📝 Données envoyées:', jsonData);
+        // console.log('🚀 Soumission du formulaire à l\'API...');
+        // console.log('📝 Données envoyées:', jsonData);
         
         // Envoyer les données à l'endpoint API sécurisé
         fetch('/api/submit-newsletter', {
@@ -443,50 +415,41 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
           },
           body: JSON.stringify(jsonData)
         })
-        .then(response => {
-          console.log('📥 Réponse reçue:', response);
-          return response.json();
-        })
+        .then(response => response.json())
         .then(result => {
-          console.log('📄 Données de réponse:', result);
+          // console.log('📄 Données de réponse:', result);
           
           if (result.success) {
-            console.log('✅ Soumission réussie:', result);
+            // console.log('✅ Soumission réussie:', result);
             
-            // Rediriger directement vers la page de confirmation sans afficher de message de succès
+            // Rediriger directement sans message
             const redirectUrl = form.getAttribute('action');
             if (redirectUrl) {
-              // Afficher un message bref pendant la redirection
-              showStatus('Redirection...', 'processing');
-              
-              // Rediriger après un court délai
-              setTimeout(() => {
-                window.location.href = redirectUrl;
-              }, 500);
+              window.location.href = redirectUrl;
             }
           } else {
-            console.error('❌ Erreur lors de la soumission:', result);
+            console.error('❌ Erreur lors de la soumission');
             showError(result.message || 'Une erreur est survenue lors de l\'inscription.');
           }
         })
         .catch(error => {
-          console.error('❌ Erreur lors de la soumission:', error);
-          showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
+          console.error('❌ Erreur lors de la soumission');
+          showError('Une erreur est survenue lors de la communication avec le serveur.');
         });
       } catch (error) {
-        console.error('❌ Erreur lors de la soumission:', error);
-        showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
+        console.error('❌ Erreur lors de la soumission');
+        showError('Une erreur est survenue lors de la communication avec le serveur.');
       }
     }
     
     // Attacher l'événement click au bouton
-    console.log('🔄 Attachement de l\'événement click au bouton...');
+    // console.log('🔄 Attachement de l\'événement click au bouton...');
     submitButton.addEventListener('click', function(_event) {
-      console.log('🖱️ Événement click détecté sur le bouton');
+      // console.log('🖱️ Événement click détecté sur le bouton');
       handleSubmit();
     });
     
-    console.log('✅ Initialisation du formulaire newsletter terminée');
+    // console.log('✅ Initialisation du formulaire newsletter terminée');
   });
 </script>
 
@@ -499,15 +462,6 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
   /* Police système optimisée pour le corps du texte */
   .font-sans {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  }
-
-  @keyframes gentle-pulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 0.5; }
-  }
-
-  .animate-gentle-pulse {
-    animation: gentle-pulse 4s ease-in-out infinite;
   }
   
   /* Animation de pulsation pour le traitement */
@@ -535,8 +489,3 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
     @apply visible opacity-100 translate-y-0;
   }
 </style>
-
-<!-- Ajout des polices -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">

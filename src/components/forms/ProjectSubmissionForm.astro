@@ -214,7 +214,9 @@ const publicCible = [
         <input type="url" id="lien-video" name="LienVideo" 
                class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
                placeholder="Vous avez une vidéo ? Indiquer le lien pour la visionner" />
-        
+        <p class="mt-1 text-xs text-gray-500">
+          Optionnel - Veuillez entrer une URL valide (ex: https://youtube.com/watch?v=...)
+        </p>
       </div>
 
       <div class="mt-8 text-gray-600">
@@ -245,10 +247,10 @@ const publicCible = [
     </div>
   </section>
 
-  <!-- Message de statut - Style amélioré -->
-  <div id="formStatus" class="my-6 p-6 rounded-xl text-center hidden transition-all duration-300 transform">
+  <!-- Message de statut - Uniquement pour les erreurs -->
+  <div id="formStatus" class="my-6 p-6 rounded-xl text-center hidden transition-all duration-300 transform bg-rose-50 text-rose-700 border border-rose-200">
     <div class="flex items-center justify-center gap-3">
-      <span id="statusIcon" class="text-2xl"></span>
+      <span id="statusIcon" class="text-2xl">❌</span>
       <span id="statusMessage" class="text-lg font-medium"></span>
     </div>
   </div>
@@ -261,8 +263,16 @@ const publicCible = [
       size="lg" 
       icon="tabler:send" 
       iconPosition="right"
+      type="button"
+      class="relative overflow-hidden transition-all duration-300"
     >
-      Envoyer
+      <span id="submit-text" class="relative z-10 transition-opacity duration-300">Envoyer</span>
+      <div id="submit-loader" class="absolute inset-0 flex items-center justify-center bg-blue-600 opacity-0 transition-opacity duration-300">
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
     </Button>
   </div>
 </form>
@@ -286,14 +296,20 @@ const publicCible = [
   }
 
   /* Modifier les styles pour ne pas afficher l'erreur sur les champs vides */
-  input:invalid:not(:placeholder-shown), 
-  textarea:invalid:not(:placeholder-shown) {
+  input:invalid:not(:placeholder-shown):not(:focus), 
+  textarea:invalid:not(:placeholder-shown):not(:focus) {
     @apply border-rose-300 focus:border-rose-500 focus:ring-rose-500/20;
   }
 
   input:valid:not(:placeholder-shown), 
   textarea:valid:not(:placeholder-shown) {
     @apply border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500/20;
+  }
+
+  /* Ajouter cette règle pour s'assurer que les champs non modifiés ont une bordure neutre */
+  input:not(:focus):placeholder-shown,
+  textarea:not(:focus):placeholder-shown {
+    @apply border-gray-200 focus:border-gray-300 focus:ring-gray-300/20;
   }
 
   /* Style pour les boutons de sélection arrondis */
@@ -363,31 +379,46 @@ const publicCible = [
   label:has(input[type="checkbox"]) {
     transition: all 0.2s ease-in-out;
   }
+
+  /* Animation pour le bouton de soumission */
+  #submit-button {
+    @apply relative overflow-hidden;
+  }
+  
+  #submit-text {
+    @apply transition-opacity duration-300;
+  }
+  
+  #submit-loader {
+    @apply transition-opacity duration-300;
+  }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('🔄 Initialisation du formulaire...');
+    // console.log('🔄 Initialisation du formulaire...');
     
     // Éléments DOM avec types appropriés
-    const form = document.getElementById('pedagogical-sheet-form') as HTMLFormElement;
-    const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
-    const formStatus = document.getElementById('formStatus') as HTMLDivElement;
-    const statusIcon = document.getElementById('statusIcon') as HTMLSpanElement;
-    const statusMessage = document.getElementById('statusMessage') as HTMLSpanElement;
+    const form = document.getElementById('pedagogical-sheet-form');
+    const submitButton = document.getElementById('submit-button');
+    const formStatus = document.getElementById('formStatus');
+    const statusIcon = document.getElementById('statusIcon');
+    const statusMessage = document.getElementById('statusMessage');
     
-    console.log('🔍 Éléments DOM trouvés:', {
-      form: !!form,
-      submitButton: !!submitButton,
-      formStatus: !!formStatus,
-      statusIcon: !!statusIcon,
-      statusMessage: !!statusMessage
-    });
+    // Vérification de l'existence des éléments avec plus de détails
+    // console.log('🔍 Recherche des éléments DOM:');
+    // console.log('- Formulaire:', form);
+    // console.log('- Bouton de soumission:', submitButton);
+    // console.log('- Zone de statut:', formStatus);
+    // console.log('- Icône de statut:', statusIcon);
+    // console.log('- Message de statut:', statusMessage);
     
-    if (!form || !submitButton || !formStatus) {
-      console.error('❌ Éléments du formulaire non trouvés');
+    if (!form || !submitButton || !formStatus || !statusIcon || !statusMessage) {
+      console.error('❌ Certains éléments du formulaire sont manquants');
       return;
     }
+    
+    console.log('✅ Tous les éléments du formulaire ont été trouvés');
     
     // Ajouter des placeholders vides à tous les champs pour que :not(:placeholder-shown) fonctionne
     const inputFields = form.querySelectorAll('input[type="text"], input[type="email"], textarea[required]') as NodeListOf<HTMLInputElement | HTMLTextAreaElement>;
@@ -397,61 +428,49 @@ const publicCible = [
       }
     });
     
-    // Fonctions pour afficher les messages de statut
-    function showStatus(message: string, type: 'error' | 'processing') {
-      console.log(`🔔 Affichage du message de statut (${type}): ${message}`);
-      
-      // Réinitialiser les classes
-      formStatus.className = 'my-6 p-6 rounded-xl text-center transition-all duration-300 transform';
-      
-      // Ajouter la classe correspondant au type
-      formStatus.classList.add(type);
-      
-      // Définir l'icône et le message
-      if (type === 'error') {
-        statusIcon.innerHTML = '❌';
-        statusMessage.textContent = message;
-        // Animation pour erreur
-        formStatus.classList.add('scale-100', 'translate-y-0');
-      } else if (type === 'processing') {
-        statusIcon.innerHTML = '⏳';
-        statusMessage.textContent = message;
-        // Animation pour traitement
-        formStatus.classList.add('pulse');
-      }
-      
-      // Rendre visible
-      formStatus.classList.remove('hidden');
-      
-      // Désactiver le bouton pendant le traitement
-      if (type === 'processing') {
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<span class="animate-pulse">Traitement en cours...</span>';
-      } else {
-        // Réactiver le bouton pour les autres types
-        submitButton.disabled = false;
-        submitButton.innerHTML = '<span>ENVOYER</span>';
-      }
-      
-      // Faire défiler jusqu'au message
-      formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    
-    function showError(message: string) {
-      showStatus(message, 'error');
-    }
-    
-    // Fonction pour afficher/masquer les messages d'erreur
+    // Fonction pour basculer l'affichage des messages d'erreur
     function toggleErrorMessage(element, show) {
       if (!element) return;
       
       if (show) {
         element.classList.add('error-visible');
-        element.hidden = false;
+        element.classList.remove('hidden');
       } else {
         element.classList.remove('error-visible');
-        element.hidden = true;
+        element.classList.add('hidden');
       }
+    }
+    
+    // Fonction pour activer/désactiver le mode chargement du bouton
+    function setButtonLoading(isLoading) {
+      submitButton.disabled = isLoading;
+      const submitText = document.getElementById('submit-text');
+      const submitLoader = document.getElementById('submit-loader');
+      
+      if (isLoading) {
+        submitText.classList.add('opacity-0');
+        submitLoader.classList.add('opacity-100');
+      } else {
+        submitText.classList.remove('opacity-0');
+        submitLoader.classList.remove('opacity-100');
+      }
+    }
+    
+    // Fonction pour afficher uniquement les erreurs
+    function showError(message) {
+      // console.log(`🔔 Affichage du message d'erreur: ${message}`);
+      
+      // Définir le message
+      statusMessage.textContent = message;
+      
+      // Réinitialiser le bouton
+      setButtonLoading(false);
+      
+      // Rendre visible
+      formStatus.classList.remove('hidden');
+      
+      // Faire défiler jusqu'au message
+      formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     
     // Validation des types d'enseignement
@@ -500,6 +519,71 @@ const publicCible = [
       });
     });
     
+    // Validation des champs optionnels avec format spécifique (URL, etc.)
+    const optionalFormattedInputs = document.querySelectorAll('input[type="url"]:not([required]), input[type="email"]:not([required]), input[type="tel"]:not([required])');
+    
+    optionalFormattedInputs.forEach(input => {
+      input.addEventListener('blur', () => {
+        // Vérifier uniquement si le champ n'est pas vide
+        if (input.value !== '' && !input.validity.valid) {
+          // Afficher un message d'erreur personnalisé
+          let errorMessage = "Veuillez entrer une valeur valide";
+          
+          if (input.type === 'url') {
+            errorMessage = "Veuillez entrer une URL valide (ex: https://exemple.com)";
+          } else if (input.type === 'email') {
+            errorMessage = "Veuillez entrer une adresse email valide";
+          } else if (input.type === 'tel') {
+            errorMessage = "Veuillez entrer un numéro de téléphone valide";
+          }
+          
+          // Ajouter une classe d'erreur au champ
+          input.classList.add('border-rose-300');
+          
+          // Afficher un message d'erreur sous le champ
+          const helpText = input.nextElementSibling;
+          if (helpText) {
+            helpText.textContent = errorMessage;
+            helpText.classList.remove('text-gray-500');
+            helpText.classList.add('text-rose-500');
+          }
+        } else {
+          // Réinitialiser le style du champ
+          input.classList.remove('border-rose-300');
+          
+          // Réinitialiser le message d'aide
+          const helpText = input.nextElementSibling;
+          if (helpText) {
+            if (input.type === 'url') {
+              helpText.textContent = "Optionnel - Veuillez entrer une URL valide (ex: https://youtube.com/watch?v=...)";
+            } else if (input.type === 'tel') {
+              helpText.textContent = "Optionnel";
+            }
+            helpText.classList.add('text-gray-500');
+            helpText.classList.remove('text-rose-500');
+          }
+        }
+      });
+      
+      // Réinitialiser le style lors de la saisie
+      input.addEventListener('input', () => {
+        if (input.validity.valid || input.value === '') {
+          input.classList.remove('border-rose-300');
+          
+          const helpText = input.nextElementSibling;
+          if (helpText) {
+            if (input.type === 'url') {
+              helpText.textContent = "Optionnel - Veuillez entrer une URL valide (ex: https://youtube.com/watch?v=...)";
+            } else if (input.type === 'tel') {
+              helpText.textContent = "Optionnel";
+            }
+            helpText.classList.add('text-gray-500');
+            helpText.classList.remove('text-rose-500');
+          }
+        }
+      });
+    });
+    
     // Gestion de la soumission du formulaire
     submitButton.addEventListener('click', async () => {
       // Valider tous les champs
@@ -525,9 +609,12 @@ const publicCible = [
         return false;
       }
       
+      // Masquer les messages d'erreur précédents
+      formStatus.classList.add('hidden');
+      
       try {
-        // Afficher le message de traitement
-        showStatus('Traitement en cours...', 'processing');
+        // Activer le mode chargement du bouton
+        setButtonLoading(true);
         
         // Récupérer la valeur du destinataire sélectionné ou utiliser la valeur par défaut
         const destinataireValue = form.querySelector('input[name="Destinataire"]:checked')?.value || "Non renseigné";
@@ -566,11 +653,27 @@ const publicCible = [
           LiensVIDEO: formData.get('LienVideo') || ''
         };
         
-        console.log('🚀 Soumission du formulaire à l\'API...');
-        console.log('📝 Données envoyées:', jsonData);
+        // console.log('🚀 Soumission du formulaire à l\'API...');
+        // console.log('📝 Données envoyées:', jsonData);
         
-        // Envoyer les données à l'endpoint API sécurisé
-        const response = await fetch('/api/submit-pedagogical-sheet', {
+        // Détection du mode local
+        const isLocalDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        
+        if (isLocalDevelopment) {
+          // console.log('🧪 Mode développement local détecté - Simulation de soumission');
+          
+          // Simuler un délai de traitement
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          // console.log('✅ Simulation de soumission réussie');
+          
+          // Rediriger directement sans message
+          window.location.href = '/merci-soumission';
+          return;
+        }
+        
+        // En production, envoyer les données à l'endpoint API
+        const response = await fetch('/.netlify/functions/submit-pedagogical-sheet', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -582,16 +685,16 @@ const publicCible = [
         const result = await response.json();
         
         if (result.success) {
-          console.log('✅ Soumission réussie:', result);
+          // console.log('✅ Soumission réussie:', result);
           
-          // Rediriger vers la page de confirmation au lieu d'afficher un message
+          // Rediriger directement sans message
           window.location.href = '/merci-soumission';
         } else {
-          console.error('❌ Erreur lors de la soumission:', result);
+          console.error('❌ Erreur lors de la soumission');
           showError(result.message || 'Une erreur est survenue lors de la soumission du formulaire.');
         }
       } catch (error) {
-        console.error('❌ Erreur lors de la soumission:', error);
+        console.error('❌ Erreur lors de la soumission');
         showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
       }
     });

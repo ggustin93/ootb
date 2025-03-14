@@ -12,6 +12,8 @@ interface Props {
   fullWidth?: boolean;
   disabled?: boolean;
   color?: string;
+  type?: 'button' | 'submit' | 'reset';
+  id?: string;
 }
 
 const {
@@ -24,7 +26,10 @@ const {
   class: className,
   fullWidth = false,
   disabled = false,
-  color
+  color,
+  type = 'button',
+  id = '',
+  ...rest
 } = Astro.props;
 
 // Tailles
@@ -104,6 +109,8 @@ const Element = href ? 'a' : 'button';
   class:list={[buttonClass, 'group']}
   disabled={disabled}
   {...disabled && { 'aria-disabled': true }}
+  type={type}
+  id={id}
 >
   {icon && iconPosition === 'left' && (
     <Icon name={icon} class={getIconClasses('left')} />

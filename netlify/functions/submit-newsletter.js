@@ -1,4 +1,5 @@
 import { Api } from 'nocodb-sdk';
+import * as SibApiV3Sdk from 'sib-api-v3-sdk';
 
 // Configuration NocoDB - sécurisée car exécutée côté serveur uniquement
 const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || 'https://app.nocodb.com';
@@ -8,6 +9,10 @@ const NOCODB_PROJECT_ID = process.env.NOCODB_PROJECT_ID || 'p41z6qweidro6nu';
 const NOCODB_NEWSLETTER_TABLE_ID = process.env.NOCODB_NEWSLETTER_TABLE_ID || 'm6hnpjey4laav0z';
 const NOCODB_NEWSLETTER_VIEW_ID = process.env.NOCODB_NEWSLETTER_VIEW_ID || 'vwcs0f92mc8rh0s5';
 
+// Configuration Brevo
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
+const BREVO_LIST_ID = parseInt(process.env.BREVO_LIST_ID || '2', 10);
+
 console.log('🔄 Fonction Netlify submit-newsletter chargée');
 console.log('📝 Configuration:', {
   NOCODB_BASE_URL,
@@ -15,7 +20,9 @@ console.log('📝 Configuration:', {
   NOCODB_ORG_ID,
   NOCODB_PROJECT_ID,
   NOCODB_NEWSLETTER_TABLE_ID,
-  NOCODB_NEWSLETTER_VIEW_ID
+  NOCODB_NEWSLETTER_VIEW_ID,
+  hasBrevoKey: !!BREVO_API_KEY,
+  BREVO_LIST_ID
 });
 
 // Initialiser l'API NocoDB
@@ -43,6 +50,22 @@ const initNocoDBApi = () => {
   }
 };
 
+// Initialiser l'API Brevo
+const initBrevoApi = () => {
+  try {
+    const defaultClient = SibApiV3Sdk.ApiClient.instance;
+    const apiKey = defaultClient.authentications['api-key'];
+    apiKey.apiKey = BREVO_API_KEY;
+    
+    const apiInstance = new SibApiV3Sdk.ContactsApi();
+    console.log('✅ API Brevo initialisée avec succès');
+    return apiInstance;
+  } catch (error) {
+    console.error('❌ Erreur lors de l\'initialisation de l\'API Brevo:', error);
+    return null;
+  }
+};
+
 // Vérifier si un objet est une erreur API
 const isApiError = (error) => {
   return error && typeof error === 'object' && 'response' in error;
@@ -66,6 +89,53 @@ function formatDateForNocoDB(date) {
   
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}${timezoneString}`;
 }
+
+// Ajouter un contact à une liste Brevo
+const addContactToBrevoList = async (email) => {
+  const api = initBrevoApi();
+  if (!api) return false;
+  
+  try {
+    // Étape 1: Créer ou mettre à jour le contact
+    const createContact = new SibApiV3Sdk.CreateContact();
+    createContact.email = email;
+    createContact.listIds = [BREVO_LIST_ID]; // Ajouter directement à la liste lors de la création
+    
+    try {
+      // Essayer de créer le contact
+      await api.createContact(createContact);
+      console.log(`✅ Contact ${email} créé et ajouté à la liste ${BREVO_LIST_ID}`);
+      return true;
+    } catch (createError) {
+      // Si le contact existe déjà, essayer de l'ajouter à la liste
+      console.log(`ℹ️ Le contact ${email} existe peut-être déjà, tentative d'ajout à la liste...`);
+      
+      // Étape 2: Si la création échoue, essayer d'ajouter à la liste
+      const contactEmails = new SibApiV3Sdk.AddContactToList();
+      contactEmails.emails = [email];
+      
+      try {
+        await api.addContactToList(BREVO_LIST_ID, contactEmails);
+        console.log(`✅ Contact ${email} ajouté à la liste ${BREVO_LIST_ID}`);
+        return true;
+      } catch (addError) {
+        // Si l'ajout à la liste échoue également, logger l'erreur
+        console.error(`❌ Erreur lors de l'ajout du contact ${email} à la liste:`, addError.response?.body || addError.message);
+        
+        // Si c'est une erreur "déjà dans la liste", considérer comme un succès
+        if (addError.response?.body?.message?.includes('already in list')) {
+          console.log(`ℹ️ Le contact ${email} est déjà dans la liste ${BREVO_LIST_ID}`);
+          return true;
+        }
+        
+        return false;
+      }
+    }
+  } catch (error) {
+    console.error(`❌ Erreur lors de la gestion du contact ${email}:`, error.response?.body || error.message);
+    return false;
+  }
+};
 
 export const handler = async (event) => {
   // Gérer les requêtes GET (test de connexion)
@@ -349,6 +419,12 @@ export const handler = async (event) => {
           
           console.log('✅ Abonné existant mis à jour avec succès');
           
+          // Ajouter le contact à la liste Brevo si l'API est configurée
+          if (BREVO_API_KEY) {
+            const brevoResult = await addContactToBrevoList(data.email);
+            console.log('📝 Résultat Brevo:', brevoResult);
+          }
+          
           return {
             statusCode: 200,
             body: JSON.stringify({
@@ -379,6 +455,12 @@ export const handler = async (event) => {
         );
         
         console.log('✅ Nouvel abonné créé avec succès:', result);
+
+        // Ajouter le contact à la liste Brevo si l'API est configurée
+        if (BREVO_API_KEY) {
+          const brevoResult = await addContactToBrevoList(data.email);
+          console.log('📝 Résultat Brevo:', brevoResult);
+        }
         
         return {
           statusCode: 201,
@@ -389,7 +471,8 @@ export const handler = async (event) => {
               email: data.email,
               created: true,
               timestamp: new Date().toISOString(),
-              formattedDate: formattedData["Date d'inscription"]
+              formattedDate: formattedData["Date d'inscription"],
+              brevoSync: BREVO_API_KEY ? true : false
             }
           }),
           headers: {

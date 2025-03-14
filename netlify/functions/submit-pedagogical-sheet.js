@@ -69,10 +69,11 @@ export const handler = async (event) => {
       "Nom": data.nom,
       "Email": data.email,
       "Téléphone": data.telephone || '',
-      "École": data.ecole,
+      "Ecole": data.ecole,
       "Déclinaisons": data.Declinaisons || '',
       "Conseils": data.Conseils || '',
       "Liens": data.Liens || '',
+      "LiensVIDEO": data.LiensVIDEO || '',
       "Edition": new Date().getFullYear().toString()
     };
     

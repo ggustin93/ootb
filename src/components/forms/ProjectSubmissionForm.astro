@@ -211,7 +211,7 @@ const publicCible = [
         <label for="lien-video" class="block text-gray-700 mb-2 font-medium">
           Lien vidéo
         </label>
-        <input type="url" id="lien-video" name="LienVideo" 
+        <input type="url" id="lien-video" name="LiensVIDEO" 
                class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
                placeholder="Vous avez une vidéo ? Indiquer le lien pour la visionner" />
         <p class="mt-1 text-xs text-gray-500">
@@ -650,7 +650,7 @@ const publicCible = [
           Declinaisons: formData.get('Déclinaisons') || '',
           Conseils: formData.get('Conseils') || '',
           Liens: formData.get('Liens') || '',
-          LiensVIDEO: formData.get('LienVideo') || ''
+          LiensVIDEO: formData.get('LiensVIDEO') || ''
         };
         
         // console.log('🚀 Soumission du formulaire à l\'API...');

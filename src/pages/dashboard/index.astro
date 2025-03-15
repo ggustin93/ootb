@@ -1,0 +1,884 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import CustomStyles from '~/components/CustomStyles.astro';
+import { Image } from 'astro:assets';
+import logoHeader from '~/assets/images/ootb-logo-header.svg';
+
+// TODO: Implémentation future de Supabase pour la gestion sécurisée des credentials
+// import { createClient } from '@supabase/supabase-js';
+// const supabase = createClient(
+//   import.meta.env.PUBLIC_SUPABASE_URL,
+//   import.meta.env.SUPABASE_SERVICE_KEY
+// );
+
+interface Credentials {
+  username?: string;
+  password?: string;
+  apiKey?: string;
+  notes?: string;
+}
+
+interface Tool {
+  title: string;
+  description: string;
+  url: string;
+  icon: string;
+  credentials?: Credentials;
+  notes?: string;
+}
+
+interface ToolCategory {
+  category: string;
+  icon: string;
+  description: string;
+  items: Tool[];
+}
+
+// Informations de contact
+const contactInfo = {
+  website: "https://pwablo.be",
+  phone: "+32 456 61 72 60",
+  whatsapp: "https://wa.me/32456617260",
+  calendar: "https://cal.com/pwablo",
+  github: "https://github.com/outofthebooks/website"
+};
+
+// Configuration des outils
+const tools: ToolCategory[] = [
+  {
+    category: "Édition",
+    icon: "tabler:edit-circle",
+    description: "Outils pour gérer le contenu du site",
+    items: [
+      {
+        title: "TinaCMS",
+        description: "Interface d'édition de contenu [Essentiel]",
+        url: "/admin/tina",
+        icon: "tabler:edit",
+        credentials: {
+          username: "admin@outofthebooks.be",
+          password: import.meta.env.TINA_PASSWORD || "Contacter l'administrateur",
+          notes: "Connexion à l'interface d'édition (ne pas partager)"
+        }
+      }
+    ]
+  },
+  {
+    category: "Données",
+    icon: "tabler:database",
+    description: "Gestion des bases de données",
+    items: [
+      {
+        title: "NocoDB",
+        description: "Base de données pour les fiches pédagogiques et la newsletter [Essentiel]",
+        url: import.meta.env.NOCODB_BASE_URL || "https://app.nocodb.com",
+        icon: "tabler:database",
+        credentials: {
+          username: "admin@outofthebooks.be",
+          password: import.meta.env.NOCODB_PASSWORD || "Contacter l'administrateur",
+          notes: "Accès à la base de données (connexion via email/password)"
+        }
+      }
+    ]
+  },
+  {
+    category: "Analytics",
+    icon: "tabler:chart-dots",
+    description: "Suivi des performances et statistiques",
+    items: [
+      {
+        title: "Umami Analytics",
+        description: "Statistiques de visite du site [Recommandé]",
+        url: "https://cloud.umami.is/websites",
+        icon: "tabler:chart-bar",
+        credentials: {
+          username: "github@pwablo.be",
+          password: import.meta.env.UMAMI_PASSWORD || "Utiliser la connexion GitHub",
+          notes: "Connexion via GitHub recommandée, mais accès email possible"
+        }
+      },
+      {
+        title: "Google Search Console",
+        description: "Référencement du site [Optionnel - Bon à connaître]",
+        url: "https://search.google.com/search-console",
+        icon: "tabler:brand-google",
+        credentials: {
+          username: "hello@outofthebooks.be",
+          notes: "Connexion via compte Google"
+        }
+      }
+    ]
+  },
+  {
+    category: "Infrastructure",
+    icon: "tabler:server",
+    description: "Gestion de l'hébergement et des domaines",
+    items: [
+      {
+        title: "OVH",
+        description: "Gestion du nom de domaine et des emails [À connaître si besoin]",
+        url: "https://www.ovh.com/manager/",
+        icon: "tabler:server",
+        credentials: {
+          username: import.meta.env.OVH_USERNAME,
+          password: import.meta.env.OVH_PASSWORD,
+          notes: "Identifiants du compte principal - Rarement nécessaire sauf changements DNS"
+        }
+      },
+      {
+        title: "Netlify",
+        description: "Hébergement et déploiement [Optionnel]",
+        url: "https://app.netlify.com/",
+        icon: "tabler:cloud",
+        credentials: {
+          username: "github@pwablo.be",
+          notes: "Connexion via GitHub recommandée"
+        }
+      }
+    ]
+  }
+];
+
+// Lien vers la documentation Notion
+const notionUrl = import.meta.env.NOTION_WORKSPACE_URL || "https://www.notion.so/outofthebooks";
+---
+
+<Layout metadata={{ title: 'Tableau de bord - Out of the Books' }}>
+  <CustomStyles />
+  <div class="flex h-screen bg-gray-50">
+    {/* Menu latéral */}
+    <aside class="w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col">
+      <div class="p-4 border-b border-gray-200">
+        <Image 
+          src={logoHeader} 
+          alt="Out of the Books" 
+          class="h-8 w-auto"
+        />
+      </div>
+
+      {/* Navigation principale */}
+      <nav class="flex-1 p-4 space-y-1">
+        {/* Lien Summary */}
+        <a
+          href="#summary"
+          class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+          title="Vue d'ensemble"
+        >
+          <Icon name="tabler:layout-dashboard" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
+          Accueil
+        </a>
+
+        {/* Séparateur */}
+        <div class="my-4 border-t border-gray-200"></div>
+
+        {/* Catégories */}
+        {tools.map(category => (
+          <a
+            href={`#${category.category.toLowerCase()}`}
+            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+            title={category.description}
+          >
+            <Icon name={category.icon} class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
+            {category.category}
+          </a>
+        ))}
+
+        {/* Séparateur */}
+        <div class="my-4 border-t border-gray-200"></div>
+
+        {/* FAQ */}
+        <a
+          href="#faq"
+          class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+          title="Questions fréquentes"
+        >
+          <Icon name="tabler:help-circle" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
+          Aide & FAQ
+        </a>
+        
+        {/* Recommandations écologiques */}
+        <a
+          href="#eco"
+          class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+          title="Bonnes pratiques écologiques"
+        >
+          <Icon name="tabler:leaf" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-[var(--ootb-green)]" />
+          Éco-responsabilité
+        </a>
+        
+        {/* GitHub */}
+        <a
+          href="#github"
+          class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+          title="Code source"
+        >
+          <Icon name="tabler:brand-github" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-800" />
+          Code
+        </a>
+      </nav>
+
+      {/* Contact (en bas) */}
+      <div class="p-4 bg-gray-50 border-t border-gray-200">
+        <div class="flex flex-col space-y-2">
+          <p class="text-xs text-gray-500 mb-1">Besoin d'aide ?</p>
+          <a 
+            href={`mailto:hello@pwablo.be`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
+          >
+            <Icon name="tabler:mail" class="w-5 h-5 mr-3 text-gray-400" />
+            hello@pwablo.be
+          </a>
+          <a 
+            href={`tel:${contactInfo.phone}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
+          >
+            <Icon name="tabler:phone" class="w-5 h-5 mr-3 text-gray-400" />
+            {contactInfo.phone}
+          </a>
+          <div class="flex space-x-2">
+            <a 
+              href={contactInfo.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 flex items-center justify-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
+              title="Contacter par WhatsApp"
+            >
+              <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-gray-400" />
+            </a>
+            <a 
+              href={contactInfo.calendar}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 flex items-center justify-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
+              title="Prendre rendez-vous"
+            >
+              <Icon name="tabler:calendar" class="w-5 h-5 text-gray-400" />
+            </a>
+          </div>
+          
+          {/* Bouton de déconnexion */}
+          <a 
+            href="/api/auth/logout"
+            class="flex items-center px-3 py-2 text-sm text-red-600 rounded-lg hover:bg-red-50 bg-white mt-4"
+          >
+            <Icon name="tabler:logout" class="w-5 h-5 mr-3 text-red-500" />
+            Déconnexion
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    {/* Contenu principal */}
+    <main class="flex-1 overflow-y-auto">
+      <div class="max-w-4xl mx-auto p-8">
+        {/* Summary - Titre simple */}
+        <section id="summary" class="mb-12">
+          <h2 class="font-handwritten text-4xl font-bold text-[var(--ootb-blue)] mb-6">Tableau de bord</h2>
+          <p class="text-gray-600 mb-8">
+            Bienvenue sur le tableau de bord d'administration. Utilisez les outils ci-dessous pour gérer votre site web.
+          </p>
+        </section>
+
+        {/* Sections des outils */}
+        {tools.map(category => (
+          <section id={category.category.toLowerCase()} class="mb-12 section-content">
+            <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target={category.category.toLowerCase()}>
+              <div class="flex items-center gap-2">
+                <Icon name={category.icon} class="w-6 h-6 text-primary-600" />
+                <h2 class="text-xl font-semibold text-gray-900">{category.category}</h2>
+              </div>
+              <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
+            </div>
+            
+            <div class="accordion-content hidden" id={`content-${category.category.toLowerCase()}`}>
+              <p class="text-gray-600 mb-6">
+                {category.category === "Édition" && 
+                  "Accédez aux outils d'édition pour modifier le contenu de votre site web. Ces interfaces vous permettent de mettre à jour les textes, images et autres éléments sans connaissances techniques."}
+                
+                {category.category === "Infrastructure" && 
+                  "Gérez l'hébergement, les noms de domaine et les paramètres techniques de votre site. Ces outils vous donnent accès aux configurations serveur et aux réglages DNS."}
+                
+                {category.category === "Données" && 
+                  "Consultez et modifiez les bases de données qui alimentent votre site. Ces interfaces vous permettent de gérer les informations structurées comme les fiches produits ou les inscriptions newsletter."}
+                
+                {category.category === "Analytics" && 
+                  "Suivez les performances et le trafic de votre site web. Ces outils vous donnent accès aux statistiques de visite, au référencement et aux comportements des utilisateurs."}
+              </p>
+              
+              <div class="grid grid-cols-1 gap-4">
+                {category.items
+                  .sort((a, b) => {
+                    // Tri par importance: Essentiel > Recommandé > Optionnel
+                    const getImportance = (desc: string) => {
+                      if (desc.includes("[Essentiel]")) return 1;
+                      if (desc.includes("[Recommandé]")) return 2;
+                      return 3;
+                    };
+                    return getImportance(a.description) - getImportance(b.description);
+                  })
+                  .map(tool => (
+                  <div class="group relative bg-white rounded-xl border border-gray-200 hover:border-primary-200 hover:shadow-md transition-all duration-200">
+                    <div class="absolute top-0 right-0 p-2 flex items-center gap-2 z-20">
+                      {tool.credentials && (
+                        <button
+                          type="button"
+                          class="flex-shrink-0 p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-white/80 transition-colors toggle-credentials"
+                          data-credentials={JSON.stringify(tool.credentials)}
+                          onclick="event.preventDefault(); event.stopPropagation();"
+                          title="Voir les identifiants"
+                        >
+                          <Icon name="tabler:key" class="w-5 h-5 text-primary-600" />
+                        </button>
+                      )}
+                    </div>
+                    
+                    <a
+                      href={tool.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="block p-4 rounded-xl group/link"
+                      onclick="window.open(this.href, '_blank', 'noopener,noreferrer'); return false;"
+                    >
+                      <div class="flex items-center gap-4">
+                        <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-2 rounded-lg group-hover:scale-110 transition-transform duration-200">
+                          <Icon name={tool.icon} class="w-5 h-5 text-primary-600" />
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <div class="flex items-center gap-2">
+                            <h3 class="font-medium truncate group-hover:text-primary-600 transition-colors">{tool.title}</h3>
+                            <Icon 
+                              name="tabler:external-link" 
+                              class="w-5 h-5 text-primary-600 opacity-0 group-hover/link:opacity-100 transform group-hover/link:translate-x-1 group-hover/link:scale-110 transition-all duration-200" 
+                            />
+                            {tool.description.includes("[Essentiel]") && (
+                              <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full">Essentiel</span>
+                            )}
+                            {tool.description.includes("[Recommandé]") && (
+                              <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-blue)] text-white rounded-full">Recommandé</span>
+                            )}
+                            {(tool.description.includes("[Optionnel]") || tool.description.includes("[À connaître")) && (
+                              <span class="px-1.5 py-0.5 text-xs bg-gray-100 text-gray-500 rounded-full">Optionnel</span>
+                            )}
+                          </div>
+                          <p class="text-sm text-gray-600 truncate">{tool.description.split("[")[0]}</p>
+                        </div>
+                      </div>
+                    </a>
+
+                    {tool.credentials && (
+                      <div class="credentials-info hidden mt-4 p-4 bg-gray-50 rounded-lg text-sm border-t">
+                        {tool.credentials.username && (
+                          <p class="mb-2 flex items-center">
+                            <span class="font-medium w-24">Identifiant :</span>
+                            <span class="font-mono">{tool.credentials.username}</span>
+                          </p>
+                        )}
+                        {tool.credentials.password ? (
+                          <p class="mb-2 flex items-center">
+                            <span class="font-medium w-24">Mot de passe :</span>
+                            <span class="font-mono password-field flex-1">••••••••</span>
+                            <button 
+                              type="button" 
+                              class="p-1 text-gray-400 hover:text-primary-600 rounded toggle-password"
+                              onclick="event.preventDefault()"
+                              title="Afficher/masquer le mot de passe"
+                            >
+                              <Icon name="tabler:eye" class="w-4 h-4" />
+                            </button>
+                          </p>
+                        ) : (
+                          <p class="mb-2 flex items-center">
+                            <span class="font-medium w-24">Mot de passe :</span>
+                            <span class="text-gray-500 italic">Défini par l'utilisateur lors de l'invitation</span>
+                          </p>
+                        )}
+                        {/* Note de sécurité */}
+                        <div class="mt-3 p-2 bg-yellow-50 rounded text-xs text-amber-700 border border-amber-200">
+                          <div class="flex items-start gap-1.5">
+                            <Icon name="tabler:alert-triangle" class="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+                            <span>Ce tableau de bord est réservé aux administrateurs. Ne partagez jamais ces identifiants avec des tiers.</span>
+                          </div>
+                        </div>
+                        {tool.credentials.notes && (
+                          <p class="text-gray-600 text-sm mt-2">{tool.credentials.notes}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        ))}
+
+        {/* Section FAQ simplifiée */}
+        <section id="faq" class="mb-12 section-content">
+          <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="faq">
+            <div class="flex items-center gap-2">
+              <Icon name="tabler:help-circle" class="w-6 h-6 text-primary-600" />
+              <h2 class="text-xl font-semibold text-gray-900">Aide & FAQ</h2>
+            </div>
+            <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
+          </div>
+          
+          <div class="accordion-content hidden" id="content-faq">
+            <p class="text-gray-600 mb-6">
+              Retrouvez ici toute la documentation et les réponses aux questions fréquentes sur l'utilisation de votre site web. Cette ressource est régulièrement mise à jour pour vous aider à tirer le meilleur parti de votre plateforme.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div class="bg-white rounded-xl border border-gray-200 overflow-hidden p-6">
+                <div class="flex flex-col gap-4">
+                  <div>
+                    <h3 class="font-handwritten text-3xl mb-2 text-[var(--ootb-blue)]">Documentation complète</h3>
+                    <p class="text-gray-600 text-sm">Toutes les informations sur l'utilisation du site sont disponibles dans notre espace Notion.</p>
+                  </div>
+                  <a 
+                    href={notionUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center px-4 py-2 bg-[var(--ootb-blue)] text-white rounded-lg hover:opacity-90 transition-colors self-start"
+                  >
+                    <Icon name="tabler:brand-notion" class="w-5 h-5 mr-2" />
+                    Consulter la documentation
+                  </a>
+                </div>
+              </div>
+              
+              <div class="bg-white rounded-xl border border-gray-200 overflow-hidden p-6">
+                <h3 class="font-handwritten text-3xl mb-4 text-[var(--ootb-violet)]">Contact direct</h3>
+                <div class="space-y-3">
+                  <a href={`mailto:hello@pwablo.be`} class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]" target="_blank" rel="noopener noreferrer">
+                    <Icon name="tabler:mail" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                    <span>hello@pwablo.be</span>
+                  </a>
+                  <a href={`tel:${contactInfo.phone}`} class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]" target="_blank" rel="noopener noreferrer">
+                    <Icon name="tabler:phone" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                    <span>{contactInfo.phone}</span>
+                  </a>
+                  <a href={contactInfo.whatsapp} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]">
+                    <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                    <span>WhatsApp</span>
+                  </a>
+                  <a href={contactInfo.calendar} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]">
+                    <Icon name="tabler:calendar" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                    <span>Prendre rendez-vous</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Section Eco-responsabilité */}
+        <section id="eco" class="mb-12 section-content">
+          <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="eco">
+            <div class="flex items-center gap-2">
+              <Icon name="tabler:leaf" class="w-6 h-6 text-[var(--ootb-green)]" />
+              <h2 class="text-xl font-semibold text-gray-900">Éco-responsabilité</h2>
+            </div>
+            <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
+          </div>
+          
+          <div class="accordion-content hidden" id="content-eco">
+            <p class="text-gray-600 mb-4">
+              Pour maintenir un excellent score écologique sur votre site, gardez ces conseils à l'esprit lorsque vous ajoutez du contenu. Même si Astro et Cloudinary optimisent déjà en partie vos images, ces bonnes pratiques restent importantes :
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-medium text-[var(--ootb-green)] mb-2 flex items-center gap-2">
+                  <Icon name="tabler:photo" class="w-5 h-5" />
+                  Optimisation d'images
+                </h4>
+                <ul class="text-sm text-gray-600 space-y-2">
+                  <li class="flex items-start gap-2">
+                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                    <span>Préparer les images avec des dimensions adaptées avant de les téléverser (max 1500px)</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                    <span>Privilégier les formats modernes (AVIF, WebP) quand disponibles</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                    <span>Compresser les images avant téléversement pour de meilleures performances</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-medium text-[var(--ootb-green)] mb-2 flex items-center gap-2">
+                  <Icon name="tabler:code" class="w-5 h-5" />
+                  Pourquoi c'est important
+                </h4>
+                <ul class="text-sm text-gray-600 space-y-2">
+                  <li class="flex items-start gap-2">
+                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                    <span>Temps de chargement plus rapides pour vos visiteurs</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                    <span>Meilleur référencement sur Google (Core Web Vitals)</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                    <span>Réduction de l'empreinte carbone (idéalement &lt; 0.5g CO2/page)</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="bg-yellow-50 p-4 rounded-lg mb-4 text-sm">
+              <div class="flex items-start gap-2">
+                <Icon name="tabler:info-circle" class="w-5 h-5 text-[var(--ootb-orange)] flex-shrink-0" />
+                <div>
+                  <p class="mb-2">
+                    <span class="font-medium">Bon à savoir :</span> La partie technique de votre site est déjà bien optimisée, avec d'excellents scores sur <a href="https://pagespeed.web.dev/" target="_blank" rel="noopener noreferrer" class="text-[var(--ootb-blue)] underline hover:opacity-80">Lighthouse</a> et <a href="https://ecograder.com/" target="_blank" rel="noopener noreferrer" class="text-[var(--ootb-green)] underline hover:opacity-80">Ecograder</a>.
+                  </p>
+                  <p>
+                    Votre site utilise Astro (génération statique) et Cloudinary (optimisation d'images) pour garantir des performances optimales. Ces optimisations techniques vous aident à maintenir un bon score écologique, mais les images que vous ajoutez via l'éditeur de contenu bénéficieront également de vos optimisations manuelles.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <h4 class="font-medium text-gray-700 mb-2">Outils recommandés :</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <a href="https://squoosh.app/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 group">
+                <div class="flex items-center gap-2">
+                  <Icon name="tabler:photo" class="w-4 h-4 text-[var(--ootb-orange)]" />
+                  <span>Squoosh (compression)</span>
+                </div>
+                <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full group-hover:bg-opacity-20">Essentiel</span>
+              </a>
+              <a href="https://www.iloveimg.com/resize-image" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 group">
+                <div class="flex items-center gap-2">
+                  <Icon name="tabler:resize" class="w-4 h-4 text-[var(--ootb-turquoise)]" />
+                  <span>iLoveIMG (redimensionnement)</span>
+                </div>
+                <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full group-hover:bg-opacity-20">Essentiel</span>
+              </a>
+            </div>
+          </div>
+        </section>
+        
+        {/* Section GitHub */}
+        <section id="github" class="mb-12 section-content">
+          <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="github">
+            <div class="flex items-center gap-2">
+              <Icon name="tabler:code" class="w-6 h-6 text-gray-800" />
+              <h2 class="text-xl font-semibold text-gray-900">Code source</h2>
+            </div>
+            <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
+          </div>
+          
+          <div class="accordion-content hidden" id="content-github">
+            <p class="text-gray-600 mb-4">
+              Le code source complet du site est disponible sur GitHub. Il s'agit d'un projet Astro avec TailwindCSS et TinaCMS qui utilise des technologies modernes et performantes :
+            </p>
+            
+            <ul class="text-sm text-gray-600 space-y-2 mb-6">
+              <li class="flex items-start gap-2">
+                <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
+                <span><strong>Framework Astro</strong> : Génération de site statique ultra-performant</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
+                <span><strong>TailwindCSS</strong> : Design responsive et optimisé</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
+                <span><strong>TinaCMS</strong> : Interface d'édition de contenu intuitive</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
+                <span><strong>JavaScript & TypeScript</strong> : Approche pragmatique avec un code simple et accessible</span>
+              </li>
+            </ul>
+            
+            <div class="bg-yellow-50 p-4 rounded-lg mb-6 text-sm">
+              <div class="flex items-start gap-2">
+                <Icon name="tabler:info-circle" class="w-5 h-5 text-[var(--ootb-orange)] flex-shrink-0" />
+                <div>
+                  <p class="mb-2">
+                    <span class="font-medium">Note importante :</span> Même si le code source est disponible, le développeur initial (pwablo) reste entièrement disponible pour toute assistance, modification ou évolution du site. N'hésitez pas à le contacter pour tout besoin technique.
+                  </p>
+                  <p>
+                    La codebase a été conçue pour être facilement compréhensible, avec une structure claire et des commentaires pertinents. Tout développeur familier avec Astro ou les frameworks JS modernes peut reprendre le projet sans difficulté.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a 
+                href={contactInfo.github} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:opacity-90 transition-colors"
+              >
+                <Icon name="tabler:brand-github" class="w-5 h-5 mr-2" />
+                Voir le repository GitHub
+              </a>
+              <a 
+                href="https://docs.astro.build/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-4 py-2 bg-[var(--ootb-orange)] text-white rounded-lg hover:opacity-90 transition-colors"
+              >
+                <Icon name="tabler:book" class="w-5 h-5 mr-2" />
+                Documentation Astro
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .credentials-info {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .password-field {
+    letter-spacing: 0.2em;
+  }
+
+  /* Effet de hover sur les cartes */
+  .group:hover .group-hover\:shadow-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  /* Animation pour l'accordéon */
+  .accordion-icon {
+    transition: transform 0.2s ease;
+  }
+
+  .accordion-header[aria-expanded="true"] .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  .accordion-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+
+  /* Textes h3 avec la police manuscrite */
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  /* Couleurs OOTB pour différentes sections */
+  .accordion-header[data-target="édition"] .text-primary-600,
+  .accordion-header[data-target="édition"][aria-expanded="true"] .text-gray-400 {
+    color: var(--ootb-orange);
+  }
+  
+  .accordion-header[data-target="infrastructure"] .text-primary-600,
+  .accordion-header[data-target="infrastructure"][aria-expanded="true"] .text-gray-400 {
+    color: var(--ootb-blue);
+  }
+  
+  .accordion-header[data-target="données"] .text-primary-600,
+  .accordion-header[data-target="données"][aria-expanded="true"] .text-gray-400 {
+    color: var(--ootb-turquoise);
+  }
+  
+  .accordion-header[data-target="analytics"] .text-primary-600,
+  .accordion-header[data-target="analytics"][aria-expanded="true"] .text-gray-400 {
+    color: var(--ootb-green);
+  }
+  
+  .accordion-header[data-target="faq"] .text-primary-600,
+  .accordion-header[data-target="faq"][aria-expanded="true"] .text-gray-400 {
+    color: var(--ootb-violet);
+  }
+  
+  .accordion-header[data-target="eco"] .text-primary-600,
+  .accordion-header[data-target="eco"][aria-expanded="true"] .text-gray-400 {
+    color: var(--ootb-green);
+  }
+</style>
+
+<script>
+  // Empêcher la propagation du clic sur les boutons
+  document.querySelectorAll('.toggle-credentials, .toggle-password').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  });
+
+  // Gestion de l'affichage/masquage des informations d'identification
+  document.querySelectorAll('.toggle-credentials').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLButtonElement;
+      const card = target.closest('.group');
+      const credentialsInfo = card?.querySelector('.credentials-info');
+      
+      if (credentialsInfo) {
+        credentialsInfo.classList.toggle('hidden');
+        target.title = credentialsInfo.classList.contains('hidden') ? 'Voir les identifiants' : 'Masquer les identifiants';
+      }
+    });
+  });
+
+  // Gestion simplifiée de l'affichage/masquage des mots de passe
+  window.addEventListener('DOMContentLoaded', () => {
+    // Assignation directe de l'événement pour tous les boutons toggle-password
+    const toggleButtons = document.querySelectorAll('.toggle-password');
+    toggleButtons.forEach((btn) => {
+      const button = btn as HTMLElement;
+      button.addEventListener('click', () => {
+        // Récupérer l'élément contenant le mot de passe
+        const passwordField = button.previousElementSibling as HTMLElement;
+        if (!passwordField) return;
+
+        // Récupérer les données d'identifiants
+        const credentialsContainer = button.closest('[data-credentials]') as HTMLElement;
+        if (!credentialsContainer || !credentialsContainer.dataset.credentials) return;
+
+        try {
+          // Parser les données JSON
+          const credentials = JSON.parse(credentialsContainer.dataset.credentials);
+          
+          // Vérifier si le mot de passe est actuellement masqué
+          const isMasked = passwordField.classList.contains('password-field');
+          
+          if (isMasked) {
+            // Afficher le mot de passe
+            if (credentials.password && credentials.password !== "undefined") {
+              passwordField.textContent = credentials.password;
+            } else {
+              passwordField.textContent = '(Défini par l\'utilisateur)';
+              passwordField.classList.add('text-gray-500', 'italic');
+            }
+            passwordField.classList.remove('password-field');
+            
+            // Changer l'icône pour "masquer"
+            button.innerHTML = `
+              <Icon name="tabler:eye-off" class="w-4 h-4" />
+            `;
+          } else {
+            // Masquer le mot de passe
+            passwordField.textContent = '••••••••';
+            passwordField.classList.add('password-field');
+            passwordField.classList.remove('text-gray-500', 'italic');
+            
+            // Changer l'icône pour "afficher"
+            button.innerHTML = `
+              <Icon name="tabler:eye" class="w-4 h-4" />
+            `;
+          }
+        } catch (err) {
+          console.error('Erreur lors du traitement des identifiants:', err);
+        }
+      });
+    });
+  });
+
+  // Gestion des accordéons
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    header.setAttribute('aria-expanded', 'false');
+    
+    header.addEventListener('click', () => {
+      const target = header.getAttribute('data-target');
+      const content = document.getElementById(`content-${target}`);
+      
+      if (content) {
+        const isExpanded = header.getAttribute('aria-expanded') === 'true';
+        
+        // Fermer tous les autres accordéons
+        document.querySelectorAll('.accordion-header').forEach(h => {
+          if (h !== header) {
+            h.setAttribute('aria-expanded', 'false');
+            const otherTarget = h.getAttribute('data-target');
+            const otherContent = document.getElementById(`content-${otherTarget}`);
+            if (otherContent) {
+              otherContent.classList.add('hidden');
+            }
+          }
+        });
+        
+        // Basculer l'état de l'accordéon actuel
+        header.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+        content.classList.toggle('hidden');
+      }
+    });
+  });
+
+  // Navigation par sections avec ouverture de l'accordéon correspondant
+  document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(this: HTMLAnchorElement, e: Event) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href')?.substring(1);
+      const targetElement = document.getElementById(targetId || '');
+      
+      if (targetElement) {
+        // Faire défiler jusqu'à la section
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+        
+        // Ouvrir l'accordéon correspondant
+        const header = targetElement.querySelector('.accordion-header');
+        const content = document.getElementById(`content-${targetId}`);
+        
+        if (header && content) {
+          // Fermer tous les accordéons
+          document.querySelectorAll('.accordion-header').forEach(h => {
+            h.setAttribute('aria-expanded', 'false');
+            const otherTarget = h.getAttribute('data-target');
+            const otherContent = document.getElementById(`content-${otherTarget}`);
+            
+            if (otherTarget === targetId) {
+              h.setAttribute('aria-expanded', 'true');
+              otherContent?.classList.remove('hidden');
+            } else {
+              otherContent?.classList.add('hidden');
+            }
+          });
+        }
+        
+        // Mettre en évidence la section active
+        document.querySelectorAll('nav a').forEach(a => {
+          a.classList.remove('bg-gray-100', 'text-primary-600');
+        });
+        this.classList.add('bg-gray-100', 'text-primary-600');
+      }
+    });
+  });
+
+  // Détecter la section visible au défilement
+  window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section[id]');
+    let currentSection = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      const sectionHeight = section.clientHeight;
+      
+      if (window.scrollY >= sectionTop - 200 && window.scrollY < sectionTop + sectionHeight - 200) {
+        currentSection = section.getAttribute('id') || '';
+      }
+    });
+    
+    // Mettre à jour la navigation
+    document.querySelectorAll('nav a').forEach(a => {
+      a.classList.remove('bg-gray-100', 'text-primary-600');
+      
+      const href = a.getAttribute('href');
+      if (href === `#${currentSection}`) {
+        a.classList.add('bg-gray-100', 'text-primary-600');
+      }
+    });
+  });
+</script>

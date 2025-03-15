@@ -1,0 +1,175 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+
+// Récupérer les paramètres d'erreur éventuels
+const errorCode = Astro.url.searchParams.get('error');
+let errorMessage = '';
+
+if (errorCode === 'invalid_credentials') {
+  errorMessage = "Email ou mot de passe incorrect.";
+} else if (errorCode === 'auth_error') {
+  errorMessage = "Une erreur s'est produite lors de l'authentification.";
+}
+---
+
+<Layout metadata={{ title: 'Connexion - Out of the Books' }}>
+  <main class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+    <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
+      <div class="text-center">
+        <h2 class="mt-6 text-3xl font-bold text-gray-900">
+          Connexion à l'administration
+        </h2>
+        <p class="mt-2 text-sm text-gray-600">
+          Connectez-vous pour accéder au tableau de bord
+        </p>
+      </div>
+
+      {errorMessage && (
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <Icon name="tabler:alert-circle" class="h-5 w-5 text-red-500" />
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-red-700">{errorMessage}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div class="mt-8">
+        <form id="login-form" class="space-y-6">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
+            <div class="mt-1 relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Icon name="tabler:mail" class="h-5 w-5 text-gray-400" />
+              </div>
+              <input 
+                id="email" 
+                name="email" 
+                type="email" 
+                autocomplete="email" 
+                required 
+                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" 
+                placeholder="votre@email.com"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+            <div class="mt-1 relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Icon name="tabler:lock" class="h-5 w-5 text-gray-400" />
+              </div>
+              <input 
+                id="password" 
+                name="password" 
+                type="password" 
+                autocomplete="current-password" 
+                required 
+                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" 
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+
+          <div>
+            <Button 
+              type="submit"
+              variant="blue"
+              size="lg"
+              icon="tabler:login"
+              iconPosition="left"
+              fullWidth={true}
+              id="login-button"
+            >
+              Se connecter
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('login-form');
+    const submitButton = document.getElementById('login-button') as HTMLButtonElement | null;
+    
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Désactiver le bouton et montrer l'état de chargement
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Connexion en cours...
+          `;
+        }
+        
+        const emailInput = document.getElementById('email') as HTMLInputElement;
+        const passwordInput = document.getElementById('password') as HTMLInputElement;
+        
+        const email = emailInput?.value || '';
+        const password = passwordInput?.value || '';
+        
+        if (!email || !password) {
+          alert('Veuillez remplir tous les champs');
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.innerHTML = `<svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg> Se connecter`;
+          }
+          return;
+        }
+        
+        try {
+          const response = await fetch('/.netlify/functions/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          });
+          
+          if (response.redirected) {
+            window.location.href = response.url;
+          } else if (!response.ok) {
+            const data = await response.json();
+            window.location.href = `/login?error=invalid_credentials&message=${encodeURIComponent(data.message || '')}`;
+          }
+        } catch (error) {
+          console.error('Erreur lors de la connexion:', error);
+          window.location.href = '/login?error=auth_error';
+          
+          // Réactiver le bouton en cas d'erreur
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.innerHTML = `<svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg> Se connecter`;
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  /* Amélioration de la visibilité des champs de formulaire */
+  input {
+    height: 2.75rem;
+  }
+  
+  /* Assurer que les icônes sont visibles */
+  .absolute svg {
+    display: inline-block;
+  }
+</style> 

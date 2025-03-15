@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "npm run build:netlify"
+  command = "npm run build"
 
 [dev]
   command = "npm run dev"
@@ -98,3 +98,25 @@
   pretty_urls = true
 [build.processing.images]
   compress = true
+
+# Redirection pour la déconnexion
+[[redirects]]
+  from = "/api/auth/logout"
+  to = "/.netlify/functions/auth/logout"
+  status = 200
+  force = true
+
+# Middleware pour protéger les routes du tableau de bord
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/.netlify/functions/auth-middleware"
+  status = 200
+  force = true
+  conditions = {Role = ["admin"]}
+
+# Redirection après vérification du middleware
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/dashboard/:splat"
+  status = 200
+  force = true

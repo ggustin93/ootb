@@ -15,6 +15,9 @@ Ce dossier contient la documentation technique du projet Out of the Books. Chaqu
 - [Structure du projet](./architecture/structure.md) - Vue d'ensemble de la structure du projet
 - [Collections de contenu](./architecture/collections.md) - Description des collections de contenu Astro
 
+### Authentification et sécurité
+- [Système d'authentification](./auth/README.md) - Documentation sur le système d'authentification basé sur les fonctions Netlify
+
 ### Formulaires et soumission
 - [Architecture du système de formulaire](./forms/form-architecture.md) - Séparation des responsabilités dans le système de formulaire
 - [Soumission des fiches pédagogiques](./forms/pedagogical-sheet-submission.md) - Processus de soumission des fiches pédagogiques

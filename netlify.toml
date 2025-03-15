@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "npm run build"
+  command = "npm run build:netlify"
 
 [dev]
   command = "npm run dev"
@@ -11,15 +11,6 @@
 # [functions]
 #   node_bundler = "esbuild"
 
-# Variables d'environnement pour le développement local
-# Pour la production, configurez-les dans l'interface Netlify
-# [build.environment]
-#   GITHUB_OWNER = ""
-#   GITHUB_REPO = ""
-#   GITHUB_TOKEN = ""
-#   GITHUB_BRANCH = "main"
-#   TRIGGER_NETLIFY_BUILD = "false"
-#   NETLIFY_BUILD_HOOK = ""
 
 # Configuration pour la fonction submit-pedagogical-sheet
 [[redirects]]

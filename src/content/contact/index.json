@@ -5,8 +5,8 @@
   },
   "hero": {
     "title": "Contact",
-    "subtitle": "Envoyez-nous un message",
-    "description": "Notre équipe est là pour vous aider et répondre à toutes vos questions."
+    "subtitle": "Envoyez-nous un message ",
+    "description": "Notre équipe est là pour vous aider et répondre à vos questions."
   },
   "form": {
     "name": {
@@ -37,4 +37,4 @@
       "value": "Avenue Louise 65, 1050 Bruxelles"
     }
   }
-} 
+}

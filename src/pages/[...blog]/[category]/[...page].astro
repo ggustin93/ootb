@@ -1,6 +1,7 @@
 ---
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
-import { blogCategoryRobots, getStaticPathsBlogCategory, findTags } from '~/utils/blog';
+import { blogCategoryRobots, getStaticPathsBlogCategory, findTags, fetchPosts } from '~/utils/blog';
+import { getCachedPosts } from '~/utils/cache';
 
 import Layout from '~/layouts/PageLayout.astro';
 import BlogList from '~/components/blog/List.astro';
@@ -49,11 +50,16 @@ const allTags = await findTags().then(tags => {
 const MAX_VISIBLE_TAGS = 15;
 const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
 
-// Préparer les posts pour la recherche
-const searchablePosts = page.data.map(post => ({
-  slug: post.slug,
-  title: post.title || ''
-}));
+// Récupérer TOUS les posts pour la recherche avec mise en cache
+const allPosts = await getCachedPosts(fetchPosts);
+// Filtrer pour ne garder que les posts de la catégorie actuelle
+const searchablePosts = allPosts
+  .filter(post => post.category?.slug === category.slug)
+  .map(post => ({
+    slug: post.slug,
+    title: post.title || '',
+    category: post.category?.slug
+  }));
 
 // Configuration des filtres
 const FILTER_TYPES = {

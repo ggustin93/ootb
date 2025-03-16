@@ -19,9 +19,11 @@ const {
   mobileIconOnly = false
 } = Astro.props;
 
-// Utiliser le href tel quel, sans ajouter d'ancre
-// Cela permet de maintenir la position Y lors du changement de catégorie
-const finalHref = href + (href === '/blog' || href.startsWith('/category/') ? '#category-content' : '');
+// Utiliser le href tel quel, sans ajouter d'ancre pour /blog
+// Pour les autres liens de catégorie, ajouter l'ancre
+const finalHref = href === '/blog' 
+  ? href 
+  : href + (href.startsWith('/category/') ? '#category-content' : '');
 
 // Générer un ID unique pour ce bouton
 const buttonId = `category-btn-${Math.random().toString(36).substring(2, 9)}`;

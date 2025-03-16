@@ -1,6 +1,6 @@
 ---
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
-import { blogTagRobots, getStaticPathsBlogTag, findTags } from '~/utils/blog';
+import { blogTagRobots, getStaticPathsBlogTag, findTags, fetchPosts } from '~/utils/blog';
 import { CONTENT_TYPES } from '~/config/content-types';
 import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
 import Layout from '~/layouts/PageLayout.astro';
@@ -12,6 +12,7 @@ import TagSearch from '~/components/common/TagSearch.astro';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import CategoryButton from '~/components/blog/CategoryButton.astro';
 import CategoryFilters from '~/components/blog/CategoryFilters.astro';
+import { getCachedPosts } from '~/utils/cache';
 
 // Import des données TinaCMS
 import tagData from '~/content/blog/blog.json';
@@ -44,11 +45,16 @@ const allTags = await findTags().then(tags => {
 const MAX_VISIBLE_TAGS = 15;
 const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
 
-// Préparer les posts pour la recherche
-const searchablePosts = page.data.map(post => ({
-  slug: post.slug,
-  title: post.title || ''
-}));
+// Récupérer TOUS les posts pour la recherche avec mise en cache
+const allPosts = await getCachedPosts(fetchPosts);
+// Pour la page de tag, nous voulons tous les posts qui ont ce tag
+const searchablePosts = allPosts
+  .filter(post => post.tags?.some(t => t.slug === tag.slug))
+  .map(post => ({
+    slug: post.slug,
+    title: post.title || '',
+    category: post.category?.slug
+  }));
 
 // Extraction correcte des données du JSON
 const { hero } = tagData;

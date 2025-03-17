@@ -15,6 +15,19 @@ export const handler = async (event) => {
     cookies: event.headers.cookie ? 'présent' : 'absent'
   });
   
+  // Mode démo - accès direct avec un paramètre spécial dans l'URL
+  const url = new URL(event.rawUrl);
+  const demoKey = url.searchParams.get('demo_key');
+  
+  // Clé de démo encodée en base64 pour "outofthebooks2024"
+  if (demoKey === 'b3V0b2Z0aGVib29rczIwMjQ=') {
+    console.log('🔑 Auth-Check : Mode démo activé avec clé valide');
+    return {
+      statusCode: 200,
+      body: ''
+    };
+  }
+  
   // Récupérer le cookie d'authentification
   const cookies = event.headers.cookie || '';
   const accessToken = cookies.match(/sb-access-token=([^;]+)/)?.[1];

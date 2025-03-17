@@ -54,35 +54,6 @@ const RAW_DATA_PATH = path.join(RAW_DATA_DIR, RAW_DATA_FILENAME);
 const EDITION_YEAR = '2024';
 
 /**
- * Nettoie le répertoire des fiches pédagogiques
- */
-function cleanFichesDirectory() {
-  try {
-    if (fs.existsSync(FICHES_DIR)) {
-      // Lire tous les fichiers MDX dans le répertoire (sauf README.md)
-      const files = fs.readdirSync(FICHES_DIR)
-        .filter(file => file.endsWith('.mdx') && file !== 'README.md');
-      
-      console.log(`🧹 Nettoyage du répertoire des fiches: ${files.length} fichiers à supprimer...`);
-      
-      // Supprimer chaque fichier
-      files.forEach(file => {
-        const filePath = path.join(FICHES_DIR, file);
-        fs.unlinkSync(filePath);
-      });
-      
-      console.log(`✅ Répertoire nettoyé avec succès.`);
-    } else {
-      // Si le répertoire n'existe pas, le créer
-      fs.mkdirSync(FICHES_DIR, { recursive: true });
-      console.log(`📁 Répertoire créé: ${FICHES_DIR}`);
-    }
-  } catch (error) {
-    console.error(`❌ Erreur lors du nettoyage du répertoire:`, error);
-  }
-}
-
-/**
  * Sauvegarde les données brutes dans un fichier JSON
  */
 function saveRawData(data, filename) {
@@ -104,51 +75,86 @@ function saveRawData(data, filename) {
 /**
  * Vérifie si les données ont changé par rapport aux données précédemment sauvegardées
  * @param {Array} newData - Les nouvelles données récupérées de l'API
- * @returns {boolean} - True si les données ont changé, false sinon
+ * @returns {Object} - { hasChanges, changedItems, removedItems, addedItems }
  */
 function checkIfDataChanged(newData) {
   try {
     // Vérifier si le fichier de données existe
     if (!fs.existsSync(RAW_DATA_PATH)) {
-      console.log(`📝 Aucun fichier de données précédent trouvé. Génération requise.`);
-      return true;
+      console.log(`📝 Aucun fichier de données précédent trouvé. Génération complète requise.`);
+      return { 
+        hasChanges: true, 
+        changedItems: newData, 
+        removedItems: [], 
+        addedItems: newData 
+      };
     }
     
     // Lire les anciennes données
     const oldDataRaw = fs.readFileSync(RAW_DATA_PATH, 'utf8');
     const oldData = JSON.parse(oldDataRaw);
+    const oldItems = oldData.list || [];
     
     // Comparaison simple par nombre d'éléments
-    if (!oldData.list || oldData.list.length !== newData.length) {
-      console.log(`📊 Différence de nombre d'éléments détectée (${oldData.list ? oldData.list.length : 0} vs ${newData.length}). Génération requise.`);
-      return true;
+    if (oldItems.length !== newData.length) {
+      console.log(`📊 Différence de nombre d'éléments détectée (${oldItems.length} vs ${newData.length}).`);
     }
     
-    // Vérifier si les identifiants et dates de mise à jour sont identiques
-    const newDataMap = new Map(newData.map(item => [item.Id, JSON.stringify(item)]));
-    let hasChanges = false;
+    // Créer des maps pour faciliter la comparaison
+    const oldItemsMap = new Map(oldItems.map(item => [item.Id, item]));
+    const newItemsMap = new Map(newData.map(item => [item.Id, item]));
     
-    for (const oldItem of oldData.list) {
+    // Identifier les éléments modifiés, supprimés et ajoutés
+    const changedItems = [];
+    const removedItems = [];
+    const addedItems = [];
+    
+    // Vérifier les éléments modifiés et supprimés
+    for (const oldItem of oldItems) {
       if (!oldItem.Id) continue;
       
-      // Si l'élément n'existe plus ou a été modifié
-      if (!newDataMap.has(oldItem.Id) || newDataMap.get(oldItem.Id) !== JSON.stringify(oldItem)) {
-        hasChanges = true;
-        break;
+      if (!newItemsMap.has(oldItem.Id)) {
+        // Élément supprimé
+        removedItems.push(oldItem);
+      } else {
+        // Vérifier si l'élément a été modifié
+        const newItem = newItemsMap.get(oldItem.Id);
+        if (JSON.stringify(oldItem) !== JSON.stringify(newItem)) {
+          changedItems.push(newItem);
+        }
       }
     }
     
+    // Vérifier les éléments ajoutés
+    for (const newItem of newData) {
+      if (!newItem.Id) continue;
+      
+      if (!oldItemsMap.has(newItem.Id)) {
+        addedItems.push(newItem);
+      }
+    }
+    
+    const hasChanges = changedItems.length > 0 || removedItems.length > 0 || addedItems.length > 0;
+    
     if (hasChanges) {
-      console.log(`🔄 Modifications détectées dans les données. Génération requise.`);
+      console.log(`🔄 Modifications détectées:`);
+      console.log(`   - ${changedItems.length} fiches modifiées`);
+      console.log(`   - ${addedItems.length} fiches ajoutées`);
+      console.log(`   - ${removedItems.length} fiches supprimées`);
     } else {
       console.log(`✅ Aucune modification détectée dans les données. Génération non nécessaire.`);
     }
     
-    return hasChanges;
+    return { hasChanges, changedItems, removedItems, addedItems };
   } catch (error) {
     console.error(`❌ Erreur lors de la vérification des données:`, error);
-    // En cas d'erreur, on génère par sécurité
-    return true;
+    // En cas d'erreur, on génère tout par sécurité
+    return { 
+      hasChanges: true, 
+      changedItems: newData, 
+      removedItems: [], 
+      addedItems: newData 
+    };
   }
 }
 
@@ -431,25 +437,82 @@ ${Object.entries(frontmatter).map(([key, value]) => {
 }
 
 /**
- * Sauvegarde les fiches en fichiers MDX
+ * Nettoie uniquement les fiches spécifiées du répertoire
+ * @param {Array} fichesToRemove - Liste des fiches à supprimer
+ */
+function cleanSpecificFiches(fichesToRemove) {
+  try {
+    if (!fs.existsSync(FICHES_DIR)) {
+      fs.mkdirSync(FICHES_DIR, { recursive: true });
+      console.log(`📁 Répertoire créé: ${FICHES_DIR}`);
+      return;
+    }
+    
+    if (fichesToRemove.length === 0) {
+      console.log(`ℹ️ Aucune fiche à supprimer.`);
+      return;
+    }
+    
+    console.log(`🧹 Suppression de ${fichesToRemove.length} fiches spécifiques...`);
+    
+    // Créer un ensemble de slugs à supprimer pour une recherche plus rapide
+    const slugsToRemove = new Set(fichesToRemove.map(fiche => {
+      const baseSlug = slugify(fiche.Title || 'fiche-pedagogique', {
+        lower: true,
+        strict: true,
+        remove: /[*+~.()'"!:@]/g
+      });
+      
+      const edition = fiche.Edition || EDITION_YEAR;
+      return `${edition}-${baseSlug}-${fiche.Id}`;
+    }));
+    
+    // Lire tous les fichiers MDX dans le répertoire
+    const files = fs.readdirSync(FICHES_DIR)
+      .filter(file => file.endsWith('.mdx') && file !== 'README.md');
+    
+    let removedCount = 0;
+    
+    // Supprimer les fichiers correspondant aux slugs à supprimer
+    for (const file of files) {
+      // Extraire le slug du nom de fichier (sans l'extension .mdx)
+      const fileSlug = file.replace('.mdx', '');
+      
+      // Vérifier si ce fichier correspond à une fiche à supprimer
+      for (const slugToRemove of slugsToRemove) {
+        if (fileSlug.includes(slugToRemove) || fileSlug.includes(`-${slugToRemove.split('-').pop()}.mdx`)) {
+          const filePath = path.join(FICHES_DIR, file);
+          fs.unlinkSync(filePath);
+          removedCount++;
+          break;
+        }
+      }
+    }
+    
+    console.log(`✅ ${removedCount} fiches supprimées.`);
+  } catch (error) {
+    console.error(`❌ Erreur lors de la suppression des fiches spécifiques:`, error);
+  }
+}
+
+/**
+ * Sauvegarde les fiches MDX dans des fichiers
  */
 async function saveFichesToFiles(fiches) {
   console.log(`💾 Sauvegarde de ${fiches.length} fiches pédagogiques...`);
   
-  // Création du répertoire des fiches s'il n'existe pas
+  // Créer le répertoire s'il n'existe pas
   if (!fs.existsSync(FICHES_DIR)) {
     fs.mkdirSync(FICHES_DIR, { recursive: true });
-    console.log(`📁 Répertoire créé: ${FICHES_DIR}`);
   }
   
   for (const fiche of fiches) {
-    const filePath = path.join(FICHES_DIR, `${fiche.slug}.mdx`);
-    
     try {
+      const filePath = path.join(FICHES_DIR, `${fiche.slug}.mdx`);
       fs.writeFileSync(filePath, fiche.content, 'utf8');
       console.log(`✅ Fiche sauvegardée: ${filePath}`);
     } catch (error) {
-      console.error(`❌ Erreur lors de la sauvegarde de la fiche ${fiche.slug}:`, error);
+      console.error(`❌ Erreur lors de la sauvegarde de la fiche "${fiche.title}":`, error);
     }
   }
 }
@@ -461,41 +524,37 @@ async function main() {
   console.log('🚀 Démarrage de la génération des fiches pédagogiques...');
   
   try {
-    // 1. Récupération des fiches depuis NocoDB
+    // Récupérer les fiches depuis NocoDB
     const response = await fetchFichesPedagogiques();
     const fiches = response.list || [];
     
-    if (fiches.length === 0) {
-      console.log('⚠️ Aucune fiche pédagogique trouvée, fin du processus.');
+    // Vérifier si les données ont changé
+    const { hasChanges, changedItems, removedItems, addedItems } = checkIfDataChanged(fiches);
+    
+    // Sauvegarder les données brutes
+    saveRawData(response, RAW_DATA_FILENAME);
+    
+    if (!hasChanges) {
+      console.log('✅ Aucune modification détectée. Aucune action nécessaire.');
       return;
     }
     
-    // 2. Vérifier si les données ont changé
-    const dataChanged = checkIfDataChanged(fiches);
+    console.log('🔄 Des modifications ont été détectées, mise à jour des fiches en cours...');
     
-    // Sauvegarder les nouvelles données brutes dans tous les cas pour comparaison future
-    saveRawData(response, RAW_DATA_FILENAME);
+    // Supprimer uniquement les fiches qui ont été modifiées ou supprimées
+    const fichesToRemove = [...changedItems, ...removedItems];
+    cleanSpecificFiches(fichesToRemove);
     
-    // N'exécuter les étapes suivantes que si les données ont changé
-    if (dataChanged) {
-      console.log('🔄 Des modifications ont été détectées, mise à jour des fiches en cours...');
-      
-      // 3. Nettoyer le répertoire des fiches
-      cleanFichesDirectory();
-      
-      // 4. Conversion des fiches au format MDX
-      const fichesConverties = convertFichesToMDX(fiches);
-      
-      // 5. Sauvegarde des fiches en fichiers MDX
-      await saveFichesToFiles(fichesConverties);
-      
-      console.log('✨ Génération des fiches pédagogiques terminée avec succès!');
-    } else {
-      console.log('💤 Aucune modification détectée, aucune action nécessaire.');
-    }
+    // Convertir uniquement les fiches modifiées ou ajoutées
+    const fichesToGenerate = [...changedItems, ...addedItems];
+    const mdxFiches = convertFichesToMDX(fichesToGenerate);
+    
+    // Sauvegarder les fiches
+    await saveFichesToFiles(mdxFiches);
+    
+    console.log('✨ Génération des fiches pédagogiques terminée avec succès!');
   } catch (error) {
     console.error('❌ Erreur lors de la génération des fiches pédagogiques:', error);
-    process.exit(1);
   }
 }
 

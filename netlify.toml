@@ -98,14 +98,14 @@
 # API: Déconnexion
 [[redirects]]
   from = "/api/auth/logout"
-  to = "/.netlify/functions/auth/logout"
+  to = "/.netlify/functions/api/logout"
   status = 200
   force = true
 
 # API: Connexion
 [[redirects]]
   from = "/api/auth/login"
-  to = "/.netlify/functions/auth/login"
+  to = "/.netlify/functions/api/login"
   status = 200
   force = true
 
@@ -113,69 +113,7 @@
 # PROTECTION DASHBOARD (AUTHENTIFICATION)
 # =====================================
 
-# Protection de la route dashboard principale (sans slash final)
-# Cette règle intercepte /dashboard et redirige vers le middleware d'authentification
-[[redirects]]
-  from = "/dashboard"
-  to = "/.netlify/functions/auth-middleware"
-  status = 200
-  force = true
-
-# Protection de la route dashboard avec slash final
-# Cette règle intercepte /dashboard/ et redirige vers le middleware d'authentification
-[[redirects]]
-  from = "/dashboard/"
-  to = "/.netlify/functions/auth-middleware"
-  status = 200
-  force = true
-
-# Protection des routes dashboard/* sauf index.html pour éviter les boucles
-[[redirects]]
-  from = "/dashboard/*"
-  to = "/.netlify/functions/auth-middleware"
-  status = 200
-  force = true
-  conditions = {Path = ["!/dashboard/index.html"]}
-
-# Cette règle permet de servir dashboard/index.html directement
-[[redirects]]
-  from = "/dashboard/index.html"
-  to = "/dashboard/index.html"
-  status = 200
-  force = true
-
-# Cette règle permet de servir le contenu du dashboard en mode DEV
-[[redirects]]
-  from = "/dashboard/"
-  to = "/dashboard/index.html"
-  status = 200
-  force = true
-  conditions = {X-Bypass-Auth = ["true"]}
-
-# Protection de la route dashboard.html
-[[redirects]]
-  from = "/dashboard.html"
-  to = "/.netlify/functions/auth-middleware"
-  status = 200
-  force = true
-
-# Cette règle permet de servir dashboard.html après authentification
-[[redirects]]
-  from = "/dashboard.html"
-  to = "/dashboard/index.html"
-  status = 200
-  force = true
-  conditions = {X-Bypass-Auth = ["true"]}
-
-# Cette règle ne sera utilisée QU'APRÈS le middleware d'authentification
-# Elle permet de servir le contenu statique des sous-pages après authentification
-[[redirects]]
-  from = "/dashboard/*"
-  to = "/dashboard/:splat"
-  status = 200
-  force = true
-
-# Protection simplifiée du dashboard
+# Protection simplifiée du dashboard - règle unique
 [[redirects]]
   from = "/dashboard*"
   to = "/.netlify/functions/auth-check"

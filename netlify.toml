@@ -1,113 +1,190 @@
+# =====================================
+# CONFIGURATION DE BASE
+# =====================================
+
 [build]
-  publish = "dist"
-  command = "npm run build:netlify"
+  publish = "dist"                     # Répertoire à déployer
+  command = "npm run build:netlify"    # Commande de build pour le déploiement
+  functions = "netlify/functions"      # Emplacement des fonctions serverless
 
 [dev]
-  command = "npm run dev"
-  port = 3000
-  targetPort = 4321
-  framework = "astro"
+  command = "npm run dev"              # Commande de développement local
+  port = 3001                          # Port de l'interface locale
+  targetPort = 4321                    # Port interne d'Astro
+  framework = "astro"                  # Framework utilisé
 
-# [functions]
-#   node_bundler = "esbuild"
+# =====================================
+# VARIABLES D'ENVIRONNEMENT
+# =====================================
 
+[build.environment]
+  NODE_VERSION = "20.11.0"             # Version Node.js à utiliser
+  SHARP_IGNORE_GLOBAL_LIBVIPS = "1"    # Optimisation pour Sharp
+  NETLIFY = "true"                     # Indicateur d'environnement Netlify
+  # Optimisations de cache
+  NETLIFY_USE_YARN_CACHE = "true"      # Utiliser le cache Yarn
+  NETLIFY_CACHE_FOLDER = ".cache"      # Dossier de cache
+  # Optimisations de performance
+  NODE_OPTIONS = "--max-old-space-size=4096"  # Augmenter l'allocation mémoire
 
-# Configuration pour la fonction submit-pedagogical-sheet
+# =====================================
+# OPTIMISATION DE CACHE
+# =====================================
+
+# Configuration du cache pour les assets statiques
+[[headers]]
+  for = "/_astro/*"                    # Assets générés par Astro
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"                    # Assets statiques
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"                        # Fichiers JavaScript
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"                       # Fichiers CSS
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# =====================================
+# OPTIMISATION DE PERFORMANCE
+# =====================================
+
+# Compression Brotli pour une meilleure performance
+[build.processing]
+  skip_processing = false              # Activer le traitement des fichiers
+[build.processing.css]
+  bundle = true                        # Regrouper les CSS
+  minify = true                        # Minifier les CSS
+[build.processing.js]
+  bundle = true                        # Regrouper les JS
+  minify = true                        # Minifier les JS
+[build.processing.html]
+  pretty_urls = true                   # URLs propres (sans .html)
+[build.processing.images]
+  compress = true                      # Compresser les images
+
+# =====================================
+# REDIRECTIONS API
+# =====================================
+
+# API: Soumission de fiche pédagogique
 [[redirects]]
   from = "/api/submit-pedagogical-sheet"
   to = "/.netlify/functions/submit-pedagogical-sheet"
   status = 200
   force = true
 
-# Configuration pour la fonction submit-newsletter
+# API: Soumission à la newsletter
 [[redirects]]
   from = "/api/submit-newsletter"
   to = "/.netlify/functions/submit-newsletter"
   status = 200
   force = true
 
-# Configuration pour la fonction submit-contact
+# API: Formulaire de contact
 [[redirects]]
   from = "/api/submit-contact"
   to = "/.netlify/functions/submit-contact"
   status = 200
   force = true
 
-[build.environment]
-  NODE_VERSION = "20.11.0"
-  SHARP_IGNORE_GLOBAL_LIBVIPS = "1"
-  NETLIFY = "true"
-  # Optimisations de cache pour réduire le temps de build
-  NETLIFY_USE_YARN_CACHE = "true"
-  NETLIFY_CACHE_FOLDER = ".cache"
-  # Optimisations de performance
-  NODE_OPTIONS = "--max-old-space-size=4096"
-
-# Configuration du cache pour les assets statiques
-[[headers]]
-  for = "/_astro/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[redirects]]
-  from = "/admin"
-  to = "https://outofthebooks.vercel.app/admin"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/admin/*"
-  to = "https://outofthebooks.vercel.app/admin/:splat"
-  status = 301
-  force = true
-
-# Compression Brotli pour une meilleure performance
-[build.processing]
-  skip_processing = false
-[build.processing.css]
-  bundle = true
-  minify = true
-[build.processing.js]
-  bundle = true
-  minify = true
-[build.processing.html]
-  pretty_urls = true
-[build.processing.images]
-  compress = true
-
-# Redirection pour la déconnexion
+# API: Déconnexion
 [[redirects]]
   from = "/api/auth/logout"
   to = "/.netlify/functions/auth/logout"
   status = 200
   force = true
 
-# Middleware pour protéger les routes du tableau de bord
+# =====================================
+# PROTECTION DASHBOARD (AUTHENTIFICATION)
+# =====================================
+
+# Protection de la route dashboard principale (sans slash final)
+# Cette règle intercepte /dashboard et redirige vers le middleware d'authentification
+[[redirects]]
+  from = "/dashboard"
+  to = "/.netlify/functions/auth-middleware"
+  status = 200
+  force = true
+
+# Protection de la route dashboard avec slash final
+# Cette règle intercepte /dashboard/ et redirige vers le middleware d'authentification
+[[redirects]]
+  from = "/dashboard/"
+  to = "/.netlify/functions/auth-middleware"
+  status = 200
+  force = true
+
+# Protection des routes dashboard/* sauf index.html pour éviter les boucles
 [[redirects]]
   from = "/dashboard/*"
   to = "/.netlify/functions/auth-middleware"
   status = 200
   force = true
-  conditions = {Role = ["admin"]}
+  conditions = {Path = ["!/dashboard/index.html"]}
 
-# Redirection après vérification du middleware
+# Cette règle permet de servir dashboard/index.html directement
+[[redirects]]
+  from = "/dashboard/index.html"
+  to = "/dashboard/index.html"
+  status = 200
+  force = true
+
+# Cette règle permet de servir le contenu du dashboard en mode DEV
+[[redirects]]
+  from = "/dashboard/"
+  to = "/dashboard/index.html"
+  status = 200
+  force = true
+  conditions = {X-Bypass-Auth = ["true"]}
+
+# Cette règle permet de servir dashboard.html directement (pour le mode DEV)
+[[redirects]]
+  from = "/dashboard.html"
+  to = "/dashboard/index.html"
+  status = 200
+  force = true
+
+# Cette règle ne sera utilisée QU'APRÈS le middleware d'authentification
+# Elle permet de servir le contenu statique des sous-pages après authentification
 [[redirects]]
   from = "/dashboard/*"
   to = "/dashboard/:splat"
   status = 200
   force = true
+
+# =====================================
+# REDIRECTIONS ADMIN VERS AUTRE SERVEUR
+# =====================================
+
+# Redirection de la route /admin vers Vercel
+[[redirects]]
+  from = "/admin"                       # Route admin de base
+  to = "https://outofthebooks.vercel.app/admin"
+  status = 301                          # Redirection permanente
+  force = true
+
+# Redirection des sous-routes /admin/* vers Vercel
+[[redirects]]
+  from = "/admin/*"                     # Toutes les sous-routes admin
+  to = "https://outofthebooks.vercel.app/admin/:splat"
+  status = 301                          # Redirection permanente
+  force = true
+
+# =====================================
+# AUTRES ROUTES PROTÉGÉES
+# =====================================
+
+# Exemple pour routes privées additionnelles (commenté)
+# [[redirects]]
+#   from = "/private/*"
+#   to = "/.netlify/functions/auth-middleware"
+#   status = 200
+#   force = true

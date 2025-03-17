@@ -1,16 +1,14 @@
 ---
+// Suppression de getStaticPaths qui cause des problèmes en mode dev
+// export function getStaticPaths() {...}
+
 import Layout from '~/layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import CustomStyles from '~/components/CustomStyles.astro';
 import { Image } from 'astro:assets';
 import logoHeader from '~/assets/images/ootb-logo-header.svg';
 
-// TODO: Implémentation future de Supabase pour la gestion sécurisée des credentials
-// import { createClient } from '@supabase/supabase-js';
-// const supabase = createClient(
-//   import.meta.env.PUBLIC_SUPABASE_URL,
-//   import.meta.env.SUPABASE_SERVICE_KEY
-// );
+// Toute la vérification d'authentification est maintenant gérée par le middleware Netlify
 
 interface Credentials {
   username?: string;
@@ -880,5 +878,20 @@ const notionUrl = import.meta.env.NOTION_WORKSPACE_URL || "https://www.notion.so
         a.classList.add('bg-gray-100', 'text-primary-600');
       }
     });
+  });
+
+  // Script pour afficher les informations de l'utilisateur si disponibles
+  document.addEventListener('DOMContentLoaded', () => {
+    // Dans un environnement réel, les headers X-User-* seraient définis par le middleware
+    // et seraient accessibles via du SSR ou une requête spécifique
+    
+    // Pour tester en statique, vous pouvez décommenter cette partie
+    // Ce code sera ignoré en production car les headers ne seront pas présents
+    /*
+    const userElements = document.querySelectorAll('.user-email');
+    userElements.forEach(el => {
+      el.textContent = "utilisateur@exemple.com";
+    });
+    */
   });
 </script>

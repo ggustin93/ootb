@@ -7,7 +7,8 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 console.log('🔄 Fonction Netlify auth chargée');
 console.log('📝 Configuration:', {
   hasSupabaseUrl: !!SUPABASE_URL,
-  hasSupabaseKey: !!SUPABASE_ANON_KEY
+  hasSupabaseKey: !!SUPABASE_ANON_KEY,
+  supabaseUrlPrefix: SUPABASE_URL ? SUPABASE_URL.substring(0, 10) + '...' : 'non défini'
 });
 
 // Initialiser le client Supabase
@@ -16,12 +17,22 @@ const supabase = createClient(SUPABASE_URL || '', SUPABASE_ANON_KEY || '');
 // Fonction pour générer un cookie sécurisé
 const generateSecureCookie = (name, value, maxAge) => {
   const isProduction = process.env.NODE_ENV === 'production';
-  return `${name}=${value}; Path=/; HttpOnly; ${isProduction ? 'Secure; ' : ''}SameSite=Lax; Max-Age=${maxAge}`;
+  const cookie = `${name}=${value}; Path=/; HttpOnly; ${isProduction ? 'Secure; ' : ''}SameSite=Lax; Max-Age=${maxAge}`;
+  console.log(`🍪 Génération du cookie ${name}: ${value ? 'valeur définie' : 'valeur vide'}, maxAge=${maxAge}`);
+  return cookie;
 };
 
 export const handler = async (event) => {
+  console.log('📥 Requête reçue:', {
+    method: event.httpMethod,
+    path: event.path,
+    headers: Object.keys(event.headers),
+    hasBody: !!event.body
+  });
+
   // Gérer les requêtes OPTIONS (CORS)
   if (event.httpMethod === 'OPTIONS') {
+    console.log('🔄 Traitement d\'une requête OPTIONS (CORS)');
     return {
       statusCode: 204,
       headers: {
@@ -39,7 +50,11 @@ export const handler = async (event) => {
     try {
       // Récupérer les données du formulaire
       const data = JSON.parse(event.body);
-      console.log('📝 Données reçues:', { email: data.email, hasPassword: !!data.password });
+      console.log('📝 Données reçues:', { 
+        email: data.email ? `${data.email.substring(0, 3)}...` : 'non défini', 
+        hasPassword: !!data.password,
+        redirectTo: data.redirectTo || '/dashboard/'
+      });
       
       // Vérifier si les données essentielles sont présentes
       if (!data.email || !data.password) {
@@ -57,6 +72,7 @@ export const handler = async (event) => {
       }
       
       // Tenter de se connecter avec Supabase
+      console.log('🔄 Tentative de connexion avec Supabase...');
       const { data: authData, error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password
@@ -76,34 +92,40 @@ export const handler = async (event) => {
         };
       }
       
-      // Connexion réussie
-      console.log('✅ Connexion réussie pour:', data.email);
+      // Connexion réussie, créer les cookies et rediriger
+      console.log('✅ Connexion réussie pour:', authData.user.email);
       
-      // Générer les cookies pour stocker les tokens
-      const accessTokenCookie = generateSecureCookie(
-        'sb-access-token', 
-        authData.session.access_token, 
-        60 * 60 * 24 * 7 // 1 semaine
-      );
+      // Récupérer l'URL de redirection depuis les paramètres ou utiliser une valeur par défaut
+      const redirectTo = data.redirectTo || '/dashboard/';
+      console.log('🔄 Redirection vers:', redirectTo);
       
-      const refreshTokenCookie = generateSecureCookie(
-        'sb-refresh-token', 
-        authData.session.refresh_token, 
-        60 * 60 * 24 * 7 // 1 semaine
-      );
+      // Créer les cookies pour stocker les tokens
+      const accessTokenCookie = `sb-access-token=${authData.session.access_token}; Path=/; HttpOnly; Max-Age=${60 * 60 * 24 * 7}`;
+      const refreshTokenCookie = `sb-refresh-token=${authData.session.refresh_token}; Path=/; HttpOnly; Max-Age=${60 * 60 * 24 * 7}`;
       
-      // Rediriger vers le tableau de bord
+      // Déterminer si nous sommes en mode développement
+      const isDevMode = process.env.NODE_ENV !== 'production';
+      console.log(`🛠️ Mode: ${isDevMode ? 'DEV' : 'PROD'}`);
+      
+      // Adapter l'URL de redirection en fonction du mode
+      // En mode DEV, rediriger vers /dashboard.html au lieu de /dashboard/
+      let finalRedirectUrl = redirectTo;
+      if (isDevMode && redirectTo === '/dashboard/') {
+        finalRedirectUrl = '/dashboard.html';
+        console.log(`🔄 Mode DEV: Redirection adaptée vers ${finalRedirectUrl}`);
+      }
+      
+      console.log(`🎯 URL finale de redirection: ${finalRedirectUrl}`);
+      console.log(`🍪 Cookies générés: ${accessTokenCookie.substring(0, 20)}... et ${refreshTokenCookie.substring(0, 20)}...`);
+      
       return {
         statusCode: 302,
         headers: {
-          'Location': '/dashboard',
+          'Location': finalRedirectUrl,
           'Set-Cookie': [accessTokenCookie, refreshTokenCookie],
           'Cache-Control': 'no-cache'
         },
-        body: JSON.stringify({
-          success: true,
-          message: 'Connexion réussie'
-        })
+        body: JSON.stringify({ success: true })
       };
     } catch (error) {
       console.error('❌ Erreur lors du traitement de la requête:', error);
@@ -122,18 +144,21 @@ export const handler = async (event) => {
   }
   
   // Gérer les requêtes GET (déconnexion)
-  if (event.httpMethod === 'GET' && event.path === '/.netlify/functions/auth/logout') {
-    console.log('🔄 Requête GET reçue pour la déconnexion');
+  if (event.httpMethod === 'GET' && (event.path === '/.netlify/functions/auth/logout' || event.path === '/api/auth/logout')) {
+    console.log('🔄 Requête GET reçue pour la déconnexion, path:', event.path);
     
     try {
       // Déconnecter l'utilisateur de Supabase
+      console.log('🔄 Déconnexion de Supabase...');
       await supabase.auth.signOut();
+      console.log('✅ Déconnexion Supabase réussie');
       
       // Supprimer les cookies
       const clearAccessTokenCookie = generateSecureCookie('sb-access-token', '', 0);
       const clearRefreshTokenCookie = generateSecureCookie('sb-refresh-token', '', 0);
       
       // Rediriger vers la page de connexion
+      console.log('➡️ Redirection vers la page de connexion');
       return {
         statusCode: 302,
         headers: {
@@ -163,6 +188,7 @@ export const handler = async (event) => {
   }
   
   // Méthode ou chemin non supporté
+  console.log('❌ Endpoint non trouvé:', event.path);
   return {
     statusCode: 404,
     body: JSON.stringify({

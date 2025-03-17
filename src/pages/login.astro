@@ -11,23 +11,34 @@ if (errorCode === 'invalid_credentials') {
   errorMessage = "Email ou mot de passe incorrect.";
 } else if (errorCode === 'auth_error') {
   errorMessage = "Une erreur s'est produite lors de l'authentification.";
+} else if (errorCode === 'session_expired') {
+  errorMessage = "Votre session a expiré. Veuillez vous reconnecter.";
+} else if (errorCode === 'auth_required') {
+  errorMessage = "Vous devez être connecté pour accéder à cette page.";
 }
+
+// Paramètre de redirection
+const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard/';
 ---
 
 <Layout metadata={{ title: 'Connexion - Out of the Books' }}>
   <main class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
     <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
       <div class="text-center">
-        <h2 class="mt-6 text-3xl font-bold text-gray-900">
+        <h1 class="mt-6 text-3xl font-bold text-gray-900">
           Connexion à l'administration
-        </h2>
+        </h1>
         <p class="mt-2 text-sm text-gray-600">
           Connectez-vous pour accéder au tableau de bord
         </p>
       </div>
 
       {errorMessage && (
-        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+        <div 
+          class="bg-red-50 border-l-4 border-red-500 p-4 mb-4" 
+          role="alert"
+          aria-live="assertive"
+        >
           <div class="flex">
             <div class="flex-shrink-0">
               <Icon name="tabler:alert-circle" class="h-5 w-5 text-red-500" />
@@ -40,7 +51,7 @@ if (errorCode === 'invalid_credentials') {
       )}
 
       <div class="mt-8">
-        <form id="login-form" class="space-y-6">
+        <form id="login-form" class="space-y-6" novalidate>
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
             <div class="mt-1 relative">
@@ -53,14 +64,20 @@ if (errorCode === 'invalid_credentials') {
                 type="email" 
                 autocomplete="email" 
                 required 
-                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" 
+                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all" 
                 placeholder="votre@email.com"
+                aria-required="true"
+                aria-describedby="email-error"
               />
+              <div id="email-error" class="hidden text-red-500 text-xs mt-1"></div>
             </div>
           </div>
 
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+            <div class="flex items-center justify-between">
+              <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+              <!-- <a href="#" class="text-xs text-primary-600 hover:underline">Mot de passe oublié?</a> -->
+            </div>
             <div class="mt-1 relative">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Icon name="tabler:lock" class="h-5 w-5 text-gray-400" />
@@ -71,11 +88,16 @@ if (errorCode === 'invalid_credentials') {
                 type="password" 
                 autocomplete="current-password" 
                 required 
-                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" 
+                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all" 
                 placeholder="••••••••"
+                aria-required="true"
+                aria-describedby="password-error"
               />
+              <div id="password-error" class="hidden text-red-500 text-xs mt-1"></div>
             </div>
           </div>
+
+          <input type="hidden" id="redirect" value={redirectTo} />
 
           <div>
             <Button 
@@ -86,6 +108,7 @@ if (errorCode === 'invalid_credentials') {
               iconPosition="left"
               fullWidth={true}
               id="login-button"
+              aria-label="Se connecter"
             >
               Se connecter
             </Button>
@@ -98,12 +121,80 @@ if (errorCode === 'invalid_credentials') {
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('login-form');
+    const form = document.getElementById('login-form') as HTMLFormElement;
     const submitButton = document.getElementById('login-button') as HTMLButtonElement | null;
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    const emailError = document.getElementById('email-error') as HTMLDivElement;
+    const passwordError = document.getElementById('password-error') as HTMLDivElement;
+    const redirectInput = document.getElementById('redirect') as HTMLInputElement;
+    
+    // Validation des champs
+    const validateEmail = (email: string): boolean => {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email) {
+        emailError.textContent = "L'email est requis";
+        emailError.classList.remove('hidden');
+        emailInput.classList.add('border-red-500');
+        return false;
+      } else if (!regex.test(email)) {
+        emailError.textContent = "Format d'email invalide";
+        emailError.classList.remove('hidden');
+        emailInput.classList.add('border-red-500');
+        return false;
+      }
+      emailError.classList.add('hidden');
+      emailInput.classList.remove('border-red-500');
+      return true;
+    };
+    
+    const validatePassword = (password: string): boolean => {
+      if (!password) {
+        passwordError.textContent = "Le mot de passe est requis";
+        passwordError.classList.remove('hidden');
+        passwordInput.classList.add('border-red-500');
+        return false;
+      }
+      passwordError.classList.add('hidden');
+      passwordInput.classList.remove('border-red-500');
+      return true;
+    };
+    
+    // Événements de validation
+    emailInput?.addEventListener('blur', () => {
+      validateEmail(emailInput.value);
+    });
+    
+    passwordInput?.addEventListener('blur', () => {
+      validatePassword(passwordInput.value);
+    });
+    
+    // Supprimer l'erreur quand l'utilisateur commence à taper
+    emailInput?.addEventListener('input', () => {
+      emailError.classList.add('hidden');
+      emailInput.classList.remove('border-red-500');
+    });
+    
+    passwordInput?.addEventListener('input', () => {
+      passwordError.classList.add('hidden');
+      passwordInput.classList.remove('border-red-500');
+    });
     
     if (form) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        const email = emailInput?.value || '';
+        const password = passwordInput?.value || '';
+        const redirectTo = redirectInput?.value || '/dashboard/';
+        
+        // Valider les champs
+        const isEmailValid = validateEmail(email);
+        const isPasswordValid = validatePassword(password);
+        
+        if (!isEmailValid || !isPasswordValid) {
+          return;
+        }
         
         // Désactiver le bouton et montrer l'état de chargement
         if (submitButton) {
@@ -117,39 +208,24 @@ if (errorCode === 'invalid_credentials') {
           `;
         }
         
-        const emailInput = document.getElementById('email') as HTMLInputElement;
-        const passwordInput = document.getElementById('password') as HTMLInputElement;
-        
-        const email = emailInput?.value || '';
-        const password = passwordInput?.value || '';
-        
-        if (!email || !password) {
-          alert('Veuillez remplir tous les champs');
-          if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.innerHTML = `<svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg> Se connecter`;
-          }
-          return;
-        }
-        
         try {
           const response = await fetch('/.netlify/functions/auth/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password, redirectTo })
           });
           
           if (response.redirected) {
             window.location.href = response.url;
           } else if (!response.ok) {
             const data = await response.json();
-            window.location.href = `/login?error=invalid_credentials&message=${encodeURIComponent(data.message || '')}`;
+            window.location.href = `/login?error=invalid_credentials&message=${encodeURIComponent(data.message || '')}&redirect=${encodeURIComponent(redirectTo)}`;
           }
         } catch (error) {
           console.error('Erreur lors de la connexion:', error);
-          window.location.href = '/login?error=auth_error';
+          window.location.href = `/login?error=auth_error&redirect=${encodeURIComponent(redirectTo)}`;
           
           // Réactiver le bouton en cas d'erreur
           if (submitButton) {
@@ -163,9 +239,24 @@ if (errorCode === 'invalid_credentials') {
 </script>
 
 <style>
-  /* Amélioration de la visibilité des champs de formulaire */
+  /* Transitions améliorées */
   input {
     height: 2.75rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  input:focus {
+    box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+  }
+  
+  /* Animation pour les notifications d'erreur */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  [role="alert"] {
+    animation: fadeIn 0.3s ease-out forwards;
   }
   
   /* Assurer que les icônes sont visibles */

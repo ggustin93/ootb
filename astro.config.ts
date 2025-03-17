@@ -8,6 +8,7 @@ import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import type { AstroIntegration } from 'astro';
 import react from '@astrojs/react';
+import umami from "@yeskunall/astro-umami";
 import astrowind from './vendor/integration';
 import { readingTimeRemarkPlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
@@ -24,9 +25,9 @@ export default defineConfig({
  experimental: {
    clientPrerender: true
  },
- /*redirects: {
+ redirects: {
    '/admin': '/admin/index.html'
- },*/
+ },
  integrations: [
    sitemap(),
    tailwind({
@@ -48,6 +49,7 @@ export default defineConfig({
     ]
   }),
    react(),
+   umami({ id: "8c5601e7-d9e1-4ce6-9570-5780ac94b2a3" }),
    {
      name: 'font-assets',
      hooks: {
@@ -83,12 +85,6 @@ export default defineConfig({
      partytown({
        config: { 
          forward: ['dataLayer.push'],
-         resolveUrl: (url) => {
-           // Rediriger les requêtes Umami vers leur domaine d'origine
-           if (url.hostname === 'cloud.umami.is') {
-             return url;
-           }
-         },
        },
      })
    ),

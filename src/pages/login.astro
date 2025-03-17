@@ -18,7 +18,7 @@ if (errorCode === 'invalid_credentials') {
 }
 
 // Paramètre de redirection
-const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard/';
+const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
 ---
 
 <Layout metadata={{ title: 'Connexion - Out of the Books' }}>
@@ -186,7 +186,7 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard/';
         
         const email = emailInput?.value || '';
         const password = passwordInput?.value || '';
-        const redirectTo = redirectInput?.value || '/dashboard/';
+        const redirectTo = redirectInput?.value || '/dashboard';
         
         // Valider les champs
         const isEmailValid = validateEmail(email);
@@ -229,7 +229,11 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard/';
           
           if (response.redirected) {
             console.log('🔄 Redirection vers:', response.url);
-            window.location.href = response.url;
+            // Utiliser setTimeout pour s'assurer que les cookies sont bien définis avant la redirection
+            setTimeout(() => {
+              window.location.href = response.url;
+            }, 100);
+            return;
           } else if (response.ok) {
             // Gérer la réponse JSON
             const data = await response.json();

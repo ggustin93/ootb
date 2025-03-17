@@ -132,11 +132,12 @@ export const handler = async (event) => {
         console.log(`🎯 URL finale de redirection: ${finalRedirectUrl}`);
         console.log(`🍪 Cookies générés: ${accessTokenCookie.substring(0, 20)}... et ${refreshTokenCookie.substring(0, 20)}...`);
         
+        // Utiliser un tableau pour Set-Cookie
         return {
           statusCode: 302,
           headers: {
             'Location': finalRedirectUrl,
-            'Set-Cookie': accessTokenCookie + ', ' + refreshTokenCookie,
+            'Set-Cookie': [accessTokenCookie, refreshTokenCookie],
             'Cache-Control': 'no-cache'
           },
           body: JSON.stringify({ success: true })

@@ -1,0 +1,186 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+
+// Récupérer les paramètres d'erreur éventuels
+const errorCode = Astro.url.searchParams.get('error');
+let errorMessage = '';
+
+if (errorCode === 'invalid_password') {
+  errorMessage = "Mot de passe incorrect.";
+}
+---
+
+<Layout metadata={{ title: 'Accès - Out of the Books' }}>
+  <main class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+    <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
+      <div class="text-center">
+        <h1 class="mt-6 text-3xl font-bold text-gray-900">
+          Accès Administration
+        </h1>
+        <p class="mt-2 text-sm text-gray-600">
+          Entrez le mot de passe pour accéder au tableau de bord
+        </p>
+      </div>
+
+      {errorMessage && (
+        <div 
+          class="bg-red-50 border-l-4 border-red-500 p-4 mb-4" 
+          role="alert"
+        >
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <Icon name="tabler:alert-circle" class="h-5 w-5 text-red-500" />
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-red-700">{errorMessage}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Message de validation (caché par défaut) -->
+      <div 
+        id="validation-message" 
+        class="hidden bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4" 
+        role="alert"
+      >
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <Icon name="tabler:alert-triangle" class="h-5 w-5 text-yellow-500" />
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-yellow-700">Veuillez entrer un mot de passe.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <form id="simple-form" class="space-y-6">
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+            <div class="mt-1 relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Icon name="tabler:lock" class="h-5 w-5 text-gray-400" />
+              </div>
+              <input 
+                id="password" 
+                name="password" 
+                type="password" 
+                required 
+                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all" 
+                placeholder="Entrez le mot de passe"
+              />
+            </div>
+          </div>
+
+          <div>
+            <Button 
+              type="submit"
+              variant="blue"
+              size="lg"
+              icon="tabler:login"
+              iconPosition="left"
+              fullWidth={true}
+              id="admin-button"
+              aria-label="Accéder à l'administration"
+            >
+              Accéder
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('simple-form');
+    const passwordInput = document.getElementById('password');
+    const validationMessage = document.getElementById('validation-message');
+    
+    // Mot de passe pour l'accès admin
+    const ADMIN_PASSWORD = "ootb2025";
+    
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const password = passwordInput.value.trim();
+        
+        // Vérifier si le champ est vide
+        if (!password) {
+          // Afficher le message de validation
+          validationMessage.classList.remove('hidden');
+          // Ajouter une classe pour l'animation
+          validationMessage.classList.add('animate-bounce-in');
+          // Focus sur le champ de mot de passe
+          passwordInput.focus();
+          return;
+        }
+        
+        // Cacher le message de validation s'il était affiché
+        validationMessage.classList.add('hidden');
+        
+        if (password === ADMIN_PASSWORD) {
+          // Stocker l'accès dans sessionStorage
+          sessionStorage.setItem('dashboard_access', 'granted');
+          
+          // Afficher un message de chargement
+          const button = document.getElementById('admin-button');
+          if (button) {
+            button.disabled = true;
+            button.innerHTML = '<span class="inline-flex items-center"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Connexion...</span>';
+          }
+          
+          // Rediriger vers le dashboard avec la clé
+          setTimeout(() => {
+            window.location.href = `/dashboard?key=${ADMIN_PASSWORD}`;
+          }, 500);
+        } else {
+          window.location.href = '/ootb?error=invalid_password';
+        }
+      });
+      
+      // Masquer le message de validation lorsque l'utilisateur commence à taper
+      passwordInput.addEventListener('input', () => {
+        validationMessage.classList.add('hidden');
+      });
+    }
+  });
+</script>
+
+<style>
+  /* Transitions améliorées */
+  input {
+    height: 2.75rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  input:focus {
+    box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+  }
+  
+  /* Animation pour les notifications d'erreur */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  [role="alert"] {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  /* Animation pour le message de validation */
+  .animate-bounce-in {
+    animation: bounceIn 0.5s ease-out forwards;
+  }
+  
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+</style> 

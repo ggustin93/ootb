@@ -6,14 +6,13 @@ import Layout from '~/layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import CustomStyles from '~/components/CustomStyles.astro';
 import { Image } from 'astro:assets';
+import Button from '~/components/ui/Button.astro';
 import logoHeader from '~/assets/images/ootb-logo-header.svg';
 
 // Toute la vérification d'authentification est maintenant gérée par le middleware Netlify
 
 interface Credentials {
   username?: string;
-  password?: string;
-  apiKey?: string;
   notes?: string;
 }
 
@@ -39,7 +38,7 @@ const contactInfo = {
   phone: "+32 456 61 72 60",
   whatsapp: "https://wa.me/32456617260",
   calendar: "https://cal.com/pwablo",
-  github: "https://github.com/outofthebooks/website"
+  github: "https://github.com/ggustin93/ootb"
 };
 
 // Configuration des outils
@@ -51,13 +50,12 @@ const tools: ToolCategory[] = [
     items: [
       {
         title: "TinaCMS",
-        description: "Interface d'édition de contenu [Essentiel]",
-        url: "/admin/tina",
+        description: "Système de gestion des contenus internes [Essentiel]",
+        url: "/admin",
         icon: "tabler:edit",
         credentials: {
-          username: "admin@outofthebooks.be",
-          password: import.meta.env.TINA_PASSWORD || "Contacter l'administrateur",
-          notes: "Connexion à l'interface d'édition (ne pas partager)"
+          username: "alexia@festivaloutofthebooks.com",
+          notes: "Connexion à l'interface d'édition (accès sur invitation)"
         }
       }
     ]
@@ -69,13 +67,12 @@ const tools: ToolCategory[] = [
     items: [
       {
         title: "NocoDB",
-        description: "Base de données pour les fiches pédagogiques et la newsletter [Essentiel]",
+        description: "Système de gestion des contenus externes [Essentiel]",
         url: import.meta.env.NOCODB_BASE_URL || "https://app.nocodb.com",
         icon: "tabler:database",
         credentials: {
-          username: "admin@outofthebooks.be",
-          password: import.meta.env.NOCODB_PASSWORD || "Contacter l'administrateur",
-          notes: "Accès à la base de données (connexion via email/password)"
+          username: "Toute l'équipe",
+          notes: "Accès à la base de données (connexion via email)"
         }
       }
     ]
@@ -88,12 +85,11 @@ const tools: ToolCategory[] = [
       {
         title: "Umami Analytics",
         description: "Statistiques de visite du site [Recommandé]",
-        url: "https://cloud.umami.is/websites",
+        url: "https://cloud.umami.is/share/VJBTDMq2NAlUVkDO/outofthebooks.netlify.app",
         icon: "tabler:chart-bar",
         credentials: {
-          username: "github@pwablo.be",
-          password: import.meta.env.UMAMI_PASSWORD || "Utiliser la connexion GitHub",
-          notes: "Connexion via GitHub recommandée, mais accès email possible"
+          username: "Statistiques publiques",
+          notes: "Compte admin : hello@pwablo.be (accès ou transfert sur demande)"
         }
       },
       {
@@ -102,8 +98,8 @@ const tools: ToolCategory[] = [
         url: "https://search.google.com/search-console",
         icon: "tabler:brand-google",
         credentials: {
-          username: "hello@outofthebooks.be",
-          notes: "Connexion via compte Google"
+          username: "A déterminer",
+          notes: "Sur invitation"
         }
       }
     ]
@@ -119,9 +115,8 @@ const tools: ToolCategory[] = [
         url: "https://www.ovh.com/manager/",
         icon: "tabler:server",
         credentials: {
-          username: import.meta.env.OVH_USERNAME,
-          password: import.meta.env.OVH_PASSWORD,
-          notes: "Identifiants du compte principal - Rarement nécessaire sauf changements DNS"
+          username: "3121-0412-77/guillaume",
+          notes: "Compte auxiliaire pour gérer DNS et emails"
         }
       },
       {
@@ -130,8 +125,18 @@ const tools: ToolCategory[] = [
         url: "https://app.netlify.com/",
         icon: "tabler:cloud",
         credentials: {
-          username: "github@pwablo.be",
-          notes: "Connexion via GitHub recommandée"
+          username: "guillaume.gustin.9@gmail.com",
+          notes: "Accès ou transfert sur demande"
+        }
+      },
+      {
+        title: "Cloudinary",
+        description: "Gestion et optimisation des médias [Optionnel]",
+        url: "https://cloudinary.com/console/",
+        icon: "tabler:photo",
+        credentials: {
+          username: "hello@pwablo.be",
+          notes: "Accès ou transfert sur demande"
         }
       }
     ]
@@ -139,505 +144,512 @@ const tools: ToolCategory[] = [
 ];
 
 // Lien vers la documentation Notion
-const notionUrl = import.meta.env.NOTION_WORKSPACE_URL || "https://www.notion.so/outofthebooks";
+const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995a27d85380809142f0e1a369d9cc?pvs=4';
 ---
 
-<Layout metadata={{ title: 'Tableau de bord - Out of the Books' }}>
-  <CustomStyles />
-  <div class="flex h-screen bg-gray-50">
-    {/* Menu latéral */}
-    <aside class="w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col">
-      <div class="p-4 border-b border-gray-200">
-        <Image 
-          src={logoHeader} 
-          alt="Out of the Books" 
-          class="h-8 w-auto"
-        />
+<Layout metadata={{ 
+  title: 'Tableau de bord - Out of the Books',
+  noindex: true,
+  nofollow: true
+}}>
+  <!-- Conteneur d'authentification - remplacé par un encadré informatif simple -->
+  <div id="auth-container" class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+    <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
+      <h1 class="text-2xl font-bold text-gray-900 text-center">Tableau de bord administrateur</h1>
+      <div class="bg-blue-50 p-4 rounded-lg text-sm border border-blue-200 mb-4">
+        <h2 class="font-medium text-blue-700 mb-2">Adresses emails de connexion</h2>
+        <ul class="space-y-2 text-blue-800">
+          <li class="flex items-center gap-2">
+            <Icon name="tabler:user" class="w-4 h-4 text-blue-600" />
+            <span><strong>Admin principal:</strong> admin@outofthebooks.be</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="tabler:user" class="w-4 h-4 text-blue-600" />
+            <span><strong>Édition contenu:</strong> alexia@festivaloutofthebooks.com</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="tabler:user" class="w-4 h-4 text-blue-600" />
+            <span><strong>Technique:</strong> hello@pwablo.be</span>
+          </li>
+        </ul>
       </div>
+      <Button 
+        href="/" 
+        variant="blue" 
+        size="lg" 
+        icon="tabler:home" 
+        iconPosition="left"
+        class="w-full"
+      >
+        Retour à l'accueil
+      </Button>
+    </div>
+  </div>
 
-      {/* Navigation principale */}
-      <nav class="flex-1 p-4 space-y-1">
-        {/* Lien Summary */}
-        <a
-          href="#summary"
-          class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-          title="Vue d'ensemble"
-        >
-          <Icon name="tabler:layout-dashboard" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
-          Accueil
-        </a>
+  <!-- Contenu du dashboard (masqué par défaut) -->
+  <div id="dashboard-content" class="hidden">
+    <CustomStyles />
+    <div class="flex h-screen bg-gray-50">
+      {/* Menu latéral */}
+      <aside class="w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col">
+        <div class="p-4 border-b border-gray-200">
+          <Image 
+            src={logoHeader} 
+            alt="Out of the Books" 
+            class="h-8 w-auto"
+          />
+        </div>
 
-        {/* Séparateur */}
-        <div class="my-4 border-t border-gray-200"></div>
-
-        {/* Catégories */}
-        {tools.map(category => (
+        {/* Navigation principale */}
+        <nav class="flex-1 p-4 space-y-1">
+          {/* Lien Summary */}
           <a
-            href={`#${category.category.toLowerCase()}`}
+            href="#summary"
             class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-            title={category.description}
+            title="Vue d'ensemble"
           >
-            <Icon name={category.icon} class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
-            {category.category}
+            <Icon name="tabler:layout-dashboard" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
+            Accueil
           </a>
-        ))}
 
-        {/* Séparateur */}
-        <div class="my-4 border-t border-gray-200"></div>
+          {/* Séparateur */}
+          <div class="my-4 border-t border-gray-200"></div>
 
-        {/* FAQ */}
-        <a
-          href="#faq"
-          class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-          title="Questions fréquentes"
-        >
-          <Icon name="tabler:help-circle" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
-          Aide & FAQ
-        </a>
-        
-        {/* Recommandations écologiques */}
-        <a
-          href="#eco"
-          class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-          title="Bonnes pratiques écologiques"
-        >
-          <Icon name="tabler:leaf" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-[var(--ootb-green)]" />
-          Éco-responsabilité
-        </a>
-        
-        {/* GitHub */}
-        <a
-          href="#github"
-          class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-          title="Code source"
-        >
-          <Icon name="tabler:brand-github" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-800" />
-          Code
-        </a>
-      </nav>
+          {/* Catégories */}
+          {tools.map(category => (
+            <a
+              href={`#${category.category.toLowerCase()}`}
+              class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+              title={category.description}
+            >
+              <Icon name={category.icon} class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
+              {category.category}
+            </a>
+          ))}
 
-      {/* Contact (en bas) */}
-      <div class="p-4 bg-gray-50 border-t border-gray-200">
-        <div class="flex flex-col space-y-2">
-          <p class="text-xs text-gray-500 mb-1">Besoin d'aide ?</p>
-          <a 
-            href={`mailto:hello@pwablo.be`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
+          {/* Séparateur */}
+          <div class="my-4 border-t border-gray-200"></div>
+
+          {/* FAQ */}
+          <a
+            href="#faq"
+            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+            title="Questions fréquentes"
           >
-            <Icon name="tabler:mail" class="w-5 h-5 mr-3 text-gray-400" />
-            hello@pwablo.be
+            <Icon name="tabler:help-circle" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
+            Aide & FAQ
           </a>
-          <a 
-            href={`tel:${contactInfo.phone}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
+          
+          {/* Recommandations écologiques */}
+          <a
+            href="#eco"
+            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+            title="Bonnes pratiques écologiques"
           >
-            <Icon name="tabler:phone" class="w-5 h-5 mr-3 text-gray-400" />
-            {contactInfo.phone}
+            <Icon name="tabler:leaf" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-[var(--ootb-green)]" />
+            Éco-responsabilité
           </a>
-          <div class="flex space-x-2">
+          
+          {/* GitHub */}
+          <a
+            href="#github"
+            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
+            title="Code source"
+          >
+            <Icon name="tabler:brand-github" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-800" />
+            Code
+          </a>
+        </nav>
+
+        {/* Contact (en bas) */}
+        <div class="p-4 bg-gray-50 border-t border-gray-200">
+          <div class="flex flex-col space-y-2">
+            <p class="text-xs text-gray-500 mb-1">Besoin d'aide ?</p>
             <a 
-              href={contactInfo.whatsapp}
+              href={`mailto:hello@pwablo.be`}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex-1 flex items-center justify-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
-              title="Contacter par WhatsApp"
+              class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
             >
-              <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-gray-400" />
+              <Icon name="tabler:mail" class="w-5 h-5 mr-3 text-gray-400" />
+              hello@pwablo.be
             </a>
             <a 
-              href={contactInfo.calendar}
+              href={`tel:${contactInfo.phone}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex-1 flex items-center justify-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
-              title="Prendre rendez-vous"
+              class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
             >
-              <Icon name="tabler:calendar" class="w-5 h-5 text-gray-400" />
+              <Icon name="tabler:phone" class="w-5 h-5 mr-3 text-gray-400" />
+              {contactInfo.phone}
+            </a>
+            <div class="flex space-x-2">
+              <a 
+                href={contactInfo.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 flex items-center justify-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
+                title="Contacter par WhatsApp"
+              >
+                <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-gray-400" />
+              </a>
+              <a 
+                href={contactInfo.calendar}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 flex items-center justify-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
+                title="Prendre rendez-vous"
+              >
+                <Icon name="tabler:calendar" class="w-5 h-5 text-gray-400" />
+              </a>
+            </div>
+            
+            {/* Bouton de déconnexion - MODIFIÉ */}
+            <a 
+              href="#" 
+              id="logout-button"
+              class="flex items-center px-3 py-2 text-sm text-red-600 rounded-lg hover:bg-red-50 bg-white mt-4"
+            >
+              <Icon name="tabler:logout" class="w-5 h-5 mr-3 text-red-500" />
+              Déconnexion
             </a>
           </div>
-          
-          {/* Bouton de déconnexion */}
-          <a 
-            href="/api/auth/logout"
-            class="flex items-center px-3 py-2 text-sm text-red-600 rounded-lg hover:bg-red-50 bg-white mt-4"
-          >
-            <Icon name="tabler:logout" class="w-5 h-5 mr-3 text-red-500" />
-            Déconnexion
-          </a>
         </div>
-      </div>
-    </aside>
+      </aside>
 
-    {/* Contenu principal */}
-    <main class="flex-1 overflow-y-auto">
-      <div class="max-w-4xl mx-auto p-8">
-        {/* Summary - Titre simple */}
-        <section id="summary" class="mb-12">
-          <h2 class="font-handwritten text-4xl font-bold text-[var(--ootb-blue)] mb-6">Tableau de bord</h2>
-          <p class="text-gray-600 mb-8">
-            Bienvenue sur le tableau de bord d'administration. Utilisez les outils ci-dessous pour gérer votre site web.
-          </p>
-        </section>
+      {/* Contenu principal */}
+      <main class="flex-1 overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8">
+          {/* Summary - Titre simple */}
+          <section id="summary" class="mb-12">
+            <h2 class="font-handwritten text-4xl font-bold text-[var(--ootb-blue)] mb-6">Tableau de bord</h2>
+            <p class="text-gray-600 mb-8">
+              Bienvenue sur le tableau de bord d'administration. Utilisez les outils ci-dessous pour gérer votre site web.
+            </p>
+          </section>
 
-        {/* Sections des outils */}
-        {tools.map(category => (
-          <section id={category.category.toLowerCase()} class="mb-12 section-content">
-            <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target={category.category.toLowerCase()}>
+          {/* Sections des outils */}
+          {tools.map(category => (
+            <section id={category.category.toLowerCase()} class="mb-12 section-content">
+              <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target={category.category.toLowerCase()}>
+                <div class="flex items-center gap-2">
+                  <Icon name={category.icon} class="w-6 h-6 text-primary-600" />
+                  <h2 class="text-xl font-semibold text-gray-900">{category.category}</h2>
+                </div>
+                <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
+              </div>
+              
+              <div class="accordion-content hidden" id={`content-${category.category.toLowerCase()}`}>
+                <p class="text-gray-600 mb-6">
+                  {category.category === "Édition" && 
+                    "Accédez aux outils d'édition pour modifier le contenu de votre site web. Ces interfaces vous permettent de mettre à jour les textes, images et autres éléments sans connaissances techniques."}
+                  
+                  {category.category === "Infrastructure" && 
+                    "Gérez l'hébergement, les noms de domaine et les paramètres techniques de votre site. Ces outils vous donnent accès aux configurations serveur et aux réglages DNS."}
+                  
+                  {category.category === "Données" && 
+                    "Consultez et modifiez les bases de données qui alimentent votre site. Ces interfaces vous permettent de gérer les formulaires du festival ainsi que les formulaires de la newsletter, de contact,  de l'appel à projet pour les fiches pédagogiques."}
+                  
+                  {category.category === "Analytics" && 
+                    "Suivez les performances et le trafic de votre site web. Ces outils vous donnent accès aux statistiques de visite, au référencement et aux comportements des utilisateurs."}
+                </p>
+                
+                <div class="grid grid-cols-1 gap-4">
+                  {category.items
+                    .sort((a, b) => {
+                      // Tri par importance: Essentiel > Recommandé > Optionnel
+                      const getImportance = (desc: string) => {
+                        if (desc.includes("[Essentiel]")) return 1;
+                        if (desc.includes("[Recommandé]")) return 2;
+                        return 3;
+                      };
+                      return getImportance(a.description) - getImportance(b.description);
+                    })
+                    .map(tool => (
+                    <div class="group relative bg-white rounded-xl border border-gray-200 hover:border-primary-200 hover:shadow-md transition-all duration-200">
+                      <a
+                        href={tool.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="block p-4 rounded-xl group/link"
+                        onclick="window.open(this.href, '_blank', 'noopener,noreferrer'); return false;"
+                      >
+                        <div class="flex items-center gap-4">
+                          <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-2 rounded-lg group-hover:scale-110 transition-transform duration-200">
+                            <Icon name={tool.icon} class="w-5 h-5 text-primary-600" />
+                          </div>
+                          <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2">
+                              <h3 class="font-medium truncate group-hover:text-primary-600 transition-colors">{tool.title}</h3>
+                              <Icon 
+                                name="tabler:external-link" 
+                                class="w-5 h-5 text-primary-600 opacity-100 group-hover/link:scale-110 transition-all duration-200" 
+                              />
+                              {tool.description.includes("[Essentiel]") && (
+                                <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full">Essentiel</span>
+                              )}
+                              {tool.description.includes("[Recommandé]") && (
+                                <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-blue)] text-white rounded-full">Recommandé</span>
+                              )}
+                              {(tool.description.includes("[Optionnel]") || tool.description.includes("[À connaître")) && (
+                                <span class="px-1.5 py-0.5 text-xs bg-gray-100 text-gray-500 rounded-full">Optionnel</span>
+                              )}
+                            </div>
+                            <p class="text-sm text-gray-600 truncate">{tool.description.split("[")[0]}</p>
+                          </div>
+                        </div>
+                      </a>
+
+                      {/* Encadré des informations d'accès - avec icône de personne responsable */}
+                      {tool.credentials && (
+                        <div class="mt-2 p-3 bg-blue-50 rounded-b-lg text-sm border-t border-blue-100">
+                          <div class="flex items-start gap-2 mb-2">
+                            {tool.title === "Umami Analytics" ? (
+                              <Icon name="tabler:eye" class="w-4 h-4 text-blue-600" />
+                            ) : (
+                              <Icon name="tabler:user-shield" class="w-4 h-4 text-blue-600" />
+                            )}
+                            <span class={tool.title === "Umami Analytics" ? "font-medium" : "font-mono"}>
+                              {tool.credentials.username}
+                            </span>
+                          </div>
+                          {tool.credentials.notes && (
+                            <p class="text-blue-700 text-xs mt-1 pl-6">{tool.credentials.notes}</p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          ))}
+
+          {/* Section FAQ simplifiée */}
+          <section id="faq" class="mb-12 section-content">
+            <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="faq">
               <div class="flex items-center gap-2">
-                <Icon name={category.icon} class="w-6 h-6 text-primary-600" />
-                <h2 class="text-xl font-semibold text-gray-900">{category.category}</h2>
+                <Icon name="tabler:help-circle" class="w-6 h-6 text-primary-600" />
+                <h2 class="text-xl font-semibold text-gray-900">Aide & FAQ</h2>
               </div>
               <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
             </div>
             
-            <div class="accordion-content hidden" id={`content-${category.category.toLowerCase()}`}>
+            <div class="accordion-content hidden" id="content-faq">
               <p class="text-gray-600 mb-6">
-                {category.category === "Édition" && 
-                  "Accédez aux outils d'édition pour modifier le contenu de votre site web. Ces interfaces vous permettent de mettre à jour les textes, images et autres éléments sans connaissances techniques."}
-                
-                {category.category === "Infrastructure" && 
-                  "Gérez l'hébergement, les noms de domaine et les paramètres techniques de votre site. Ces outils vous donnent accès aux configurations serveur et aux réglages DNS."}
-                
-                {category.category === "Données" && 
-                  "Consultez et modifiez les bases de données qui alimentent votre site. Ces interfaces vous permettent de gérer les informations structurées comme les fiches produits ou les inscriptions newsletter."}
-                
-                {category.category === "Analytics" && 
-                  "Suivez les performances et le trafic de votre site web. Ces outils vous donnent accès aux statistiques de visite, au référencement et aux comportements des utilisateurs."}
+                Retrouvez ici toute la documentation et les réponses aux questions fréquentes sur l'utilisation de votre site web. Cette ressource est régulièrement mise à jour pour vous aider à tirer le meilleur parti de votre plateforme.
               </p>
               
-              <div class="grid grid-cols-1 gap-4">
-                {category.items
-                  .sort((a, b) => {
-                    // Tri par importance: Essentiel > Recommandé > Optionnel
-                    const getImportance = (desc: string) => {
-                      if (desc.includes("[Essentiel]")) return 1;
-                      if (desc.includes("[Recommandé]")) return 2;
-                      return 3;
-                    };
-                    return getImportance(a.description) - getImportance(b.description);
-                  })
-                  .map(tool => (
-                  <div class="group relative bg-white rounded-xl border border-gray-200 hover:border-primary-200 hover:shadow-md transition-all duration-200">
-                    <div class="absolute top-0 right-0 p-2 flex items-center gap-2 z-20">
-                      {tool.credentials && (
-                        <button
-                          type="button"
-                          class="flex-shrink-0 p-2 text-gray-400 hover:text-primary-600 rounded-lg hover:bg-white/80 transition-colors toggle-credentials"
-                          data-credentials={JSON.stringify(tool.credentials)}
-                          onclick="event.preventDefault(); event.stopPropagation();"
-                          title="Voir les identifiants"
-                        >
-                          <Icon name="tabler:key" class="w-5 h-5 text-primary-600" />
-                        </button>
-                      )}
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden p-6">
+                  <div class="flex flex-col gap-4">
+                    <div>
+                      <h3 class="font-handwritten text-3xl mb-2 text-[var(--ootb-blue)]">Documentation complète</h3>
+                      <p class="text-gray-600 text-sm">Toutes les informations sur l'utilisation du site sont disponibles dans notre espace Notion.</p>
                     </div>
-                    
-                    <a
-                      href={tool.url}
-                      target="_blank"
+                    <a 
+                      href={notionUrl} 
+                      target="_blank" 
                       rel="noopener noreferrer"
-                      class="block p-4 rounded-xl group/link"
-                      onclick="window.open(this.href, '_blank', 'noopener,noreferrer'); return false;"
+                      class="inline-flex items-center px-4 py-2 bg-[var(--ootb-blue)] text-white rounded-lg hover:opacity-90 transition-colors self-start"
                     >
-                      <div class="flex items-center gap-4">
-                        <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-2 rounded-lg group-hover:scale-110 transition-transform duration-200">
-                          <Icon name={tool.icon} class="w-5 h-5 text-primary-600" />
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <div class="flex items-center gap-2">
-                            <h3 class="font-medium truncate group-hover:text-primary-600 transition-colors">{tool.title}</h3>
-                            <Icon 
-                              name="tabler:external-link" 
-                              class="w-5 h-5 text-primary-600 opacity-0 group-hover/link:opacity-100 transform group-hover/link:translate-x-1 group-hover/link:scale-110 transition-all duration-200" 
-                            />
-                            {tool.description.includes("[Essentiel]") && (
-                              <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full">Essentiel</span>
-                            )}
-                            {tool.description.includes("[Recommandé]") && (
-                              <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-blue)] text-white rounded-full">Recommandé</span>
-                            )}
-                            {(tool.description.includes("[Optionnel]") || tool.description.includes("[À connaître")) && (
-                              <span class="px-1.5 py-0.5 text-xs bg-gray-100 text-gray-500 rounded-full">Optionnel</span>
-                            )}
-                          </div>
-                          <p class="text-sm text-gray-600 truncate">{tool.description.split("[")[0]}</p>
-                        </div>
-                      </div>
+                      <Icon name="tabler:brand-notion" class="w-5 h-5 mr-2" />
+                      Voir la FAQ Notion
                     </a>
-
-                    {tool.credentials && (
-                      <div class="credentials-info hidden mt-4 p-4 bg-gray-50 rounded-lg text-sm border-t">
-                        {tool.credentials.username && (
-                          <p class="mb-2 flex items-center">
-                            <span class="font-medium w-24">Identifiant :</span>
-                            <span class="font-mono">{tool.credentials.username}</span>
-                          </p>
-                        )}
-                        {tool.credentials.password ? (
-                          <p class="mb-2 flex items-center">
-                            <span class="font-medium w-24">Mot de passe :</span>
-                            <span class="font-mono password-field flex-1">••••••••</span>
-                            <button 
-                              type="button" 
-                              class="p-1 text-gray-400 hover:text-primary-600 rounded toggle-password"
-                              onclick="event.preventDefault()"
-                              title="Afficher/masquer le mot de passe"
-                            >
-                              <Icon name="tabler:eye" class="w-4 h-4" />
-                            </button>
-                          </p>
-                        ) : (
-                          <p class="mb-2 flex items-center">
-                            <span class="font-medium w-24">Mot de passe :</span>
-                            <span class="text-gray-500 italic">Défini par l'utilisateur lors de l'invitation</span>
-                          </p>
-                        )}
-                        {/* Note de sécurité */}
-                        <div class="mt-3 p-2 bg-yellow-50 rounded text-xs text-amber-700 border border-amber-200">
-                          <div class="flex items-start gap-1.5">
-                            <Icon name="tabler:alert-triangle" class="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
-                            <span>Ce tableau de bord est réservé aux administrateurs. Ne partagez jamais ces identifiants avec des tiers.</span>
-                          </div>
-                        </div>
-                        {tool.credentials.notes && (
-                          <p class="text-gray-600 text-sm mt-2">{tool.credentials.notes}</p>
-                        )}
-                      </div>
-                    )}
                   </div>
-                ))}
+                </div>
+                
+                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden p-6">
+                  <h3 class="font-handwritten text-3xl mb-4 text-[var(--ootb-violet)]">Contact direct</h3>
+                  <div class="space-y-3">
+                    <a href={`mailto:hello@pwablo.be`} class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]" target="_blank" rel="noopener noreferrer">
+                      <Icon name="tabler:mail" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                      <span>hello@pwablo.be</span>
+                    </a>
+                    <a href={`tel:${contactInfo.phone}`} class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]" target="_blank" rel="noopener noreferrer">
+                      <Icon name="tabler:phone" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                      <span>{contactInfo.phone}</span>
+                    </a>
+                    <a href={contactInfo.whatsapp} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]">
+                      <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                      <span>WhatsApp</span>
+                    </a>
+                    <a href={contactInfo.calendar} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]">
+                      <Icon name="tabler:calendar" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                      <span>Prendre rendez-vous</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
-        ))}
-
-        {/* Section FAQ simplifiée */}
-        <section id="faq" class="mb-12 section-content">
-          <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="faq">
-            <div class="flex items-center gap-2">
-              <Icon name="tabler:help-circle" class="w-6 h-6 text-primary-600" />
-              <h2 class="text-xl font-semibold text-gray-900">Aide & FAQ</h2>
-            </div>
-            <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
-          </div>
           
-          <div class="accordion-content hidden" id="content-faq">
-            <p class="text-gray-600 mb-6">
-              Retrouvez ici toute la documentation et les réponses aux questions fréquentes sur l'utilisation de votre site web. Cette ressource est régulièrement mise à jour pour vous aider à tirer le meilleur parti de votre plateforme.
-            </p>
+          {/* Section Eco-responsabilité */}
+          <section id="eco" class="mb-12 section-content">
+            <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="eco">
+              <div class="flex items-center gap-2">
+                <Icon name="tabler:leaf" class="w-6 h-6 text-[var(--ootb-green)]" />
+                <h2 class="text-xl font-semibold text-gray-900">Éco-responsabilité</h2>
+              </div>
+              <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div class="bg-white rounded-xl border border-gray-200 overflow-hidden p-6">
-                <div class="flex flex-col gap-4">
+            <div class="accordion-content hidden" id="content-eco">
+              <p class="text-gray-600 mb-4">
+                Pour maintenir un excellent score écologique sur votre site, gardez ces conseils à l'esprit lorsque vous ajoutez du contenu. Même si Astro et Cloudinary optimisent déjà en partie vos images, ces bonnes pratiques restent importantes :
+              </p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <h4 class="font-medium text-[var(--ootb-green)] mb-2 flex items-center gap-2">
+                    <Icon name="tabler:photo" class="w-5 h-5" />
+                    Optimisation d'images
+                  </h4>
+                  <ul class="text-sm text-gray-600 space-y-2">
+                    <li class="flex items-start gap-2">
+                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                      <span>Préparer les images avec des dimensions adaptées avant de les téléverser (max 1200px)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                      <span>Privilégier les formats modernes (AVIF, WebP) quand disponibles</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                      <span>Compresser les images avant téléversement pour de meilleures performances</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <h4 class="font-medium text-[var(--ootb-green)] mb-2 flex items-center gap-2">
+                    <Icon name="tabler:code" class="w-5 h-5" />
+                    Pourquoi c'est important
+                  </h4>
+                  <ul class="text-sm text-gray-600 space-y-2">
+                    <li class="flex items-start gap-2">
+                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                      <span>Temps de chargement plus rapides pour vos visiteurs</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                      <span>Meilleur référencement sur Google (Core Web Vitals)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
+                      <span>Réduction de l'empreinte carbone du site web</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="bg-yellow-50 p-4 rounded-lg mb-4 text-sm">
+                <div class="flex items-start gap-2">
+                  <Icon name="tabler:info-circle" class="w-5 h-5 text-[var(--ootb-orange)] flex-shrink-0" />
                   <div>
-                    <h3 class="font-handwritten text-3xl mb-2 text-[var(--ootb-blue)]">Documentation complète</h3>
-                    <p class="text-gray-600 text-sm">Toutes les informations sur l'utilisation du site sont disponibles dans notre espace Notion.</p>
+                    <p class="mb-2">
+                      <span class="font-medium">Bon à savoir :</span> La partie technique de votre site est déjà bien optimisée, avec d'excellents scores sur <a href="https://pagespeed.web.dev/" target="_blank" rel="noopener noreferrer" class="text-[var(--ootb-blue)] underline hover:opacity-80">Lighthouse</a> et <a href="https://ecograder.com/" target="_blank" rel="noopener noreferrer" class="text-[var(--ootb-green)] underline hover:opacity-80">Ecograder</a>.
+                    </p>
+                    <p>
+                      Votre site utilise Astro (génération statique) et Cloudinary (optimisation d'images) pour garantir des performances optimales. Ces optimisations techniques vous aident à maintenir un bon score écologique, mais les images que vous ajoutez via l'éditeur de contenu bénéficieront également de vos optimisations manuelles.
+                    </p>
                   </div>
-                  <a 
-                    href={notionUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center px-4 py-2 bg-[var(--ootb-blue)] text-white rounded-lg hover:opacity-90 transition-colors self-start"
-                  >
-                    <Icon name="tabler:brand-notion" class="w-5 h-5 mr-2" />
-                    Consulter la documentation
-                  </a>
                 </div>
               </div>
               
-              <div class="bg-white rounded-xl border border-gray-200 overflow-hidden p-6">
-                <h3 class="font-handwritten text-3xl mb-4 text-[var(--ootb-violet)]">Contact direct</h3>
-                <div class="space-y-3">
-                  <a href={`mailto:hello@pwablo.be`} class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]" target="_blank" rel="noopener noreferrer">
-                    <Icon name="tabler:mail" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                    <span>hello@pwablo.be</span>
-                  </a>
-                  <a href={`tel:${contactInfo.phone}`} class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]" target="_blank" rel="noopener noreferrer">
-                    <Icon name="tabler:phone" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                    <span>{contactInfo.phone}</span>
-                  </a>
-                  <a href={contactInfo.whatsapp} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]">
-                    <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                    <span>WhatsApp</span>
-                  </a>
-                  <a href={contactInfo.calendar} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]">
-                    <Icon name="tabler:calendar" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                    <span>Prendre rendez-vous</span>
-                  </a>
-                </div>
+              <h4 class="font-medium text-gray-700 mb-2">Outils recommandés :</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <a href="https://squoosh.app/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 group">
+                  <div class="flex items-center gap-2">
+                    <Icon name="tabler:photo" class="w-4 h-4 text-[var(--ootb-orange)]" />
+                    <span>Squoosh (compression)</span>
+                  </div>
+                  <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full group-hover:bg-opacity-20">Essentiel</span>
+                </a>
+                <a href="https://www.iloveimg.com/resize-image" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 group">
+                  <div class="flex items-center gap-2">
+                    <Icon name="tabler:resize" class="w-4 h-4 text-[var(--ootb-turquoise)]" />
+                    <span>iLoveIMG (redimensionnement)</span>
+                  </div>
+                  <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full group-hover:bg-opacity-20">Essentiel</span>
+                </a>
               </div>
             </div>
-          </div>
-        </section>
-        
-        {/* Section Eco-responsabilité */}
-        <section id="eco" class="mb-12 section-content">
-          <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="eco">
-            <div class="flex items-center gap-2">
-              <Icon name="tabler:leaf" class="w-6 h-6 text-[var(--ootb-green)]" />
-              <h2 class="text-xl font-semibold text-gray-900">Éco-responsabilité</h2>
-            </div>
-            <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
-          </div>
+          </section>
           
-          <div class="accordion-content hidden" id="content-eco">
-            <p class="text-gray-600 mb-4">
-              Pour maintenir un excellent score écologique sur votre site, gardez ces conseils à l'esprit lorsque vous ajoutez du contenu. Même si Astro et Cloudinary optimisent déjà en partie vos images, ces bonnes pratiques restent importantes :
-            </p>
+          {/* Section GitHub */}
+          <section id="github" class="mb-12 section-content">
+            <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="github">
+              <div class="flex items-center gap-2">
+                <Icon name="tabler:code" class="w-6 h-6 text-gray-800" />
+                <h2 class="text-xl font-semibold text-gray-900">Code source</h2>
+              </div>
+              <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div class="bg-gray-50 p-4 rounded-lg">
-                <h4 class="font-medium text-[var(--ootb-green)] mb-2 flex items-center gap-2">
-                  <Icon name="tabler:photo" class="w-5 h-5" />
-                  Optimisation d'images
-                </h4>
-                <ul class="text-sm text-gray-600 space-y-2">
-                  <li class="flex items-start gap-2">
-                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                    <span>Préparer les images avec des dimensions adaptées avant de les téléverser (max 1500px)</span>
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                    <span>Privilégier les formats modernes (AVIF, WebP) quand disponibles</span>
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                    <span>Compresser les images avant téléversement pour de meilleures performances</span>
-                  </li>
-                </ul>
+            <div class="accordion-content hidden" id="content-github">
+              <p class="text-gray-600 mb-4">
+                Le code source complet du site est disponible sur GitHub. Il s'agit d'un projet Astro avec TailwindCSS et TinaCMS qui utilise des technologies modernes et performantes :
+              </p>
+              
+              <ul class="text-sm text-gray-600 space-y-2 mb-6">
+                <li class="flex items-start gap-2">
+                  <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
+                  <span><strong>Framework Astro</strong> : Génération de site statique ultra-performant</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
+                  <span><strong>TailwindCSS</strong> : Design responsive et optimisé</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
+                  <span><strong>TinaCMS</strong> : Interface d'édition de contenu intuitive</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
+                  <span><strong>JavaScript & TypeScript</strong> : Approche pragmatique avec un code simple et accessible</span>
+                </li>
+              </ul>
+              
+              <div class="bg-yellow-50 p-4 rounded-lg mb-6 text-sm">
+                <div class="flex items-start gap-2">
+                  <Icon name="tabler:info-circle" class="w-5 h-5 text-[var(--ootb-orange)] flex-shrink-0" />
+                  <div>
+                    <p class="mb-2">
+                      <span class="font-medium">Note importante :</span> Même si le code source est disponible, le développeur initial (pwablo) reste entièrement disponible pour toute assistance, modification ou évolution du site. N'hésitez pas à le contacter pour tout besoin technique.
+                    </p>
+                    <p>
+                      La codebase a été conçue pour être facilement compréhensible, avec une structure claire et des commentaires pertinents. Tout développeur familier avec Astro ou les frameworks JS modernes peut reprendre le projet sans difficulté.
+                    </p>
+                  </div>
+                </div>
               </div>
               
-              <div class="bg-gray-50 p-4 rounded-lg">
-                <h4 class="font-medium text-[var(--ootb-green)] mb-2 flex items-center gap-2">
-                  <Icon name="tabler:code" class="w-5 h-5" />
-                  Pourquoi c'est important
-                </h4>
-                <ul class="text-sm text-gray-600 space-y-2">
-                  <li class="flex items-start gap-2">
-                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                    <span>Temps de chargement plus rapides pour vos visiteurs</span>
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                    <span>Meilleur référencement sur Google (Core Web Vitals)</span>
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                    <span>Réduction de l'empreinte carbone (idéalement &lt; 0.5g CO2/page)</span>
-                  </li>
-                </ul>
+              <div class="flex flex-col sm:flex-row gap-4">
+                <a 
+                  href={contactInfo.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:opacity-90 transition-colors"
+                >
+                  <Icon name="tabler:brand-github" class="w-5 h-5 mr-2" />
+                  Voir le repository GitHub
+                </a>
+                <a 
+                  href="https://docs.astro.build/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center px-4 py-2 bg-[var(--ootb-orange)] text-white rounded-lg hover:opacity-90 transition-colors"
+                >
+                  <Icon name="tabler:book" class="w-5 h-5 mr-2" />
+                  Documentation Astro
+                </a>
               </div>
             </div>
-            
-            <div class="bg-yellow-50 p-4 rounded-lg mb-4 text-sm">
-              <div class="flex items-start gap-2">
-                <Icon name="tabler:info-circle" class="w-5 h-5 text-[var(--ootb-orange)] flex-shrink-0" />
-                <div>
-                  <p class="mb-2">
-                    <span class="font-medium">Bon à savoir :</span> La partie technique de votre site est déjà bien optimisée, avec d'excellents scores sur <a href="https://pagespeed.web.dev/" target="_blank" rel="noopener noreferrer" class="text-[var(--ootb-blue)] underline hover:opacity-80">Lighthouse</a> et <a href="https://ecograder.com/" target="_blank" rel="noopener noreferrer" class="text-[var(--ootb-green)] underline hover:opacity-80">Ecograder</a>.
-                  </p>
-                  <p>
-                    Votre site utilise Astro (génération statique) et Cloudinary (optimisation d'images) pour garantir des performances optimales. Ces optimisations techniques vous aident à maintenir un bon score écologique, mais les images que vous ajoutez via l'éditeur de contenu bénéficieront également de vos optimisations manuelles.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <h4 class="font-medium text-gray-700 mb-2">Outils recommandés :</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              <a href="https://squoosh.app/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 group">
-                <div class="flex items-center gap-2">
-                  <Icon name="tabler:photo" class="w-4 h-4 text-[var(--ootb-orange)]" />
-                  <span>Squoosh (compression)</span>
-                </div>
-                <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full group-hover:bg-opacity-20">Essentiel</span>
-              </a>
-              <a href="https://www.iloveimg.com/resize-image" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 group">
-                <div class="flex items-center gap-2">
-                  <Icon name="tabler:resize" class="w-4 h-4 text-[var(--ootb-turquoise)]" />
-                  <span>iLoveIMG (redimensionnement)</span>
-                </div>
-                <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full group-hover:bg-opacity-20">Essentiel</span>
-              </a>
-            </div>
-          </div>
-        </section>
-        
-        {/* Section GitHub */}
-        <section id="github" class="mb-12 section-content">
-          <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="github">
-            <div class="flex items-center gap-2">
-              <Icon name="tabler:code" class="w-6 h-6 text-gray-800" />
-              <h2 class="text-xl font-semibold text-gray-900">Code source</h2>
-            </div>
-            <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
-          </div>
-          
-          <div class="accordion-content hidden" id="content-github">
-            <p class="text-gray-600 mb-4">
-              Le code source complet du site est disponible sur GitHub. Il s'agit d'un projet Astro avec TailwindCSS et TinaCMS qui utilise des technologies modernes et performantes :
-            </p>
-            
-            <ul class="text-sm text-gray-600 space-y-2 mb-6">
-              <li class="flex items-start gap-2">
-                <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
-                <span><strong>Framework Astro</strong> : Génération de site statique ultra-performant</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
-                <span><strong>TailwindCSS</strong> : Design responsive et optimisé</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
-                <span><strong>TinaCMS</strong> : Interface d'édition de contenu intuitive</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
-                <span><strong>JavaScript & TypeScript</strong> : Approche pragmatique avec un code simple et accessible</span>
-              </li>
-            </ul>
-            
-            <div class="bg-yellow-50 p-4 rounded-lg mb-6 text-sm">
-              <div class="flex items-start gap-2">
-                <Icon name="tabler:info-circle" class="w-5 h-5 text-[var(--ootb-orange)] flex-shrink-0" />
-                <div>
-                  <p class="mb-2">
-                    <span class="font-medium">Note importante :</span> Même si le code source est disponible, le développeur initial (pwablo) reste entièrement disponible pour toute assistance, modification ou évolution du site. N'hésitez pas à le contacter pour tout besoin technique.
-                  </p>
-                  <p>
-                    La codebase a été conçue pour être facilement compréhensible, avec une structure claire et des commentaires pertinents. Tout développeur familier avec Astro ou les frameworks JS modernes peut reprendre le projet sans difficulté.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="flex flex-col sm:flex-row gap-4">
-              <a 
-                href={contactInfo.github} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:opacity-90 transition-colors"
-              >
-                <Icon name="tabler:brand-github" class="w-5 h-5 mr-2" />
-                Voir le repository GitHub
-              </a>
-              <a 
-                href="https://docs.astro.build/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="inline-flex items-center px-4 py-2 bg-[var(--ootb-orange)] text-white rounded-lg hover:opacity-90 transition-colors"
-              >
-                <Icon name="tabler:book" class="w-5 h-5 mr-2" />
-                Documentation Astro
-              </a>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
+          </section>
+        </div>
+      </main>
+    </div>
   </div>
 </Layout>
 
@@ -708,80 +720,11 @@ const notionUrl = import.meta.env.NOTION_WORKSPACE_URL || "https://www.notion.so
 </style>
 
 <script>
-  // Empêcher la propagation du clic sur les boutons
-  document.querySelectorAll('.toggle-credentials, .toggle-password').forEach(button => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    });
-  });
-
-  // Gestion de l'affichage/masquage des informations d'identification
-  document.querySelectorAll('.toggle-credentials').forEach(button => {
-    button.addEventListener('click', (e) => {
-      const target = e.currentTarget as HTMLButtonElement;
-      const card = target.closest('.group');
-      const credentialsInfo = card?.querySelector('.credentials-info');
-      
-      if (credentialsInfo) {
-        credentialsInfo.classList.toggle('hidden');
-        target.title = credentialsInfo.classList.contains('hidden') ? 'Voir les identifiants' : 'Masquer les identifiants';
-      }
-    });
-  });
-
-  // Gestion simplifiée de l'affichage/masquage des mots de passe
-  window.addEventListener('DOMContentLoaded', () => {
-    // Assignation directe de l'événement pour tous les boutons toggle-password
-    const toggleButtons = document.querySelectorAll('.toggle-password');
-    toggleButtons.forEach((btn) => {
-      const button = btn as HTMLElement;
-      button.addEventListener('click', () => {
-        // Récupérer l'élément contenant le mot de passe
-        const passwordField = button.previousElementSibling as HTMLElement;
-        if (!passwordField) return;
-
-        // Récupérer les données d'identifiants
-        const credentialsContainer = button.closest('[data-credentials]') as HTMLElement;
-        if (!credentialsContainer || !credentialsContainer.dataset.credentials) return;
-
-        try {
-          // Parser les données JSON
-          const credentials = JSON.parse(credentialsContainer.dataset.credentials);
-          
-          // Vérifier si le mot de passe est actuellement masqué
-          const isMasked = passwordField.classList.contains('password-field');
-          
-          if (isMasked) {
-            // Afficher le mot de passe
-            if (credentials.password && credentials.password !== "undefined") {
-              passwordField.textContent = credentials.password;
-            } else {
-              passwordField.textContent = '(Défini par l\'utilisateur)';
-              passwordField.classList.add('text-gray-500', 'italic');
-            }
-            passwordField.classList.remove('password-field');
-            
-            // Changer l'icône pour "masquer"
-            button.innerHTML = `
-              <Icon name="tabler:eye-off" class="w-4 h-4" />
-            `;
-          } else {
-            // Masquer le mot de passe
-            passwordField.textContent = '••••••••';
-            passwordField.classList.add('password-field');
-            passwordField.classList.remove('text-gray-500', 'italic');
-            
-            // Changer l'icône pour "afficher"
-            button.innerHTML = `
-              <Icon name="tabler:eye" class="w-4 h-4" />
-            `;
-          }
-        } catch (err) {
-          console.error('Erreur lors du traitement des identifiants:', err);
-        }
-      });
-    });
+  // Script d'authentification simplifié
+  document.addEventListener('DOMContentLoaded', () => {
+    // Afficher directement le dashboard sans vérification
+    document.getElementById('dashboard-content').classList.remove('hidden');
+    document.getElementById('auth-container').classList.add('hidden');
   });
 
   // Gestion des accordéons
@@ -893,5 +836,12 @@ const notionUrl = import.meta.env.NOTION_WORKSPACE_URL || "https://www.notion.so
       el.textContent = "utilisateur@exemple.com";
     });
     */
+  });
+
+  // Gestion de la déconnexion - simplification
+  document.getElementById('logout-button')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Rediriger vers la page d'accueil
+    window.location.href = '/';
   });
 </script>

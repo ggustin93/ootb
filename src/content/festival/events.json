@@ -1351,6 +1351,240 @@
         "email": "editions@callicephale.fr",
         "phone": "0033646410900"
       }
+    },
+    {
+      "id": "stand-166",
+      "title": "Virages : des pistes pour éduquer autrement ",
+      "description": "Face aux défis éducatifs actuels, Virages vous invite à repenser l'éducation en proposant une alternative innovante pour les parents et les professeurs. Découvrez des ressources pédagogiques variées : ateliers, conférences et formations pratiques. Explorez une approche inédite à travers des exemples et engagez des discussions enrichissantes avec des coachs parentaux/des psychologues. Ensemble, faisons un virage vers une éducation plus enrichissante et adaptée à chaque enfant et chaque parent !",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Bénédicte Bodeux",
+      "organization": "",
+      "image": "/images/events/stands/stand-166.webp",
+      "speakerImage": null,
+      "tags": [
+        "Parents",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Parents",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.virages-formations.com ",
+      "contact": {
+        "email": "bonjour@virages.org",
+        "phone": "0479954409"
+      }
+    },
+    {
+      "id": "stand-167",
+      "title": "Pour évoquer, transférer et ... ne pas oublier !",
+      "description": "Ouaip.be est une plateforme pédagogique destinée aux élèves de 3e à 6e primaire, leur permettant de renforcer leurs apprentissages de manière autonome. Les enseignants sélectionnent et planifient des exercices adaptés, appelés \"titres\", que les élèves réalisent en classe ou à domicile. Chaque titre offre une correction immédiate et des aides écrites et vocales pour guider l'élève. Cette approche structurée favorise la révision des compétences acquises, l'autonomie et l'engagement des élèves.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Benoit Monnoyer",
+      "organization": "",
+      "image": "/images/events/stands/stand-167.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Primaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://ouaip.be/",
+      "contact": {
+        "email": "administrateur@ouaip.be",
+        "phone": "0455/184465"
+      }
+    },
+    {
+      "id": "stand-168",
+      "title": "Alphabet simplifié",
+      "description": "Je sensibilise les enseignants à la dysgraphie et au retard du geste graphique en créant un fil conducteur pour assurer un passage plus harmonieux entre les maternelles et les primaires. Je propose des séances de graphothérapie, avec ma propre méthode « l’alphabet simplifié », et de coaching scolaire dans mon cabinet situé à Bruxelles. Je donne des formations aux professeurs et des conférences aux parents. Venez à mon stand pour découvrir mes outils pédagogiques :) ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Elise Verstraeten",
+      "organization": "",
+      "image": "/images/events/stands/stand-168.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.elise-grapho-coaching.be ",
+      "contact": {
+        "email": "eliseverstraeten@gmail.com",
+        "phone": "0485195635"
+      }
+    },
+    {
+      "id": "stand-169",
+      "title": "Alice éditions",
+      "description": "Au fil de l’aventure Alice Éditions commencée en 1995, nous avons pris le parti d’être une maison d’édition jeunesse engagée.\n\nNotre conviction profonde est qu’un beau livre est un formidable outil pour ouvrir les enfants et les ados à des valeurs qui nous tiennent à cœur : le respect (de soi, de l’autre, de l’environnement), l’ouverture d’esprit, l’entraide et le dialogue.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Sophie Van den Bril",
+      "organization": "",
+      "image": "/images/events/stands/stand-169.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.alice-editions.be",
+      "contact": {
+        "email": "sophie@alice-editions.be",
+        "phone": "0497544798"
+      }
+    },
+    {
+      "id": "stand-170",
+      "title": "Association TDAH Belgique",
+      "description": "L’association TDA/H Belgique informe, guide et soutient toutes les personnes confrontées au Trouble du Déficit de l’Attention avec ou sans Hyperactivité.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Pascale  De Coster",
+      "organization": "",
+      "image": "/images/events/stands/stand-170.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.tdah.be",
+      "contact": {
+        "email": "info@tdah.be",
+        "phone": "+32499206388"
+      }
+    },
+    {
+      "id": "stand-171",
+      "title": "BookWidgets, outil de création d'exercices numériques ",
+      "description": "BookWidgets permet aux enseignants de créer des activités interactives et d’évaluer leurs élèves avec 40 types d’activités et 35 types de questions. Intégré à Google Classroom, Microsoft Teams, Smartschool et Moodle, il facilite le partage, le suivi en temps réel et la correction automatique. BookWidgets peut être utilisé pour l’évaluation formative et sommative, avec un feedback personnalisé. Idéal pour toutes les matières et tous les niveaux !",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Dimitri Bongers",
+      "organization": "",
+      "image": "/images/events/stands/stand-171.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.bookwidgets.com/fr ",
+      "contact": {
+        "email": "dimitri@bookwidgets.com",
+        "phone": "0470043443"
+      }
+    },
+    {
+      "id": "stand-172",
+      "title": "l'école des loisirs",
+      "description": "L’école des loisirs est un éditeur indépendant français de littérature pour la jeunesse créée en 1965. En 1987, l’école des loisirs décide d’ouvrir une antenne éditoriale à Bruxelles, afin de diversifier ses collections. Pastel est le nom choisi pour cet « imprint » belge. L’école des loisirs propose également en Belgique des abonnements-livres : l’école des max.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Chloé Peurey",
+      "organization": "",
+      "image": "/images/events/stands/stand-172.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.ecoledesloisirs.fr/",
+      "contact": {
+        "email": "cpeurey@ecoledesloisirs.com",
+        "phone": "0473231527"
+      }
+    },
+    {
+      "id": "stand-173",
+      "title": "RESONANCE asbl",
+      "description": "Resonance est une plateforme d’organisations de jeunesse qui propose : des formations / ressources pédagogiques / mise en réseau des professionnel·les lors d’events conviviaux. Nos outils pédagogiques phares : le Techni’kit 2.0 & la valisette BTT qui sont entrés dans les écoles avec les formations ‘Techniques actives & participatives’ et ‘La bientraitance dans les postures éducatives : une mission collective ». Venez découvrir aussi l’Anim’App & le tout nouvel Ancrage sur le Bienêtre des jeunes!",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "virginie goethals pour RESONANCE asbl",
+      "organization": "",
+      "image": "/images/events/stands/stand-173.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professionnels",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professionnels",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.resonanceasbl.be",
+      "contact": {
+        "email": "virginie.goethals@resonanceasbl.be",
+        "phone": "0478/641657"
+      }
+    },
+    {
+      "id": "stand-174",
+      "title": "CodeNPlay",
+      "description": "CodeNPlay facilite l’accès des jeunes à la pensée informatique, la robotique et la citoyenneté numérique de manière inclusive via : la formation des enseignant·es, l’accompagnement des structures éducatives dans leur transition numérique, l’organisation d’activités extrascolaires de programmation et robotique, ainsi que la création de contenus pédagogiques, non genrés et adaptés au public cible.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Sonia Trichili",
+      "organization": "",
+      "image": "/images/events/stands/stand-174.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.codenplay.be",
+      "contact": {
+        "email": "sonia@codenplay.be",
+        "phone": "0474/935440"
+      }
     }
   ],
   "Jeudi": [
@@ -1691,6 +1925,240 @@
         "email": "editions@callicephale.fr",
         "phone": "0033646410900"
       }
+    },
+    {
+      "id": "stand-166",
+      "title": "Virages : des pistes pour éduquer autrement ",
+      "description": "Face aux défis éducatifs actuels, Virages vous invite à repenser l'éducation en proposant une alternative innovante pour les parents et les professeurs. Découvrez des ressources pédagogiques variées : ateliers, conférences et formations pratiques. Explorez une approche inédite à travers des exemples et engagez des discussions enrichissantes avec des coachs parentaux/des psychologues. Ensemble, faisons un virage vers une éducation plus enrichissante et adaptée à chaque enfant et chaque parent !",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Bénédicte Bodeux",
+      "organization": "",
+      "image": "/images/events/stands/stand-166.webp",
+      "speakerImage": null,
+      "tags": [
+        "Parents",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Parents",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.virages-formations.com ",
+      "contact": {
+        "email": "bonjour@virages.org",
+        "phone": "0479954409"
+      }
+    },
+    {
+      "id": "stand-167",
+      "title": "Pour évoquer, transférer et ... ne pas oublier !",
+      "description": "Ouaip.be est une plateforme pédagogique destinée aux élèves de 3e à 6e primaire, leur permettant de renforcer leurs apprentissages de manière autonome. Les enseignants sélectionnent et planifient des exercices adaptés, appelés \"titres\", que les élèves réalisent en classe ou à domicile. Chaque titre offre une correction immédiate et des aides écrites et vocales pour guider l'élève. Cette approche structurée favorise la révision des compétences acquises, l'autonomie et l'engagement des élèves.",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Benoit Monnoyer",
+      "organization": "",
+      "image": "/images/events/stands/stand-167.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Primaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://ouaip.be/",
+      "contact": {
+        "email": "administrateur@ouaip.be",
+        "phone": "0455/184465"
+      }
+    },
+    {
+      "id": "stand-168",
+      "title": "Alphabet simplifié",
+      "description": "Je sensibilise les enseignants à la dysgraphie et au retard du geste graphique en créant un fil conducteur pour assurer un passage plus harmonieux entre les maternelles et les primaires. Je propose des séances de graphothérapie, avec ma propre méthode « l’alphabet simplifié », et de coaching scolaire dans mon cabinet situé à Bruxelles. Je donne des formations aux professeurs et des conférences aux parents. Venez à mon stand pour découvrir mes outils pédagogiques :) ",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Elise Verstraeten",
+      "organization": "",
+      "image": "/images/events/stands/stand-168.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.elise-grapho-coaching.be ",
+      "contact": {
+        "email": "eliseverstraeten@gmail.com",
+        "phone": "0485195635"
+      }
+    },
+    {
+      "id": "stand-169",
+      "title": "Alice éditions",
+      "description": "Au fil de l’aventure Alice Éditions commencée en 1995, nous avons pris le parti d’être une maison d’édition jeunesse engagée.\n\nNotre conviction profonde est qu’un beau livre est un formidable outil pour ouvrir les enfants et les ados à des valeurs qui nous tiennent à cœur : le respect (de soi, de l’autre, de l’environnement), l’ouverture d’esprit, l’entraide et le dialogue.",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Sophie Van den Bril",
+      "organization": "",
+      "image": "/images/events/stands/stand-169.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.alice-editions.be",
+      "contact": {
+        "email": "sophie@alice-editions.be",
+        "phone": "0497544798"
+      }
+    },
+    {
+      "id": "stand-170",
+      "title": "Association TDAH Belgique",
+      "description": "L’association TDA/H Belgique informe, guide et soutient toutes les personnes confrontées au Trouble du Déficit de l’Attention avec ou sans Hyperactivité.",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Pascale  De Coster",
+      "organization": "",
+      "image": "/images/events/stands/stand-170.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.tdah.be",
+      "contact": {
+        "email": "info@tdah.be",
+        "phone": "+32499206388"
+      }
+    },
+    {
+      "id": "stand-171",
+      "title": "BookWidgets, outil de création d'exercices numériques ",
+      "description": "BookWidgets permet aux enseignants de créer des activités interactives et d’évaluer leurs élèves avec 40 types d’activités et 35 types de questions. Intégré à Google Classroom, Microsoft Teams, Smartschool et Moodle, il facilite le partage, le suivi en temps réel et la correction automatique. BookWidgets peut être utilisé pour l’évaluation formative et sommative, avec un feedback personnalisé. Idéal pour toutes les matières et tous les niveaux !",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Dimitri Bongers",
+      "organization": "",
+      "image": "/images/events/stands/stand-171.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.bookwidgets.com/fr ",
+      "contact": {
+        "email": "dimitri@bookwidgets.com",
+        "phone": "0470043443"
+      }
+    },
+    {
+      "id": "stand-172",
+      "title": "l'école des loisirs",
+      "description": "L’école des loisirs est un éditeur indépendant français de littérature pour la jeunesse créée en 1965. En 1987, l’école des loisirs décide d’ouvrir une antenne éditoriale à Bruxelles, afin de diversifier ses collections. Pastel est le nom choisi pour cet « imprint » belge. L’école des loisirs propose également en Belgique des abonnements-livres : l’école des max.",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Chloé Peurey",
+      "organization": "",
+      "image": "/images/events/stands/stand-172.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.ecoledesloisirs.fr/",
+      "contact": {
+        "email": "cpeurey@ecoledesloisirs.com",
+        "phone": "0473231527"
+      }
+    },
+    {
+      "id": "stand-173",
+      "title": "RESONANCE asbl",
+      "description": "Resonance est une plateforme d’organisations de jeunesse qui propose : des formations / ressources pédagogiques / mise en réseau des professionnel·les lors d’events conviviaux. Nos outils pédagogiques phares : le Techni’kit 2.0 & la valisette BTT qui sont entrés dans les écoles avec les formations ‘Techniques actives & participatives’ et ‘La bientraitance dans les postures éducatives : une mission collective ». Venez découvrir aussi l’Anim’App & le tout nouvel Ancrage sur le Bienêtre des jeunes!",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "virginie goethals pour RESONANCE asbl",
+      "organization": "",
+      "image": "/images/events/stands/stand-173.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professionnels",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professionnels",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.resonanceasbl.be",
+      "contact": {
+        "email": "virginie.goethals@resonanceasbl.be",
+        "phone": "0478/641657"
+      }
+    },
+    {
+      "id": "stand-174",
+      "title": "CodeNPlay",
+      "description": "CodeNPlay facilite l’accès des jeunes à la pensée informatique, la robotique et la citoyenneté numérique de manière inclusive via : la formation des enseignant·es, l’accompagnement des structures éducatives dans leur transition numérique, l’organisation d’activités extrascolaires de programmation et robotique, ainsi que la création de contenus pédagogiques, non genrés et adaptés au public cible.",
+      "type": "Stands",
+      "day": "Jeudi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Sonia Trichili",
+      "organization": "",
+      "image": "/images/events/stands/stand-174.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.codenplay.be",
+      "contact": {
+        "email": "sonia@codenplay.be",
+        "phone": "0474/935440"
+      }
     }
   ],
   "Vendredi": [
@@ -2004,6 +2472,240 @@
       "contact": {
         "email": "editions@callicephale.fr",
         "phone": "0033646410900"
+      }
+    },
+    {
+      "id": "stand-166",
+      "title": "Virages : des pistes pour éduquer autrement ",
+      "description": "Face aux défis éducatifs actuels, Virages vous invite à repenser l'éducation en proposant une alternative innovante pour les parents et les professeurs. Découvrez des ressources pédagogiques variées : ateliers, conférences et formations pratiques. Explorez une approche inédite à travers des exemples et engagez des discussions enrichissantes avec des coachs parentaux/des psychologues. Ensemble, faisons un virage vers une éducation plus enrichissante et adaptée à chaque enfant et chaque parent !",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Bénédicte Bodeux",
+      "organization": "",
+      "image": "/images/events/stands/stand-166.webp",
+      "speakerImage": null,
+      "tags": [
+        "Parents",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Parents",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.virages-formations.com ",
+      "contact": {
+        "email": "bonjour@virages.org",
+        "phone": "0479954409"
+      }
+    },
+    {
+      "id": "stand-167",
+      "title": "Pour évoquer, transférer et ... ne pas oublier !",
+      "description": "Ouaip.be est une plateforme pédagogique destinée aux élèves de 3e à 6e primaire, leur permettant de renforcer leurs apprentissages de manière autonome. Les enseignants sélectionnent et planifient des exercices adaptés, appelés \"titres\", que les élèves réalisent en classe ou à domicile. Chaque titre offre une correction immédiate et des aides écrites et vocales pour guider l'élève. Cette approche structurée favorise la révision des compétences acquises, l'autonomie et l'engagement des élèves.",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Benoit Monnoyer",
+      "organization": "",
+      "image": "/images/events/stands/stand-167.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Primaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://ouaip.be/",
+      "contact": {
+        "email": "administrateur@ouaip.be",
+        "phone": "0455/184465"
+      }
+    },
+    {
+      "id": "stand-168",
+      "title": "Alphabet simplifié",
+      "description": "Je sensibilise les enseignants à la dysgraphie et au retard du geste graphique en créant un fil conducteur pour assurer un passage plus harmonieux entre les maternelles et les primaires. Je propose des séances de graphothérapie, avec ma propre méthode « l’alphabet simplifié », et de coaching scolaire dans mon cabinet situé à Bruxelles. Je donne des formations aux professeurs et des conférences aux parents. Venez à mon stand pour découvrir mes outils pédagogiques :) ",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Elise Verstraeten",
+      "organization": "",
+      "image": "/images/events/stands/stand-168.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.elise-grapho-coaching.be ",
+      "contact": {
+        "email": "eliseverstraeten@gmail.com",
+        "phone": "0485195635"
+      }
+    },
+    {
+      "id": "stand-169",
+      "title": "Alice éditions",
+      "description": "Au fil de l’aventure Alice Éditions commencée en 1995, nous avons pris le parti d’être une maison d’édition jeunesse engagée.\n\nNotre conviction profonde est qu’un beau livre est un formidable outil pour ouvrir les enfants et les ados à des valeurs qui nous tiennent à cœur : le respect (de soi, de l’autre, de l’environnement), l’ouverture d’esprit, l’entraide et le dialogue.",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Sophie Van den Bril",
+      "organization": "",
+      "image": "/images/events/stands/stand-169.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.alice-editions.be",
+      "contact": {
+        "email": "sophie@alice-editions.be",
+        "phone": "0497544798"
+      }
+    },
+    {
+      "id": "stand-170",
+      "title": "Association TDAH Belgique",
+      "description": "L’association TDA/H Belgique informe, guide et soutient toutes les personnes confrontées au Trouble du Déficit de l’Attention avec ou sans Hyperactivité.",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Pascale  De Coster",
+      "organization": "",
+      "image": "/images/events/stands/stand-170.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.tdah.be",
+      "contact": {
+        "email": "info@tdah.be",
+        "phone": "+32499206388"
+      }
+    },
+    {
+      "id": "stand-171",
+      "title": "BookWidgets, outil de création d'exercices numériques ",
+      "description": "BookWidgets permet aux enseignants de créer des activités interactives et d’évaluer leurs élèves avec 40 types d’activités et 35 types de questions. Intégré à Google Classroom, Microsoft Teams, Smartschool et Moodle, il facilite le partage, le suivi en temps réel et la correction automatique. BookWidgets peut être utilisé pour l’évaluation formative et sommative, avec un feedback personnalisé. Idéal pour toutes les matières et tous les niveaux !",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Dimitri Bongers",
+      "organization": "",
+      "image": "/images/events/stands/stand-171.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.bookwidgets.com/fr ",
+      "contact": {
+        "email": "dimitri@bookwidgets.com",
+        "phone": "0470043443"
+      }
+    },
+    {
+      "id": "stand-172",
+      "title": "l'école des loisirs",
+      "description": "L’école des loisirs est un éditeur indépendant français de littérature pour la jeunesse créée en 1965. En 1987, l’école des loisirs décide d’ouvrir une antenne éditoriale à Bruxelles, afin de diversifier ses collections. Pastel est le nom choisi pour cet « imprint » belge. L’école des loisirs propose également en Belgique des abonnements-livres : l’école des max.",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Chloé Peurey",
+      "organization": "",
+      "image": "/images/events/stands/stand-172.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.ecoledesloisirs.fr/",
+      "contact": {
+        "email": "cpeurey@ecoledesloisirs.com",
+        "phone": "0473231527"
+      }
+    },
+    {
+      "id": "stand-173",
+      "title": "RESONANCE asbl",
+      "description": "Resonance est une plateforme d’organisations de jeunesse qui propose : des formations / ressources pédagogiques / mise en réseau des professionnel·les lors d’events conviviaux. Nos outils pédagogiques phares : le Techni’kit 2.0 & la valisette BTT qui sont entrés dans les écoles avec les formations ‘Techniques actives & participatives’ et ‘La bientraitance dans les postures éducatives : une mission collective ». Venez découvrir aussi l’Anim’App & le tout nouvel Ancrage sur le Bienêtre des jeunes!",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "virginie goethals pour RESONANCE asbl",
+      "organization": "",
+      "image": "/images/events/stands/stand-173.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professionnels",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professionnels",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.resonanceasbl.be",
+      "contact": {
+        "email": "virginie.goethals@resonanceasbl.be",
+        "phone": "0478/641657"
+      }
+    },
+    {
+      "id": "stand-174",
+      "title": "CodeNPlay",
+      "description": "CodeNPlay facilite l’accès des jeunes à la pensée informatique, la robotique et la citoyenneté numérique de manière inclusive via : la formation des enseignant·es, l’accompagnement des structures éducatives dans leur transition numérique, l’organisation d’activités extrascolaires de programmation et robotique, ainsi que la création de contenus pédagogiques, non genrés et adaptés au public cible.",
+      "type": "Stands",
+      "day": "Vendredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Sonia Trichili",
+      "organization": "",
+      "image": "/images/events/stands/stand-174.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.codenplay.be",
+      "contact": {
+        "email": "sonia@codenplay.be",
+        "phone": "0474/935440"
       }
     }
   ]

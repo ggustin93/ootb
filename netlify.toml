@@ -175,6 +175,13 @@
   status = 200
   force = true
 
+# Protection simplifiée du dashboard
+[[redirects]]
+  from = "/dashboard*"
+  to = "/.netlify/functions/auth-check"
+  status = 200
+  force = true
+
 # =====================================
 # REDIRECTIONS ADMIN VERS AUTRE SERVEUR
 # =====================================

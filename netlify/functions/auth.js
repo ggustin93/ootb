@@ -76,60 +76,85 @@ export const handler = async (event) => {
       
       // Tenter de se connecter avec Supabase
       console.log('🔄 Tentative de connexion avec Supabase...');
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password
-      });
+      console.log('📝 URL Supabase:', SUPABASE_URL ? 'Définie' : 'Non définie');
+      console.log('📝 Clé Supabase:', SUPABASE_ANON_KEY ? 'Définie' : 'Non définie');
       
-      if (error) {
-        console.error('❌ Erreur de connexion:', error.message);
+      try {
+        const { data: authData, error } = await supabase.auth.signInWithPassword({
+          email: data.email,
+          password: data.password
+        });
+        
+        if (error) {
+          console.error('❌ Erreur de connexion Supabase:', error.message);
+          console.error('❌ Détails de l\'erreur:', JSON.stringify(error));
+          return {
+            statusCode: 401,
+            body: JSON.stringify({
+              success: false,
+              message: 'Email ou mot de passe incorrect'
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+        }
+        
+        // Connexion réussie, créer les cookies et rediriger
+        console.log('✅ Connexion réussie pour:', authData.user.email);
+        console.log('✅ Détails de la session:', JSON.stringify({
+          userId: authData.user.id,
+          email: authData.user.email,
+          hasAccessToken: !!authData.session.access_token,
+          hasRefreshToken: !!authData.session.refresh_token
+        }));
+        
+        // Récupérer l'URL de redirection depuis les paramètres ou utiliser une valeur par défaut
+        const redirectTo = data.redirectTo || '/dashboard/';
+        console.log('🔄 Redirection vers:', redirectTo);
+        
+        // Créer les cookies pour stocker les tokens
+        const accessTokenCookie = generateSecureCookie('sb-access-token', authData.session.access_token, 60 * 60 * 24 * 7);
+        const refreshTokenCookie = generateSecureCookie('sb-refresh-token', authData.session.refresh_token, 60 * 60 * 24 * 7);
+        
+        // Déterminer si nous sommes en mode développement
+        const isDevMode = process.env.NODE_ENV !== 'production';
+        console.log(`🛠️ Mode: ${isDevMode ? 'DEV' : 'PROD'}`);
+        
+        // Adapter l'URL de redirection en fonction du mode
+        // En mode DEV, rediriger vers /dashboard.html au lieu de /dashboard/
+        let finalRedirectUrl = redirectTo;
+        if (isDevMode && redirectTo === '/dashboard/') {
+          finalRedirectUrl = '/dashboard.html';
+          console.log(`🔄 Mode DEV: Redirection adaptée vers ${finalRedirectUrl}`);
+        }
+        
+        console.log(`🎯 URL finale de redirection: ${finalRedirectUrl}`);
+        console.log(`🍪 Cookies générés: ${accessTokenCookie.substring(0, 20)}... et ${refreshTokenCookie.substring(0, 20)}...`);
+        
         return {
-          statusCode: 401,
+          statusCode: 302,
+          headers: {
+            'Location': finalRedirectUrl,
+            'Set-Cookie': accessTokenCookie + ', ' + refreshTokenCookie,
+            'Cache-Control': 'no-cache'
+          },
+          body: JSON.stringify({ success: true })
+        };
+      } catch (error) {
+        console.error('❌ Erreur lors du traitement de la requête:', error);
+        
+        return {
+          statusCode: 500,
           body: JSON.stringify({
             success: false,
-            message: 'Email ou mot de passe incorrect'
+            message: `Erreur lors du traitement de la requête: ${error.message || 'Erreur inconnue'}`
           }),
           headers: {
             'Content-Type': 'application/json'
           }
         };
       }
-      
-      // Connexion réussie, créer les cookies et rediriger
-      console.log('✅ Connexion réussie pour:', authData.user.email);
-      
-      // Récupérer l'URL de redirection depuis les paramètres ou utiliser une valeur par défaut
-      const redirectTo = data.redirectTo || '/dashboard/';
-      console.log('🔄 Redirection vers:', redirectTo);
-      
-      // Créer les cookies pour stocker les tokens
-      const accessTokenCookie = `sb-access-token=${authData.session.access_token}; Path=/; HttpOnly; Max-Age=${60 * 60 * 24 * 7}`;
-      const refreshTokenCookie = `sb-refresh-token=${authData.session.refresh_token}; Path=/; HttpOnly; Max-Age=${60 * 60 * 24 * 7}`;
-      
-      // Déterminer si nous sommes en mode développement
-      const isDevMode = process.env.NODE_ENV !== 'production';
-      console.log(`🛠️ Mode: ${isDevMode ? 'DEV' : 'PROD'}`);
-      
-      // Adapter l'URL de redirection en fonction du mode
-      // En mode DEV, rediriger vers /dashboard.html au lieu de /dashboard/
-      let finalRedirectUrl = redirectTo;
-      if (isDevMode && redirectTo === '/dashboard/') {
-        finalRedirectUrl = '/dashboard.html';
-        console.log(`🔄 Mode DEV: Redirection adaptée vers ${finalRedirectUrl}`);
-      }
-      
-      console.log(`🎯 URL finale de redirection: ${finalRedirectUrl}`);
-      console.log(`🍪 Cookies générés: ${accessTokenCookie.substring(0, 20)}... et ${refreshTokenCookie.substring(0, 20)}...`);
-      
-      return {
-        statusCode: 302,
-        headers: {
-          'Location': finalRedirectUrl,
-          'Set-Cookie': [accessTokenCookie, refreshTokenCookie],
-          'Cache-Control': 'no-cache'
-        },
-        body: JSON.stringify({ success: true })
-      };
     } catch (error) {
       console.error('❌ Erreur lors du traitement de la requête:', error);
       

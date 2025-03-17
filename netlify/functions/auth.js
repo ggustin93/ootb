@@ -133,12 +133,12 @@ export const handler = async (event) => {
         console.log(`🍪 Cookies générés: ${accessTokenCookie.substring(0, 20)}... et ${refreshTokenCookie.substring(0, 20)}...`);
         
         // Revenir à une approche où le serveur définit les cookies et effectue la redirection
-        // Mais en utilisant une chaîne pour Set-Cookie au lieu d'un tableau pour éviter les erreurs
+        // Mais en utilisant un tableau pour Set-Cookie pour définir correctement les cookies
         return {
           statusCode: 302,
           headers: {
             'Location': finalRedirectUrl,
-            'Set-Cookie': accessTokenCookie + '; ' + refreshTokenCookie,
+            'Set-Cookie': [accessTokenCookie, refreshTokenCookie],
             'Cache-Control': 'no-cache'
           },
           body: ''

@@ -9,15 +9,32 @@ const supabase = createClient(SUPABASE_URL || '', SUPABASE_ANON_KEY || '');
 
 // Fonction pour extraire les cookies d'une requête
 const parseCookies = (cookieHeader) => {
-  if (!cookieHeader) return {};
+  if (!cookieHeader) {
+    console.log('❌ Aucun cookie trouvé dans les headers');
+    return {};
+  }
   
   console.log('🍪 Headers de cookies reçus:', cookieHeader);
   
-  return cookieHeader.split(';').reduce((cookies, cookie) => {
-    const [name, value] = cookie.trim().split('=').map(c => c.trim());
-    cookies[name] = value;
-    return cookies;
-  }, {});
+  // Diviser les cookies par point-virgule
+  const cookies = {};
+  const cookieParts = cookieHeader.split(';');
+  
+  console.log(`🍪 Nombre de parties de cookies: ${cookieParts.length}`);
+  
+  cookieParts.forEach((part, index) => {
+    const [name, value] = part.trim().split('=').map(c => c.trim());
+    if (name && value) {
+      cookies[name] = value;
+      console.log(`🍪 Cookie #${index + 1}: ${name}=${value.substring(0, 10)}...`);
+    } else {
+      console.log(`⚠️ Partie de cookie invalide #${index + 1}: "${part}"`);
+    }
+  });
+  
+  console.log('🍪 Cookies extraits:', Object.keys(cookies));
+  
+  return cookies;
 };
 
 export const handler = async (event) => {

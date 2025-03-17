@@ -230,7 +230,23 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard/';
           if (response.redirected) {
             console.log('🔄 Redirection vers:', response.url);
             window.location.href = response.url;
-          } else if (!response.ok) {
+          } else if (response.ok) {
+            // Gérer la réponse JSON
+            const data = await response.json();
+            console.log('✅ Connexion réussie, données reçues:', data);
+            
+            // Définir les cookies côté client
+            if (data.cookies) {
+              document.cookie = `sb-access-token=${data.cookies.accessToken}; Path=/; HttpOnly; Max-Age=${60 * 60 * 24 * 7}`;
+              document.cookie = `sb-refresh-token=${data.cookies.refreshToken}; Path=/; HttpOnly; Max-Age=${60 * 60 * 24 * 7}`;
+            }
+            
+            // Rediriger vers l'URL spécifiée
+            if (data.redirectTo) {
+              console.log('🔄 Redirection vers:', data.redirectTo);
+              window.location.href = data.redirectTo;
+            }
+          } else {
             const data = await response.json();
             console.error('❌ Erreur de connexion:', data);
             window.location.href = `/login?error=invalid_credentials&message=${encodeURIComponent(data.message || '')}&redirect=${encodeURIComponent(redirectTo)}`;

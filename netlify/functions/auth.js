@@ -132,15 +132,16 @@ export const handler = async (event) => {
         console.log(`🎯 URL finale de redirection: ${finalRedirectUrl}`);
         console.log(`🍪 Cookies générés: ${accessTokenCookie.substring(0, 20)}... et ${refreshTokenCookie.substring(0, 20)}...`);
         
-        // Utiliser un tableau pour Set-Cookie
+        // Revenir à une approche où le serveur définit les cookies et effectue la redirection
+        // Mais en utilisant une chaîne pour Set-Cookie au lieu d'un tableau pour éviter les erreurs
         return {
           statusCode: 302,
           headers: {
             'Location': finalRedirectUrl,
-            'Set-Cookie': [accessTokenCookie, refreshTokenCookie],
+            'Set-Cookie': accessTokenCookie + '; ' + refreshTokenCookie,
             'Cache-Control': 'no-cache'
           },
-          body: JSON.stringify({ success: true })
+          body: ''
         };
       } catch (error) {
         console.error('❌ Erreur lors du traitement de la requête:', error);

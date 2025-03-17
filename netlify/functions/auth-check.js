@@ -8,20 +8,30 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(SUPABASE_URL || '', SUPABASE_ANON_KEY || '');
 
 export const handler = async (event) => {
+  console.log('🔒 Auth-Check : Requête reçue', {
+    method: event.httpMethod,
+    path: event.path,
+    host: event.headers.host,
+    cookies: event.headers.cookie ? 'présent' : 'absent'
+  });
+  
   // Récupérer le cookie d'authentification
   const cookies = event.headers.cookie || '';
   const accessToken = cookies.match(/sb-access-token=([^;]+)/)?.[1];
+  const refreshToken = cookies.match(/sb-refresh-token=([^;]+)/)?.[1];
   
-  console.log('🔒 Vérification d\'authentification pour:', event.path);
-  console.log('🍪 Token trouvé:', accessToken ? '✅ Présent' : '❌ Absent');
+  console.log('🍪 Auth-Check : Tokens trouvés:', {
+    accessToken: accessToken ? '✅ Présent' : '❌ Absent',
+    refreshToken: refreshToken ? '✅ Présent' : '❌ Absent'
+  });
   
   // Si pas de token, rediriger vers login
   if (!accessToken) {
-    console.log('❌ Aucun token, redirection vers login');
+    console.log('❌ Auth-Check : Aucun token d\'accès, redirection vers login');
     return {
       statusCode: 302,
       headers: { 
-        'Location': '/login',
+        'Location': '/login?error=auth_required',
         'Cache-Control': 'no-cache'
       },
       body: ''
@@ -29,15 +39,50 @@ export const handler = async (event) => {
   }
   
   try {
-    // Vérifier le token avec Supabase
-    const { data, error } = await supabase.auth.getUser();
+    // 1. Définir la session explicitement si nous avons les deux tokens
+    if (refreshToken) {
+      console.log('🔄 Auth-Check : Tentative de définition explicite de la session');
+      const { error: sessionError } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken
+      });
+      
+      if (sessionError) {
+        console.log('❌ Auth-Check : Erreur lors de la définition de la session:', sessionError.message);
+        return {
+          statusCode: 302,
+          headers: { 
+            'Location': '/login?error=session_expired',
+            'Cache-Control': 'no-cache'
+          },
+          body: ''
+        };
+      }
+      console.log('✅ Auth-Check : Session définie avec succès');
+    }
     
-    if (error || !data.user) {
-      console.log('❌ Token invalide:', error?.message);
+    // 2. Vérifier le token avec getUser() en passant explicitement le token
+    console.log('🔄 Auth-Check : Vérification du token utilisateur');
+    const { data, error } = await supabase.auth.getUser(accessToken);
+    
+    if (error) {
+      console.log('❌ Auth-Check : Erreur vérification token:', error.message);
       return {
         statusCode: 302,
         headers: { 
-          'Location': '/login',
+          'Location': '/login?error=invalid_token',
+          'Cache-Control': 'no-cache'
+        },
+        body: ''
+      };
+    }
+    
+    if (!data || !data.user) {
+      console.log('❌ Auth-Check : Aucun utilisateur trouvé');
+      return {
+        statusCode: 302,
+        headers: { 
+          'Location': '/login?error=user_not_found',
           'Cache-Control': 'no-cache'
         },
         body: ''
@@ -45,7 +90,7 @@ export const handler = async (event) => {
     }
     
     // Utilisateur authentifié, permettre l'accès
-    console.log('✅ Utilisateur authentifié:', data.user.email);
+    console.log('✅ Auth-Check : Utilisateur authentifié:', data.user.email);
     
     // Retourner le status 200 pour permettre l'accès
     return {
@@ -53,11 +98,11 @@ export const handler = async (event) => {
       body: ''
     };
   } catch (error) {
-    console.log('❌ Erreur lors de la vérification:', error);
+    console.log('❌ Auth-Check : Erreur générale:', error);
     return {
       statusCode: 302,
       headers: { 
-        'Location': '/login',
+        'Location': '/login?error=auth_error',
         'Cache-Control': 'no-cache'
       },
       body: ''

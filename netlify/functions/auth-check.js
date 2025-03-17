@@ -38,6 +38,30 @@ export const handler = async (event) => {
     };
   }
   
+  // Détecter si nous sommes en mode développement
+  const isLocalhost = event.headers.host && (
+    event.headers.host.includes('localhost') || 
+    event.headers.host.includes('127.0.0.1')
+  );
+  const isNetlifyDev = process.env.NETLIFY_DEV === 'true';
+  const isDevelopment = isLocalhost || isNetlifyDev;
+  
+  console.log('🛠️ Auth-Check : Mode développement ?', {
+    isLocalhost,
+    isNetlifyDev,
+    isDevelopment,
+    host: event.headers.host
+  });
+  
+  // En mode développement, accepter des tokens de test
+  if (isDevelopment && accessToken === 'fake-token') {
+    console.log('✅ Auth-Check : Mode DEV, acceptation du token de test');
+    return {
+      statusCode: 200,
+      body: ''
+    };
+  }
+  
   try {
     // 1. Définir la session explicitement si nous avons les deux tokens
     if (refreshToken) {

@@ -44,12 +44,15 @@ export const handler = async (event) => {
   }
 
   // Gérer les requêtes POST (connexion)
-  if (event.httpMethod === 'POST' && event.path === '/.netlify/functions/auth/login') {
+  if (event.httpMethod === 'POST' && (event.path === '/.netlify/functions/auth/login' || event.path === '/api/auth/login')) {
     console.log('🔄 Requête POST reçue pour la connexion');
+    console.log('📝 Headers reçus:', JSON.stringify(event.headers));
+    console.log('📝 Path complet:', event.path);
     
     try {
       // Récupérer les données du formulaire
       const data = JSON.parse(event.body);
+      console.log('📝 Données reçues complètes:', JSON.stringify(data));
       console.log('📝 Données reçues:', { 
         email: data.email ? `${data.email.substring(0, 3)}...` : 'non défini', 
         hasPassword: !!data.password,

@@ -102,6 +102,13 @@
   status = 200
   force = true
 
+# API: Connexion
+[[redirects]]
+  from = "/api/auth/login"
+  to = "/.netlify/functions/auth/login"
+  status = 200
+  force = true
+
 # =====================================
 # PROTECTION DASHBOARD (AUTHENTIFICATION)
 # =====================================
@@ -145,12 +152,20 @@
   force = true
   conditions = {X-Bypass-Auth = ["true"]}
 
-# Cette règle permet de servir dashboard.html directement (pour le mode DEV)
+# Protection de la route dashboard.html
+[[redirects]]
+  from = "/dashboard.html"
+  to = "/.netlify/functions/auth-middleware"
+  status = 200
+  force = true
+
+# Cette règle permet de servir dashboard.html après authentification
 [[redirects]]
   from = "/dashboard.html"
   to = "/dashboard/index.html"
   status = 200
   force = true
+  conditions = {X-Bypass-Auth = ["true"]}
 
 # Cette règle ne sera utilisée QU'APRÈS le middleware d'authentification
 # Elle permet de servir le contenu statique des sous-pages après authentification

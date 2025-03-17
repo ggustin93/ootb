@@ -209,7 +209,10 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard/';
         }
         
         try {
-          const response = await fetch('/.netlify/functions/auth/login', {
+          console.log('🔄 Tentative de connexion avec les données:', { email, redirectTo });
+          
+          // Utiliser la route API simplifiée
+          const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -217,14 +220,23 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard/';
             body: JSON.stringify({ email, password, redirectTo })
           });
           
+          console.log('📝 Réponse reçue:', { 
+            status: response.status, 
+            redirected: response.redirected,
+            url: response.url,
+            headers: Object.fromEntries([...response.headers])
+          });
+          
           if (response.redirected) {
+            console.log('🔄 Redirection vers:', response.url);
             window.location.href = response.url;
           } else if (!response.ok) {
             const data = await response.json();
+            console.error('❌ Erreur de connexion:', data);
             window.location.href = `/login?error=invalid_credentials&message=${encodeURIComponent(data.message || '')}&redirect=${encodeURIComponent(redirectTo)}`;
           }
         } catch (error) {
-          console.error('Erreur lors de la connexion:', error);
+          console.error('❌ Exception lors de la connexion:', error);
           window.location.href = `/login?error=auth_error&redirect=${encodeURIComponent(redirectTo)}`;
           
           // Réactiver le bouton en cas d'erreur

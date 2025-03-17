@@ -20,15 +20,17 @@ export const handler = async (event) => {
     // Déconnecter l'utilisateur
     await supabase.auth.signOut();
     
-    // Supprimer les cookies
+    // Supprimer les cookies (concaténés en une seule chaîne)
+    const cookieString = [
+      'sb-access-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
+      'sb-refresh-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'
+    ].join(', ');
+    
     return {
       statusCode: 302,
       headers: {
         'Location': '/login',
-        'Set-Cookie': [
-          'sb-access-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
-          'sb-refresh-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'
-        ],
+        'Set-Cookie': cookieString,
         'Cache-Control': 'no-cache'
       },
       body: ''

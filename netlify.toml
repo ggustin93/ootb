@@ -113,11 +113,34 @@
 # PROTECTION DASHBOARD (AUTHENTIFICATION)
 # =====================================
 
-# Protection simplifiée du dashboard - règle unique
+# Protection du dashboard - vérification d'authentification
 [[redirects]]
-  from = "/dashboard*"
+  from = "/dashboard"
   to = "/.netlify/functions/auth-check"
   status = 200
+  force = true
+  conditions = {Cookie = ["sb-access-token"]}
+
+# Redirection vers login si pas authentifié
+[[redirects]]
+  from = "/dashboard"
+  to = "/login?error=auth_required"
+  status = 302
+  force = true
+
+# Protection des sous-routes du dashboard
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/.netlify/functions/auth-check"
+  status = 200
+  force = true
+  conditions = {Cookie = ["sb-access-token"]}
+
+# Redirection vers login si pas authentifié pour les sous-routes
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/login?error=auth_required"
+  status = 302
   force = true
 
 # =====================================

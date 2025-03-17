@@ -73,14 +73,17 @@ export const handler = async (event) => {
     
     console.log('🍪 API Login : Génération cookies et redirection');
     
+    // Concaténer les cookies en une seule chaîne pour éviter les problèmes avec Netlify
+    const cookieString = [
+      `sb-access-token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
+      `sb-refresh-token=${refreshToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
+    ].join(', ');
+    
     return {
       statusCode: 302,
       headers: {
         'Location': finalRedirectUrl,
-        'Set-Cookie': [
-          `sb-access-token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
-          `sb-refresh-token=${refreshToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
-        ],
+        'Set-Cookie': cookieString,
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
         'Expires': '0'

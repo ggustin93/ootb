@@ -28,7 +28,7 @@
   },
   "criteres": {
     "title": "Ce que nous recherchons",
-    "backgroundImage": "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3",
+    "backgroundImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742305268/IMG_3174_1_b3xx5j.jpg",
     "items": [
       {
         "title": "Innovation pédagogique",
@@ -126,4 +126,4 @@
       "submitButton": "Soumettre le projet"
     }
   }
-} 
+}

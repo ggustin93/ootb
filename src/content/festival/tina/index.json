@@ -6,8 +6,8 @@
   },
   "hero": {
     "logo": "~/assets/images/logo_festival_white.svg",
-    "heroImage": "~/assets/images/festival_hero.webp",
-    "date": "1, 2 et 3 octobre 2025",
+    "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742298770/1007-OOTB-S1-143_bwyrvs.jpg",
+    "date": "01, 02 et 03 octobre 2025",
     "location": "La Sucrerie - Wavre",
     "description": "Trois jours de conférences, d'ateliers et de rencontres pour repenser l'éducation de demain."
   },
@@ -63,10 +63,26 @@
     ]
   },
   "stats": [
-    { "number": "40+", "label": "conférences", "icon": "tabler:presentation" },
-    { "number": "20+", "label": "ateliers pratiques", "icon": "tabler:tool" },
-    { "number": "80+", "label": "intervenants", "icon": "tabler:users" },
-    { "number": "3000+", "label": "participants", "icon": "tabler:heart-handshake" }
+    {
+      "number": "40+",
+      "label": "conférences",
+      "icon": "tabler:presentation"
+    },
+    {
+      "number": "20+",
+      "label": "ateliers pratiques",
+      "icon": "tabler:tool"
+    },
+    {
+      "number": "80+",
+      "label": "intervenants",
+      "icon": "tabler:users"
+    },
+    {
+      "number": "3000+",
+      "label": "participants",
+      "icon": "tabler:heart-handshake"
+    }
   ],
   "programme": {
     "title": "Programme du festival",
@@ -75,14 +91,32 @@
       "allDaysLabel": "Tous les jours",
       "globalViewLabel": "Vue globale",
       "days": [
-        { "name": "Mardi", "date": "1 oct" },
-        { "name": "Mercredi", "date": "2 oct" },
-        { "name": "Jeudi", "date": "3 oct" }
+        {
+          "name": "Mardi",
+          "date": "1 oct"
+        },
+        {
+          "name": "Mercredi",
+          "date": "2 oct"
+        },
+        {
+          "name": "Jeudi",
+          "date": "3 oct"
+        }
       ],
       "eventTypes": [
-        { "name": "Conférences", "icon": "tabler:presentation" },
-        { "name": "Ateliers", "icon": "tabler:hammer" },
-        { "name": "Stands", "icon": "tabler:building-store" }
+        {
+          "name": "Conférences",
+          "icon": "tabler:presentation"
+        },
+        {
+          "name": "Ateliers",
+          "icon": "tabler:hammer"
+        },
+        {
+          "name": "Stands",
+          "icon": "tabler:building-store"
+        }
       ],
       "allEventsLabel": "Tous les événements",
       "pdfButtonLabel": "Programme PDF",
@@ -135,26 +169,50 @@
         "adresse": "Chemin de la Sucrerie 2, 1300 Wavre",
         "mapLink": "https://maps.app.goo.gl/dsJnTzVSAh5aV2x3A",
         "infos": [
-          { "text": "Parking gratuit sur place", "icon": "tabler:car" },
-          { "text": "Gare de Wavre à 10 min à pied", "icon": "tabler:train" }
+          {
+            "text": "Parking gratuit sur place",
+            "icon": "tabler:car"
+          },
+          {
+            "text": "Gare de Wavre à 10 min à pied",
+            "icon": "tabler:train"
+          }
         ]
       },
       {
         "title": "Horaires",
         "icon": "tabler:clock",
         "infos": [
-          { "text": "Ouverture : 8h30", "icon": "tabler:door-enter" },
-          { "text": "Fermeture : 18h00", "icon": "tabler:door-exit" },
-          { "text": "Restauration sur place", "icon": "tabler:coffee" }
+          {
+            "text": "Ouverture : 8h30",
+            "icon": "tabler:door-enter"
+          },
+          {
+            "text": "Fermeture : 18h00",
+            "icon": "tabler:door-exit"
+          },
+          {
+            "text": "Restauration sur place",
+            "icon": "tabler:coffee"
+          }
         ]
       },
       {
         "title": "Accessibilité PMR",
         "icon": "tabler:wheelchair",
         "infos": [
-          { "text": "Site entièrement accessible", "icon": "tabler:check" },
-          { "text": "Places PMR réservées", "icon": "tabler:parking" },
-          { "text": "Sanitaires adaptés", "icon": "tabler:accessible" }
+          {
+            "text": "Site entièrement accessible",
+            "icon": "tabler:check"
+          },
+          {
+            "text": "Places PMR réservées",
+            "icon": "tabler:parking"
+          },
+          {
+            "text": "Sanitaires adaptés",
+            "icon": "tabler:accessible"
+          }
         ]
       }
     ],
@@ -187,4 +245,4 @@
       }
     ]
   }
-} 
+}

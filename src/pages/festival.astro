@@ -12,7 +12,6 @@ import ootbLogo from '~/assets/images/ootb-logo.svg';
 import Carousel from '~/components/ui/Carousel.astro';
 import Button from '~/components/ui/Button.astro';
 import ActivityCards from '~/components/sections/ActivityCards.astro';
-
 // Activer le prerendering pour cette page
 export const prerender = true;
 
@@ -22,13 +21,12 @@ import festivalContent from '~/content/festival/tina/index.json';
 // Extraction des données du fichier JSON
 const { metadata, hero, about, gallery, stats, programme, themes: themeData, accessibility, partenaires: partenaireData } = festivalContent;
 
-// Import des images pour le hero (nécessaire car les chemins dans le JSON sont des chaînes)
-import logoFestival from '~/assets/images/logo_festival_white.svg';
-import heroImage from '~/assets/images/festival_hero.webp';
+// Import de l'utilitaire findImage pour résoudre les chemins d'images
+import { findImage } from '~/utils/images';
 
-// Préparation des images pour le composant FestivalHeroSection
-const heroLogo = logoFestival;
-const heroBackground = heroImage;
+// Résolution des images pour le hero section
+const heroLogo = await findImage(hero.logo);
+const heroBackground = await findImage(hero.heroImage);
 
 // Utiliser directement les données statiques au lieu d'appeler getEventsByDay()
 const eventsByDay = eventsData as EventsByDay;
@@ -392,9 +390,14 @@ const eventsByDay = eventsData as EventsByDay;
                 src={partenaire.logo}
                 alt="Logo partenaire"
                 class="max-h-full w-auto object-contain relative z-10"
-                widths={[150, 200]}
-                sizes="(max-width: 768px) 150px, 200px"
+                widths={[150, 300]}
+                sizes="(max-width: 768px) 150px, 300px"
                 loading="lazy"
+                cloudinaryOptions={{
+                  quality: "auto:eco",
+                  crop: "scale",
+                  dpr: "auto"
+                }}
               />
             </div>
           </div>

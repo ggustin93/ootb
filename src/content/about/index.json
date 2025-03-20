@@ -4,7 +4,7 @@
     "description": "Découvrez l'équipe et la mission d'Out of the Books, une ASBL dédiée à l'innovation pédagogique et au bien-être des enfants en Belgique francophone."
   },
   "hero": {
-    "logo": "~/assets/images/logo_ootb_garcon_blanc.svg",
+    "logo": "~/assets/images/logo_ootb_garcon_blanc.webp",
     "heroImage": "~/assets/images/ootb_team.webp",
     "quote": "Out of the Books rassemble des enseignants, experts et passionnés d'éducation pour transformer l'éducation en Belgique francophone. Notre mission : créer des ponts entre tous les acteurs de l'éducation et favoriser l'innovation pédagogique.",
     "quoteColor": "--ootb-yellow",
@@ -80,7 +80,7 @@
         "description": "Formatrice en méthode de travail et créatrice de la structure Evocation qui accompagne des enfants.\n",
         "photo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742298175/EDUCATION_MODE_D_EMPLOI_-_SHOOTING-20250227-503905_hnq3eb.jpg",
         "contact": {
-          "email": "sophie@festivaloutofthebooks.com",
+          "email": "sophie@festivalootb.com",
           "phone": "0476/46.24.25"
         }
       },

@@ -136,11 +136,14 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
               src={heroImage}
               alt="Festival Out of the Books"
               class="rounded-2xl shadow-xl w-full"
-              widths={[350, 500, 800]}
-              sizes="(max-width: 768px) 350px, (max-width: 1200px) 500px, 800px"
+              widths={[400, 800, 1200]}
+              sizes="(max-width: 640px) 400px, (max-width: 1024px) 800px, 1200px"
               aspectRatio="4:3"
               loading="eager"
               decoding="async"
+              fetchpriority="high"
+              formats={["avif","webp", "jpg"]}
+              id="hero-image-debug"
             />
           </div>
           <div 
@@ -207,6 +210,11 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
       triggerModalOpen();
     }
   });
+</script>
+
+<script is:inline>
+  // Script amélioré pour vérifier le format réel via les en-têtes HTTP
+  // Suppression complète du script de débogage
 </script>
 
 <style>

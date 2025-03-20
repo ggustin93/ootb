@@ -85,21 +85,23 @@ const isStringUrl = (src: string | ImageMetadata): src is string => typeof src =
             <Image
               src={logo}
               alt="Out of the Books"
-              class={`${logoClass} max-w-[200px] md:max-w-[320px]`} 
-              widths={[320, 640]}
-              sizes="(max-width: 768px) 200px, 320px"
+              class={logoClass}
+              widths={[300, 700]}
+              sizes="(max-width: 768px) 300px, 700px"
               loading="eager"
               decoding="async"
+              formats={["avif", "webp", "jpg"]}
             />
           ) : (
             <Image
               src={logo}
               alt="Out of the Books" 
-              class={`${logoClass} max-w-[200px] md:max-w-[320px]`}
-              widths={[320, 640]}
-              sizes="(max-width: 768px) 200px, 320px"
+              class={logoClass}
+              widths={[300, 700]}
+              sizes="(max-width: 768px) 300px, 700px"
               loading="eager"
               decoding="async"
+              formats={["avif", "webp", "jpg"]}
             />
           )}
         </h1>

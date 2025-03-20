@@ -39,12 +39,12 @@ const defaultUnsplashOptions: UnsplashOptions = {
 };
 
 const defaultCloudinaryOptions: CloudinaryOptions = {
-  quality: 'auto:good', // Qualité automatique avec un bon équilibre
-  format: 'auto', // Format automatique (WebP, AVIF selon navigateur)
-  crop: 'fill', // Remplit l'espace en conservant les proportions
+  quality: 'auto:good', // Bon équilibre par défaut
+  format: 'webp',       // WebP par défaut
+  crop: 'fill',
   fetch_format: 'auto',
-  dpr: 'auto', // Adaptation automatique au DPR de l'appareil
-  gravity: 'auto' // Focus intelligent sur les éléments importants
+  dpr: 'auto',
+  gravity: 'auto'
 };
 
 const props = Astro.props;
@@ -79,6 +79,7 @@ function generateCloudinaryUrl(
   baseUrl: string,
   width: number,
   options: CloudinaryOptions,
+  aspectRatio?: string | number,
   isSrcSet = false
 ): string {
   const url = new URL(baseUrl);
@@ -86,16 +87,30 @@ function generateCloudinaryUrl(
   const cloudName = pathParts[1];
   const publicId = pathParts.slice(4).join('/').replace(/\.[^/.]+$/, '');
 
+  // Limiter la largeur maximale à 1200px pour réduire les transformations
+  const limitedWidth = Math.min(width, 1200);
+  
+  // Préparer les transformations de base
   const transformations = [
-    `w_${width}`,
+    `w_${limitedWidth}`,
     `c_${options.crop}`,
     `q_${options.quality}`,
     `f_${options.format}`,
     `dpr_${options.dpr}`,
-    `g_${options.gravity}`, // Ajout du paramètre gravity
-  ].join(',');
+    `g_${options.gravity}`,
+  ];
+  
+  // Ajouter l'aspect ratio s'il est spécifié
+  if (aspectRatio) {
+    // Convertir en format Cloudinary (16:9 -> 16:9, 1.78 -> 1.78:1)
+    const arParam = typeof aspectRatio === 'string' && aspectRatio.includes(':')
+      ? aspectRatio.replace(':', ':')
+      : `${aspectRatio}:1`;
+    
+    transformations.push(`ar_${arParam}`);
+  }
 
-  return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations}/${publicId}`;
+  return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations.join(',')}/${publicId}`;
 }
 
 // Fonction pour générer le srcset pour Cloudinary
@@ -104,10 +119,10 @@ function generateCloudinarySrcSet(
   baseWidth: number,
   options: CloudinaryOptions
 ): string {
-  // Tailles optimisées pour le responsive
-  const widths = [320, 640, 960, 1280, 1600]; // Tailles courantes pour différents écrans
+  // Tailles optimisées plus réalistes pour le web
+  const widths = [400, 800, 1200]; // Réduire à 3 tailles raisonnables
   return widths
-    .filter(w => w <= baseWidth * 2) // Ne pas générer de tailles trop grandes
+    .filter(w => w <= baseWidth) // Ne pas dépasser la largeur de base
     .map(w => {
       const url = generateCloudinaryUrl(baseUrl, w, options, true);
       return `${url} ${w}w`;
@@ -125,18 +140,76 @@ function generateDefaultSizes(baseWidth: number): string {
 }
 
 if (typeof _image === 'string') {
-  // Gestion des images Cloudinary
+  // Forcer le traitement Cloudinary pour les URLs Cloudinary
   if (_image.includes('cloudinary.com')) {
+    console.log("Forçage du traitement Cloudinary personnalisé pour:", _image);
     const options: CloudinaryOptions = {
       ...defaultCloudinaryOptions,
       ...(props.cloudinaryOptions || {}),
     };
-
+    
     const baseWidth = props.width || 960; // Largeur par défaut raisonnable
-    const baseHeight = props.height || Math.round(baseWidth * 0.5625); // Ratio 16:9 par défaut
-
+    
+    // Calculer la hauteur en fonction de l'aspectRatio s'il est spécifié
+    let baseHeight: number;
+    
+    if (props.aspectRatio) {
+      // Traiter le format "16:9" ou "1.78"
+      if (typeof props.aspectRatio === 'string' && props.aspectRatio.includes(':')) {
+        const [width, height] = props.aspectRatio.split(':').map(Number);
+        baseHeight = Math.round(baseWidth / (width / height));
+      } else {
+        // Si c'est un nombre ou une chaîne sans ":", le traiter comme un ratio direct
+        const ratio = typeof props.aspectRatio === 'string' 
+          ? parseFloat(props.aspectRatio) 
+          : props.aspectRatio as number;
+        baseHeight = Math.round(baseWidth / ratio);
+      }
+    } else {
+      // Fallback sur le ratio 16:9 par défaut
+      baseHeight = props.height || Math.round(baseWidth * 0.5625);
+    }
+    
+    // Maintenant, ajoutons le calcul d'aspect dans les transformations Cloudinary
+    const aspectTransformation = props.aspectRatio ? `ar_${props.aspectRatio.toString().replace(':', ':')}` : '';
+    
+    // Modifions la fonction generateCloudinaryUrl pour inclure l'aspect ratio
+    const generateCustomCloudinaryUrl = (url: string, width: number) => {
+      const parsedUrl = new URL(url);
+      const pathParts = parsedUrl.pathname.split('/');
+      const cloudName = pathParts[1];
+      const publicId = pathParts.slice(4).join('/').replace(/\.[^/.]+$/, '');
+    
+      // Limiter la largeur maximale
+      const limitedWidth = Math.min(width, 1200);
+      
+      // Construire les transformations avec l'aspect ratio
+      let transformations = [
+        `w_${limitedWidth}`,
+        `c_${options.crop}`,
+        `q_${options.quality}`,
+        `f_${options.format}`,
+        `dpr_${options.dpr}`,
+        `g_${options.gravity}`,
+      ];
+      
+      // Ajouter l'aspect ratio s'il est défini
+      if (aspectTransformation) {
+        transformations.push(aspectTransformation);
+      }
+      
+      return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations.join(',')}/${publicId}`;
+    };
+    
+    // Utiliser cette nouvelle fonction pour générer l'URL et le srcset
+    const src = generateCustomCloudinaryUrl(_image, baseWidth);
+    const srcset = [400, 800, 1200]
+      .filter(w => w <= baseWidth)
+      .map(w => `${generateCustomCloudinaryUrl(_image, w)} ${w}w`)
+      .join(', ');
+    
     image = {
-      src: generateCloudinaryUrl(_image, baseWidth, options),
+      src,
       attributes: {
         ...props,
         loading: props.loading,
@@ -145,9 +218,19 @@ if (typeof _image === 'string') {
         width: baseWidth,
         height: baseHeight,
         sizes: props.sizes || generateDefaultSizes(baseWidth),
-        srcset: generateCloudinarySrcSet(_image, baseWidth, options),
+        srcset: srcset,
       },
     };
+  }
+  // Sinon utiliser Unpic pour les autres images compatibles
+  else if (isUnpicCompatible(_image)) {
+    console.log("Utilisation d'Unpic pour transformer l'image:", _image);
+    try {
+      image = await getImagesOptimized(_image, props, unpicOptimizer);
+    } catch (error) {
+      console.error("Erreur avec Unpic:", error);
+      // Fallback en cas d'erreur Unpic
+    }
   }
   // Gestion des images Unsplash
   else if (_image.includes('unsplash.com')) {

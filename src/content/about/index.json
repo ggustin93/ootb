@@ -5,7 +5,7 @@
   },
   "hero": {
     "logo": "~/assets/images/logo_ootb_garcon_blanc.webp",
-    "heroImage": "~/assets/images/ootb_team.webp",
+    "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742468971/EDUCATION_MODE_D_EMPLOI_-_SHOOTING-20250227-503624_d9efwi.jpg",
     "quote": "Out of the Books rassemble des enseignants, experts et passionnés d'éducation pour transformer l'éducation en Belgique francophone. Notre mission : créer des ponts entre tous les acteurs de l'éducation et favoriser l'innovation pédagogique.",
     "quoteColor": "--ootb-yellow",
     "scrollLabel": "En savoir plus"

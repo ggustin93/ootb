@@ -171,19 +171,3 @@
 #   to = "/.netlify/functions/auth-middleware"
 #   status = 200
 #   force = true
-
-# =====================================
-# SÉCURITÉ ET EN-TÊTES HTTP
-# =====================================
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    # En-têtes de sécurité modernes (sans Expect-CT déprécié)
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "DENY"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    # Désactiver explicitement l'en-tête Expect-CT
-    Expect-CT = ""

@@ -7,6 +7,13 @@
     "language": "fr",
     "defaultSocialImage": "/images/assets/ootb-social-card.jpg"
   },
+  "festival": {
+    "showUnpublishedEvents": true
+  },
+  "system": {
+    "triggerDeployment": false,
+    "deploymentTimestamp": "2025-03-29T12:30:00.659Z"
+  },
   "announcement": {
     "enabled": false,
     "color": "#e7461c",

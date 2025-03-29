@@ -4,23 +4,34 @@ import type { EventsByDay } from '~/types/festival';
 import { Icon } from 'astro-icon/components';
 import EventCard from '~/components/ui/EventCard.astro';
 
+// Importer directement le fichier de paramètres
+import siteSettings from '~/content/site/settings.json';
+
 interface Props {
   events: EventsByDay;
 }
 
 const { events } = Astro.props;
 
-// En mode production, filtrer les événements pour ne garder que ceux qui sont publiés
-const IS_PRODUCTION = import.meta.env.PROD;
+// Récupérer le paramètre d'affichage des événements non publiés depuis les paramètres du site
+let SHOW_UNPUBLISHED_EVENTS = false;
 
-// Créer une version filtrée des événements si nous sommes en mode production
+// Si le paramètre festival.showUnpublishedEvents existe, l'utiliser
+if (siteSettings.festival?.showUnpublishedEvents !== undefined) {
+  SHOW_UNPUBLISHED_EVENTS = siteSettings.festival.showUnpublishedEvents;
+} else {
+  // Sinon, fallback sur la variable d'environnement
+  SHOW_UNPUBLISHED_EVENTS = import.meta.env.SHOW_UNPUBLISHED_EVENTS === 'true' || import.meta.env.DEV;
+}
+
+// Créer une version filtrée des événements selon la configuration
 const filteredEvents: EventsByDay = {};
 for (const day in events) {
-  if (IS_PRODUCTION) {
-    // En production, ne garder que les événements publiés
+  if (!SHOW_UNPUBLISHED_EVENTS) {
+    // Ne garder que les événements publiés si l'option est désactivée
     filteredEvents[day] = events[day].filter(event => event.status === 'Publié');
   } else {
-    // En développement, garder tous les événements
+    // Garder tous les événements si l'option est activée
     filteredEvents[day] = events[day];
   }
 }
@@ -41,7 +52,7 @@ const eventCounts: Record<string, number> = {
 };
 
 // Afficher des logs pour le débogage des filtres
-console.log(`Environnement: ${IS_PRODUCTION ? 'Production' : 'Développement'}`);
+console.log(`Mode événements non publiés: ${SHOW_UNPUBLISHED_EVENTS ? 'Activé' : 'Désactivé'}`);
 console.log(`Nombre total d'événements après filtrage par statut: ${allEvents.length}`);
 console.log(`Événements par type:`, eventCounts);
 ---

@@ -10,6 +10,13 @@ export const siteSettingsCollection: Collection = {
       create: false,
       delete: false,
     },
+    beforeSubmit: async ({ values }) => {
+      if (values.system?.triggerDeployment) {
+        values.system.deploymentTimestamp = new Date().toISOString();
+        values.system.triggerDeployment = false;
+      }
+      return values;
+    }
   },
   defaultItem: () => ({
     seo: {
@@ -19,6 +26,12 @@ export const siteSettingsCollection: Collection = {
       defaultDescription: "Out of the Books ASBL : l'éducation et le bien-être de l'enfant au cœur des priorités. Une plateforme collaborative pour transformer l'éducation en Belgique francophone.",
       language: "fr",
       defaultSocialImage: "/images/assets/ootb-social-card.jpg"
+    },
+    festival: {
+      showUnpublishedEvents: false
+    },
+    system: {
+      deploymentTimestamp: new Date().toISOString()
     },
     announcement: {
       enabled: true,
@@ -86,6 +99,48 @@ export const siteSettingsCollection: Collection = {
           label: "Image sociale par défaut",
           description: "Image utilisée pour les partages sociaux quand aucune image spécifique n'est fournie (1200x630px recommandé)",
           required: false,
+        }
+      ]
+    },
+    {
+      type: "object",
+      name: "festival",
+      label: "Paramètres du Festival",
+      description: "Configuration spécifique au festival",
+      fields: [
+        {
+          type: "boolean",
+          name: "showUnpublishedEvents",
+          label: "Afficher les événements non publiés",
+          description: "⚠️ ATTENTION : Uniquement pour les tests ! Activez cette option pour afficher temporairement les événements en cours de validation (statut différent de 'Publié').",
+          ui: {
+            description: "Cette option permet de prévisualiser les événements avant publication. Désactivez-la avant la mise en ligne officielle du programme."
+          }
+        }
+      ]
+    },
+    {
+      type: "object",
+      name: "system",
+      label: "Actions système",
+      description: "Options de maintenance du site",
+      fields: [
+        {
+          type: "boolean",
+          name: "triggerDeployment",
+          label: "Forcer le redéploiement du site",
+          description: "⚡ Activation = mise à jour complète du site",
+          ui: {
+            description: "Activez cette option et sauvegardez pour forcer un redéploiement complet du site. Utilisez en cas de problème d'affichage ou pour appliquer plusieurs modifications récentes.",
+          }
+        },
+        {
+          type: "string",
+          name: "deploymentTimestamp",
+          label: "Horodatage technique",
+          ui: {
+            component: "hidden"
+          }
         }
       ]
     },

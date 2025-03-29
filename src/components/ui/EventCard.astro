@@ -27,6 +27,8 @@ interface Props {
   level?: string;
   teachingType?: string;
   url?: string;
+  status?: 'Publié' | 'A valider';
+  theme?: string;
 }
 
 const { 
@@ -44,7 +46,9 @@ const {
   target: propTarget,
   level: propLevel,
   teachingType: propTeachingType,
-  url: propUrl
+  url: propUrl,
+  status: propStatus,
+  theme: propTheme
 } = Astro.props;
 
 // Utiliser les propriétés de l'objet Event s'il est fourni, sinon utiliser les props individuelles
@@ -77,6 +81,8 @@ const target = event?.target || propTarget;
 const level = event?.level || propLevel;
 const teachingType = event?.teachingType || propTeachingType;
 const url = event?.url || propUrl;
+const status = event?.status || propStatus || 'Publié'; // Valeur par défaut: Publié
+const theme = event?.theme || propTheme || '';
 
 // Importer dynamiquement l'image si elle a été téléchargée
 let importedImage: ImageMetadata | null = null;
@@ -323,6 +329,8 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
   data-type={eventType}
   data-day={day}
   data-time={time}
+  data-status={status}
+  style={status === 'A valider' ? 'opacity: 0.7;' : ''}
 >
   <div class="md:flex h-full">
     <!-- Image à gauche (sur desktop) ou en haut (sur mobile) -->
@@ -365,6 +373,14 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
     <!-- Contenu à droite (sur desktop) ou en bas (sur mobile) -->
     <div class="md:w-2/3 p-4 md:p-6 flex flex-col">
       <div class="flex-grow">
+        <!-- Bannière de statut si "A valider" -->
+        {status === 'A valider' && (
+          <div class="mb-2 text-sm font-medium py-1 px-2 rounded bg-yellow-50 text-yellow-700 border border-yellow-200 inline-flex items-center">
+            <Icon name="tabler:alert-triangle" class="w-4 h-4 mr-1" />
+            En attente de validation
+          </div>
+        )}
+
         <!-- En-tête avec heure, lieu et expert - Version desktop -->
         <div class="hidden md:flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-500 mb-2 md:mb-3">
           {day && eventType !== 'Stands' && (
@@ -385,16 +401,28 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
               <span>{location}</span>
             </div>
           )}
-          {speaker && (
+          {eventType !== 'Stands' && speaker && (
             <div class="flex items-center">
               <Icon name="tabler:user" class="w-4 h-4 mr-1" />
               <span class="font-medium text-gray-500">{speaker}</span>
+            </div>
+          )}
+          {eventType === 'Stands' && (
+            <div class="flex items-center">
+              <Icon name="tabler:tag" class="w-4 h-4 mr-1" />
+              <span class="font-medium text-gray-500">{theme || 'À définir'}</span>
             </div>
           )}
         </div>
 
         <!-- En-tête simplifié pour mobile -->
         <div class="flex md:hidden flex-wrap items-center gap-2 text-sm text-gray-500 mb-2">
+          {status === 'A valider' && (
+            <div class="text-xs font-medium py-0.5 px-1.5 rounded bg-yellow-50 text-yellow-700 border border-yellow-200 inline-flex items-center">
+              <Icon name="tabler:alert-triangle" class="w-3 h-3 mr-0.5" />
+              En attente
+            </div>
+          )}
           {day && eventType !== 'Stands' && (
             <div class="flex items-center">
               <Icon name="tabler:calendar" class="w-4 h-4 mr-1" />
@@ -503,10 +531,16 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
                 <span class="text-gray-600">{location}</span>
               </div>
             )}
-            {speaker && (
+            {eventType !== 'Stands' && speaker && (
               <div class="flex items-start gap-2">
                 <Icon name="tabler:user" class="w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5" />
                 <span class="text-gray-600 font-medium">{speaker}</span>
+              </div>
+            )}
+            {eventType === 'Stands' && (
+              <div class="flex items-start gap-2">
+                <Icon name="tabler:tag" class="w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5" />
+                <span class="text-gray-600 font-medium">{theme || 'À définir'}</span>
               </div>
             )}
           </div>

@@ -556,6 +556,10 @@ function convertStandsToEvents(stands) {
     const teachingType = stand["Type d'enseignement"] || '';
     const website = stand["Site internet"] || '';
     
+    // Extraire le statut et la thématique
+    const status = stand["Statut"] === "Publié" ? "Publié" : "A valider";
+    const theme = stand["Thématique liée"] && stand["Thématique liée"].Title ? stand["Thématique liée"].Title : '';
+    
     return {
       id: `stand-${stand.ID}`,
       title: stand["Choisissez un titre court"] || `Stand ${stand.ID}`,
@@ -580,7 +584,9 @@ function convertStandsToEvents(stands) {
       contact: {
         email: stand.Email || '',
         phone: stand.GSM || ''
-      }
+      },
+      status,
+      theme
     };
   });
 }
@@ -604,6 +610,9 @@ function convertAteliersToEvents(ateliers) {
     const level = atelier["Niveau d'enseignement"] || '';
     const teachingType = atelier["Type d'enseignement"] || '';
     const website = atelier["Site internet"] || '';
+    
+    // Extraire le statut
+    const status = atelier["Statut"] === "Publié" ? "Publié" : "A valider";
     
     return {
       id: `atelier-${atelier.ID}`,
@@ -629,7 +638,8 @@ function convertAteliersToEvents(ateliers) {
       contact: {
         email: atelier.Email || '',
         phone: atelier.GSM || ''
-      }
+      },
+      status
     };
   });
 }
@@ -683,6 +693,9 @@ function convertConferencesToEvents(conferences) {
     const teachingType = conference["Type d'enseignement"] || '';
     const website = conference["Site internet"] || '';
     
+    // Extraire le statut
+    const status = conference["Statut"] === "Publié" ? "Publié" : "A valider";
+    
     return {
       id: `conference-${conference.ID}`,
       title: title || `Conférence ${conference.ID}`,
@@ -707,7 +720,8 @@ function convertConferencesToEvents(conferences) {
       contact: {
         email: conference.Email || '',
         phone: conference.GSM || ''
-      }
+      },
+      status
     };
   });
 }

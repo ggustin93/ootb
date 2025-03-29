@@ -22,6 +22,8 @@ export interface Event {
     email: string;
     phone: string;
   };
+  status?: 'Publié' | 'A valider';
+  theme?: string;
 }
 
 export interface EventsByDay {

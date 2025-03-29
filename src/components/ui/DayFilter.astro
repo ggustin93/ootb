@@ -10,10 +10,26 @@ interface Props {
 
 const { events } = Astro.props;
 
+// En mode production, filtrer les événements pour ne garder que ceux qui sont publiés
+const IS_PRODUCTION = true; //import.meta.env.PROD;
+
+// Créer une version filtrée des événements si nous sommes en mode production
+const filteredEvents: EventsByDay = {};
+for (const day in events) {
+  if (IS_PRODUCTION) {
+    // En production, ne garder que les événements publiés
+    filteredEvents[day] = events[day].filter(event => event.status === 'Publié');
+  } else {
+    // En développement, garder tous les événements
+    filteredEvents[day] = events[day];
+  }
+}
+
+// Utiliser les événements filtrés pour la suite
 const ITEMS_PER_PAGE = 10;
 
 // Créer un tableau plat de tous les événements pour la pagination
-const allEvents = Object.values(events).flat();
+const allEvents = Object.values(filteredEvents).flat();
 
 // Compter le nombre d'événements par type
 const eventCounts: Record<string, number> = {
@@ -25,7 +41,8 @@ const eventCounts: Record<string, number> = {
 };
 
 // Afficher des logs pour le débogage des filtres
-console.log(`Nombre total d'événements: ${allEvents.length}`);
+console.log(`Environnement: ${IS_PRODUCTION ? 'Production' : 'Développement'}`);
+console.log(`Nombre total d'événements après filtrage par statut: ${allEvents.length}`);
 console.log(`Événements par type:`, eventCounts);
 ---
 
@@ -246,7 +263,7 @@ console.log(`Événements par type:`, eventCounts);
 
   <!-- Contenu des événements -->
   <div id="events-container" class="relative space-y-4 md:space-y-6">
-    {Object.values(events).flat().map(event => (
+    {Object.values(filteredEvents).flat().map(event => (
       <EventCard event={event} />
     ))}
 

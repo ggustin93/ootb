@@ -603,7 +603,14 @@ function convertAteliersToEvents(ateliers) {
     
     // Gérer les cas où les champs peuvent être null
     const time = formatTime(atelier.Heure);
-    const location = atelier.Espaces || 'À définir';
+    
+    // Gérer le cas où Espaces peut être un objet ou une chaîne de caractères
+    let location = 'À définir';
+    if (atelier.Espaces) {
+      location = typeof atelier.Espaces === 'object' && atelier.Espaces !== null ? 
+                atelier.Espaces.Title || 'À définir' : 
+                atelier.Espaces;
+    }
     
     // Extraire les informations supplémentaires
     const target = atelier["À qui s'adresse atelier ?"] || '';

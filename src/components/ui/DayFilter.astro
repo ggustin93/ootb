@@ -11,7 +11,7 @@ interface Props {
 const { events } = Astro.props;
 
 // En mode production, filtrer les événements pour ne garder que ceux qui sont publiés
-const IS_PRODUCTION = true; //import.meta.env.PROD;
+const IS_PRODUCTION = import.meta.env.PROD;
 
 // Créer une version filtrée des événements si nous sommes en mode production
 const filteredEvents: EventsByDay = {};

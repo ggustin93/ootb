@@ -36,6 +36,7 @@ Ce document explique l'organisation des fichiers liés au festival dans le proje
 - `src/components/ui/DayFilter.astro` : Composant de filtrage par jour
   - Permet de filtrer les événements par jour et par type
   - Gère la pagination des événements
+  - Documentation détaillée dans [dayfilter.md](./dayfilter.md)
 
 - `src/components/ui/EventCard.astro` : Carte d'événement
   - Affiche les détails d'un événement

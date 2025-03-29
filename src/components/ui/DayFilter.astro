@@ -606,10 +606,33 @@ console.log(`Événements par type:`, eventCounts);
       // Mettre à jour le titre des filtres actifs
       updateActiveFiltersTitle();
       
-      // Réorganiser les événements (sans tri supplémentaire)
+      // Optimiser le rendu en utilisant requestAnimationFrame
+      let startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = Math.min(startIndex + itemsPerPage, filteredEvents.length);
+      
+      // Rendre progressivement, 2-3 éléments à la fois
+      const renderBatch = () => {
+        const batchSize = 3;
+        const batchEnd = Math.min(startIndex + batchSize, endIndex);
+        
+        for (let i = startIndex; i < batchEnd; i++) {
+          filteredEvents[i].style.display = 'block';
+        }
+        
+        startIndex = batchEnd;
+        
+        if (startIndex < endIndex) {
+          requestAnimationFrame(renderBatch);
+        }
+      };
+      
+      // Masquer tous les événements d'abord
       filteredEvents.forEach(event => {
-        container.appendChild(event);
+        event.style.display = 'none';
       });
+      
+      // Commencer le rendu par lots
+      requestAnimationFrame(renderBatch);
     }
 
     // Gérer l'affichage du message "Pas d'événements correspondants"
@@ -704,14 +727,6 @@ console.log(`Événements par type:`, eventCounts);
       (button as HTMLButtonElement).disabled = currentPage === totalPages;
     });
 
-    // Afficher les événements de la page courante
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    
-    filteredEvents.forEach((event, index) => {
-      event.style.display = index >= start && index < end ? 'block' : 'none';
-    });
-    
     // Mettre à jour le compteur d'événements dans l'interface
     const eventsCount = document.getElementById('events-count');
     if (eventsCount) {

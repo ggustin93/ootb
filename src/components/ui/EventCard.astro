@@ -342,6 +342,9 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
             alt={title}
             widths={[200, 400, 600]}
             sizes="(max-width: 640px) 200px, (max-width: 1024px) 400px, 600px"
+            loading="lazy"
+            decoding="async"
+            fetchpriority="low"
           />
         ) : (
           <EventImage 
@@ -448,6 +451,9 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
                 height={160}
                 widths={[80, 160, 240]}
                 sizes="(max-width: 640px) 80px, (max-width: 1024px) 160px, 240px"
+                loading="lazy"
+                decoding="async"
+                format="webp"
               />
             </div>
             <div class="text-sm text-gray-600">
@@ -556,6 +562,9 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
                   height={128}
                   widths={[64, 128, 192]}
                   sizes="(max-width: 640px) 64px, (max-width: 1024px) 128px, 192px"
+                  loading="lazy"
+                  decoding="async"
+                  format="webp"
                 />
               </div>
               <div class="text-sm text-gray-600">
@@ -669,5 +678,36 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+
+  // Nouveau code - Optimisations avec Intersection Observer
+  if ('IntersectionObserver' in window) {
+    // Observer pour les images d'événements
+    const eventImagesObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const container = entry.target;
+          const lazyImage = container.querySelector('img[loading="lazy"]');
+          
+          if (lazyImage) {
+            if (lazyImage.dataset.src) {
+              lazyImage.src = lazyImage.dataset.src;
+              delete lazyImage.dataset.src;
+            }
+            
+            // Détacher l'observateur une fois l'image chargée
+            eventImagesObserver.unobserve(container);
+          }
+        }
+      });
+    }, {
+      rootMargin: '100px', // Charger un peu avant que l'élément soit visible
+      threshold: 0.1
+    });
+
+    // Observer toutes les cartes d'événements
+    document.querySelectorAll('.event-card').forEach(card => {
+      eventImagesObserver.observe(card);
+    });
+  }
 });
 </script>

@@ -953,12 +953,12 @@ function organizeEventsByDay(events) {
     addedEventIdsByDay[day] = new Set();
   }
   
+  // Séparer les stands des autres événements
+  const stands = events.filter(event => event.type === 'Stands');
+  const otherEvents = events.filter(event => event.type !== 'Stands');
+  
   // Fonction de comparaison pour le tri
   const compareEvents = (a, b) => {
-    // Les stands sont toujours en dernier
-    if (a.type === 'Stands' && b.type !== 'Stands') return 1;
-    if (a.type !== 'Stands' && b.type === 'Stands') return -1;
-
     // Si un événement a une heure définie et l'autre non, celui avec l'heure définie passe en premier
     if (a.time !== 'À définir' && b.time === 'À définir') return -1;
     if (a.time === 'À définir' && b.time !== 'À définir') return 1;
@@ -978,35 +978,34 @@ function organizeEventsByDay(events) {
     return 0;
   };
   
-  // Ajouter les événements aux jours correspondants
-  for (const event of events) {
-    // Pour les stands, les ajouter à tous les jours
-    if (event.type === 'Stands') {
-      for (const day of DAYS) {
-        if (!addedEventIdsByDay[day].has(event.id)) {
-          eventsByDay[day].push({
-            ...event,
-            day,
-            time: 'Tous les jours'
-          });
-          addedEventIdsByDay[day].add(event.id);
-        }
-      }
-    } else {
-      // Pour les autres types d'événements, comportement normal
-      const normalizedDay = normalizeDay(event.day);
-      if (DAYS.includes(normalizedDay)) {
-        if (!addedEventIdsByDay[normalizedDay].has(event.id)) {
-          eventsByDay[normalizedDay].push({
-            ...event,
-            day: normalizedDay
-          });
-          addedEventIdsByDay[normalizedDay].add(event.id);
-        } else {
-          console.warn(`⚠️ Doublon détecté et ignoré: ${event.id} (${event.title}) pour le jour ${normalizedDay}`);
-        }
+  // Ajouter les événements (hors stands) aux jours correspondants
+  for (const event of otherEvents) {
+    const normalizedDay = normalizeDay(event.day);
+    if (DAYS.includes(normalizedDay)) {
+      if (!addedEventIdsByDay[normalizedDay].has(event.id)) {
+        eventsByDay[normalizedDay].push({
+          ...event,
+          day: normalizedDay
+        });
+        addedEventIdsByDay[normalizedDay].add(event.id);
+      } else {
+        console.warn(`⚠️ Doublon détecté et ignoré: ${event.id} (${event.title}) pour le jour ${normalizedDay}`);
       }
     }
+  }
+  
+  // Ajouter une propriété shared aux stands pour indiquer qu'ils sont partagés entre les jours
+  const standsWithSharedFlag = stands.map(stand => ({
+    ...stand,
+    time: 'Tous les jours',
+    shared: true // Indicateur que l'événement est partagé entre les jours
+  }));
+  
+  // Ajouter les stands seulement au jour "Mercredi" (le premier jour)
+  // On les ajoutera aux autres jours dans l'interface via DayFilter.astro
+  if (standsWithSharedFlag.length > 0) {
+    eventsByDay['Mercredi'] = [...eventsByDay['Mercredi'], ...standsWithSharedFlag];
+    console.log(`📊 ${standsWithSharedFlag.length} stands ajoutés uniquement au jour Mercredi`);
   }
   
   // Trier les événements de chaque jour

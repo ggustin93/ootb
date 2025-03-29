@@ -462,20 +462,36 @@ console.log(`Événements par type:`, eventCounts);
 
   // Fonction pour trier les événements chronologiquement
   function sortEventsByTime(events: HTMLElement[]): HTMLElement[] {
+    const dayOrder = {
+      'Mercredi': 1,
+      'Jeudi': 2,
+      'Vendredi': 3
+    };
+
     return [...events].sort((a, b) => {
-      // Les stands sont toujours en dernier
+      // Les stands sont toujours en dernier, peu importe le jour
       const aType = a.getAttribute('data-type');
       const bType = b.getAttribute('data-type');
       if (aType === 'Stands' && bType !== 'Stands') return 1;
       if (aType !== 'Stands' && bType === 'Stands') return -1;
 
-      // Si un événement a une heure définie et l'autre non, celui avec l'heure définie passe en premier
+      // Trier d'abord par jour (Mercredi < Jeudi < Vendredi)
+      const aDay = a.getAttribute('data-day') || 'Mercredi';
+      const bDay = b.getAttribute('data-day') || 'Mercredi'; 
+      
+      // Si les jours sont différents, trier par jour chronologique
+      if (aDay !== bDay) {
+        return (dayOrder[aDay] || 0) - (dayOrder[bDay] || 0);
+      }
+
+      // Si les jours sont identiques, continuer avec le tri par heure
       const aTime = a.getAttribute('data-time') || '';
       const bTime = b.getAttribute('data-time') || '';
+      
       if (aTime !== 'À définir' && bTime === 'À définir') return -1;
       if (aTime === 'À définir' && bTime !== 'À définir') return 1;
 
-      // Si les deux événements ont une heure définie et différente de "À définir" et "Tous les jours"
+      // Si les deux ont une heure définie, les comparer
       if (aTime !== 'À définir' && bTime !== 'À définir' && 
           aTime !== 'Tous les jours' && bTime !== 'Tous les jours') {
         return aTime.localeCompare(bTime);
@@ -566,8 +582,11 @@ console.log(`Événements par type:`, eventCounts);
       // Appliquer les mêmes règles de filtrage
       const typeMatch = isAllTypesActive || (eventType && activeTypes.includes(eventType));
       
-      const dayMatch = isAllDaysActive || 
-                      (eventDay && activeDays.some(day => normalizeDay(day) === normalizeDay(eventDay)));
+      // Modifier cette condition pour inclure les stands quel que soit le jour sélectionné
+      const dayMatch = 
+        isAllDaysActive || 
+        (eventDay && activeDays.some(day => normalizeDay(day) === normalizeDay(eventDay))) ||
+        (eventType === 'Stands'); // Toujours inclure les stands
       
       return dayMatch && typeMatch;
     });
@@ -708,17 +727,32 @@ console.log(`Événements par type:`, eventCounts);
   function updateEventCounts() {
     const events = Array.from(document.querySelectorAll('.event-card')) as HTMLElement[];
     
+    // Filtrer les événements selon TOUS les jours actifs (et non juste le premier)
+    const filteredByDay = isAllDaysActive 
+      ? events 
+      : events.filter(event => {
+          const eventDay = event.getAttribute('data-day');
+          const eventType = event.getAttribute('data-type');
+          // Inclure l'événement si c'est un stand ou s'il correspond à l'un des jours actifs
+          return (
+            eventType === 'Stands' || 
+            (eventDay && activeDays.some(day => normalizeDay(day) === normalizeDay(eventDay)))
+          );
+        });
+    
     // Récupérer tous les stands et éliminer les doublons par titre
     const standsSet = new Set<string>();
-    events.filter(event => event.getAttribute('data-type') === 'Stands').forEach(stand => {
-      const standTitle = stand.querySelector('h3')?.textContent || '';
-      standsSet.add(standTitle);
-    });
+    filteredByDay
+      .filter(event => event.getAttribute('data-type') === 'Stands')
+      .forEach(stand => {
+        const standTitle = stand.querySelector('h3')?.textContent || '';
+        standsSet.add(standTitle);
+      });
     
-    // Compter les événements par type
+    // Compter les événements par type pour les jours sélectionnés
     const typeCounts = {
-      'Conférences': events.filter(event => event.getAttribute('data-type') === 'Conférences').length,
-      'Ateliers': events.filter(event => event.getAttribute('data-type') === 'Ateliers').length,
+      'Conférences': filteredByDay.filter(event => event.getAttribute('data-type') === 'Conférences').length,
+      'Ateliers': filteredByDay.filter(event => event.getAttribute('data-type') === 'Ateliers').length,
       'Stands': standsSet.size // Nombre unique de stands
     };
     
@@ -739,6 +773,25 @@ console.log(`Événements par type:`, eventCounts);
       // Calculer le total en additionnant les conférences, ateliers et stands uniques
       const total = typeCounts.Conférences + typeCounts.Ateliers + typeCounts.Stands;
       allTypesBadge.textContent = total.toString();
+    }
+    
+    // Ajouter un indicateur visuel des jours actifs dans le compteur
+    const eventsCount = document.getElementById('events-count');
+    if (eventsCount) {
+      if (!isAllDaysActive && activeDays.length > 0) {
+        // Afficher tous les jours actifs si plusieurs jours sont sélectionnés
+        if (activeDays.length === 1) {
+          eventsCount.textContent = `(${activeDays[0]})`;
+        } else if (activeDays.length === 2) {
+          eventsCount.textContent = `(${activeDays[0]} & ${activeDays[1]})`;
+        } else {
+          eventsCount.textContent = `(${activeDays.length} jours)`;
+        }
+        eventsCount.classList.remove('hidden');
+      } else {
+        eventsCount.textContent = '';
+        eventsCount.classList.add('hidden');
+      }
     }
   }
 
@@ -1095,4 +1148,88 @@ console.log(`Événements par type:`, eventCounts);
       initializeFilters();
     }
   });
+
+  function filterEventsByDay(selectedDay) {
+    // Récupérer la liste complète des événements
+    const eventsContainer = document.getElementById('events-container');
+    if (!eventsContainer) return;
+    
+    // Réinitialiser les événements visibles
+    const allEventCards = Array.from(document.querySelectorAll('.event-card'));
+    allEventCards.forEach(card => card.style.display = 'none');
+    
+    // Obtenir tous les événements pour le jour sélectionné
+    const dayEvents = allEventCards.filter(event => {
+      const eventType = event.getAttribute('data-type');
+      const eventDay = event.getAttribute('data-day');
+      
+      // Inclure l'événement si:
+      return (
+        // C'est un événement du jour sélectionné
+        eventDay === selectedDay || 
+        // OU c'est un stand (qui doit s'afficher quel que soit le jour)
+        eventType === 'Stands'
+      );
+    });
+    
+    // Définir les événements filtrés pour la pagination
+    filteredEvents = dayEvents;
+    
+    // Trier les événements
+    filteredEvents.sort((a, b) => {
+      const dayOrder = {
+        'Mercredi': 1,
+        'Jeudi': 2,
+        'Vendredi': 3
+      };
+      
+      // Les stands sont toujours en dernier
+      const aType = a.getAttribute('data-type');
+      const bType = b.getAttribute('data-type');
+      
+      if (aType === 'Stands' && bType !== 'Stands') return 1;
+      if (aType !== 'Stands' && bType === 'Stands') return -1;
+      
+      // Trier d'abord par jour
+      const aDay = a.getAttribute('data-day') || 'Mercredi';
+      const bDay = b.getAttribute('data-day') || 'Mercredi';
+      
+      if (aDay !== bDay) {
+        return (dayOrder[aDay] || 0) - (dayOrder[bDay] || 0);
+      }
+      
+      // Puis par heure
+      const aTime = a.getAttribute('data-time') || '';
+      const bTime = b.getAttribute('data-time') || '';
+      
+      if (aTime !== 'À définir' && bTime === 'À définir') return -1;
+      if (aTime === 'À définir' && bTime !== 'À définir') return 1;
+      
+      if (aTime !== 'À définir' && bTime !== 'À définir' && 
+          aTime !== 'Tous les jours' && bTime !== 'Tous les jours') {
+        return aTime.localeCompare(bTime);
+      }
+      
+      // Tri par type d'événement
+      if (aType === bType) return 0;
+      if (aType === 'Conférences') return -1;
+      if (bType === 'Conférences') return 1;
+      if (aType === 'Ateliers') return -1;
+      if (bType === 'Ateliers') return 1;
+      
+      return 0;
+    });
+    
+    // Réinitialiser la pagination
+    currentPage = 1;
+    
+    // Mise à jour de la pagination et affichage des événements
+    updatePagination();
+    
+    // Mettre à jour le titre des filtres actifs
+    updateActiveFiltersTitle();
+    
+    // Dispatch d'un événement personnalisé pour informer d'autres composants
+    document.dispatchEvent(new CustomEvent('dayChange', { detail: selectedDay }));
+  }
 </script>

@@ -39,42 +39,7 @@
       "variant": "default",
       "description": "Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation"
     },
-    "actualite": {
-      "label": "ACTUALITÉS",
-      "shortLabel": "Actualités",
-      "titlePrefix": "Nos",
-      "titleSuffix": "actualités",
-      "pageTitle": "Nos actualités",
-      "actionLabel": "Voir les actualités",
-      "color": "var(--content-actualite)",
-      "icon": "tabler:news",
-      "variant": "actualite",
-      "description": "Restez informé des dernières innovations pédagogiques et des actualités du monde de l'éducation"
-    },
-    "fiche": {
-      "label": "FICHES PÉDAGOGIQUES",
-      "shortLabel": "Fiches",
-      "titlePrefix": "Nos",
-      "titleSuffix": "fiches",
-      "pageTitle": "Nos fiches pédagogiques",
-      "actionLabel": "Voir les fiches",
-      "color": "var(--content-fiche)",
-      "icon": "tabler:file-text",
-      "variant": "appel",
-      "description": "Des ressources pratiques et détaillées pour enrichir vos cours et activités pédagogiques"
-    },
-    "live": {
-      "label": "LIVES FACEBOOK",
-      "shortLabel": "Lives",
-      "titlePrefix": "Nos",
-      "titleSuffix": "lives",
-      "pageTitle": "Nos lives Facebook",
-      "actionLabel": "Voir les lives",
-      "color": "var(--content-live)",
-      "icon": "tabler:brand-facebook",
-      "variant": "live",
-      "description": "Participez à nos sessions en direct et interagissez avec notre communauté d'enseignants"
-    },
+    
     "podcast": {
       "label": "PODCASTS",
       "shortLabel": "Podcasts",
@@ -109,6 +74,44 @@
         { "icon": "tabler:mail", "label": "Contactez-nous", "url": "mailto:contact@pedagoscope.be" }
       ]
     },
+   
+    "live": {
+      "label": "LIVES FACEBOOK",
+      "shortLabel": "Lives",
+      "titlePrefix": "Nos",
+      "titleSuffix": "lives",
+      "pageTitle": "Nos lives Facebook",
+      "actionLabel": "Voir les lives",
+      "color": "var(--content-live)",
+      "icon": "tabler:brand-facebook",
+      "variant": "live",
+      "description": "Participez à nos sessions en direct et interagissez avec notre communauté d'enseignants"
+    },
+    "actualite": {
+      "label": "ACTUALITÉS",
+      "shortLabel": "Actualités",
+      "titlePrefix": "Nos",
+      "titleSuffix": "actualités",
+      "pageTitle": "Nos actualités",
+      "actionLabel": "Voir les actualités",
+      "color": "var(--content-actualite)",
+      "icon": "tabler:news",
+      "variant": "actualite",
+      "description": "Restez informé des dernières innovations pédagogiques et des actualités du monde de l'éducation"
+    },
+    "fiche": {
+      "label": "FICHES PÉDAGOGIQUES",
+      "shortLabel": "Fiches",
+      "titlePrefix": "Nos",
+      "titleSuffix": "fiches",
+      "pageTitle": "Nos fiches pédagogiques",
+      "actionLabel": "Voir les fiches",
+      "color": "var(--content-fiche)",
+      "icon": "tabler:file-text",
+      "variant": "appel",
+      "description": "Des ressources pratiques et détaillées pour enrichir vos cours et activités pédagogiques"
+    },
+    
     "premium": {
       "label": "PREMIUM",
       "shortLabel": "Premium",

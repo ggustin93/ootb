@@ -39,34 +39,34 @@
     {
       "icon": "tabler:heart",
       "title": "Au sein de l’ASBL Out of the Books, nous œuvrons pour répondre à deux problématiques majeures de l’éducation :",
-      "description": "1.Lutter contre la pénurie des enseignants\n\nAttirer davantage de candidats vers l'enseignement en valorisant le métier et en favorisant l’immersion dès la formation initiale.\n\nFidéliser et accompagner les enseignants en poste grâce à des formations, des événements et des outils pédagogiques innovants.\n\nRevaloriser le métier dans la société en changeant le regard sur l’enseignement via des campagnes médiatiques et des partenariats.\n\n\n2. Réduire les difficultés d’apprentissage et l’échec scolaire\n\nFormer et outiller les enseignants pour mieux accompagner leurs élèves à travers des événements, des podcasts et des émissions dédiées.\n\nPromouvoir des pratiques pédagogiques efficaces et innovantes en collaboration avec des experts en éducation.\n\nÉvaluer l’impact de nos actions pour améliorer continuellement notre approche et réduire les inégalités scolaires.\n"
+      "description": "1. Lutter contre la pénurie des enseignants\n2. Attirer davantage de candidats vers l'enseignement en valorisant le métier et en favorisant l’immersion dès la formation initiale.\n3. Fidéliser et accompagner les enseignants en poste grâce à des formations, des événements et des outils pédagogiques innovants.\n4. Revaloriser le métier dans la société en changeant le regard sur l’enseignement via des campagnes médiatiques et des partenariats.\n5. Réduire les difficultés d’apprentissage et l’échec scolaire\n6. Former et outiller les enseignants pour mieux accompagner leurs élèves à travers des événements, des podcasts et des émissions dédiées.\n7. Promouvoir des pratiques pédagogiques efficaces et innovantes en collaboration avec des experts en éducation.\n8. Évaluer l’impact de nos actions pour améliorer continuellement notre approche et réduire les inégalités scolaires.\n"
     },
     {
       "icon": "tabler:tool",
       "title": "Nos objectifs? ",
-      "description": "1. Faire de l’enseignement une profession choisie et valorisée\n\nSensibiliser et encourager les vocations dès le secondaire.\n\nRenforcer le sentiment d’appartenance et de soutien chez les enseignants.\n\nAméliorer les conditions de travail et la reconnaissance du métier.\n\n2. Améliorer l’efficacité pédagogique et lutter contre l’échec scolaire\n\nOffrir des outils concrets aux enseignants pour enrichir leurs pratiques.\nEncourager l’innovation et la recherche en éducation.\n\nAssurer un suivi des enseignants formés pour mesurer l’impact sur la réussite des élèves.\n\nL’ensemble de nos initiatives vise à bâtir un système éducatif plus inclusif, performant et motivant pour tous."
+      "description": "1. Faire de l’enseignement une profession choisie et valorisée\n2. Sensibiliser et encourager les vocations dès le secondaire.\n3. Renforcer le sentiment d’appartenance et de soutien chez les enseignants.\n4. Améliorer les conditions de travail et la reconnaissance du métier.\n5. Améliorer l’efficacité pédagogique et lutter contre l’échec scolaire\n6. Offrir des outils concrets aux enseignants pour enrichir leurs pratiques.\n7. Encourager l’innovation et la recherche en éducation.\n8. Assurer un suivi des enseignants formés pour mesurer l’impact sur la réussite des élèves.\n9. L’ensemble de nos initiatives vise à bâtir un système éducatif plus inclusif, performant et motivant pour tous.\n"
     }
   ],
   "valeurs": [
     {
       "icon": "tabler:puzzle",
       "title": "Synergies",
-      "description": "Créer des ponts entre tous les acteurs de l'éducation"
+      "description": "Créer des ponts entre tous les acteurs de l'éducation\n"
     },
     {
       "icon": "tabler:heart-handshake",
       "title": "Bienveillance",
-      "description": "Promouvoir une approche positive et constructive de l'éducation"
+      "description": "Promouvoir une approche positive et constructive de l'éducation\n"
     },
     {
       "icon": "tabler:award",
       "title": "Valorisation",
-      "description": "Mettre en lumière les talents et les initiatives des enseignants"
+      "description": "Mettre en lumière les talents et les initiatives des enseignants\n"
     },
     {
       "icon": "tabler:bulb",
       "title": "Innovation",
-      "description": "Encourager les nouvelles approches pédagogiques"
+      "description": "Encourager les nouvelles approches pédagogiques\n"
     }
   ],
   "equipe": {

@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
+import { TinaMarkdown } from 'tinacms/dist/rich-text';
 
 // Importer les données du fichier JSON
 import aboutData from '~/content/about/index.json';
@@ -112,21 +113,39 @@ const teamImage = await findImage(hero.heroImage);
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">Nos Missions</SectionDivider>
-        <div class="grid grid-cols-1 gap-8">
-          {missions.map(mission => (
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md">
-              <div class="flex items-start gap-4">
-                <div class="bg-[--ootb-turquoise] rounded-lg p-3">
-                  <Icon name={mission.icon} class="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 class="text-xl font-semibold text-gray-900 mb-2">{mission.title}</h3>
-                  <p class="text-gray-700">{mission.description}</p>
-                </div>
+        
+        {missions.map(mission => (
+          <div class="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-md mb-8">
+            <div class="flex items-start gap-4 mb-4">
+              <div class="bg-[--ootb-turquoise] rounded-lg p-3 flex-shrink-0">
+                <Icon name={mission.icon} class="w-6 h-6 text-white" />
               </div>
+              <h3 class="text-xl font-semibold text-gray-900">{mission.title}</h3>
             </div>
-          ))}
-        </div>
+            
+            <div class="prose prose-base max-w-none text-gray-700">
+              {typeof mission.description === 'string' ? (
+                <div set:html={mission.description
+                  .split('\n')
+                  .map((line, i) => {
+                    if (!line.trim()) return '';
+                    if (line.match(/^\d+\./)) {
+                      const [num, ...rest] = line.split('.');
+                      return `<div class="flex items-start mb-3">
+                                <span class="font-semibold mr-2">${num}.</span>
+                                <span>${rest.join('.').trim()}</span>
+                              </div>`;
+                    }
+                    return `<p>${line}</p>`;
+                  })
+                  .join('')
+                }/>
+              ) : (
+                <TinaMarkdown content={mission.description} />
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -145,7 +164,13 @@ const teamImage = await findImage(hero.heroImage);
                 </div>
                 <div>
                   <h3 class="text-xl font-semibold text-gray-900 mb-2">{valeur.title}</h3>
-                  <p class="text-gray-700">{valeur.description}</p>
+                  <div class="prose prose-sm max-w-none text-gray-700">
+                    {typeof valeur.description === 'string' ? (
+                      <p>{valeur.description}</p>
+                    ) : (
+                      <TinaMarkdown content={valeur.description} />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

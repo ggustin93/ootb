@@ -192,12 +192,9 @@ export const aboutCollection: Collection = {
           label: "Titre",
         },
         {
-          type: "string",
+          type: "rich-text",
           name: "description",
           label: "Description",
-          ui: {
-            component: "textarea",
-          },
         },
       ],
     },
@@ -223,12 +220,9 @@ export const aboutCollection: Collection = {
           label: "Titre",
         },
         {
-          type: "string",
+          type: "rich-text",
           name: "description",
           label: "Description",
-          ui: {
-            component: "textarea",
-          },
         },
       ],
     },

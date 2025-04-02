@@ -170,26 +170,28 @@ const metadata = {
               <!-- Bouton "TOUS" toujours présent -->
               <CategoryButton
                 href="/blog"
-                icon="tabler:layout-grid"
-                label="Tous"
+                icon={CONTENT_TYPES.all.icon}
+                label={CONTENT_TYPES.all.shortLabel}
                 color="#1f2937"
                 isActive={!category.slug || category.slug === 'blog'}
               />
 
-              <!-- Autres filtres -->
-              {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => {
-                const isActive = key.toLowerCase() === category.slug?.toLowerCase();
-                const colorVar = `var(--content-${key})`;
-                return (
-                  <CategoryButton
-                    href={`/category/${key.toLowerCase()}`}
-                    icon={config.icon}
-                    label={config.label}
-                    color={colorVar}
-                    isActive={isActive}
-                  />
-                );
-              })}
+              <!-- Autres filtres - Structure harmonisée comme dans [...page].astro -->
+              {/* MODIFICATION TEMPORAIRE: Catégorie "premium" masquée - Pour réactiver, supprimer "key !== 'premium'" du filtre ci-dessous */}
+              {Object.entries(CONTENT_TYPES)
+                .filter(([key]) => key !== 'all' && key !== 'premium')
+                .map(([key, config]) => {
+                  const isActive = key.toLowerCase() === category.slug?.toLowerCase();
+                  return (
+                    <CategoryButton
+                      href={`/category/${key}`}
+                      icon={config.icon}
+                      label={config.shortLabel}
+                      color={config.color}
+                      isActive={isActive}
+                    />
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -225,11 +227,12 @@ const metadata = {
                   href="/blog#category-content"
                   class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
                 >
-                  <Icon name={FILTER_TYPES.all.icon} class="w-4 h-4" />
-                  <span class="text-xs sm:text-sm">{FILTER_TYPES.all.label}</span>
+                  <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4" />
+                  <span class="text-xs sm:text-sm">{CONTENT_TYPES.all.shortLabel}</span>
                 </a>
 
-                {Object.entries(FILTER_TYPES).filter(([key]) => key !== 'all').map(([key, config]) => (
+                {/* MODIFICATION TEMPORAIRE: Catégorie "premium" masquée - Pour réactiver, supprimer "key !== 'premium'" du filtre ci-dessous */}
+                {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all' && key !== 'premium').map(([key, config]) => (
                   <a
                     href={`/category/${key.toLowerCase()}#category-content`}
                     class:list={[
@@ -244,7 +247,7 @@ const metadata = {
                     ]}
                   >
                     <Icon name={config.icon} class="w-4 h-4" />
-                    <span class="text-xs sm:text-sm">{config.label}</span>
+                    <span class="text-xs sm:text-sm">{config.shortLabel}</span>
                   </a>
                 ))}
               </div>

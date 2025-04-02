@@ -23,14 +23,15 @@ const { allLabel, mobileSelectLabel } = blogConfig.hero.filters.categoryFilters;
 
 // Créer la liste complète de toutes les catégories, y compris premium
 const allCategories = [
-  ...Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all'),
+  ...Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all' && key !== 'premium'),
   // Ajouter explicitement premium s'il n'est pas déjà dans CONTENT_TYPES
-  ...(!('premium' in CONTENT_TYPES) ? [['premium', {
+  // Commenté temporairement
+  /* ...(!('premium' in CONTENT_TYPES) ? [['premium', {
     icon: 'tabler:crown',
     label: 'PREMIUM',
     shortLabel: 'Premium',
     color: 'var(--content-premium)'
-  }]] : [])
+  }]] : []) */
 ];
 
 // Amélioration de la vérification de sécurité pour l'accès aux propriétés dynamiques

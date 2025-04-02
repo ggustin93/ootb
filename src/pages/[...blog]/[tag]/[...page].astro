@@ -134,7 +134,7 @@ const metadata = {
               />
 
               {Object.entries(CONTENT_TYPES)
-                .filter(([key]) => key !== 'all')
+                .filter(([key]) => key !== 'all' && key !== 'premium')
                 .map(([key, config]) => (
                   <CategoryButton 
                     href={`/category/${key}`}

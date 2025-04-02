@@ -38,13 +38,13 @@
   "missions": [
     {
       "icon": "tabler:heart",
-      "title": "Notre mission",
-      "description": "Placer l'éducation et le bien-être de l'enfant au cœur des priorités pour bâtir une société de demain plus collaborative, créative et épanouissante."
+      "title": "Au sein de l’ASBL Out of the Books, nous œuvrons pour répondre à deux problématiques majeures de l’éducation :",
+      "description": "1.Lutter contre la pénurie des enseignants\n\nAttirer davantage de candidats vers l'enseignement en valorisant le métier et en favorisant l’immersion dès la formation initiale.\n\nFidéliser et accompagner les enseignants en poste grâce à des formations, des événements et des outils pédagogiques innovants.\n\nRevaloriser le métier dans la société en changeant le regard sur l’enseignement via des campagnes médiatiques et des partenariats.\n\n\n2. Réduire les difficultés d’apprentissage et l’échec scolaire\n\nFormer et outiller les enseignants pour mieux accompagner leurs élèves à travers des événements, des podcasts et des émissions dédiées.\n\nPromouvoir des pratiques pédagogiques efficaces et innovantes en collaboration avec des experts en éducation.\n\nÉvaluer l’impact de nos actions pour améliorer continuellement notre approche et réduire les inégalités scolaires.\n"
     },
     {
       "icon": "tabler:tool",
-      "title": "Notre objectif",
-      "description": "Outiller et accompagner les enseignants en prenant en compte leur réalité quotidienne sur le terrain."
+      "title": "Nos objectifs? ",
+      "description": "1. Faire de l’enseignement une profession choisie et valorisée\n\nSensibiliser et encourager les vocations dès le secondaire.\n\nRenforcer le sentiment d’appartenance et de soutien chez les enseignants.\n\nAméliorer les conditions de travail et la reconnaissance du métier.\n\n2. Améliorer l’efficacité pédagogique et lutter contre l’échec scolaire\n\nOffrir des outils concrets aux enseignants pour enrichir leurs pratiques.\nEncourager l’innovation et la recherche en éducation.\n\nAssurer un suivi des enseignants formés pour mesurer l’impact sur la réussite des élèves.\n\nL’ensemble de nos initiatives vise à bâtir un système éducatif plus inclusif, performant et motivant pour tous."
     }
   ],
   "valeurs": [
@@ -72,7 +72,7 @@
   "equipe": {
     "title": "Notre équipe",
     "titleColor": "--ootb-orange",
-    "description": "Notre équipe est composée de professionnels passionnés qui apportent chacun leur expertise unique : enseignants de terrain, chercheurs en sciences de l'éducation, experts en pédagogie et spécialistes de l'innovation éducative. Cette diversité est notre force et nous permet d'avoir une approche complète et pragmatique des enjeux éducatifs.",
+    "description": "Nous sommes entourées de professionnels passionnés qui apportent chacun leur expertise unique : enseignants de terrain, chercheurs en sciences de l'éducation, experts en pédagogie et spécialistes de l'innovation éducative. Cette diversité est notre force et nous permet d'avoir une approche complète et pragmatique des enjeux éducatifs.",
     "membres": [
       {
         "name": "Sophie Vanden Plas",

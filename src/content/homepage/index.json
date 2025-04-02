@@ -83,47 +83,44 @@
   "premium": {
     "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1740649896/ootb-logo_yfscco.svg",
     "title": {
-      "firstLine": "Passez au niveau",
-      "secondLine": "premium"
+      "firstLine": "Ensemble, construisons l'éducation de demain !",
+      "secondLine": ""
     },
-    "intro": "Accédez à nos contenus experts et analyses approfondies pour transformer votre approche pédagogique!",
+    "intro": "",
+    "description": "Votre soutien est essentiel pour garantir la pérennité de nos actions : créer des ressources pédagogiques innovantes, faire évoluer le Festival, donner la parole aux experts et accompagner enseignants, futurs enseignants, parents et élèves face aux défis de notre époque.",
+    "closingText": "Grâce à vous, nous pouvons continuer à agir. Rejoignez-nous pour bâtir une école plus motivante et efficace !",
     "buttons": {
       "primary": {
-        "text": "Découvrir Premium",
-        "href": "category/premium#premium-section-top",
-        "icon": "tabler:crown"
+        "text": "Faire un don",
+        "href": "https://buymeacoffee.com/outofthebooks",
+        "icon": "tabler:coffee"
       },
       "secondary": {
-        "text": "Écouter un extrait",
-        "href": "category/premium#premium-section-top",
-        "icon": "tabler:player-play"
+        "text": "Scanner le QR code",
+        "href": "#qr-code",
+        "icon": "tabler:qrcode"
       }
     },
     "features": [
       {
-        "text": "Hors-séries exclusifs mensuels"
+        "text": "Créer des ressources pédagogiques innovantes"
       },
       {
-        "text": "Analyses approfondies des experts"
+        "text": "Faire évoluer le Festival"
       },
       {
-        "text": "Ressources pédagogiques premium"
+        "text": "Donner la parole aux experts"
+      },
+      {
+        "text": "Accompagner enseignants, futurs enseignants, parents et élèves"
       }
     ],
-    "podcastHighlights": [
-      {
-        "title": "Les neurosciences en classe",
-        "description": "Découvrez les dernières avancées en neurosciences appliquées à l'éducation",
-        "image": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1738708740/cld-sample.jpg",
-        "duration": "1h 12min"
-      },
-      {
-        "title": "La pédagogie active",
-        "description": "Guide complet et pratique pour une classe dynamique",
-        "image": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1738708738/samples/man-on-a-street.jpg",
-        "duration": "58min"
-      }
-    ]
+    "qrCode": {
+      "image": "~/assets/images/bmc_qr.png",
+      "title": "Soutenez-nous !",
+      "caption": "",
+      "link": "https://buymeacoffee.com/outofthebooks"
+    }
   },
   "newsletter": {
     "title": "Restez connectés",

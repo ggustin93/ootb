@@ -9,27 +9,29 @@ import ootbLogo from '~/assets/images/ootb-logo.svg';
 const { 
   heroImage = ootbLogo, 
   title: { 
-    firstLine = 'Passez au niveau', 
-    secondLine = 'premium' 
+    firstLine = 'Soutenez-nous', 
+    secondLine = '' 
   } = {}, 
-  intro, 
-  features, 
-  podcastHighlights,
+  intro = 'Ensemble, construisons l\'éducation de demain !',
+  description = 'Votre soutien est essentiel pour garantir la pérennité de nos actions : créer des ressources pédagogiques innovantes, faire évoluer le Festival, donner la parole aux experts et accompagner enseignants, futurs enseignants, parents et élèves face aux défis de notre époque.',
+  closingText = 'Grâce à vous, nous pouvons continuer à agir. Rejoignez-nous pour bâtir une école plus motivante et efficace !',
+  features = [],
   buttons = {
     primary: {
-      text: 'Découvrir Premium',
-      href: 'category/premium#premium-section-top',
-      icon: 'tabler:crown'
-    },
-    secondary: {
-      text: 'Écouter un extrait',
-      href: 'category/premium#premium-section-top',
-      icon: 'tabler:player-play'
+      text: 'Faire un don',
+      href: 'https://buymeacoffee.com/outofthebooks',
+      icon: 'tabler:coffee'
     }
+  },
+  qrCode = {
+    image: '~/assets/images/bmc_qr.png',
+    title: 'Soutenez-nous !',
+    caption: '',
+    link: 'https://buymeacoffee.com/outofthebooks'
   }
 } = homepageData.premium;
 ---
-<section class="py-16 px-4 md:px-8 bg-[--ootb-turquoise] text-white relative overflow-hidden">
+<section class="px-4 md:px-8 py-16 md:py-20 bg-[--ootb-turquoise] text-white relative overflow-hidden">
   <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
     <Image
       src={heroImage}
@@ -41,7 +43,7 @@ const {
       loading="lazy"
       decoding="async"
     />
-    <Icon name="tabler:book-2" class="absolute w-20 h-24 -rotate-12 top-[10%] left-[35%] opacity-20 transition-transform hover:-translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
+    <Icon name="tabler:heart" class="absolute w-20 h-24 -rotate-12 top-[10%] left-[35%] opacity-20 transition-transform hover:-translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
     <Icon name="tabler:book" class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
   </div>
 
@@ -49,79 +51,81 @@ const {
     <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
       <div class="relative z-10">
         <SectionDivider variant="white" class="mb-6">
-          <Icon name="tabler:sparkles" class="w-4 h-4 mr-1" />
-          Premium
+          <Icon name="tabler:heart-handshake" class="w-4 h-4 mr-1 md:mt-0 -mt-0.5" />
+          Soutenez-nous
         </SectionDivider>
-        <h2>
-          <span class="heading-2 text-white">{firstLine}</span>
-          <span class="heading-2 text-[var(--ootb-yellow)] italic">{secondLine}</span>
+        
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-white mb-8">
+          <span class="text-[--ootb-yellow] relative font-bold italic">
+            Ensemble
+            <span class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
+            <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
+            <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
+          </span>
+          <span>, construisons l'éducation de demain !</span>
         </h2>
         
-        <p class="text-lg text-white mb-8 max-w-xl">
-          {intro}
+        <p class="text-lg leading-relaxed text-white/90 mb-8 max-w-xl">
+          {description}
         </p>
         
-        <ul class="space-y-4 mb-8">
-          {features.map(feature => (
-            <li class="flex items-center gap-3 group">
-              <span class="flex-shrink-0 w-5 h-5 rounded-full bg-[color-mix(in_srgb,var(--ootb-yellow)_20%,transparent)] flex items-center justify-center">
-                <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-yellow)]" />
-              </span>
-              <span class="text-base text-white group-hover:text-[var(--ootb-yellow)] transition-colors">{feature.text}</span>
-            </li>
-          ))}
-        </ul>
+        <p class="text-lg font-medium text-white/90 mb-10 max-w-xl">
+          {closingText}
+        </p>
 
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex mb-8">
           <Button
             href={buttons.primary.href}
             variant="premium-primary"
             icon={buttons.primary.icon}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="lg"
+            class="w-full sm:w-auto px-10 py-4"
           >
             {buttons.primary.text}
-          </Button>
-          <Button
-            href={buttons.secondary.href}
-            variant="premium-secondary"
-            icon={buttons.secondary.icon}
-          >
-            {buttons.secondary.text}
           </Button>
         </div>
       </div>
 
-      <div class="space-y-3 relative">
-        {podcastHighlights.map(podcast => (
-          <a href="#" class="group relative bg-white/15 backdrop-blur-sm rounded-xl p-4 hover:bg-white/25 transition-all border border-white/20 flex gap-4 block">
+      <div id="qr-code" class="hidden lg:flex justify-center items-center">
+        <div class="bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 flex flex-col items-center max-w-md">
+          <h3 class="text-3xl font-bold text-[--ootb-turquoise] mb-8 text-center">{qrCode.title}</h3>
+          
+          <a href={qrCode.link} target="_blank" rel="noopener noreferrer" class="block">
             <Image 
-              src={podcast.image}
-              alt=""
-              class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 object-cover"
-              width={120}
-              height={120}
-              widths={[120, 240]}
-              sizes="120px"
-              loading="lazy"
-              decoding="async"
+              src={qrCode.image}
+              alt="QR code pour nous soutenir via Buy Me a Coffee"
+              class="w-full max-w-[320px] h-auto"
+              width={320}
+              height={320}
+              widths={[320, 450]}
+              sizes="320px"
+              loading="eager"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <Icon name="tabler:player-play" class="w-8 h-8 text-white" />
-            </div>
-            
-            <div>
-              <span class="inline-flex items-center gap-1 bg-[color-mix(in_srgb,var(--ootb-yellow)_100%,transparent)] px-2 py-1 rounded-full text-xs font-medium mb-2 text-[color-mix(in_srgb,var(--ootb-turquoise)_50%,black)] backdrop-blur-sm">
-                Hors-série
-              </span>
-              <h3 class="text-2xl font-bold mb-1 line-clamp-1">{podcast.title}</h3>
-              <p class="text-white/90 text-sm mb-2 line-clamp-2">{podcast.description}</p>
-              <div class="flex items-center gap-1 text-xs text-white/75">
-                <Icon name="tabler:clock" class="w-3.5 h-3.5" />
-                <span>{podcast.duration}</span>
-              </div>
-            </div>
           </a>
-        ))}
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  a:has(img) {
+    position: relative;
+  }
+  
+  a:has(img)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  
+  a:has(img):hover::after {
+    opacity: 1;
+  }
+</style>

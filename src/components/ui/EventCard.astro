@@ -513,12 +513,13 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
         <!-- Bouton "Voir les détails" pour mobile -->
         <div class="md:hidden mt-4">
           <button 
-            class="details-toggle w-full py-3 px-4 text-base font-medium text-[#e4451e] border border-[#e4451e]/20 rounded-lg flex items-center justify-center gap-2 hover:bg-[#e4451e]/5 transition-all duration-300"
-            aria-expanded="false"
+            type="button"
+            class="js-toggle-details w-full py-3 px-4 text-base font-medium text-[#e4451e] border border-[#e4451e]/20 rounded-lg flex items-center justify-center gap-2 hover:bg-[#e4451e]/5 transition-all duration-300"
+            data-target="mobile-details"
           >
-            <span class="show-details">Voir les détails</span>
-            <span class="hide-details hidden">Masquer les détails</span>
-            <Icon name="tabler:chevron-down" class="w-5 h-5 details-icon transition-transform duration-300" />
+            <span class="js-show-text">Voir les détails</span>
+            <span class="js-hide-text hidden">Masquer les détails</span>
+            <Icon name="tabler:chevron-down" class="w-5 h-5 js-toggle-icon transition-transform duration-300" />
           </button>
         </div>
 
@@ -634,80 +635,56 @@ const config = eventTypeConfig[eventType] || eventTypeConfig[badge] || {
 </div> 
 
 <script is:inline>
-document.addEventListener('DOMContentLoaded', () => {
-  const descriptionContainers = document.querySelectorAll('.description-container');
+// Attend que tout le document soit chargé
+function initButtons() {
+  console.log('Initialisation des boutons "Voir les détails"');
   
-  descriptionContainers.forEach(container => {
-    const descriptionText = container.querySelector('.description-text');
-    const toggleButton = container.querySelector('.description-toggle');
-    const showMoreSpan = container.querySelector('.show-more');
-    const showLessSpan = container.querySelector('.show-less');
-    const descriptionIcon = container.querySelector('.description-icon');
+  // Sélectionne tous les boutons de toggle
+  const toggleButtons = document.querySelectorAll('.js-toggle-details');
+  console.log('Boutons trouvés:', toggleButtons.length);
+  
+  // Pour chaque bouton, ajoute un écouteur d'événement de clic
+  toggleButtons.forEach((button, index) => {
+    console.log(`Configuration du bouton #${index + 1}`);
     
-    if (toggleButton && descriptionText) {
-      toggleButton.addEventListener('click', () => {
-        const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
-        
-        toggleButton.setAttribute('aria-expanded', !isExpanded);
-        descriptionText.classList.toggle('line-clamp-4');
-        showMoreSpan.classList.toggle('hidden');
-        showLessSpan.classList.toggle('hidden');
-        descriptionIcon.classList.toggle('rotate-180');
-      });
-    }
-  });
-  
-  // Ajouter la gestion des boutons "Voir les détails" pour mobile
-  const detailsToggles = document.querySelectorAll('.details-toggle');
-  
-  detailsToggles.forEach(toggle => {
-    const showDetails = toggle.querySelector('.show-details');
-    const hideDetails = toggle.querySelector('.hide-details');
-    const detailsIcon = toggle.querySelector('.details-icon');
-    const mobileDetails = toggle.closest('.event-card').querySelector('.mobile-details');
-    
-    if (toggle && mobileDetails) {
-      toggle.addEventListener('click', () => {
-        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-        
-        toggle.setAttribute('aria-expanded', !isExpanded);
-        showDetails.classList.toggle('hidden');
-        hideDetails.classList.toggle('hidden');
-        detailsIcon.classList.toggle('rotate-180');
-        mobileDetails.classList.toggle('hidden');
-      });
-    }
-  });
-
-  // Nouveau code - Optimisations avec Intersection Observer
-  if ('IntersectionObserver' in window) {
-    // Observer pour les images d'événements
-    const eventImagesObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const container = entry.target;
-          const lazyImage = container.querySelector('img[loading="lazy"]');
-          
-          if (lazyImage) {
-            if (lazyImage.dataset.src) {
-              lazyImage.src = lazyImage.dataset.src;
-              delete lazyImage.dataset.src;
-            }
-            
-            // Détacher l'observateur une fois l'image chargée
-            eventImagesObserver.unobserve(container);
-          }
-        }
-      });
-    }, {
-      rootMargin: '100px', // Charger un peu avant que l'élément soit visible
-      threshold: 0.1
+    button.addEventListener('click', function(event) {
+      console.log(`Clic sur le bouton #${index + 1}`);
+      
+      // Trouve la carte d'événement parente
+      const card = this.closest('.event-card');
+      if (!card) {
+        console.error('Carte d\'événement non trouvée');
+        return;
+      }
+      
+      // Trouve les détails à afficher/masquer
+      const details = card.querySelector('.mobile-details');
+      if (!details) {
+        console.error('Détails mobiles non trouvés');
+        return;
+      }
+      
+      // Trouve les éléments de texte du bouton
+      const showText = this.querySelector('.js-show-text');
+      const hideText = this.querySelector('.js-hide-text');
+      const icon = this.querySelector('.js-toggle-icon');
+      
+      // Bascule l'affichage des détails
+      details.classList.toggle('hidden');
+      
+      // Bascule l'affichage du texte du bouton
+      if (showText) showText.classList.toggle('hidden');
+      if (hideText) hideText.classList.toggle('hidden');
+      
+      // Bascule la rotation de l'icône
+      if (icon) icon.classList.toggle('rotate-180');
     });
+  });
+}
 
-    // Observer toutes les cartes d'événements
-    document.querySelectorAll('.event-card').forEach(card => {
-      eventImagesObserver.observe(card);
-    });
-  }
-});
+// Initialise les boutons après le chargement du DOM
+document.addEventListener('DOMContentLoaded', initButtons);
+
+// Pour prendre en charge Astro View Transitions
+document.addEventListener('astro:page-load', initButtons);
 </script>

@@ -5,9 +5,27 @@ interface TicketingModalProps {
   id: string;
   isOpen: boolean;
   onClose: () => void;
+  ticketingConfig?: {
+    modalText: string;
+    ifpcButtonLabel: string;
+    ifpcButtonUrl: string;
+    weezeventButtonLabel: string;
+    weezeventButtonUrl: string;
+  };
 }
 
-export default function TicketingModal({ id, isOpen, onClose }: TicketingModalProps) {
+export default function TicketingModal({ 
+  id, 
+  isOpen, 
+  onClose, 
+  ticketingConfig = {
+    modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.",
+    ifpcButtonLabel: "Billetterie IFPC",
+    ifpcButtonUrl: "https://ifpc-fwb.be",
+    weezeventButtonLabel: "Billetterie générale",
+    weezeventButtonUrl: "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
+  }
+}: TicketingModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,6 +54,20 @@ export default function TicketingModal({ id, isOpen, onClose }: TicketingModalPr
     }
   };
 
+  const openWeezeventModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const w = window.open(
+      ticketingConfig.weezeventButtonUrl,
+      'Billetterie_weezevent',
+      'width=650, height=600, top=100, left=100, toolbar=no, resizable=yes, scrollbars=yes, status=no'
+    );
+    if (w) w.focus();
+    return false;
+  };
+
+  // Séparer le texte en paragraphes
+  const paragraphs = ticketingConfig.modalText.split('\n\n');
+
   return (
     <div
       ref={modalRef}
@@ -62,33 +94,31 @@ export default function TicketingModal({ id, isOpen, onClose }: TicketingModalPr
 
           {/* Content */}
           <div className="mb-8">
-            <p className="text-gray-600 mb-4">
-              Le Festival Out of the Books fait partie du programme des formations en Interréseaux organisées par l'IFPC.
-            </p>
-            <p className="text-gray-600">
-              Si vous êtes enseignant·e, vous pouvez vous inscrire via la billetterie dédiée de l'IFPC. Sinon, utilisez notre billetterie générale Weezevent.
-            </p>
+            {paragraphs.map((paragraph, index) => (
+              <p key={index} className={`text-gray-600 ${index < paragraphs.length - 1 ? 'mb-4' : ''}`}>
+                {paragraph}
+              </p>
+            ))}
           </div>
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4">
             <a
-              href="https://ifpc-fwb.be"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 inline-flex justify-center items-center gap-2 rounded-full bg-[--ootb-orange] px-6 py-3 text-white hover:bg-[--ootb-orange]/90 transition-colors"
-            >
-              <Icon icon="tabler:school" className="w-5 h-5" />
-              <span>Billetterie IFPC</span>
-            </a>
-            <a
-              href="#"
+              href={ticketingConfig.ifpcButtonUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 inline-flex justify-center items-center gap-2 rounded-full bg-gray-100 px-6 py-3 text-gray-700 hover:bg-gray-200 transition-colors"
             >
+              <Icon icon="tabler:school" className="w-5 h-5" />
+              <span>{ticketingConfig.ifpcButtonLabel}</span>
+            </a>
+            <a
+              href={ticketingConfig.weezeventButtonUrl}
+              onClick={openWeezeventModal}
+              className="flex-1 inline-flex justify-center items-center gap-2 rounded-full bg-[--ootb-orange] px-6 py-3 text-white hover:bg-[--ootb-orange]/90 transition-colors"
+            >
               <Icon icon="tabler:ticket" className="w-5 h-5" />
-              <span>Billetterie générale</span>
+              <span>{ticketingConfig.weezeventButtonLabel}</span>
             </a>
           </div>
         </div>

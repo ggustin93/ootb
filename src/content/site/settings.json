@@ -8,7 +8,7 @@
     "defaultSocialImage": "/images/assets/ootb-social-card.jpg"
   },
   "festival": {
-    "showUnpublishedEvents": true
+    "showUnpublishedEvents": false
   },
   "system": {
     "triggerDeployment": false,

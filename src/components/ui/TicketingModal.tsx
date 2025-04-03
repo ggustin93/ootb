@@ -14,17 +14,20 @@ interface TicketingModalProps {
   };
 }
 
+// Valeurs par défaut qui correspondent à la structure dans festival.ticketing
+const DEFAULT_CONFIG = {
+  modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.",
+  ifpcButtonLabel: "Billetterie IFPC",
+  ifpcButtonUrl: "https://ifpc-fwb.be",
+  weezeventButtonLabel: "Billetterie générale",
+  weezeventButtonUrl: "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
+};
+
 export default function TicketingModal({ 
   id, 
   isOpen, 
   onClose, 
-  ticketingConfig = {
-    modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.",
-    ifpcButtonLabel: "Billetterie IFPC",
-    ifpcButtonUrl: "https://ifpc-fwb.be",
-    weezeventButtonLabel: "Billetterie générale",
-    weezeventButtonUrl: "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
-  }
+  ticketingConfig = DEFAULT_CONFIG
 }: TicketingModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 

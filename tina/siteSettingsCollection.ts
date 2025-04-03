@@ -28,7 +28,14 @@ export const siteSettingsCollection: Collection = {
       defaultSocialImage: "/images/assets/ootb-social-card.jpg"
     },
     festival: {
-      showUnpublishedEvents: false
+      showUnpublishedEvents: false,
+      ticketing: {
+        modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.",
+        ifpcButtonLabel: "Billetterie IFPC",
+        ifpcButtonUrl: "https://ifpc-fwb.be",
+        weezeventButtonLabel: "Billetterie générale",
+        weezeventButtonUrl: "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
+      }
     },
     system: {
       deploymentTimestamp: new Date().toISOString()
@@ -46,13 +53,6 @@ export const siteSettingsCollection: Collection = {
       },
       showOnPages: ["all"],
       hideOnPages: ["festival"]
-    },
-    ticketing: {
-      modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension. Sinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.",
-      ifpcButtonLabel: "Billetterie IFPC",
-      ifpcButtonUrl: "https://ifpc-fwb.be",
-      weezeventButtonLabel: "Billetterie générale",
-      weezeventButtonUrl: "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
     }
   }),
   fields: [
@@ -123,6 +123,52 @@ export const siteSettingsCollection: Collection = {
           ui: {
             description: "Cette option permet de prévisualiser les événements avant publication. Désactivez-la avant la mise en ligne officielle du programme."
           }
+        },
+        {
+          type: "object",
+          name: "ticketing",
+          label: "Billetterie",
+          description: "Configuration de la billetterie du festival",
+          fields: [
+            {
+              type: "string",
+              name: "modalText",
+              label: "Texte du modal de billetterie",
+              description: "Texte affiché dans la fenêtre de réservation des tickets",
+              required: true,
+              ui: {
+                component: "textarea"
+              }
+            },
+            {
+              type: "string",
+              name: "ifpcButtonLabel",
+              label: "Texte du bouton IFPC",
+              description: "Libellé du bouton pour la billetterie IFPC",
+              required: true,
+            },
+            {
+              type: "string",
+              name: "ifpcButtonUrl",
+              label: "URL du bouton IFPC",
+              description: "Lien pour la billetterie IFPC",
+              required: true,
+            },
+            {
+              type: "string",
+              name: "weezeventButtonLabel",
+              label: "Texte du bouton Weezevent",
+              description: "Libellé du bouton pour la billetterie Weezevent",
+              required: true,
+            },
+            {
+              type: "string",
+              name: "weezeventButtonUrl",
+              label: "URL du bouton Weezevent",
+              description: "Lien pour la billetterie Weezevent",
+              required: true,
+            }
+          ],
         }
       ]
     },
@@ -230,52 +276,6 @@ export const siteSettingsCollection: Collection = {
           list: true,
         },
       ],
-    },
-    {
-      type: "object",
-      name: "ticketing",
-      label: "Billetterie",
-      description: "Configuration de la billetterie du festival",
-      fields: [
-        {
-          type: "string",
-          name: "modalText",
-          label: "Texte du modal de billetterie",
-          description: "Texte affiché dans la fenêtre de réservation des tickets",
-          required: true,
-          ui: {
-            component: "textarea"
-          }
-        },
-        {
-          type: "string",
-          name: "ifpcButtonLabel",
-          label: "Texte du bouton IFPC",
-          description: "Libellé du bouton pour la billetterie IFPC",
-          required: true,
-        },
-        {
-          type: "string",
-          name: "ifpcButtonUrl",
-          label: "URL du bouton IFPC",
-          description: "Lien pour la billetterie IFPC",
-          required: true,
-        },
-        {
-          type: "string",
-          name: "weezeventButtonLabel",
-          label: "Texte du bouton Weezevent",
-          description: "Libellé du bouton pour la billetterie Weezevent",
-          required: true,
-        },
-        {
-          type: "string",
-          name: "weezeventButtonUrl",
-          label: "URL du bouton Weezevent",
-          description: "Lien pour la billetterie Weezevent",
-          required: true,
-        }
-      ],
-    },
+    }
   ],
 }; 

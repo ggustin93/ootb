@@ -460,7 +460,7 @@ function saveRawData(data: unknown, filename: string): void {
 }
 
 /**
- * Récupère les stands depuis l'API NocoDB
+ * Récupère les stands depuis l'API NocoDB avec pagination complète
  * @returns Réponse contenant la liste des stands
  */
 export async function fetchStands(): Promise<NocoDBResponse> {
@@ -472,36 +472,101 @@ export async function fetchStands(): Promise<NocoDBResponse> {
   
   try {
     const api = initNocoDBApi();
-    
     console.log('Appel à l\'API NocoDB pour récupérer les stands...');
     
-    // Appel à l'API pour récupérer les données
-    const response = await api.dbTableRow.list(
+    // Vérifier le nombre total d'éléments sans filtre
+    const countResponse = await api.dbTableRow.list(
       "noco",
       NOCODB_CONFIG.projectId,
       NOCODB_CONFIG.tables.stands,
-      NOCODB_CONFIG.defaultQueryParams.stands
+      {
+        limit: 1,
+        offset: 0,
+        where: ""
+      }
     );
     
-    console.log(`Données récupérées avec succès: ${response.list.length} stands trouvés`);
+    console.log(`Nombre total de stands dans la table: ${countResponse.pageInfo?.totalRows || 0}`);
+    console.log(`NOCODB_CONFIG pour les stands:`, JSON.stringify(NOCODB_CONFIG.defaultQueryParams.stands, null, 2));
     
-    // Sauvegarder la réponse complète
-    saveRawData(response, 'stands_response.json');
+    // Essayons une requête sans filtre et avec une pagination forcée à 35 éléments
+    const directResponse = await api.dbTableRow.list(
+      "noco",
+      NOCODB_CONFIG.projectId,
+      NOCODB_CONFIG.tables.stands,
+      {
+        limit: 35,
+        offset: 0,
+        where: ""
+      }
+    );
     
-    // Formatage de la réponse pour correspondre à l'interface NocoDBResponse
+    console.log(`Réponse directe avec limit=35: ${directResponse.list.length} stands (total: ${directResponse.pageInfo?.totalRows || 0})`);
+    
+    let allStands: NocoDBStand[] = [];
+    let currentPage = 0;
+    let isLastPage = false;
+    let totalRows = 0;
+    
+    // Boucle de pagination pour récupérer toutes les données
+    while (!isLastPage) {
+      const queryParams = {
+        ...NOCODB_CONFIG.defaultQueryParams.stands,
+        offset: currentPage * NOCODB_CONFIG.defaultQueryParams.stands.limit,
+        where: "" // S'assurer qu'aucun filtre n'est appliqué
+      };
+      
+      console.log(`Requête page ${currentPage + 1} avec params:`, JSON.stringify(queryParams, null, 2));
+      
+      // Appel à l'API pour récupérer la page courante
+      const response = await api.dbTableRow.list(
+        "noco",
+        NOCODB_CONFIG.projectId,
+        NOCODB_CONFIG.tables.stands,
+        queryParams
+      );
+      
+      console.log(`Réponse page ${currentPage + 1}:`, JSON.stringify(response.pageInfo, null, 2));
+      
+      // Ajouter les stands de la page courante au tableau
+      allStands = [...allStands, ...(response.list as NocoDBStand[])];
+      
+      // Mettre à jour les informations de pagination
+      totalRows = response.pageInfo?.totalRows || 0;
+      
+      // Vérifier si c'est la dernière page en se basant sur isLastPage de l'API
+      isLastPage = response.pageInfo?.isLastPage || false;
+      
+      console.log(`Page ${currentPage + 1} récupérée: ${response.list.length} stands (Total: ${allStands.length}/${totalRows})`);
+      
+      currentPage++;
+      
+      // Sécurité pour éviter une boucle infinie
+      if (currentPage > 10) {
+        console.log('⚠️ Nombre maximum de pages atteint, arrêt de la boucle');
+        break;
+      }
+    }
+    
+    console.log(`Données récupérées avec succès: ${allStands.length} stands trouvés au total`);
+    
+    // Formatage de la réponse finale
     const formattedResponse = {
-      list: response.list as NocoDBStand[],
+      list: allStands,
       pageInfo: {
-        totalRows: response.pageInfo?.totalRows || 0,
-        page: response.pageInfo?.page || 1,
-        pageSize: response.pageInfo?.pageSize || 25,
-        isFirstPage: response.pageInfo?.isFirstPage || true,
-        isLastPage: response.pageInfo?.isLastPage || true
+        totalRows,
+        page: 1,
+        pageSize: allStands.length,
+        isFirstPage: true,
+        isLastPage: true
       },
       stats: { 
-        dbQueryTime: "0" // Valeur par défaut car stats n'existe pas dans la réponse
+        dbQueryTime: "0"
       }
     };
+    
+    // Sauvegarder la réponse complète
+    saveRawData(formattedResponse, 'stands_response.json');
     
     // Mettre à jour le cache
     updateCache(standsCache, formattedResponse, 'stands');
@@ -526,36 +591,68 @@ export async function fetchAteliers(): Promise<NocoDBSessionsResponse> {
   
   try {
     const api = initNocoDBApi();
-    
     console.log('Appel à l\'API NocoDB pour récupérer les ateliers...');
     
-    // Appel à l'API pour récupérer les données
-    const response = await api.dbTableRow.list(
-      "noco",
-      NOCODB_CONFIG.projectId,
-      NOCODB_CONFIG.tables.ateliers,
-      NOCODB_CONFIG.defaultQueryParams.ateliers
-    );
+    let allAteliers: NocoDBSession[] = [];
+    let currentPage = 0;
+    let isLastPage = false;
+    let totalRows = 0;
     
-    console.log(`Données récupérées avec succès: ${response.list.length} ateliers trouvés`);
+    // Boucle de pagination pour récupérer toutes les données
+    while (!isLastPage) {
+      const queryParams = {
+        ...NOCODB_CONFIG.defaultQueryParams.ateliers,
+        offset: currentPage * NOCODB_CONFIG.defaultQueryParams.ateliers.limit,
+        where: "" // S'assurer qu'aucun filtre n'est appliqué
+      };
+      
+      // Appel à l'API pour récupérer la page courante
+      const response = await api.dbTableRow.list(
+        "noco",
+        NOCODB_CONFIG.projectId,
+        NOCODB_CONFIG.tables.ateliers,
+        queryParams
+      );
+      
+      // Ajouter les ateliers de la page courante au tableau
+      allAteliers = [...allAteliers, ...(response.list as NocoDBSession[])];
+      
+      // Mettre à jour les informations de pagination
+      totalRows = response.pageInfo?.totalRows || 0;
+      
+      // Vérifier si c'est la dernière page en se basant sur isLastPage de l'API
+      isLastPage = response.pageInfo?.isLastPage || false;
+      
+      console.log(`Page ${currentPage + 1} récupérée: ${response.list.length} ateliers (Total: ${allAteliers.length}/${totalRows})`);
+      
+      currentPage++;
+      
+      // Sécurité pour éviter une boucle infinie
+      if (currentPage > 10) {
+        console.log('⚠️ Nombre maximum de pages atteint, arrêt de la boucle');
+        break;
+      }
+    }
     
-    // Sauvegarder la réponse complète
-    saveRawData(response, 'ateliers_response.json');
+    console.log(`Données récupérées avec succès: ${allAteliers.length} ateliers trouvés au total`);
     
-    // Formatage de la réponse pour correspondre à l'interface NocoDBSessionsResponse
+    // Formatage de la réponse finale
     const formattedResponse = {
-      list: response.list as NocoDBSession[],
+      list: allAteliers,
       pageInfo: {
-        totalRows: response.pageInfo?.totalRows || 0,
-        page: response.pageInfo?.page || 1,
-        pageSize: response.pageInfo?.pageSize || 25,
-        isFirstPage: response.pageInfo?.isFirstPage || true,
-        isLastPage: response.pageInfo?.isLastPage || true
+        totalRows,
+        page: 1,
+        pageSize: allAteliers.length,
+        isFirstPage: true,
+        isLastPage: true
       },
       stats: { 
-        dbQueryTime: "0" // Valeur par défaut car stats n'existe pas dans la réponse
+        dbQueryTime: "0"
       }
     };
+    
+    // Sauvegarder la réponse complète
+    saveRawData(formattedResponse, 'ateliers_response.json');
     
     // Mettre à jour le cache
     updateCache(ateliersCache, formattedResponse, 'ateliers');
@@ -580,36 +677,68 @@ export async function fetchConferences(): Promise<NocoDBSessionsResponse> {
   
   try {
     const api = initNocoDBApi();
-    
     console.log('Appel à l\'API NocoDB pour récupérer les conférences...');
     
-    // Appel à l'API pour récupérer les données
-    const response = await api.dbTableRow.list(
-      "noco",
-      NOCODB_CONFIG.projectId,
-      NOCODB_CONFIG.tables.conferences,
-      NOCODB_CONFIG.defaultQueryParams.conferences
-    );
+    let allConferences: NocoDBSession[] = [];
+    let currentPage = 0;
+    let isLastPage = false;
+    let totalRows = 0;
     
-    console.log(`Données récupérées avec succès: ${response.list.length} conférences trouvées`);
+    // Boucle de pagination pour récupérer toutes les données
+    while (!isLastPage) {
+      const queryParams = {
+        ...NOCODB_CONFIG.defaultQueryParams.conferences,
+        offset: currentPage * NOCODB_CONFIG.defaultQueryParams.conferences.limit,
+        where: "" // S'assurer qu'aucun filtre n'est appliqué
+      };
+      
+      // Appel à l'API pour récupérer la page courante
+      const response = await api.dbTableRow.list(
+        "noco",
+        NOCODB_CONFIG.projectId,
+        NOCODB_CONFIG.tables.conferences,
+        queryParams
+      );
+      
+      // Ajouter les conférences de la page courante au tableau
+      allConferences = [...allConferences, ...(response.list as NocoDBSession[])];
+      
+      // Mettre à jour les informations de pagination
+      totalRows = response.pageInfo?.totalRows || 0;
+      
+      // Vérifier si c'est la dernière page en se basant sur isLastPage de l'API
+      isLastPage = response.pageInfo?.isLastPage || false;
+      
+      console.log(`Page ${currentPage + 1} récupérée: ${response.list.length} conférences (Total: ${allConferences.length}/${totalRows})`);
+      
+      currentPage++;
+      
+      // Sécurité pour éviter une boucle infinie
+      if (currentPage > 10) {
+        console.log('⚠️ Nombre maximum de pages atteint, arrêt de la boucle');
+        break;
+      }
+    }
     
-    // Sauvegarder la réponse complète
-    saveRawData(response, 'conferences_response.json');
+    console.log(`Données récupérées avec succès: ${allConferences.length} conférences trouvées au total`);
     
-    // Formatage de la réponse pour correspondre à l'interface NocoDBSessionsResponse
+    // Formatage de la réponse finale
     const formattedResponse = {
-      list: response.list as NocoDBSession[],
+      list: allConferences,
       pageInfo: {
-        totalRows: response.pageInfo?.totalRows || 0,
-        page: response.pageInfo?.page || 1,
-        pageSize: response.pageInfo?.pageSize || 25,
-        isFirstPage: response.pageInfo?.isFirstPage || true,
-        isLastPage: response.pageInfo?.isLastPage || true
+        totalRows,
+        page: 1,
+        pageSize: allConferences.length,
+        isFirstPage: true,
+        isLastPage: true
       },
       stats: { 
-        dbQueryTime: "0" // Valeur par défaut car stats n'existe pas dans la réponse
+        dbQueryTime: "0"
       }
     };
+    
+    // Sauvegarder la réponse complète
+    saveRawData(formattedResponse, 'conferences_response.json');
     
     // Mettre à jour le cache
     updateCache(conferencesCache, formattedResponse, 'conferences');

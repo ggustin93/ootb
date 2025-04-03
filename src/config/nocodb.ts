@@ -23,7 +23,7 @@ export const NOCODB_CONFIG = {
   defaultQueryParams: {
     stands: {
       offset: 0,
-      limit: 25,
+      limit: 50,
       where: ""
     },
     ateliers: {

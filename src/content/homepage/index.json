@@ -132,31 +132,31 @@
       {
         "name": "YouTube",
         "icon": "tabler:brand-youtube",
-        "href": "https://youtube.com/@outofthebooks",
+        "href": "https://www.youtube.com/@outofthebooksasbl",
         "color": "text-[--ootb-blue]"
       },
       {
         "name": "Facebook",
         "icon": "tabler:brand-facebook",
-        "href": "https://facebook.com/outofthebooks",
+        "href": "https://www.facebook.com/outofthebooksasbl",
         "color": "text-[--ootb-blue]"
       },
       {
         "name": "LinkedIn",
         "icon": "tabler:brand-linkedin",
-        "href": "https://www.linkedin.com/company/festivalootb/",
+        "href": "https://www.linkedin.com/company/outofthebooks/",
         "color": "text-[--ootb-blue]"
       },
       {
         "name": "Instagram",
         "icon": "tabler:brand-instagram",
-        "href": "https://www.instagram.com/festivaloutofthebooks/",
+        "href": "https://www.instagram.com/outofthebooksasbl/",
         "color": "text-[--ootb-blue]"
       },
       {
         "name": "Spotify",
         "icon": "tabler:brand-spotify",
-        "href": "https://open.spotify.com/show/outofthebooks",
+        "href": "https://open.spotify.com/show/4yTxSH2wLtptZQ8Ly4D6DI?si=ub-5Jr9uRjuedLDysvfc7Q",
         "color": "text-[--ootb-blue]"
       }
     ]

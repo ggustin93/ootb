@@ -283,17 +283,27 @@
       {
         "ariaLabel": "Facebook",
         "icon": "tabler:brand-facebook",
-        "href": "#"
+        "href": "https://www.facebook.com/outofthebooksasbl"
       },
       {
         "ariaLabel": "Instagram",
         "icon": "tabler:brand-instagram",
-        "href": "#"
+        "href": "https://www.instagram.com/outofthebooksasbl/"
       },
       {
         "ariaLabel": "LinkedIn",
         "icon": "tabler:brand-linkedin",
-        "href": "#"
+        "href": "https://www.linkedin.com/company/outofthebooks/"
+      },
+      {
+        "ariaLabel": "YouTube",
+        "icon": "tabler:brand-youtube",
+        "href": "https://www.youtube.com/@outofthebooksasbl"
+      },
+      {
+        "ariaLabel": "Spotify",
+        "icon": "tabler:brand-spotify", 
+        "href": "https://open.spotify.com/show/4yTxSH2wLtptZQ8Ly4D6DI?si=ub-5Jr9uRjuedLDysvfc7Q"
       }
     ],
     "footNote": "Out of the Books ASBL © 2025",

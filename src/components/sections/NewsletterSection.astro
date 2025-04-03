@@ -32,31 +32,31 @@ const defaultSocialLinks = [
   {
     name: 'YouTube',
     icon: 'tabler:brand-youtube',
-    href: 'https://youtube.com/@outofthebooks',
+    href: 'https://www.youtube.com/@outofthebooksasbl',
     color: 'text-[--ootb-blue]'
   },
   {
     name: 'Facebook',
     icon: 'tabler:brand-facebook',
-    href: 'https://facebook.com/outofthebooks',
+    href: 'https://www.facebook.com/outofthebooksasbl',
     color: 'text-[--ootb-blue]'
   },
   {
     name: 'LinkedIn',
     icon: 'tabler:brand-linkedin',
-    href: 'https://www.linkedin.com/company/festivalootb/',
+    href: 'https://www.linkedin.com/company/outofthebooks/',
     color: 'text-[--ootb-blue]'
   },
   {
     name: 'Instagram',
     icon: 'tabler:brand-instagram',
-    href: 'https://www.instagram.com/festivaloutofthebooks/',
+    href: 'https://www.instagram.com/outofthebooksasbl/',
     color: 'text-[--ootb-blue]'
   },
   {
     name: 'Spotify',
     icon: 'tabler:brand-spotify',
-    href: 'https://open.spotify.com/show/outofthebooks',
+    href: 'https://open.spotify.com/show/4yTxSH2wLtptZQ8Ly4D6DI?si=ub-5Jr9uRjuedLDysvfc7Q',
     color: 'text-[--ootb-blue]'
   }
 ];
@@ -237,9 +237,7 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
     const form = document.getElementById('newsletter-form');
     const submitButton = document.getElementById('newsletter-submit');
     const statusContainer = document.getElementById('newsletter-status');
-    const statusIcon = document.getElementById('newsletter-status-icon');
     const statusMessage = document.getElementById('newsletter-status-message');
-    const originalButtonText = submitButton?.querySelector('span')?.textContent || "S'inscrire";
     const privacyCheckbox = document.getElementById('privacy-policy');
     const privacyError = document.getElementById('privacy-error');
     
@@ -432,11 +430,11 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
             showError(result.message || 'Une erreur est survenue lors de l\'inscription.');
           }
         })
-        .catch(error => {
+        .catch((_err) => {
           console.error('❌ Erreur lors de la soumission');
           showError('Une erreur est survenue lors de la communication avec le serveur.');
         });
-      } catch (error) {
+      } catch (_err) {
         console.error('❌ Erreur lors de la soumission');
         showError('Une erreur est survenue lors de la communication avec le serveur.');
       }

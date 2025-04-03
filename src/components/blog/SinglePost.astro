@@ -150,11 +150,10 @@ const styles = {
 
 // Classes pour le wrapper média
 const mediaWrapperClasses = [
-  "rounded-lg overflow-hidden shadow-lg relative aspect-video mb-8",
+  "rounded-lg overflow-hidden relative aspect-video mb-8",
   contentStates.isLiveFacebook && "ring-4 ring-[#1877F2]/20",
   contentStates.isPodcast && "ring-4 ring-[var(--ootb-violet)]/20",
-  contentType === 'tv' && "ring-4 ring-[var(--ootb-green)]/20",
-  contentType === 'actualite' && "ring-4 ring-[var(--content-actualite)]/20"
+  contentType === 'tv' && "ring-4 ring-[var(--ootb-green)]/20"
 ];
 
 ---
@@ -216,7 +215,7 @@ const mediaWrapperClasses = [
 
         {/* Média - Vidéo YouTube */}
         {(contentStates.isVideo && mediaInfo.videoUrl) ? (
-          <div class:list={[...mediaWrapperClasses, "group"]}>
+          <div class:list={[...mediaWrapperClasses, "group", "shadow-lg"]}>
             <VideoPlayer 
               videoUrl={mediaInfo.videoUrl}
               title={post.title}
@@ -232,7 +231,10 @@ const mediaWrapperClasses = [
           (contentStates.isTvContent && mediaInfo.tvcomUrl) || 
           (contentType === 'actualite' && post.image && !isDefaultImage && !contentStates.isPodcast)
         ) && (
-          <div class:list={[...mediaWrapperClasses, "group"]}>
+          <div class:list={[...mediaWrapperClasses, "group", 
+            contentType !== 'actualite' && "shadow-lg",
+            contentType === 'actualite' && "max-w-fit mx-auto mt-4 mb-8"
+          ]}>
             <FeaturedImage 
               image={displayImage}
               title={post.title}
@@ -257,7 +259,7 @@ const mediaWrapperClasses = [
 
         {/* Fond par défaut si aucune image n'est fournie et pas de média spécifique */}
         {(!post.image || isDefaultImage) && !contentStates.isPodcast && !contentStates.isVideo && !mediaInfo.videoUrl && !contentStates.isPedagogicalSheet && (
-          <div class:list={[...mediaWrapperClasses, "group"]}>
+          <div class:list={[...mediaWrapperClasses, "group", "shadow-lg"]}>
             <div 
               class:list={[
                 'w-full h-full flex items-center justify-center aspect-video',
@@ -342,5 +344,13 @@ const mediaWrapperClasses = [
 <style>  
   .aspect-video {
     aspect-ratio: 16/9;
+  }
+  
+  /* Assurer que les images d'actualité ne dépassent pas leurs dimensions d'origine */
+  .max-w-fit img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
   }
 </style>

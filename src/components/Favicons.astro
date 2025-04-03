@@ -2,9 +2,20 @@
 import favIcon from '~/assets/favicons/favicon.ico';
 import favIconSvg from '~/assets/favicons/favicon.svg';
 import appleTouchIcon from '~/assets/favicons/apple-touch-icon.png';
+import favicon16 from '~/assets/favicons/favicon-16x16.png';
+import favicon32 from '~/assets/favicons/favicon-32x32.png';
+
+// Génère un timestamp pour forcer le rechargement des favicons
+const version = `v=${Date.now()}`;
 ---
 
-<link rel="shortcut icon" href={favIcon} />
-<link rel="icon" type="image/svg+xml" href={favIconSvg.src} />
-<link rel="mask-icon" href={favIconSvg.src} color="#8D46E7" />
-<link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon.src} />
+<link rel="shortcut icon" href={`${favIcon}?${version}`} />
+<link rel="icon" type="image/svg+xml" href={`${favIconSvg.src}?${version}`} />
+<link rel="icon" type="image/png" sizes="32x32" href={`${favicon32.src}?${version}`} />
+<link rel="icon" type="image/png" sizes="16x16" href={`${favicon16.src}?${version}`} />
+<link rel="mask-icon" href={`${favIconSvg.src}?${version}`} color="#8D46E7" />
+<link rel="apple-touch-icon" sizes="180x180" href={`${appleTouchIcon.src}?${version}`} />
+
+<!-- Balise spécifique à Safari pour nettoyer le cache de favicons -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

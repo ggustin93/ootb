@@ -29,7 +29,16 @@ export default defineConfig({
    '/admin': '/admin/index.html'
  },
  integrations: [
-   sitemap(),
+   sitemap({
+     filter: (page) => 
+       !page.includes('/dashboard') && 
+       !page.includes('/merci-contact') &&
+       !page.includes('/merci-soumission') &&
+       !page.includes('/merci-inscription') &&
+       !page.includes('/ootb') &&
+       !page.includes('/terms') &&
+       !page.includes('/privacy')
+   }),
    tailwind({
      applyBaseStyles: false,
    }),

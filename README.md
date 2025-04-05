@@ -15,19 +15,11 @@ A collaborative platform for educational innovation in French-speaking Belgium, 
 - 🏆 High performance & accessibility scores
 - 🖼️ Image optimization via **Astro Assets**
 
-## 📂 Main Sections
-
-- **About Us**: Vision, mission & values
-- **Team**: Meet the members
-- **Events**: Educational workshops & conferences
-- **Resources**: Pedagogical tools & materials
-- **Blog**: Insights & latest updates
-
 ## 🛠️ Tech Stack
-
+- **Database**: NocoDB 
 - **Framework**: [Astro](https://astro.build/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **CMS**: [Tina CMS](https://tina.io/)
+- **Git-based CMS**: [Tina CMS](https://tina.io/)
 - **Deployment**: [Netlify](https://netlify.com)
 - **Icons**: [Tabler Icons](https://tabler-icons.io/)
 - **Media Storage**: Cloudinary via Tina CMS
@@ -64,9 +56,6 @@ TINA_TOKEN
 # Cloudinary
 CLOUDINARY_CLOUD_NAM
 CLOUDINARY_API_KEY
-
-# Youtube
-YOUTUBE_PLAYLIST_ID
 
 # Brevo
 BREVO_API_KEY

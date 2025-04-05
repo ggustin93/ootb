@@ -1,6 +1,9 @@
 ---
 title: Mentions légales
 layout: ~/layouts/MarkdownLayout.astro
+robots:
+  index: false
+  follow: false
 ---
 
 *Dernière mise à jour*: 5 mars 2025

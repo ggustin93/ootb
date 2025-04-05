@@ -1,6 +1,9 @@
 ---
 title: Politique de confidentialité
 layout: ~/layouts/MarkdownLayout.astro
+robots:
+  index: false
+  follow: false
 ---
 
 *Dernière mise à jour*: 4 mars 2025

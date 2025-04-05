@@ -189,15 +189,18 @@ const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995
   <!-- Contenu du dashboard (masqué par défaut) -->
   <div id="dashboard-content" class="hidden">
     <CustomStyles />
-    <div class="flex h-screen bg-gray-50">
-      {/* Menu latéral */}
-      <aside class="w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col">
-        <div class="p-4 border-b border-gray-200">
+    <div class="flex flex-col md:flex-row h-screen bg-gray-50">
+      {/* Menu latéral - caché par défaut sur mobile */}
+      <aside class="md:w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col fixed inset-y-0 left-0 z-30 transform md:relative md:translate-x-0 transition duration-300 ease-in-out w-72 -translate-x-full" id="sidebar">
+        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
           <Image 
             src={logoHeader} 
             alt="Out of the Books" 
             class="h-8 w-auto"
           />
+          <button class="md:hidden text-gray-500 hover:text-gray-700" id="close-sidebar">
+            <Icon name="tabler:x" class="w-6 h-6" />
+          </button>
         </div>
 
         {/* Navigation principale */}
@@ -317,9 +320,26 @@ const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995
         </div>
       </aside>
 
+      {/* Overlay pour mobile - affiché quand le menu est ouvert */}
+      <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
+
       {/* Contenu principal */}
       <main class="flex-1 overflow-y-auto">
-        <div class="max-w-4xl mx-auto p-8">
+        {/* Header mobile */}
+        <div class="sticky top-0 z-10 md:hidden bg-white border-b border-gray-200 shadow-sm">
+          <div class="flex items-center justify-between p-4">
+            <Image 
+              src={logoHeader} 
+              alt="Out of the Books" 
+              class="h-8 w-auto"
+            />
+            <button id="open-sidebar" class="text-gray-500 hover:text-gray-700">
+              <Icon name="tabler:menu-2" class="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto p-4 md:p-8">
           {/* Summary - Titre simple */}
           <section id="summary" class="mb-12">
             <h2 class="font-handwritten text-4xl font-bold text-[var(--ootb-blue)] mb-6">Tableau de bord</h2>
@@ -717,15 +737,110 @@ const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995
   .accordion-header[data-target="eco"][aria-expanded="true"] .text-gray-400 {
     color: var(--ootb-green);
   }
+  
+  /* Styles pour le menu mobile */
+  #sidebar {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    will-change: transform;
+  }
+  
+  @media (max-width: 768px) {
+    /* Amélioration du rendu sur mobile */
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    
+    h2.text-xl {
+      font-size: 1.35rem;
+    }
+    
+    h3.text-3xl {
+      font-size: 1.75rem;
+    }
+    
+    /* Adapter la taille des cartes sur mobile */
+    .rounded-xl {
+      padding: 0.75rem;
+    }
+  }
+  
+  /* Animation pour le menu */
+  .transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
 </style>
 
 <script>
   // Script d'authentification simplifié
   document.addEventListener('DOMContentLoaded', () => {
-    // Afficher directement le dashboard sans vérification
-    document.getElementById('dashboard-content').classList.remove('hidden');
-    document.getElementById('auth-container').classList.add('hidden');
+    // Vérifier l'authentification dans sessionStorage
+    const hasAccess = sessionStorage.getItem('dashboard_access') === 'granted';
+    
+    if (hasAccess) {
+      // Afficher le dashboard si l'accès est autorisé
+      const dashboardContent = document.getElementById('dashboard-content');
+      const authContainer = document.getElementById('auth-container');
+      
+      if (dashboardContent && authContainer) {
+        dashboardContent.classList.remove('hidden');
+        authContainer.classList.add('hidden');
+      }
+    } else {
+      // Rediriger vers la page de login si non authentifié
+      window.location.href = '/ootb';
+    }
+    
+    // Gestion du menu mobile
+    initializeMobileMenu();
   });
+  
+  // Fonction pour initialiser le menu mobile
+  function initializeMobileMenu() {
+    const openSidebarBtn = document.getElementById('open-sidebar');
+    const closeSidebarBtn = document.getElementById('close-sidebar');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const menuLinks = sidebar?.querySelectorAll('a');
+    
+    // Ouvre le menu latéral
+    openSidebarBtn?.addEventListener('click', () => {
+      sidebar?.classList.remove('-translate-x-full');
+      overlay?.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    });
+    
+    // Ferme le menu latéral
+    const closeSidebar = () => {
+      sidebar?.classList.add('-translate-x-full');
+      overlay?.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    };
+    
+    closeSidebarBtn?.addEventListener('click', closeSidebar);
+    overlay?.addEventListener('click', closeSidebar);
+    
+    // Ferme le menu sur mobile quand un lien est cliqué
+    menuLinks?.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) { // 768px correspond à la breakpoint md de Tailwind
+          closeSidebar();
+        }
+      });
+    });
+    
+    // Ajuste l'état du menu lors du redimensionnement
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        sidebar?.classList.remove('-translate-x-full');
+        document.body.classList.remove('overflow-hidden');
+      } else if (!overlay?.classList.contains('hidden')) {
+        // Si l'overlay est visible (menu ouvert) et qu'on passe en mode desktop
+        closeSidebar();
+      }
+    });
+  }
 
   // Gestion des accordéons
   document.querySelectorAll('.accordion-header').forEach(header => {
@@ -841,6 +956,8 @@ const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995
   // Gestion de la déconnexion - simplification
   document.getElementById('logout-button')?.addEventListener('click', (e) => {
     e.preventDefault();
+    // Supprimer l'accès du sessionStorage
+    sessionStorage.removeItem('dashboard_access');
     // Rediriger vers la page d'accueil
     window.location.href = '/';
   });

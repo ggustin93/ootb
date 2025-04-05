@@ -61,6 +61,35 @@ const speakerImage = event?.speakerImage || propSpeakerImage;
 const originalImage = event?.image || propImage;
 const badge = propBadge || '';
 
+/**
+ * Normalise une URL en s'assurant qu'elle commence par un protocole
+ * @param url L'URL à normaliser
+ * @returns L'URL normalisée
+ */
+function normalizeUrl(url: string): string {
+  if (!url) return '';
+  
+  // Supprimer les espaces en début et fin
+  url = url.trim();
+  
+  // Si l'URL contient plusieurs URLs (avec tiret ou virgule), prendre la première
+  if (url.includes(' - ') || url.includes(',')) {
+    url = url.split(/\s*[,-]\s*/)[0].trim();
+  }
+  
+  // Vérifier si l'URL commence déjà par http:// ou https://
+  if (url.match(/^https?:\/\//i)) {
+    return url;
+  }
+  
+  // Ajouter https:// au début
+  return `https://${url}`;
+}
+
+// Normaliser l'URL
+const rawUrl = event?.url || propUrl;
+const url = rawUrl ? normalizeUrl(rawUrl) : '';
+
 // Normaliser le jour pour garantir la cohérence
 let day = event?.day || propDay;
 // S'assurer que le jour est une des valeurs acceptées
@@ -80,7 +109,6 @@ const eventType = event?.type || propEventType;
 const target = event?.target || propTarget;
 const level = event?.level || propLevel;
 const teachingType = event?.teachingType || propTeachingType;
-const url = event?.url || propUrl;
 const status = event?.status || propStatus || 'Publié'; // Valeur par défaut: Publié
 const theme = event?.theme || propTheme || '';
 
@@ -647,7 +675,7 @@ function initButtons() {
   toggleButtons.forEach((button, index) => {
     console.log(`Configuration du bouton #${index + 1}`);
     
-    button.addEventListener('click', function(event) {
+    button.addEventListener('click', function(_event) {
       console.log(`Clic sur le bouton #${index + 1}`);
       
       // Trouve la carte d'événement parente

@@ -85,46 +85,7 @@
   ],
   "programme": {
     "title": "Programme du festival",
-    "description": "Découvrez toutes les conférences, ateliers et stands sur les 3 jours",
-    "dayFilter": {
-      "allDaysLabel": "Tous les jours",
-      "globalViewLabel": "Vue globale",
-      "days": [
-        {
-          "name": "Mardi",
-          "date": "1 oct"
-        },
-        {
-          "name": "Mercredi",
-          "date": "2 oct"
-        },
-        {
-          "name": "Jeudi",
-          "date": "3 oct"
-        }
-      ],
-      "eventTypes": [
-        {
-          "name": "Conférences",
-          "icon": "tabler:presentation"
-        },
-        {
-          "name": "Ateliers",
-          "icon": "tabler:hammer"
-        },
-        {
-          "name": "Stands",
-          "icon": "tabler:building-store"
-        }
-      ],
-      "allEventsLabel": "Tous les événements",
-      "pdfButtonLabel": "Programme PDF",
-      "pdfLink": "/programme.pdf",
-      "prevLabel": "Précédent",
-      "nextLabel": "Suivant",
-      "pageLabel": "Page",
-      "onLabel": "sur"
-    }
+    "description": "Découvrez toutes les conférences, ateliers et stands sur les 3 jours"
   },
   "themes": {
     "title": "Les grands thèmes du Festival",

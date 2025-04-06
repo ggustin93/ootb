@@ -8,7 +8,12 @@
     "defaultSocialImage": "/images/assets/ootb-social-card.jpg"
   },
   "festival": {
-    "showUnpublishedEvents": false
+    "showUnpublishedEvents": false,
+    "programLink": {
+      "enabled": false,
+      "text": "Voir le programme complet",
+      "url": "https://indd.adobe.com/view/7bf541a0-d836-436c-b34a-68b6431b8fd0"
+    }
   },
   "system": {
     "triggerDeployment": false,

@@ -35,6 +35,11 @@ export const siteSettingsCollection: Collection = {
         ifpcButtonUrl: "https://ifpc-fwb.be",
         weezeventButtonLabel: "Billetterie générale",
         weezeventButtonUrl: "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
+      },
+      programLink: {
+        enabled: false,
+        text: "Voir le programme complet",
+        url: "#"
       }
     },
     system: {
@@ -168,6 +173,32 @@ export const siteSettingsCollection: Collection = {
               description: "Lien pour la billetterie Weezevent",
               required: true,
             }
+          ],
+        },
+        {
+          type: "object",
+          name: "programLink",
+          label: "Lien vers le programme complet",
+          description: "Configuration du bouton pour accéder au programme complet",
+          fields: [
+            {
+              type: "boolean",
+              name: "enabled",
+              label: "Activer le bouton",
+              description: "Activer ou désactiver l'affichage du bouton 'Voir le programme complet'",
+            },
+            {
+              type: "string",
+              name: "text",
+              label: "Texte du bouton",
+              description: "Texte affiché sur le bouton (ex: Voir le programme complet)",
+            },
+            {
+              type: "string",
+              name: "url",
+              label: "URL du programme",
+              description: "Lien vers le programme complet (PDF, page web, etc.)",
+            },
           ],
         }
       ]

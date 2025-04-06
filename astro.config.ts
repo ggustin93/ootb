@@ -37,7 +37,8 @@ export default defineConfig({
        !page.includes('/merci-inscription') &&
        !page.includes('/ootb') &&
        !page.includes('/terms') &&
-       !page.includes('/privacy')
+       !page.includes('/privacy') &&
+       !page.includes('/login')
    }),
    tailwind({
      applyBaseStyles: false,

@@ -1,3 +1,6 @@
-# Block all crawlers for all paths
+# Allow Google and other search engines to access the site
 User-agent: *
-Disallow: /
+Allow: /
+
+# Point to the sitemap index
+Sitemap: https://outofthebooks.com/sitemap-index.xml

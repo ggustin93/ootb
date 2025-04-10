@@ -1,7 +1,6 @@
-import type { Event } from '~/types/festival';
+import type { Event, FestivalDay as FestivalDayType, EventType } from '~/types/festival';
 import { Api } from 'nocodb-sdk';
 import { NOCODB_BASE_URL, NOCODB_CONFIG, getNocoDBToken } from '~/config/nocodb';
-import { FestivalDay } from '~/services/events';
 import fs from 'fs';
 import path from 'path';
 
@@ -12,11 +11,17 @@ const AUTO_REFRESH_INTERVAL = 15 * 60 * 1000; // 15 minutes en millisecondes
 const MAX_CACHE_AGE = 60 * 60 * 1000; // 1 heure en millisecondes (durée maximale avant rafraîchissement forcé)
 const LIGHT_CHECK_INTERVAL = 3 * 60 * 1000; // 3 minutes en millisecondes (intervalle pour les vérifications légères)
 
+interface CacheData<T> {
+  timestamp: number;
+  data: T | null;
+  count: number;
+}
+
 // Cache pour les différentes requêtes
-const standsCache = { timestamp: 0, data: null as NocoDBResponse | null, count: 0 };
-const ateliersCache = { timestamp: 0, data: null as NocoDBSessionsResponse | null, count: 0 };
-const conferencesCache = { timestamp: 0, data: null as NocoDBSessionsResponse | null, count: 0 };
-const sessionsCache = { timestamp: 0, data: null as NocoDBSessionsResponse | null, count: 0 };
+const standsCache: CacheData<NocoDBResponse> = { timestamp: 0, data: null, count: 0 };
+const ateliersCache: CacheData<NocoDBSessionsResponse> = { timestamp: 0, data: null, count: 0 };
+const conferencesCache: CacheData<NocoDBSessionsResponse> = { timestamp: 0, data: null, count: 0 };
+const sessionsCache: CacheData<NocoDBSessionsResponse> = { timestamp: 0, data: null, count: 0 };
 
 // Variables pour suivre les mises à jour
 let autoRefreshActive = false;
@@ -29,9 +34,8 @@ let updateDetected = false; // Indique si une mise à jour a été détectée
  * @param cache Objet de cache à vérifier
  * @returns true si le cache est valide, false sinon
  */
-function isCacheValid<T>(cache: { timestamp: number, data: T | null }): boolean {
-  if (FORCE_REFRESH) return false;
-  if (!cache.data) return false;
+function isCacheValid<T>(cache: CacheData<T>): boolean {
+  if (FORCE_REFRESH || !cache.data) return false;
   
   const now = Date.now();
   const age = now - cache.timestamp;
@@ -52,7 +56,7 @@ function isCacheValid<T>(cache: { timestamp: number, data: T | null }): boolean 
  * @param data Données à stocker en cache
  * @param name Nom du cache pour les logs
  */
-function updateCache<T>(cache: { timestamp: number, data: T | null }, data: T, name: string): void {
+function updateCache<T>(cache: CacheData<T>, data: T, name: string): void {
   cache.timestamp = Date.now();
   cache.data = data;
   console.log(`🔄 Cache mis à jour pour "${name}" à ${new Date().toLocaleTimeString()}`);
@@ -64,15 +68,19 @@ function updateCache<T>(cache: { timestamp: number, data: T | null }, data: T, n
 export function clearAllCaches(): void {
   standsCache.timestamp = 0;
   standsCache.data = null;
+  standsCache.count = 0;
   
   ateliersCache.timestamp = 0;
   ateliersCache.data = null;
+  ateliersCache.count = 0;
   
   conferencesCache.timestamp = 0;
   conferencesCache.data = null;
+  conferencesCache.count = 0;
   
   sessionsCache.timestamp = 0;
   sessionsCache.data = null;
+  sessionsCache.count = 0;
   
   console.log(`🧹 Tous les caches ont été vidés`);
 }
@@ -454,9 +462,88 @@ function saveRawData(data: unknown, filename: string): void {
     const filePath = path.join(logsDir, filename);
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
     console.log(`✅ Données sauvegardées dans ${filePath}`);
-  } catch (error) {
-    console.error(`❌ Erreur lors de la sauvegarde des données:`, error);
+  } catch (error: any) { // Type error as any
+    console.error(`❌ Erreur lors de la sauvegarde des données (${filename}):`, error.message);
   }
+}
+
+/**
+ * Fonction générique pour récupérer toutes les lignes d'une table NocoDB avec pagination.
+ * Gère la pagination et retourne la liste complète des éléments.
+ * @param api Instance de l'API NocoDB initialisée.
+ * @param tableId ID de la table NocoDB.
+ * @param queryParamsBase Paramètres de requête de base (limit, where, etc.).
+ * @param dataType Nom du type de données pour les logs (ex: 'stands').
+ * @returns Promise résolue avec la liste complète des éléments.
+ */
+async function fetchAllNocoDBRows<T>(api: Api<unknown>, tableId: string, queryParamsBase: Record<string, any>, dataType: string): Promise<T[]> { // Type queryParamsBase
+  let allItems: T[] = [];
+  let currentPage = 0;
+  let isLastPage = false;
+  let totalRows = 0; // Tentative de récupération du total
+  const limit = queryParamsBase.limit || 50; // Utiliser la limite fournie ou 50 par défaut
+
+  console.log(`🚀 Démarrage de la récupération de tous les ${dataType}...`);
+
+  while (!isLastPage) {
+    const queryParams = {
+      ...queryParamsBase,
+      offset: currentPage * limit,
+      limit: limit,
+      where: queryParamsBase.where || "" // S'assurer que 'where' est défini
+    };
+
+    console.log(`[${dataType}] Récupération page ${currentPage + 1} (offset: ${queryParams.offset}, limit: ${limit})`);
+
+    try {
+      const response = await api.dbTableRow.list(
+        "noco",
+        NOCODB_CONFIG.projectId,
+        tableId,
+        queryParams
+      );
+
+      const currentItems = (response.list || []) as T[];
+      allItems = [...allItems, ...currentItems];
+
+      // Mettre à jour totalRows depuis la première page si disponible
+      if (currentPage === 0 && response.pageInfo?.totalRows) {
+        totalRows = response.pageInfo.totalRows;
+        console.log(`[${dataType}] Nombre total d'éléments reporté par l'API: ${totalRows}`);
+      }
+
+      // Détermination de la dernière page
+      const reportedLastPage = response.pageInfo?.isLastPage || false;
+      const lessItemsThanLimit = currentItems.length < limit;
+      const fetchedAllReportedItems = totalRows > 0 && allItems.length >= totalRows;
+
+      isLastPage = reportedLastPage || lessItemsThanLimit || fetchedAllReportedItems;
+
+      console.log(`[${dataType}] Page ${currentPage + 1} récupérée: ${currentItems.length} éléments. (Total Actuel: ${allItems.length} / ${totalRows || '?'}). isLastPage=${isLastPage}`);
+
+      currentPage++;
+
+      // Sécurité pour éviter les boucles infinies (ajuster si > 100 pages attendues)
+      if (currentPage > 100) {
+        console.warn(`⚠️ [${dataType}] Limite de 100 pages atteinte. Arrêt de la récupération par sécurité.`);
+        break;
+      }
+
+      // Condition d'arrêt supplémentaire si l'API renvoie une page vide après la première
+      if (currentItems.length === 0 && currentPage > 1) {
+        console.log(`[${dataType}] Réponse vide reçue après la première page. Arrêt de la récupération.`);
+        isLastPage = true; // Forcer l'arrêt
+      }
+
+    } catch (error: any) { // Type error as any
+      console.error(`❌ Erreur lors de la récupération de la page ${currentPage + 1} pour ${dataType}:`, error);
+      // En cas d'erreur sur une page, on arrête pour éviter les données partielles
+      throw new Error(`Erreur API NocoDB pour ${dataType} page ${currentPage + 1}: ${error.message || error}`);
+    }
+  }
+
+  console.log(`✅ Récupération terminée pour ${dataType}: ${allItems.length} éléments trouvés.`);
+  return allItems;
 }
 
 /**
@@ -472,114 +559,46 @@ export async function fetchStands(): Promise<NocoDBResponse> {
   
   try {
     const api = initNocoDBApi();
-    console.log('Appel à l\'API NocoDB pour récupérer les stands...');
-    
-    // Vérifier le nombre total d'éléments sans filtre
-    const countResponse = await api.dbTableRow.list(
-      "noco",
-      NOCODB_CONFIG.projectId,
+    const allStands = await fetchAllNocoDBRows<NocoDBStand>(
+      api,
       NOCODB_CONFIG.tables.stands,
-      {
-        limit: 1,
-        offset: 0,
-        where: ""
-      }
+      NOCODB_CONFIG.defaultQueryParams.stands,
+      'stands'
     );
-    
-    console.log(`Nombre total de stands dans la table: ${countResponse.pageInfo?.totalRows || 0}`);
-    console.log(`NOCODB_CONFIG pour les stands:`, JSON.stringify(NOCODB_CONFIG.defaultQueryParams.stands, null, 2));
-    
-    // Essayons une requête sans filtre et avec une pagination forcée à 35 éléments
-    const directResponse = await api.dbTableRow.list(
-      "noco",
-      NOCODB_CONFIG.projectId,
-      NOCODB_CONFIG.tables.stands,
-      {
-        limit: 35,
-        offset: 0,
-        where: ""
-      }
-    );
-    
-    console.log(`Réponse directe avec limit=35: ${directResponse.list.length} stands (total: ${directResponse.pageInfo?.totalRows || 0})`);
-    
-    let allStands: NocoDBStand[] = [];
-    let currentPage = 0;
-    let isLastPage = false;
-    let totalRows = 0;
-    
-    // Boucle de pagination pour récupérer toutes les données
-    while (!isLastPage) {
-      const queryParams = {
-        ...NOCODB_CONFIG.defaultQueryParams.stands,
-        offset: currentPage * NOCODB_CONFIG.defaultQueryParams.stands.limit,
-        where: "" // S'assurer qu'aucun filtre n'est appliqué
-      };
-      
-      console.log(`Requête page ${currentPage + 1} avec params:`, JSON.stringify(queryParams, null, 2));
-      
-      // Appel à l'API pour récupérer la page courante
-      const response = await api.dbTableRow.list(
-        "noco",
-        NOCODB_CONFIG.projectId,
-        NOCODB_CONFIG.tables.stands,
-        queryParams
-      );
-      
-      console.log(`Réponse page ${currentPage + 1}:`, JSON.stringify(response.pageInfo, null, 2));
-      
-      // Ajouter les stands de la page courante au tableau
-      allStands = [...allStands, ...(response.list as NocoDBStand[])];
-      
-      // Mettre à jour les informations de pagination
-      totalRows = response.pageInfo?.totalRows || 0;
-      
-      // Vérifier si c'est la dernière page en se basant sur isLastPage de l'API
-      isLastPage = response.pageInfo?.isLastPage || false;
-      
-      console.log(`Page ${currentPage + 1} récupérée: ${response.list.length} stands (Total: ${allStands.length}/${totalRows})`);
-      
-      currentPage++;
-      
-      // Sécurité pour éviter une boucle infinie
-      if (currentPage > 10) {
-        console.log('⚠️ Nombre maximum de pages atteint, arrêt de la boucle');
-        break;
-      }
-    }
-    
-    console.log(`Données récupérées avec succès: ${allStands.length} stands trouvés au total`);
     
     // Formatage de la réponse finale
-    const formattedResponse = {
+    const formattedResponse: NocoDBResponse = { // Ensure type
       list: allStands,
       pageInfo: {
-        totalRows,
+        totalRows: allStands.length,
         page: 1,
         pageSize: allStands.length,
         isFirstPage: true,
         isLastPage: true
       },
       stats: { 
-        dbQueryTime: "0"
+        dbQueryTime: "0" // Placeholder, car non fourni par la boucle
       }
     };
     
-    // Sauvegarder la réponse complète
+    // Sauvegarder la réponse formatée (contenant la liste complète)
     saveRawData(formattedResponse, 'stands_response.json');
     
     // Mettre à jour le cache
     updateCache(standsCache, formattedResponse, 'stands');
+    standsCache.count = allStands.length; // Mettre à jour le compteur
     
     return formattedResponse;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des stands:', error);
-    throw error;
+  } catch (error: any) { // Type error
+    console.error('❌ Erreur finale lors de la récupération des stands:', error.message);
+    // En cas d'erreur, retourner une liste vide ou lancer une exception
+    // Ici, on lance pour que l'appelant puisse gérer l'erreur
+    throw error; 
   }
 }
 
 /**
- * Récupère les ateliers depuis l'API NocoDB
+ * Récupère les ateliers depuis l'API NocoDB avec pagination complète
  * @returns Réponse contenant la liste des ateliers
  */
 export async function fetchAteliers(): Promise<NocoDBSessionsResponse> {
@@ -591,56 +610,20 @@ export async function fetchAteliers(): Promise<NocoDBSessionsResponse> {
   
   try {
     const api = initNocoDBApi();
-    console.log('Appel à l\'API NocoDB pour récupérer les ateliers...');
-    
-    let allAteliers: NocoDBSession[] = [];
-    let currentPage = 0;
-    let isLastPage = false;
-    let totalRows = 0;
-    
-    // Boucle de pagination pour récupérer toutes les données
-    while (!isLastPage) {
-      const queryParams = {
-        ...NOCODB_CONFIG.defaultQueryParams.ateliers,
-        offset: currentPage * NOCODB_CONFIG.defaultQueryParams.ateliers.limit,
-        where: "" // S'assurer qu'aucun filtre n'est appliqué
-      };
-      
-      // Appel à l'API pour récupérer la page courante
-      const response = await api.dbTableRow.list(
-        "noco",
-        NOCODB_CONFIG.projectId,
-        NOCODB_CONFIG.tables.ateliers,
-        queryParams
-      );
-      
-      // Ajouter les ateliers de la page courante au tableau
-      allAteliers = [...allAteliers, ...(response.list as NocoDBSession[])];
-      
-      // Mettre à jour les informations de pagination
-      totalRows = response.pageInfo?.totalRows || 0;
-      
-      // Vérifier si c'est la dernière page en se basant sur isLastPage de l'API
-      isLastPage = response.pageInfo?.isLastPage || false;
-      
-      console.log(`Page ${currentPage + 1} récupérée: ${response.list.length} ateliers (Total: ${allAteliers.length}/${totalRows})`);
-      
-      currentPage++;
-      
-      // Sécurité pour éviter une boucle infinie
-      if (currentPage > 10) {
-        console.log('⚠️ Nombre maximum de pages atteint, arrêt de la boucle');
-        break;
-      }
-    }
-    
-    console.log(`Données récupérées avec succès: ${allAteliers.length} ateliers trouvés au total`);
-    
+    // Ensure the generic type matches expected Session type (NocoDBAtelier)
+    const allAteliers = await fetchAllNocoDBRows<NocoDBAtelier>( 
+      api,
+      NOCODB_CONFIG.tables.ateliers,
+      NOCODB_CONFIG.defaultQueryParams.ateliers,
+      'ateliers'
+    );
+        
     // Formatage de la réponse finale
-    const formattedResponse = {
-      list: allAteliers,
+    const formattedResponse: NocoDBSessionsResponse = {
+      // Cast might be needed if NocoDBSession is a union and T was specific
+      list: allAteliers as NocoDBSession[], 
       pageInfo: {
-        totalRows,
+        totalRows: allAteliers.length,
         page: 1,
         pageSize: allAteliers.length,
         isFirstPage: true,
@@ -656,16 +639,17 @@ export async function fetchAteliers(): Promise<NocoDBSessionsResponse> {
     
     // Mettre à jour le cache
     updateCache(ateliersCache, formattedResponse, 'ateliers');
+    ateliersCache.count = allAteliers.length; // Mettre à jour le compteur
     
     return formattedResponse;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des ateliers:', error);
+  } catch (error: any) { // Type error
+    console.error('❌ Erreur finale lors de la récupération des ateliers:', error.message);
     throw error;
   }
 }
 
 /**
- * Récupère les conférences depuis l'API NocoDB
+ * Récupère les conférences depuis l'API NocoDB avec pagination complète
  * @returns Réponse contenant la liste des conférences
  */
 export async function fetchConferences(): Promise<NocoDBSessionsResponse> {
@@ -677,56 +661,20 @@ export async function fetchConferences(): Promise<NocoDBSessionsResponse> {
   
   try {
     const api = initNocoDBApi();
-    console.log('Appel à l\'API NocoDB pour récupérer les conférences...');
-    
-    let allConferences: NocoDBSession[] = [];
-    let currentPage = 0;
-    let isLastPage = false;
-    let totalRows = 0;
-    
-    // Boucle de pagination pour récupérer toutes les données
-    while (!isLastPage) {
-      const queryParams = {
-        ...NOCODB_CONFIG.defaultQueryParams.conferences,
-        offset: currentPage * NOCODB_CONFIG.defaultQueryParams.conferences.limit,
-        where: "" // S'assurer qu'aucun filtre n'est appliqué
-      };
-      
-      // Appel à l'API pour récupérer la page courante
-      const response = await api.dbTableRow.list(
-        "noco",
-        NOCODB_CONFIG.projectId,
-        NOCODB_CONFIG.tables.conferences,
-        queryParams
-      );
-      
-      // Ajouter les conférences de la page courante au tableau
-      allConferences = [...allConferences, ...(response.list as NocoDBSession[])];
-      
-      // Mettre à jour les informations de pagination
-      totalRows = response.pageInfo?.totalRows || 0;
-      
-      // Vérifier si c'est la dernière page en se basant sur isLastPage de l'API
-      isLastPage = response.pageInfo?.isLastPage || false;
-      
-      console.log(`Page ${currentPage + 1} récupérée: ${response.list.length} conférences (Total: ${allConferences.length}/${totalRows})`);
-      
-      currentPage++;
-      
-      // Sécurité pour éviter une boucle infinie
-      if (currentPage > 10) {
-        console.log('⚠️ Nombre maximum de pages atteint, arrêt de la boucle');
-        break;
-      }
-    }
-    
-    console.log(`Données récupérées avec succès: ${allConferences.length} conférences trouvées au total`);
-    
+    // Ensure the generic type matches expected Session type (NocoDBConference)
+    const allConferences = await fetchAllNocoDBRows<NocoDBConference>( 
+      api,
+      NOCODB_CONFIG.tables.conferences,
+      NOCODB_CONFIG.defaultQueryParams.conferences,
+      'conferences'
+    );
+        
     // Formatage de la réponse finale
-    const formattedResponse = {
-      list: allConferences,
+    const formattedResponse: NocoDBSessionsResponse = {
+      // Cast might be needed if NocoDBSession is a union and T was specific
+      list: allConferences as NocoDBSession[], 
       pageInfo: {
-        totalRows,
+        totalRows: allConferences.length,
         page: 1,
         pageSize: allConferences.length,
         isFirstPage: true,
@@ -742,10 +690,11 @@ export async function fetchConferences(): Promise<NocoDBSessionsResponse> {
     
     // Mettre à jour le cache
     updateCache(conferencesCache, formattedResponse, 'conferences');
+    conferencesCache.count = allConferences.length; // Mettre à jour le compteur
     
     return formattedResponse;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des conférences:', error);
+  } catch (error: any) { // Type error
+    console.error('❌ Erreur finale lors de la récupération des conférences:', error.message);
     throw error;
   }
 }
@@ -762,17 +711,17 @@ export async function fetchSessions(): Promise<NocoDBSessionsResponse> {
   }
   
   try {
-    // Récupérer les ateliers et les conférences
-    const ateliers = await fetchAteliers();
-    const conferences = await fetchConferences();
+    // Récupérer les ateliers et les conférences (utilisent maintenant la pagination)
+    const ateliersResponse = await fetchAteliers();
+    const conferencesResponse = await fetchConferences();
     
-    // Combiner les résultats
-    const combinedList = [...ateliers.list, ...conferences.list];
+    // Combiner les résultats des listes
+    const combinedList = [...ateliersResponse.list, ...conferencesResponse.list];
     
-    console.log(`Sessions combinées: ${combinedList.length} sessions au total (${ateliers.list.length} ateliers + ${conferences.list.length} conférences)`);
+    console.log(`Sessions combinées: ${combinedList.length} sessions au total (${ateliersResponse.list.length} ateliers + ${conferencesResponse.list.length} conférences)`);
     
     // Formatage de la réponse pour correspondre à l'interface NocoDBSessionsResponse
-    const formattedResponse = {
+    const formattedResponse: NocoDBSessionsResponse = { // Ensure type
       list: combinedList,
       pageInfo: {
         totalRows: combinedList.length,
@@ -786,12 +735,13 @@ export async function fetchSessions(): Promise<NocoDBSessionsResponse> {
       }
     };
     
-    // Mettre à jour le cache
+    // Mettre à jour le cache global des sessions
     updateCache(sessionsCache, formattedResponse, 'sessions');
+    sessionsCache.count = combinedList.length; // Mettre à jour le compteur global
     
     return formattedResponse;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des sessions:', error);
+  } catch (error: any) { // Type error
+    console.error('❌ Erreur lors de la récupération combinée des sessions:', error.message);
     throw error;
   }
 }
@@ -799,9 +749,10 @@ export async function fetchSessions(): Promise<NocoDBSessionsResponse> {
 /**
  * Détermine le jour de l'événement à partir de la valeur fournie
  * @param jourValue La valeur du jour à traiter
- * @returns Le jour formaté comme FestivalDay
+ * @returns Le jour formaté comme FestivalDayType (alias de ~/types/festival.FestivalDay)
  */
-function getEventDay(jourValue: unknown): FestivalDay {
+// Ensure return type matches FestivalDayType from ~/types/festival
+function getEventDay(jourValue: unknown): FestivalDayType { 
   // Gérer les valeurs nulles ou undefined
   if (jourValue === null || jourValue === undefined) {
     return 'À définir';
@@ -831,14 +782,17 @@ function getEventDay(jourValue: unknown): FestivalDay {
   }
   
   // Si c'est un nombre (0 = Les trois jours, 1 = Mercredi, 2 = Jeudi, 3 = Vendredi)
+  // Mapping NocoDB (ajusté selon la spec): 1=Mer, 2=Jeu, 3=Ven
   if (typeof jourValue === 'number') {
     if (jourValue === 1) return 'Mercredi';
     if (jourValue === 2) return 'Jeudi';
     if (jourValue === 3) return 'Vendredi';
-    
-    return 'À définir';
+    // Cas 0 pour 'Les trois jours' - affecté à Mercredi par défaut dans la conversion stand
+    // Ou considérer comme 'À définir' ici ? Optons pour À définir
+    return 'À définir'; 
   }
   
+  console.warn(`[getEventDay] Valeur de jour non reconnue: ${JSON.stringify(jourValue)}, retournant 'À définir'.`)
   return 'À définir';
 }
 
@@ -852,8 +806,8 @@ export function convertStandsToEvents(stands: NocoDBStand[]): Event[] {
   
   // Pour chaque stand, créer trois événements (un pour chaque jour)
   stands.forEach(stand => {
-    // Jours du festival
-    const festivalDays: FestivalDay[] = ['Mercredi', 'Jeudi', 'Vendredi'];
+    // Jours du festival - Utiliser le type FestivalDayType
+    const festivalDays: FestivalDayType[] = ['Mercredi', 'Jeudi', 'Vendredi']; 
     
     // Récupérer l'URL de l'image ou utiliser l'image par défaut
     const imageUrl = stand["Envoyez votre logo"]?.length > 0 
@@ -863,50 +817,57 @@ export function convertStandsToEvents(stands: NocoDBStand[]): Event[] {
     // Générer un titre plus descriptif si le titre est manquant
     let title = stand["Choisissez un titre court"];
     if (!title || title.trim() === "") {
-      // Si le prénom et le nom sont disponibles, utiliser "Stand de [Prénom Nom]"
-      if (stand.Prénom && stand.Nom) {
+       if (stand.Prénom && stand.Nom) {
         title = `Stand de ${stand.Prénom} ${stand.Nom}`;
       } 
-      // Sinon, si nous avons une description, utiliser les premiers mots
       else if (stand["Décrivez brièvement votre stand pour les visiteurs"]) {
         const description = stand["Décrivez brièvement votre stand pour les visiteurs"];
-        // Prendre les 5 premiers mots de la description ou moins si la description est courte
         const words = description.split(' ').slice(0, 5);
         title = words.join(' ') + (words.length === 5 ? '...' : '');
       } 
-      // En dernier recours, utiliser un titre générique avec l'ID
       else {
         title = `Stand #${stand.ID}`;
       }
-      
       console.log(`⚠️ Titre manquant pour le stand #${stand.ID}, titre généré: "${title}"`);
     }
+
+    // Extract tags
+    const tags = [
+        stand["À qui s'adresse le stand ?"],
+        stand["Niveau d'enseignement"],
+        stand["Type d'enseignement"],
+        stand["Thématique liée"]?.Title
+    ].filter(Boolean) as string[]; // Filter out null/undefined and assert as string[]
     
     // Créer un événement pour chaque jour
     festivalDays.forEach(day => {
       allEvents.push({
-        id: `stand-${stand.ID}-${day}`,
+        id: `stand-${stand.ID}-${day}`, // Ensure unique ID per day instance
         title: title,
         description: stand["Décrivez brièvement votre stand pour les visiteurs"] || "Description à venir",
-        day,
+        day, // FestivalDayType from the loop
         time: "Toute la journée",
         location: stand.Espaces?.Title || "Emplacement à définir",
         speaker: stand.Prénom && stand.Nom ? `${stand.Prénom} ${stand.Nom}` : "Exposant à définir",
+        organization: '', // Add missing property
         type: "Stands" as const,
         image: imageUrl,
+        speakerImage: null, // Add missing property
         url: stand["Site internet"] || "",
         target: stand["À qui s'adresse le stand ?"] || "Public à définir",
         level: stand["Niveau d'enseignement"] || "Niveau à définir",
-        teachingType: stand["Type d'enseignement"] || "Type à définir"
+        teachingType: stand["Type d'enseignement"] || "Type à définir",
+        tags: tags // Add missing property
       });
     });
   });
   
   // Analyser la distribution des jours pour les stands
-  const standsByDay: Record<FestivalDay, number> = {} as Record<FestivalDay, number>;
+  const standsByDay: Record<string, number> = {}; // Use string for keys
   allEvents.forEach(event => {
-    if (!standsByDay[event.day]) standsByDay[event.day] = 0;
-    standsByDay[event.day]++;
+    const dayKey = event.day as string; // Cast to string for key access
+    if (!standsByDay[dayKey]) standsByDay[dayKey] = 0;
+    standsByDay[dayKey]++;
   });
   console.log('📊 Distribution des stands par jour:', standsByDay);
   
@@ -919,8 +880,7 @@ export function convertAteliersToEvents(ateliers: NocoDBAtelier[]): Event[] {
   
   const events = ateliers.map(atelier => {
     // Déterminer le jour
-    const day = getEventDay(atelier.Jours);
-    
+    const day = getEventDay(atelier.Jours); // Returns FestivalDayType
     
     // Récupérer l'URL de l'image ou utiliser l'image par défaut
     const imageUrl = atelier["Envoyez votre logo"]?.length > 0 
@@ -929,48 +889,54 @@ export function convertAteliersToEvents(ateliers: NocoDBAtelier[]): Event[] {
     
     // Générer un titre plus descriptif si le titre est manquant
     let title = atelier["Choisissez un titre court"];
-    if (!title || title.trim() === "") {
-      // Si le prénom et le nom sont disponibles, utiliser "Atelier de [Prénom Nom]"
-      if (atelier.Prénom && atelier.Nom) {
+     if (!title || title.trim() === "") {
+       if (atelier.Prénom && atelier.Nom) {
         title = `Atelier de ${atelier.Prénom} ${atelier.Nom}`;
       } 
-      // Sinon, si nous avons une description, utiliser les premiers mots
       else if (atelier["Décrivez brièvement votre animation pour les visiteurs"]) {
         const description = atelier["Décrivez brièvement votre animation pour les visiteurs"];
-        // Prendre les 5 premiers mots de la description ou moins si la description est courte
         const words = description.split(' ').slice(0, 5);
         title = words.join(' ') + (words.length === 5 ? '...' : '');
       } 
-      // En dernier recours, utiliser un titre générique avec l'ID
       else {
         title = `Atelier #${atelier.ID}`;
       }
-      
       console.log(`⚠️ Titre manquant pour l'atelier #${atelier.ID}, titre généré: "${title}"`);
     }
+
+    // Extract tags
+     const tags = [
+        atelier["À qui s'adresse atelier ?"],
+        atelier["Niveau d'enseignement"],
+        atelier["Type d'enseignement"]
+    ].filter(Boolean) as string[];
     
     return {
       id: `atelier-${atelier.ID}`,
       title: title,
       description: atelier["Décrivez brièvement votre animation pour les visiteurs"] || "Description à venir",
-      day,
+      day, // FestivalDayType
       time: atelier.Heure || "Horaire à définir",
       location: atelier.Espaces || "Emplacement à définir",
       speaker: atelier.Prénom && atelier.Nom ? `${atelier.Prénom} ${atelier.Nom}` : "Intervenant à définir",
+      organization: '', // Add missing property
       type: "Ateliers" as const,
       image: imageUrl,
+      speakerImage: null, // Add missing property
       url: atelier["Site internet"] || "",
       target: atelier["À qui s'adresse atelier ?"] || "Public à définir",
       level: atelier["Niveau d'enseignement"] || "Niveau à définir",
-      teachingType: atelier["Type d'enseignement"] || "Type à définir"
+      teachingType: atelier["Type d'enseignement"] || "Type à définir",
+      tags: tags // Add missing property
     };
   });
   
   // Analyser la distribution des jours pour les ateliers
-  const ateliersByDay: Record<FestivalDay, number> = {} as Record<FestivalDay, number>;
+  const ateliersByDay: Record<string, number> = {}; // Use string for keys
   events.forEach(event => {
-    if (!ateliersByDay[event.day]) ateliersByDay[event.day] = 0;
-    ateliersByDay[event.day]++;
+    const dayKey = event.day as string; // Cast to string for key access
+    if (!ateliersByDay[dayKey]) ateliersByDay[dayKey] = 0;
+    ateliersByDay[dayKey]++;
   });
   console.log('📊 Distribution des ateliers par jour:', ateliersByDay);
   
@@ -982,12 +948,12 @@ export function convertConferencesToEvents(conferences: NocoDBConference[]): Eve
   const defaultImage = '/images/default-conference.jpg';
   const defaultSpeakerImage = '/images/default-speaker.jpg';
   
-  console.log('🔄 Conversion des conférences en événements...');
+  console.log(`🔄 Conversion de ${conferences.length} conférences en événements...`);
   
   const events = conferences.map((conference, index) => {
     try {
       // Déterminer le jour
-      const day = getEventDay(conference.Jours);
+      const day = getEventDay(conference.Jours); // Returns FestivalDayType
       
       // Image URL extraction
       const imageUrl = conference["Envoyez votre logo"]?.length > 0 
@@ -1000,54 +966,62 @@ export function convertConferencesToEvents(conferences: NocoDBConference[]): Eve
         : defaultSpeakerImage;
 
       // Générer un titre plus descriptif si le titre est manquant
-      let title = conference["Choisissez un titre pour la conférence"];
+      let title = conference["Choisissez un titre pour la conférence"] || conference["Choisissez un titre court"];
       if (!title || title.trim() === "") {
-        // Si le prénom et le nom sont disponibles, utiliser "Conférence de [Prénom Nom]"
         if (conference.Prénom && conference.Nom) {
           title = `Conférence de ${conference.Prénom} ${conference.Nom}`;
         } 
-        // Sinon, si nous avons une description, utiliser les premiers mots
         else if (conference["Décrivez brièvement votre conférence pour les visiteurs"]) {
           const description = conference["Décrivez brièvement votre conférence pour les visiteurs"];
-          // Prendre les 5 premiers mots de la description ou moins si la description est courte
           const words = description.split(' ').slice(0, 5);
           title = words.join(' ') + (words.length === 5 ? '...' : '');
         } 
-        // En dernier recours, utiliser un titre générique avec l'ID
         else {
           title = `Conférence #${conference.ID}`;
         }
-        
         console.log(`⚠️ Titre manquant pour la conférence #${conference.ID}, titre généré: "${title}"`);
       }
+
+      // Extract target audience robustly
+      const targetAudience = conference["À qui s'adresse la conférence ?"] || conference["À qui s'adresse conference ?"] || "Public à définir";
+
+       // Extract tags
+       const tags = [
+          targetAudience,
+          conference["Niveau d'enseignement"],
+          conference["Type d'enseignement"]
+      ].filter(Boolean) as string[];
 
       return {
         id: `conference-${conference.ID}`,
         title: title,
         description: conference["Décrivez brièvement votre conférence pour les visiteurs"] || "Description à venir",
-        day,
+        day, // FestivalDayType
         time: conference.Heure || "Horaire à définir",
-        location: typeof conference.Espaces === 'object' ? conference.Espaces?.Title : conference.Espaces || "Emplacement à définir",
+        location: typeof conference.Espaces === 'object' && conference.Espaces !== null ? conference.Espaces.Title : conference.Espaces || "Emplacement à définir",
         speaker: conference.Prénom && conference.Nom ? `${conference.Prénom} ${conference.Nom}` : "Intervenant à définir",
+        organization: '', // Add missing property
         type: "Conférences" as const,
         image: imageUrl,
-        speakerImage: speakerImageUrl,
+        speakerImage: speakerImageUrl, // Correctly assigned
         url: conference["Site internet"] || "",
-        target: conference["À qui s'adresse la conférence ?"] || "Public à définir",
+        target: targetAudience,
         level: conference["Niveau d'enseignement"] || "Niveau à définir",
-        teachingType: conference["Type d'enseignement"] || "Type à définir"
+        teachingType: conference["Type d'enseignement"] || "Type à définir",
+        tags: tags // Add missing property
       };
-    } catch (error) {
-      console.error(`❌ Erreur lors de la conversion de la conférence #${index + 1}:`, error);
-      return null;
+    } catch (error: any) { // Type error
+      console.error(`❌ Erreur lors de la conversion de la conférence #${index + 1} (ID: ${conference.ID}):`, error.message);
+      return null; // Return null for failed conversions
     }
-  }).filter(event => event !== null);
+  }).filter((event): event is Event => event !== null); // Filter out nulls and assert type
   
   // Analyser la distribution des jours pour les conférences
-  const conferencesByDay: Record<FestivalDay, number> = {} as Record<FestivalDay, number>;
+  const conferencesByDay: Record<string, number> = {}; // Use string for keys
   events.forEach(event => {
-    if (!conferencesByDay[event.day]) conferencesByDay[event.day] = 0;
-    conferencesByDay[event.day]++;
+     const dayKey = event.day as string; // Cast to string for key access
+    if (!conferencesByDay[dayKey]) conferencesByDay[dayKey] = 0;
+    conferencesByDay[dayKey]++;
   });
   console.log('📊 Distribution des conférences par jour:', conferencesByDay);
   

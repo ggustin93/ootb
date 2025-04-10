@@ -51,7 +51,7 @@ const NOCODB_CONFIG = {
   defaultQueryParams: {
     stands: {
       offset: 0,
-      limit: 50,
+      limit: 100,
       where: ""
     },
     ateliers: {
@@ -325,212 +325,193 @@ async function createDirectories() {
 }
 
 // Sauvegarder les données brutes dans un fichier JSON pour référence
-function saveRawData(data, filename) {
+function saveRawData(dataList, filename) {
   try {
     const filePath = path.join(RAW_DATA_DIR, filename);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    fs.writeFileSync(filePath, JSON.stringify(dataList, null, 2));
     console.log(`✅ Données brutes sauvegardées dans ${filePath}`);
   } catch (error) {
-    console.error(`❌ Erreur lors de la sauvegarde des données:`, error);
+    console.error(`❌ Erreur lors de la sauvegarde des données (${filename}):`, error);
   }
 }
 
 /**
  * Vérifie si les données ont changé par rapport aux données précédemment sauvegardées
- * @param {Array} newData - Les nouvelles données récupérées de l'API
+ * @param {Array} newDataList - La nouvelle liste d'éléments récupérée de l'API
  * @param {string} dataType - Le type de données (stands, ateliers, conferences)
  * @returns {boolean} - True si les données ont changé, false sinon
  */
-function checkIfDataChanged(newData, dataType) {
+function checkIfDataChanged(newDataList, dataType) {
+  const rawFileName = `${dataType}_raw.json`;
+  const filePath = path.join(RAW_DATA_DIR, rawFileName);
+
   try {
-    // Définir le chemin du fichier selon le type de données
-    const fileName = `${dataType}_response.json`;
-    const filePath = path.join(RAW_DATA_DIR, fileName);
-    
-    // Vérifier si le fichier de données existe
+    // Vérifier si le fichier de données précédent existe
     if (!fs.existsSync(filePath)) {
-      console.log(`📝 Aucun fichier de données précédent trouvé pour ${dataType}. Génération requise.`);
+      console.log(`📝 Aucun fichier de données précédent trouvé pour ${dataType} (${rawFileName}). Sauvegarde initiale.`);
+      saveRawData(newDataList, rawFileName);
       return true;
     }
-    
+
     // Lire les anciennes données
     const oldDataRaw = fs.readFileSync(filePath, 'utf8');
-    const oldData = JSON.parse(oldDataRaw);
-    
-    // Comparaison simple par nombre d'éléments
-    if (!oldData.list || oldData.list.length !== newData.length) {
-      console.log(`📊 Différence de nombre d'éléments détectée pour ${dataType} (${oldData.list ? oldData.list.length : 0} vs ${newData.length}). Génération requise.`);
+    const oldDataList = JSON.parse(oldDataRaw);
+
+    // Comparaison par nombre d'éléments
+    if (!Array.isArray(oldDataList) || oldDataList.length !== newDataList.length) {
+      console.log(`📊 Différence de nombre d'éléments détectée pour ${dataType} (${oldDataList ? oldDataList.length : 0} vs ${newDataList.length}).`);
+      saveRawData(newDataList, rawFileName);
       return true;
     }
-    
-    // Vérifier si les identifiants et le contenu sont identiques
-    const newDataMap = new Map(newData.map(item => [item.Id, JSON.stringify(item)]));
-    let hasChanges = false;
-    
-    for (const oldItem of oldData.list) {
-      if (!oldItem.Id) continue;
-      
-      // Si l'élément n'existe plus ou a été modifié
-      if (!newDataMap.has(oldItem.Id) || newDataMap.get(oldItem.Id) !== JSON.stringify(oldItem)) {
-        hasChanges = true;
-        break;
-      }
+
+    // Comparaison plus détaillée (basée sur les ID et la sérialisation)
+    // Crée des maps pour une recherche rapide par ID
+    const oldDataMap = new Map(oldDataList.map(item => [item.ID || item.Id, JSON.stringify(item)]));
+    const newDataMap = new Map(newDataList.map(item => [item.ID || item.Id, JSON.stringify(item)]));
+
+    // Vérifie si tous les anciens éléments existent et sont identiques dans les nouvelles données
+    for (const [id, oldJson] of oldDataMap.entries()) {
+        if (!newDataMap.has(id) || newDataMap.get(id) !== oldJson) {
+            console.log(`🔄 Modification détectée pour ${dataType} (élément ID: ${id} modifié ou supprimé).`);
+            saveRawData(newDataList, rawFileName);
+            return true;
+        }
     }
-    
-    if (hasChanges) {
-      console.log(`🔄 Modifications détectées dans les données ${dataType}. Génération requise.`);
-    } else {
-      console.log(`✅ Aucune modification détectée dans les données ${dataType}. Génération non nécessaire.`);
+
+    // Vérifie si de nouveaux éléments ont été ajoutés
+     for (const [id] of newDataMap.entries()) {
+        if (!oldDataMap.has(id)) {
+             console.log(`🔄 Modification détectée pour ${dataType} (nouvel élément ID: ${id} ajouté).`);
+             saveRawData(newDataList, rawFileName);
+             return true;
+        }
     }
-    
-    return hasChanges;
+
+
+    console.log(`✅ Aucune modification détectée dans les données ${dataType}.`);
+    return false;
+
   } catch (error) {
     console.error(`❌ Erreur lors de la vérification des données ${dataType}:`, error);
-    // En cas d'erreur, on génère par sécurité
+    // En cas d'erreur (ex: fichier JSON corrompu), considérer comme modifié pour forcer la regénération
+    saveRawData(newDataList, rawFileName); // Sauvegarde la nouvelle version par sécurité
     return true;
   }
 }
 
-// Récupérer les stands depuis NocoDB
+// Fonction générique pour récupérer toutes les lignes d'une table avec pagination
+async function fetchAllTableRows(api, tableId, queryParamsBase, dataType) {
+  let allItems = [];
+  let currentPage = 0;
+  let isLastPage = false;
+  let totalRows = 0;
+  const limit = queryParamsBase.limit || 50; // Utiliser la limite définie ou 50 par défaut
+
+  console.log(`Appel à l'API NocoDB pour récupérer les ${dataType}...`);
+
+  while (!isLastPage) {
+    const queryParams = {
+      ...queryParamsBase,
+      offset: currentPage * limit,
+      limit: limit,
+      where: queryParamsBase.where || "" // Assurer que where est défini
+    };
+
+    console.log(`${dataType}: Requête page ${currentPage + 1} avec offset ${queryParams.offset}, limit ${queryParams.limit}`);
+
+    try {
+      const response = await api.dbTableRow.list(
+        "noco",
+        NOCODB_CONFIG.projectId,
+        tableId,
+        queryParams
+      );
+
+      const currentItems = response.list || [];
+      allItems = [...allItems, ...currentItems];
+      totalRows = response.pageInfo?.totalRows || totalRows; // Conserver le total si déjà connu
+
+      // Détermination plus fiable de la dernière page
+      isLastPage = response.pageInfo?.isLastPage || (currentItems.length < limit) || (allItems.length >= totalRows && totalRows > 0);
+
+      console.log(`${dataType}: Page ${currentPage + 1} récupérée: ${currentItems.length} éléments (Total: ${allItems.length}/${totalRows || 'inconnu'})`);
+
+      currentPage++;
+
+      // Sécurité anti-boucle infinie
+      if (currentPage > 100) {
+        console.warn(`⚠️ Nombre maximum de pages (100) atteint pour ${dataType}, arrêt de la boucle par sécurité.`);
+        break;
+      }
+
+      // Si la dernière réponse était vide et ce n'est pas la première page, on arrête
+      if (currentItems.length === 0 && currentPage > 1) {
+          console.log(`${dataType}: Réponse vide reçue pour la page ${currentPage}, fin de la récupération.`);
+          isLastPage = true; // Forcer la sortie
+      }
+
+    } catch (error) {
+      console.error(`❌ Erreur lors de la récupération de la page ${currentPage + 1} pour ${dataType}:`, error);
+      // Décider s'il faut arrêter ou continuer en cas d'erreur sur une page
+      // Pour l'instant, on arrête pour éviter des données partielles non détectées
+      throw new Error(`Erreur API NocoDB pour ${dataType} page ${currentPage + 1}: ${error.message}`);
+    }
+  }
+
+  console.log(`Données récupérées pour ${dataType}: ${allItems.length} éléments trouvés au total`);
+  return allItems;
+}
+
+// Récupérer les stands depuis NocoDB avec pagination complète
 async function fetchStands() {
   try {
     const api = initNocoDBApi();
-    
-    console.log('Appel à l\'API NocoDB pour récupérer les stands...');
-    
-    // Appel à l'API pour récupérer les données
-    const response = await api.dbTableRow.list(
-      "noco",
-      NOCODB_CONFIG.projectId,
-      NOCODB_CONFIG.tables.stands,
-      NOCODB_CONFIG.defaultQueryParams.stands
+    const allStands = await fetchAllTableRows(
+        api,
+        NOCODB_CONFIG.tables.stands,
+        NOCODB_CONFIG.defaultQueryParams.stands,
+        'stands'
     );
-    
-    console.log(`Données récupérées avec succès: ${response.list.length} stands trouvés`);
-    
-    // Vérifier si les données ont changé
-    const dataChanged = checkIfDataChanged(response.list, 'stands');
-    
-    // Sauvegarder la réponse complète uniquement si les données ont changé
-    if (dataChanged) {
-      saveRawData(response, 'stands_response.json');
-    }
-    
-    // Formatage de la réponse pour correspondre à l'interface NocoDBResponse
-    const formattedResponse = {
-      list: response.list,
-      pageInfo: {
-        totalRows: response.pageInfo?.totalRows || 0,
-        page: response.pageInfo?.page || 1,
-        pageSize: response.pageInfo?.pageSize || 25,
-        isFirstPage: response.pageInfo?.isFirstPage || true,
-        isLastPage: response.pageInfo?.isLastPage || true
-      },
-      stats: { 
-        dbQueryTime: "0" // Valeur par défaut car stats n'existe pas dans la réponse
-      },
-      dataChanged: dataChanged
-    };
-    
-    return formattedResponse;
+    const dataChanged = checkIfDataChanged(allStands, 'stands');
+    return { list: allStands, dataChanged: dataChanged };
   } catch (error) {
-    console.error('❌ Erreur lors de la récupération des stands:', error);
-    return { list: [], dataChanged: true };
+    console.error('❌ Erreur finale lors de la récupération des stands:', error);
+    return { list: [], dataChanged: true }; // Indiquer un changement en cas d'erreur pour forcer la regénération
   }
 }
 
-// Récupérer les ateliers depuis NocoDB
+// Récupérer les ateliers depuis NocoDB avec pagination complète
 async function fetchAteliers() {
   try {
     const api = initNocoDBApi();
-    
-    console.log('Appel à l\'API NocoDB pour récupérer les ateliers...');
-    
-    // Appel à l'API pour récupérer les données
-    const response = await api.dbTableRow.list(
-      "noco",
-      NOCODB_CONFIG.projectId,
-      NOCODB_CONFIG.tables.ateliers,
-      NOCODB_CONFIG.defaultQueryParams.ateliers
+     const allAteliers = await fetchAllTableRows(
+        api,
+        NOCODB_CONFIG.tables.ateliers,
+        NOCODB_CONFIG.defaultQueryParams.ateliers,
+        'ateliers'
     );
-    
-    console.log(`Données récupérées avec succès: ${response.list.length} ateliers trouvés`);
-    
-    // Vérifier si les données ont changé
-    const dataChanged = checkIfDataChanged(response.list, 'ateliers');
-    
-    // Sauvegarder la réponse complète uniquement si les données ont changé
-    if (dataChanged) {
-      saveRawData(response, 'ateliers_response.json');
-    }
-    
-    // Formatage de la réponse
-    const formattedResponse = {
-      list: response.list,
-      pageInfo: {
-        totalRows: response.pageInfo?.totalRows || 0,
-        page: response.pageInfo?.page || 1,
-        pageSize: response.pageInfo?.pageSize || 25,
-        isFirstPage: response.pageInfo?.isFirstPage || true,
-        isLastPage: response.pageInfo?.isLastPage || true
-      },
-      stats: { 
-        dbQueryTime: "0"
-      },
-      dataChanged: dataChanged
-    };
-    
-    return formattedResponse;
+    const dataChanged = checkIfDataChanged(allAteliers, 'ateliers');
+    return { list: allAteliers, dataChanged: dataChanged };
   } catch (error) {
-    console.error('❌ Erreur lors de la récupération des ateliers:', error);
+    console.error('❌ Erreur finale lors de la récupération des ateliers:', error);
     return { list: [], dataChanged: true };
   }
 }
 
-// Récupérer les conférences depuis NocoDB
+// Récupérer les conférences depuis NocoDB avec pagination complète
 async function fetchConferences() {
   try {
     const api = initNocoDBApi();
-    
-    console.log('Appel à l\'API NocoDB pour récupérer les conférences...');
-    
-    // Appel à l'API pour récupérer les données
-    const response = await api.dbTableRow.list(
-      "noco",
-      NOCODB_CONFIG.projectId,
-      NOCODB_CONFIG.tables.conferences,
-      NOCODB_CONFIG.defaultQueryParams.conferences
+    const allConferences = await fetchAllTableRows(
+        api,
+        NOCODB_CONFIG.tables.conferences,
+        NOCODB_CONFIG.defaultQueryParams.conferences,
+        'conferences'
     );
-    
-    console.log(`Données récupérées avec succès: ${response.list.length} conférences trouvées`);
-    
-    // Vérifier si les données ont changé
-    const dataChanged = checkIfDataChanged(response.list, 'conferences');
-    
-    // Sauvegarder la réponse complète uniquement si les données ont changé
-    if (dataChanged) {
-      saveRawData(response, 'conferences_response.json');
-    }
-    
-    // Formatage de la réponse
-    const formattedResponse = {
-      list: response.list,
-      pageInfo: {
-        totalRows: response.pageInfo?.totalRows || 0,
-        page: response.pageInfo?.page || 1,
-        pageSize: response.pageInfo?.pageSize || 25,
-        isFirstPage: response.pageInfo?.isFirstPage || true,
-        isLastPage: response.pageInfo?.isLastPage || true
-      },
-      stats: { 
-        dbQueryTime: "0"
-      },
-      dataChanged: dataChanged
-    };
-    
-    return formattedResponse;
+    const dataChanged = checkIfDataChanged(allConferences, 'conferences');
+    return { list: allConferences, dataChanged: dataChanged };
   } catch (error) {
-    console.error('❌ Erreur lors de la récupération des conférences:', error);
+    console.error('❌ Erreur finale lors de la récupération des conférences:', error);
     return { list: [], dataChanged: true };
   }
 }

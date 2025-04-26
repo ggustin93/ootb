@@ -5,6 +5,7 @@ import Image from '~/components/common/Image.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
+import type { ImageMetadata } from 'astro';
 
 // Importer les données du fichier JSON
 import aboutData from '~/content/about/index.json';
@@ -16,8 +17,16 @@ const { metadata, hero, quiSommesNous, vision, actions, missions, valeurs, equip
 import { findImage } from '~/utils/images';
 
 // Résolution des images avec les mêmes noms de variables
-const logo_blanc = await findImage(hero.logo);
-const teamImage = await findImage(hero.heroImage);
+const logo_blanc: string | ImageMetadata | null | undefined = await findImage(hero.logo);
+const teamImage: string | ImageMetadata | null | undefined = await findImage(hero.heroImage);
+
+// Vérifier si les images ont été trouvées. Lancer une erreur si elles manquent.
+if (!logo_blanc) {
+  throw new Error(`[a-propos.astro] Logo image not found at path: ${hero.logo}`);
+}
+if (!teamImage) {
+  throw new Error(`[a-propos.astro] Hero image not found at path: ${hero.heroImage}`);
+}
 
 ---
 

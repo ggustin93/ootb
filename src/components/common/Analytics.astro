@@ -13,22 +13,13 @@ import { ANALYTICS } from 'astrowind:config';
   ) : null
 }
 
-{/* Umami Analytics - Optimisé pour les performances avec Partytown */}
+{/* Umami Analytics - Le script ci-dessous est commenté car l'intégration 
+   @yeskunall/astro-umami configurée dans astro.config.ts 
+   est censée injecter le script nécessaire automatiquement. */}
+{/*
 <script 
   defer 
   src="https://cloud.umami.is/script.js" 
   data-website-id="8c5601e7-d9e1-4ce6-9570-5780ac94b2a3"
 ></script>
-
-{/* Script d'initialisation différé pour Umami */}
-<script is:inline>
-  // Initialiser Umami après le chargement complet de la page
-  document.addEventListener('DOMContentLoaded', function() {
-    // Attendre un court délai pour permettre au contenu principal de s'afficher
-    setTimeout(function() {
-      if (window.umami) {
-        window.umami.track('page-view');
-      }
-    }, 1000);
-  });
-</script>
+*/}

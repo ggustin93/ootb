@@ -49,3 +49,6 @@ tina/__generated__/*
 .cache-loader/
 .sharp-cache/
 .vite/
+
+# Notes personnelles et suivi de maintenance
+notes/

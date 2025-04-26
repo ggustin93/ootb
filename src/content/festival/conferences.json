@@ -1,12 +1,12 @@
 [
   {
     "id": "conference-2",
-    "title": "Prévenir l’Intimidation, Cultiver le Bien-Être : Vers une École Plus Sereine",
-    "description": "Cette conférence propose une réflexion approfondie sur la prévention de l’intimidation en milieu scolaire, en mettant l’accent sur le développement du bien-être, de l’estime de soi et des compétences émotionnelles chez les élèves. À travers des apports issus des neurosciences, nous explorerons comment le cerveau réagit face au stress et aux dynamiques de groupe, et comment des stratégies simples peuvent renforcer la résilience des jeunes. L’objectif est d’offrir des outils concrets pour favoriser un climat scolaire bienveillant, où le respect, l’écoute et le vivre-ensemble deviennent des leviers puissants contre l’intimidation.",
+    "title": "Cultiver le Bien-Être : Vers une École Plus Sereine",
+    "description": "Cette conférence propose une réflexion profonde sur le bien-être des enfants dans l’enseignement, en mettant l’accent sur le développement de l’estime de soi, des compétences émotionnelles et du sentiment de sécurité affective à l’école. À travers les apports des neurosciences, nous explorerons comment le cerveau des enfants réagit au stress, aux relations sociales et à l’environnement scolaire, et comment ces facteurs influencent leurs apprentissages et leur épanouissement.\n\nDes pistes concrètes seront proposées pour créer un climat scolaire apaisé et stimulant, où chaque enfant peut se sentir reconnu, soutenu et en confiance. Un espace où le respect, l’écoute et le lien deviennent des leviers puissants pour apprendre, grandir et s’épanouir ensemble.",
     "type": "Conférences",
     "day": "Mercredi",
-    "time": "10:00",
-    "location": "À définir",
+    "time": "10:15",
+    "location": "Albert Einstein",
     "speaker": "Jeremy  Clément",
     "organization": "",
     "image": "/images/events/conferences/conference-2.webp",
@@ -23,293 +23,8 @@
     "contact": {
       "email": "Jeremy.treebu@gmail.com",
       "phone": "0472434769"
-    }
-  },
-  {
-    "id": "conference-3",
-    "title": "L'esprit critique... comment le développer avec la PNL",
-    "description": "L'esprit critique est une compétence essentielle aujourd'hui, avec l'accès facile à une  grande quantité d'informations mais de qualité relative. En pédagogie PNL, nous avons identifié (métacognition) quatre stratégies cognitives particulièrement efficaces (dont celle de réflexion). Plusieurs outils PNL sont bien utiles pour mettre de l'ordre dans les informations qu'on reçoit. Nous pouvons donc apprendre l'esprit critique de manière méthodique.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "16:00",
-    "location": "À définir",
-    "speaker": "Alain Thiry",
-    "organization": "",
-    "image": "/images/events/conferences/conference-3.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-3.webp",
-    "tags": [
-      "Professionnels",
-      "Primaire et secondaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professionnels",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "www.interactif.be",
-    "contact": {
-      "email": "alainthiry@interactif.be",
-      "phone": "0478380335"
-    }
-  },
-  {
-    "id": "conference-7",
-    "title": "#CoolTogether : Conflits entre ados - Quelques clés pour comprendre et agir",
-    "description": "S’outiller pour apprendre aux jeunes les bases de la gestion non violente des conflits.\nDurant cette conférence, les participant·es auront l’occasion : \n-\tD’expérimenter quelques facettes des approches de gestion positive des conflits entre et avec les adolescent·es ;\n-\tDe découvrir comment transmettre cette approche aux jeunes eux-mêmes pour faciliter la gestion des conflits au sein de leur institution (école ou autre).\n",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Alexandre Castanheira",
-    "organization": "",
-    "image": "/images/events/conferences/conference-7.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-7.webp",
-    "tags": [
-      "Professionnels",
-      "Secondaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professionnels",
-    "level": "Secondaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "www.universitedepaix.org",
-    "contact": {
-      "email": "Castanheira",
-      "phone": "0497758639"
-    }
-  },
-  {
-    "id": "conference-8",
-    "title": "Evaluer autrement, c'est possible !",
-    "description": "Il est possible de mettre en oeuvre une nouvelle forme d'évaluation : l'évaluation positive (parce qu'elle s'intéresse aux progrès des élèves) et éducative (parce qu'elle accompagne véritablement les apprentissages). Au quotidien, elle se traduit par la boucle évaluative qui assure aux élèves un accompagnement de leurs apprentissages, notamment par la rétroaction. L'évaluation éducative vise le dépassement de soi : ceux qui ont réussi vont plus loin, ceux qui rencontrent des difficultés peuvent s'appuyer sur l'aide des autres élèves. \n\n\n\n\n\n",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Yves Khordoc",
-    "organization": "",
-    "image": "/images/events/conferences/conference-8.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-8.webp",
-    "tags": [
-      "Professeurs",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.leprof.be / www.ppda.be",
-    "contact": {
-      "email": "yveskhordoc@gmail.com",
-      "phone": "+32475221606"
-    }
-  },
-  {
-    "id": "conference-9",
-    "title": "L'autorité parentale au service de l'épanouissement de l'enfant",
-    "description": "Parents, enseignants… trop de choses à gérer et jamais assez de temps ? 🤯\nDans cette conférence, pas de solutions miracles, mais des pistes concrètes, accessibles et parfois originales, issues de la thérapie brève systémique.\nL’objectif : alléger votre charge mentale sans culpabiliser, avec des stratégies pratiques et applicables immédiatement.\nUn regard nouveau pour mieux gérer les priorités et avancer sans surcharge !\nPrêt.e à souffler un peu ? Venez découvrir Marina Blanchart qui vous proposera des solutions qui font vraiment la différence !",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Marina Blanchart",
-    "organization": "",
-    "image": "/images/events/conferences/conference-9.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-9.webp",
-    "tags": [
-      "Parents",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Parents",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.virages-formations.com",
-    "contact": {
-      "email": "marina.blanchart@virages-formations.com",
-      "phone": "0486031759"
-    }
-  },
-  {
-    "id": "conference-10",
-    "title": "Éduquer au numérique par les émotions et la perception",
-    "description": "Dans un monde où les écrans prennent une place croissante, La Philosophie Cliky aide les enfants dès 5 ans à développer des compétences psycho-sociales essentielles : l’intimité, l’empathie, et la responsabilité. Ancrée dans les dernières avancées neuroscientifiques, cette démarche repose sur la matérialisation d’Internet et l’accompagnement des émotions. Elle transforme l’éducation au numérique en une aventure captivante, guidée par des valeurs de respect et de liberté.\nGrâce à des outils concrets et accessibles, Virginie Tyou vous propose des clés pour que les enfants deviennent des utilisateurs éclairés et créatifs, capables de préserver leur bien-être et celui des autres tout en explorant les possibilités infinies du numérique et de l'IA.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Virginie TYOU",
-    "organization": "",
-    "image": "/images/events/conferences/conference-10.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-10.webp",
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.cliky.eu",
-    "contact": {
-      "email": "virginie.tyou@cliky.eu",
-      "phone": "0032477205088"
-    }
-  },
-  {
-    "id": "conference-11",
-    "title": "Facilitez-vous les langues en classe !",
-    "description": "Depuis 2020, l’éveil aux langues est une matière obligatoire dans les écoles de la Fédération Wallonie-Bruxelles. Pourtant, plus de 70% des enseignants déclarent ne pas se sentir à l’aise pour l’enseigner, par manque de formation, d’outils adaptés ou simplement de temps.\n\nComment répondre à cette nouvelle exigence sans stress, tout en offrant une expérience enrichissante aux élèves ? Dans cette conférence, nous aborderons les réalités du terrain et partagerons des solutions concrètes et faciles à mettre en place pour que l’éveil aux langues devienne une opportunité et non une contrainte.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Véronique Van den Abeele",
-    "organization": "",
-    "image": "/images/events/conferences/conference-11.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-11.webp",
-    "tags": [
-      "Professionnels",
-      "Maternelle et primaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professionnels",
-    "level": "Maternelle et primaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "www.tradanim.com",
-    "contact": {
-      "email": "direction@tradanim.be",
-      "phone": "+32475941641"
-    }
-  },
-  {
-    "id": "conference-12",
-    "title": "Visualisez Vos Idées: Le Pouvoir de la Pensée Visuelle",
-    "description": "Transformez vos idées en images! Rejoignez-nous pour découvrir les outils de la pensée visuelle. Libérez votre créativité et améliorez votre compréhension grâce à des techniques visuelles innovantes. Venez explorer un monde où chaque pensée prend forme ! Des outils simples, efficaces et concrets pour l'émergence et la structuration de vos idées.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Christophe Vanderroost",
-    "organization": "",
-    "image": "/images/events/conferences/conference-12.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-12.webp",
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.creapicto.com",
-    "contact": {
-      "email": "christophe.vanderroost@gmail.com",
-      "phone": "0487227575"
-    }
-  },
-  {
-    "id": "conference-13",
-    "title": "L'autorité parentale au service de l'épanouissement de l'enfant",
-    "description": "Vous vous sentez parfois perdu entre bienveillance et autorité avec vos enfants ? Vous hésitez entre poser des limites claires et préserver une relation harmonieuse ? Cette conférence est faite pour vous ! \n\nNous explorerons ensemble des pistes concrètes pour poser des repères solides sans basculer dans l'autoritarisme ou le laxisme. Comment poser des limites tout en restant à l’écoute ? Quelle place donner aux émotions dans l’éducation ? Et comment utiliser la sanction de manière constructive ?\n\n Un échange riche pour vous aider à trouver l’équilibre qui vous convient et accompagner vos enfants avec confiance et sérénité. 💡✨",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Marina Blanchart",
-    "organization": "",
-    "image": "/images/events/conferences/conference-13.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-13.webp",
-    "tags": [
-      "Parents",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Parents",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.virages-consultations.com",
-    "contact": {
-      "email": "marina.blanchart@virages-formations.com",
-      "phone": "0486031759"
-    }
-  },
-  {
-    "id": "conference-14",
-    "title": "Comprendre les mécanismes du stress et le gérer.",
-    "description": "Et si le stress était, la plupart du temps, le fruit d'un film mental trouvant sa source au coeur de l'imagination ! Celle-ci étant nourrie par nos suppositions, nos croyances, nos valeurs, nos peurs...Nous vous proposons un voyage au coeur du cerveau pour comprendre les mécanismes d'installation du stress. Comment le gérer ?\nRessentir ensemble quelques pistes pour aller vers un mieux être pour soi, l'autre et le monde qui nous entoure. ",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Isabelle et Daphnée Smedts et Visée",
-    "organization": "",
-    "image": "/images/events/conferences/conference-14.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-14.webp",
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "",
-    "contact": {
-      "email": "isasmedts@gmail.com",
-      "phone": "0473 88 74 08"
-    }
-  },
-  {
-    "id": "conference-34",
-    "title": "Lecture et cerveau : les clés d'un apprentissage efficace ",
-    "description": "L’apprentissage de la lecture est une étape cruciale du développement de l’enfant et les recherches en neurosciences permettent aujourd’hui de mieux comprendre les mécanismes en jeu dans le cerveau du lecteur débutant.\n\nÀ travers les travaux de Stanislas Dehaene, nous explorerons comment le cerveau réorganise son système visuel pour identifier et traiter les lettres et les mots. Nous verrons pourquoi une approche syllabique et explicite – fondée sur l’apprentissage du code et non sur la mémorisation globale des mots – est la stratégie la plus efficace pour enseigner la lecture.\n\nCette conférence s’adresse aux enseignants souhaitant s’appuyer sur les avancées scientifiques pour optimiser leur pédagogie et donner à chaque enfant les meilleures chances de réussite en lecture.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Benjamin Stevens",
-    "organization": "",
-    "image": "/images/events/conferences/conference-34.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-34.webp",
-    "tags": [
-      "Professeurs",
-      "Primaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "www.apili.fr",
-    "contact": {
-      "email": "benjamin.stevens@apili.fr",
-      "phone": "+33.630.51.72.96"
-    }
-  },
-  {
-    "id": "conference-35",
-    "title": "Comment accompagner les enfants dans leurs devoirs?",
-    "description": "Le moment des devoirs est un enfer…\nVotre enfant refuse de travailler, est très lent, bouge sans cesse, s'énerve au moment des devoirs...\nLa conférence \"Comment accompagner les enfants dans leurs devoirs ?\" est pour vous ! \nDes outils concrets seront proposés aux parents et aux enseignants. Ceux-ci ont pour but de déminer une relation parent-enfant souvent conflictuelle et remplie de stress et de permettre à l'enfant ainsi qu'au parent de mieux s'armer pour gagner en autonomie. \n\n",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Aurore et Stéphanie Leblicq et Masse",
-    "organization": "",
-    "image": "/images/events/conferences/conference-35.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-35.webp",
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Primaire et secondaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "www.evocation.be",
-    "contact": {
-      "email": "aurore.evocation@gmail.com",
-      "phone": "0477/88.52.15"
-    }
+    },
+    "status": "Publié"
   },
   {
     "id": "conference-67",
@@ -317,8 +32,8 @@
     "description": "Ce que nos enfants mangent impacte-t-il leurs facultés scolaires ? Peut-on établir un lien entre des difficultés attentionnelles et l’alimentation ?\nDans cette conférence, je vous propose de répondre à ces questions de manière concrète, avec l’appui d’études et d’expérimentations.\nNous parlerons de concentration, de mémorisation et d’hygiène de l’apprentissage.\nPoint abordé : l’impact du sucre et des additifs sur les facultés scolaires (mémoire, attention, inhibition).",
     "type": "Conférences",
     "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
+    "time": "10:15",
+    "location": "Nelson Mandela",
     "speaker": "Guillaume Bousquet",
     "organization": "",
     "image": "/images/events/conferences/conference-67.webp",
@@ -335,85 +50,8 @@
     "contact": {
       "email": "pedagovie@gmail.com",
       "phone": "+33609613896"
-    }
-  },
-  {
-    "id": "conference-134",
-    "title": "Comment \"Sauver l'école ?\"",
-    "description": "Dix ans après sa sortie, le livre de John Rizzo \"Sauver l'école ?\" est réédité. Il propose un voyage narratif en classe où John tâtonne, puis réussit à enclencher un mouvement pour reprendre chaque élève là où il est, avec son retard ou son avance. En une décennie, la révolution numérique, associée à l’arrivée d’une école des compétences et de l’inclusion, a précipité le système scolaire dans une crise. Qu’ont fait John et Fanny des premières expérimentations racontées dans le livre ? Quels sont les outils qu’ils proposent dans School’Up pour accompagner les enseignants dans une nécessaire évolution, sans révolution, afin que leur métier reste le plus beau du monde? Venez le découvrir lors de leur conférence, et repartez chacun avec un exemplaire gratuit du livre.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "John Rizzo",
-    "organization": "",
-    "image": "/images/events/conferences/conference-134.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-134.webp",
-    "tags": [
-      "Professeurs",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "schoolup.be",
-    "contact": {
-      "email": "john@schoolup.be",
-      "phone": "+32486345901"
-    }
-  },
-  {
-    "id": "conference-166",
-    "title": "Les outils de la pensée",
-    "description": "placeholder",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Luc  de Brabandere",
-    "organization": "",
-    "image": "/images/events/conferences/conference-166.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-166.webp",
-    "tags": [
-      "Professeurs",
-      "Secondaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professeurs",
-    "level": "Secondaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "https://www.lucdebrabandere.com/",
-    "contact": {
-      "email": "luc.de.brabandere@cartoonbase.com ",
-      "phone": "0496124943"
-    }
-  },
-  {
-    "id": "conference-167",
-    "title": "Comment construire pas à pas l'autonomie des ados?",
-    "description": "Comment aider nos élèves à devenir acteurs de leurs apprentissages ? Lors de cette conférence, nous explorerons le rôle clé de l’enseignant dans l’accompagnement des jeunes vers plus d’autonomie. Je partagerai des outils concrets et des techniques pratiques à mettre en place en classe pour les guider efficacement. Une approche progressive pour favoriser la confiance et la responsabilisation des ados dans leurs apprentissages. ",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Sophie Vanden Plas",
-    "organization": "",
-    "image": "/images/events/conferences/conference-167.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-167.webp",
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.sophievandenplas.be",
-    "contact": {
-      "email": "methode.evocation@gmail.com",
-      "phone": "0476462425"
-    }
+    },
+    "status": "Publié"
   },
   {
     "id": "conference-199",
@@ -421,8 +59,8 @@
     "description": "L’intelligence artificielle transforme l’enseignement : gain de temps, personnalisation des apprentissages, outils interactifs… Mais comment l’intégrer efficacement sans perdre l’essence du métier d’enseignant ?\n\nCette conférence propose une approche concrète pour utiliser l’IA comme un véritable assistant pédagogique. Création de contenus, évaluation automatisée, différenciation des apprentissages : découvrez des outils pratiques et leurs limites.",
     "type": "Conférences",
     "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
+    "time": "10:15",
+    "location": "Benjamin Franklin",
     "speaker": "Mélissa et Loïc  Johnen et Sartieaux",
     "organization": "",
     "image": "/images/events/conferences/conference-199.webp",
@@ -439,7 +77,8 @@
     "contact": {
       "email": "loic.sartieaux@segec.be",
       "phone": "0491202438"
-    }
+    },
+    "status": "Publié"
   },
   {
     "id": "conference-232",
@@ -447,8 +86,8 @@
     "description": "Le harcèlement scolaire est un phénomène de groupe particulièrement complexe à traiter. Intervenir avec la \"méthode de la préoccupation partagée – MPPfr permet d’accompagner la cible des brimades afin de la soutenir tout en travaillant avec les intimidateurs pour leur permettre de changer de posture de façon honorable. De nombreuses situations peuvent être résolues sans utiliser la sanction via cette méthode humaniste et restaurative. Parlons en ensemble lors de cette conférence!",
     "type": "Conférences",
     "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
+    "time": "11:30",
+    "location": "Albert Einstein",
     "speaker": "Centre RéSIS Belgique Centre RéSIS Belgique",
     "organization": "",
     "image": "/images/events/conferences/conference-232.webp",
@@ -465,7 +104,8 @@
     "contact": {
       "email": "centreresis.belgique@gmail.com",
       "phone": "0497 27 44 20"
-    }
+    },
+    "status": "Publié"
   },
   {
     "id": "conference-233",
@@ -473,8 +113,8 @@
     "description": "Stimuler la lecture, l’ouverture d’esprit et le développement d’une pensée autonome chez les enfants est indispensable pour en faire de futurs citoyens actifs et libres ! Découvrez des ressources et des outils proposés par Philéas & Autobule et le Pôle Philo (LBW) pour susciter le questionnement des enfants, poser un regard critique sur un thème pour réfléchir, s’indigner, s’étonner… et en parler.",
     "type": "Conférences",
     "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
+    "time": "11:30",
+    "location": "Nelson Mandela",
     "speaker": "Mélanie Olivier",
     "organization": "",
     "image": "/images/events/conferences/conference-233.webp",
@@ -491,250 +131,71 @@
     "contact": {
       "email": "info@phileasetautobule.com",
       "phone": "010223191"
-    }
+    },
+    "status": "Publié"
   },
   {
-    "id": "conference-234",
-    "title": "L'éducation sécurisante : une nécessité aux apprentissages",
-    "description": "La qualité des relations du tout-petit avec les adultes joue un rôle capital dans le développement de sa sécurité affective et de son attachement, en plus de contribuer à son rendement scolaire, l’acceptation par ses pairs et sa confiance en lui. Et si la relation adulte-enfant était associée aux manifestations comportementales et émotionnelles de l’enfant ?  \n\nUne conférence appuyée sur le modèle conceptuel de l’éducation sécurisante spécifique à l'accompagnement du tout-petit entre 2 et 8 ans.",
+    "id": "conference-13",
+    "title": "L'autorité parentale au service de l'épanouissement de l'enfant",
+    "description": "Vous vous sentez parfois perdu entre bienveillance et autorité avec vos enfants ? Vous hésitez entre poser des limites claires et préserver une relation harmonieuse ? Cette conférence est faite pour vous ! \n\nNous explorerons ensemble des pistes concrètes pour poser des repères solides sans basculer dans l'autoritarisme ou le laxisme. Comment poser des limites tout en restant à l’écoute ? Quelle place donner aux émotions dans l’éducation ? Et comment utiliser la sanction de manière constructive ?\n\n Un échange riche pour vous aider à trouver l’équilibre qui vous convient et accompagner vos enfants avec confiance et sérénité. 💡✨",
     "type": "Conférences",
     "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Mélanie Bilodeau",
+    "time": "14:00",
+    "location": "Albert Einstein",
+    "speaker": "Marina Blanchart",
     "organization": "",
-    "image": "/images/events/conferences/conference-234.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-234.webp",
+    "image": "/images/events/conferences/conference-13.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-13.webp",
     "tags": [
-      "Professionnels",
-      "Maternelle",
+      "Parents",
+      "Maternelle-primaire et secondaire",
       "Enseignement ordinaire et spécialisé"
     ],
-    "target": "Professionnels",
-    "level": "Maternelle",
+    "target": "Parents",
+    "level": "Maternelle-primaire et secondaire",
     "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "melaniebilodeau.com",
+    "url": "www.virages-consultations.com",
     "contact": {
-      "email": "psychoed@melaniebilodeau.com",
-      "phone": "1-819-699-1020"
-    }
+      "email": "marina.blanchart@virages-formations.com",
+      "phone": "0486031759"
+    },
+    "status": "Publié"
   },
   {
-    "id": "conference-265",
-    "title": "Accompagner les capacités à apprendre, le pouvoir de la médiation",
-    "description": "Tout au long de sa vie le cerveau a besoin d'apprendre.La \"re-médiation\" relève le défi de développer le potentiel cognitif d'un enfant ou de corriger certaines déficiences cognitives. Cette approche du Professeur Feuerstein définit trois clés: le cerveau peut toujours se modifier, la médiatisation de l'adulte est capitale et l'environnement modifiant plutôt que l'environnement modifié...",
+    "id": "conference-35",
+    "title": "Comment accompagner les enfants dans leurs devoirs?",
+    "description": "Le moment des devoirs est un enfer…\nVotre enfant refuse de travailler, est très lent, bouge sans cesse, s'énerve au moment des devoirs...\nLa conférence \"Comment accompagner les enfants dans leurs devoirs ?\" est pour vous ! \nDes outils concrets seront proposés aux parents et aux enseignants. Ceux-ci ont pour but de déminer une relation parent-enfant souvent conflictuelle et remplie de stress et de permettre à l'enfant ainsi qu'au parent de mieux s'armer pour gagner en autonomie. \n\n",
     "type": "Conférences",
     "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Danielle HENUSET",
+    "time": "14:00",
+    "location": "Nelson Mandela",
+    "speaker": "Aurore et Stéphanie Leblicq et Masse",
     "organization": "",
-    "image": "/images/events/conferences/conference-265.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-265.webp",
+    "image": "/images/events/conferences/conference-35.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-35.webp",
     "tags": [
       "Professeurs, parents et enfants",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "",
-    "contact": {
-      "email": "henuset.dan@gmail.com",
-      "phone": "0475 231889"
-    }
-  },
-  {
-    "id": "conference-298",
-    "title": "Former les enseignants à la lecture littéraire de l’album ",
-    "description": "Les derniers résultats de l’enquête PIRLS indiquent que le niveau de compréhension en lecture des élèves de 4e primaire de la FW-B se situe en bas du classement des pays de l’OCDE. Comment engager tous les élèves dans la lecture de récits de qualité ? Nous proposerons une piste didactique pour amener les élèves à mobiliser les stratégies de compréhension en lecture, par le dévoilement progressif de l’intrigue d’un album et par le débat interprétatif autour de celui-ci. ",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Graziella Deleuze",
-    "organization": "",
-    "image": "/images/events/conferences/conference-298.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-298.webp",
-    "tags": [
-      "Professeurs",
-      "Primaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "",
-    "contact": {
-      "email": "deleuzegraziella@gmail.com",
-      "phone": "0479 90 71 17"
-    }
-  },
-  {
-    "id": "conference-299",
-    "title": "Comment mobiliser les données pour piloter mon enseignement ou mon établissement ?",
-    "description": "Dans un monde où les données sont omniprésentes, leur potentiel pour transformer l’éducation est immense. Mais comment les exploiter efficacement pour améliorer les apprentissages, optimiser la gestion de votre établissement scolaire et prendre des décisions éclairées ? Cette conférence vous invite à explorer des solutions concrètes et accessibles pour tirer parti des données et des outils numériques afin de relever ces défis.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Sébastien Place",
-    "organization": "",
-    "image": "/images/events/conferences/conference-299.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-299.webp",
-    "tags": [
-      "Professeurs",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "",
-    "contact": {
-      "email": "splace@microsoft.com",
-      "phone": "0479823712"
-    }
-  },
-  {
-    "id": "conference-300",
-    "title": "Sensibilisation à la problématique du décrochage scolaire, des pistes, des leviers pour mieux y remédier.",
-    "description": "Odyssée accompagne des jeunes de 12 à 20 ans, en décrochage scolaire ou en risque de l'être, à se remettre en projet et redevenir acteurs de leur avenir. C'est une problématique multifactorielle qui touche actuellement près d'un jeune sur dix. Mieux comprendre les causes et les précurseurs est nécessaire pour réagir rapidement. Lors de ce moment de partage, nous verrons ensemble des pistes et des leviers pour tenter de remédier à cette problématique qui peut toucher n'importe quel jeune.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Catherine Sztencel",
-    "organization": "",
-    "image": "/images/events/conferences/conference-300.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-300.webp",
-    "tags": [
-      "Professionnels",
-      "Secondaire",
+      "Primaire et secondaire",
       "Enseignement ordinaire"
     ],
-    "target": "Professionnels",
-    "level": "Secondaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "www.odysseeasbl.be",
-    "contact": {
-      "email": "direction@odysseeasbl.be",
-      "phone": "0476/26 19 98"
-    }
-  },
-  {
-    "id": "conference-331",
-    "title": "Comment parler aux enfants des épreuves de la vie et les accompagner à construire un futur apaisé ?",
-    "description": "Les événements récents (pandémie, etc.) ont bouleversé la vie des enfants et leur développement relationnel, psychologique et émotionnel. Dans ce contexte, il est primordial de les accompagner dans ces épreuves de la vie, pour qu’ils apprennent à les surmonter. Mais les mots pour leur en parler peuvent être difficiles à trouver. Elodie Lamarque vous apporte ces mots et des outils pour accompagner chaque enfant de façon douce, ludique et respectueuse de son développement.\n",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Elodie Lamarque",
-    "organization": "",
-    "image": "/images/events/conferences/conference-331.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-331.webp",
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Primaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
     "target": "Professeurs, parents et enfants",
-    "level": "Primaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.esf-scienceshumaines.fr",
-    "contact": {
-      "email": "elodie.lamarque@epimelia.fr",
-      "phone": "+33642264265"
-    }
-  },
-  {
-    "id": "conference-332",
-    "title": "Apprendre aux enfants à coopérer en classe",
-    "description": "Dès le plus jeune âge, il est indispensable que les enfants puissent agir avec d’autres et développer des habiletés sociales. Pour que la coopération profite réellement à tous, il est important de former les élèves à toutes ses formes : l’aide, l’entraide et le tutorat ; le travail en équipe et en atelier ; le travail en groupe ; les conseils coopératifs d’élèves ….\nAu cours de cette conférence, Sylvain Connac présentera aux enseignants tous les éléments pour se former à la coopération.\n",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Sylvain  Connac",
-    "organization": "",
-    "image": "/images/events/conferences/conference-332.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-332.webp",
-    "tags": [
-      "Professeurs",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professeurs",
-    "level": "Maternelle-primaire et secondaire",
+    "level": "Primaire et secondaire",
     "teachingType": "Enseignement ordinaire",
-    "url": "www.esf-scienceshumaines.fr",
+    "url": "www.evocation.be",
     "contact": {
-      "email": "sylvain.connac@univ-montp3.fr",
-      "phone": "+33181699501"
-    }
-  },
-  {
-    "id": "conference-364",
-    "title": "Aborder le (cyber)harcèlement en classe",
-    "description": "Vos élèves vous partagent des problèmes qu’ils ont pu avoir en ligne mais vous ne savez pas toujours comment y répondre ? Vous prenez connaissance de cas s’apparentant à du (cyber)harcèlement mais ne savez pas comment traiter le sujet avec vos élèves ?\nDurant cet atelier, nous aborderons la thématique du (cyber)harcèlement : comment l'aborder en classe, comment sensibiliser vos élèves à celui-ci... Nous vous présenterons plusieurs activités à réaliser en classe et des conseils pratiques.",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "Brieuc Tollenaere",
-    "organization": "",
-    "image": "/images/events/conferences/conference-364.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-364.webp",
-    "tags": [
-      "Professeurs",
-      "Primaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "www.bibliosansfrontieres.be",
-    "contact": {
-      "email": "brieuc.tollenaere@bibliosansfrontieres.be",
-      "phone": "0472654341"
-    }
-  },
-  {
-    "id": "conference-365",
-    "title": "Inclusion et diversité cognitive",
-    "description": "Cette conférence présentera les grands principes favorisant l'inclusion des élèves ayant un diagnostic de troubles du neurodéveloppement, tels qu'ils ont été proposés dans le livre \"Pareils, pas pareils\", co-écrit avec Isabelle Filliozat (Nathan, 2025)",
-    "type": "Conférences",
-    "day": "Mercredi",
-    "time": "À définir",
-    "location": "À définir",
-    "speaker": "faby cazalis-judet de la combe",
-    "organization": "",
-    "image": "/images/events/conferences/conference-365.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-365.webp",
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "",
-    "contact": {
-      "email": "fabienne.cazalis@icloud.com",
-      "phone": "+33769008923"
-    }
+      "email": "aurore.evocation@gmail.com",
+      "phone": "0477/88.52.15"
+    },
+    "status": "Publié"
   },
   {
     "id": "conference-1",
     "title": "Préparer et accompagner son enfant sur le chemin de l’écriture.",
     "description": "Votre enfant n’aime pas dessiner ou écrire ? \nIl ne passe pas de lui-même à l’atelier de graphisme/d'écriture en classe? \nIl se plaint de douleur à la main/ aux doigts/ au bras ? \nSon tracé manque d’assurance, de souplesse et fluidité ? \nIl ne gère pas l’espace de sa feuille de papier ? \nIl se tient mal (outil, tenue corporelle) ? \nIl ne tient pas le geste graphique dans le temps ? \nIl est crispé ? \n\nComment lui (re)donner goût à l’écriture ?\nVous reconnaissez votre enfant dans cette description ?\nAlors inscrivez-vous à cette conférence.\nNous aborderons:\n- les stades du développement\n- les signes d’alerte\n- les trucs et astuces\n- les gestes pré-calligraphiques, les chiffres et les lettres\n- les aménagements raisonnables et la dysgraphie.",
     "type": "Conférences",
-    "day": "Jeudi",
-    "time": "À définir",
-    "location": "Cafétéria",
+    "day": "Mercredi",
+    "time": "15:15",
+    "location": "Benjamin Franklin",
     "speaker": "Elise Verstraeten",
     "organization": "",
     "image": "/images/events/conferences/conference-1.webp",
@@ -751,16 +212,476 @@
     "contact": {
       "email": "eliseverstraeten@gmail.com",
       "phone": "0485195635"
-    }
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-364",
+    "title": "Aborder le (cyber)harcèlement en classe",
+    "description": "Vos élèves vous partagent des problèmes qu’ils ont pu avoir en ligne mais vous ne savez pas toujours comment y répondre ? Vous prenez connaissance de cas s’apparentant à du (cyber)harcèlement mais ne savez pas comment traiter le sujet avec vos élèves ?\nDurant cet atelier, nous aborderons la thématique du (cyber)harcèlement : comment l'aborder en classe, comment sensibiliser vos élèves à celui-ci... Nous vous présenterons plusieurs activités à réaliser en classe et des conseils pratiques.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "15:15",
+    "location": "Albert Einstein",
+    "speaker": "Brieuc Tollenaere",
+    "organization": "",
+    "image": "/images/events/conferences/conference-364.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-364.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.bibliosansfrontieres.be",
+    "contact": {
+      "email": "brieuc.tollenaere@bibliosansfrontieres.be",
+      "phone": "0472654341"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-166",
+    "title": "De l'importance des outils pour développer la pensée.",
+    "description": "La pensée n'est pas une science que l'on étudie mais un art que l'on pratique. \nDévelopper sa pensée, c'est mieux comprendre ses grands principes, pour ensuite libérer son potentiel. \nComme tous les artistes et les artisans, le penseur doit donc se constituer sa propre boite à outils. \nLa conférence en présentera certains et en citera beaucoup d'autres, tout en rappelant l'essentiel: \nce qui fait l'artiste, l'artisan ou le penseur, ce n'est pas la boite à outils, c'est le projet qui les motive ",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "09:00",
+    "location": "Albert Einstein",
+    "speaker": "Luc  de Brabandere",
+    "organization": "",
+    "image": "/images/events/conferences/conference-166.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-166.webp",
+    "tags": [
+      "Professeurs",
+      "Secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "https://www.lucdebrabandere.com/",
+    "contact": {
+      "email": "luc.de.brabandere@cartoonbase.com ",
+      "phone": "0496124943"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-10",
+    "title": "Éduquer au numérique par les émotions et la perception",
+    "description": "Dans un monde où les écrans prennent une place croissante, La Philosophie Cliky aide les enfants dès 5 ans à développer des compétences psycho-sociales essentielles : l’intimité, l’empathie, et la responsabilité. Ancrée dans les dernières avancées neuroscientifiques, cette démarche repose sur la matérialisation d’Internet et l’accompagnement des émotions. Elle transforme l’éducation au numérique en une aventure captivante, guidée par des valeurs de respect et de liberté.\nGrâce à des outils concrets et accessibles, Virginie Tyou vous propose des clés pour que les enfants deviennent des utilisateurs éclairés et créatifs, capables de préserver leur bien-être et celui des autres tout en explorant les possibilités infinies du numérique et de l'IA.",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "10:15",
+    "location": "Benjamin Franklin",
+    "speaker": "Virginie TYOU",
+    "organization": "",
+    "image": "/images/events/conferences/conference-10.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-10.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.cliky.eu",
+    "contact": {
+      "email": "virginie.tyou@cliky.eu",
+      "phone": "0032477205088"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-167",
+    "title": "Comment construire pas à pas l'autonomie des ados?",
+    "description": "Comment aider nos élèves à devenir acteurs de leurs apprentissages ? Lors de cette conférence, nous explorerons le rôle clé de l’enseignant dans l’accompagnement des jeunes vers plus d’autonomie. Je partagerai des outils concrets et des techniques pratiques à mettre en place en classe pour les guider efficacement. Une approche progressive pour favoriser la confiance et la responsabilisation des ados dans leurs apprentissages. ",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "10:15",
+    "location": "Nelson Mandela",
+    "speaker": "Sophie Vanden Plas",
+    "organization": "",
+    "image": "/images/events/conferences/conference-167.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-167.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.sophievandenplas.be",
+    "contact": {
+      "email": "methode.evocation@gmail.com",
+      "phone": "0476462425"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-370",
+    "title": "Pourquoi les élèves ne lisent-ils pas et ne comprennent-ils pas le consignes?",
+    "description": "La première question concerne l’intérêt que les élèves manifestent vis-à-vis des consignes, des démarches proposées et des savoirs dispensés dans les cours suivant leur rapport à l’école. La seconde concerne la compréhension : c’est-à-dire la transformation des informations en représentations mentales, la création de liens avec les données, la conscience des attentes méthodologiques ou culturelles de l’enseignant. Outre l'analyse, nous proposons de multiples actions concrètes pour agir!",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "10:15",
+    "location": "Albert Einstein",
+    "speaker": "Stéphane Hoeben",
+    "organization": "",
+    "image": "/images/events/conferences/conference-370.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-370.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.atzeo.com",
+    "contact": {
+      "email": "info@atzeo.com",
+      "phone": "0472371242"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-300",
+    "title": "Sensibilisation à la problématique du décrochage scolaire, des pistes, des leviers pour mieux y remédier.",
+    "description": "Odyssée accompagne des jeunes de 12 à 20 ans, en décrochage scolaire ou en risque de l'être, à se remettre en projet et redevenir acteurs de leur avenir. C'est une problématique multifactorielle qui touche actuellement près d'un jeune sur dix. Mieux comprendre les causes et les précurseurs est nécessaire pour réagir rapidement. Lors de ce moment de partage, nous verrons ensemble des pistes et des leviers pour tenter de remédier à cette problématique qui peut toucher n'importe quel jeune.",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "11:30",
+    "location": "Nelson Mandela",
+    "speaker": "Catherine Sztencel",
+    "organization": "",
+    "image": "/images/events/conferences/conference-300.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-300.webp",
+    "tags": [
+      "Professionnels",
+      "Secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professionnels",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.odysseeasbl.be",
+    "contact": {
+      "email": "direction@odysseeasbl.be",
+      "phone": "0476/26 19 98"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-369",
+    "title": "La métacognition dès la maternelle, c’est possible !",
+    "description": "Lucrèce et Bernadette, formatrices depuis des années sur le sujet, partagent et témoignent de pratiques de métacognition en relation avec la différenciation et l’enseignement explicite.\nGrâce à cette conférence, vous serez en mesure de clarifier certains concepts théoriques, de créer des automatismes e des rituels métacognitifs, de permettre à l’enfant d’entrer dans son métier d’élève (différencier « faire\" et \"apprendre à faire\"), d'amener vos élèves sur la voie de la réflexivité.",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "11:30",
+    "location": "Albert Einstein",
+    "speaker": "Lucrèce Barszez",
+    "organization": "",
+    "image": "/images/events/conferences/conference-369.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-369.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.atzeo.com",
+    "contact": {
+      "email": "info@atzeo.com",
+      "phone": "0472371242"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-463",
+    "title": "Les facteurs de réussite pour une école inclusive",
+    "description": "Philippe Tremblay, expert en éducation, explorera les facteurs clés qui favorisent une école véritablement inclusive. Il partagera des pistes concrètes pour surmonter les défis et créer un environnement d’apprentissage adapté à tous les élèves. Une conférence inspirante pour repenser l’inclusion scolaire !",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "11:30",
+    "location": "Albert Einstein",
+    "speaker": "Philippe Tremblay",
+    "organization": "",
+    "image": "/images/events/conferences/conference-463.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-463.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "Philippe.Tremblay@fse.ulaval.ca ",
+      "phone": "0465-975176"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-3",
+    "title": "L'esprit critique... comment le développer avec la PNL",
+    "description": "L'esprit critique est une compétence essentielle aujourd'hui, avec l'accès facile à une  grande quantité d'informations mais de qualité relative. En pédagogie PNL, nous avons identifié (métacognition) quatre stratégies cognitives particulièrement efficaces (dont celle de réflexion). Plusieurs outils PNL sont bien utiles pour mettre de l'ordre dans les informations qu'on reçoit. Nous pouvons donc apprendre l'esprit critique de manière méthodique.",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "12:45",
+    "location": "Albert Einstein",
+    "speaker": "Alain Thiry",
+    "organization": "",
+    "image": "/images/events/conferences/conference-3.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-3.webp",
+    "tags": [
+      "Professionnels",
+      "Primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professionnels",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.interactif.be",
+    "contact": {
+      "email": "alainthiry@interactif.be",
+      "phone": "0478380335"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-12",
+    "title": "Visualisez Vos Idées: Le Pouvoir de la Pensée Visuelle",
+    "description": "Transformez vos idées en images! Rejoignez-nous pour découvrir les outils de la pensée visuelle. Libérez votre créativité et améliorez votre compréhension grâce à des techniques visuelles innovantes. Venez explorer un monde où chaque pensée prend forme ! Des outils simples, efficaces et concrets pour l'émergence et la structuration de vos idées.",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "12:45",
+    "location": "Benjamin Franklin",
+    "speaker": "Christophe Vanderroost",
+    "organization": "",
+    "image": "/images/events/conferences/conference-12.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-12.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.creapicto.com",
+    "contact": {
+      "email": "christophe.vanderroost@gmail.com",
+      "phone": "0487227575"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-299",
+    "title": "Comment mobiliser les données pour piloter mon enseignement ou mon établissement ?",
+    "description": "Dans un monde où les données sont omniprésentes, leur potentiel pour transformer l’éducation est immense. Mais comment les exploiter efficacement pour améliorer les apprentissages, optimiser la gestion de votre établissement scolaire et prendre des décisions éclairées ? Cette conférence vous invite à explorer des solutions concrètes et accessibles pour tirer parti des données et des outils numériques afin de relever ces défis.",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "12:45",
+    "location": "Nelson Mandela",
+    "speaker": "Sébastien Place & Maxime Duquesnoy",
+    "organization": "",
+    "image": "/images/events/conferences/conference-299.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-299.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "splace@microsoft.com",
+      "phone": "0479823712"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-9",
+    "title": "La charge mentale",
+    "description": "Parents, enseignants… trop de choses à gérer et jamais assez de temps ? 🤯\nDans cette conférence, pas de solutions miracles, mais des pistes concrètes, accessibles et parfois originales, issues de la thérapie brève systémique.\nL’objectif : alléger votre charge mentale sans culpabiliser, avec des stratégies pratiques et applicables immédiatement.\nUn regard nouveau pour mieux gérer les priorités et avancer sans surcharge !\nPrêt.e à souffler un peu ? Venez découvrir Marina Blanchart qui vous proposera des solutions qui font vraiment la différence !",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "14:00",
+    "location": "Benjamin Franklin",
+    "speaker": "Marina Blanchart",
+    "organization": "",
+    "image": "/images/events/conferences/conference-9.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-9.webp",
+    "tags": [
+      "Parents",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Parents",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.virages-formations.com",
+    "contact": {
+      "email": "marina.blanchart@virages-formations.com",
+      "phone": "0486031759"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-11",
+    "title": "Facilitez-vous les langues en classe !",
+    "description": "Depuis 2020, l’éveil aux langues est une matière obligatoire dans les écoles de la Fédération Wallonie-Bruxelles. Pourtant, plus de 70% des enseignants déclarent ne pas se sentir à l’aise pour l’enseigner, par manque de formation, d’outils adaptés ou simplement de temps.\n\nComment répondre à cette nouvelle exigence sans stress, tout en offrant une expérience enrichissante aux élèves ? Dans cette conférence, nous aborderons les réalités du terrain et partagerons des solutions concrètes et faciles à mettre en place pour que l’éveil aux langues devienne une opportunité et non une contrainte.",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "14:00",
+    "location": "Nelson Mandela",
+    "speaker": "Véronique Van den Abeele",
+    "organization": "",
+    "image": "/images/events/conferences/conference-11.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-11.webp",
+    "tags": [
+      "Professionnels",
+      "Maternelle et primaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professionnels",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.tradanim.com",
+    "contact": {
+      "email": "direction@tradanim.be",
+      "phone": "+32475941641"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-332",
+    "title": "Apprendre aux enfants à coopérer en classe",
+    "description": "Dès le plus jeune âge, il est indispensable que les enfants puissent agir avec d’autres et développer des habiletés sociales. Pour que la coopération profite réellement à tous, il est important de former les élèves à toutes ses formes : l’aide, l’entraide et le tutorat ; le travail en équipe et en atelier ; le travail en groupe ; les conseils coopératifs d’élèves ….\nAu cours de cette conférence, Sylvain Connac présentera aux enseignants tous les éléments pour se former à la coopération.\n",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "14:00",
+    "location": "Benjamin Franklin",
+    "speaker": "Sylvain  Connac",
+    "organization": "",
+    "image": "/images/events/conferences/conference-332.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-332.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.esf-scienceshumaines.fr",
+    "contact": {
+      "email": "sylvain.connac@univ-montp3.fr",
+      "phone": "+33181699501"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-14",
+    "title": "Comprendre les mécanismes du stress et le gérer.",
+    "description": "Et si le stress était, la plupart du temps, le fruit d'un film mental trouvant sa source au coeur de l'imagination ! Celle-ci étant nourrie par nos suppositions, nos croyances, nos valeurs, nos peurs...Nous vous proposons un voyage au coeur du cerveau pour comprendre les mécanismes d'installation du stress. Comment le gérer ?\nRessentir ensemble quelques pistes pour aller vers un mieux être pour soi, l'autre et le monde qui nous entoure. ",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "15:15",
+    "location": "Nelson Mandela",
+    "speaker": "Isabelle et Daphnée Smedts et Visée",
+    "organization": "",
+    "image": "/images/events/conferences/conference-14.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-14.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "isasmedts@gmail.com",
+      "phone": "0473 88 74 08"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-365",
+    "title": "Inclusion et diversité cognitive",
+    "description": "Cette conférence présentera les grands principes favorisant l'inclusion des élèves ayant un diagnostic de troubles du neurodéveloppement, tels qu'ils ont été proposés dans le livre \"Pareils, pas pareils\", co-écrit avec Isabelle Filliozat (Nathan, 2025)",
+    "type": "Conférences",
+    "day": "Jeudi",
+    "time": "15:15",
+    "location": "Benjamin Franklin",
+    "speaker": "faby cazalis-judet de la combe",
+    "organization": "",
+    "image": "/images/events/conferences/conference-365.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-365.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "fabienne.cazalis@icloud.com",
+      "phone": "+33769008923"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-430",
+    "title": "Les enseignants ont du talent",
+    "description": "Durant une heure, une dizaine d’enseignants passionnés, de la maternelle au secondaire, partageront leurs pratiques innovantes et inspirantes. L’objectif ? Stimuler l’échange, donner des idées concrètes et encourager une dynamique collective pour faire évoluer l’éducation ensemble ! ",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "09:00",
+    "location": "Albert Einstein",
+    "speaker": "Porteurs de projets",
+    "organization": "",
+    "image": "/images/events/conferences/conference-430.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-430.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.outofthebooks/appel-a-projets",
+    "contact": {
+      "email": "sophie@festivaloutofthebooks.com",
+      "phone": "0476462425"
+    },
+    "status": "Publié"
   },
   {
     "id": "conference-4",
     "title": "Babaoo : Atelier découverte d'un outil digital pour développer ses fonctions exécutives",
     "description": "Aujourd'hui plus que jamais, les enfants ont besoin de comprendre le fonctionnement de leur cerveau pour l'utiliser efficacement ! Avec Babaoo, les enfants comprennent pourquoi les fonctions exécutives sont si importantes, mais ils apprennent aussi à développer de nouveaux réflexes cognitifs, et de nouvelles stratégies d'apprentissage, tout en s'amusant ! Venez découvrir cette application neuroéducative, à utiliser à la maison, à l'école, ou en cabinet de consultation !",
     "type": "Conférences",
-    "day": "Jeudi",
-    "time": "À définir",
-    "location": "À définir",
+    "day": "Vendredi",
+    "time": "10:15",
+    "location": "Benjamin Franklin",
     "speaker": "Alexandra VOLCKAERT",
     "organization": "",
     "image": "/images/events/conferences/conference-4.webp",
@@ -777,7 +698,224 @@
     "contact": {
       "email": "alexandra@babaoo.com",
       "phone": "0478 700 701"
-    }
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-397",
+    "title": "Les ambitions du tronc commun",
+    "description": "L'instauration d'un nouveau curriculum de formation commune, ambitieux, pluridisciplinaire et allongé vise à assurer à notre système éducatif à la fois plus d'équité et plus d'efficacité. On présentera les enjeux de cette vaste réforme, ce qui a déjà été engrangé et les étapes suivantes.",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "10:15",
+    "location": "Albert Einstein",
+    "speaker": "Marc Romainville",
+    "organization": "",
+    "image": "/images/events/conferences/conference-397.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-397.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "marc.romainville@unamur.be",
+      "phone": "0472956354"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-464",
+    "title": "Mieux comprendre les Compétences Psycho Sociales pour les développer dans le quotidien et les apprentissages ",
+    "description": "Une conférence pour plonger au cœur des CPS : pouvoir les identifier et les intégrer dans nos pratiques pédagogiques et éducatives. \nUn doux mélange entre éclairages théoriques (c'est quoi ? combien y en a-t-il ? Quel est le lien avec les apprentissages ?) et pistes pratiques (outils, jeux, activités, ressources). Une conférence dynamique et participative pour s'enrichir ensemble.\n",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "10:15",
+    "location": "Nelson Mandela",
+    "speaker": "Perrine Bigot",
+    "organization": "",
+    "image": "/images/events/conferences/conference-464.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-464.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "perrine.bigot@gmail.com",
+      "phone": "0468131060"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-34",
+    "title": "Lecture et cerveau : les clés d'un apprentissage efficace ",
+    "description": "L’apprentissage de la lecture est une étape cruciale du développement de l’enfant et les recherches en neurosciences permettent aujourd’hui de mieux comprendre les mécanismes en jeu dans le cerveau du lecteur débutant.\n\nÀ travers les travaux de Stanislas Dehaene, nous explorerons comment le cerveau réorganise son système visuel pour identifier et traiter les lettres et les mots. Nous verrons pourquoi une approche syllabique et explicite – fondée sur l’apprentissage du code et non sur la mémorisation globale des mots – est la stratégie la plus efficace pour enseigner la lecture.\n\nCette conférence s’adresse aux enseignants souhaitant s’appuyer sur les avancées scientifiques pour optimiser leur pédagogie et donner à chaque enfant les meilleures chances de réussite en lecture.",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "11:30",
+    "location": "Nelson Mandela",
+    "speaker": "Benjamin Stevens",
+    "organization": "",
+    "image": "/images/events/conferences/conference-34.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-34.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.apili.fr",
+    "contact": {
+      "email": "benjamin.stevens@apili.fr",
+      "phone": "+33.630.51.72.96"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-234",
+    "title": "L'éducation sécurisante : une nécessité aux apprentissages",
+    "description": "La qualité des relations du tout-petit avec les adultes joue un rôle capital dans le développement de sa sécurité affective et de son attachement, en plus de contribuer à son rendement scolaire, l’acceptation par ses pairs et sa confiance en lui. Et si la relation adulte-enfant était associée aux manifestations comportementales et émotionnelles de l’enfant ?  \n\nUne conférence appuyée sur le modèle conceptuel de l’éducation sécurisante spécifique à l'accompagnement du tout-petit entre 2 et 8 ans.",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "11:30",
+    "location": "Albert Einstein",
+    "speaker": "Mélanie Bilodeau",
+    "organization": "",
+    "image": "/images/events/conferences/conference-234.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-234.webp",
+    "tags": [
+      "Professionnels",
+      "Maternelle",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Maternelle",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "melaniebilodeau.com",
+    "contact": {
+      "email": "psychoed@melaniebilodeau.com",
+      "phone": "1-819-699-1020"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-368",
+    "title": "L’orthographe en douceur",
+    "description": "Il s’agit de faire de nos élèves des chercheurs pour qu'ils découvrent des grands principes plutôt que  des « micro-éléments » matières. \nVoici quelques-uns de ces principes : Apprentissage de la vigilance orthographique (apprendre à mettre dans la mémoire de travail et augmenter l’empan visuel) - Apprentissage du principe phonogrammique qui explique pourquoi on ne peut écrire avec ses oreilles.  - Apprentissage que la compréhension dirige l'écriture des accords (Fém-Masc / Sing-Plur / Sujet-V) ",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "11:30",
+    "location": "Nelson Mandela",
+    "speaker": "André Wauters",
+    "organization": "",
+    "image": "/images/events/conferences/conference-368.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-368.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.atzeo.com",
+    "contact": {
+      "email": "info@atzeo.com",
+      "phone": "0472371242"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-134",
+    "title": "Comment \"Sauver l'école ?\"",
+    "description": "Dix ans après sa sortie, le livre de John Rizzo \"Sauver l'école ?\" est réédité. Il propose un voyage narratif en classe où John tâtonne, puis réussit à enclencher un mouvement pour reprendre chaque élève là où il est, avec son retard ou son avance. En une décennie, la révolution numérique, associée à l’arrivée d’une école des compétences et de l’inclusion, a précipité le système scolaire dans une crise. Qu’ont fait John et Fanny des premières expérimentations racontées dans le livre ? Quels sont les outils qu’ils proposent dans School’Up pour accompagner les enseignants dans une nécessaire évolution, sans révolution, afin que leur métier reste le plus beau du monde? Venez le découvrir lors de leur conférence, et repartez chacun avec un exemplaire gratuit du livre.",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "12:45",
+    "location": "Nelson Mandela",
+    "speaker": "John Rizzo",
+    "organization": "",
+    "image": "/images/events/conferences/conference-134.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-134.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "schoolup.be",
+    "contact": {
+      "email": "john@schoolup.be",
+      "phone": "+32486345901"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-298",
+    "title": "Former les enseignants à la lecture littéraire de l’album ",
+    "description": "Les derniers résultats de l’enquête PIRLS (Progress in International Reading and Literacy Study) indiquent que le niveau de compréhension en lecture des élèves de 4e primaire de la FW-B se situe en bas du classement des pays de l’OCDE. Comment engager tous les élèves, même faibles lecteurs, dans la lecture d’albums exigeants comme ceux édités par l’Ecole des loisirs ? Nous proposerons des pistes didactiques pour amener les élèves à mobiliser les stratégies de compréhension en lecture, par le dévoilement progressif de l’intrigue d’un album et par le débat interprétatif autour de celui-ci. ",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "12:45",
+    "location": "Benjamin Franklin",
+    "speaker": "Graziella Deleuze",
+    "organization": "",
+    "image": "/images/events/conferences/conference-298.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-298.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "deleuzegraziella@gmail.com",
+      "phone": "0479 90 71 17"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-331",
+    "title": "Comment parler aux enfants des épreuves de la vie et les accompagner à construire un futur apaisé ?",
+    "description": "Les événements récents (pandémie, etc.) ont bouleversé la vie des enfants et leur développement relationnel, psychologique et émotionnel. Dans ce contexte, il est primordial de les accompagner dans ces épreuves de la vie, pour qu’ils apprennent à les surmonter. Mais les mots pour leur en parler peuvent être difficiles à trouver. Elodie Lamarque vous apporte ces mots et des outils pour accompagner chaque enfant de façon douce, ludique et respectueuse de son développement.\n",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "12:45",
+    "location": "Benjamin Franklin",
+    "speaker": "Elodie Lamarque",
+    "organization": "",
+    "image": "/images/events/conferences/conference-331.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-331.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.esf-scienceshumaines.fr",
+    "contact": {
+      "email": "elodie.lamarque@epimelia.fr",
+      "phone": "+33642264265"
+    },
+    "status": "Publié"
   },
   {
     "id": "conference-6",
@@ -785,8 +923,8 @@
     "description": "La mémoire de travail est un espace de travail mental permettant de maintenir en tête et de manipuler des informations. Elle est nécessaire notamment pour comprendre une explication, lire un texte, parler, écrire, répondre à une question, résoudre un problème et, de façon plus générale, pour faire preuve de compétence. Bien qu’essentielle à la plupart des tâches, la mémoire de travail est pourtant très limitée et, conséquemment, les risques de surcharge sont omniprésents. Malheureusement, lorsque la mémoire de travail est surchargée, le cerveau se désactive et cesse son processus de traitement de l’information, ce qui peut évidemment nuire à l’apprentissage et à la compétence. S’appuyant sur la recherche portant sur le cerveau, la mémoire de travail et la notion de charge cognitive, cette présentation propose quatre stratégies concrètes pour réduire le risque de surcharge pouvant nuire de façon dramatique au développement de compétences et à l’apprentissage.",
     "type": "Conférences",
     "day": "Vendredi",
-    "time": "À définir",
-    "location": "À définir",
+    "time": "14:00",
+    "location": "Nelson Mandela",
     "speaker": "Steve Masson",
     "organization": "",
     "image": "/images/events/conferences/conference-6.webp",
@@ -803,6 +941,142 @@
     "contact": {
       "email": "masson.steve@uqam.ca",
       "phone": "1 514 898-8548"
-    }
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-8",
+    "title": "Evaluer autrement, c'est possible !",
+    "description": "Il est possible de mettre en oeuvre une nouvelle forme d'évaluation : l'évaluation positive (parce qu'elle s'intéresse aux progrès des élèves) et éducative (parce qu'elle accompagne véritablement les apprentissages). Au quotidien, elle se traduit par la boucle évaluative qui assure aux élèves un accompagnement de leurs apprentissages, notamment par la rétroaction. L'évaluation éducative vise le dépassement de soi : ceux qui ont réussi vont plus loin, ceux qui rencontrent des difficultés peuvent s'appuyer sur l'aide des autres élèves. \n\n\n\n\n\n",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "14:00",
+    "location": "Albert Einstein",
+    "speaker": "Yves Khordoc",
+    "organization": "",
+    "image": "/images/events/conferences/conference-8.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-8.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.leprof.be / www.ppda.be",
+    "contact": {
+      "email": "yveskhordoc@gmail.com",
+      "phone": "+32475221606"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-366",
+    "title": "La concentration",
+    "description": "Comment améliorer sa concentration ?\nComment garder nos élèves \"focus\" ?\nEtre conscient des premiers signes de la distraction \nPrendre conscience qu’on est en train de se laisser distraire\nDistractions internes \nDistractions externes \nOutils pratiques",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "14:00",
+    "location": "Benjamin Franklin",
+    "speaker": "Philippe Dehaes",
+    "organization": "",
+    "image": "/images/events/conferences/conference-366.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-366.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "",
+    "contact": {
+      "email": "m4cbydehaes@gmail.com",
+      "phone": "+32475287587"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-371",
+    "title": "Accompagner les élèves à haut potentiel : reconnaître, comprendre et agir",
+    "description": "Accompagner un élève à haut potentiel intellectuel (HPI) peut être passionnant, mais déstabilisant. Il est essentiel de bien comprendre ce qu’est le HPI pour éviter incompréhensions et négligence des difficultés sous-jacentes. Identifier ses besoins réels, qu’ils soient cognitifs, sociaux ou affectifs, exige une combinaison de connaissances et d’observations concrètes. Cette intervention fournit des repères pour clarifier les enjeux et proposer des actions adaptées en classe.",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "15:00",
+    "location": "Nelson Mandela",
+    "speaker": "Catherine Cuche",
+    "organization": "",
+    "image": "/images/events/conferences/conference-371.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-371.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "catherine.cuche@gmail.com",
+      "phone": "0486514555"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-7",
+    "title": "#CoolTogether : Conflits entre ados - Quelques clés pour comprendre et agir",
+    "description": "S’outiller pour apprendre aux jeunes les bases de la gestion non violente des conflits.\nDurant cette conférence, les participant·es auront l’occasion : \n-\tD’expérimenter quelques facettes des approches de gestion positive des conflits entre et avec les adolescent·es ;\n-\tDe découvrir comment transmettre cette approche aux jeunes eux-mêmes pour faciliter la gestion des conflits au sein de leur institution (école ou autre).\n",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "15:15",
+    "location": "Benjamin Franklin",
+    "speaker": "Alexandre Castanheira",
+    "organization": "",
+    "image": "/images/events/conferences/conference-7.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-7.webp",
+    "tags": [
+      "Professionnels",
+      "Secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professionnels",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.universitedepaix.org",
+    "contact": {
+      "email": "Castanheira",
+      "phone": "0497758639"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "conference-265",
+    "title": "Accompagner les capacités à apprendre, le pouvoir de la médiation",
+    "description": "Tout au long de sa vie le cerveau a besoin d'apprendre.La \"re-médiation\" relève le défi de développer le potentiel cognitif d'un enfant ou de corriger certaines déficiences cognitives. Cette approche du Professeur Feuerstein définit trois clés: le cerveau peut toujours se modifier, la médiatisation de l'adulte est capitale et l'environnement modifiant plutôt que l'environnement modifié...",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "15:15",
+    "location": "Albert Einstein",
+    "speaker": "Danielle HENUSET",
+    "organization": "",
+    "image": "/images/events/conferences/conference-265.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-265.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "henuset.dan@gmail.com",
+      "phone": "0475 231889"
+    },
+    "status": "Publié"
   }
 ]

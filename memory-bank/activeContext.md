@@ -2,6 +2,61 @@
 
 <!-- Current work focus. Recent changes. Next steps. Active decisions and considerations. -->
 
+## Current Primary Focus: Ensuring Reliable Anchor Link Scrolling with `trailingSlash: true`
+
+### 1. Background & Problem Statement:
+- The Astro configuration `trailingSlash: true` (in `src/config.yaml`) is active to ensure URL consistency with Netlify's `pretty_urls = true` setting and to prevent GSC 5xx errors previously encountered (see `private-notes/fix_2025-04-26_google-search-console.md`).
+- This setup, while good for SEO and URL canonicalization, can interfere with the browser's native scroll-to-anchor behavior. When a URL with a hash (e.g., `/festival#programme`) is accessed, Netlify ensures the page is served from its trailing-slashed version (e.g., `/festival/#programme`). This implicit redirect or direct serving of the slashed URL can cause the browser to "lose" the scroll instruction for the anchor.
+- Additionally, initial links in `src/content/navigation/index.json` did not include a trailing slash before the hash (e.g., `/festival#programme`), leading to 404 errors in the local development environment because the Astro dev server (with `trailingSlash: true`) expects paths like `/festival/`.
+
+### 2. Goals:
+- Restore smooth and reliable automatic scrolling to anchor targets (e.g., `#section-id`) across the site.
+- Maintain the `trailingSlash: true` configuration for SEO and platform compatibility.
+- Ensure navigation links work correctly in both local development and production (Netlify) environments without 404 errors.
+- The solution must account for the site's sticky header to prevent target sections from being obscured post-scroll.
+
+### 3. Solution Implemented:
+A multi-part solution has been implemented:
+
+   **a) Client-Side JavaScript for Anchor Scrolling (`src/components/common/BasicScripts.astro`):**
+    - A `handleAnchorScroll()` JavaScript function was added.
+    - This function is called on page load (`onLoad` and via `astro:after-swap`).
+    - It reads `window.location.hash`.
+    - If a hash is present, it attempts to find the corresponding element by ID.
+    - **Key Logic**: It cleans the hash by removing any trailing slash (e.g., `#myanchor/` becomes `myanchor`) before attempting `document.getElementById()`. This handles cases where the `trailingSlash: true` logic might add a slash to the hash fragment.
+    - It calculates the correct scroll position, accounting for the `offsetHeight` of the sticky header (`#header[data-aw-sticky-header]`).
+    - It uses `window.scrollTo()` with `behavior: 'smooth'` to perform the scroll.
+
+   **b) Update Navigation Links (`src/content/navigation/index.json`):**
+    - All internal navigation links, especially those pointing to anchors, were updated to include a trailing slash in the path segment before the hash.
+    - Example: `"/festival#programme"` was changed to `"/festival/#programme"`.
+    - This ensures that links directly target the canonical URL structure expected by Astro (with `trailingSlash: true`) and served by Netlify, resolving 404 errors in the local development environment.
+
+   **c) Astro Configuration (`src/config.yaml`):**
+    - `trailingSlash: true` remains active.
+
+### 4. Recent Changes & Current Status:
+- **`src/components/common/BasicScripts.astro`**: Modified to include `handleAnchorScroll()` and call it appropriately. Console logs used for debugging will be commented out shortly before creating the staging branch.
+- **`src/content/navigation/index.json`**: All relevant `href` values updated to include trailing slashes before anchors.
+- **Local Testing**: Confirmed that:
+    - Clicking menu links navigates to the correct slashed URLs (e.g., `/page/#anchor`).
+    - No 404 errors occur.
+    - Anchor scrolling works as expected.
+- **Next Step**: Create a `staging` branch, deploy to a Netlify test URL, and conduct thorough testing in a production-like environment.
+
+### 5. Next Steps (Post-Staging Branch Creation & Deployment):
+1.  **Thorough Testing on Netlify Staging URL**:
+    - Verify all navigation links (pages and anchors) work correctly.
+    - Confirm smooth anchor scrolling on various pages and browsers.
+    - Check for any console errors.
+    - Monitor GSC (long-term) after merging to production to ensure no new crawl issues.
+2.  **(If Staging Tests Pass)** Merge changes to the main production branch.
+3.  **(Future Task - Deferred)** Revisit the renaming of `id="features"` on `/festival/` to something more descriptive like `#apropos-festival` or `#activites-cles` and update the corresponding menu link if necessary.
+
+### 6. Active Decisions & Considerations:
+- The current solution balances SEO requirements (consistent trailing slashes), developer experience (working links in local dev), and user experience (smooth anchor scrolling).
+- The `handleAnchorScroll` script's robustness in cleaning potential trailing slashes from hash fragments is key to its success with the `trailingSlash:true` Astro setting.
+
 ## Current Primary Task: Resolving 404 Errors for Non-Trailing Slash URLs
 
 ### 1. Problem Statement:
@@ -166,7 +221,4 @@ document.addEventListener('astro:after-swap', () => {
 - Test Direct Anchor URLs: Manually enter URLs like `yourdomain.com/festival/#programme` into the address bar. Verify correct scrolling and header offset.
 - Test In-Page Menu Links: Click navigation items that link to sections on the current page.
 - Test Cross-Page Links with Anchors: If a link from Page A goes to `PageB/#section`, test this.
-- Verify Header Offset: Ensure the scrolled-to section is not hidden under the sticky header. Adjust the header selector or height calculation in `handleAnchorScroll` if needed.
-- Regression Test Other JS Features: Confirm that the theme toggle, mobile menu, scroll animations, and social sharing still function correctly.
-
-This brief should provide the developer with a clear understanding of the issue and the planned solution. The most critical part is the careful integration into the existing `BasicScripts.astro` file. 
+- Verify Header Offset: Ensure the scrolled-to section is not hidden under the sticky header. Adjust the header selector or height calculation in `handleAnchorScroll`

@@ -40,6 +40,50 @@ import { UI } from 'astrowind:config';
     }
   }
 
+  // NEW ANCHOR SCROLLING FUNCTION
+  function handleAnchorScroll() {
+    // console.log('handleAnchorScroll called');
+    const hash = window.location.hash;
+    // console.log('Current hash:', hash);
+
+    if (hash) {
+      requestAnimationFrame(() => {
+        try {
+          let elementId = hash.substring(1);
+          // console.log('Original elementId from hash:', elementId);
+          if (elementId.endsWith('/')) {
+            elementId = elementId.slice(0, -1);
+            // console.log('Cleaned elementId (trailing slash removed):', elementId);
+          }
+          // console.log('Looking for element with ID:', elementId);
+          const element = document.getElementById(elementId);
+          // console.log('Element found:', element);
+
+          if (element) {
+            const header = document.querySelector('#header[data-aw-sticky-header]');
+            let headerHeight = 0;
+            if (header) {
+              headerHeight = header.offsetHeight;
+            }
+            // console.log('Header height:', headerHeight);
+
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+            // console.log('Calculated offsetPosition:', offsetPosition);
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+            // console.log('Scrolled to:', offsetPosition);
+          }
+        } catch (e) {
+          // console.warn(`Could not scroll to element with ID: ${hash.substring(1)}`, e);
+        }
+      });
+    }
+  }
+
   const onLoad = function () {
     let lastKnownScrollPosition = window.scrollY;
     let ticking = true;
@@ -138,6 +182,9 @@ import { UI } from 'astrowind:config';
         ticking = true;
       }
     });
+
+    // CALL THE NEW ANCHOR SCROLLING LOGIC
+    handleAnchorScroll();
   };
   const onPageShow = function () {
     document.documentElement.classList.add('motion-safe:scroll-smooth');
@@ -151,13 +198,21 @@ import { UI } from 'astrowind:config';
     document.querySelector('#header nav')?.classList.add('hidden');
   };
 
-  window.onload = onLoad;
+  window.onload = () => {
+    onLoad(); // Includes handleAnchorScroll()
+    if (window.Observer && typeof window.Observer.start === 'function') { // Check if Observer is defined
+      Observer.start();
+    }
+  };
   window.onpageshow = onPageShow;
 
   document.addEventListener('astro:after-swap', () => {
     initTheme();
-    onLoad();
+    onLoad(); // Includes handleAnchorScroll()
     onPageShow();
+    if (window.Observer && typeof window.Observer.start === 'function') { // Check if Observer is defined
+      Observer.start();
+    }
   });
 </script>
 

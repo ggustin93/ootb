@@ -3,33 +3,50 @@
 <!-- What works. What's left to build. Current status. Known issues. -->
 
 ## Current Status
-- **Trailing Slash Configuration**: Astro is configured for `trailingSlash: true` (via `src/config.yaml` and Astrowind integration). This was implemented on April 26, 2025, to resolve Google Search Console 5xx errors.
-- **Netlify `pretty_urls`**: Active in `netlify.toml`.
-- **Anchor Link Scrolling**: A JavaScript fix has been implemented in `src/components/common/BasicScripts.astro` to handle scrolling to hash IDs, considering the sticky header. Full testing is pending resolution of the 404/routing issue.
+- **URL Handling & SEO**:
+    - Astro is configured for `trailingSlash: true` (via `src/config.yaml`).
+    - Netlify's `pretty_urls = true` (in `netlify.toml`) ensures canonical URLs are served with trailing slashes.
+    - This combined setup resolves previous Google Search Console 5xx errors related to URL inconsistencies.
+- **Anchor Link Navigation**:
+    - A client-side JavaScript solution (`handleAnchorScroll()` in `src/components/common/BasicScripts.astro`) has been implemented to ensure smooth scrolling to anchors, accounting for the sticky header and potential modifications to the URL hash by the `trailingSlash:true` behavior.
+    - Navigation links in `src/content/navigation/index.json` have been updated to use trailing slashes in paths before the hash (e.g., `/page/#anchor`), resolving 404 errors in local development and ensuring consistency.
+- **Local Development**: Navigation and anchor scrolling are now working correctly.
+- **Memory Bank**: Core files have been reviewed and updated to reflect the current project state and recent fixes.
 
 ## Known Issues
-- **404 Errors on Non-Trailing Slash URLs**: Accessing pages without a trailing slash (e.g., `/festival`) results in an Astro 404 error page. This is because Astro expects slashed URLs due to `trailingSlash: true`.
-- **(Potentially) Asset Loading**: A user observation about assets "not loading well" was made. This needs to be monitored after the 404/routing fix. The Astro 404 page itself seems to load its assets correctly.
+- **(Monitor) Asset Loading**: A previous user observation about assets "not loading well" needs to be kept in mind during staging and production testing. This is currently not confirmed as an active issue related to recent changes.
+- **(Monitor) Linter Errors**: `src/pages/festival.astro` has some TypeScript linter errors related to image props that should be addressed in a separate effort.
 
 ## What's Left to Build / Next Steps
-- **Implement Netlify Redirect for Trailing Slashes**:
-    - **File to Modify**: `netlify.toml`.
-    - **Action**: Add a 301 redirect rule to enforce trailing slashes for directory-like paths, ensuring consistency between direct access and Astro's expectations.
-    - **Purpose**: Resolve 404 errors for non-slashed URLs and reinforce the GSC 5xx fix from April 26th by providing clear canonical URLs.
-- **Testing (Post-Redirect Implementation & Deployment)**:
-    - Test 301 redirects from non-slashed to slashed URLs.
-    - Test direct access to slashed URLs (should be 200).
-    - Re-test anchor link scrolling functionality comprehensively.
-    - Verify no impact on direct file asset loading.
-    - Monitor GSC for crawl status.
-    - Re-evaluate any perceived asset loading issues.
+1.  **Clean Up `BasicScripts.astro`**: Comment out or remove debugging `console.log` statements from the `handleAnchorScroll` function.
+2.  **Create Staging Branch**:
+    - Create a new Git branch (e.g., `staging` or `feat/anchor-scroll-fix`).
+    - Commit all changes:
+        - `src/config.yaml` (ensure `trailingSlash: true` is active).
+        - `src/components/common/BasicScripts.astro` (with `handleAnchorScroll` fix and cleaned logs).
+        - `src/content/navigation/index.json` (updated `href` values).
+        - `memory-bank/activeContext.md` (updated).
+        - `memory-bank/progress.md` (this updated version).
+        - (Potentially `memory-bank/systemPatterns.md` if changes were agreed upon).
+    - Push the branch to the remote repository.
+3.  **Deploy Staging Branch to Netlify**: Configure Netlify to deploy this branch to a test URL.
+4.  **Thorough Testing on Staging URL**:
+    - Verify all navigation links (pages and anchors).
+    - Confirm smooth and accurate anchor scrolling across different pages and browsers.
+    - Check for any console errors.
+    - Perform general regression testing of site functionality.
+5.  **(If Staging Tests Pass)** Merge the staging branch into the main production branch.
+6.  **Monitor Production**: After live deployment, monitor site behavior and Google Search Console.
+7.  **(Future Task - Deferred)** Revisit the renaming of `id="features"` on `/festival/`.
 
 ## What Works
-- Core website functionality (when accessed with trailing slashes).
-- Astro's `trailingSlash: true` setting (via `config.yaml`) is active.
-- Previous Google Search Console 5xx errors (related to `trailingSlash: false` vs. Netlify `pretty_urls`) were resolved by setting `trailingSlash: true`.
-- Initial Memory Bank structure and content for project understanding have been populated and updated.
-- Anchor scroll fix *code* has been implemented (awaiting full testing).
+- **Consistent URL Structure**: Achieved through `trailingSlash: true` in Astro and Netlify's `pretty_urls`.
+- **Resolution of GSC 5xx Errors**: The consistent URL structure fixed previous GSC 5xx errors.
+- **Anchor Link Scrolling**: Now functional in local development due to:
+    - `handleAnchorScroll()` in `BasicScripts.astro` (handles sticky header and cleans hash).
+    - Updated `href` values in `navigation.json` (prevents 404s in local dev).
+- **Local Development Experience**: Clicking links in the menu now correctly navigates to pages and scrolls to anchors without 404 errors.
+- **Memory Bank**: Updated to reflect recent fixes and current project status.
 
 ## Development Guidelines
 - **Trailing Slash Configuration**: Successfully changed to `true` (aligning with Netlify's `pretty_urls = true`), resolving Google Search Console 5xx errors.

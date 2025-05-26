@@ -3,127 +3,127 @@
     "links": [
       {
         "text": "Festival",
-        "href": "/festival",
+        "href": "/festival/",
         "links": [
           {
             "text": "Vue d'ensemble",
-            "href": "/festival"
+            "href": "/festival/"
           },
           {
             "text": "Billetterie",
-            "href": "/festival#tickets"
+            "href": "/festival/#tickets"
           },
           {
             "text": "A propos",
-            "href": "/festival#features"
+            "href": "/festival/#features"
           },
           {
             "text": "Programme",
-            "href": "/festival#programme"
+            "href": "/festival/#programme"
           },
           {
             "text": "Thématiques",
-            "href": "/festival#themes"
+            "href": "/festival/#themes"
           },
           {
             "text": "Informations pratiques",
-            "href": "/festival#accessibility"
+            "href": "/festival/#accessibility"
           },
           {
             "text": "Partenaires",
-            "href": "/festival#partenaires"
+            "href": "/festival/#partenaires"
           }
         ]
       },
       {
         "text": "Nos contenus",
-        "href": "/blog",
+        "href": "/blog/",
         "links": [
           {
             "text": "Tous les contenus",
-            "href": "/blog"
+            "href": "/blog/"
           },
           {
             "text": "Podcasts",
-            "href": "/category/podcast"
+            "href": "/category/podcast/"
           },
           {
             "text": "Emissions TV",
-            "href": "/category/tv"
+            "href": "/category/tv/"
           },
           {
             "text": "Live Facebook",
-            "href": "/category/live"
+            "href": "/category/live/"
           },
           {
             "text": "Fiches pédagogiques",
-            "href": "/category/fiche"
+            "href": "/category/fiche/"
           },
           {
             "text": "Contenu premium",
-            "href": "/category/premium#premium-section-top"
+            "href": "/category/premium/#premium-section-top"
           }
         ]
       },
       {
         "text": "Appel à projet",
-        "href": "/appel-a-projets",
+        "href": "/appel-a-projets/",
         "links": [
           {
             "text": "Vue d'ensemble",
-            "href": "/appel-a-projets"
+            "href": "/appel-a-projets/"
           },
           {
             "text": "Critères",
-            "href": "/appel-a-projets#criteres"
+            "href": "/appel-a-projets/#criteres"
           },
           {
             "text": "Processus",
-            "href": "/appel-a-projets#processus"
+            "href": "/appel-a-projets/#processus"
           },
           {
             "text": "Soumettre un projet",
-            "href": "/appel-a-projets#formulaire"
+            "href": "/appel-a-projets/#formulaire"
           }
         ]
       },
       {
         "text": "À propos",
-        "href": "/a-propos",
+        "href": "/a-propos/",
         "links": [
           {
             "text": "Vue d'ensemble",
-            "href": "/a-propos"
+            "href": "/a-propos/"
           },
           {
             "text": "Qui sommes-nous",
-            "href": "/a-propos#qui-sommes-nous"
+            "href": "/a-propos/#qui-sommes-nous"
           },
           {
             "text": "Notre vision",
-            "href": "/a-propos#vision"
+            "href": "/a-propos/#vision"
           },
           {
             "text": "Nos missions",
-            "href": "/a-propos#missions"
+            "href": "/a-propos/#missions"
           },
           {
             "text": "Nos valeurs",
-            "href": "/a-propos#valeurs"
+            "href": "/a-propos/#valeurs"
           },
           {
             "text": "Notre équipe",
-            "href": "/a-propos#equipe"
+            "href": "/a-propos/#equipe"
           },
           {
             "text": "Nos partenaires",
-            "href": "/a-propos#partenaires"
+            "href": "/a-propos/#partenaires"
           }
         ]
       },
       {
         "text": "Contact",
-        "href": "/contact"
+        "href": "/contact/"
       }
     ],
     "mobileLinks": [
@@ -135,27 +135,27 @@
           },
           {
             "text": "Festival",
-            "href": "/festival"
+            "href": "/festival/"
           },
           {
             "text": "Podcasts",
-            "href": "/category/podcast"
+            "href": "/category/podcast/"
           },
           {
             "text": "Pédagoscope",
-            "href": "/category/tv"
+            "href": "/category/tv/"
           },
           {
             "text": "Appel à projet",
-            "href": "/appel-a-projets"
+            "href": "/appel-a-projets/"
           },
           {
             "text": "À propos",
-            "href": "/a-propos"
+            "href": "/a-propos/"
           },
           {
             "text": "Contact",
-            "href": "/contact"
+            "href": "/contact/"
           }
         ]
       }
@@ -176,19 +176,19 @@
         "links": [
           {
             "text": "Vue d'ensemble",
-            "href": "/festival"
+            "href": "/festival/"
           },
           {
             "text": "Programme 2025",
-            "href": "/festival#programme"
+            "href": "/festival/#programme"
           },
           {
             "text": "Billetterie",
-            "href": "/festival#tickets"
+            "href": "/festival/#tickets"
           },
           {
             "text": "Infos pratiques",
-            "href": "/festival#accessibility"
+            "href": "/festival/#accessibility"
           }
         ]
       },
@@ -197,19 +197,19 @@
         "links": [
           {
             "text": "Tous les contenus",
-            "href": "/blog"
+            "href": "/blog/"
           },
           {
             "text": "Podcasts",
-            "href": "/category/podcast"
+            "href": "/category/podcast/"
           },
           {
             "text": "Pédagoscope",
-            "href": "/category/tv"
+            "href": "/category/tv/"
           },
           {
             "text": "Fiches pédagogiques",
-            "href": "/category/fiche"
+            "href": "/category/fiche/"
           }
         ]
       },
@@ -218,19 +218,19 @@
         "links": [
           {
             "text": "Qui sommes-nous",
-            "href": "/a-propos"
+            "href": "/a-propos/"
           },
           {
             "text": "Notre équipe",
-            "href": "/a-propos#equipe"
+            "href": "/a-propos/#equipe"
           },
           {
             "text": "Nos partenaires",
-            "href": "/a-propos#partenaires"
+            "href": "/a-propos/#partenaires"
           },
           {
             "text": "Contact",
-            "href": "/contact"
+            "href": "/contact/"
           }
         ]
       }
@@ -244,27 +244,27 @@
           },
           {
             "text": "Festival",
-            "href": "/festival"
+            "href": "/festival/"
           },
           {
             "text": "Podcasts",
-            "href": "/category/podcast"
+            "href": "/category/podcast/"
           },
           {
             "text": "Pédagoscope",
-            "href": "/category/tv"
+            "href": "/category/tv/"
           },
           {
             "text": "Appel à projet",
-            "href": "/appel-a-projets"
+            "href": "/appel-a-projets/"
           },
           {
             "text": "À propos",
-            "href": "/a-propos"
+            "href": "/a-propos/"
           },
           {
             "text": "Contact",
-            "href": "/contact"
+            "href": "/contact/"
           }
         ]
       }
@@ -272,11 +272,11 @@
     "legalLinks": [
       {
         "text": "Mentions légales",
-        "href": "/terms"
+        "href": "/terms/"
       },
       {
         "text": "Politique de confidentialité",
-        "href": "/privacy"
+        "href": "/privacy/"
       }
     ],
     "socialLinks": [

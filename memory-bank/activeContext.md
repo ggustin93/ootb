@@ -2,65 +2,69 @@
 
 <!-- Current work focus. Recent changes. Next steps. Active decisions and considerations. -->
 
-## Current Primary Focus: Finalizing and Merging Anchor Link Scrolling Fix (`trailingSlash: true`)
+## Current Primary Focus: Finalizing Staging Tests & Preparing for Review
 
 ### 1. Background & Problem Statement:
 - The Astro configuration `trailingSlash: true` (in `src/config.yaml`) is active for URL consistency with Netlify's `pretty_urls = true` and to prevent previous GSC 5xx errors.
-- This setup interfered with native anchor scrolling, especially for subsequent anchor navigations on the same page.
-- Initial navigation links in `src/content/navigation/index.json` also lacked trailing slashes before hashes, causing local 404s.
+- This setup interfered with native anchor scrolling and hash-based modal triggering.
+- Initial navigation links in `src/content/navigation/index.json` also lacked trailing slashes before hashes.
+- The Ticketing modal (`src/components/ui/TicketingButton.tsx`) was not consistently triggered by URL hashes like `/festival/#tickets/`.
 
 ### 2. Goals:
 - Restore smooth, reliable automatic scrolling to anchor targets.
+- Ensure modals can be triggered reliably via specific URL hash patterns.
 - Maintain `trailingSlash: true`.
 - Ensure correct navigation link behavior in local dev and production.
-- Account for the sticky header.
+- Account for the sticky header in scrolling.
 
 ### 3. Solution Implemented:
 A multi-part solution has been implemented and verified on the `staging` branch:
 
    **a) Client-Side JavaScript for Anchor Scrolling (`src/components/common/BasicScripts.astro`):**
-    - A `handleAnchorScroll()` JavaScript function was added.
-    - This function is called on page load (`onLoad` which is triggered by `window.onload` and `astro:after-swap`) **and also via a `window.addEventListener('hashchange', handleAnchorScroll)` listener** to handle same-page anchor navigations.
-    - It reads `window.location.hash`.
-    - **Key Logic**: It cleans the hash by removing any trailing slash (e.g., `#myanchor/` becomes `myanchor`) before `document.getElementById()`.
-    - It calculates the correct scroll position, accounting for the sticky header's `offsetHeight`.
-    - It uses `window.scrollTo()` with `behavior: 'smooth'`.
-    - Debugging `console.log` statements have been commented out after successful testing.
+    - `handleAnchorScroll()` function added, called on page load/swap and `hashchange`.
+    - Cleans hash (removes trailing slash) before `getElementById()`.
+    - Accounts for sticky header `offsetHeight`.
+    - Uses `window.scrollTo()` with `behavior: 'smooth'`.
 
    **b) Update Navigation Links (`src/content/navigation/index.json`):**
-    - All internal navigation links pointing to anchors were updated to include a trailing slash in the path segment before the hash (e.g., `"/festival/#programme"`).
+    - Internal navigation links updated to include a trailing slash before the hash (e.g., `"/festival/#programme"`).
 
    **c) Astro Configuration (`src/config.yaml`):**
     - `trailingSlash: true` remains active.
 
+   **d) Ticketing Modal Hash Handling (`src/components/ui/TicketingButton.tsx`):**
+    - `useEffect` hook updated to listen for `hashchange`.
+    - `checkHashAndOpenModal` function now correctly identifies `/#tickets/` (and similar variations like `#tickets`, `/#tickets`, `#tickets/`) to trigger the modal.
+    - `handleClick` function now sets `window.location.hash = '/#tickets/'` for consistency when the button is clicked.
+    - Unused prop `openOnLoad` was prefixed with `_` to satisfy linter.
+    - Debugging `console.log` statements were commented out after successful testing.
+
 ### 4. Recent Changes & Current Status:
-- **`src/components/common/BasicScripts.astro`**: Modified as described above. All anchor scrolling scenarios, including same-page subsequent anchor clicks, are confirmed working on the `staging` Netlify deployment. Console logs have been commented out.
+- **`src/components/common/BasicScripts.astro`**: Anchor scrolling scenarios confirmed working on `staging`. Console logs commented out.
 - **`src/content/navigation/index.json`**: `href` values updated.
-- **`staging` Branch Commit (d1a4263)**: This commit, intended to remove console logs, also included other pending changes:
-    - Deletion of `.cursorrules`.
-    - Modifications to `.gitignore`, `package-lock.json`, `package.json`.
-    - Updates to festival content files (`src/content/festival/*` and `src/content/festival/raw-data/*`).
-- **Local & Staging Testing**: Confirmed that:
-    - Clicking menu links navigates correctly.
-    - No 404 errors related to these links.
-    - Anchor scrolling works reliably in all tested scenarios on `staging`.
-- **File `src/services/api/nocodb/`**: Remains untracked.
+- **`src/components/ui/TicketingButton.tsx`**: Modal triggering via `/festival/#tickets/` (and similar hashes) fixed and confirmed working on `staging`. Logs commented out and linter warning for `_openOnLoad` addressed.
+- **`staging` Branch Commits**: 
+    - `d1a4263`: Anchor fix log cleanup (also included other pending changes like `.cursorrules` deletion, `package.json` updates, and festival content files).
+    - `5dab121`: Ticketing modal hash fix and `TicketingButton.tsx` cleanup.
+- **Local & Staging Testing**: Confirmed that anchor scrolling and ticketing modal triggering via hash work reliably in all tested scenarios on `staging`.
 
 ### 5. Next Steps:
-1.  **Review and Confirm Changes in Commit `d1a4263`**: Ensure all files included in this commit on the `staging` branch (beyond the `BasicScripts.astro` log cleanup) are intended and ready for merging to `main`.
-2.  **Merge `staging` Branch to `main`**: Once confirmed, merge the `staging` branch into the `main` production branch.
-3.  **Deploy `main` to Production**: Netlify will automatically deploy `main`.
-4.  **Post-Production Testing**: Perform a final round of testing on the live production site.
-5.  **Monitor Production**: Monitor site behavior and Google Search Console for any new issues.
-6.  **Handle Untracked/Remaining Files**:
-    - Decide the fate of the untracked `src/services/api/nocodb/` directory (e.g., add to `.gitignore` if not yet ready, or commit to a feature branch like `feature/nocodb-refactoring`).
-    - Address any other outstanding local changes not part of the `staging` branch.
-7.  **(Future Task - Deferred)** Revisit the renaming of `id="features"` on `/festival/`.
-8.  **Update `memory-bank/progress.md`** to reflect the completion of this task.
+1.  **External Review on Staging**: Share the `staging` URL with a friend/colleague for independent testing and feedback.
+2.  **Address Feedback (if any)**: Implement any necessary changes based on the feedback.
+3.  **Merge `staging` Branch to `main`**: Once feedback is positive and any issues are resolved, merge the `staging` branch into the `main` production branch.
+4.  **Deploy `main` to Production**: Netlify will automatically deploy `main`.
+5.  **Post-Production Testing**: Perform a final round of testing on the live production site.
+6.  **Monitor Production**: Monitor site behavior and Google Search Console for any new issues.
+7.  **Handle Untracked/Remaining Files**:
+    - Decide the fate of the untracked `src/services/api/nocodb/` directory.
+    - Address any other outstanding local changes.
+8.  **(Future Task - Loader for /festival/#programme)**: Begin work on adding a loading indicator for the programme section after `main` is updated and stable.
+9.  **(Future Task - Deferred)** Revisit the renaming of `id="features"` on `/festival/`.
+10. **Update `memory-bank/progress.md`** to reflect the completion of these tasks and the current next steps.
 
 ### 6. Active Decisions & Considerations:
-- The combined client-side script enhancements and navigation link updates have successfully resolved anchor scrolling issues while maintaining SEO best practices for URL structure.
-- The `staging` branch now contains a mix of the anchor fix and other site updates; these will be merged to `main` together unless a different strategy is decided before merging.
+- The implemented client-side script enhancements and navigation link updates have successfully resolved anchor scrolling and hash-based modal issues while maintaining SEO best practices for URL structure.
+- The `staging` branch is considered feature-complete for these fixes and ready for external review before merging to `main`.
 
 ## Developer Brief: Fixing Anchor Link Scrolling with Trailing Slashes in Astro
 <!-- Retained for technical reference on the implemented solution -->
@@ -95,3 +99,4 @@ Restore reliable automatic scrolling to anchor targets, accounting for the stick
 - **Subsequent in-page menu clicks to different anchors now also work correctly due to the `hashchange` listener.**
 - Cross-page links with anchors work.
 - Header offset is correctly handled.
+- **Ticketing modal (`/festival/#tickets/`) opens correctly via direct URL, menu click, and button click.**

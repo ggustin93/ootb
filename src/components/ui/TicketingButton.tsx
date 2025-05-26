@@ -7,47 +7,54 @@ interface TicketingButtonProps {
   label: string;
   variant: 'primary' | 'secondary';
   className?: string;
-  openOnLoad?: boolean;
+  _openOnLoad?: boolean;
 }
 
-export default function TicketingButton({ icon, label, variant, className = '', openOnLoad = false }: TicketingButtonProps) {
+export default function TicketingButton({ icon, label, variant, className = '', _openOnLoad = false }: TicketingButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Vérifier le hash initial
-    if (window.location.hash === '#tickets') {
-      setIsModalOpen(true);
-    }
-
-    // Créer un MutationObserver pour surveiller les changements de hash
-    const observer = new MutationObserver((mutations) => {
-      if (window.location.hash === '#tickets') {
+    const checkHashAndOpenModal = () => {
+      const currentHash = window.location.hash;
+      // console.log('TicketingButton: currentHash is', currentHash); // Debug log
+      // Check for #tickets, /#tickets, #tickets/, /#tickets/
+      if (currentHash === '#tickets' || currentHash === '/#tickets' || currentHash === '#tickets/' || currentHash === '/#tickets/') {
+        // console.log('TicketingButton: Hash match found, opening modal.'); // Debug log
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => setIsModalOpen(true), 300);
+        setTimeout(() => {
+          setIsModalOpen(true);
+        }, 100);
+      } else {
+        // console.log('TicketingButton: No hash match for modal.'); // Debug log
       }
-    });
+    };
 
-    // Observer les changements dans le document
-    observer.observe(document.documentElement, {
-      attributes: true,
-      childList: true,
-      subtree: true
-    });
+    checkHashAndOpenModal();
 
-    return () => observer.disconnect();
+    window.addEventListener('hashchange', checkHashAndOpenModal);
+
+    return () => {
+      window.removeEventListener('hashchange', checkHashAndOpenModal);
+    };
   }, []);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    window.location.hash = 'tickets';
-    setIsModalOpen(true);
+    // Consistently set the hash to /#tickets/ to match the primary case we want to trigger
+    window.location.hash = '/#tickets/'; 
+    // No need to call setIsModalOpen(true) here, as the hashchange listener will pick it up
+    // and call checkHashAndOpenModal, which in turn calls setIsModalOpen(true).
   };
 
   const handleClose = () => {
     setIsModalOpen(false);
-    // Retirer le hash #tickets de l'URL sans recharger la page
-    history.pushState("", document.title, window.location.pathname + window.location.search);
+    const currentHash = window.location.hash;
+    // console.log('TicketingButton: Closing modal, currentHash is', currentHash); // Debug log
+    if (currentHash === '#tickets' || currentHash === '/#tickets' || currentHash === '#tickets/' || currentHash === '/#tickets/') {
+      // console.log('TicketingButton: Clearing hash after modal close.'); // Debug log
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
   };
 
   const variants = {

@@ -441,9 +441,36 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       if (titleElement) titleElement.textContent = title;
     }
 
-    updateEventCounts() {
-      // Placeholder for event count updates
-      console.log('updateEventCounts called');
+    updateEventCounts(allEventsData) {
+      const dayFilteredEvents = this.isAllDaysActive
+        ? allEventsData
+        : allEventsData.filter(eventData => {
+            const event = eventData.event;
+            // For Stands, if any day is selected, they are included.
+            if (event.type === 'Stands' && this.activeDays.length > 0) return true;
+            // For other types, check if the event's day is in the active days list.
+            return this.activeDays.some(activeDay => this.normalizeDay(activeDay) === this.normalizeDay(event.day));
+          });
+
+      const counts = {
+        all: dayFilteredEvents.length,
+        Conférences: dayFilteredEvents.filter(eventData => eventData.event.type === 'Conférences').length,
+        Ateliers: dayFilteredEvents.filter(eventData => eventData.event.type === 'Ateliers').length,
+        Stands: dayFilteredEvents.filter(eventData => eventData.event.type === 'Stands').length
+      };
+
+      document.querySelectorAll('.type-filter-button, #all-types-button').forEach(button => {
+        const type = button.dataset.type;
+        const countBadge = button.querySelector('span:last-child');
+        
+        if (countBadge) {
+          if (button.id === 'all-types-button') {
+            countBadge.textContent = counts.all;
+          } else if (type && counts[type] !== undefined) {
+            countBadge.textContent = counts[type];
+          }
+        }
+      });
     }
   }
 
@@ -1092,7 +1119,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
     // Update UI
     eventPagination.updatePaginationUI();
-    eventFilters.updateEventCounts();
+    eventFilters.updateEventCounts(allEventsData);
     eventFilters.updateActiveFiltersTitle();
 
     // Show/hide containers
@@ -1151,6 +1178,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
     // Defer the main processing to allow browser to scroll first
     setTimeout(() => {
+      eventFilters.updateEventCounts(allEventsData);
       updateDisplay();
       
       // Hide loader and show content

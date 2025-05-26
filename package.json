@@ -58,7 +58,7 @@
         "@tabler/icons-react": "^3.26.0",
         "@tanstack/react-query": "^5.62.11",
         "@tinacms/auth": "^1.0.11",
-        "@tinacms/cli": "^1.9.0",
+        "@tinacms/cli": "^1.9.3",
         "@types/node-fetch": "^2.6.12",
         "@types/react": "^19.0.2",
         "@types/react-dom": "^19.0.2",
@@ -69,10 +69,11 @@
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "dotenv": "^16.4.7",
+        "jsonpath-plus": "^10.3",
         "limax": "4.1.0",
         "lodash.merge": "^4.6.2",
         "lucide-react": "^0.469.0",
-        "next-tinacms-cloudinary": "^13.0.0",
+        "next-tinacms-cloudinary": "^13.0.3",
         "nocodb-sdk": "^0.262.1",
         "node-fetch": "^2.7.0",
         "sharp": "^0.33.5",
@@ -81,7 +82,7 @@
         "swiper": "^11.2.2",
         "tailwindcss-animate": "^1.0.7",
         "tina-graphql": "^0.2.0",
-        "tinacms": "^2.7.0",
+        "tinacms": "^2.7.3",
         "unpic": "^3.22.0"
     },
     "devDependencies": {
@@ -120,7 +121,13 @@
         "unist-util-visit": "^5.0.0"
     },
     "resolutions": {
-        "astro": "^5.1.8"
+        "astro": "^5.1.8",
+        "jsonpath-plus": "^10.3.0",
+        "lodash.set": "^4.3.2",
+        "trim": "^0.0.3",
+        "@octokit/request": "^9.0.0",
+        "@octokit/request-error": "^6.0.0",
+        "axios": "^1.6.0"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.0"

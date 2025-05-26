@@ -51,4 +51,4 @@ tina/__generated__/*
 .vite/
 
 # Notes personnelles et suivi de maintenance
-notes/
+private-notes/

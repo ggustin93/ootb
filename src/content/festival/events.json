@@ -1653,6 +1653,441 @@
       "status": "Publié",
       "theme": "",
       "shared": true
+    },
+    {
+      "id": "stand-661",
+      "title": "Organisme de séjours linguistiques",
+      "description": "Nous sommes un organisme qui accompagnons les étudiants qui souhaitent une immersion linguistique à l'étranger, école de langues, programme Erasmus pour les enseignants, VVT, séjours juniors. Nous aidons également dans leurs démarches, les jeunes qui souhaitent continuer leur parcours d'études supérieures à l'étranger.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Fabienne Breedstraet",
+      "organization": "",
+      "image": "/images/events/stands/stand-661.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://langtra.be/",
+      "contact": {
+        "email": "fabienne@langtra.be",
+        "phone": "0499800099"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-694",
+      "title": "Editions Plantyn",
+      "description": "Les Editions Plantyn sont une entreprise belge spécialisée dans la création de solutions pédagogiques innovantes destinées aux enseignants. Avec une offre diversifiée qui couvre des manuels scolaires, des outils numériques et des ressources complémentaires (ouvrages de remédiation et préparation aux épreuves), Plantyn accompagne l'éducation moderne et propose des solutions qui facilitent l'apprentissage,  Venez découvrir nos collections et supports numériques sur notre stand !",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Editions Plantyn Editions Plantyn",
+      "organization": "",
+      "image": "/images/events/stands/stand-694.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.plantyn.com/fr-BE/home",
+      "contact": {
+        "email": "service@plantyn.com",
+        "phone": "03/377.50.00"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-695",
+      "title": "Apprendre et grandir en équilibre",
+      "description": "Pousser la porte des ateliers de la libellule, c'est d'abord faire la rencontre avec le métier d'orthopédagogue clinicien: un accompagnement global pour soutenir les apprentissages, la confiance en soi et la gestion des émotions.\nC'est aussi des cours de yoga pour enfants et adolescents: une découverte  du corps, de l'esprit grâce à des séances adaptées.\nDécouvrez également des ateliers créatifs pour éveiller les sens et l'imagination!\nUn espace bienveillant pour petits et grands curieux !",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Maud Depermentier",
+      "organization": "",
+      "image": "/images/events/stands/stand-695.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "lesateliersdelalibellule.be",
+      "contact": {
+        "email": "mauddep@hotmail.com",
+        "phone": "0479/309421"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-727",
+      "title": "Kaleidi - La passion des maths et du numérique",
+      "description": "Kaleidi vous propose de découvrir les mathématiques et le numérique autrement. A travers ses activités ludiques, Kaleidi vous propose des animations, des formations, des accompagnements et des stages qui suscite passion et enthousiasme pour les mathématiques.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Olivier Golinveau",
+      "organization": "",
+      "image": "/images/events/stands/stand-727.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://kaleidi.be/",
+      "contact": {
+        "email": "olivier.golinveau@kaleidi.be",
+        "phone": "0492270995"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-728",
+      "title": "Signpost - Le partenaire TIC pour l’enseignement",
+      "description": "Signpost accompagne les établissements scolaires, leur personnel, leurs enseignants et élèves avec des solutions de numérisation complètes : matériel, logiciels, méthodes didactiques, connectivité et formation. Notre équipe de techniciens expérimentés, de formateurs dévoués, de rédacteurs créatifs, de développeurs innovants et de responsables du service d'assistance enthousiastes permet aux établissements d'enseignement de se concentrer en priorité sur ce qui est le plus important : l'éducation.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Elise De Rycke",
+      "organization": "",
+      "image": "/images/events/stands/stand-728.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://signpost.be/fr-be/",
+      "contact": {
+        "email": "elise.derycke@signpost.eu",
+        "phone": "+32 472 21 25 87 "
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-760",
+      "title": "Citoyenneté et Participation",
+      "description": "Comment parler de politique belge, d'impôts, de justice ou encore de commerce équitable tout en laissant de très bons souvenirs aux élèves ?  Les jeux, immersions et animations de Citoyenneté et Participation connaissent un succès croissant auprès des écoles.  Venez découvrir les outils offerts aux enseignants ainsi que nos différentes actions pour les jeunes dès 16 ans.  Nous serons ravies de vous épauler.  ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Karin Dubois",
+      "organization": "",
+      "image": "/images/events/stands/stand-760.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Secondaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Secondaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://www.cpcp.be",
+      "contact": {
+        "email": "dubois@cpcp.be",
+        "phone": "0476313163"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-793",
+      "title": "Bienvenue dans le monde merveilleux des réflexes archaïques",
+      "description": "Venez découvrir les réflexes archaïques! Nous vous proposons de voir comment le travail sur l'intégration des programmes neuro-sensori-moteurs aide les apprenants de tout âge à améliorer leurs compétences et à déployer tout leur potentiel corporel, émotionnel et cognitif. \nNous proposons des ateliers et des formations à destination notamment des enseignants, logopèdes, parents, psychomotriciens,...  afin de fournir des outils accessibles, pratiques et ciblés sur les besoins des élèves. ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Bastiane Meurice",
+      "organization": "",
+      "image": "/images/events/stands/stand-793.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "ecoledesreflexes.com",
+      "contact": {
+        "email": "teamreflexesKRA@gmail.com",
+        "phone": "0470 75 24 41"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-826",
+      "title": "Les Idees Bleues",
+      "description": "Magasin de jouets indépendant et spécialisé en jeux de société. \n\nVenez découvrir les dernières nouveautés ainsi que les meilleures jeux de société à utiliser dans un cadre professionnel. \n",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Bertrand Genin",
+      "organization": "",
+      "image": "/images/events/stands/stand-826.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.lesideesbleues.be",
+      "contact": {
+        "email": "geninbertrand@gmail.com",
+        "phone": "491591552"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-859",
+      "title": "Brain Gym :La place du corps dans l'apprentissage ",
+      "description": "Le Brain Gym® est une approche éducative, simple et ludique pour tous !\nProfessionnels de l'enfance, parents et enfants.\nLes mouvements de Brain Gym® se basent sur le lien existant entre les mouvements et les fonctions cérébrales impliquées dans l'apprentissage et la perception.\nLes objectifs sont multiples :\n - honorer l'intelligence innée, \n- découvrir, respecter le rythme de chacun \n- comprendre les fonctionnements compensatoires induits par le stress. \n- grandir en confiance et en autonomie.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Bernadette Asbl Brain Gym Belgium",
+      "organization": "",
+      "image": "/images/events/stands/stand-859.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "braingymbelgium.be",
+      "contact": {
+        "email": "braingymbelgium.com",
+        "phone": "0032 472 97 02 01"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-892",
+      "title": "IFPC",
+      "description": "Institut de la Formation Professionnelle Continue.\n\n(Pour les questions - à qui s'adresse le stand et niveau d'enseignement - concernant l'IFPC, j'aurai dû tout cocher.)\n",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Céline VANDENBUSSCHE",
+      "organization": "",
+      "image": "/images/events/stands/stand-892.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.ifpc-fwb.be",
+      "contact": {
+        "email": "celine.vandenbussche@ifpc-fwb.be",
+        "phone": "0498768863"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-925",
+      "title": "Relie-F et ses membres ",
+      "description": "Vous souhaitez trouver de nouveaux partenaires pour votre classe ? Vous êtes à la recherche de projets innovants ? Vous avez une thématique en tête mais pas d'idée pour la concrétiser ? Vous êtes parents et vous cherchez des activités pour vos enfants ?  Les associations de jeunesse de Relie-F peuvent vous apporter tout ça et même plus encore !",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Alice Strub",
+      "organization": "",
+      "image": "/images/events/stands/stand-925.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.relie-f.be/",
+      "contact": {
+        "email": "projet@relie-f.be",
+        "phone": "0488249584"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-958",
+      "title": "Confédération des Organisations de Jeunesse",
+      "description": "Enseignant, parent ou jeune, venez explorer toute la richesse du secteur jeunesse ! La COJ et ses membres vous invitent à découvrir une large palette d’opportunités :\n- Enseignants : animations de classe, outils pédagogiques, formations\n- Parents & jeunes : stages, ateliers, séjours et volontariat chez nous ou ailleurs.\nUne  occasion de faire le plein d’idées, de contacts et de ressources pour nourrir vos projets éducatifs et le quotidien des enfants et des jeunes !",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Geneviève Nicaise",
+      "organization": "",
+      "image": "/images/events/stands/stand-958.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.coj.be",
+      "contact": {
+        "email": "direction@coj.be",
+        "phone": "0475901388"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-959",
+      "title": "Des ressources clés en main pour enseignants ",
+      "description": "Institutrice passionnée, je crée des dossiers pédagogiques et un agenda spécialement conçus pour les enseignants du fondamental. À l’écoute des réalités du terrain, je développe des outils concrets, bienveillants et adaptés aux besoins du quotidien pour vous faire gagner du temps, alléger votre charge mentale et garder du plaisir à enseigner.\n",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Mathilde Tholet",
+      "organization": "",
+      "image": "/images/events/stands/stand-959.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "lesprepasdemathilde.com",
+      "contact": {
+        "email": "lesprepasdemathilde@gmail.com",
+        "phone": "0470/07.50.96"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-991",
+      "title": "Découvrez le génie humain à travers 6 sites touristiques et culturels de la province de Liège !",
+      "description": "Découvrez le génie humain à travers 6 sites liégeois, de la Préhistoire à aujourd'hui en passant par la révolution industrielle !\n\nMaison des Terrils – Histoire & nature\nMaison de la Métallurgie et de l'Industrie – 4 siècles de découvertes technologiques\nBlegny-Mine – Authentique charbonnage reconnu Patrimoine mondial de l’UNESCO\nPréhistomuseum – L’expérience de Sapiens\nMusée du Val Saint-Lambert – Magie du cristal\nCentre Touristique Laine & Mode – Interdit aux moutons",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Axel Gathoye",
+      "organization": "",
+      "image": "/images/events/stands/stand-991.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.laroutedufeu.be",
+      "contact": {
+        "email": "info@laroutedufeu.be",
+        "phone": "0479840320"
+      },
+      "status": "A valider",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1024",
+      "title": "Le Pacte d’Excellence, simplifié avec Pelckmans",
+      "description": "En tant que maison d’éditions scolaires, nous souhaitons inviter les enseignants à rencontrer nos déléguées. Elles se feront un plaisir de  les guider dans le choix d’un matériel pédagogique approprié.\n\nLe Pacte pour un Enseignement d’excellence se profile à l’horizon, apportant avec lui bon nombre de défis. Nous travaillons d’ores et déjà sur de nouvelles méthodes qui s’inscrivent dans cette réforme pour soutenir pleinement les professeurs, leur faciliter la vie et répondre à leur besoins.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "location": "À définir",
+      "speaker": "Lut Lambert",
+      "organization": "",
+      "image": "/images/events/stands/stand-1024.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Secondaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Secondaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://www.editionspelckmans.be/",
+      "contact": {
+        "email": "lut.lambert@pelckmans.be",
+        "phone": "0496164145"
+      },
+      "status": "A valider",
+      "theme": "",
+      "shared": true
     }
   ],
   "Jeudi": [
@@ -1799,7 +2234,7 @@
       "day": "Jeudi",
       "time": "10:45",
       "location": "Espace atelier",
-      "speaker": "Hélène Caels",
+      "speaker": "Hélène & Luc Caels & De Brabandere",
       "organization": "",
       "image": "/images/events/ateliers/atelier-199.webp",
       "speakerImage": null,
@@ -1811,7 +2246,7 @@
       "target": "Professeurs",
       "level": "Secondaire",
       "teachingType": "Enseignement ordinaire",
-      "url": "",
+      "url": "https://www.facebook.com/ap.cpc.be",
       "contact": {
         "email": "h.caels@mailfence.com",
         "phone": "+32494485945"
@@ -2195,33 +2630,6 @@
         "phone": "0473 88 74 08"
       },
       "status": "Publié"
-    },
-    {
-      "id": "conference-365",
-      "title": "Inclusion et diversité cognitive",
-      "description": "Cette conférence présentera les grands principes favorisant l'inclusion des élèves ayant un diagnostic de troubles du neurodéveloppement, tels qu'ils ont été proposés dans le livre \"Pareils, pas pareils\", co-écrit avec Isabelle Filliozat (Nathan, 2025)",
-      "type": "Conférences",
-      "day": "Jeudi",
-      "time": "15:15",
-      "location": "Benjamin Franklin",
-      "speaker": "faby cazalis-judet de la combe",
-      "organization": "",
-      "image": "/images/events/conferences/conference-365.webp",
-      "speakerImage": "/images/events/conferences/speaker-conference-365.webp",
-      "tags": [
-        "Professeurs, parents et enfants",
-        "Maternelle-primaire et secondaire",
-        "Enseignement ordinaire et spécialisé"
-      ],
-      "target": "Professeurs, parents et enfants",
-      "level": "Maternelle-primaire et secondaire",
-      "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "",
-      "contact": {
-        "email": "fabienne.cazalis@icloud.com",
-        "phone": "+33769008923"
-      },
-      "status": "Publié"
     }
   ],
   "Vendredi": [
@@ -2556,7 +2964,7 @@
       "type": "Conférences",
       "day": "Vendredi",
       "time": "12:45",
-      "location": "Benjamin Franklin",
+      "location": "Albert Einstein",
       "speaker": "Elodie Lamarque",
       "organization": "",
       "image": "/images/events/conferences/conference-331.webp",

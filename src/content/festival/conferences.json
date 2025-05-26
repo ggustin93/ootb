@@ -621,33 +621,6 @@
     "status": "Publié"
   },
   {
-    "id": "conference-365",
-    "title": "Inclusion et diversité cognitive",
-    "description": "Cette conférence présentera les grands principes favorisant l'inclusion des élèves ayant un diagnostic de troubles du neurodéveloppement, tels qu'ils ont été proposés dans le livre \"Pareils, pas pareils\", co-écrit avec Isabelle Filliozat (Nathan, 2025)",
-    "type": "Conférences",
-    "day": "Jeudi",
-    "time": "15:15",
-    "location": "Benjamin Franklin",
-    "speaker": "faby cazalis-judet de la combe",
-    "organization": "",
-    "image": "/images/events/conferences/conference-365.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-365.webp",
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "",
-    "contact": {
-      "email": "fabienne.cazalis@icloud.com",
-      "phone": "+33769008923"
-    },
-    "status": "Publié"
-  },
-  {
     "id": "conference-430",
     "title": "Les enseignants ont du talent",
     "description": "Durant une heure, une dizaine d’enseignants passionnés, de la maternelle au secondaire, partageront leurs pratiques innovantes et inspirantes. L’objectif ? Stimuler l’échange, donner des idées concrètes et encourager une dynamique collective pour faire évoluer l’éducation ensemble ! ",
@@ -897,7 +870,7 @@
     "type": "Conférences",
     "day": "Vendredi",
     "time": "12:45",
-    "location": "Benjamin Franklin",
+    "location": "Albert Einstein",
     "speaker": "Elodie Lamarque",
     "organization": "",
     "image": "/images/events/conferences/conference-331.webp",

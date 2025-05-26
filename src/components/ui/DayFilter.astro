@@ -1,8 +1,9 @@
 ---
 import { days, dayDates, eventTypes } from '~/services/events';
-import type { EventsByDay } from '~/types/festival';
+import type { EventsByDay, FestivalEvent } from '~/types/festival';
 import { Icon } from 'astro-icon/components';
-import EventCard from '~/components/ui/EventCard.astro';
+// import EventCard from '~/components/ui/EventCard.astro'; // Not used in client-side rendering
+// import SkeletonEventCard from '~/components/ui/SkeletonEventCard.astro'; // Not used in client-side rendering
 
 // Importer directement le fichier de paramètres
 import siteSettings from '~/content/site/settings.json';
@@ -11,7 +12,7 @@ interface Props {
   events: EventsByDay;
 }
 
-const { events } = Astro.props;
+const { events: propsEvents } = Astro.props;
 
 // Récupérer le paramètre d'affichage des événements non publiés depuis les paramètres du site
 let SHOW_UNPUBLISHED_EVENTS = false;
@@ -24,40 +25,75 @@ if (siteSettings.festival?.showUnpublishedEvents !== undefined) {
   SHOW_UNPUBLISHED_EVENTS = import.meta.env.SHOW_UNPUBLISHED_EVENTS === 'true' || import.meta.env.DEV;
 }
 
-// Créer une version filtrée des événements selon la configuration
-const filteredEvents: EventsByDay = {};
-for (const day in events) {
+const serverFilteredEvents: EventsByDay = {};
+for (const day in propsEvents) {
   if (!SHOW_UNPUBLISHED_EVENTS) {
     // Ne garder que les événements publiés si l'option est désactivée
-    filteredEvents[day] = events[day].filter(event => event.status === 'Publié');
+    serverFilteredEvents[day] = propsEvents[day].filter(event => event.status === 'Publié');
   } else {
     // Garder tous les événements si l'option est activée
-    filteredEvents[day] = events[day];
+    serverFilteredEvents[day] = propsEvents[day];
   }
 }
 
 // Utiliser les événements filtrés pour la suite
-const ITEMS_PER_PAGE = 10;
+export const ITEMS_PER_PAGE = 10;
 
-// Créer un tableau plat de tous les événements pour la pagination
-const allEvents = Object.values(filteredEvents).flat();
+const allEventsFlat: FestivalEvent[] = Object.values(serverFilteredEvents).flat();
 
 // Compter le nombre d'événements par type
 const eventCounts: Record<string, number> = {
-  'all': allEvents.length,
-  'programme': allEvents.filter(evt => evt.type === 'Conférences' || evt.type === 'Ateliers').length,
-  'Conférences': allEvents.filter(evt => evt.type === 'Conférences').length,
-  'Ateliers': allEvents.filter(evt => evt.type === 'Ateliers').length,
-  'Stands': allEvents.filter(evt => evt.type === 'Stands').length
+  'all': allEventsFlat.length,
+  'programme': allEventsFlat.filter(evt => evt.type === 'Conférences' || evt.type === 'Ateliers').length,
+  'Conférences': allEventsFlat.filter(evt => evt.type === 'Conférences').length,
+  'Ateliers': allEventsFlat.filter(evt => evt.type === 'Ateliers').length,
+  'Stands': allEventsFlat.filter(evt => evt.type === 'Stands').length
 };
 
 // Afficher des logs pour le débogage des filtres
 console.log(`Mode événements non publiés: ${SHOW_UNPUBLISHED_EVENTS ? 'Activé' : 'Désactivé'}`);
-console.log(`Nombre total d'événements après filtrage par statut: ${allEvents.length}`);
+console.log(`Nombre total d'événements après filtrage par statut: ${allEventsFlat.length}`);
 console.log(`Événements par type:`, eventCounts);
+
+// Prepare event data for client-side rendering
+const eventsDataForClient = allEventsFlat.map(event => ({
+  event: {
+    id: event.id,
+    title: event.title,
+    description: event.description,
+    type: event.type,
+    day: event.day,
+    time: event.time,
+    location: event.location,
+    speaker: event.speaker,
+    organization: event.organization,
+    status: event.status,
+    url: event.url,
+    tags: event.tags || [],
+    target: event.target,
+    level: event.level,
+    teachingType: event.teachingType,
+    theme: event.theme
+  },
+  eventImage: event.image || null,
+  speakerImage: event.speakerImage || null
+}));
 ---
 
-<div class="space-y-8 md:space-y-12" data-items-per-page={ITEMS_PER_PAGE}>
+<div id="day-filter-wrapper" class="day-filter-loading space-y-8 md:space-y-12" data-items-per-page={ITEMS_PER_PAGE}>
+  <!-- Titre principal en haut -->
+  <div class="text-center">
+    <h2 id="active-filters-title" class="text-3xl md:text-4xl font-bold font-handwritten text-[#e4451e] mb-2">
+      Tous les événements
+    </h2>
+    <h2 id="active-filters-title-mobile" class="sm:hidden text-3xl md:text-4xl font-bold font-handwritten text-[#e4451e] mb-2">
+      Tous les événements
+    </h2>
+    <p class="text-gray-600 text-sm md:text-base mb-6">
+      Découvrez notre programme complet et filtrez selon vos préférences
+    </p>
+  </div>
+
   <!-- Filtres et navigation -->
   <div class="space-y-4 md:space-y-6">
     <!-- Version mobile: menus déroulants simplifiés -->
@@ -107,8 +143,8 @@ console.log(`Événements par type:`, eventCounts);
 
     <!-- Filtre par jour - Version desktop avec sélection multiple -->
     <div class="relative hidden sm:block">
-      <div class="flex justify-between items-center mb-3 md:mb-4 gap-3 md:gap-4">
-        <div class="flex-1 overflow-x-auto">
+      <div class="flex justify-center items-center mb-3 md:mb-4 gap-3 md:gap-4">
+        <div class="flex-1 flex justify-center overflow-x-auto">
           <!-- Version desktop: boutons -->
           <div class="flex gap-2 md:gap-3 p-1" id="days-container">
             <!-- Option "Tous les jours" -->
@@ -146,41 +182,12 @@ console.log(`Événements par type:`, eventCounts);
           </div>
         </div>
         
-        <!-- Boutons de navigation desktop -->
-        <div class="hidden sm:flex flex-col items-center gap-2">
-          <div class="flex items-center gap-2">
-            <button 
-              class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
-              id="prev-page" 
-              disabled
-              aria-label="Page précédente"
-            >
-              <Icon name="tabler:chevron-left" class="w-8 h-8" />
-              <span class="sr-only">Page précédente</span>
-            </button>
-            
-            <button 
-              class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
-              id="next-page"
-              aria-label="Page suivante"
-            >
-              <Icon name="tabler:chevron-right" class="w-8 h-8" />
-              <span class="sr-only">Page suivante</span>
-            </button>
-          </div>
-          
-          <div class="flex items-center gap-2 text-center">
-            <span class="pagination-info text-sm text-gray-500">
-              Page <span id="current-page">1</span> sur <span id="total-pages">3</span>
-            </span>
-            <span class="text-sm text-gray-400 hidden md:inline" id="events-count"></span>
-          </div>
-        </div>
+
       </div>
     </div>
 
     <!-- Filtre par type - Version desktop avec sélection multiple -->
-    <div class="hidden sm:flex flex-wrap gap-2 md:gap-3" id="types-container">
+    <div class="hidden sm:flex flex-wrap justify-center gap-2 md:gap-3" id="types-container">
       <!-- Bouton "Tous les types" -->
       <button
         class:list={[
@@ -195,17 +202,13 @@ console.log(`Événements par type:`, eventCounts);
         aria-label="Afficher tous les types d'événements"
       >
         <Icon name="tabler:layout-grid" class="w-4 h-4 md:w-5 md:h-5" />
-        <span class="hidden xs:inline">Tous les types</span>
-        <span class="ml-1 px-1.5 py-0.5 rounded-full text-xs bg-[#e4451e]/10 text-[#e4451e] 
-               group-data-[state=active]:bg-white 
-               group-data-[state=active]:text-[#e4451e]"
-          data-state="active"
-        >
+        <span>Tous les types</span>
+        <span class="ml-1 px-2 py-0.5 text-xs rounded-full bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white group-data-[state=active]:text-[#e4451e]">
           {eventCounts.all}
         </span>
       </button>
 
-      {eventTypes.map(type => (
+      {eventTypes.map((type) => (
         <button
           class:list={[
             "type-filter-button group px-3 md:px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300",
@@ -218,34 +221,70 @@ console.log(`Événements par type:`, eventCounts);
           type="button"
           aria-label={`Afficher uniquement les ${type}`}
         >
-          <Icon name={
-            type === 'Conférences' ? 'tabler:presentation' :
-            type === 'Ateliers' ? 'tabler:hammer' : 'tabler:building-store'
-          } class="w-4 h-4 md:w-5 md:h-5" />
-          <span class="hidden xs:inline">{type}</span>
-          <span 
-            class="ml-1 px-1.5 py-0.5 rounded-full text-xs 
-                   bg-[#e4451e]/10 text-[#e4451e] 
-                   group-data-[state=active]:bg-white 
-                   group-data-[state=active]:text-[#e4451e]"
-            data-state="inactive"
-          >
-            {type === 'Conférences' ? eventCounts.Conférences : 
-             type === 'Ateliers' ? eventCounts.Ateliers : 
-             eventCounts.Stands}
+          <Icon name={type === 'Conférences' ? 'tabler:presentation' : type === 'Ateliers' ? 'tabler:tool' : 'tabler:building-store'} class="w-4 h-4 md:w-5 md:h-5" />
+          <span>{type}</span>
+          <span class="ml-1 px-2 py-0.5 text-xs rounded-full bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white group-data-[state=active]:text-[#e4451e]">
+            {eventCounts[type]}
           </span>
         </button>
       ))}
     </div>
   </div>
 
-  <!-- Titre des filtres actifs et info pagination -->
-  <div id="filters-title-container" class="flex justify-between items-center py-4 md:py-6 border-t border-gray-100">
-    <h3 id="active-filters-title" class="text-2xl md:text-3xl font-handwritten text-[#e4451e] opacity-90 hidden sm:block"></h3>
+  <!-- Navigation desktop uniquement -->
+  <div class="hidden sm:flex items-center justify-center gap-4 mb-6">
+    <button 
+      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm transition-all duration-300" 
+      id="prev-page" 
+      disabled
+      aria-label="Page précédente"
+    >
+      <Icon name="tabler:chevron-left" class="w-6 h-6" />
+      <span class="sr-only">Page précédente</span>
+    </button>
     
-    <!-- Navigation mobile en bas de page -->
-    <div class="sm:hidden w-full flex flex-col items-center">
-      <div class="flex items-center justify-center gap-4 w-full">
+    <div class="flex items-center gap-2 mx-4">
+      <span class="pagination-info text-sm text-gray-500">
+        Page <span id="current-page">1</span> sur <span id="total-pages">3</span>
+      </span>
+      <span class="text-sm text-gray-400 hidden md:inline" id="events-count"></span>
+    </div>
+    
+    <button 
+      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm transition-all duration-300" 
+      id="next-page"
+      aria-label="Page suivante"
+    >
+      <Icon name="tabler:chevron-right" class="w-6 h-6" />
+      <span class="sr-only">Page suivante</span>
+    </button>
+  </div>
+
+  <!-- Loader section -->
+  <div id="events-loader" class="flex justify-center items-center py-12">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#e4451e]"></div>
+  </div>
+
+  <!-- Conteneur des événements -->
+  <div id="events-container" class="hidden grid gap-6 md:gap-8">
+    <!-- Les événements seront rendus ici par JavaScript -->
+  </div>
+
+  <!-- Message aucun événement -->
+  <div id="no-events-message" class="hidden text-center py-12">
+    <div class="max-w-md mx-auto">
+      <Icon name="tabler:calendar-off" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
+      <h3 class="text-xl font-semibold text-gray-700 mb-2">Aucun événement trouvé</h3>
+      <p class="text-gray-500">
+        Aucun événement ne correspond à vos critères de filtrage.
+        Essayez de modifier vos filtres pour voir plus d'événements.
+      </p>
+    </div>
+  </div>
+
+  <!-- Navigation mobile en bas -->
+  <div class="sm:hidden flex flex-col items-center gap-4 pt-6 border-t border-gray-200">
+    <div class="flex items-center gap-4">
         <button 
           class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
           id="prev-page-mobile" 
@@ -268,171 +307,44 @@ console.log(`Événements par type:`, eventCounts);
           <Icon name="tabler:chevron-right" class="w-6 h-6" />
           <span class="sr-only">Page suivante</span>
         </button>
-      </div>
     </div>
   </div>
 
-  <!-- Contenu des événements -->
-  <div id="events-container" class="relative space-y-4 md:space-y-6">
-    {Object.values(filteredEvents).flat().map(event => (
-      <EventCard event={event} />
-    ))}
-
-    <!-- Message "Pas d'événements" -->
-    <div id="no-events-message" class="hidden">
-      <div class="flex flex-col items-center justify-center py-12 px-4 text-center">
-        <Icon name="tabler:calendar-off" class="w-16 h-16 text-gray-300 mb-4" />
-        <h4 class="text-xl font-medium text-gray-900 mb-2">Aucun événement trouvé</h4>
-        <p id="no-events-details" class="text-gray-500">
-          Pas d'événements correspondant à vos critères de recherche.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Pagination desktop en bas de la liste -->
-  <div class="hidden sm:flex flex-col items-center gap-4 mt-8 pt-8 border-t border-gray-100">
-    <div class="flex items-center gap-4">
+  <!-- Navigation en bas pour desktop -->
+  <div class="hidden sm:flex justify-center items-center gap-4 pt-6 border-t border-gray-200">
       <button 
-        class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
         id="prev-page-bottom" 
         disabled
         aria-label="Page précédente"
       >
-        <Icon name="tabler:chevron-left" class="w-8 h-8" />
+      <Icon name="tabler:chevron-left" class="w-6 h-6" />
         <span class="sr-only">Page précédente</span>
       </button>
       
-      <span class="pagination-info text-sm text-gray-500">
+    <span class="pagination-info text-sm text-gray-500 min-w-[100px] text-center">
         Page <span id="current-page-bottom">1</span> sur <span id="total-pages-bottom">3</span>
       </span>
       
       <button 
-        class="pagination-button flex items-center justify-center w-14 h-14 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
+      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
         id="next-page-bottom"
         aria-label="Page suivante"
       >
-        <Icon name="tabler:chevron-right" class="w-8 h-8" />
+      <Icon name="tabler:chevron-right" class="w-6 h-6" />
         <span class="sr-only">Page suivante</span>
       </button>
-    </div>
   </div>
 </div>
 
 <style>
-  .day-filter-button:hover {
-    @apply transform -translate-y-0.5;
-  }
-
-  .day-filter-button.active {
-    @apply transform -translate-y-1;
-  }
-
-  .type-filter-button[data-state="active"] {
-    @apply shadow-sm;
-  }
-
-  .overflow-x-auto {
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .overflow-x-auto::-webkit-scrollbar {
-    display: none;
-  }
-
-  .accordion-content {
-    transition: max-height 0.3s ease-out;
-  }
-
-  .accordion-icon {
-    transition: transform 0.3s ease;
-  }
-
-  .accordion-trigger[aria-expanded="true"] .accordion-icon {
-    transform: rotate(180deg);
-  }
-
-  /* Styles pour l'accordéon de description */
-  .description-text {
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-
-  .description-text.expanded {
-    display: block;
-    line-clamp: none;
-    -webkit-line-clamp: unset;
-    animation: fadeIn 0.5s ease;
-  }
-
-  .description-text.not-truncated {
-    padding-bottom: 0;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0.7; }
-    to { opacity: 1; }
-  }
-
-  .description-container {
-    position: relative;
-    padding-bottom: 1.5rem;
-  }
-
-  .description-toggle {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.375rem;
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(4px);
+  /* Styles pour le loader */
+  .day-filter-loading #events-container {
+    display: none !important;
   }
   
-  .description-toggle:hover {
-    background-color: rgba(228, 69, 30, 0.1);
-  }
-
-  .description-icon {
-    transition: transform 0.3s ease;
-  }
-
-  .description-toggle[aria-expanded="true"] .description-icon {
-    transform: rotate(180deg);
-  }
-
-  /* Amélioration de la responsivité mobile */
-  @media (max-width: 640px) {
-    .event-card {
-      @apply shadow-sm;
-    }
-    
-    .event-card .md\:w-1\/3 {
-      height: auto;
-    }
-    
-    /* Ajustements pour les petits écrans */
-    .event-card h3 {
-      @apply text-xl font-bold;
-    }
-
-    .mobile-details {
-      @apply text-base;
-    }
-  }
-
-  /* Ajout de styles pour les petits écrans */
-  @media (max-width: 480px) {
-    .xs\:inline {
-      display: none;
-    }
-  }
-  
-  @media (min-width: 481px) {
-    .hidden.xs\:inline {
-      display: inline;
-    }
+  .day-filter-loading #events-loader {
+    display: flex !important;
   }
 
   /* Styles pour les boutons actifs */
@@ -453,809 +365,1006 @@ console.log(`Événements par type:`, eventCounts);
   .pagination-button {
     transition: all 0.3s ease;
   }
-  
+
   .pagination-button:hover:not(:disabled) {
     transform: scale(1.05);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 </style>
 
-<script>
-  let currentPage = 1;
-  const itemsPerPage = parseInt(document.querySelector('[data-items-per-page]')?.getAttribute('data-items-per-page') || '10');
-  let filteredEvents: HTMLElement[] = [];
-  
-  // Variables pour la gestion des filtres
-  let activeDays: string[] = []; // Jours actifs (vide = tous)
-  let activeTypes: string[] = []; // Types actifs (vide = tous)
-  let isAllDaysActive = true; // État du bouton "Tous les jours"
-  let isAllTypesActive = true; // État du bouton "Tous" (types)
-
-  // Fonction pour trier les événements chronologiquement
-  function sortEventsByTime(events: HTMLElement[]): HTMLElement[] {
-    const dayOrder = {
-      'Mercredi': 1,
-      'Jeudi': 2,
-      'Vendredi': 3
-    };
-
-    return [...events].sort((a, b) => {
-      // Les stands sont toujours en dernier, peu importe le jour
-      const aType = a.getAttribute('data-type');
-      const bType = b.getAttribute('data-type');
-      if (aType === 'Stands' && bType !== 'Stands') return 1;
-      if (aType !== 'Stands' && bType === 'Stands') return -1;
-
-      // Trier d'abord par jour (Mercredi < Jeudi < Vendredi)
-      const aDay = a.getAttribute('data-day') || 'Mercredi';
-      const bDay = b.getAttribute('data-day') || 'Mercredi'; 
-      
-      // Si les jours sont différents, trier par jour chronologique
-      if (aDay !== bDay) {
-        return (dayOrder[aDay] || 0) - (dayOrder[bDay] || 0);
-      }
-
-      // Si les jours sont identiques, continuer avec le tri par heure
-      const aTime = a.getAttribute('data-time') || '';
-      const bTime = b.getAttribute('data-time') || '';
-      
-      if (aTime !== 'À définir' && bTime === 'À définir') return -1;
-      if (aTime === 'À définir' && bTime !== 'À définir') return 1;
-
-      // Si les deux ont une heure définie, les comparer
-      if (aTime !== 'À définir' && bTime !== 'À définir' && 
-          aTime !== 'Tous les jours' && bTime !== 'Tous les jours') {
-        return aTime.localeCompare(bTime);
-      }
-
-      // Si les deux sont "À définir", trier par type
-      if (aType === bType) return 0;
-      if (aType === 'Conférences') return -1;
-      if (bType === 'Conférences') return 1;
-      if (aType === 'Ateliers') return -1;
-      if (bType === 'Ateliers') return 1;
-      return 0;
-    });
-  }
-
-  // Fonction pour normaliser les noms des jours (supprimer les espaces, minuscules)
-  function normalizeDay(day: string | null): string {
-    if (!day) return '';
-    return day.trim().toLowerCase();
-  }
-  
-  // Fonction pour réinitialiser la pagination
-  function resetPagination() {
-    currentPage = 1;
-    updatePagination();
-  }
-  
-  // Fonction pour mettre à jour le titre des filtres actifs
-  function updateActiveFiltersTitle() {
-    const titleElement = document.getElementById('active-filters-title');
-    const titleContainer = document.getElementById('filters-title-container');
-    if (!titleElement || !titleContainer) return;
-    
-    // Déboguer les valeurs actuelles
-    console.log("Mise à jour du titre des filtres actifs:");
-    console.log("isAllDaysActive:", isAllDaysActive);
-    console.log("isAllTypesActive:", isAllTypesActive);
-    console.log("activeDays:", activeDays);
-    console.log("activeTypes:", activeTypes);
-    
-    let title = '';
-    
-    // Si tous les filtres sont actifs, ne pas afficher de titre et masquer le conteneur
-    if (isAllDaysActive && isAllTypesActive) {
-      titleElement.textContent = '';
-      titleContainer.classList.add('hidden');
-      return;
-    } else {
-      titleContainer.classList.remove('hidden');
+<script define:vars={{ eventsData: eventsDataForClient, itemsPerPageConst: ITEMS_PER_PAGE }}>
+  // Inline utility classes for browser compatibility
+  class EventFilters {
+    constructor() {
+      this.activeDays = [];
+      this.activeTypes = [];
+      this.isAllDaysActive = true;
+      this.isAllTypesActive = true;
     }
-    
-    // Construire le titre en fonction des filtres actifs
-    if (!isAllTypesActive && activeTypes.length > 0) {
-      // Vérifier si les types sont correctement formatés
-      title = activeTypes.join(' & ');
+
+    normalizeDay(day) {
+      if (!day) return '';
+      return day.trim().toLowerCase();
     }
-    
-    if (!isAllDaysActive && activeDays.length > 0) {
-      if (title) {
-        title += ' - ';
+
+    updateActiveFiltersTitle() {
+      const titleElement = document.getElementById('active-filters-title');
+      const titleMobileElement = document.getElementById('active-filters-title-mobile');
+      if (!titleElement && !titleMobileElement) return;
+
+      let title = '';
+      
+      // Helper function to get correct article and agreement for event types
+      const getTypeWithArticle = (type) => {
+        switch (type) {
+          case 'Conférences':
+            return 'Toutes les conférences';
+          case 'Ateliers':
+            return 'Tous les ateliers';
+          case 'Stands':
+            return 'Tous les stands';
+          default:
+            return `Tous les ${type}`;
+        }
+      };
+
+      // Déterminer si tous les jours/types sont effectivement sélectionnés
+      const allDaysSelected = this.isAllDaysActive || this.activeDays.length === 3;
+      const allTypesSelected = (this.isAllTypesActive && this.activeTypes.length === 0) || this.activeTypes.length === 3;
+
+      if (allDaysSelected && allTypesSelected) {
+        title = 'Tous les événements';
+      } else if (allDaysSelected && !allTypesSelected) {
+        if (this.activeTypes.length === 1) {
+          title = getTypeWithArticle(this.activeTypes[0]);
+        } else {
+          title = `${this.activeTypes.join(' & ')}`;
+        }
+      } else if (!allDaysSelected && allTypesSelected) {
+        if (this.activeDays.length === 1) {
+          title = `Événements du ${this.activeDays[0]}`;
+        } else {
+          title = `Événements - ${this.activeDays.join(' & ')}`;
+        }
+      } else {
+        // Both days and types are filtered
+        const dayText = this.activeDays.length === 1 ? this.activeDays[0] : 
+                       this.activeDays.length === 3 ? 'tous les jours' : `${this.activeDays.join(' & ')}`;
+        const typeText = this.activeTypes.length === 1 ? this.activeTypes[0] : 
+                        this.activeTypes.length === 3 ? 'tous types' : `${this.activeTypes.join(' & ')}`;
+        
+        // Si on a une sélection très large, simplifier
+        if ((this.activeDays.length === 3 && this.activeTypes.length >= 2) || 
+            (this.activeDays.length >= 2 && this.activeTypes.length === 3)) {
+          title = 'Tous les événements';
+        } else {
+          title = `${typeText} - ${dayText}`;
+        }
       }
-      title += activeDays.join(' & ');
+
+      if (titleElement) titleElement.textContent = title;
+      if (titleMobileElement) titleMobileElement.textContent = title;
     }
-    
-    console.log("Titre final:", title);
-    titleElement.textContent = title;
+
+    updateEventCounts() {
+      // Placeholder for event count updates
+      console.log('updateEventCounts called');
+    }
   }
-  
-  // Fonction pour mettre à jour la pagination
-  function updatePagination() {
-    const events = Array.from(document.querySelectorAll('.event-card')) as HTMLElement[];
-    
-    console.log(`Filtrage - Jours actifs: ${activeDays.length ? activeDays.join(', ') : 'Tous'}`);
-    console.log(`Filtrage - Types actifs: ${activeTypes.length ? activeTypes.join(', ') : 'Tous'}`);
-    console.log(`Nombre total d'événements à filtrer: ${events.length}`);
-    
-    // Filtrer les événements
-    events.forEach(event => {
-      // Masquer tous les événements initialement - ils seront affichés selon la pagination
-      event.style.display = 'none';
-    });
-    
-    // Mettre à jour la liste des événements filtrés
-    filteredEvents = events.filter(event => {
-      const eventType = event.getAttribute('data-type');
-      const eventDay = event.getAttribute('data-day');
-      
-      // Appliquer les mêmes règles de filtrage
-      const typeMatch = isAllTypesActive || (eventType && activeTypes.includes(eventType));
-      
-      // Modifier cette condition pour inclure les stands quel que soit le jour sélectionné
-      const dayMatch = 
-        isAllDaysActive || 
-        (eventDay && activeDays.some(day => normalizeDay(day) === normalizeDay(eventDay))) ||
-        (eventType === 'Stands'); // Toujours inclure les stands
-      
-      return dayMatch && typeMatch;
-    });
 
-    // Trier les événements filtrés chronologiquement
-    filteredEvents = sortEventsByTime(filteredEvents);
+  class EventPagination {
+    constructor(itemsPerPage = 10) {
+      this.currentPage = 1;
+      this.itemsPerPage = itemsPerPage;
+      this.filteredEvents = [];
+    }
 
-    // Réorganiser les événements dans le DOM
-    const container = document.getElementById('events-container');
-    if (container) {
-      // Supprimer l'en-tête existant s'il y en a un
-      const existingHeader = document.getElementById('event-type-header');
-      if (existingHeader) {
-        container.removeChild(existingHeader);
+    setEvents(events) {
+      this.filteredEvents = events;
+    }
+
+    getTotalPages() {
+      return Math.max(1, Math.ceil(this.filteredEvents.length / this.itemsPerPage));
+    }
+
+    getCurrentPageEvents() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = Math.min(startIndex + this.itemsPerPage, this.filteredEvents.length);
+      return this.filteredEvents.slice(startIndex, endIndex);
+    }
+
+    nextPage() {
+      if (this.currentPage < this.getTotalPages()) {
+        this.currentPage++;
+        return true;
+      }
+      return false;
+    }
+
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        return true;
+      }
+      return false;
+    }
+
+    resetPage() {
+      this.currentPage = 1;
+    }
+
+    updatePaginationUI() {
+      const totalPages = this.getTotalPages();
+      
+      document.querySelectorAll('#current-page, #current-page-mobile, #current-page-bottom').forEach(el => {
+        el.textContent = this.currentPage.toString();
+      });
+      
+      document.querySelectorAll('#total-pages, #total-pages-mobile, #total-pages-bottom').forEach(el => {
+        el.textContent = totalPages.toString();
+      });
+      
+      document.querySelectorAll('#prev-page, #prev-page-mobile, #prev-page-bottom').forEach(button => {
+        button.disabled = this.currentPage === 1;
+      });
+      
+      document.querySelectorAll('#next-page, #next-page-mobile, #next-page-bottom').forEach(button => {
+        button.disabled = this.currentPage === totalPages || this.filteredEvents.length === 0;
+      });
+    }
+  }
+
+  class EventRenderer {
+    constructor() {
+      this.container = null;
+    }
+
+    setContainer(container) {
+      this.container = container;
+    }
+
+    // Normalise une URL en s'assurant qu'elle commence par un protocole
+    normalizeUrl(url) {
+      if (!url) return '';
+      
+      // Supprimer les espaces en début et fin
+      url = url.trim();
+      
+      // Si l'URL contient plusieurs URLs (avec tiret ou virgule), prendre la première
+      if (url.includes(' - ') || url.includes(',')) {
+        url = url.split(/\s*[,-]\s*/)[0].trim();
       }
       
-      // Mettre à jour le titre des filtres actifs
-      updateActiveFiltersTitle();
+      // Vérifier si l'URL commence déjà par http:// ou https://
+      if (url.match(/^https?:\/\//i)) {
+        return url;
+      }
       
-      // Optimiser le rendu en utilisant requestAnimationFrame
-      let startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = Math.min(startIndex + itemsPerPage, filteredEvents.length);
+      // Ajouter https:// au début
+      return `https://${url}`;
+    }
+
+    // Normalise le jour pour garantir la cohérence
+    normalizeDay(day) {
+      if (!day) return day;
+      const dayLower = day.toString().trim().toLowerCase();
+      if (dayLower.includes('vendredi')) {
+        return 'Vendredi';
+      } else if (dayLower.includes('jeudi')) {
+        return 'Jeudi';
+      } else if (dayLower.includes('mercredi')) {
+        return 'Mercredi';
+      }
+      return day;
+    }
+
+    // Configuration des types d'événements avec icônes et couleurs
+    getEventTypeConfig(eventType) {
+      const eventTypeConfig = {
+        'Festival 2025': {
+          icon: 'tabler:confetti',
+          color: 'var(--content-premium)',
+          bgClass: 'bg-[color-mix(in_srgb,var(--content-premium)_30%,white)]',
+          textClass: 'text-[var(--content-premium)]'
+        },
+        'Live Facebook': {
+          icon: 'tabler:broadcast',
+          color: 'var(--content-live)',
+          bgClass: 'bg-[color-mix(in_srgb,var(--content-live)_30%,white)]',
+          textClass: 'text-[var(--content-live)]'
+        },
+        'Conférences': {
+          icon: 'tabler:presentation',
+          color: 'var(--content-actualite)',
+          bgClass: 'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]',
+          textClass: 'text-[var(--content-actualite)]'
+        },
+        'Ateliers': {
+          icon: 'tabler:tool',
+          color: 'var(--content-podcast)',
+          bgClass: 'bg-[color-mix(in_srgb,var(--content-podcast)_30%,white)]',
+          textClass: 'text-[var(--content-podcast)]'
+        },
+        'Stands': {
+          icon: 'tabler:building-store',
+          color: 'var(--content-tv)',
+          bgClass: 'bg-[color-mix(in_srgb,var(--content-tv)_30%,white)]',
+          textClass: 'text-[var(--content-tv)]'
+        }
+      };
+
+      return eventTypeConfig[eventType] || {
+        icon: 'tabler:calendar-event',
+        color: 'var(--content-actualite)',
+        bgClass: 'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]',
+        textClass: 'text-[var(--content-actualite)]'
+      };
+    }
+
+    // Génère les icônes SVG (identiques à celles d'EventCard.astro)
+    generateIcon(iconName, className = 'w-4 h-4') {
+      const icons = {
+        'tabler:presentation': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2m0 0V3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m11 0H6m6 7l4-4m0 0l-4-4m4 4H9"/></svg>`,
+        'tabler:tool': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+        'tabler:building-store': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V7l-2-4h18l-2 4v14M9 9h1M9 13h1M9 17h1"/></svg>`,
+        'tabler:calendar': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"/></svg>`,
+        'tabler:clock': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>`,
+        'tabler:map-pin': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>`,
+        'tabler:user': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM12 14a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7z"/></svg>`,
+        'tabler:tag': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5l7 7-7 7-7-7V3z"/></svg>`,
+        'tabler:alert-triangle': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`,
+        'tabler:chevron-down': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>`,
+        'tabler:chevron-up': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>`,
+        'tabler:external-link': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`,
+        'tabler:users': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+        'tabler:school': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 10v6M2 10l10-5 10 5-10 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12v5c3 0 5.5-1 8-3v-2z"/></svg>`,
+        'tabler:book': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`
+      };
+      return icons[iconName] || `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>`;
+    }
+
+    renderEventCard(eventData) {
+      const { event, eventImage, speakerImage } = eventData;
       
-      // Rendre progressivement, 2-3 éléments à la fois
+      // Normaliser les données
+      const normalizedUrl = event.url ? this.normalizeUrl(event.url) : '';
+      const normalizedDay = this.normalizeDay(event.day);
+      const eventType = event.type || 'Conférences';
+      const status = event.status || 'Publié';
+      const config = this.getEventTypeConfig(eventType);
+
+      // Créer l'élément principal
+      const eventCard = document.createElement('div');
+      eventCard.className = 'event-card group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300';
+      eventCard.setAttribute('data-type', eventType);
+      eventCard.setAttribute('data-day', normalizedDay || '');
+      eventCard.setAttribute('data-time', event.time || '');
+      eventCard.setAttribute('data-status', status);
+      
+      if (status === 'A valider') {
+        eventCard.style.opacity = '0.7';
+      }
+
+
+
+      // Construire le HTML complet (structure identique à EventCard.astro)
+      eventCard.innerHTML = `
+        <div class="md:flex h-full">
+          <!-- Image à gauche (sur desktop) ou en haut (sur mobile) -->
+          <div class="md:w-1/3 relative overflow-hidden md:rounded-l-xl p-6 border-b md:border-b-0 md:border-r border-gray-100">
+            <div class="h-56 md:h-full flex items-center justify-center">
+              ${eventImage ? `
+                <img 
+                  src="${eventImage}" 
+                  alt="${event.title || ''}"
+                  class="max-w-full max-h-full object-contain rounded-lg"
+                  loading="lazy"
+                  width="400"
+                  height="225"
+                />
+              ` : `
+                <div class="w-full h-full flex items-center justify-center rounded-lg" style="background-color: ${eventType === 'Conférences' ? '#fff5f2' : eventType === 'Ateliers' ? '#f0f7ff' : '#f0fff4'}">
+                  ${this.generateIcon(config.icon, 'w-24 h-24')}
+                </div>
+              `}
+            </div>
+            <!-- Badge du type d'événement (visible uniquement sur mobile) -->
+            <div class="absolute top-3 right-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm"
+                 style="
+                   background-color: ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.15)' : 
+                                      eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.15)' : 
+                                      'rgba(22, 163, 74, 0.15)'};
+                   color: ${eventType === 'Conférences' ? '#e4451e' : 
+                           eventType === 'Ateliers' ? '#2563eb' : 
+                           '#16a34a'};
+                   border: 1px solid ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.3)' : 
+                                      eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.3)' : 
+                                      'rgba(22, 163, 74, 0.3)'};
+                 "
+            >
+              ${this.generateIcon(config.icon, 'w-3.5 h-3.5')}
+              ${eventType}
+            </div>
+          </div>
+
+          <!-- Contenu à droite (sur desktop) ou en bas (sur mobile) -->
+          <div class="md:w-2/3 p-4 md:p-6 flex flex-col">
+            <div class="flex-grow">
+              <!-- Bannière de statut si "A valider" -->
+              ${status === 'A valider' ? `
+                <div class="mb-2 text-sm font-medium py-1 px-2 rounded bg-yellow-50 text-yellow-700 border border-yellow-200 inline-flex items-center">
+                  ${this.generateIcon('tabler:alert-triangle', 'w-4 h-4 mr-1')}
+                  En attente de validation
+                </div>
+              ` : ''}
+
+              <!-- En-tête avec heure, lieu et expert - Version desktop -->
+              <div class="hidden md:flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-500 mb-2 md:mb-3">
+                ${normalizedDay && eventType !== 'Stands' ? `
+                  <div class="flex items-center">
+                    ${this.generateIcon('tabler:calendar', 'w-4 h-4 mr-1')}
+                    <span>${normalizedDay}</span>
+                  </div>
+                ` : ''}
+                ${event.time ? `
+                  <div class="flex items-center">
+                    ${this.generateIcon('tabler:clock', 'w-4 h-4 mr-1')}
+                    <span>${eventType === 'Stands' ? 'Tous les jours' : event.time}</span>
+                  </div>
+                ` : ''}
+                ${event.location ? `
+                  <div class="flex items-center">
+                    ${this.generateIcon('tabler:map-pin', 'w-4 h-4 mr-1')}
+                    <span>${event.location}</span>
+                  </div>
+                ` : ''}
+                ${eventType !== 'Stands' && event.speaker ? `
+                  <div class="flex items-center">
+                    ${this.generateIcon('tabler:user', 'w-4 h-4 mr-1')}
+                    <span class="font-medium text-gray-500">${event.speaker}</span>
+                  </div>
+                ` : ''}
+                ${eventType === 'Stands' ? `
+                  <div class="flex items-center">
+                    ${this.generateIcon('tabler:tag', 'w-4 h-4 mr-1')}
+                    <span class="font-medium text-gray-500">${event.theme || 'À définir'}</span>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- En-tête simplifié pour mobile -->
+              <div class="flex md:hidden flex-wrap items-center gap-2 text-sm text-gray-500 mb-2">
+                ${status === 'A valider' ? `
+                  <div class="text-xs font-medium py-0.5 px-1.5 rounded bg-yellow-50 text-yellow-700 border border-yellow-200 inline-flex items-center">
+                    ${this.generateIcon('tabler:alert-triangle', 'w-3 h-3 mr-0.5')}
+                    En attente
+                  </div>
+                ` : ''}
+                ${normalizedDay && eventType !== 'Stands' ? `
+                  <div class="flex items-center">
+                    ${this.generateIcon('tabler:calendar', 'w-4 h-4 mr-1')}
+                    <span>${normalizedDay}</span>
+                  </div>
+                ` : ''}
+                ${event.time ? `
+                  <div class="flex items-center">
+                    ${this.generateIcon('tabler:clock', 'w-4 h-4 mr-1')}
+                    <span>${eventType === 'Stands' ? 'Tous les jours' : event.time}</span>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Photo du conférencier (uniquement pour les conférences) -->
+              ${eventType === 'Conférences' && event.speaker ? `
+                <div class="mb-3 hidden md:flex items-center">
+                  <div class="w-20 h-20 rounded-full overflow-hidden mr-3 flex-shrink-0 bg-white border border-gray-200 p-0">
+                    <img
+                      src="${speakerImage || 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png'}"
+                      alt="${event.speaker || 'Conférencier'}"
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                      width="80"
+                      height="80"
+                    />
+                  </div>
+                  <div class="text-sm text-gray-600">
+                    <p class="font-medium text-[#e4451e]">${event.speaker}</p>
+                    <p class="italic">Conférencier</p>
+                  </div>
+                </div>
+              ` : ''}
+
+              <!-- Titre -->
+              <h3 class="text-xl md:text-2xl font-bold text-sky-900 group-hover:text-[#e4451e] transition-colors mb-2 md:mb-3">
+                ${event.title || ''}
+              </h3>
+
+              <!-- Description avec accordéon pour les textes longs - Version desktop -->
+              <div class="description-container relative hidden md:block">
+                <p class="text-gray-600 mb-2 md:mb-4 description-text line-clamp-4 pr-16">${event.description || ''}</p>
+                ${event.description && event.description.length > 280 ? `
+                  <button 
+                    class="text-[#e4451e] text-sm font-medium flex items-center gap-1.5 description-toggle hover:bg-[#e4451e]/10 transition-all duration-300 absolute bottom-0 right-0 px-2 py-1 rounded-md"
+                    aria-expanded="false"
+                  >
+                    <span class="show-more inline-flex items-center">
+                      <span></span>
+                      ${this.generateIcon('tabler:chevron-down', 'w-4 h-4 ml-1 description-icon transition-transform duration-300')}
+                    </span>
+                    <span class="show-less hidden inline-flex items-center">
+                      <span>Voir moins</span>
+                      ${this.generateIcon('tabler:chevron-up', 'w-4 h-4 ml-1 transition-transform duration-300')}
+                    </span>
+                  </button>
+                ` : ''}
+              </div>
+
+              <!-- Informations supplémentaires - Version desktop -->
+              <div class="hidden md:grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 mb-3">
+                ${event.target ? `
+                  <div class="flex items-start text-sm text-gray-600">
+                    ${this.generateIcon('tabler:users', 'w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                    <span><span class="font-medium">Public:</span> ${event.target}</span>
+                  </div>
+                ` : ''}
+                ${event.level ? `
+                  <div class="flex items-start text-sm text-gray-600">
+                    ${this.generateIcon('tabler:school', 'w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                    <span><span class="font-medium">Niveau:</span> ${event.level}</span>
+                  </div>
+                ` : ''}
+                ${event.teachingType ? `
+                  <div class="flex items-start text-sm text-gray-600">
+                    ${this.generateIcon('tabler:book', 'w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                    <span><span class="font-medium">Type:</span> ${event.teachingType}</span>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Bouton "Voir les détails" pour mobile -->
+              <div class="md:hidden mt-4">
+                <button 
+                  type="button"
+                  class="js-toggle-details w-full py-3 px-4 text-base font-medium text-[#e4451e] border border-[#e4451e]/20 rounded-lg flex items-center justify-center gap-2 hover:bg-[#e4451e]/5 transition-all duration-300"
+                  data-target="mobile-details"
+                >
+                  <span class="js-show-text">Voir les détails</span>
+                  <span class="js-hide-text hidden">Masquer les détails</span>
+                  ${this.generateIcon('tabler:chevron-down', 'w-5 h-5 js-toggle-icon transition-transform duration-300')}
+                </button>
+              </div>
+
+              <!-- Détails supplémentaires pour mobile (masqués par défaut) -->
+              <div class="mobile-details hidden md:hidden mt-4 space-y-4 border-t border-gray-100 pt-4">
+                <!-- Description complète pour mobile -->
+                <div class="text-gray-600">
+                  <p class="text-base">${event.description || ''}</p>
+                </div>
+                
+                <!-- Informations sur le lieu et l'intervenant -->
+                <div class="flex flex-col gap-3 text-base">
+                  ${event.location ? `
+                    <div class="flex items-start gap-2">
+                      ${this.generateIcon('tabler:map-pin', 'w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                      <span class="text-gray-600">${event.location}</span>
+                    </div>
+                  ` : ''}
+                  ${eventType !== 'Stands' && event.speaker ? `
+                    <div class="flex items-start gap-2">
+                      ${this.generateIcon('tabler:user', 'w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                      <span class="text-gray-600 font-medium">${event.speaker}</span>
+                    </div>
+                  ` : ''}
+                  ${eventType === 'Stands' ? `
+                    <div class="flex items-start gap-2">
+                      ${this.generateIcon('tabler:tag', 'w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                      <span class="text-gray-600 font-medium">${event.theme || 'À définir'}</span>
+                    </div>
+                  ` : ''}
+                </div>
+
+                <!-- Photo du conférencier pour mobile -->
+                ${eventType === 'Conférences' && event.speaker ? `
+                  <div class="flex items-center mt-4">
+                    <div class="w-16 h-16 rounded-full overflow-hidden mr-3 flex-shrink-0 bg-white border border-gray-200 p-0">
+                      <img
+                        src="${speakerImage || 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png'}"
+                        alt="${event.speaker || 'Conférencier'}"
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                        width="64"
+                        height="64"
+                      />
+                    </div>
+                    <div class="text-sm text-gray-600">
+                      <p class="font-medium text-[#e4451e]">${event.speaker}</p>
+                      <p class="italic">Conférencier</p>
+                    </div>
+                  </div>
+                ` : ''}
+
+                <!-- Informations supplémentaires pour mobile -->
+                <div class="grid grid-cols-1 gap-3">
+                  ${event.target ? `
+                    <div class="flex items-start text-base text-gray-600">
+                      ${this.generateIcon('tabler:users', 'w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                      <span><span class="font-medium">Public:</span> ${event.target}</span>
+                    </div>
+                  ` : ''}
+                  ${event.level ? `
+                    <div class="flex items-start text-base text-gray-600">
+                      ${this.generateIcon('tabler:school', 'w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                      <span><span class="font-medium">Niveau:</span> ${event.level}</span>
+                    </div>
+                  ` : ''}
+                  ${event.teachingType ? `
+                    <div class="flex items-start text-base text-gray-600">
+                      ${this.generateIcon('tabler:book', 'w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
+                      <span><span class="font-medium">Type:</span> ${event.teachingType}</span>
+                    </div>
+                  ` : ''}
+                </div>
+                
+                <!-- Lien vers le site web dans les détails pour mobile -->
+                ${normalizedUrl ? `
+                  <div class="flex items-center mt-4 pt-2 border-t border-gray-100">
+                    <a 
+                      href="${normalizedUrl}" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-[#e4451e] hover:bg-[#e4451e]/10 transition-colors w-full justify-center border border-[#e4451e]/20"
+                    >
+                      ${this.generateIcon('tabler:external-link', 'w-4 h-4')}
+                      Visiter le site web
+                    </a>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2">
+              <!-- Lien vers le site web pour desktop -->
+              ${normalizedUrl ? `
+                <div class="hidden md:block w-full mt-4 pt-3 border-t border-gray-100">
+                  <a 
+                    href="${normalizedUrl}" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-[#e4451e] hover:bg-[#e4451e]/10 transition-colors border border-[#e4451e]/20"
+                  >
+                    ${this.generateIcon('tabler:external-link', 'w-4 h-4')}
+                    Visiter le site web
+                  </a>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+
+      return eventCard;
+    }
+
+    renderEvents(eventsData) {
+      if (!this.container) {
+        console.error('Container not set for EventRenderer');
+        return;
+      }
+
+      this.container.innerHTML = '';
+
+      let startIndex = 0;
       const renderBatch = () => {
-        const batchSize = 3;
-        const batchEnd = Math.min(startIndex + batchSize, endIndex);
+        const batchSize = 5;
+        const batchEnd = Math.min(startIndex + batchSize, eventsData.length);
         
         for (let i = startIndex; i < batchEnd; i++) {
-          filteredEvents[i].style.display = 'block';
+          const eventCard = this.renderEventCard(eventsData[i]);
+          this.container.appendChild(eventCard);
         }
         
         startIndex = batchEnd;
         
-        if (startIndex < endIndex) {
+        if (startIndex < eventsData.length) {
           requestAnimationFrame(renderBatch);
+        } else {
+          // Ajouter les gestionnaires d'événements après le rendu complet
+          this.attachEventListeners();
         }
       };
       
-      // Masquer tous les événements d'abord
-      filteredEvents.forEach(event => {
-        event.style.display = 'none';
-      });
-      
-      // Commencer le rendu par lots
       requestAnimationFrame(renderBatch);
     }
 
-    // Gérer l'affichage du message "Pas d'événements correspondants"
-    const noEventsMessage = document.getElementById('no-events-message');
-    const noEventsDetails = document.getElementById('no-events-details');
-    
-    if (filteredEvents.length === 0) {
-      // Personnaliser le message en fonction des filtres sélectionnés
-      let message = "Pas d'événements correspondant à vos critères de recherche.";
-      
-      if (!isAllDaysActive && !isAllTypesActive) {
-        const dayNames = activeDays.join(' et ');
-        const typeNames = activeTypes.join(' ou ');
-        message = `Pas de ${typeNames.toLowerCase()} ${dayNames.toLowerCase()}.`;
-      } else if (!isAllDaysActive) {
-        const dayNames = activeDays.join(' et ');
-        message = `Pas d'événements programmés ${dayNames.toLowerCase()}.`;
-      } else if (!isAllTypesActive) {
-        const typeNames = activeTypes.join(' ou ');
-        message = `Pas de ${typeNames.toLowerCase()} dans le programme.`;
-      }
-      
-      if (noEventsDetails) {
-        noEventsDetails.textContent = message;
-      }
-      
-      // Afficher le message
-      if (noEventsMessage) {
-        noEventsMessage.classList.remove('hidden');
-      }
-      
-      // Masquer les paginations
-      const paginationContainers = document.querySelectorAll('.pagination-info');
-      paginationContainers.forEach(container => {
-        const paginationDiv = container.closest('div');
-        if (paginationDiv) {
-          paginationDiv.classList.add('hidden');
-        }
-      });
-      
-      // Masquer les boutons de pagination
-      document.querySelectorAll('.pagination-button').forEach(button => {
-        button.classList.add('hidden');
-      });
-    } else {
-      // Masquer le message s'il y a des événements
-      if (noEventsMessage) {
-        noEventsMessage.classList.add('hidden');
-      }
-      
-      // Afficher les paginations
-      const paginationContainers = document.querySelectorAll('.pagination-info');
-      paginationContainers.forEach(container => {
-        const paginationDiv = container.closest('div');
-        if (paginationDiv) {
-          paginationDiv.classList.remove('hidden');
-        }
-      });
-      
-      // Afficher les boutons de pagination
-      document.querySelectorAll('.pagination-button').forEach(button => {
-        button.classList.remove('hidden');
-      });
-    }
-    
-    // Calculer les pages
-    const totalPages = Math.max(1, Math.ceil(filteredEvents.length / itemsPerPage));
-    
-    // Mettre à jour les compteurs de page
-    document.querySelectorAll('#current-page, #current-page-mobile, #current-page-bottom').forEach(el => {
-      el.textContent = currentPage.toString();
-    });
-    
-    document.querySelectorAll('#total-pages, #total-pages-mobile, #total-pages-bottom').forEach(el => {
-      el.textContent = totalPages.toString();
-    });
+    attachEventListeners() {
+      if (!this.container) return;
 
-    // Réinitialiser la page courante si elle dépasse le nombre total de pages
-    if (currentPage > totalPages) {
-      currentPage = 1;
-    }
+      // Gestionnaires pour les boutons de description (desktop)
+      this.container.querySelectorAll('.description-toggle').forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const descriptionText = button.parentElement.querySelector('.description-text');
+          const showMore = button.querySelector('.show-more');
+          const showLess = button.querySelector('.show-less');
+          const isExpanded = button.getAttribute('aria-expanded') === 'true';
 
-    // Activer/désactiver les boutons de pagination
-    const prevButtons = document.querySelectorAll('#prev-page, #prev-page-mobile, #prev-page-bottom');
-    const nextButtons = document.querySelectorAll('#next-page, #next-page-mobile, #next-page-bottom');
-    
-    prevButtons.forEach(button => {
-      (button as HTMLButtonElement).disabled = currentPage === 1;
-    });
-    
-    nextButtons.forEach(button => {
-      (button as HTMLButtonElement).disabled = currentPage === totalPages;
-    });
-
-    // Mettre à jour le compteur d'événements dans l'interface
-    const eventsCount = document.getElementById('events-count');
-    if (eventsCount) {
-      eventsCount.textContent = '';
-      eventsCount.classList.add('hidden');
-    }
-
-    // Mettre à jour les compteurs d'événements dans les pastilles
-    updateEventCounts();
-  }
-
-  // Compter le nombre d'événements par type et jour pour les pastilles
-  function updateEventCounts() {
-    const events = Array.from(document.querySelectorAll('.event-card')) as HTMLElement[];
-    
-    // Filtrer les événements selon TOUS les jours actifs (et non juste le premier)
-    const filteredByDay = isAllDaysActive 
-      ? events 
-      : events.filter(event => {
-          const eventDay = event.getAttribute('data-day');
-          const eventType = event.getAttribute('data-type');
-          // Inclure l'événement si c'est un stand ou s'il correspond à l'un des jours actifs
-          return (
-            eventType === 'Stands' || 
-            (eventDay && activeDays.some(day => normalizeDay(day) === normalizeDay(eventDay)))
-          );
-        });
-    
-    // Récupérer tous les stands et éliminer les doublons par titre
-    const standsSet = new Set<string>();
-    filteredByDay
-      .filter(event => event.getAttribute('data-type') === 'Stands')
-      .forEach(stand => {
-        const standTitle = stand.querySelector('h3')?.textContent || '';
-        standsSet.add(standTitle);
-      });
-    
-    // Compter les événements par type pour les jours sélectionnés
-    const typeCounts = {
-      'Conférences': filteredByDay.filter(event => event.getAttribute('data-type') === 'Conférences').length,
-      'Ateliers': filteredByDay.filter(event => event.getAttribute('data-type') === 'Ateliers').length,
-      'Stands': standsSet.size // Nombre unique de stands
-    };
-    
-    // Mettre à jour les pastilles de comptage
-    document.querySelectorAll('.type-filter-button').forEach(button => {
-      const type = button.getAttribute('data-type');
-      if (type) {
-        const countBadge = button.querySelector('span:last-child');
-        if (countBadge) {
-          countBadge.textContent = typeCounts[type as keyof typeof typeCounts].toString();
-        }
-      }
-    });
-    
-    // Mettre à jour la pastille "Tous les types"
-    const allTypesBadge = document.querySelector('#all-types-button span:last-child');
-    if (allTypesBadge) {
-      // Calculer le total en additionnant les conférences, ateliers et stands uniques
-      const total = typeCounts.Conférences + typeCounts.Ateliers + typeCounts.Stands;
-      allTypesBadge.textContent = total.toString();
-    }
-    
-    // Ajouter un indicateur visuel des jours actifs dans le compteur
-    const eventsCount = document.getElementById('events-count');
-    if (eventsCount) {
-      if (!isAllDaysActive && activeDays.length > 0) {
-        // Afficher tous les jours actifs si plusieurs jours sont sélectionnés
-        if (activeDays.length === 1) {
-          eventsCount.textContent = `(${activeDays[0]})`;
-        } else if (activeDays.length === 2) {
-          eventsCount.textContent = `(${activeDays[0]} & ${activeDays[1]})`;
-        } else {
-          eventsCount.textContent = `(${activeDays.length} jours)`;
-        }
-        eventsCount.classList.remove('hidden');
-      } else {
-        eventsCount.textContent = '';
-        eventsCount.classList.add('hidden');
-      }
-    }
-  }
-
-  // Initialisation
-  function initializeFilters() {
-    // Activer "Tous les jours" et "Tous" par défaut
-    isAllDaysActive = true;
-    isAllTypesActive = true;
-    activeDays = [];
-    activeTypes = [];
-    
-    // Initialiser l'apparence des boutons
-    document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
-    document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-    document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
-    
-    document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
-    document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-    
-    // Initialiser les sélecteurs mobiles
-    const mobileDaySelector = document.getElementById('mobile-day-selector') as HTMLSelectElement;
-    if (mobileDaySelector) {
-      mobileDaySelector.value = 'all';
-    }
-    
-    const mobileTypeSelector = document.getElementById('mobile-type-selector') as HTMLSelectElement;
-    if (mobileTypeSelector) {
-      mobileTypeSelector.value = 'all';
-    }
-    
-    updatePagination();
-    
-    // Initialiser les boutons d'accordéon une fois que les événements sont chargés
-    document.querySelectorAll('.description-toggle').forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        const container = toggle.closest('.description-container');
-        const text = container?.querySelector('.description-text');
-        const showMore = toggle.querySelector('.show-more');
-        const showLess = toggle.querySelector('.show-less');
-        
-        if (toggle.getAttribute('aria-expanded') === 'false') {
-          toggle.setAttribute('aria-expanded', 'true');
-          text?.classList.add('expanded');
-          text?.classList.remove('line-clamp-4');
-          showMore?.classList.add('hidden');
-          showLess?.classList.remove('hidden');
-        } else {
-          toggle.setAttribute('aria-expanded', 'false');
-          text?.classList.remove('expanded');
-          text?.classList.add('line-clamp-4');
-          showMore?.classList.remove('hidden');
-          showLess?.classList.add('hidden');
-        }
-      });
-    });
-    
-    // Initialiser les boutons "Voir les détails" sur mobile
-    document.querySelectorAll('.details-toggle').forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        const card = toggle.closest('.event-card');
-        const details = card?.querySelector('.mobile-details');
-        const showDetails = toggle.querySelector('.show-details');
-        const hideDetails = toggle.querySelector('.hide-details');
-        const icon = toggle.querySelector('.details-icon');
-        
-        if (toggle.getAttribute('aria-expanded') === 'false') {
-          toggle.setAttribute('aria-expanded', 'true');
-          details?.classList.remove('hidden');
-          showDetails?.classList.add('hidden');
-          hideDetails?.classList.remove('hidden');
-          icon?.classList.add('rotate-180');
-        } else {
-          toggle.setAttribute('aria-expanded', 'false');
-          details?.classList.add('hidden');
-          showDetails?.classList.remove('hidden');
-          hideDetails?.classList.add('hidden');
-          icon?.classList.remove('rotate-180');
-        }
-      });
-    });
-
-    // Ajouter un en-tête pour clarifier le type d'événements affichés
-    updateActiveFiltersTitle();
-
-    // Mettre à jour les compteurs d'événements dans les pastilles
-    updateEventCounts();
-  }
-  
-  // Fonction pour attacher les écouteurs d'événements
-  function attachEventListeners() {
-    // Nettoyer les écouteurs précédents si nécessaire
-    
-    // Sélecteur de jour mobile
-    const mobileDaySelector = document.getElementById('mobile-day-selector');
-    if (mobileDaySelector) {
-      mobileDaySelector.addEventListener('change', (e) => {
-        const target = e.target as HTMLSelectElement;
-        const selectedDay = target.value;
-        
-        // Réinitialiser les jours actifs
-        activeDays = [];
-        isAllDaysActive = false;
-        
-        // Mettre à jour l'apparence des boutons de jour (pour la version desktop)
-        document.querySelectorAll('.day-filter-button').forEach(button => {
-          const dayValue = button.getAttribute('data-day');
-          if (dayValue === 'all') {
-            if (selectedDay === 'all') {
-              isAllDaysActive = true;
-              button.setAttribute('data-state', 'active');
-              button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-              button.classList.remove('bg-white', 'text-[#e4451e]');
-            } else {
-              button.setAttribute('data-state', 'inactive');
-              button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-              button.classList.add('bg-white', 'text-[#e4451e]');
-            }
-          } else if (dayValue && dayValue === selectedDay) {
-            button.setAttribute('data-state', 'active');
-            button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-            button.classList.remove('bg-white', 'text-[#e4451e]');
-            activeDays.push(dayValue);
+          if (isExpanded) {
+            descriptionText.classList.add('line-clamp-4');
+            showMore.classList.remove('hidden');
+            showLess.classList.add('hidden');
+            button.setAttribute('aria-expanded', 'false');
           } else {
-            button.setAttribute('data-state', 'inactive');
-            button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-            button.classList.add('bg-white', 'text-[#e4451e]');
+            descriptionText.classList.remove('line-clamp-4');
+            showMore.classList.add('hidden');
+            showLess.classList.remove('hidden');
+            button.setAttribute('aria-expanded', 'true');
           }
         });
-        
-        // Si "all" est sélectionné
-        if (selectedDay === 'all') {
-          isAllDaysActive = true;
-          activeDays = [];
-        }
-        
-        // Réinitialiser la pagination et mettre à jour l'affichage
-        resetPagination();
       });
-    }
-    
-    // Sélecteur de type mobile
-    const mobileTypeSelector = document.getElementById('mobile-type-selector');
-    if (mobileTypeSelector) {
-      mobileTypeSelector.addEventListener('change', (e) => {
-        const target = e.target as HTMLSelectElement;
-        const selectedType = target.value;
-        
-        console.log("Sélection mobile - Type sélectionné:", selectedType);
-        
-        // Réinitialiser les types actifs
-        activeTypes = [];
-        isAllTypesActive = false;
-        
-        // Mettre à jour l'apparence des boutons de type (pour la version desktop)
-        if (selectedType === 'all') {
-          isAllTypesActive = true;
-          document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
-          document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
+
+      // Gestionnaires pour les boutons de détails (mobile)
+      this.container.querySelectorAll('.js-toggle-details').forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const card = button.closest('.event-card');
+          const details = card.querySelector('.mobile-details');
+          const showText = button.querySelector('.js-show-text');
+          const hideText = button.querySelector('.js-hide-text');
+          const icon = button.querySelector('.js-toggle-icon');
           
-          document.querySelectorAll('.type-filter-button').forEach(button => {
-            button.setAttribute('data-state', 'inactive');
-            button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-          });
-        } else {
-          document.getElementById('all-types-button')?.setAttribute('data-state', 'inactive');
-          document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-          
-          // Ajouter directement le type sélectionné à activeTypes
-          activeTypes.push(selectedType);
-          console.log("Type ajouté directement:", selectedType);
-          
-          // Mettre à jour l'apparence des boutons desktop
-          document.querySelectorAll('.type-filter-button').forEach(button => {
-            const typeValue = button.getAttribute('data-type');
-            if (typeValue === selectedType) {
-              button.setAttribute('data-state', 'active');
-              button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-            } else {
-              button.setAttribute('data-state', 'inactive');
-              button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-            }
-          });
-        }
-        
-        console.log("Types actifs après sélection mobile:", activeTypes);
-        
-        // Réinitialiser la pagination et mettre à jour l'affichage
-        resetPagination();
-      });
-    }
-    
-    // Filtres par jour (desktop)
-    document.querySelectorAll('.day-filter-button').forEach(button => {
-      button.addEventListener('click', () => {
-        const dayValue = button.getAttribute('data-day');
-        if (!dayValue) return;
-        
-        const currentState = button.getAttribute('data-state');
-        
-        if (dayValue === 'all') {
-          // Bouton "Tous les jours"
-          isAllDaysActive = true;
-          activeDays = [];
-          
-          // Mettre à jour l'apparence des boutons
-          document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
-          document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-          document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
-          
-          document.querySelectorAll('.day-filter-button:not([data-day="all"])').forEach(btn => {
-            btn.setAttribute('data-state', 'inactive');
-            btn.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-            btn.classList.add('bg-white', 'text-[#e4451e]');
-          });
-        } else {
-          // Jours spécifiques
-          if (currentState === 'active') {
-            // Désactiver le jour si ce n'est pas le dernier actif
-            if (activeDays.length > 1) {
-              button.setAttribute('data-state', 'inactive');
-              button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-              button.classList.add('bg-white', 'text-[#e4451e]');
-              activeDays = activeDays.filter(day => day !== dayValue);
-            }
+          if (details.classList.contains('hidden')) {
+            details.classList.remove('hidden');
+            showText.classList.add('hidden');
+            hideText.classList.remove('hidden');
+            icon.style.transform = 'rotate(180deg)';
           } else {
-            // Activer le jour et désactiver "Tous les jours"
-            isAllDaysActive = false;
-            document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'inactive');
-            document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-            document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('bg-white', 'text-[#e4451e]');
-            
-            button.setAttribute('data-state', 'active');
-            button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-            button.classList.remove('bg-white', 'text-[#e4451e]');
-            
-            if (!activeDays.includes(dayValue)) {
-              activeDays.push(dayValue);
-            }
+            details.classList.add('hidden');
+            showText.classList.remove('hidden');
+            hideText.classList.add('hidden');
+            icon.style.transform = 'rotate(0deg)';
           }
-          
-          // Si aucun jour n'est actif, réactiver "Tous les jours"
-          if (activeDays.length === 0) {
-            isAllDaysActive = true;
-            document.querySelector('.day-filter-button[data-day="all"]')?.setAttribute('data-state', 'active');
-            document.querySelector('.day-filter-button[data-day="all"]')?.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-            document.querySelector('.day-filter-button[data-day="all"]')?.classList.remove('bg-white', 'text-[#e4451e]');
-          }
-        }
-        
-        console.log(`Jours actifs après clic: ${activeDays.join(', ')}`);
-        
-        // Réinitialiser la pagination et mettre à jour l'affichage
-        resetPagination();
-      });
-    });
-    
-    // Bouton "Tous les types" (desktop)
-    const allTypesButton = document.getElementById('all-types-button');
-    if (allTypesButton) {
-      allTypesButton.addEventListener('click', () => {
-        // Activer le bouton "Tous" et désactiver tous les autres
-        isAllTypesActive = true;
-        activeTypes = [];
-        
-        // Mettre à jour l'apparence des boutons
-        document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
-        document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-        
-        document.querySelectorAll('.type-filter-button').forEach(button => {
-          button.setAttribute('data-state', 'inactive');
-          button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
         });
-        
-        // Réinitialiser la pagination et mettre à jour l'affichage
-        resetPagination();
       });
     }
-    
-    // Filtres de type (desktop)
-    document.querySelectorAll('.type-filter-button').forEach(button => {
-      button.addEventListener('click', () => {
-        const filterType = button.getAttribute('data-type');
-        if (!filterType) return;
-        
-        // Désactiver le bouton "Tous" quand on clique sur un type spécifique
-        isAllTypesActive = false;
-        document.getElementById('all-types-button')?.setAttribute('data-state', 'inactive');
-        document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-        
-        const currentState = button.getAttribute('data-state');
-        
-        // Inverser l'état du bouton
-        if (currentState === 'active') {
-          // Désactiver le type
-          button.setAttribute('data-state', 'inactive');
-          button.querySelector('span:last-child')?.setAttribute('data-state', 'inactive');
-          activeTypes = activeTypes.filter(type => type !== filterType);
-          
-          // Si tous les types sont désactivés, réactiver "Tous"
-          if (activeTypes.length === 0) {
-            isAllTypesActive = true;
-            document.getElementById('all-types-button')?.setAttribute('data-state', 'active');
-            document.getElementById('all-types-button')?.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-          }
-        } else {
-          // Activer le type
-          button.setAttribute('data-state', 'active');
-          button.querySelector('span:last-child')?.setAttribute('data-state', 'active');
-          if (!activeTypes.includes(filterType)) {
-            activeTypes.push(filterType);
-          }
-        }
-        
-        console.log(`Types actifs après clic: ${activeTypes.join(', ')}`);
-        
-        // Réinitialiser la pagination et mettre à jour l'affichage
-        resetPagination();
-      });
-    });
-    
-    // Boutons de pagination
-    document.querySelectorAll('#prev-page, #prev-page-mobile, #prev-page-bottom').forEach(button => {
-      button.addEventListener('click', () => {
-        if (currentPage > 1) {
-          currentPage--;
-          updatePagination();
-        }
-      });
-    });
-    
-    document.querySelectorAll('#next-page, #next-page-mobile, #next-page-bottom').forEach(button => {
-      button.addEventListener('click', () => {
-        const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-        if (currentPage < totalPages) {
-          currentPage++;
-          updatePagination();
-        }
-      });
-    });
   }
 
-  // Utiliser astro:page-load pour la compatibilité avec View Transitions
-  document.addEventListener('astro:page-load', () => {
-    console.log("Initialisation du filtre d'événements");
-    attachEventListeners();
-    initializeFilters();
-  });
-  
-  // Conserver DOMContentLoaded pour la compatibilité avec le chargement initial sans ViewTransitions
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!document.body.classList.contains('astro-transition')) {
-      console.log("Initialisation du filtre d'événements (chargement initial)");
-      attachEventListeners();
-      initializeFilters();
-    }
-  });
+  // Initialize utility instances
+  const eventFilters = new EventFilters();
+  const eventPagination = new EventPagination(itemsPerPageConst);
+  const eventRenderer = new EventRenderer();
 
-  function filterEventsByDay(selectedDay) {
-    // Récupérer la liste complète des événements
-    const eventsContainer = document.getElementById('events-container');
-    if (!eventsContainer) return;
-    
-    // Réinitialiser les événements visibles
-    const allEventCards = Array.from(document.querySelectorAll('.event-card'));
-    allEventCards.forEach(card => card.style.display = 'none');
-    
-    // Obtenir tous les événements pour le jour sélectionné
-    const dayEvents = allEventCards.filter(event => {
-      const eventType = event.getAttribute('data-type');
-      const eventDay = event.getAttribute('data-day');
+  // Set up the renderer container
+  const eventsContainer = document.getElementById('events-container');
+  const eventsLoader = document.getElementById('events-loader');
+  eventRenderer.setContainer(eventsContainer);
+
+  // Store all events data
+  let allEventsData = eventsData;
+
+  function updateDisplay() {
+    // Filter events
+    const filteredEvents = allEventsData.filter(eventData => {
+      const event = eventData.event;
+      const typeMatch = eventFilters.isAllTypesActive || (event.type && eventFilters.activeTypes.includes(event.type));
+      const dayMatch = eventFilters.isAllDaysActive || 
+        (event.day && eventFilters.activeDays.some(day => eventFilters.normalizeDay(day) === eventFilters.normalizeDay(event.day))) ||
+        (event.type === 'Stands');
       
-      // Inclure l'événement si:
-      return (
-        // C'est un événement du jour sélectionné
-        eventDay === selectedDay || 
-        // OU c'est un stand (qui doit s'afficher quel que soit le jour)
-        eventType === 'Stands'
-      );
+      return dayMatch && typeMatch;
     });
-    
-    // Définir les événements filtrés pour la pagination
-    filteredEvents = dayEvents;
-    
-    // Trier les événements
-    filteredEvents.sort((a, b) => {
-      const dayOrder = {
-        'Mercredi': 1,
-        'Jeudi': 2,
-        'Vendredi': 3
-      };
+
+    // Sort events
+    const sortedEvents = [...filteredEvents].sort((a, b) => {
+      const dayOrder = { 'Mercredi': 1, 'Jeudi': 2, 'Vendredi': 3 };
       
-      // Les stands sont toujours en dernier
-      const aType = a.getAttribute('data-type');
-      const bType = b.getAttribute('data-type');
+      const aType = a.event.type;
+      const bType = b.event.type;
       
       if (aType === 'Stands' && bType !== 'Stands') return 1;
       if (aType !== 'Stands' && bType === 'Stands') return -1;
-      
-      // Trier d'abord par jour
-      const aDay = a.getAttribute('data-day') || 'Mercredi';
-      const bDay = b.getAttribute('data-day') || 'Mercredi';
+
+      const aDay = a.event.day || 'Mercredi';
+      const bDay = b.event.day || 'Mercredi';
       
       if (aDay !== bDay) {
         return (dayOrder[aDay] || 0) - (dayOrder[bDay] || 0);
       }
-      
-      // Puis par heure
-      const aTime = a.getAttribute('data-time') || '';
-      const bTime = b.getAttribute('data-time') || '';
+
+      const aTime = a.event.time || '';
+      const bTime = b.event.time || '';
       
       if (aTime !== 'À définir' && bTime === 'À définir') return -1;
       if (aTime === 'À définir' && bTime !== 'À définir') return 1;
       
-      if (aTime !== 'À définir' && bTime !== 'À définir' && 
-          aTime !== 'Tous les jours' && bTime !== 'Tous les jours') {
+      if (aTime !== 'À définir' && bTime !== 'À définir' && aTime !== 'Tous les jours' && bTime !== 'Tous les jours') {
         return aTime.localeCompare(bTime);
       }
-      
-      // Tri par type d'événement
+
       if (aType === bType) return 0;
       if (aType === 'Conférences') return -1;
       if (bType === 'Conférences') return 1;
       if (aType === 'Ateliers') return -1;
       if (bType === 'Ateliers') return 1;
-      
       return 0;
     });
-    
-    // Réinitialiser la pagination
-    currentPage = 1;
-    
-    // Mise à jour de la pagination et affichage des événements
-    updatePagination();
-    
-    // Mettre à jour le titre des filtres actifs
-    updateActiveFiltersTitle();
-    
-    // Dispatch d'un événement personnalisé pour informer d'autres composants
-    document.dispatchEvent(new CustomEvent('dayChange', { detail: selectedDay }));
+
+    // Update pagination
+    eventPagination.setEvents(sortedEvents);
+    const currentPageEvents = eventPagination.getCurrentPageEvents();
+
+    // Render events
+    eventRenderer.renderEvents(currentPageEvents);
+
+    // Update UI
+    eventPagination.updatePaginationUI();
+    eventFilters.updateEventCounts();
+    eventFilters.updateActiveFiltersTitle();
+
+    // Show/hide containers
+    if (sortedEvents.length === 0) {
+      document.getElementById('no-events-message')?.classList.remove('hidden');
+      eventsContainer?.classList.add('hidden');
+        } else {
+      document.getElementById('no-events-message')?.classList.add('hidden');
+      eventsContainer?.classList.remove('hidden');
+    }
   }
+
+  function initializeFilters() {
+    const wrapper = document.getElementById('day-filter-wrapper');
+    
+    // Reset filters
+    eventFilters.isAllDaysActive = true;
+    eventFilters.isAllTypesActive = true;
+    eventFilters.activeDays = [];
+    eventFilters.activeTypes = [];
+    eventPagination.resetPage();
+
+    // Reset button states
+    document.querySelectorAll('.day-filter-button').forEach(btn => {
+      const day = btn.dataset.day;
+      if (day === 'all') {
+        btn.dataset.state = 'active';
+        btn.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+        btn.classList.remove('bg-white', 'text-[#e4451e]');
+        } else {
+        btn.dataset.state = 'inactive';
+        btn.classList.add('bg-white', 'text-[#e4451e]');
+        btn.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+      }
+    });
+
+    document.querySelectorAll('.type-filter-button, #all-types-button').forEach(btn => {
+      const countBadge = btn.querySelector('span:last-child');
+
+      if (btn.id === 'all-types-button') {
+        btn.dataset.state = 'active';
+        btn.classList.add('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
+        if (countBadge) {
+          countBadge.classList.add('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+          countBadge.classList.remove('bg-[#e4451e]/10', 'text-[#e4451e]');
+        }
+        } else {
+        btn.dataset.state = 'inactive';
+        btn.classList.remove('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
+        if (countBadge) {
+          countBadge.classList.add('bg-[#e4451e]/10', 'text-[#e4451e]');
+          countBadge.classList.remove('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+        }
+      }
+    });
+
+    // Defer the main processing to allow browser to scroll first
+    setTimeout(() => {
+      updateDisplay();
+      
+      // Hide loader and show content
+      if (wrapper) {
+        wrapper.classList.remove('day-filter-loading');
+      }
+      if (eventsLoader) {
+        eventsLoader.style.display = 'none';
+      }
+      if (eventsContainer) {
+        eventsContainer.classList.remove('hidden');
+      }
+    }, 100);
+  }
+
+  function attachEventListeners() {
+    // Day filter buttons - Support pour sélection multiple
+    document.querySelectorAll('.day-filter-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const clickedDay = button.dataset.day;
+        
+        if (clickedDay === 'all') {
+          // Activer "Tous les jours" et désactiver les autres
+          eventFilters.isAllDaysActive = true;
+          eventFilters.activeDays = [];
+          
+          document.querySelectorAll('.day-filter-button').forEach(btn => {
+            if (btn.dataset.day === 'all') {
+              btn.dataset.state = 'active';
+              btn.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+              btn.classList.remove('bg-white', 'text-[#e4451e]');
+            } else {
+              btn.dataset.state = 'inactive';
+              btn.classList.add('bg-white', 'text-[#e4451e]');
+              btn.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            }
+          });
+        } else {
+          // Désactiver "Tous les jours"
+          const allButton = document.querySelector('[data-day="all"]');
+          allButton.dataset.state = 'inactive';
+          allButton.classList.add('bg-white', 'text-[#e4451e]');
+          allButton.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+          
+          // Toggle le jour sélectionné
+          const isCurrentlyActive = button.dataset.state === 'active';
+          if (isCurrentlyActive) {
+            // Désactiver ce jour
+            button.dataset.state = 'inactive';
+            button.classList.add('bg-white', 'text-[#e4451e]');
+            button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            eventFilters.activeDays = eventFilters.activeDays.filter(day => day !== clickedDay);
+          } else {
+            // Activer ce jour
+            button.dataset.state = 'active';
+            button.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            button.classList.remove('bg-white', 'text-[#e4451e]');
+            if (!eventFilters.activeDays.includes(clickedDay)) {
+              eventFilters.activeDays.push(clickedDay);
+            }
+          }
+          
+          // Si aucun jour n'est sélectionné, réactiver "Tous les jours"
+          if (eventFilters.activeDays.length === 0) {
+            eventFilters.isAllDaysActive = true;
+            allButton.dataset.state = 'active';
+            allButton.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
+            allButton.classList.remove('bg-white', 'text-[#e4451e]');
+          } else if (eventFilters.activeDays.length === 3) {
+            // Si les 3 jours sont sélectionnés, c'est équivalent à "tous les jours"
+            eventFilters.isAllDaysActive = true;
+          } else {
+            eventFilters.isAllDaysActive = false;
+          }
+        }
+        
+        eventPagination.resetPage();
+        updateDisplay();
+      });
+    });
+
+    // Type filter buttons
+    document.querySelectorAll('.type-filter-button, #all-types-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const clickedType = button.dataset.type;
+        const isAllButton = button.id === 'all-types-button';
+
+        if (isAllButton) {
+          eventFilters.isAllTypesActive = true;
+          eventFilters.activeTypes = [];
+            } else {
+          eventFilters.isAllTypesActive = false;
+          if (eventFilters.activeTypes.includes(clickedType)) {
+            eventFilters.activeTypes = eventFilters.activeTypes.filter(t => t !== clickedType);
+          } else {
+            eventFilters.activeTypes.push(clickedType);
+          }
+          if (eventFilters.activeTypes.length === 0) {
+            eventFilters.isAllTypesActive = true;
+          }
+          // Ne pas forcer isAllTypesActive = true quand les 3 types sont sélectionnés
+          // Garder les boutons individuels actifs pour la cohérence visuelle
+        }
+
+        // Update button states
+        document.querySelectorAll('.type-filter-button, #all-types-button').forEach(btn => {
+          const type = btn.dataset.type;
+          const countBadge = btn.querySelector('span:last-child');
+
+          if (eventFilters.isAllTypesActive && eventFilters.activeTypes.length === 0) {
+            // Cas où "Tous les types" est explicitement sélectionné
+            if (btn.id === 'all-types-button') {
+              btn.dataset.state = 'active';
+              btn.classList.add('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
+              if (countBadge) {
+                countBadge.classList.add('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+                countBadge.classList.remove('bg-[#e4451e]/10', 'text-[#e4451e]');
+              }
+            } else {
+              btn.dataset.state = 'inactive';
+              btn.classList.remove('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
+              if (countBadge) {
+                countBadge.classList.add('bg-[#e4451e]/10', 'text-[#e4451e]');
+                countBadge.classList.remove('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+              }
+            }
+          } else {
+            // Cas où des types spécifiques sont sélectionnés
+            if (btn.id === 'all-types-button') {
+              btn.dataset.state = 'inactive';
+              btn.classList.remove('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
+              if (countBadge) {
+                countBadge.classList.add('bg-[#e4451e]/10', 'text-[#e4451e]');
+                countBadge.classList.remove('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+              }
+            } else if (eventFilters.activeTypes.includes(type)) {
+              btn.dataset.state = 'active';
+              btn.classList.add('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
+              if (countBadge) {
+                countBadge.classList.add('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+                countBadge.classList.remove('bg-[#e4451e]/10', 'text-[#e4451e]');
+              }
+            } else {
+              btn.dataset.state = 'inactive';
+              btn.classList.remove('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
+              if (countBadge) {
+                countBadge.classList.add('bg-[#e4451e]/10', 'text-[#e4451e]');
+                countBadge.classList.remove('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+              }
+            }
+          }
+        });
+        
+        eventPagination.resetPage();
+        updateDisplay();
+      });
+    });
+
+    // Pagination buttons
+    document.querySelectorAll('.pagination-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const action = button.id.startsWith('prev') ? 'prev' : 'next';
+        if (action === 'prev') {
+          eventPagination.prevPage();
+        } else {
+          eventPagination.nextPage();
+        }
+        updateDisplay();
+      });
+    });
+    
+    // Mobile selectors
+    const mobileDaySelector = document.getElementById('mobile-day-selector');
+    const mobileTypeSelector = document.getElementById('mobile-type-selector');
+
+    if (mobileDaySelector) {
+      mobileDaySelector.addEventListener('change', (event) => {
+        const selectedDay = event.target.value;
+        eventFilters.isAllDaysActive = selectedDay === 'all';
+        eventFilters.activeDays = eventFilters.isAllDaysActive ? [] : [selectedDay];
+        eventPagination.resetPage();
+        updateDisplay();
+      });
+    }
+
+    if (mobileTypeSelector) {
+      mobileTypeSelector.addEventListener('change', (event) => {
+        const selectedType = event.target.value;
+        eventFilters.isAllTypesActive = selectedType === 'all';
+        eventFilters.activeTypes = eventFilters.isAllTypesActive ? [] : [selectedType];
+        eventPagination.resetPage();
+        updateDisplay();
+      });
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener('astro:page-load', () => {
+    console.log("DayFilter: astro:page-load, initializing with", eventsData.length, "events");
+    allEventsData = eventsData;
+    attachEventListeners();
+    initializeFilters();
+  });
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!document.body.classList.contains('astro-transition')) {
+      console.log("DayFilter: DOMContentLoaded, initializing with", eventsData.length, "events");
+      attachEventListeners();
+      initializeFilters();
+    }
+  });
 </script>

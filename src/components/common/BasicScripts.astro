@@ -3,11 +3,13 @@ import { UI } from 'astrowind:config';
 ---
 
 <script is:inline define:vars={{ defaultTheme: UI.theme }}>
-  if (window.basic_script) {
+  if (window.basic_script_initialized) {
+    if (typeof event !== 'undefined' && event && event.type === 'astro:page-load') {
+      handleAnchorScroll();
+    }
     return;
   }
-
-  window.basic_script = true;
+  window.basic_script_initialized = true;
 
   function applyTheme(theme) {
     if (theme === 'dark') {
@@ -42,9 +44,9 @@ import { UI } from 'astrowind:config';
 
   // NEW ANCHOR SCROLLING FUNCTION
   function handleAnchorScroll() {
-    // console.log('handleAnchorScroll called'); // Re-enabled for debugging
+    // console.log('handleAnchorScroll called');
     const hash = window.location.hash;
-    // console.log('Current hash:', hash); // Re-enabled for debugging
+    // console.log('Current hash:', hash);
 
     if (hash) {
       requestAnimationFrame(() => {
@@ -77,8 +79,9 @@ import { UI } from 'astrowind:config';
             });
             // console.log('Scrolled to:', offsetPosition);
           }
-        } catch (e) {
-          // console.warn(`Could not scroll to element with ID: ${hash.substring(1)}`, e);
+        } catch {
+          // Catch block is intentionally empty as the error is not critical for page function.
+          // console.warn(`Could not scroll to element with ID: ${hash.substring(1)}`); // Retain if silent non-scroll is an issue
         }
       });
     }
@@ -182,9 +185,6 @@ import { UI } from 'astrowind:config';
         ticking = true;
       }
     });
-
-    // CALL THE NEW ANCHOR SCROLLING LOGIC
-    handleAnchorScroll();
   };
   const onPageShow = function () {
     document.documentElement.classList.add('motion-safe:scroll-smooth');
@@ -198,21 +198,16 @@ import { UI } from 'astrowind:config';
     document.querySelector('#header nav')?.classList.add('hidden');
   };
 
-  window.onload = () => {
-    onLoad(); // Includes handleAnchorScroll()
-    if (window.Observer && typeof window.Observer.start === 'function') { // Check if Observer is defined
-      Observer.start();
-    }
-  };
-  window.onpageshow = onPageShow;
+  window.addEventListener('DOMContentLoaded', () => {
+    onLoad();
+    handleAnchorScroll();
+  });
 
-  document.addEventListener('astro:after-swap', () => {
+  document.addEventListener('astro:page-load', (_event) => {
     initTheme();
-    onLoad(); // Includes handleAnchorScroll()
+    onLoad();
     onPageShow();
-    if (window.Observer && typeof window.Observer.start === 'function') { // Check if Observer is defined
-      Observer.start();
-    }
+    handleAnchorScroll();
   });
 
   // ADD EVENT LISTENER FOR HASH CHANGES

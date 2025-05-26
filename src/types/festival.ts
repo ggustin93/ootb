@@ -1,7 +1,7 @@
 export type FestivalDay = 'Mercredi' | 'Jeudi' | 'Vendredi';
 export type EventType = 'Conférences' | 'Ateliers' | 'Stands';
 
-export interface Event {
+export interface FestivalEvent {
   id: string;
   title: string;
   description: string;
@@ -27,5 +27,5 @@ export interface Event {
 }
 
 export interface EventsByDay {
-  [day: string]: Event[];
+  [day: string]: FestivalEvent[];
 } 

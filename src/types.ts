@@ -101,4 +101,17 @@ export interface ContentTypeConfig {
   color: string;
   icon: string;
   badgeClass: string;
+}
+
+// Call To Action for buttons
+export interface CallToAction {
+  text: string; // For the button's visible text
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'blue' | 'outline-blue' | 'premium-primary' | 'premium-secondary' | 'card' | 'outline-podcast' | 'outline-tv';
+  icon?: string;
+  target?: string;
+  // Add any other Button props you anticipate using for header actions, e.g.:
+  // id?: string;
+  // disabled?: boolean;
+  // type?: 'button' | 'submit' | 'reset';
 } 

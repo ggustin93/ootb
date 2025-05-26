@@ -115,7 +115,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
                     label={label}
                     variant={variant}
                     client:load
-                    openOnLoad={Astro.url.hash === '#tickets'}
+                    _openOnLoad={Astro.url.hash === '#tickets'}
                     className="w-full sm:w-auto"
                   />
                 );

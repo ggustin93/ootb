@@ -15,7 +15,7 @@
 ## How It Should Work
 The platform (`outofthebooks.com`) should function as an intuitive, engaging, and reliable central hub for the "Out of the Books" community and its offerings.
 - **Content Discovery**: Users can easily find, filter, and consume a wide array of educational content (blog posts, podcasts, videos, fiches).
-- **Event Hub**: Comprehensive information, scheduling, and ticketing (if applicable) for the annual festival and other events are clear and accessible.
+- **Event Hub**: Comprehensive information, scheduling, and ticketing (if applicable) for the annual festival and other events are clear and accessible. The event filtering system is designed to be highly intuitive, with dynamic titles that clearly reflect current selections and smart defaults that enhance usability (e.g., displaying "Tous les événements" when all options are chosen).
 - **Community Portal**: Acts as a gateway to the "Out of the Books" community, directing users to relevant social channels and newsletters, fostering a sense of belonging.
 - **Project Submission & Showcase**: The "Appel à projets" section is straightforward, encouraging submissions and highlighting supported projects.
 - **Information Resource**: Clearly presents the organization's mission, vision, values, team, and partners, building trust and transparency.
@@ -24,8 +24,8 @@ The platform (`outofthebooks.com`) should function as an intuitive, engaging, an
 ## User Experience Goals
 - **Inspiration & Empowerment**: Users should feel inspired by the content and community, and empowered with practical ideas and resources they can apply.
 - **Connection & Belonging**: Users should feel part of a supportive and forward-thinking educational community.
-- **Ease of Access & Navigation**: The platform must be intuitive, fast, and accessible across all devices (fully responsive, high performance).
+- **Ease of Access & Navigation**: The platform must be intuitive, fast, and accessible across all devices (fully responsive, high performance). This includes clear and efficient mechanisms for filtering and navigating complex information like event schedules.
 - **Engagement**: Content and platform features should encourage repeat visits, active participation (where applicable), and sharing.
-- **Clarity & Trust**: Information should be presented clearly, and the platform should feel reliable and professional.
+- **Clarity & Trust**: Information should be presented clearly, and the platform should feel reliable and professional. Filter states and results should be unambiguous.
 - **Accessibility**: Adherence to high accessibility standards (WCAG guidelines) ensures inclusivity for all users.
 - **Pleasant Visual Experience**: Modern design, including features like dark mode, enhances user comfort. 

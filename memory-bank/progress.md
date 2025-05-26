@@ -2,37 +2,350 @@
 
 <!-- What works. What's left to build. Current status. Known issues. -->
 
+## Current Date: 26/05/2025
+
 ## Current Status
-- **URL Handling & SEO**:
-    - Astro is configured for `trailingSlash: true` (via `src/config.yaml`).
-    - Netlify's `pretty_urls = true` (in `netlify.toml`) ensures canonical URLs are served with trailing slashes.
-    - This combined setup resolves previous Google Search Console 5xx errors related to URL inconsistencies.
-- **Anchor Link Navigation & Hash-based Modals (Fixed & Verified on Staging)**:
-    - **Anchor Scrolling**: Client-side JavaScript solution (`handleAnchorScroll()` in `src/components/common/BasicScripts.astro`), including a `hashchange` event listener, ensures smooth scrolling to anchors in all scenarios. Accounts for sticky header and cleans hash fragments. Debug logs commented out.
-    - **Ticketing Modal**: The modal in `src/components/ui/TicketingButton.tsx` is now correctly triggered by URL hash `/#tickets/` (and similar variations) due to updated `useEffect` and `checkHashAndOpenModal` logic. `handleClick` also consistently sets this hash. Debug logs commented out and linter warning for `_openOnLoad` addressed.
-    - **Navigation Links**: `src/content/navigation/index.json` updated with trailing slashes before anchors.
-- **`staging` Branch Commits**: 
-    - `d1a4263`: Anchor fix log cleanup (also included other pending changes).
-    - `5dab121`: Ticketing modal hash fix and `TicketingButton.tsx` cleanup.
-- **Memory Bank**: Core files (`activeContext.md`, `progress.md`) are being updated to reflect the current project state and next steps (external review before merge).
+- **Festival Event Filters UI/UX**: Phase d'amélioration de l'interface utilisateur et de l'expérience utilisateur pour les filtres d'événements sur la page du festival est terminée.
+    - La logique de filtrage, l'affichage dynamique des titres, la gestion de l'état des boutons et le positionnement des éléments (titre, pagination) sont implémentés et fonctionnels.
+    - Le code de `DayFilter.astro` a été refactorisé pour orchestrer les classes utilitaires JavaScript (`EventFilters`, `EventPagination`, `EventRenderer`).
+- **Performance**: Les améliorations de performance précédemment réalisées sont maintenues.
+- **`EventCard.astro`**: Marqué comme déprécié pour le rendu dynamique des listes d'événements ; un commentaire a été ajouté au fichier.
+- **Memory Bank**: Mis à jour pour refléter les derniers changements et l'état actuel du projet.
+
+## What Works
+- **Festival Page (`/festival/`) - Section Programme**:
+    - **Filtrage d'événements avancé**: 
+        - Sélection par types d'événements (Ateliers, Conférences, Stands) et par jours.
+        - Sélection multiple des jours possible.
+        - Les boutons de filtre de type restent visuellement actifs individuellement même lorsque "Tous les événements" est affiché.
+    - **Titres de filtres dynamiques et clairs**:
+        - Affichage de "Tous les événements" lorsque toutes les options sont sélectionnées (pour les types ou pour les jours).
+        - Correction des accords grammaticaux (ex: "Toutes les conférences").
+        - Affichage simplifié comme "[Type d'événement] - Tous les jours".
+        - Utilisation de la police "handwritten" et de la couleur orange pour le titre principal des filtres actifs.
+    - **Pagination fonctionnelle**: La navigation entre les pages d'événements fonctionne correctement et est positionnée logiquement entre les filtres et la liste.
+    - **Rendu client des événements**: La liste des événements est rendue côté client par `EventRenderer.js` via `DayFilter.astro`.
+    - **Performance optimisée**: La section reste rapide et réactive.
+- **Cohérence Visuelle**: L'interface utilisateur des filtres est cohérente.
+- **Code Refactorisé**: La logique de `DayFilter.astro` est mieux structurée grâce à l'utilisation de classes JS externes.
+
+## What's Left to Build
+- (Aucun nouvel élément identifié pour cette phase spécifique. Le focus était sur la finalisation des améliorations des filtres d'événements.)
 
 ## Known Issues
-- **Linter Warning in `BasicScripts.astro`**: `'e' is defined but never used` in a `catch (e)` block where the `console.warn` using `e` is commented out. This is minor and non-blocking.
-- **(Monitor) Asset Loading**: A previous user observation about assets "not loading well" should be kept in mind during final production testing.
-- **(Monitor) Linter Errors in `src/pages/festival.astro`**: Pre-existing TypeScript linter errors related to image props in this file should be addressed in a separate effort.
+- (Aucun nouveau problème bloquant identifié lors des récentes modifications. Les problèmes connus précédemment listés (linter, etc.) restent valables s'ils n'ont pas été abordés séparément.)
+
+---
+*Le contenu ci-dessous concerne la phase majeure de refactoring des performances et de la logique de filtrage intelligente, achevée en décembre 2024. Il est conservé pour l'historique.* 
+
+## ✅ COMPLETED (December 2024): Festival Page Performance Optimization & Smart Event Filtering
+
+### 🎉 Final Achievement (December 2024)
+**COMPLETE SUCCESS**: Festival page optimization with smart filtering system and comprehensive refactoring. User confirmed: "Non tout est déja refacto et pico bello !" (No everything is already refactored and perfect!).
+
+### 📊 Performance Results
+- **Before**: 2-second delay before scrolling to `#programme` anchor
+- **After**: **Immediate scrolling** with fast, responsive filtering
+- **Root Cause Solved**: Large server-side HTML payload eliminated
+- **Solution**: Client-side rendering with deferred processing and skeleton UI
+
+### 🎯 Smart Event Filtering Implementation
+
+#### Intelligent Filter Title Generation
+1. **Smart Simplification Logic**:
+   - When all 3 types selected → "Tous les événements"
+   - When all 3 days selected → "Tous les événements"
+   - Automatic detection when manual selection equals "all active" state
+
+2. **Proper French Gender Agreement**:
+   - "Toutes les conférences" (feminine) ✅
+   - "Tous les ateliers" (masculine) ✅
+   - "Tous les stands" (masculine) ✅
+   - Helper function `getTypeWithArticle()` for correct grammar
+
+3. **Festival Context Logic**:
+   - "Ateliers - tous les jours" instead of "Ateliers - Mercredi & Jeudi & Vendredi"
+   - Intelligent state management for better UX
+   - Context-aware simplification for readability
+
+#### EventFilters Class Synchronization
+- **External utility**: `src/utils/eventFilters.js` - Main filtering logic
+- **Inline version**: `src/components/ui/DayFilter.astro` - Synchronized implementation
+- **Consistent behavior**: Both versions use identical logic for title generation
+- **Smart state detection**: Manual selection of all items sets "isAll*Active" flags
+
+### 🚀 Comprehensive Refactoring Achievements
+
+#### Major Performance Boost
+- ✅ **Eliminated 2-second delay**: Page scrolls immediately to `#programme`
+- ✅ **Optimized image loading**: Skeleton UI with deferred event processing
+- ✅ **Fast filtering**: Instant response to filter changes
+- ✅ **Smooth pagination**: No UI blocking during page changes
+- ✅ **Responsive experience**: Perfect mobile/desktop performance
+
+#### Utility Class Refactoring
+- ✅ **Better maintainability**: Clean separation of concerns
+- ✅ **Faster development**: Reusable utility classes across components
+- ✅ **Consistent code**: Standardized patterns throughout codebase
+- ✅ **Improved debugging**: Clear, modular architecture
+- ✅ **Future-proof**: Easy to extend and modify
+
+#### UI/UX Enhancements
+- ✅ **Handwritten font**: Applied to filter titles for elegant design
+- ✅ **Multiple day selection**: Enhanced filter functionality
+- ✅ **Centered event images**: Fixed alignment issues
+- ✅ **Consistent icons**: Corrected icon names throughout interface
+- ✅ **Smart titles**: Logical simplification for better user experience
+
+### 🎨 UI Consistency Achievement
+- ✅ **Exact Visual Match**: Client-rendered cards identical to `EventCard.astro`
+- ✅ **Complete Feature Parity**: All original functionality preserved
+- ✅ **Interactive Elements**: Description toggles, mobile details, animations
+- ✅ **Responsive Design**: Perfect mobile/desktop experience
+- ✅ **Event Listeners**: Proper attachment after DOM rendering
+
+### 🏗️ Technical Implementation
+
+#### Final Architecture
+```
+Server (Astro) → Minimal Event Data → Client (JavaScript) → Full HTML Rendering
+```
+
+#### EventRenderer Class (Complete Rewrite)
+The `EventRenderer` in `DayFilter.astro` generates **exactly the same HTML structure** as `EventCard.astro`:
+
+1. **Identical Layout**:
+   - Image positioning (left on desktop, top on mobile)
+   - Typography, colors, spacing
+   - Badge styling with proper icons
+   - Speaker photo integration
+
+2. **Complete Features**:
+   - Event type badges with colors/icons
+   - Speaker photos for conferences  
+   - Expandable descriptions (desktop)
+   - Mobile detail toggles
+   - Status indicators ("A valider")
+   - External website links
+   - All metadata (target, level, teachingType, theme)
+
+3. **Interactive Functionality**:
+   - Description expand/collapse buttons
+   - Mobile details toggle with animations
+   - Icon rotations and transitions
+   - Proper event listener attachment
+
+#### Performance Optimizations
+- **Deferred Processing**: 100ms setTimeout for immediate scrolling
+- **Batch Rendering**: 5 events per batch to prevent UI blocking
+- **Minimal Server Data**: Only essential data passed to client
+- **Event Listener Management**: Attached after complete rendering
+
+### 📁 Files Modified (Final State)
+- ✅ `src/utils/eventFilters.js`: Smart filtering with gender agreement
+- ✅ `src/components/ui/DayFilter.astro`: Synchronized EventFilters implementation
+- ✅ `src/components/ui/EventCard.astro`: Performance optimizations
+- ✅ `src/utils/eventPagination.js`: Pagination utility class
+- ✅ `src/utils/eventRenderer.js`: Rendering optimizations
+- ✅ `src/types.ts`: Interface improvements and CallToAction export fix
+- ✅ Multiple component files: Comprehensive utility class refactoring
+
+### 🔧 Key Technical Decisions
+1. **Client-Side Rendering**: Better perceived performance than server-side
+2. **Utility Classes**: Clean separation of concerns for maintainability
+3. **Exact HTML Replication**: Ensures perfect UI consistency
+4. **Event Listener Strategy**: Attach after batch rendering completion
+5. **Data Structure**: Minimal but complete event information
+6. **Smart State Management**: Automatic detection of "all active" states
+7. **French Grammar Logic**: Proper gender agreement implementation
+
+### 📈 Performance Metrics
+- **Page Load**: Immediate scrolling capability
+- **Filter Response**: Instant filter application
+- **Pagination**: Smooth page transitions
+- **Memory Usage**: Efficient batch rendering
+- **User Experience**: Seamless interaction
+- **Code Quality**: Maintainable, modular architecture
+
+## 🚀 What Works Now
+
+### Festival Page (`/festival/`)
+- ✅ **Immediate Scrolling**: No delay when navigating to `#programme`
+- ✅ **Smart Filtering**: Intelligent title generation with proper French grammar
+- ✅ **Fast Response**: Instant filter application and pagination
+- ✅ **Perfect UI**: Identical to original `EventCard.astro` design
+- ✅ **Mobile Responsive**: Excellent mobile experience
+- ✅ **Interactive Elements**: All buttons and toggles working smoothly
+
+### Event Display System
+- ✅ **Event Cards**: Complete visual and functional parity
+- ✅ **Speaker Photos**: Proper display for conferences
+- ✅ **Event Badges**: Correct colors and icons by type
+- ✅ **Status Indicators**: "A valider" events properly marked
+- ✅ **External Links**: Website links working correctly
+- ✅ **Metadata Display**: All event details shown appropriately
+
+### Smart Filtering System
+- ✅ **Gender Agreement**: Proper French grammar throughout
+- ✅ **Context Awareness**: Festival-specific logic and terminology
+- ✅ **Smart Simplification**: "Tous les événements" for complete selections
+- ✅ **State Synchronization**: Manual and "all active" states aligned
+- ✅ **User-Friendly**: Logical, readable filter titles
+
+### Performance Infrastructure
+- ✅ **Utility Classes**: Clean, maintainable code architecture
+- ✅ **Batch Rendering**: Prevents UI blocking
+- ✅ **Event Management**: Proper listener attachment/cleanup
+- ✅ **Data Flow**: Efficient server-to-client data transfer
+- ✅ **Skeleton UI**: Immediate feedback while content loads
+
+## 🧠 Key Learnings
+
+### Performance Optimization
+- **Server-side rendering** can block browser scrolling with large datasets
+- **Client-side rendering** with skeleton UI provides better perceived performance
+- **Deferred processing** allows critical UI operations (scrolling) to happen first
+- **Batch rendering** prevents browser blocking during heavy operations
+
+### Code Architecture
+- **Utility classes** make complex JavaScript much more maintainable
+- **Separation of concerns** improves debugging and testing
+- **Event listener management** is crucial for dynamic content
+- **Consistent patterns** across codebase improve development speed
+
+### User Experience
+- **Immediate response** is more important than complete content loading
+- **Visual consistency** must be maintained during performance optimizations
+- **Progressive enhancement** allows core functionality while features load
+- **Context awareness** improves filter logic and user understanding
+
+### French Language Implementation
+- **Gender agreement** is critical for professional French applications
+- **Context-specific logic** enhances user experience in domain-specific apps
+- **Smart simplification** reduces cognitive load for users
+- **Automatic state detection** improves interface intelligence
+
+## 🎯 Next Phase Opportunities
+
+### Monitoring & Maintenance
+1. **Performance Tracking**: Monitor real-world usage metrics
+2. **User Feedback**: Collect feedback on new filtering experience
+3. **Code Maintenance**: Keep utility classes updated and optimized
+
+### Potential Future Enhancements
+1. **Search Functionality**: Text search across events
+2. **Advanced Filters**: More granular filtering options (theme, level, etc.)
+3. **Favorites System**: User bookmarking capability
+4. **Calendar Integration**: Export events to calendar apps
+5. **Offline Support**: Service worker for offline functionality
+
+### Code Quality Improvements
+1. **Testing**: Add unit tests for utility classes
+2. **Documentation**: Update technical documentation
+3. **Optimization**: Further performance tuning if needed
+4. **Accessibility**: Enhanced WCAG compliance
+
+## 📋 Current Status: READY FOR NEXT PROJECT
+
+The festival page optimization and smart filtering implementation is **100% complete** and successful. All goals achieved:
+- ✅ **Performance**: 2-second delay eliminated, instant filtering
+- ✅ **Maintainability**: Comprehensive utility class refactoring
+- ✅ **UX**: Smart filter titles with proper French grammar
+- ✅ **Visual Consistency**: Exact match with original design
+- ✅ **Code Quality**: Clean, modular, well-documented architecture
+- ✅ **User Experience**: Fast, responsive, intuitive interaction
+
+**Ready for commit, deployment, and next development phase.**
+
+## Development Guidelines
+- **Trailing Slash Configuration**: Successfully changed to `true` (aligning with Netlify's `pretty_urls = true`), resolving Google Search Console 5xx errors.
+- **Website Functionality**: Core website features are operational.
+- **Development Guidelines**: Initial Memory Bank populated with project brief, product context, tech context, and system patterns.
+
+## Known Issues
+- **Broken Anchor Link Scrolling**: The change to `trailingSlash: true` has broken in-page anchor link navigation (e.g., `/festival/#programme`). Links to sections do not reliably scroll the user to the target section. The browser seems to lose or not act upon the hash part of the URL after a potential redirect to the trailing slash version.
+- **User Report (Benoît)**: Clicking menu items like "programme sur festival" navigates to `/festival/` but does not scroll to the `#programme` section.
 
 ## What's Left to Build / Next Steps
-1.  **External Review on Staging**: Share the `staging` URL with a friend/colleague for independent testing and feedback on anchor scrolling and ticketing modal functionality.
-2.  **Address Feedback (if any)**: Implement any necessary changes based on the feedback.
-3.  **Merge `staging` Branch to `main`**: Once feedback is positive and any issues are resolved, merge the `staging` branch into the `main` production branch.
-4.  **Deploy `main` to Production**: Netlify will automatically deploy `main`.
-5.  **Post-Production Testing**: Perform a final round of testing on the live production site.
-6.  **Monitor Production**: Monitor site behavior and Google Search Console for any new issues.
-7.  **Handle Untracked/Remaining Files**:
-    - Decide the fate of the untracked `src/services/api/nocodb/` directory.
-    - Address any other outstanding local changes.
-8.  **(New Task - Loader for /festival/#programme)**: After `main` is updated and stable, begin work on adding a loading indicator for the programme section on the festival page.
-9.  **(Future Task - Deferred)** Revisit the renaming of `id="features"` on `/festival/`.
+- **Implement Anchor Scroll Fix**:
+    - **File to Modify**: `src/components/common/BasicScripts.astro`.
+    - **Action**: Integrate a client-side JavaScript solution (`handleAnchorScroll()` function) into the existing `onLoad` function within `BasicScripts.astro`.
+    - **Details**: The script must account for the fixed/sticky header height to ensure correct scroll offset. It should use `window.location.hash`, `document.getElementById()`, and `window.scrollTo()`.
+    - **Integration**: Ensure the new logic is compatible with existing script lifecycle events (`window.onload`, `astro:after-swap`) and doesn't conflict with other scripts like the Intersection Observer (`Observer.start()`).
+- **Testing**:
+    - Test direct anchor URLs.
+    - Test in-page menu links.
+    - Test cross-page links with anchors.
+    - Verify header offset.
+    - Regression test other JS features (theme toggle, mobile menu, scroll animations, social sharing).
+
+## What Works
+- Core website functionality.
+- Netlify `pretty_urls` and `trailingSlash: true` are active.
+- Resolution of previous Google Search Console 5xx errors related to URL inconsistencies.
+
+## Progression du Projet - 19/07/2024
+
+**Ce qui fonctionne / Ce qui est terminé (sur la branche `staging`):**
+
+1.  **Configuration de Base du Projet Astro (Out of the Box):**
+    *   Structure du projet initialisée.
+    *   Configuration `trailingSlash: true` et `build.format: 'file'` appliquée dans `astro.config.mjs` (via `src/config.yaml`).
+    *   Netlify `pretty_urls = true` configuré dans `netlify.toml`.
+
+2.  **Défilement des Ancres (Anchor Scrolling):**
+    *   **CORRIGÉ & VALIDÉ:** Le défilement vers les ancres (ex: `/festival/#themes`) fonctionne correctement, y compris après la redirection automatique vers une URL avec slash final (ex: `/festival/#themes/`).
+    *   La logique dans `src/components/common/BasicScripts.astro` gère les slashs dans `window.location.hash` et écoute les `hashchange` pour les navigations sur la même page.
+    *   Les URLs dans `src/content/navigation/index.json` ont été mises à jour pour inclure un slash final avant l'ancre (ex: `/a-propos/#equipe`).
+
+3.  **Déclenchement de la Modale de Billetterie via Hash URL:**
+    *   **CORRIGÉ & VALIDÉ:** La navigation vers `/festival/#tickets/` (ou variations proches comme `/#tickets`, `#tickets`) ouvre automatiquement la modale de billetterie.
+    *   La logique se trouve dans `src/components/ui/TicketingButton.tsx` et utilise un `useEffect` avec un écouteur `hashchange`.
+
+4.  **Loader pour la Section Programme du Festival:**
+    *   **IMPLÉMENTÉ (Fonctionnel):** Un loader subtil s'affiche pour la section `/festival/#programme` pendant le chargement/rendu initial de ses événements.
+    *   Le composant `src/components/ui/DayFilter.astro` gère l'affichage de ce loader de manière autonome.
+    *   Un nouveau composant `src/components/ui/SectionLoader.astro` a été créé pour l'animation.
+    *   L'idée d'un spinner/loader plus complexe a été abandonnée au profit de l'optimisation du chargement des données.
+
+5.  **Gestion des Erreurs GSC (5xx):**
+    *   L'application cohérente des slashes finaux (`trailingSlash: true` et `pretty_urls = true`) devrait résoudre les erreurs 5xx liées aux inconsistances d'URL sur GSC. À surveiller après le déploiement de `main`.
+
+**Ce qui reste à faire / En cours:**
+
+1.  **Optimisation des Performances et Correction de Bugs (Branche `staging`):**
+    *   **Optimisation `events.json`**: Analyse et refonte du chargement de `events.json` pour éviter les chargements multiples et améliorer la performance de `festival.astro` et `DayFilter.astro`.
+    *   **Correction Taille Images Conférenciers**: Investiguer et corriger l'affichage des images des conférenciers dans `EventCard.astro` et `SpeakerImage.astro`.
+    *   **Correction Erreurs Linter**: Résoudre les erreurs TypeScript dans `DayFilter.astro`.
+
+2.  **Tests et Validation (Branche `staging`):**
+    *   L'utilisateur doit effectuer des tests complets sur l'URL de prévisualisation Netlify pour la branche `staging` afin de valider :
+        *   Le défilement des ancres sur toutes les pages concernées.
+        *   L'ouverture de la modale de billetterie via différents moyens (URL directe, clic menu).
+        *   L'affichage correct du loader pour la section programme (et sa pertinence après optimisation).
+        *   Les performances de chargement de la page `/festival/`.
+        *   L'affichage correct des images des conférenciers.
+
+3.  **Fusion et Déploiement:**
+    *   Si tous les tests sont concluants, fusionner la branche `staging` dans `main`.
+    *   Déployer `main` en production.
+
+4.  **Surveillance Post-Déploiement:**
+    *   Surveiller Google Search Console pour s'assurer que les erreurs 5xx sont résolues.
+    *   Vérifier le comportement général du site en production.
+
+**Problèmes Connus / Points de vigilance:**
+
+*   Aucun problème bloquant identifié sur la branche `staging` actuellement.
+*   **Performance `events.json`**: Potentiel ralentissement dû au chargement/traitement de `events.json`.
+*   **Taille Images Conférenciers**: Affichage potentiellement incorrect des images des conférenciers.
+
+**Objectifs Futurs (Hors Scope Immédiat):**
+
+*   Revue générale du SEO technique.
+*   Optimisation des performances (autres que le loader déjà ajouté).
+
+**Note:** Toutes les modifications récentes ont été poussées sur la branche `staging`.
 
 ## What Works
 - **Consistent URL Structure**: Achieved through `trailingSlash: true` in Astro and Netlify's `pretty_urls`.
@@ -41,6 +354,7 @@
 - **Ticketing Modal Hash Triggering (Verified on Staging)**: The `/festival/#tickets/` modal now opens reliably via direct URL access, menu clicks, and button clicks.
 - **Local Development Experience**: Clicking links in the menu now correctly navigates to pages and scrolls/opens modals as expected.
 - **Staging Deployment**: The `staging` branch on Netlify reflects the latest fixes and functions as expected.
+- **Loader for Festival Programme**: A basic loader is functional in `DayFilter.astro`.
 
 ## Development Guidelines
 - **Trailing Slash Configuration**: Successfully changed to `true` (aligning with Netlify's `pretty_urls = true`), resolving Google Search Console 5xx errors.

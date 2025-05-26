@@ -26,7 +26,55 @@
 - **Naming Convention**: Components are named in PascalCase.
 - **Props**: Clearly documented with TypeScript and JSDoc.
 
-## 3. Routing and Page Generation
+## 3. Utility Class Architecture (Major Enhancement)
+
+### Event Management Utilities
+- **EventFilters Class** (`src/utils/eventFilters.js`):
+    - Smart filter title generation with French gender agreement, including dynamic updates for simplified views (e.g., "Tous les événements", "[Type] - Tous les jours").
+    - Context-aware simplification logic ("Tous les événements" for complete selections).
+    - Manages the state of filter buttons, ensuring visual consistency even when combined selections simplify the main title.
+- **EventPagination Class** (`src/utils/eventPagination.js`):
+    - Clean pagination logic separated from UI components
+    - Configurable page sizes and navigation
+- **EventRenderer Class** (`src/utils/eventRenderer.js`):
+    - Handles the client-side rendering of individual event cards. This class is responsible for generating the HTML structure that was previously defined by the (now deprecated for dynamic lists) `EventCard.astro` component.
+    - Ensures visual parity with the original Astro component design.
+
+### Client-Side Rendering and Orchestration for Event Filters & List
+- The `src/components/ui/DayFilter.astro` component has evolved into an orchestrator for client-side event filtering and display.
+- It initializes and coordinates instances of `EventFilters`, `EventPagination`, and `EventRenderer`.
+- This pattern shifts the responsibility of rendering the event list and managing filter interactions to client-side JavaScript, utilizing the aforementioned utility classes. This approach allows for dynamic updates to the filter titles, button states, and the event list itself without full page reloads, enhancing responsiveness and user experience.
+- The layout and styling of the filter controls, the dynamic filter title, and the pagination controls are managed within `DayFilter.astro`, which then delegates the core logic to the respective utility classes.
+
+### Smart Filtering Patterns
+- **French Language Intelligence**:
+    - Gender agreement: "Toutes les conférences", "Tous les ateliers", "Tous les stands"
+    - Context-specific logic for festival terminology
+    - Smart simplification for better UX
+- **State Synchronization**:
+    - Manual selection of all items automatically sets "isAll*Active" flags
+    - Consistent behavior between external utility and inline implementations
+- **Festival Context Awareness**:
+    - "Ateliers - tous les jours" instead of verbose day listings
+    - Logical title generation based on domain knowledge
+
+## 4. Performance Optimization Patterns
+
+### Client-Side Rendering Strategy
+- **Deferred Processing**: 100ms setTimeout allows immediate scrolling before content rendering
+- **Batch Rendering**: Process events in batches of 5 to prevent UI blocking
+- **Skeleton UI**: Immediate visual feedback while content loads
+- **Event Listener Management**: Proper attachment after DOM elements are created
+
+### Data Flow Optimization
+```
+Server (Astro) → Minimal Event Data → Client (JavaScript) → Full HTML Rendering
+```
+- **Minimal Server Payload**: Only essential data passed to client
+- **Client-Side Enhancement**: Full UI rendering happens on client for better perceived performance
+- **Progressive Enhancement**: Core functionality works, enhanced features load progressively
+
+## 5. Routing and Page Generation
 - **File-System Routing**: Astro uses a file-based routing system. Files in `src/pages/` map to site URLs.
     - Example: `src/pages/festival.astro` -> `outofthebooks.com/festival`.
 - **Dynamic Routes**:
@@ -37,7 +85,7 @@
     - The site is configured with `trailingSlash: true` (Astro config) and Netlify `pretty_urls = true` to enforce consistent trailing slashes on URLs for SEO and canonicalization.
     - A client-side script (`handleAnchorScroll()` in `src/components/common/BasicScripts.astro`), utilizing `onLoad` and `hashchange` event listeners, ensures reliable scrolling to anchors despite potential URL modifications by this setup. Navigation links (`src/content/navigation/index.json`) are also formatted with trailing slashes before anchors.
 
-## 4. Data Flow & State Management
+## 6. Data Flow & State Management
 - **Build-Time Data Fetching**:
     - Scripts in `src/scripts/` (e.g., `build-festival-data.js`) fetch data from NocoDB.
     - Fetched data is processed and often stored as JSON files (e.g., in `src/content/festival/raw-data/`, `src/data/`) or directly consumed by Astro pages/components during the build.
@@ -46,7 +94,12 @@
 - **Client-Side State**: Primarily managed within individual React components (`.tsx`). For more complex client-side state or data fetching (e.g., after initial page load), `src/providers/QueryProvider.tsx` suggests a library like React Query might be used.
 - **Global State (Astro)**: Astro itself is not a state management library in the client-side sense. Global data is typically passed down through props or made available via context during build time.
 
-## 5. Content & Asset Handling Patterns
+### Enhanced State Management Patterns
+- **Smart State Detection**: Automatic recognition when manual selections equal "all active" states
+- **Synchronized State**: Consistent behavior between utility classes and component implementations
+- **Context-Aware State**: State management that understands domain-specific logic (festival context)
+
+## 7. Content & Asset Handling Patterns
 - **Markdown/MDX for Rich Content**: `src/content/post/` uses `.mdx` extensively, allowing for rich text and embedded interactive React components.
 - **JSON for Structured Data**: Configuration, festival data, and other structured content are often stored in `.json` files within `src/content/` and `src/config/`.
 - **Image Handling**:
@@ -57,7 +110,7 @@
     - Images organized in `src/assets/images/`.
 - **Icon System**: Tabler Icons via `astro-icon/components`.
 
-## 6. Performance & Accessibility Patterns
+## 8. Performance & Accessibility Patterns
 - **SSG Core**: Minimizes client-side JavaScript and delivers fast initial page loads.
 - **Image Optimization**: Critical for performance (see Image Handling).
 - **Code Splitting**: Astro automatically splits code for optimal loading.
@@ -74,21 +127,55 @@
     - Resource weight < 500KB per page.
 - **Lighthouse Score Target**: >90 across all categories.
 
-## 7. Configuration Management
+### Advanced Performance Patterns
+- **Perceived Performance**: Immediate response prioritized over complete loading
+- **Batch Processing**: Heavy operations split into non-blocking batches
+- **Skeleton UI**: Immediate visual feedback during loading states
+- **Deferred Enhancement**: Critical functionality first, enhancements after
+
+## 9. Configuration Management
 - **Project Configuration**: `src/config/` directory for TypeScript-based configurations (e.g., `festival.ts`, `nocodb.ts`).
 - **Site-wide Settings**: `src/content/site/settings.json` for general site settings, potentially used by TinaCMS or global components.
 - **Astro Configuration**: `astro.config.mjs` (not in `src/` but at project root) defines Astro integrations, output modes, etc.
 - **Environment Variables**: Handled by Netlify for deployment, documented in `README.md`.
 
-## 8. Modularity and Reusability
+## 10. Modularity and Reusability
 - **Component-Driven**: High degree of modularity achieved through Astro and React components.
 - **Utility Functions**: `src/lib/` and `src/utils/` house reusable functions for tasks like post handling (`posts.ts`), image processing, and general utilities.
 - **Service Layer**: `src/services/` abstracts external API interactions (e.g., NocoDB).
 - **Type Definitions**: `src/types/` ensures consistency and clear contracts between modules.
 
-## 9. API Integrations
+### Enhanced Modularity Patterns
+- **Utility Classes**: Complex logic extracted into reusable, testable classes
+- **Separation of Concerns**: Clear boundaries between filtering, pagination, and rendering logic
+- **Consistent Interfaces**: Standardized patterns across similar functionality
+- **Domain-Specific Logic**: Business rules encapsulated in appropriate utility classes
+
+## 11. Internationalization & Language Patterns
+
+### French Language Support
+- **Gender Agreement**: Proper French grammar implementation throughout the interface
+- **Context-Aware Translation**: Domain-specific terminology for educational festival context
+- **Smart Simplification**: Language-aware logic for better user experience
+- **Cultural Adaptation**: Interface behavior adapted for French-speaking users
+
+## 12. API Integrations
 - **NocoDB**: Primary backend for structured data (events, etc.), accessed via a dedicated service layer.
 - **TinaCMS**: Integrates with the Git repository for content editing.
 - **Cloudinary**: Media asset storage and delivery, likely integrated with TinaCMS.
 - **Brevo**: Email services.
-- **Supabase**: `src/lib/supabase.ts` file exists; however, Supabase is **not currently in active use** according to project owner. Its presence might indicate past consideration or future plans. 
+- **Supabase**: `src/lib/supabase.ts` file exists; however, Supabase is **not currently in active use** according to project owner. Its presence might indicate past consideration or future plans.
+
+## 13. Code Quality Patterns
+
+### Maintainability
+- **Clean Architecture**: Clear separation between data, logic, and presentation layers
+- **Consistent Naming**: Standardized naming conventions across components and utilities
+- **Documentation**: TypeScript interfaces and JSDoc for clear contracts
+- **Modular Design**: Easy to test, debug, and extend individual components
+
+### Performance Monitoring
+- **Lighthouse Integration**: Regular performance auditing
+- **User Experience Metrics**: Focus on perceived performance and responsiveness
+- **Code Splitting**: Optimal loading strategies for different content types
+- **Resource Optimization**: Efficient asset loading and caching strategies 

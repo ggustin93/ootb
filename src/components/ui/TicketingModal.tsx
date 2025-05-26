@@ -38,14 +38,39 @@ export default function TicketingModal({
       }
     };
 
+    // Handle navigation clicks to close modal
+    const handleNavigationClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a[href]') as HTMLAnchorElement;
+      
+      if (link && isOpen) {
+        const href = link.getAttribute('href');
+        // Close modal if navigating to a different page (not just anchors)
+        if (href && !href.startsWith('#') && !href.includes('#tickets')) {
+          onClose();
+        }
+      }
+    };
+
+    // Handle browser navigation (back/forward buttons)
+    const handlePopState = () => {
+      if (isOpen && !window.location.hash.includes('tickets')) {
+        onClose();
+      }
+    };
+
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', handleEscape);
+      document.addEventListener('click', handleNavigationClick);
+      window.addEventListener('popstate', handlePopState);
     }
 
     return () => {
       document.body.style.overflow = '';
       document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('click', handleNavigationClick);
+      window.removeEventListener('popstate', handlePopState);
     };
   }, [isOpen, onClose]);
 

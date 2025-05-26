@@ -16,21 +16,19 @@ export default function TicketingButton({ icon, label, variant, className = '', 
   useEffect(() => {
     const checkHashAndOpenModal = () => {
       const currentHash = window.location.hash;
-      // console.log('TicketingButton: currentHash is', currentHash); // Debug log
       // Check for #tickets, /#tickets, #tickets/, /#tickets/
       if (currentHash === '#tickets' || currentHash === '/#tickets' || currentHash === '#tickets/' || currentHash === '/#tickets/') {
-        // console.log('TicketingButton: Hash match found, opening modal.'); // Debug log
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(() => {
           setIsModalOpen(true);
         }, 100);
-      } else {
-        // console.log('TicketingButton: No hash match for modal.'); // Debug log
       }
     };
 
+    // Check on initial load
     checkHashAndOpenModal();
 
+    // Listen for hash changes
     window.addEventListener('hashchange', checkHashAndOpenModal);
 
     return () => {
@@ -41,18 +39,16 @@ export default function TicketingButton({ icon, label, variant, className = '', 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Consistently set the hash to /#tickets/ to match the primary case we want to trigger
-    window.location.hash = '/#tickets/'; 
-    // No need to call setIsModalOpen(true) here, as the hashchange listener will pick it up
-    // and call checkHashAndOpenModal, which in turn calls setIsModalOpen(true).
+    // Open modal directly on click
+    setIsModalOpen(true);
+    // Also set hash for consistency
+    window.location.hash = '#tickets';
   };
 
   const handleClose = () => {
     setIsModalOpen(false);
     const currentHash = window.location.hash;
-    // console.log('TicketingButton: Closing modal, currentHash is', currentHash); // Debug log
     if (currentHash === '#tickets' || currentHash === '/#tickets' || currentHash === '#tickets/' || currentHash === '/#tickets/') {
-      // console.log('TicketingButton: Clearing hash after modal close.'); // Debug log
       history.pushState("", document.title, window.location.pathname + window.location.search);
     }
   };

@@ -7,46 +7,44 @@
     - Astro is configured for `trailingSlash: true` (via `src/config.yaml`).
     - Netlify's `pretty_urls = true` (in `netlify.toml`) ensures canonical URLs are served with trailing slashes.
     - This combined setup resolves previous Google Search Console 5xx errors related to URL inconsistencies.
-- **Anchor Link Navigation**:
-    - A client-side JavaScript solution (`handleAnchorScroll()` in `src/components/common/BasicScripts.astro`) has been implemented to ensure smooth scrolling to anchors, accounting for the sticky header and potential modifications to the URL hash by the `trailingSlash:true` behavior.
-    - Navigation links in `src/content/navigation/index.json` have been updated to use trailing slashes in paths before the hash (e.g., `/page/#anchor`), resolving 404 errors in local development and ensuring consistency.
-- **Local Development**: Navigation and anchor scrolling are now working correctly.
-- **Memory Bank**: Core files have been reviewed and updated to reflect the current project state and recent fixes.
+- **Anchor Link Navigation (Fixed & Verified on Staging)**:
+    - A client-side JavaScript solution (`handleAnchorScroll()` in `src/components/common/BasicScripts.astro`), including a `hashchange` event listener, ensures smooth scrolling to anchors in all scenarios (initial load, subsequent same-page clicks).
+    - The script accounts for the sticky header and potential trailing slashes in hash fragments.
+    - Debugging `console.log` statements have been commented out from `BasicScripts.astro`.
+    - Navigation links in `src/content/navigation/index.json` have been updated with trailing slashes before anchors (e.g., `/page/#anchor`), resolving local 404s and ensuring consistency.
+- **`staging` Branch Commit (d1a4263)**: The latest commit on `staging` includes the anchor fix (with logs removed) and also incorporated other pending changes:
+    - Deletion of `.cursorrules`.
+    - Modifications to `.gitignore`, `package-lock.json`, `package.json`.
+    - Updates to festival content files (`src/content/festival/*` and `src/content/festival/raw-data/*`).
+- **Memory Bank**: Core files (`activeContext.md`, `progress.md`) are being updated to reflect the current project state.
 
 ## Known Issues
-- **(Monitor) Asset Loading**: A previous user observation about assets "not loading well" needs to be kept in mind during staging and production testing. This is currently not confirmed as an active issue related to recent changes.
-- **(Monitor) Linter Errors**: `src/pages/festival.astro` has some TypeScript linter errors related to image props that should be addressed in a separate effort.
+- **Linter Warning in `BasicScripts.astro`**: `'e' is defined but never used` in a `catch (e)` block where the `console.warn` using `e` is commented out. This is minor and non-blocking.
+- **(Monitor) Asset Loading**: A previous user observation about assets "not loading well" should be kept in mind during final production testing, though not observed as an issue during recent staging tests related to anchor scrolling.
+- **(Monitor) Linter Errors in `src/pages/festival.astro`**: Pre-existing TypeScript linter errors related to image props in this file should be addressed in a separate effort.
 
 ## What's Left to Build / Next Steps
-1.  **Clean Up `BasicScripts.astro`**: Comment out or remove debugging `console.log` statements from the `handleAnchorScroll` function.
-2.  **Create Staging Branch**:
-    - Create a new Git branch (e.g., `staging` or `feat/anchor-scroll-fix`).
-    - Commit all changes:
-        - `src/config.yaml` (ensure `trailingSlash: true` is active).
-        - `src/components/common/BasicScripts.astro` (with `handleAnchorScroll` fix and cleaned logs).
-        - `src/content/navigation/index.json` (updated `href` values).
-        - `memory-bank/activeContext.md` (updated).
-        - `memory-bank/progress.md` (this updated version).
-        - (Potentially `memory-bank/systemPatterns.md` if changes were agreed upon).
-    - Push the branch to the remote repository.
-3.  **Deploy Staging Branch to Netlify**: Configure Netlify to deploy this branch to a test URL.
-4.  **Thorough Testing on Staging URL**:
-    - Verify all navigation links (pages and anchors).
-    - Confirm smooth and accurate anchor scrolling across different pages and browsers.
-    - Check for any console errors.
-    - Perform general regression testing of site functionality.
-5.  **(If Staging Tests Pass)** Merge the staging branch into the main production branch.
-6.  **Monitor Production**: After live deployment, monitor site behavior and Google Search Console.
+1.  **Review and Confirm Changes in Commit `d1a4263`**: Ensure all files included in this commit on the `staging` branch are intended and ready for merging to `main`.
+2.  **Merge `staging` Branch to `main`**: Once confirmed, merge the `staging` branch into the `main` production branch.
+3.  **Deploy `main` to Production**: Netlify will automatically deploy `main`.
+4.  **Post-Production Testing**: Perform a final round of testing on the live production site.
+5.  **Monitor Production**: Monitor site behavior and Google Search Console for any new issues.
+6.  **Handle Untracked/Remaining Files**:
+    - Decide the fate of the untracked `src/services/api/nocodb/` directory (e.g., add to `.gitignore` or commit to `feature/nocodb-refactoring`).
+    - Address any other outstanding local changes not part of the `staging` branch.
 7.  **(Future Task - Deferred)** Revisit the renaming of `id="features"` on `/festival/`.
 
 ## What Works
 - **Consistent URL Structure**: Achieved through `trailingSlash: true` in Astro and Netlify's `pretty_urls`.
 - **Resolution of GSC 5xx Errors**: The consistent URL structure fixed previous GSC 5xx errors.
-- **Anchor Link Scrolling**: Now functional in local development due to:
-    - `handleAnchorScroll()` in `BasicScripts.astro` (handles sticky header and cleans hash).
-    - Updated `href` values in `navigation.json` (prevents 404s in local dev).
+- **Full Anchor Link Scrolling Functionality (Verified on Staging)**:
+    - Scrolling on initial page load with an anchor.
+    - Scrolling when clicking an anchor link on the same page (first time).
+    - Scrolling when clicking subsequent anchor links on the same page (due to `hashchange` listener).
+    - Sticky header is correctly accounted for.
+    - Hash cleaning logic handles potential trailing slashes.
 - **Local Development Experience**: Clicking links in the menu now correctly navigates to pages and scrolls to anchors without 404 errors.
-- **Memory Bank**: Updated to reflect recent fixes and current project status.
+- **Staging Deployment**: The `staging` branch on Netlify reflects the latest fixes and functions as expected regarding anchor navigation.
 
 ## Development Guidelines
 - **Trailing Slash Configuration**: Successfully changed to `true` (aligning with Netlify's `pretty_urls = true`), resolving Google Search Console 5xx errors.

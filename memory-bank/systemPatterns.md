@@ -33,6 +33,9 @@
     - For blog posts, categories, and tags (e.g., `src/pages/[...blog]/[category]/[...page].astro`). Slugs are generated, likely from frontmatter or directory structure.
 - **API Routes**: Server-side functions located in `src/pages/api/` (e.g., `src/pages/api/events.ts`). These can be used for tasks like handling form submissions or proxying requests, though with an SSG focus, their use might be for specific dynamic interactions or build-time data fetching support.
 - **Layouts**: Astro layouts (`src/layouts/`) provide common page structure (HTML shell, headers, footers). Content pages and components are slotted into these layouts.
+- **URL Handling with `trailingSlash: true`**:
+    - The site is configured with `trailingSlash: true` (Astro config) and Netlify `pretty_urls = true` to enforce consistent trailing slashes on URLs for SEO and canonicalization.
+    - A client-side script (`handleAnchorScroll()` in `src/components/common/BasicScripts.astro`), utilizing `onLoad` and `hashchange` event listeners, ensures reliable scrolling to anchors despite potential URL modifications by this setup. Navigation links (`src/content/navigation/index.json`) are also formatted with trailing slashes before anchors.
 
 ## 4. Data Flow & State Management
 - **Build-Time Data Fetching**:

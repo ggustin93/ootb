@@ -7,7 +7,7 @@
 - **Styling**: Tailwind CSS - Utility-first CSS framework for rapid UI development. Custom Tailwind config likely present.
     - Additional handwritten CSS in `src/assets/styles/handwritten.css`.
 - **UI Components**: Primarily Astro components (`.astro`). React components (`.tsx`) are used for dynamic/interactive elements, particularly within MDX content (e.g., `src/components/mdx/react/`).
-- **Language**: TypeScript - For type safety and improved developer experience (strict configuration as per `.cursorrules`). JavaScript for some scripts and client-side interactions.
+- **Language**: TypeScript - For type safety and improved developer experience (strict configuration as per `.cursorrules`). JavaScript for some scripts and client-side interactions (e.g., `src/components/common/BasicScripts.astro` which includes logic for `trailingSlash: true` compatibility and anchor scrolling).
 
 ## 2. Content Management & Data
 - **Primary Data Source (Events, Workshops, etc.)**: NocoDB - An open-source Airtable alternative. Data is fetched via an API.

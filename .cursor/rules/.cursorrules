@@ -1,0 +1,120 @@
+# Guide de développement
+
+## Messages de commit
+
+Les messages de commit doivent suivre la spécification Conventional Commits avec le format suivant :
+`[type][(scope)]: [description]`
+
+### Règles à suivre
+
+- Utiliser un type et un scope optionnel en minuscules (ex: feat, fix, refactor)
+- Limiter la description à 60 caractères maximum pour la lisibilité
+- Le message doit pouvoir être copié directement dans le terminal
+- Inclure la commande git commit complète
+
+### Exemples
+
+- Pour une nouvelle fonctionnalité UI :
+  ```bash
+  git commit -m 'feat(ui): add responsive layout with TailwindCSS'
+  ```
+- Pour un correctif de modal :
+  ```bash
+  git commit -m 'fix(modal): resolve accessibility issues on close'
+  ```
+- Pour une initialisation :
+  ```bash
+  git commit -m 'chore: initialize Astro project with TypeScript'
+  ```
+
+## Guidelines de développement
+
+### Icônes
+- Utiliser les icônes Tabler via `@iconify-json/tabler` et `astro-icon/components`
+- Import : `import { Icon } from 'astro-icon/components'`
+- Exemple : `<Icon name="tabler:arrow-right" class="w-5 h-5" />`
+
+### Images
+- Utiliser le composant `Image.astro` de `~/components/common/Image.astro`
+- Configuration recommandée :
+  - Largeurs : [400, 900]
+  - Tailles : "(max-width: 900px) 400px, 900px"
+  - Ratio : 16:9
+  - Chargement : lazy
+  - Décodage : async
+- Sources d'images approuvées :
+  - Unsplash (licence gratuite)
+  - Pexels (licence gratuite)
+  - Freepik (gratuit avec attribution)
+
+### Formats d'images
+- Privilégier les formats modernes : AVIF en premier choix, WebP en fallback
+- Inclure un fallback minimal en JPG/PNG pour la compatibilité
+- Configuration exemple :
+  ```astro
+  <Image
+    src={import('@/assets/image.avif')}
+    widths={[400, 900]}
+    sizes="(max-width: 900px) 400px, 900px"
+    alt="Description significative"
+    aspectRatio="16:9"
+    loading="lazy"
+    decoding="async"
+    formats={['avif', 'webp', 'jpg']}
+  />
+  ```
+
+### Bonnes pratiques
+- Configuration TypeScript stricte
+- Classes Tailwind uniquement, approche mobile-first
+- Composants atomiques et réutilisables
+- Documentation claire des props
+- Optimisation pour Google Lighthouse
+- Minimisation de la profondeur du DOM
+
+### Performance et Accessibilité
+- Objectif Google Lighthouse : score >90 pour tous les critères
+- Optimisations EcoIndex :
+  - Minimiser la taille du DOM (<800 nœuds)
+  - Réduire les requêtes HTTP (<40 requêtes)
+  - Optimiser le poids des ressources (<500Ko par page)
+- WCAG :
+  - Contraste des couleurs : minimum 4.5:1
+  - Structure sémantique avec landmarks ARIA
+  - Navigation au clavier fluide
+
+### Animations et Transitions
+- Utiliser les classes Tailwind pour les transitions :
+  ```html
+  <button class="transition-all duration-300 ease-in-out hover:scale-105">
+  ```
+- Respecter la préférence `prefers-reduced-motion`
+- Limiter les animations aux interactions essentielles
+
+### Architecture des composants
+- Structure recommandée :
+  ```
+  src/
+    components/
+      common/         # Composants réutilisables
+      features/       # Composants spécifiques aux fonctionnalités
+      layouts/        # Mises en page
+      ui/            # Composants d'interface basiques
+  ```
+- Nommer les composants en PascalCase
+- Documenter les props avec TypeScript et JSDoc
+
+## Style de code
+
+- Inclure des commentaires JSDoc pour les composants
+- Écrire des commentaires sémantiques
+- Suivre les principes SOLID
+- Utiliser Prettier et ESLint
+- Architecture basée sur les fonctionnalités
+
+## Commandes personnalisées
+
+- `/commit` : Génère un message de commit standardisé
+- `/generate-component` : Crée un nouveau composant Astro avec interface TypeScript
+- `/lint` : Lance ESLint et Prettier
+- `/optimize-performance` : Analyse les performances du bundle

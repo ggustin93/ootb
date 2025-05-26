@@ -42,22 +42,22 @@ import { UI } from 'astrowind:config';
 
   // NEW ANCHOR SCROLLING FUNCTION
   function handleAnchorScroll() {
-    // console.log('handleAnchorScroll called');
+    console.log('handleAnchorScroll called');
     const hash = window.location.hash;
-    // console.log('Current hash:', hash);
+    console.log('Current hash:', hash);
 
     if (hash) {
       requestAnimationFrame(() => {
         try {
           let elementId = hash.substring(1);
-          // console.log('Original elementId from hash:', elementId);
+          console.log('Original elementId from hash:', elementId);
           if (elementId.endsWith('/')) {
             elementId = elementId.slice(0, -1);
-            // console.log('Cleaned elementId (trailing slash removed):', elementId);
+            console.log('Cleaned elementId (trailing slash removed):', elementId);
           }
-          // console.log('Looking for element with ID:', elementId);
+          console.log('Looking for element with ID:', elementId);
           const element = document.getElementById(elementId);
-          // console.log('Element found:', element);
+          console.log('Element found:', element);
 
           if (element) {
             const header = document.querySelector('#header[data-aw-sticky-header]');
@@ -65,20 +65,20 @@ import { UI } from 'astrowind:config';
             if (header) {
               headerHeight = header.offsetHeight;
             }
-            // console.log('Header height:', headerHeight);
+            console.log('Header height:', headerHeight);
 
             const elementPosition = element.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-            // console.log('Calculated offsetPosition:', offsetPosition);
+            console.log('Calculated offsetPosition:', offsetPosition);
 
             window.scrollTo({
               top: offsetPosition,
               behavior: 'smooth'
             });
-            // console.log('Scrolled to:', offsetPosition);
+            console.log('Scrolled to:', offsetPosition);
           }
         } catch (e) {
-          // console.warn(`Could not scroll to element with ID: ${hash.substring(1)}`, e);
+          console.warn(`Could not scroll to element with ID: ${hash.substring(1)}`, e);
         }
       });
     }
@@ -214,6 +214,12 @@ import { UI } from 'astrowind:config';
       Observer.start();
     }
   });
+
+  // ADD EVENT LISTENER FOR HASH CHANGES
+  window.addEventListener('hashchange', function() {
+    console.log('hashchange event triggered!');
+    handleAnchorScroll();
+  }, false);
 </script>
 
 <script is:inline>

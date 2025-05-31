@@ -10,7 +10,7 @@
   "festival": {
     "showUnpublishedEvents": false,
     "ticketing": {
-      "modalText": "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.\n",
+      "modalText": "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Nous vous remercions pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.\n",
       "ifpcButtonLabel": "Billetterie IFPC",
       "ifpcButtonUrl": "https://ifpc-fwb.be",
       "weezeventButtonLabel": "Billetterie générale",

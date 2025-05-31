@@ -1,5 +1,15 @@
 import { Collection } from "tinacms";
 
+interface SystemValues {
+  triggerDeployment?: boolean;
+  deploymentTimestamp?: string;
+}
+
+interface MinimalSiteSettingsValues {
+  system?: SystemValues;
+  [key: string]: unknown; // Index signature with unknown
+}
+
 export const siteSettingsCollection: Collection = {
   label: "⚙️ Paramètres généraux",
   name: "siteSettings",
@@ -10,10 +20,12 @@ export const siteSettingsCollection: Collection = {
       create: false,
       delete: false,
     },
-    beforeSubmit: async ({ values }) => {
-      if (values.system?.triggerDeployment) {
-        values.system.deploymentTimestamp = new Date().toISOString();
-        values.system.triggerDeployment = false;
+    beforeSubmit: async ({ values }: { values: MinimalSiteSettingsValues }) => {
+      if (values.system && typeof values.system.triggerDeployment === 'boolean') {
+        if (values.system.triggerDeployment) {
+          values.system.deploymentTimestamp = new Date().toISOString();
+          values.system.triggerDeployment = false;
+        }
       }
       return values;
     }
@@ -136,14 +148,11 @@ export const siteSettingsCollection: Collection = {
           description: "Configuration de la billetterie du festival",
           fields: [
             {
-              type: "string",
+              type: "rich-text",
               name: "modalText",
               label: "Texte du modal de billetterie",
               description: "Texte affiché dans la fenêtre de réservation des tickets",
-              required: true,
-              ui: {
-                component: "textarea"
-              }
+              required: true
             },
             {
               type: "string",

@@ -5,6 +5,7 @@ import GradientHeroSection from './GradientHeroSection.astro';
 import TicketingButton from '../ui/TicketingButton';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import type { ImageMetadata } from 'astro';
+import siteSettings from '~/content/site/settings.json';
 
 interface Button {
   href: string;
@@ -61,6 +62,8 @@ const {
   imageBackgroundColor = '--ootb-orange'
 } = Astro.props;
 
+const ticketingConfig = siteSettings.festival.ticketing;
+
 const getButtonClass = (variant: 'primary' | 'secondary') => {
   if (variant === 'primary') {
     return `inline-flex items-center gap-3 bg-white/90 text-[${imageBackgroundColor}] px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-[${imageBackgroundColor}] hover:text-white border-2 border-[${imageBackgroundColor}] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group text-lg backdrop-blur-sm`;
@@ -114,6 +117,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
                     icon={icon.replace('tabler:', '')}
                     label={label}
                     variant={variant}
+                    ticketingConfig={ticketingConfig}
                     client:load
                     _openOnLoad={Astro.url.hash === '#tickets'}
                     className="w-full sm:w-auto"

@@ -2,13 +2,32 @@
 
 <!-- Current work focus. Recent changes. Next steps. Active decisions and considerations. -->
 
-## Current Date: 26/05/2025
+## Current Date: 31/05/2025
 
-## Current Focus: ✅ COMPLETED - Festival Event Filter UI/UX Enhancements & Final Code Refactor
+## Current Focus: ✅ COMPLETED - TinaCMS Integration for Festival Ticketing Modal
+
+Successfully integrated TinaCMS content management for the festival ticketing modal, enabling the client to easily update ticketing information through a user-friendly rich text editor.
+
+### Key Achievements:
+
+1.  **TinaCMS Schema Configuration**: Rich text field for `modalText` in `tina/siteSettingsCollection.ts`; integrated into centralized site settings.
+2.  **Component Enhancement**: Updated `TicketingModal.tsx` with dual format support (string/rich text), flexible rendering, and enhanced typography (`prose-base`, `leading-relaxed`).
+3.  **Data Flow Integration**: Connected `settings.json` to modal display; seamless CMS-to-UI content propagation; updated TypeScript interfaces.
+
+### Technical Summary:
+-   **Content Flow**: `TinaCMS Editor → settings.json → FestivalHeroSection → TicketingButton → TicketingModal`
+-   **Format Support**: Handles string (with paragraph splitting & escape sequence cleanup) and rich text (TinaMarkdown, future-ready).
+
+### Next Steps:
+-   Comprehensive testing: CMS workflow, cross-browser/device display, performance.
+
+---
+
+## Previous Focus (as of 26/05/2025): ✅ COMPLETED - Festival Event Filter UI/UX Enhancements & Final Code Refactor
 
 This phase focused on refining the user experience of the event filtering system on the festival page and completing the associated code refactoring.
 
-### Recent Changes & Achievements:
+### Recent Changes & Achievements (as of 26/05/2025):
 
 1.  **Filter Title Simplification & Clarity**:
     *   Implemented logic to display "Tous les événements" when all event types and/or all days are selected, replacing concatenated lists.
@@ -31,19 +50,19 @@ This phase focused on refining the user experience of the event filtering system
 5.  **Performance**: 
     *   Continued benefit from the previous major performance refactor, ensuring the UI remains responsive despite new filter logic and display changes.
 
-### Key Files Impacted:
+### Key Files Impacted (as of 26/05/2025):
 *   `src/components/ui/DayFilter.astro`: Major refactoring to implement new UI/UX for filters, title display, and to orchestrate utility classes.
 *   `src/utils/eventFilters.js`: Updated to support new title generation logic and button state management.
 *   `src/utils/eventPagination.js`: Potentially minor adjustments if any for positioning.
 *   `src/utils/eventRenderer.js`: Maintained its role for rendering event cards.
 *   `src/components/ui/EventCard.astro`: Comment added to indicate deprecation for dynamic lists.
 
-### Decisions & Considerations:
+### Decisions & Considerations (as of 26/05/2025):
 *   The shift to more dynamic, client-side managed filter titles and states improves immediate feedback to the user.
 *   Retaining `EventCard.astro` as a design reference is useful for documentation and future static rendering needs.
 *   The current placement of pagination is deemed more logical for navigating paged event results.
 
-## Next Steps:
+### Next Steps (as of 26/05/2025):
 *   Perform a final review of the implemented changes on a staging environment.
 *   Proceed with committing the changes with a detailed commit message.
 *   Consider any further UI/UX refinements based on broader user feedback if available.

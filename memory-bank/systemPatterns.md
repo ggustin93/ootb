@@ -159,14 +159,73 @@ Server (Astro) → Minimal Event Data → Client (JavaScript) → Full HTML Rend
 - **Smart Simplification**: Language-aware logic for better user experience
 - **Cultural Adaptation**: Interface behavior adapted for French-speaking users
 
-## 12. API Integrations
+## 12. TinaCMS Content Management Patterns
+
+### Rich Text Content Management
+- **TinaCMS Schema Configuration** (`tina/siteSettingsCollection.ts`):
+    - Rich text field definitions for client-editable content
+    - Centralized site settings structure for easy management
+    - Type-safe field configurations with descriptions and validation
+    - Integration with site-wide settings (`settings.json`)
+
+### Flexible Content Rendering Architecture
+- **Dual Format Support Pattern**:
+    ```typescript
+    // Support both string and rich text formats
+    modalText: TinaMarkdownContent | string
+    ```
+- **Content Format Detection**:
+    ```javascript
+    if (typeof content === 'string') {
+      // Handle string format with paragraph splitting
+    } else {
+      // Handle rich text with TinaMarkdown component
+    }
+    ```
+- **Escaped Character Handling**:
+    ```javascript
+    // Clean up escaped newlines: \\\n -> \n
+    let cleanText = content.replace(/\\\\n/g, '\n');
+    cleanText = cleanText.replace(/\\\n/g, '\n');
+    ```
+
+### Content Data Flow Pattern
+```
+TinaCMS Editor → settings.json → Astro Component → React Component → User Interface
+```
+
+- **Source**: TinaCMS rich text editor provides user-friendly content editing
+- **Storage**: Content saved to `src/content/site/settings.json`
+- **Integration**: Astro components import and pass content to React components
+- **Rendering**: React components handle flexible content display
+
+### Component Integration Patterns
+- **Settings Integration** (`FestivalHeroSection.astro`):
+    ```javascript
+    import siteSettings from '~/content/site/settings.json';
+    const ticketingConfig = siteSettings.festival.ticketing;
+    ```
+- **Props Passing Pattern**:
+    ```typescript
+    // Astro to React component data flow
+    <TicketingButton ticketingConfig={ticketingConfig} client:load />
+    ```
+- **Type Safety**: TypeScript interfaces ensure consistent data structure across components
+
+### Content Rendering Strategies
+- **Progressive Enhancement**: Core functionality works with basic content, enhanced features with rich text
+- **Graceful Fallbacks**: Automatic handling of missing or malformed content
+- **Format Agnostic**: Components work regardless of content format (string/rich text)
+- **Typography Enhancement**: Consistent styling with Tailwind prose classes
+
+## 13. API Integrations
 - **NocoDB**: Primary backend for structured data (events, etc.), accessed via a dedicated service layer.
 - **TinaCMS**: Integrates with the Git repository for content editing.
 - **Cloudinary**: Media asset storage and delivery, likely integrated with TinaCMS.
 - **Brevo**: Email services.
 - **Supabase**: `src/lib/supabase.ts` file exists; however, Supabase is **not currently in active use** according to project owner. Its presence might indicate past consideration or future plans.
 
-## 13. Code Quality Patterns
+## 14. Code Quality Patterns
 
 ### Maintainability
 - **Clean Architecture**: Clear separation between data, logic, and presentation layers

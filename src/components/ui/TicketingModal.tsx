@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { Icon } from '@iconify/react';
+import { TinaMarkdown, TinaMarkdownContent } from 'tinacms/dist/rich-text';
 
 interface TicketingModalProps {
   id: string;
   isOpen: boolean;
   onClose: () => void;
   ticketingConfig?: {
-    modalText: string;
+    modalText: TinaMarkdownContent | string; // Accept both string and rich text
     ifpcButtonLabel: string;
     ifpcButtonUrl: string;
     weezeventButtonLabel: string;
@@ -14,9 +15,8 @@ interface TicketingModalProps {
   };
 }
 
-// Valeurs par défaut qui correspondent à la structure dans festival.ticketing
 const DEFAULT_CONFIG = {
-  modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.",
+  modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.", // Default as string
   ifpcButtonLabel: "Billetterie IFPC",
   ifpcButtonUrl: "https://ifpc-fwb.be",
   weezeventButtonLabel: "Billetterie générale",
@@ -93,8 +93,32 @@ export default function TicketingModal({
     return false;
   };
 
-  // Séparer le texte en paragraphes
-  const paragraphs = ticketingConfig.modalText.split('\n\n');
+  // Function to render modal text based on type
+  const renderModalText = () => {
+    if (!ticketingConfig.modalText) return null;
+
+    // If it's a string, render as paragraphs
+    if (typeof ticketingConfig.modalText === 'string') {
+      // Clean up escaped newlines: \\\n -> \n
+      let cleanText = ticketingConfig.modalText.replace(/\\\\n/g, '\n');
+      // Also handle any remaining escaped backslashes
+      cleanText = cleanText.replace(/\\\n/g, '\n');
+      
+      const paragraphs = cleanText.split('\n\n').filter(p => p.trim());
+      return (
+        <>
+          {paragraphs.map((paragraph, index) => (
+            <p key={index} className={`text-gray-600 ${index < paragraphs.length - 1 ? 'mb-4' : ''}`}>
+              {paragraph.trim()}
+            </p>
+          ))}
+        </>
+      );
+    }
+
+    // If it's a rich text object, use TinaMarkdown
+    return <TinaMarkdown content={ticketingConfig.modalText} />;
+  };
 
   return (
     <div
@@ -121,12 +145,8 @@ export default function TicketingModal({
           </div>
 
           {/* Content */}
-          <div className="mb-8">
-            {paragraphs.map((paragraph, index) => (
-              <p key={index} className={`text-gray-600 ${index < paragraphs.length - 1 ? 'mb-4' : ''}`}>
-                {paragraph}
-              </p>
-            ))}
+          <div className="mb-8 prose prose-base max-w-none text-gray-600 leading-relaxed">
+            {renderModalText()}
           </div>
 
           {/* Actions */}

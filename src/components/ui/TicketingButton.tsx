@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import TicketingModal from './TicketingModal';
+import type { TinaMarkdownContent } from 'tinacms/dist/rich-text';
+
+// Define the ticketingConfig structure, same as in TicketingModalProps
+interface TicketingConfig {
+  modalText: TinaMarkdownContent | string; // Accept both string and rich text
+  ifpcButtonLabel: string;
+  ifpcButtonUrl: string;
+  weezeventButtonLabel: string;
+  weezeventButtonUrl: string;
+}
 
 interface TicketingButtonProps {
   icon: string;
@@ -8,9 +18,17 @@ interface TicketingButtonProps {
   variant: 'primary' | 'secondary';
   className?: string;
   _openOnLoad?: boolean;
+  ticketingConfig?: TicketingConfig; // <-- Add ticketingConfig prop
 }
 
-export default function TicketingButton({ icon, label, variant, className = '', _openOnLoad = false }: TicketingButtonProps) {
+export default function TicketingButton({ 
+  icon, 
+  label, 
+  variant, 
+  className = '', 
+  _openOnLoad = false, 
+  ticketingConfig // <-- Destructure ticketingConfig
+}: TicketingButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -91,6 +109,7 @@ export default function TicketingButton({ icon, label, variant, className = '', 
         id="ticketing-modal"
         isOpen={isModalOpen}
         onClose={handleClose}
+        ticketingConfig={ticketingConfig} // <-- Pass ticketingConfig to TicketingModal
       />
     </>
   );

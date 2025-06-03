@@ -10,7 +10,7 @@
   "festival": {
     "showUnpublishedEvents": false,
     "ticketing": {
-      "modalText": "Le Festival Out of the Books est reconnu par l'IFPC. Pour vous y inscrire, rendez-vous sur le site de l’IFPC : [https://ifpc-fwb.be](https://l.facebook.com/l.php?u=https%3A%2F%2Fifpc-fwb.be%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBEwN3Q5cklEc1ZwNzhKRk8yUgEeyTKviuTKlCrc7zBQY4z-liDyQb1oyewFzBxKJm2q_64dcrx9ceBca05Vqvw_aem_pnliYQbzGE4aGxyAsBqlKA\\&h=AT0qyWDBhC1zHuozQsKkqXRovi1ydajS4zHkckhem6a-q8n-lxksbrmN0Xot1RmRPFOWmXkf7Ik-Ful4vhxbYRGz4Dy9NGmFd9CjaDyFpTn3kLoaz3r3SOhtPJ05SuqyROweqRG0wKpnSA&__tn__=-UK-R\\&c\\[0]=AT3KL0l2coKvOZg8Q3vogywmOHMgVFxgEJDmQQQAYKYqJOJa2MKQulhL0T2DDLcJEdprG23zv6JOU5UY0BN5ZKlPTvUJXqk9eeyIiBKO0wpP0oeMC0my9E2nbByveAjsQgquZDaNjwb528SZdFaKUYS8PMB9U9jBt14nK6RYAKeL5Ia42adYya1lgcI65yfmPiUjGEV5Oqs7gIKlrKC6ynTH_7ys)  Vous aurez besoin d’une clé d’inscription aux formations (C.I.F.) disponible auprès de votre direction. La référence du code consacré à cette formation porte le numéro: «120102406/53576 ; 53577 et 53578». Pour toute autre inscription, consultez notre site[ ](https://outofthebooks.com/festival/)[https://outofthebooks.com/festival/](https://outofthebooks.com/festival/) . \n",
+      "modalText": "Le Festival Out of the Books est reconnu par l'IFPC. Pour vous y inscrire, rendez-vous sur le site de l’IFPC ci-dessous. Vous aurez besoin d’une clé d’inscription aux formations (C.I.F.) disponible auprès de votre direction. La référence du code consacré à cette formation porte le numéro: «120102406/53576 ; 53577 et 53578». Pour toute autre inscription, cliquez sur \"billetterie générale\". \n",
       "ifpcButtonLabel": "Billetterie IFPC",
       "ifpcButtonUrl": "https://ifpc-fwb.be",
       "weezeventButtonLabel": "Billetterie générale",

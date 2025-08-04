@@ -195,6 +195,12 @@ Required in Netlify:
 
 ## Current Focus Areas
 
+### Production Security System
+- Multi-level safeguard for unpublished events
+- Branch-based security: main/master branch filters unpublished events in production
+- Environment detection: Netlify, Vercel, local development
+- Settings.json integration for showUnpublishedEvents control
+
 ### Performance Patterns
 - Client-side rendering for dynamic content
 - Deferred processing (100ms setTimeout for scrolling)
@@ -211,6 +217,12 @@ Required in Netlify:
 - Gender agreement: "Toutes les conférences", "Tous les ateliers"
 - Context-specific terminology
 - Smart simplification for UX
+
+### Event System Enhancements
+- Fixed event duration logic (conferences 60min, demos 30min)
+- Improved end time calculation (resolved "À définir" issue)
+- Digital demos filtering (exclusive from workshops)
+- French grammar corrections throughout the interface
 
 ## Development Best Practices
 

@@ -165,8 +165,86 @@ function normalizeDay(day) {
 function formatTime(time) {
   if (!time) return 'À définir';
   // Si l'heure est au format HH:mm:ss, on enlève les secondes
-  return time.substring(0, 5);
+  if (typeof time === 'string' && time.length > 5) {
+    return time.substring(0, 5);
+  }
+  return time;
 }
+
+/**
+ * Calcule l'heure de fin à partir d'une heure de début et d'une durée.
+ * @param {string} startTime - L'heure de début au format "HH:mm".
+ * @param {number} durationInMinutes - La durée en minutes.
+ * @returns {string} L'heure de fin au format "HH:mm".
+ */
+function calculateEndTime(startTime, durationInMinutes) {
+  if (!startTime || typeof startTime !== 'string' || !startTime.includes(':') || durationInMinutes == null) {
+    return '';
+  }
+
+  const [hours, minutes] = startTime.split(':').map(Number);
+  if (isNaN(hours) || isNaN(minutes)) {
+    return '';
+  }
+
+  const startDate = new Date();
+  startDate.setHours(hours, minutes, 0, 0);
+
+  const endDate = new Date(startDate.getTime() + durationInMinutes * 60000);
+
+  const endHours = endDate.getHours().toString().padStart(2, '0');
+  const endMinutes = endDate.getMinutes().toString().padStart(2, '0');
+
+  return `${endHours}:${endMinutes}`;
+}
+
+/**
+ * Tests automatiques pour la fonction calculateEndTime
+ */
+function testCalculateEndTime() {
+  const tests = [
+    { start: '09:00', duration: 60, expected: '10:00' },
+    { start: '09:30', duration: 30, expected: '10:00' },
+    { start: '14:45', duration: 90, expected: '16:15' },
+    { start: '23:30', duration: 60, expected: '00:30' }
+  ];
+
+  let allPassed = true;
+  
+  tests.forEach(test => {
+    const result = calculateEndTime(test.start, test.duration);
+    if (result !== test.expected) {
+      console.error(`❌ Test failed: ${test.start} + ${test.duration}min = ${result} (expected ${test.expected})`);
+      allPassed = false;
+    }
+  });
+
+  if (allPassed) {
+    console.log('✅ calculateEndTime function tests passed');
+  }
+  return allPassed;
+}
+
+/**
+ * Détermine la durée d'un événement selon son type et données
+ */
+function getEventDuration(event) {
+  // Priorité 1: champ Durée explicite (en minutes)
+  if (event.Durée && !isNaN(parseInt(event.Durée))) {
+    return parseInt(event.Durée);
+  }
+  
+  // Priorité 2: démos numériques (Village numérique) = 30 minutes
+  if (event.Espaces === 'Village numérique') {
+    return 30;
+  }
+  
+  // Priorité 3: ateliers par défaut = 60 minutes
+  return 60;
+}
+
+// Exécuter les tests au chargement
+testCalculateEndTime();
 
 /**
  * Vérifie si les dossiers d'images des événements sont vides
@@ -208,6 +286,9 @@ function areImageDirectoriesEmpty() {
 async function main() {
   try {
     console.log('🚀 Début de la génération des données du festival...');
+    
+    // Lancer l'auto-test au début du build
+    testCalculateEndTime();
     
     // Créer les répertoires nécessaires
     await createDirectories();
@@ -548,6 +629,7 @@ function convertStandsToEvents(stands) {
       type: 'Stands',
       day: normalizedDay,
       time: 'Toute la journée',
+      endTime: '',
       location,
       speaker: `${stand.Prénom || ''} ${stand.Nom || ''}`.trim() || 'Anonyme',
       organization: '',
@@ -584,7 +666,8 @@ function convertAteliersToEvents(ateliers) {
     
     // Gérer les cas où les champs peuvent être null
     const time = formatTime(atelier.Heure);
-    
+    const endTime = formatTime(atelier["Heure de fin"]) || calculateEndTime(time, getEventDuration(atelier));
+
     // Gérer le cas où Espaces peut être un objet ou une chaîne de caractères
     let location = 'À définir';
     if (atelier.Espaces) {
@@ -609,6 +692,7 @@ function convertAteliersToEvents(ateliers) {
       type: 'Ateliers',
       day: normalizedDay,
       time,
+      endTime,
       location,
       speaker: `${atelier.Prénom || ''} ${atelier.Nom || ''}`.trim() || 'Anonyme',
       organization: atelier.Organisation || '',
@@ -667,7 +751,7 @@ function convertConferencesToEvents(conferences) {
       title = `Conférence ${conference.ID}`;
     }
     
-    // Gérer les cas où Espaces peut être null
+    // Gérer le cas où Espaces peut être null
     let location = 'À définir';
     if (conference.Espaces) {
       location = typeof conference.Espaces === 'object' && conference.Espaces !== null ? 
@@ -684,6 +768,10 @@ function convertConferencesToEvents(conferences) {
     // Extraire le statut
     const status = conference["Statut"] === "Publié" ? "Publié" : "A valider";
     
+    // Logique de durée
+    const duration = conference.Durée || 45; // 45min par défaut pour les conférences
+    const endTime = formatTime(conference["Heure de fin"]) || calculateEndTime(formatTime(conference.Heure), duration);
+    
     return {
       id: `conference-${conference.ID}`,
       title: title || `Conférence ${conference.ID}`,
@@ -691,6 +779,7 @@ function convertConferencesToEvents(conferences) {
       type: 'Conférences',
       day: normalizedDay,
       time: formatTime(conference.Heure),
+      endTime,
       location,
       speaker: `${conference.Prénom || ''} ${conference.Nom || ''}`.trim() || 'Anonyme',
       organization: conference.Organisation || '',

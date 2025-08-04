@@ -40,17 +40,45 @@ export class EventFilters {
 
   filterEvents() {
     const events = Array.from(document.querySelectorAll('.event-card'));
-    
+
     return events.filter(event => {
       const eventType = event.getAttribute('data-type');
       const eventDay = event.getAttribute('data-day');
+      const eventLocation = event.getAttribute('data-location');
+
+      // Logique pour déterminer si un événement est une démo numérique
+      const isDigitalDemo = eventType === 'Ateliers' && eventLocation === 'Village numérique';
       
-      const typeMatch = this.isAllTypesActive || (eventType && this.activeTypes.includes(eventType));
-      const dayMatch = this.isAllDaysActive || 
-        (eventDay && this.activeDays.some(day => this.normalizeDay(day) === this.normalizeDay(eventDay))) ||
-        (eventType === 'Stands');
-      
-      return dayMatch && typeMatch;
+      let typeMatch = false;
+      if (this.isAllTypesActive) {
+        typeMatch = true;
+      } else {
+        // Pour les ateliers, on vérifie s'il s'agit d'une démo numérique
+        if (eventType === 'Ateliers') {
+          if (this.activeTypes.includes('Ateliers') && !isDigitalDemo) {
+            typeMatch = true;
+          } else if (this.activeTypes.includes('Démos numériques') && isDigitalDemo) {
+            typeMatch = true;
+          }
+        } else {
+          typeMatch = this.activeTypes.includes(eventType);
+        }
+      }
+
+      let dayMatch = false;
+      if (this.isAllDaysActive) {
+        dayMatch = true;
+      } else {
+        if (eventType === 'Stands') {
+          dayMatch = this.activeDays.length > 0;
+        } else {
+          dayMatch = this.activeDays.some(activeDay => 
+            this.normalizeDay(activeDay) === this.normalizeDay(eventDay)
+          );
+        }
+      }
+
+      return typeMatch && dayMatch;
     });
   }
 

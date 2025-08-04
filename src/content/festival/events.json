@@ -7,6 +7,7 @@
       "type": "Ateliers",
       "day": "Mercredi",
       "time": "09:30",
+      "endTime": "10:30",
       "location": "Espace atelier",
       "speaker": "François Petit",
       "organization": "",
@@ -28,12 +29,41 @@
       "status": "Publié"
     },
     {
+      "id": "atelier-999",
+      "title": "Démo Numérique: Introduction à l'IA en Classe",
+      "description": "Découvrez comment intégrer des outils d'Intelligence Artificielle simples et efficaces pour personnaliser vos cours et susciter l'engagement des élèves. Cette démo de 30 minutes vous montrera des exemples concrets.",
+      "type": "Ateliers",
+      "day": "Mercredi",
+      "time": "10:00",
+      "endTime": "10:30",
+      "location": "Village numérique",
+      "speaker": "Prof. Turing",
+      "organization": "Institut de Pédagogie Digitale",
+      "image": null,
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Secondaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Secondaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "http://example.com/ia-demo",
+      "contact": {
+        "email": "turing@example.com",
+        "phone": "123456789"
+      },
+      "status": "Publié"
+    },
+    {
       "id": "conference-2",
       "title": "Cultiver le Bien-Être : Vers une École Plus Sereine",
-      "description": "Cette conférence propose une réflexion profonde sur le bien-être des enfants dans l’enseignement, en mettant l’accent sur le développement de l’estime de soi, des compétences émotionnelles et du sentiment de sécurité affective à l’école. À travers les apports des neurosciences, nous explorerons comment le cerveau des enfants réagit au stress, aux relations sociales et à l’environnement scolaire, et comment ces facteurs influencent leurs apprentissages et leur épanouissement.\n\nDes pistes concrètes seront proposées pour créer un climat scolaire apaisé et stimulant, où chaque enfant peut se sentir reconnu, soutenu et en confiance. Un espace où le respect, l’écoute et le lien deviennent des leviers puissants pour apprendre, grandir et s’épanouir ensemble.",
+      "description": "Cette conférence propose une réflexion profonde sur le bien-être des enfants dans l'enseignement, en mettant l'accent sur le développement de l'estime de soi, des compétences émotionnelles et du sentiment de sécurité affective à l'école. À travers les apports des neurosciences, nous explorerons comment le cerveau des enfants réagit au stress, aux relations sociales et à l'environnement scolaire, et comment ces facteurs influencent leurs apprentissages et leur épanouissement.\n\nDes pistes concrètes seront proposées pour créer un climat scolaire apaisé et stimulant, où chaque enfant peut se sentir reconnu, soutenu et en confiance. Un espace où le respect, l'écoute et le lien deviennent des leviers puissants pour apprendre, grandir et s'épanouir ensemble.",
       "type": "Conférences",
       "day": "Mercredi",
       "time": "10:15",
+      "endTime": "11:15",
       "location": "Albert Einstein",
       "speaker": "Jeremy  Clément",
       "organization": "",

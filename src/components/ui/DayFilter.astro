@@ -1,59 +1,73 @@
 ---
-import { days, dayDates, eventTypes } from '~/services/events';
+import { days, dayDates } from '~/services/events';
 import type { EventsByDay, FestivalEvent } from '~/types/festival';
 import { Icon } from 'astro-icon/components';
-// import EventCard from '~/components/ui/EventCard.astro'; // Not used in client-side rendering
-// import SkeletonEventCard from '~/components/ui/SkeletonEventCard.astro'; // Not used in client-side rendering
 
-// Importer directement le fichier de paramètres
-import siteSettings from '~/content/site/settings.json';
+// Définir les types d'événements ici pour inclure les démos
+const eventTypes = ['Conférences', 'Ateliers', 'Démos numériques', 'Stands'];
 
 interface Props {
   events: EventsByDay;
+  initialFilters?: {
+    types?: string[];
+    days?: string[];
+  };
 }
 
-const { events: propsEvents } = Astro.props;
+const { events, initialFilters } = Astro.props;
 
-// Récupérer le paramètre d'affichage des événements non publiés depuis les paramètres du site
-let SHOW_UNPUBLISHED_EVENTS = false;
-
-// Si le paramètre festival.showUnpublishedEvents existe, l'utiliser
-if (siteSettings.festival?.showUnpublishedEvents !== undefined) {
-  SHOW_UNPUBLISHED_EVENTS = siteSettings.festival.showUnpublishedEvents;
-} else {
-  // Sinon, fallback sur la variable d'environnement
-  SHOW_UNPUBLISHED_EVENTS = import.meta.env.SHOW_UNPUBLISHED_EVENTS === 'true' || import.meta.env.DEV;
-}
-
-const serverFilteredEvents: EventsByDay = {};
-for (const day in propsEvents) {
-  if (!SHOW_UNPUBLISHED_EVENTS) {
-    // Ne garder que les événements publiés si l'option est désactivée
-    serverFilteredEvents[day] = propsEvents[day].filter(event => event.status === 'Publié');
-  } else {
-    // Garder tous les événements si l'option est activée
-    serverFilteredEvents[day] = propsEvents[day];
+// Filtrer les événements côté serveur si des filtres initiaux sont fournis
+let serverFilteredEvents = events;
+if (initialFilters?.types?.length || initialFilters?.days?.length) {
+  serverFilteredEvents = {};
+  
+  for (const [day, dayEvents] of Object.entries(events)) {
+    let filteredDayEvents = dayEvents;
+    
+    // Filtrer par type si spécifié
+    if (initialFilters.types?.length) {
+      filteredDayEvents = filteredDayEvents.filter(event => 
+        initialFilters.types!.includes(event.type)
+      );
+    }
+    
+    // Filtrer par jour si spécifié
+    if (initialFilters.days?.length) {
+      if (!initialFilters.days.includes(day)) {
+        continue; // Skip ce jour entièrement
+      }
+    }
+    
+    if (filteredDayEvents.length > 0) {
+      serverFilteredEvents[day] = filteredDayEvents;
+    }
   }
 }
 
-// Utiliser les événements filtrés pour la suite
-export const ITEMS_PER_PAGE = 10;
-
+// Aplatir tous les événements pour calculer les totaux
 const allEventsFlat: FestivalEvent[] = Object.values(serverFilteredEvents).flat();
+
+// Prédéfinir la fonction d'identification pour la réutiliser
+const isDigitalDemo = (event: FestivalEvent) => event.type === 'Ateliers' && event.location === 'Village numérique';
 
 // Compter le nombre d'événements par type
 const eventCounts: Record<string, number> = {
   'all': allEventsFlat.length,
   'programme': allEventsFlat.filter(evt => evt.type === 'Conférences' || evt.type === 'Ateliers').length,
   'Conférences': allEventsFlat.filter(evt => evt.type === 'Conférences').length,
-  'Ateliers': allEventsFlat.filter(evt => evt.type === 'Ateliers').length,
-  'Stands': allEventsFlat.filter(evt => evt.type === 'Stands').length
+  'Ateliers': allEventsFlat.filter(evt => evt.type === 'Ateliers' && !isDigitalDemo(evt)).length,
+  'Démos numériques': allEventsFlat.filter(evt => isDigitalDemo(evt)).length,
+  'Stands': allEventsFlat.filter(evt => evt.type === 'Stands').length,
 };
 
-// Afficher des logs pour le débogage des filtres
-console.log(`Mode événements non publiés: ${SHOW_UNPUBLISHED_EVENTS ? 'Activé' : 'Désactivé'}`);
-console.log(`Nombre total d'événements après filtrage par statut: ${allEventsFlat.length}`);
-console.log(`Événements par type:`, eventCounts);
+// Compter les événements par jour
+const dayCounts: Record<string, number> = {};
+for (const day of days) {
+  dayCounts[day] = serverFilteredEvents[day]?.length || 0;
+}
+
+// Pagination et préparation des données client
+export const ITEMS_PER_PAGE = 10;
 
 // Prepare event data for client-side rendering
 const eventsDataForClient = allEventsFlat.map(event => ({
@@ -64,6 +78,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     type: event.type,
     day: event.day,
     time: event.time,
+    endTime: event.endTime,
     location: event.location,
     speaker: event.speaker,
     organization: event.organization,
@@ -218,7 +233,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           type="button"
           aria-label={`Afficher uniquement les ${type}`}
         >
-          <Icon name={type === 'Conférences' ? 'tabler:presentation' : type === 'Ateliers' ? 'tabler:tool' : 'tabler:building-store'} class="w-4 h-4 md:w-5 md:h-5" />
+          <Icon name={type === 'Conférences' ? 'tabler:presentation' : type === 'Ateliers' ? 'tabler:tool' : type === 'Démos numériques' ? 'tabler:device-desktop' : 'tabler:building-store'} class="w-4 h-4 md:w-5 md:h-5" />
           <span>{type}</span>
           <span class="ml-1 px-2 py-0.5 text-xs rounded-full bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white group-data-[state=active]:text-[#e4451e]">
             {eventCounts[type]}
@@ -455,7 +470,14 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       const counts = {
         all: dayFilteredEvents.length,
         Conférences: dayFilteredEvents.filter(eventData => eventData.event.type === 'Conférences').length,
-        Ateliers: dayFilteredEvents.filter(eventData => eventData.event.type === 'Ateliers').length,
+        Ateliers: dayFilteredEvents.filter(eventData => {
+          const event = eventData.event;
+          return event.type === 'Ateliers' && event.location !== 'Village numérique';
+        }).length,
+        'Démos numériques': dayFilteredEvents.filter(eventData => {
+          const event = eventData.event;
+          return event.type === 'Ateliers' && event.location === 'Village numérique';
+        }).length,
         Stands: dayFilteredEvents.filter(eventData => eventData.event.type === 'Stands').length
       };
 
@@ -640,7 +662,9 @@ const eventsDataForClient = allEventsFlat.map(event => ({
         'tabler:external-link': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`,
         'tabler:users': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
         'tabler:school': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 10v6M2 10l10-5 10 5-10 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12v5c3 0 5.5-1 8-3v-2z"/></svg>`,
-        'tabler:book': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`
+        'tabler:book': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+        'tabler:device-laptop': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16V8a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16V8a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2z"/></svg>`,
+        'tabler:device-desktop': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19h18M5 19V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v12M9 21v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>`
       };
       return icons[iconName] || `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>`;
     }
@@ -654,6 +678,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       const eventType = event.type || 'Conférences';
       const status = event.status || 'Publié';
       const config = this.getEventTypeConfig(eventType);
+      const isDigitalDemo = eventType === 'Ateliers' && event.location === 'Village numérique';
 
       // Créer l'élément principal
       const eventCard = document.createElement('div');
@@ -662,12 +687,11 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       eventCard.setAttribute('data-day', normalizedDay || '');
       eventCard.setAttribute('data-time', event.time || '');
       eventCard.setAttribute('data-status', status);
+      eventCard.setAttribute('data-location', event.location || '');
       
       if (status === 'A valider') {
         eventCard.style.opacity = '0.7';
       }
-
-
 
       // Construire le HTML complet (structure identique à EventCard.astro)
       eventCard.innerHTML = `
@@ -690,23 +714,34 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                 </div>
               `}
             </div>
-            <!-- Badge du type d'événement (visible uniquement sur mobile) -->
-            <div class="absolute top-3 right-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm"
-                 style="
-                   background-color: ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.15)' : 
-                                      eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.15)' : 
-                                      'rgba(22, 163, 74, 0.15)'};
-                   color: ${eventType === 'Conférences' ? '#e4451e' : 
-                           eventType === 'Ateliers' ? '#2563eb' : 
-                           '#16a34a'};
-                   border: 1px solid ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.3)' : 
-                                      eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.3)' : 
-                                      'rgba(22, 163, 74, 0.3)'};
-                 "
-            >
-              ${this.generateIcon(config.icon, 'w-3.5 h-3.5')}
-              ${eventType}
-            </div>
+            
+            <!-- Badge "DÉMO NUMERIQUE" si c'est une démo -->
+            ${isDigitalDemo ? `
+              <div class="absolute top-3 right-3 inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm bg-purple-100 text-purple-800 border border-purple-200">
+                ${this.generateIcon('tabler:device-desktop', 'w-3.5 h-3.5')}
+                Démo numérique
+              </div>
+            ` : ''}
+            
+            <!-- Badge du type d'événement (visible uniquement sur mobile, mais pas pour les démos) -->
+            ${!isDigitalDemo ? `
+              <div class="absolute top-3 right-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm"
+                   style="
+                     background-color: ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.15)' : 
+                                        eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.15)' : 
+                                        'rgba(22, 163, 74, 0.15)'};
+                     color: ${eventType === 'Conférences' ? '#e4451e' : 
+                             eventType === 'Ateliers' ? '#2563eb' : 
+                             '#16a34a'};
+                     border: 1px solid ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.3)' : 
+                                        eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.3)' : 
+                                        'rgba(22, 163, 74, 0.3)'};
+                   "
+              >
+                ${this.generateIcon(config.icon, 'w-3.5 h-3.5')}
+                ${eventType}
+              </div>
+            ` : ''}
           </div>
 
           <!-- Contenu à droite (sur desktop) ou en bas (sur mobile) -->
@@ -731,7 +766,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                 ${event.time ? `
                   <div class="flex items-center">
                     ${this.generateIcon('tabler:clock', 'w-4 h-4 mr-1')}
-                    <span>${eventType === 'Stands' ? 'Tous les jours' : event.time}</span>
+                    <span>${eventType === 'Stands' ? 'Tous les jours' : event.time}${event.endTime && event.endTime !== event.time ? ` - ${event.endTime}` : ''}</span>
                   </div>
                 ` : ''}
                 ${event.location ? `
@@ -1067,7 +1102,27 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     // Filter events
     const filteredEvents = allEventsData.filter(eventData => {
       const event = eventData.event;
-      const typeMatch = eventFilters.isAllTypesActive || (event.type && eventFilters.activeTypes.includes(event.type));
+      
+      // Déterminer si c'est une démo numérique
+      const isDigitalDemo = event.type === 'Ateliers' && event.location === 'Village numérique';
+      
+      let typeMatch = false;
+      if (eventFilters.isAllTypesActive) {
+        typeMatch = true;
+      } else {
+        // Gestion spéciale pour les ateliers et démos numériques
+        if (event.type === 'Ateliers') {
+          if (eventFilters.activeTypes.includes('Ateliers') && !isDigitalDemo) {
+            typeMatch = true; // Atelier classique
+          } else if (eventFilters.activeTypes.includes('Démos numériques') && isDigitalDemo) {
+            typeMatch = true; // Démo numérique
+          }
+        } else {
+          // Pour les autres types (Conférences, Stands)
+          typeMatch = eventFilters.activeTypes.includes(event.type);
+        }
+      }
+      
       const dayMatch = eventFilters.isAllDaysActive || 
         (event.day && eventFilters.activeDays.some(day => eventFilters.normalizeDay(day) === eventFilters.normalizeDay(event.day))) ||
         (event.type === 'Stands');
@@ -1166,7 +1221,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           countBadge.classList.add('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
           countBadge.classList.remove('bg-[#e4451e]/10', 'text-[#e4451e]');
         }
-        } else {
+      } else {
         btn.dataset.state = 'inactive';
         btn.classList.remove('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
         if (countBadge) {
@@ -1254,7 +1309,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
             eventFilters.isAllDaysActive = false;
           }
         }
-        
+
         eventPagination.resetPage();
         updateDisplay();
       });
@@ -1269,7 +1324,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
         if (isAllButton) {
           eventFilters.isAllTypesActive = true;
           eventFilters.activeTypes = [];
-            } else {
+        } else {
           eventFilters.isAllTypesActive = false;
           if (eventFilters.activeTypes.includes(clickedType)) {
             eventFilters.activeTypes = eventFilters.activeTypes.filter(t => t !== clickedType);
@@ -1279,7 +1334,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           if (eventFilters.activeTypes.length === 0) {
             eventFilters.isAllTypesActive = true;
           }
-          // Ne pas forcer isAllTypesActive = true quand les 3 types sont sélectionnés
+          // Ne pas forcer isAllTypesActive = true quand les 4 types sont sélectionnés
           // Garder les boutons individuels actifs pour la cohérence visuelle
         }
 
@@ -1331,7 +1386,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
             }
           }
         });
-        
+
         eventPagination.resetPage();
         updateDisplay();
       });
@@ -1377,7 +1432,6 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
   // Initialize on page load
   document.addEventListener('astro:page-load', () => {
-    console.log("DayFilter: astro:page-load, initializing with", eventsData.length, "events");
     allEventsData = eventsData;
     attachEventListeners();
     initializeFilters();
@@ -1385,7 +1439,6 @@ const eventsDataForClient = allEventsFlat.map(event => ({
   
   document.addEventListener('DOMContentLoaded', () => {
     if (!document.body.classList.contains('astro-transition')) {
-      console.log("DayFilter: DOMContentLoaded, initializing with", eventsData.length, "events");
       attachEventListeners();
       initializeFilters();
     }

@@ -8,6 +8,7 @@ export interface FestivalEvent {
   type: EventType;
   day: FestivalDay;
   time: string;
+  endTime: string;
   location: string;
   speaker: string;
   organization: string;

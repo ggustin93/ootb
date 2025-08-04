@@ -1114,10 +1114,13 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       } else {
         // Gestion spéciale pour les ateliers et démos numériques
         if (event.type === 'Ateliers') {
-          if (eventFilters.activeTypes.includes('Ateliers') && !isDigitalDemo) {
-            typeMatch = true; // Atelier classique
-          } else if (eventFilters.activeTypes.includes('Démos numériques') && isDigitalDemo) {
-            typeMatch = true; // Démo numérique
+          // Debug : afficher les filtres actifs
+          if (isDigitalDemo) {
+            // C'est une démo numérique - elle ne doit s'afficher QUE si "Démos numériques" est sélectionné
+            typeMatch = eventFilters.activeTypes.includes('Démos numériques');
+          } else {
+            // C'est un atelier classique - il ne doit s'afficher QUE si "Ateliers" est sélectionné
+            typeMatch = eventFilters.activeTypes.includes('Ateliers');
           }
         } else {
           // Pour les autres types (Conférences, Stands)

@@ -102,6 +102,8 @@ export class EventFilters {
           return 'Toutes les conférences';
         case 'Ateliers':
           return 'Tous les ateliers';
+        case 'Démos numériques':
+          return 'Toutes les démos numériques';
         case 'Stands':
           return 'Tous les stands';
         default:

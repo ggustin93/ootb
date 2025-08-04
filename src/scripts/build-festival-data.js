@@ -23,14 +23,49 @@ const IS_NETLIFY = process.env.NETLIFY === 'true';
 const FORCE_PRODUCTION = process.env.FORCE_PRODUCTION === 'true';
 const NODE_ENV_PRODUCTION = process.env.NODE_ENV === 'production';
 
+// Détecter la branche avec plusieurs variables possibles
+const BRANCH = process.env.BRANCH || 
+               process.env.NETLIFY_BRANCH || 
+               process.env.HEAD || 
+               process.env.VERCEL_GIT_COMMIT_REF ||
+               'unknown';
+
 // Si nous sommes sur Netlify ou si le mode production est forcé ou si NODE_ENV est production
 const IS_PRODUCTION = IS_NETLIFY || FORCE_PRODUCTION || NODE_ENV_PRODUCTION;
+const IS_MAIN_BRANCH = BRANCH === 'main' || BRANCH === 'master';
+
+// Ajouter un log de débogage pour vérifier toutes les variables de branche
+console.log(`🔍 Variables de branche détectées:`);
+console.log(`   - BRANCH: ${process.env.BRANCH || 'non définie'}`);
+console.log(`   - NETLIFY_BRANCH: ${process.env.NETLIFY_BRANCH || 'non définie'}`);
+console.log(`   - HEAD: ${process.env.HEAD || 'non définie'}`);
+console.log(`   - VERCEL_GIT_COMMIT_REF: ${process.env.VERCEL_GIT_COMMIT_REF || 'non définie'}`);
+console.log(`   - Branche finale utilisée: ${BRANCH}`);
+console.log(`   - Est-ce main/master?: ${IS_MAIN_BRANCH ? 'OUI' : 'NON'}`);
+
+// Charger les settings pour vérifier showUnpublishedEvents
+let showUnpublishedEvents = true; // Par défaut, on montre tout (sécurité pour le dev)
+try {
+  const settingsPath = path.join(ROOT_DIR, 'src/content/site/settings.json');
+  const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+  showUnpublishedEvents = settings?.festival?.showUnpublishedEvents ?? true;
+} catch (error) {
+  console.warn('⚠️ Impossible de charger settings.json, utilisation des valeurs par défaut');
+}
+
+// GARDE-FOU DE SÉCURITÉ: En production sur main, on ne montre JAMAIS les événements non publiés
+if (IS_PRODUCTION && IS_MAIN_BRANCH) {
+  showUnpublishedEvents = false;
+  console.log('🔒 SÉCURITÉ: Branche main en production - événements non publiés masqués');
+}
 
 console.log(`🔧 Environnement de build:`);
 console.log(`   - Netlify: ${IS_NETLIFY ? 'Oui' : 'Non'}`);
 console.log(`   - NODE_ENV: ${process.env.NODE_ENV || 'non défini'}`);
+console.log(`   - Branche: ${BRANCH}`);
 console.log(`   - Force production: ${FORCE_PRODUCTION ? 'Oui' : 'Non'}`);
 console.log(`   - Mode final: ${IS_PRODUCTION ? 'PRODUCTION' : 'DÉVELOPPEMENT'}`);
+console.log(`   - Afficher événements non publiés: ${showUnpublishedEvents ? 'Oui' : 'Non'}`);
 
 // Configuration NocoDB (basée sur src/config/nocodb.ts)
 const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || "https://app.nocodb.com";
@@ -634,6 +669,11 @@ function convertStandsToEvents(stands) {
     const status = stand["Statut"] === "Publié" ? "Publié" : "A valider";
     const theme = stand["Thématique liée"] && stand["Thématique liée"].Title ? stand["Thématique liée"].Title : '';
     
+    // GARDE-FOU: Filtrer les événements non publiés si nécessaire
+    if (!showUnpublishedEvents && status === "A valider") {
+      return null; // Cet événement sera filtré
+    }
+    
     return {
       id: `stand-${stand.ID}`,
       title: stand["Choisissez un titre court"] || `Stand ${stand.ID}`,
@@ -663,7 +703,7 @@ function convertStandsToEvents(stands) {
       status,
       theme
     };
-  });
+  }).filter(Boolean); // Filtrer les valeurs null
 }
 
 // Convertir les ateliers en événements
@@ -698,6 +738,11 @@ function convertAteliersToEvents(ateliers) {
     // Extraire le statut
     const status = atelier["Statut"] === "Publié" ? "Publié" : "A valider";
     
+    // GARDE-FOU: Filtrer les événements non publiés si nécessaire
+    if (!showUnpublishedEvents && status === "A valider") {
+      return null; // Cet événement sera filtré
+    }
+    
     return {
       id: `atelier-${atelier.ID}`,
       title: atelier["Choisissez un titre court"] || `Atelier ${atelier.ID}`,
@@ -726,7 +771,7 @@ function convertAteliersToEvents(ateliers) {
       },
       status
     };
-  });
+  }).filter(Boolean); // Filtrer les valeurs null
 }
 
 // Convertir les conférences en événements
@@ -781,6 +826,11 @@ function convertConferencesToEvents(conferences) {
     // Extraire le statut
     const status = conference["Statut"] === "Publié" ? "Publié" : "A valider";
     
+    // GARDE-FOU: Filtrer les événements non publiés si nécessaire
+    if (!showUnpublishedEvents && status === "A valider") {
+      return null; // Cet événement sera filtré
+    }
+    
     // Logique de durée
     const duration = conference.Durée || 60; // 60min (1h) par défaut pour les conférences
     const formattedEndTime = formatTime(conference["Heure de fin"]);
@@ -814,7 +864,7 @@ function convertConferencesToEvents(conferences) {
       },
       status
     };
-  });
+  }).filter(Boolean); // Filtrer les valeurs null
 }
 
 // Télécharger et traiter les images des événements

@@ -227,6 +227,13 @@ function testCalculateEndTime() {
 
 /**
  * Détermine la durée d'un événement selon son type et données
+ * @param {Object} event - L'événement à analyser
+ * @returns {number} Durée en minutes
+ * 
+ * Logique de priorité :
+ * 1. Champ "Durée" explicite dans NocoDB (en minutes)
+ * 2. Démos numériques (Village numérique) = 30 minutes
+ * 3. Ateliers normaux et conférences = 60 minutes (1h)
  */
 function getEventDuration(event) {
   // Priorité 1: champ Durée explicite (en minutes)
@@ -235,11 +242,16 @@ function getEventDuration(event) {
   }
   
   // Priorité 2: démos numériques (Village numérique) = 30 minutes
-  if (event.Espaces === 'Village numérique') {
+  // Gérer le cas où Espaces peut être un objet ou une chaîne de caractères
+  const espacesTitle = event.Espaces && typeof event.Espaces === 'object' ? 
+                       event.Espaces.Title : 
+                       event.Espaces;
+  
+  if (espacesTitle === 'Village numérique') {
     return 30;
   }
   
-  // Priorité 3: ateliers par défaut = 60 minutes
+  // Priorité 3: ateliers normaux et conférences par défaut = 60 minutes (1h)
   return 60;
 }
 
@@ -666,7 +678,8 @@ function convertAteliersToEvents(ateliers) {
     
     // Gérer les cas où les champs peuvent être null
     const time = formatTime(atelier.Heure);
-    const endTime = formatTime(atelier["Heure de fin"]) || calculateEndTime(time, getEventDuration(atelier));
+    const formattedEndTime = formatTime(atelier["Heure de fin"]);
+    const endTime = (formattedEndTime && formattedEndTime !== 'À définir') ? formattedEndTime : calculateEndTime(time, getEventDuration(atelier));
 
     // Gérer le cas où Espaces peut être un objet ou une chaîne de caractères
     let location = 'À définir';
@@ -769,8 +782,9 @@ function convertConferencesToEvents(conferences) {
     const status = conference["Statut"] === "Publié" ? "Publié" : "A valider";
     
     // Logique de durée
-    const duration = conference.Durée || 45; // 45min par défaut pour les conférences
-    const endTime = formatTime(conference["Heure de fin"]) || calculateEndTime(formatTime(conference.Heure), duration);
+    const duration = conference.Durée || 60; // 60min (1h) par défaut pour les conférences
+    const formattedEndTime = formatTime(conference["Heure de fin"]);
+    const endTime = (formattedEndTime && formattedEndTime !== 'À définir') ? formattedEndTime : calculateEndTime(formatTime(conference.Heure), duration);
     
     return {
       id: `conference-${conference.ID}`,

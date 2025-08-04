@@ -10,7 +10,7 @@
     "À qui s'adresse atelier ?": "Professionnels",
     "Niveau d'enseignement": "Primaire et secondaire",
     "Type d'enseignement": "Enseignement ordinaire et spécialisé",
-    "Décrivez brièvement votre animation pour les visiteurs": "Plus que jamais, les enfants ont besoin de comprendre le fonctionnement de leur cerveau, pour l'utiliser correctement !\nVenez découvrir Babaoo, l'outil digital qui apprend aux enfants à développer leur fonctions exécutives !\nDe manière ludique, et avec des missions à réaliser avec les copains dans la vraie vie, les enfants développent de nouveaux réflexes cognitifs, pour appliquer de nouvelles stratégies !",
+    "Décrivez brièvement votre animation pour les visiteurs": "Plus que jamais, les enfants ont besoin de comprendre le fonctionnement de leur cerveau, pour l'utiliser correctement !\nVenez découvrir Babaoo, l'outil digital qui apprend aux enfants à développer leurs fonctions exécutives !\nDe manière ludique, et avec des missions à réaliser avec les copains dans la vraie vie, les enfants développent de nouveaux réflexes cognitifs, pour appliquer de nouvelles stratégies !",
     "À propos de vous": "vous pouvez mettre la même chose que ce que j'ai mis pour la proposition de conférence ;-) (mais j'ai oublié de copier)",
     "Envoyez votre logo": [
       {
@@ -23,16 +23,16 @@
         "height": 519,
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/06/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Babaoo_rIfoa.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=04a901c939689b907101b5657a8e14c47839537d11bd868eff964f74b8fc0759&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Babaoo.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/06/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Babaoo_rIfoa.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=31a4c0b41598c7dd3006079396707716cde7b6190be4e7afccbb3c8582055d69&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Babaoo.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/06/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Babaoo_rIfoa.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=00518f637fe514f24d1411ea9b84452261ca930716864a506eccf4a5416bc4b7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Babaoo.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/06/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Babaoo_rIfoa.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=6cc9c840afec544b2fdfefd4aa6cbc54985cf5654e0f750a3389ab12e52f695e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Babaoo.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/06/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Babaoo_rIfoa.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=af4831f03bddbfaf1edfb48fee36277c6cc02ffdf0122ca5c38984bc07d9ae9a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Babaoo.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/06/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Babaoo_rIfoa.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=f872bb17ee608a311053eb6534a0d9f61e11212000a6d1b9d22b30ac66c2bcf7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Babaoo.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/06/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Babaoo_rIfoa.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=50df642d1da617558e183bf43b2ecff47173ef9f6e359b96560b19fc2851541e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Babaoo.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/06/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Babaoo_rIfoa.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=9ecf040f3b70c63fe2634c3ed6b5cd8bbf3b113b5dd77d2bccfdfb85ee51a12e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Babaoo.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "14:30:00",
@@ -40,7 +40,7 @@
     "Statut": "Publié",
     "Espaces_id": 67,
     "CreatedAt": "2025-02-25 13:18:37+00:00",
-    "UpdatedAt": "2025-04-02 11:44:35+00:00",
+    "UpdatedAt": "2025-06-03 12:09:31+00:00",
     "Jours": {
       "Id": 1,
       "Title": "Mercredi"
@@ -74,16 +74,16 @@
         "height": 1839,
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/19/60e65c63f9091a580cbaec91b037645612f9eb7e/CodeNPlay_Logo_3%20lignes%283%29_k-BG7.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=a704fb9ca03b41ff879c629b906fc618ed5014ca6ba988cbb6e6ce14d717fbb3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22CodeNPlay_Logo_3%20lignes%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/19/60e65c63f9091a580cbaec91b037645612f9eb7e/CodeNPlay_Logo_3%20lignes%283%29_k-BG7.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=85e6f53dfa3efad428cb051762d7803b2b5b6f4f58a2e45165f9cc10e2edc33d&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22CodeNPlay_Logo_3%20lignes%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/19/60e65c63f9091a580cbaec91b037645612f9eb7e/CodeNPlay_Logo_3%20lignes%283%29_k-BG7.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=da6e4490030c95749b5d76d43d23e97aaa460cd7484e249550bbdbd5c5685aa9&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22CodeNPlay_Logo_3%20lignes%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/19/60e65c63f9091a580cbaec91b037645612f9eb7e/CodeNPlay_Logo_3%20lignes%283%29_k-BG7.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=c47d85aaf63e690b35241474eac76ea69e9f8cb0cbac68d2cbda6cfe380cbd4b&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22CodeNPlay_Logo_3%20lignes%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/19/60e65c63f9091a580cbaec91b037645612f9eb7e/CodeNPlay_Logo_3%20lignes%283%29_k-BG7.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=6ab2089dce3736aea369b9c3c7cdccf695e2743ed46837b870f6d03154c853f4&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22CodeNPlay_Logo_3%20lignes%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/19/60e65c63f9091a580cbaec91b037645612f9eb7e/CodeNPlay_Logo_3%20lignes%283%29_k-BG7.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=c37c3206beeb4db9e8350ba4cd8097b91fcbc418e8001e1b29f6a79f75717ee7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22CodeNPlay_Logo_3%20lignes%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/19/60e65c63f9091a580cbaec91b037645612f9eb7e/CodeNPlay_Logo_3%20lignes%283%29_k-BG7.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=6f9bb670510abb9b4e8acccc5fd0cf65fc606fe2553623c91d4716a1580d3372&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22CodeNPlay_Logo_3%20lignes%283%29.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/19/60e65c63f9091a580cbaec91b037645612f9eb7e/CodeNPlay_Logo_3%20lignes%283%29_k-BG7.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=3a8968cb1698ddaf99410678434ba0a5e815522448acc33c98c9cf5f1c052db9&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22CodeNPlay_Logo_3%20lignes%283%29.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "09:30:00",
@@ -125,16 +125,16 @@
         "height": 250,
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget-Logo-RGB-square-250_NZBWG.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=9b8194e781582c2bd208e2e5be25ad229d5df6a9a120d17484ce11715d4fe920&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget-Logo-RGB-square-250.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget-Logo-RGB-square-250_NZBWG.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=7561ae925e29653c6a09544e7a1e229dc6f5395fcfa9ff6b41008e694d9cbaf2&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget-Logo-RGB-square-250.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget-Logo-RGB-square-250_NZBWG.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=39e79db5bb494c70078acc084461c50d441dd6398257dddb0e6d8e0e7c17f349&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget-Logo-RGB-square-250.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget-Logo-RGB-square-250_NZBWG.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=6fdb2e9bda4cb1ef35beadb05dc46c21fffc14023ee8569c75b8b181050236d7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget-Logo-RGB-square-250.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget-Logo-RGB-square-250_NZBWG.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=b64dca1d3e7b0824a69016c863c88a8cb4f529079adc911b4c38c88dfa548c99&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget-Logo-RGB-square-250.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget-Logo-RGB-square-250_NZBWG.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=1e446f910e934db1b3cf37026112255a18fe747b4becbd95073fddfe22912010&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget-Logo-RGB-square-250.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget-Logo-RGB-square-250_NZBWG.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=8104803003b6633db98ce8ff250680293ffe07b865a74a0ff3d71ef627093fad&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget-Logo-RGB-square-250.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget-Logo-RGB-square-250_NZBWG.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=3655e96051bf491c23752b95eb8fd8bf09a162613df157610f9db2a9de5cdb3c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget-Logo-RGB-square-250.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       },
       {
         "id": "att1jjmij5hluren",
@@ -146,16 +146,16 @@
         "height": 495,
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300_eNAZI.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=59f274f28b03c00b80864725e040348125012851a5e3422bb0c559eb1e99e00e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300_eNAZI.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=f8e22f7d5d1b82cec179b9a6f6913c484ce7e5024043b80a71cab2d98131d19f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300_eNAZI.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=2f7381c131078eb5541bc30fd38abbcfc98fde0a41b1b9af754fb16311a6d448&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300_eNAZI.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=5e5a3b55bd216dc3111c5dfa04b852e6e6c732efd2a72a4cb2b2e8924d4f169a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300_eNAZI.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=2e31559b578b3e91998680a7cb6810a1f24f567fc8716ac075f847db05a20a25&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300_eNAZI.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=ac6a86fb9bf55533ce0a7ed1b3802c6b1895f4f8da87431c2f46b4e43a02a0a3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300_eNAZI.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=f8284c2d983dbd011e09559ef8b86d8dad7b4808a09f252d15bf4c6ca6c7963a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300_eNAZI.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=6b535e4de2dd800f1cdd3de43c6fcab4763263c9b84f811d7fde6592030d84f9&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "10:45:00",
@@ -196,16 +196,16 @@
         "icon": "mdi-pdf-box",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Misa%20Belgium_3xeXg.pdf/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=8efabcc762e2df696d9ae2311fc16635fa2a9fa82639f693616960c651f0c822&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Misa%20Belgium.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Misa%20Belgium_3xeXg.pdf/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=4671d08cd9bb7ee62cd7d9a2eceeb9ed083c81896ed8bef5aa3517e3373f32ba&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Misa%20Belgium.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Misa%20Belgium_3xeXg.pdf/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=0c33ceac7f9d3a17a6f61b5a4e717eccac205ddceda46491df098bd2f67d5d66&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Misa%20Belgium.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Misa%20Belgium_3xeXg.pdf/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=56ad6bd1d0bca9338a8ac1a4007d8275d8f406d3c2cb6270002f5da73f97b17e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Misa%20Belgium.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Misa%20Belgium_3xeXg.pdf/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=a537db0dba2ef3c9b15598dc2431756e161c6152a6155cfe1c36efe43fed81b6&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Misa%20Belgium.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Misa%20Belgium_3xeXg.pdf/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=ac5599c4c1806680a9b2f82231ce9e0991665a09c7f06f305bbe2ec4f0b8079b&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Misa%20Belgium.pdf%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Misa%20Belgium_3xeXg.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=0a9d2691fc0b0b13d3fea1e5b697d1d3cf41eba73efb19b56f7aab5ee069cb30&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Misa%20Belgium.pdf%22&response-content-type=application%2Fpdf&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Misa%20Belgium_3xeXg.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=0b008d7f94420601b0e3da559c7c739519f078cec5dd1e95f6ef392b4a149e4f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Misa%20Belgium.pdf%22&response-content-type=application%2Fpdf&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       },
       {
         "id": "at9yggjqt10hxp35",
@@ -217,16 +217,16 @@
         "height": 6481,
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/sigle%20ammassado_aA0zS.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=2ae166b265945a12777f21dfb1dfab200ecb2879ec428a193be29dee13d5be09&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22sigle%20ammassado.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/sigle%20ammassado_aA0zS.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=76a141dd435afbd87d8a2a96d94dcb28a3321ed84386631f1506c66b2ddf81b0&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22sigle%20ammassado.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/sigle%20ammassado_aA0zS.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=e9e9edac83bab23f53924f4b6f9ef231e4dd0364e1aa02e4a2521e19766b06b6&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22sigle%20ammassado.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/sigle%20ammassado_aA0zS.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=8118e4966f0bfe5824bfef040b007a5e5e84f0679b63109e7bc3ad41d2aa34fd&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22sigle%20ammassado.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/sigle%20ammassado_aA0zS.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=f09c95effb5de4278686213932908baa9c7296a78cd11417bc8607fd93207f0c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22sigle%20ammassado.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/sigle%20ammassado_aA0zS.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=37ac6edb84c6c08ab3620d7f3e8617abf57e0063c42dedefb1b3082d3d9859c7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22sigle%20ammassado.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/sigle%20ammassado_aA0zS.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=cd61dcf409e07326b30346740d48f0483770a232184bae4ea5d148b571c6ea0b&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22sigle%20ammassado.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/20/60e65c63f9091a580cbaec91b037645612f9eb7e/sigle%20ammassado_aA0zS.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=0665ec6cd68bcaa7b37af23136b4471cd4697e9b5b973edd83efde2c0aef2985&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22sigle%20ammassado.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "12:00:00",
@@ -268,16 +268,16 @@
         "height": 1535,
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/23/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_CR%20registred_carre_jyKzr.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=c1ca791c70deb4e8c79ca5e5278fa8b8858997246f7850b177b7ca2a412747d3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_CR%20registred_carre.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/23/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_CR%20registred_carre_jyKzr.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=5c1b4e00cc3797e7bf386eee7ee28e0130c841f8c8980f09c287e01be05ee2ba&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_CR%20registred_carre.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/23/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_CR%20registred_carre_jyKzr.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=f7fdc7055a34ce5886f473c9f6a908c936899c75fa12dcb8bab8e8a9216927c3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_CR%20registred_carre.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/23/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_CR%20registred_carre_jyKzr.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=e0de65146ca494cd8fe5017d4bb654a257ba006c09717e0c3ab937fdf5dd5c1a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_CR%20registred_carre.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/23/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_CR%20registred_carre_jyKzr.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=69bebb43af8b2cfbc1614f0a01843475c5a4a6f79d8ab3087cf833e554b0c804&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_CR%20registred_carre.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/23/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_CR%20registred_carre_jyKzr.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=55815ae3ac7c6b3557f2c332437da25b1582d4b9d45a0ca41f7964f91a231ad6&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_CR%20registred_carre.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/23/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_CR%20registred_carre_jyKzr.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=3b0b76b85f4aac95a8f0987a29f8314788130b09a3539e3e8b6a86aba2848c87&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_CR%20registred_carre.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/23/60e65c63f9091a580cbaec91b037645612f9eb7e/logo_CR%20registred_carre_jyKzr.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=2ce15869fb3c7b12517a3039f6b3f929a0da15202ef4982cbc684d49cb7fceb6&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo_CR%20registred_carre.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "13:15:00",
@@ -319,16 +319,16 @@
         "height": 4419,
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_n5Yny.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=3ced6eb32b4fca31347e4c1cf0827d373dad284886768eca738c6eee7c8c1f54&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_n5Yny.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=dda6778d11a660ce52999915c6f4588432932d3d9ca77cbd03274cb94a4b79f9&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_n5Yny.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=c896bdbd29b16f923137c861b3519d0a349984f7100dbd76cb98b6e8de83f5f8&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_n5Yny.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=f0fce1af7629eadb4383651bc8d4e3eaaa637b0938708882f2e6945aa626dabe&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_n5Yny.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=2f87a8611be7a08327e45191a33d536b20ffb9023fe245c125eec31b215853d3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_n5Yny.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=878a1fe4a950f30279764ce542c7d5177c6758e470e3434c51d7156a9f5b2aeb&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_n5Yny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=732695e02e90005f9b63b9a0e973e15576032d7c22194baf85c96380b082739a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/25/60e65c63f9091a580cbaec91b037645612f9eb7e/logo%20Etoilium%20by%20astres%20et%20cie_n5Yny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=6238b2801a27e40cda1a74f69bc63a7abdedc7367c6761e819feaf8215a2d77d&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logo%20Etoilium%20by%20astres%20et%20cie.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "12:00:00",
@@ -370,16 +370,16 @@
         "id": "atynzgia57icyzo8",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO%20ASBL%20final%202.2_IXw29.jpeg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=ba20650e843bdaa140a9681e998ee4b45c3dc7774d59c87ff0517dff42d5189b&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO%20ASBL%20final%202.2.jpeg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO%20ASBL%20final%202.2_IXw29.jpeg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=d7f4e6055fd180bd09117e363ff7ffffc9a817ca82f2d805c55704c7c23c5975&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO%20ASBL%20final%202.2.jpeg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO%20ASBL%20final%202.2_IXw29.jpeg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=0726dada4a4612d26bdb3b3e815c4e96a14c01d818068cb1a6fbc605dade2fae&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO%20ASBL%20final%202.2.jpeg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO%20ASBL%20final%202.2_IXw29.jpeg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=dd945cf42020a9461e7967a86cdce74be3d276e354885640e306e1a679ce4d32&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO%20ASBL%20final%202.2.jpeg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO%20ASBL%20final%202.2_IXw29.jpeg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=91d37f2aa854c721689a85aed1de8e7f7a93aa289a02e7b4df8cb0e26c7ad7a6&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO%20ASBL%20final%202.2.jpeg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO%20ASBL%20final%202.2_IXw29.jpeg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=6c04ef91a7bc25d28d9107df500d3b00f9e86dce2c25f988b4107ac7e7573ce1&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO%20ASBL%20final%202.2.jpeg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO%20ASBL%20final%202.2_IXw29.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=abe626fcc98456a0ce3e56f74658dc86d2c14b711f2095476fb4b718a9c0cd25&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO%20ASBL%20final%202.2.jpeg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/02/28/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO%20ASBL%20final%202.2_IXw29.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=f68311d4e7ef53d37ab2a0d69609a0fec577de7c6119e80c6e07c012128072e4&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO%20ASBL%20final%202.2.jpeg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "13:15:00",
@@ -421,16 +421,16 @@
         "id": "atkg1ypw19sso9x3",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/02/60e65c63f9091a580cbaec91b037645612f9eb7e/logoCF_w3Wy7.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=54a6b70b2e18d8963b17a72cb8a1fd70bb77b8fbe25ef4feab3ff5b517adf3d4&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoCF.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/02/60e65c63f9091a580cbaec91b037645612f9eb7e/logoCF_w3Wy7.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=88764843dfc222192653fdb49c488de0f102fd945f3741967b8b88e2f29d691c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoCF.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/02/60e65c63f9091a580cbaec91b037645612f9eb7e/logoCF_w3Wy7.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=aba8e27173afc75e214fcfa7993e31666bd179130907259c23ca9c6a2620a54b&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoCF.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/02/60e65c63f9091a580cbaec91b037645612f9eb7e/logoCF_w3Wy7.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=c7e98d1b33799bcbdd4a80fe2ee0e7abac1fae6d1447a6d09ad0d8aaa0f4e008&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoCF.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/02/60e65c63f9091a580cbaec91b037645612f9eb7e/logoCF_w3Wy7.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=0c16eec6fa03128ec43d6fa74e46441442d8566897355a34da66ee3257e1c6f9&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoCF.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/02/60e65c63f9091a580cbaec91b037645612f9eb7e/logoCF_w3Wy7.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=1ed9f4bbed0b0d028acaa7d08042b3284ed1ffee2fd21a51b2187aaeb4153a53&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoCF.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/02/60e65c63f9091a580cbaec91b037645612f9eb7e/logoCF_w3Wy7.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=efa2b32d634e886ad0970a87fee5966602f4008096ae2ee05a5a66a1dd93f6f4&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoCF.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/02/60e65c63f9091a580cbaec91b037645612f9eb7e/logoCF_w3Wy7.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=aff6a95bd6e1f35c8900027189e3e084073bba43e86bd577c2bd68458443e4e4&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoCF.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "09:30:00",
@@ -472,16 +472,16 @@
         "id": "atc9qgpwa4ggppm0",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/03/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Wavre%20baseline%20RVB_MP0dA.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=e511b4c59f99d6c20b2040be44f9ce056efd9a0da9083bd506045cdbce95ed6f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Wavre%20baseline%20RVB.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/03/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Wavre%20baseline%20RVB_MP0dA.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=a4afd2c0cc6ccabf507f85adade06cdae08a67b454d170871a0a2a909527cd1b&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Wavre%20baseline%20RVB.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/03/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Wavre%20baseline%20RVB_MP0dA.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=df32aeee47315503a5a55bd329374a9914e09ff08008c9d1c102f9c7d29eab59&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Wavre%20baseline%20RVB.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/03/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Wavre%20baseline%20RVB_MP0dA.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=40adef37934bb41b3b31a38f985c375b430d2e43804830aeae7df8df588e6b68&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Wavre%20baseline%20RVB.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/03/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Wavre%20baseline%20RVB_MP0dA.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=5c21e33b551e34cd23c6ca92915cb5d046b6d1613be3b8fffe3ff3f271bfd598&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Wavre%20baseline%20RVB.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/03/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Wavre%20baseline%20RVB_MP0dA.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=0a6add9c0650ff798ddb65191c5c33bebaf8d729fad519a142467d767ffa3813&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Wavre%20baseline%20RVB.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/03/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Wavre%20baseline%20RVB_MP0dA.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=83740146bfdd89802caa84b6494768e400af92440686c0e06100e9f5d3ce1e4d&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Wavre%20baseline%20RVB.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/03/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo%20Wavre%20baseline%20RVB_MP0dA.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=127571a970ecef283a7bdc67012e417578b108b68ca8ed44bf3b482d730c8354&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo%20Wavre%20baseline%20RVB.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "09:30:00",
@@ -523,16 +523,16 @@
         "id": "ato5feb2w53k2q9l",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/Catalogue%20KIGUERITOUT_LJcza.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=3c22b1f2e4aba860b62cb1162d27ffd092bec125e8763f51a45243eae8742fb8&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Catalogue%20KIGUERITOUT.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/Catalogue%20KIGUERITOUT_LJcza.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=0d04ccfcf711ea49a5a262ba41035e0ba46ab98fa9dd56ee5970458da4c9f8fd&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Catalogue%20KIGUERITOUT.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/Catalogue%20KIGUERITOUT_LJcza.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=f7f1d31f645327d14e04afc626f9403f1a9cc2768d226e84933fddf4106f89a7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Catalogue%20KIGUERITOUT.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/Catalogue%20KIGUERITOUT_LJcza.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=5b77999b02487db329ca487157a1f2223514a2f25b32595fa34c0598448bb949&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Catalogue%20KIGUERITOUT.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/Catalogue%20KIGUERITOUT_LJcza.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=30203af0789b40bf7fb3d1eb2b3c0bd9e68367e234b9f664090ae9e767f35da3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Catalogue%20KIGUERITOUT.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/Catalogue%20KIGUERITOUT_LJcza.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=92439bedcf3ba9420da0789346328d6fe2c992e881fb23fa9714dff8aa7800d0&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Catalogue%20KIGUERITOUT.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/Catalogue%20KIGUERITOUT_LJcza.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=c163d9ca32ee23a411290016bd90716bd67fb9abf7708b65eff5e99e39d7be2e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Catalogue%20KIGUERITOUT.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/Catalogue%20KIGUERITOUT_LJcza.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=e4415aadfd78267651f0b8ed2863cae81a7a45f08c8a648ed0deffd795ee5573&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Catalogue%20KIGUERITOUT.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "10:45:00",
@@ -574,16 +574,16 @@
         "id": "at8oblchvmfjz7x5",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_pmEfT.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=c9ed841feb38309b9e22d19ce079fa0d9ae6fafe4b05a354f33b960491f5f409&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_pmEfT.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=c43992e2cc2576395df95b244e3f53e7c59daf291be958db3aec8704f244c311&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_pmEfT.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=0995d4942869882c1b76628005c16ad2f2297002d6021a30551b4a48de415abf&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_pmEfT.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=25bd82b436ab33fb4260f5a0ffd539f0ff6b0b0c01b0ab1f9590fb34d660bb66&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_pmEfT.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=204f848483ed006118e500c087839c678f364550434e112c7799df37e2255a93&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_pmEfT.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=8f10ec96972e51bff1dcb6fbe386fed69d9522ffff8c98b1c8fedd988cb0c41b&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_pmEfT.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=7d4f1b1bd4774280234f79ee26ac45bcc6b7a2f8651269b05dc747c12e89565d&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_pmEfT.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=6e1312c6fdeb78482b74c8bd883a1c7af2782e9c3a85dc7beb4024cc4f6b3eb6&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "14:30:00",
@@ -625,16 +625,16 @@
         "id": "at9876shwh0aoqcx",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_9KnZm.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=0cf074167216df6f902c9a42eb5e59f81110206dcbd4e011dbee0a894665e2fa&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_9KnZm.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=848cde1908c756551610c665a40fe77a5bdac1286b326903f7821fa161c8f65f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_9KnZm.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=35af3b3a9d66fed0927e75a291c4bbbdd4a1d352a659d493912542cfaac64877&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_9KnZm.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=99961c70cd6ce735b30020fedc5710321bfda3d05e5381a1d67a1c948dd5b8d1&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_9KnZm.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=f69fa85af01c91e26f9af2aded85383fd692a9af8e7f2f0088ea5a654a3dc5aa&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_9KnZm.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=d953cb4da7dd92f4c9470e917d2d3298346a01d0fd846c88d0d105f2b8fcfd30&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_9KnZm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=b4477541a82115b8f431a9aab15ef45312bce4a7309d062cbcdb1d3a24238a58&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/05/60e65c63f9091a580cbaec91b037645612f9eb7e/microsoft-logo-transparent-free_9KnZm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=a4bcd3cd4ba047966bf07bb9c5dac240e5f23232269ef2ab1bc31eb759057bd5&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22microsoft-logo-transparent-free.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "15:00:00",
@@ -676,16 +676,16 @@
         "id": "atcsoo7jc8wvacuy",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/06/60e65c63f9091a580cbaec91b037645612f9eb7e/logoBJ-Milan-1ligne-CMJN-fondClair_Lb9jl.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=6c312b0910fb2fb0e1251b8d4f4ce696340ae1b5fbb0c77da3dbf4c8af5995ca&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoBJ-Milan-1ligne-CMJN-fondClair.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/06/60e65c63f9091a580cbaec91b037645612f9eb7e/logoBJ-Milan-1ligne-CMJN-fondClair_Lb9jl.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=e6fd4fe0384c8378583c2d8008ed63cf6fa7fc52c5ea02c566c5972fff51328f&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoBJ-Milan-1ligne-CMJN-fondClair.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/06/60e65c63f9091a580cbaec91b037645612f9eb7e/logoBJ-Milan-1ligne-CMJN-fondClair_Lb9jl.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=fff216b47d77f5591c0cb298c4ba8cd60367b2dfc588957376751b9991a80888&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoBJ-Milan-1ligne-CMJN-fondClair.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/06/60e65c63f9091a580cbaec91b037645612f9eb7e/logoBJ-Milan-1ligne-CMJN-fondClair_Lb9jl.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=3f95d45c7b84fa04f4025e5c584a5089c103a003a4d50cc0db203f8661043e46&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoBJ-Milan-1ligne-CMJN-fondClair.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/06/60e65c63f9091a580cbaec91b037645612f9eb7e/logoBJ-Milan-1ligne-CMJN-fondClair_Lb9jl.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=63196aa31dc855e9f1ea7741b972c338c7ec816c73a3785c34fe04d4d89825e9&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoBJ-Milan-1ligne-CMJN-fondClair.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/06/60e65c63f9091a580cbaec91b037645612f9eb7e/logoBJ-Milan-1ligne-CMJN-fondClair_Lb9jl.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=eccf00925c5f7e03aa30b0bcaa431a7412efa3ecabd495c928c66946cdab2e24&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoBJ-Milan-1ligne-CMJN-fondClair.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/06/60e65c63f9091a580cbaec91b037645612f9eb7e/logoBJ-Milan-1ligne-CMJN-fondClair_Lb9jl.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=4c7aca1187f0665999805e856475c0e062b9183f48032a9e8ae16cf4f6b5891c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoBJ-Milan-1ligne-CMJN-fondClair.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/06/60e65c63f9091a580cbaec91b037645612f9eb7e/logoBJ-Milan-1ligne-CMJN-fondClair_Lb9jl.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=9834b2f7719469ec5ae8b6d63c33a3c36f92882cf9fc51bf35990dbe3038be71&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22logoBJ-Milan-1ligne-CMJN-fondClair.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "14:30:00",
@@ -727,16 +727,16 @@
         "id": "atr75jvek8ef1382",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/09/60e65c63f9091a580cbaec91b037645612f9eb7e/Sun%20Mar%2009%202025_pIkGr.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=4c327f3bae98e5934a6dd24ccf329b25f5172628e88b8cbb81d2a24cd65a70cf&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Sun%20Mar%2009%202025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/09/60e65c63f9091a580cbaec91b037645612f9eb7e/Sun%20Mar%2009%202025_pIkGr.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=af3bf0d7501a2cd97b2ffe05d9d13916a0d37f49821116fc55638c02ad5d8f65&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Sun%20Mar%2009%202025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/09/60e65c63f9091a580cbaec91b037645612f9eb7e/Sun%20Mar%2009%202025_pIkGr.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=c74159ca9fdd5f785a493bdd8999a12d778ba652029a93231bbfce214dc6bcda&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Sun%20Mar%2009%202025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/09/60e65c63f9091a580cbaec91b037645612f9eb7e/Sun%20Mar%2009%202025_pIkGr.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=fe872325fbc207d970e0559f0bb9d179c6b5dc77bc5f7dcd5d1d3dbeb8ee04fe&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Sun%20Mar%2009%202025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/09/60e65c63f9091a580cbaec91b037645612f9eb7e/Sun%20Mar%2009%202025_pIkGr.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=33abf21a7793266a47e7594926480e05236c4179d27cf50fe2ece63537917aaa&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Sun%20Mar%2009%202025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/09/60e65c63f9091a580cbaec91b037645612f9eb7e/Sun%20Mar%2009%202025_pIkGr.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=48ca11c8ca4ea2698a0dd28b1da73c8c466f6352a487d11eefd2023615332fad&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Sun%20Mar%2009%202025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/09/60e65c63f9091a580cbaec91b037645612f9eb7e/Sun%20Mar%2009%202025_pIkGr.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=c7db7d4224be21e3c7dabe61831c5497bed8c371376f7ee372b37aa2f97329a3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Sun%20Mar%2009%202025.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/09/60e65c63f9091a580cbaec91b037645612f9eb7e/Sun%20Mar%2009%202025_pIkGr.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=fbfd4fe3bdc6db274b3020873910c54ef7827f406279e638def26b514cc8c841&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Sun%20Mar%2009%202025.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "13:15:00",
@@ -778,16 +778,16 @@
         "id": "atney4dh7oqzg11h",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/10/60e65c63f9091a580cbaec91b037645612f9eb7e/Apeda%20logo%20avec%20texte_Pexq5.JPG/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=c9093bf3cc67068af4099c1a54c8ea445e52f439f24be1dcedf94a2895e21ac1&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apeda%20logo%20avec%20texte.JPG%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/10/60e65c63f9091a580cbaec91b037645612f9eb7e/Apeda%20logo%20avec%20texte_Pexq5.JPG/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=66092352979e1bfb88f4f87b2a25eb37805b5a4f09c0741c1f7d9ce297f11934&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apeda%20logo%20avec%20texte.JPG%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/10/60e65c63f9091a580cbaec91b037645612f9eb7e/Apeda%20logo%20avec%20texte_Pexq5.JPG/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=992fc603e79735b54173e47045e065e4cdfcc35ff93f00434685456549c64406&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apeda%20logo%20avec%20texte.JPG%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/10/60e65c63f9091a580cbaec91b037645612f9eb7e/Apeda%20logo%20avec%20texte_Pexq5.JPG/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=126074b4e37f9dc37371c9cebcc462c4a6a842dbaf2165674f85ef414651305d&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apeda%20logo%20avec%20texte.JPG%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/10/60e65c63f9091a580cbaec91b037645612f9eb7e/Apeda%20logo%20avec%20texte_Pexq5.JPG/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=16a77333aeb26800d8db656dd6b661c9c6437275d9ef705f2beb2b6f0bcf303e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apeda%20logo%20avec%20texte.JPG%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/03/10/60e65c63f9091a580cbaec91b037645612f9eb7e/Apeda%20logo%20avec%20texte_Pexq5.JPG/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=3685bdcaa661dadca8f34d26b693186d046f0523cec666136a9c439ff1f2f5ff&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apeda%20logo%20avec%20texte.JPG%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/10/60e65c63f9091a580cbaec91b037645612f9eb7e/Apeda%20logo%20avec%20texte_Pexq5.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=ee46d52dcb6303677ed61d5f2f2daad9f83c9f3dc8e8de7dd48bd46d0a163fd3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apeda%20logo%20avec%20texte.JPG%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/03/10/60e65c63f9091a580cbaec91b037645612f9eb7e/Apeda%20logo%20avec%20texte_Pexq5.JPG?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=42900691b0009f1af514a8527846ed57baefb6540796d66aead56e27bd5ebc48&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Apeda%20logo%20avec%20texte.JPG%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "12:00:00",
@@ -807,8 +807,8 @@
   },
   {
     "ID": 199,
-    "Prénom": "Hélène & Luc",
-    "Nom": "Caels & De Brabandere",
+    "Prénom": "Hélène ",
+    "Nom": "Caels avec Luc de Brabandere",
     "Email": "h.caels@mailfence.com",
     "GSM": "+32494485945",
     "Site internet": "https://www.facebook.com/ap.cpc.be",
@@ -829,16 +829,16 @@
         "id": "atz251q0d9jloeiu",
         "thumbnails": {
           "tiny": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/04/01/60e65c63f9091a580cbaec91b037645612f9eb7e/Capture%20d%E2%80%99e%CC%81cran%202025-04-01%20a%CC%80%2021.10.51_QAxpy.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=b050fa6eb9f3757b038f4a20b29fef5d49c6019374be41cb237aa67694274001&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Capture%20d%3Fe%3Fcran%202025-04-01%20a%3F%2021.10.51.png%22%3B%20filename%2A%3DUTF-8%27%27Capture%2520d%25E2%2580%2599e%25CC%2581cran%25202025-04-01%2520a%25CC%2580%252021.10.51.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/04/01/60e65c63f9091a580cbaec91b037645612f9eb7e/Capture%20d%E2%80%99e%CC%81cran%202025-04-01%20a%CC%80%2021.10.51_QAxpy.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=a24a1df0ddc8bb3172698323e6d4bc4eb77cc5f733c7dd4d4627b4105c0c616c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Capture%20d%3Fe%3Fcran%202025-04-01%20a%3F%2021.10.51.png%22%3B%20filename%2A%3DUTF-8%27%27Capture%2520d%25E2%2580%2599e%25CC%2581cran%25202025-04-01%2520a%25CC%2580%252021.10.51.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "small": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/04/01/60e65c63f9091a580cbaec91b037645612f9eb7e/Capture%20d%E2%80%99e%CC%81cran%202025-04-01%20a%CC%80%2021.10.51_QAxpy.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=f695b3750d7b376a1e0e59c66d9b3ccb54ef87d98289de2c3b9cdcab56afaf5d&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Capture%20d%3Fe%3Fcran%202025-04-01%20a%3F%2021.10.51.png%22%3B%20filename%2A%3DUTF-8%27%27Capture%2520d%25E2%2580%2599e%25CC%2581cran%25202025-04-01%2520a%25CC%2580%252021.10.51.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/04/01/60e65c63f9091a580cbaec91b037645612f9eb7e/Capture%20d%E2%80%99e%CC%81cran%202025-04-01%20a%CC%80%2021.10.51_QAxpy.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=7e27930219a03a81d4424096c227219e07a97a90b8afb6151f50fa90f70d25dd&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Capture%20d%3Fe%3Fcran%202025-04-01%20a%3F%2021.10.51.png%22%3B%20filename%2A%3DUTF-8%27%27Capture%2520d%25E2%2580%2599e%25CC%2581cran%25202025-04-01%2520a%25CC%2580%252021.10.51.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           },
           "card_cover": {
-            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/04/01/60e65c63f9091a580cbaec91b037645612f9eb7e/Capture%20d%E2%80%99e%CC%81cran%202025-04-01%20a%CC%80%2021.10.51_QAxpy.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=bbb16ffe75fec5be3071127f5793f1b48766a89fe394f952247f7050eefdc9ce&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Capture%20d%3Fe%3Fcran%202025-04-01%20a%3F%2021.10.51.png%22%3B%20filename%2A%3DUTF-8%27%27Capture%2520d%25E2%2580%2599e%25CC%2581cran%25202025-04-01%2520a%25CC%2580%252021.10.51.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/04/01/60e65c63f9091a580cbaec91b037645612f9eb7e/Capture%20d%E2%80%99e%CC%81cran%202025-04-01%20a%CC%80%2021.10.51_QAxpy.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=61914621ecdf0d9682b062d086364f7c88ab434b488a0105f3ea26644538ac75&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Capture%20d%3Fe%3Fcran%202025-04-01%20a%3F%2021.10.51.png%22%3B%20filename%2A%3DUTF-8%27%27Capture%2520d%25E2%2580%2599e%25CC%2581cran%25202025-04-01%2520a%25CC%2580%252021.10.51.png&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
           }
         },
-        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/04/01/60e65c63f9091a580cbaec91b037645612f9eb7e/Capture%20d%E2%80%99e%CC%81cran%202025-04-01%20a%CC%80%2021.10.51_QAxpy.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTKOMQ5JMU%2F20250526%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250526T125243Z&X-Amz-Expires=7637&X-Amz-Signature=86616fc4de079ff7b136f5698ee5b1aed13625f1d8ec92544d488b62fcdb4470&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Capture%20d%3Fe%3Fcran%202025-04-01%20a%3F%2021.10.51.png%22%3B%20filename%2A%3DUTF-8%27%27Capture%2520d%25E2%2580%2599e%25CC%2581cran%25202025-04-01%2520a%25CC%2580%252021.10.51.png&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/04/01/60e65c63f9091a580cbaec91b037645612f9eb7e/Capture%20d%E2%80%99e%CC%81cran%202025-04-01%20a%CC%80%2021.10.51_QAxpy.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=334541eb7c38721c08816ea64cac1d078c1c04210cfac94624faf13781e57e16&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Capture%20d%3Fe%3Fcran%202025-04-01%20a%3F%2021.10.51.png%22%3B%20filename%2A%3DUTF-8%27%27Capture%2520d%25E2%2580%2599e%25CC%2581cran%25202025-04-01%2520a%25CC%2580%252021.10.51.png&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
       }
     ],
     "Heure": "10:45:00",
@@ -846,7 +846,7 @@
     "Statut": "Publié",
     "Espaces_id": 67,
     "CreatedAt": "2025-04-01 19:39:09+00:00",
-    "UpdatedAt": "2025-05-16 08:01:18+00:00",
+    "UpdatedAt": "2025-06-20 10:01:17+00:00",
     "Jours": {
       "Id": 2,
       "Title": "Jeudi"
@@ -855,5 +855,398 @@
       "Id": 67,
       "Title": "Espace atelier"
     }
+  },
+  {
+    "ID": 232,
+    "Prénom": "Severine",
+    "Nom": "de sadeleer",
+    "Email": "severinedesadeleer@gmail.com",
+    "GSM": "0477779218",
+    "Site internet": "www.amagirafe.org",
+    "Choisissez un titre court": "AMA : correspondance scolaire numérique entre écoles à travers le monde",
+    "À qui s'adresse atelier ?": "Professeurs, parents et enfants",
+    "Niveau d'enseignement": "Maternelle et primaire",
+    "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+    "Décrivez brièvement votre animation pour les visiteurs": "Les visiteurs découvriront la plateforme AMA, exploreront les contenus pédagogiques et comprendront la richesse des échanges entre les écoles participantes au projet.",
+    "À propos de vous": "Passionnée par la transmission, je suis anthropologue spécialisée en santé publique et agréée pour l’enseignement secondaire supérieur. Fondatrice du projet AMA la Girafe, né de la volonté de connecter les élèves du monde autour de thématiques citoyennes et interculturelles.",
+    "Envoyez votre logo": [
+      {
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png",
+        "title": "Logo-AMA-HD-01.png",
+        "mimetype": "image/png",
+        "size": 34060,
+        "width": 753,
+        "height": 1498,
+        "id": "atsqag7m240i3osg",
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=8494d9eb0a1774db16393827b85d4e4d9a50fb2168a6a6c8c4c0bb55ebd896a1&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo-AMA-HD-01.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=c1deb40db56e9b2f158b520fb85ac57015f33a4b86ba225a00b550b6cc68e1ef&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo-AMA-HD-01.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=2d21db444af866337b659cae88a14e66e05a8ae2f869b517596a282114381add&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo-AMA-HD-01.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=7752d34084ead871026243a2112edd9c20317730dc21fe143ea7aa6bcc24ff16&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo-AMA-HD-01.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      }
+    ],
+    "Heure": "15:30:00",
+    "Jours_id": null,
+    "Statut": "A valider",
+    "Espaces_id": 34,
+    "CreatedAt": "2025-06-24 12:29:48+00:00",
+    "UpdatedAt": "2025-08-04 15:46:06+00:00",
+    "Jours": null,
+    "Espaces": {
+      "Id": 34,
+      "Title": "Village numérique"
+    }
+  },
+  {
+    "ID": 233,
+    "Prénom": "Benoit ",
+    "Nom": "Monnoyer",
+    "Email": "info@ouaip.be",
+    "GSM": "032473663284",
+    "Site internet": "https://ouaip.be/",
+    "Choisissez un titre court": "OUAIP.BE : au service de vos élèves !",
+    "À qui s'adresse atelier ?": "Professeurs",
+    "Niveau d'enseignement": "Primaire",
+    "Type d'enseignement": "Enseignement ordinaire",
+    "Décrivez brièvement votre animation pour les visiteurs": "Cette séance débutera par une courte présentation de Ouaip.be, de sa philosophie et de ses atouts. Ensuite, place à la démonstration concrète :\n-prise en main de l’interface enseignant ;\n-sélection et planification d’un contenu (titre) à destination des élèves ;\n-création et gestion d’un groupe‑classe, assignation du contenu…\nEnfin, un temps interactif prendra place sous forme de questions‑réponses, pour échanger et explorer les possibilités offertes par l’outil.",
+    "À propos de vous": "La démonstration sera animée par un enseignant du primaire engagé dans la création de cet outil numérique. Il est à l’origine d’Ouaip.be et se consacre à la conception des contenus proposés. L’objectif de cette rencontre est de présenter l’outil, son fonctionnement et ses usages concrets, sans mise en avant personnelle.",
+    "Envoyez votre logo": [
+      {
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO2025_sDwJm.png",
+        "title": "LOGO2025.png",
+        "mimetype": "image/png",
+        "size": 39910,
+        "width": 726,
+        "height": 338,
+        "id": "atk67bvif4inzfow",
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO2025_sDwJm.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=226dae312b5ea6404399aa837acf01b31a0017ee849c75367402c72e09bb5024&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO2025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO2025_sDwJm.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=4a97acde737b307e6490060d67c368634edad0644947b3b08695e8072f97bc63&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO2025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO2025_sDwJm.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=d6c149aadeded32175eeddea4f168ff8ac95908c574f662d4d1b9f2e11c8cbf7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO2025.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/LOGO2025_sDwJm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155307Z&X-Amz-Expires=7613&X-Amz-Signature=112f77518ca196c5a596659ecdc7856db91520db7f31f687c8469e16eceeb8f9&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22LOGO2025.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      }
+    ],
+    "Heure": null,
+    "Jours_id": null,
+    "Statut": "A valider",
+    "Espaces_id": 34,
+    "CreatedAt": "2025-06-24 14:27:34+00:00",
+    "UpdatedAt": "2025-07-01 09:24:22+00:00",
+    "Jours": null,
+    "Espaces": {
+      "Id": 34,
+      "Title": "Village numérique"
+    }
+  },
+  {
+    "ID": 265,
+    "Prénom": "Dimitri",
+    "Nom": "Bongers",
+    "Email": "dimitri@bookwidgets.com",
+    "GSM": "0032470043443",
+    "Site internet": "www.bookwidgets.com/fr",
+    "Choisissez un titre court": "Créer des exercices numériques avec BookWidgets",
+    "À qui s'adresse atelier ?": "Professeurs",
+    "Niveau d'enseignement": "Primaire et secondaire",
+    "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+    "Décrivez brièvement votre animation pour les visiteurs": "Lors de cet atelier, découvrez comment créer facilement des exercices numériques interactifs avec BookWidgets : quiz, mots croisés, cartes flash et bien plus. Dimitri de BookWidgtets vous présentera des exemples concrets, les bases pour concevoir vos propres activités adaptées à toutes les matières et à tous les niveaux, ainsi que des astuces pour gagner un temps lors de la correction. Chaque participant recevra une gift card pour tester l’outil gratuitement pendant 3 mois.\n\n",
+    "À propos de vous": "Dimitri Bongers est spécialiste en innovation pédagogique chez BookWidgets, plateforme d’activités numériques pour l’éducation. Ancien enseignant de français langue étrangère (FLE) en Flandre, il accompagne des écoles et enseignants dans la mise en œuvre concrète du numérique au service des apprentissages. Il intervient régulièrement lors d’événements éducatifs francophones pour partager retours d’expériences, bonnes pratiques et prototypes en cours de test.",
+    "Envoyez votre logo": [
+      {
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/06/25/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget Logo RGB 300 (3)_ycAo7.png",
+        "title": "BookWidget Logo RGB 300 (3).png",
+        "mimetype": "image/png",
+        "size": 53132,
+        "width": 2206,
+        "height": 495,
+        "id": "atbfca6nlzx8zed2",
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/25/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300%20%283%29_ycAo7.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=f9d5f46a46bd8e06f93bb6cbb892b25c89cf7c045ad51e71edddda1bd6aed140&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300%20%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/25/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300%20%283%29_ycAo7.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=033e8d49b3ab895d30a163f7181720082d8f8b31d96d63bc1715ff6a4ff80dd1&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300%20%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/25/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300%20%283%29_ycAo7.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=c196a48a297e59d3f53fe64cce3bad61cd905ce443a5771e295a1c01e663830e&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300%20%283%29.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/06/25/60e65c63f9091a580cbaec91b037645612f9eb7e/BookWidget%20Logo%20RGB%20300%20%283%29_ycAo7.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=08fb6f770f9ef5b3d22118964318f4823b8a6ea37bf32bf2bc293afc96f82434&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22BookWidget%20Logo%20RGB%20300%20%283%29.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      }
+    ],
+    "Heure": null,
+    "Jours_id": null,
+    "Statut": "A valider",
+    "Espaces_id": 34,
+    "CreatedAt": "2025-06-25 05:56:06+00:00",
+    "UpdatedAt": "2025-07-01 09:24:28+00:00",
+    "Jours": null,
+    "Espaces": {
+      "Id": 34,
+      "Title": "Village numérique"
+    }
+  },
+  {
+    "ID": 298,
+    "Prénom": "Alain",
+    "Nom": "Préat",
+    "Email": "info@apkiosk.com",
+    "GSM": "0499/147002",
+    "Site internet": "www.apschool.be",
+    "Choisissez un titre court": "APSchool : la solution tout-en-un pour votre école.",
+    "À qui s'adresse atelier ?": "Professeurs",
+    "Niveau d'enseignement": "Maternelle-primaire et secondaire",
+    "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+    "Décrivez brièvement votre animation pour les visiteurs": "Venez découvrir APSchool, une plateforme en ligne conçue pour simplifier la gestion quotidienne des établissements scolaires. À travers une animation conviviale, nous vous présenterons les principaux modules de l’outil. L’occasion d’échanger avec notre équipe et d’explorer concrètement comment APSchool peut répondre aux besoins de votre école.",
+    "À propos de vous": "APSchool est une plateforme qui centralise les activités administratives, financières et pédagogiques des écoles. Elle simplifie les tâches des directions, équipes éducatives et parents, réduit les impayés, évite la manipulation d’argent, s’utilise via smartphone, et génère automatiquement les documents officiels : décomptes trimestriels, attestations fiscales, subventions ONE…",
+    "Envoyez votre logo": [
+      {
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/01/60e65c63f9091a580cbaec91b037645612f9eb7e/APSchool-logo-couleur-CMJN+baseline_krIQ2.jpg",
+        "title": "APSchool-logo-couleur-CMJN+baseline.jpg",
+        "mimetype": "image/jpeg",
+        "size": 917630,
+        "width": 1773,
+        "height": 1072,
+        "id": "at5xsutoci4th0tt",
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/01/60e65c63f9091a580cbaec91b037645612f9eb7e/APSchool-logo-couleur-CMJN%2Bbaseline_krIQ2.jpg/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=624cb39be0a7802f9ccd832a3d1e5cd67625dc3dbe42ae3a5e36087ab3029cdd&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22APSchool-logo-couleur-CMJN%2Bbaseline.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/01/60e65c63f9091a580cbaec91b037645612f9eb7e/APSchool-logo-couleur-CMJN%2Bbaseline_krIQ2.jpg/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=312ee87a4c278f74cafdf4de34ccd09f2e0e57689241f5f1c259f9996a14e6a7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22APSchool-logo-couleur-CMJN%2Bbaseline.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/01/60e65c63f9091a580cbaec91b037645612f9eb7e/APSchool-logo-couleur-CMJN%2Bbaseline_krIQ2.jpg/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=27a0cc8a1695b7ac03beb59c55b1a88f69c5d246db8e4742f69ad96b02ac52d3&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22APSchool-logo-couleur-CMJN%2Bbaseline.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/01/60e65c63f9091a580cbaec91b037645612f9eb7e/APSchool-logo-couleur-CMJN%2Bbaseline_krIQ2.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=bbdb8fde6502d1ef214219c533e619abfabd3906d0f01c9e647b15ac27e17053&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22APSchool-logo-couleur-CMJN%2Bbaseline.jpg%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      }
+    ],
+    "Heure": null,
+    "Jours_id": null,
+    "Statut": "A valider",
+    "Espaces_id": null,
+    "CreatedAt": "2025-07-01 15:12:47+00:00",
+    "UpdatedAt": null,
+    "Jours": null,
+    "Espaces": null
+  },
+  {
+    "ID": 299,
+    "Prénom": "Sophia",
+    "Nom": "Seaton",
+    "Email": "ruth.houben@c-explore.com",
+    "GSM": "0484564140",
+    "Site internet": "www.typ10.fr",
+    "Choisissez un titre court": "Enseigner la dactylographie avec le programme Typ10",
+    "À qui s'adresse atelier ?": "Professeurs",
+    "Niveau d'enseignement": "Primaire et secondaire",
+    "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+    "Décrivez brièvement votre animation pour les visiteurs": "Au cours de cette démonstration, vous aurez un aperçu d’un cours de dactylographie selon la méthode Typ10. Vous serez initié(e)s aux différentes étapes du processus d'apprentissage, à l'utilisation du cahier d'exercices numérique ainsi qu'à la manière dont Typ10 utilise les différents canaux d'apprentissage. Ensuite, vous découvrirez la plateforme en ligne avec ses différentes fonctionnalités et outils. Nous vous donnerons également un aperçu de l'outil de suivi, destiné aux enseignants.",
+    "À propos de vous": "Voulez-vous rendre la dactylographie accessible à chaque enfant ?\nAvec Typ10, vous pouvez enseigner la dactylographie en 10 leçons ludiques.\nNous vous offrons :\n- Une méthode inclusive et structurée qui mobilise plusieurs canaux d’apprentissage.\n- Des outils différenciés pour fournir aux enfants un soutien adapté à leurs besoins.\n- Un programme de formation pour optimiser les approches pédagogiques des enseignants et des thérapeutes.",
+    "Envoyez votre logo": [
+      {
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/02/60e65c63f9091a580cbaec91b037645612f9eb7e/Typ10 Apprendre à taper au clavier_wv3Md.png",
+        "title": "Typ10 Apprendre à taper au clavier.png",
+        "mimetype": "image/png",
+        "size": 47747,
+        "width": 916,
+        "height": 682,
+        "id": "atn3l2m01uh9qyyp",
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/02/60e65c63f9091a580cbaec91b037645612f9eb7e/Typ10%20Apprendre%20%C3%A0%20taper%20au%20clavier_wv3Md.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=4f0f7aac82c11de58669818983e475cec2a599d3470e4297f937234f0f853fda&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Typ10%20Apprendre%20%C3%A0%20taper%20au%20clavier.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/02/60e65c63f9091a580cbaec91b037645612f9eb7e/Typ10%20Apprendre%20%C3%A0%20taper%20au%20clavier_wv3Md.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=b08743c0584e896e3de7ccd15303241f14200479f3da8238c70b9b26273f8309&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Typ10%20Apprendre%20%C3%A0%20taper%20au%20clavier.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/02/60e65c63f9091a580cbaec91b037645612f9eb7e/Typ10%20Apprendre%20%C3%A0%20taper%20au%20clavier_wv3Md.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=edf1f4d61e62091d6251d40c4651939f444db6f07995250a3a456ec4610b28d1&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Typ10%20Apprendre%20%C3%A0%20taper%20au%20clavier.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/02/60e65c63f9091a580cbaec91b037645612f9eb7e/Typ10%20Apprendre%20%C3%A0%20taper%20au%20clavier_wv3Md.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=acf6f46b7604436b4b599182612ba40982d0d078d299ed055aa3fd5b4f8f8a6c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Typ10%20Apprendre%20%C3%A0%20taper%20au%20clavier.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      }
+    ],
+    "Heure": null,
+    "Jours_id": null,
+    "Statut": "A valider",
+    "Espaces_id": null,
+    "CreatedAt": "2025-07-02 15:32:41+00:00",
+    "UpdatedAt": null,
+    "Jours": null,
+    "Espaces": null
+  },
+  {
+    "ID": 331,
+    "Prénom": "Manon",
+    "Nom": "Michaux",
+    "Email": "manon.michaux@bibliosansfrontieres.be",
+    "GSM": "+32(0) 460 35 06 64",
+    "Site internet": "Bibliothèques Sans Frontières Belgique - Découvrez nos projets",
+    "Choisissez un titre court": "Renforcer l’engagement collectif et individuel en maths/sciences avec Khan Academy",
+    "À qui s'adresse atelier ?": "Professeurs",
+    "Niveau d'enseignement": "Primaire et secondaire",
+    "Type d'enseignement": "Enseignement ordinaire",
+    "Décrivez brièvement votre animation pour les visiteurs": "Cet atelier vous invite à découvrir Khan Academy, plateforme en ligne 100% gratuite d’apprentissage des maths et des sciences. Les enseignants peuvent y créer des classes, assigner des exercices, faire de la différenciation et suivre en direct la progression de chaque élève. Vous vivrez l’expérience côté « Apprenant » grâce à l’activité CourseAuxAcquis. L’occasion de tester concrètement l’outil tout en explorant des stratégies simples et efficaces pour motiver les apprenants.",
+    "À propos de vous": "Sociologue et enseignante de formation, Manon est chargée de projet Khan Academy au sein de Bibliothèques Sans Frontières. L’ASBL a pour mission de favoriser l’accès à l’éducation et à la culture au plus grand nombre, et en particulier aux personnes en situation de vulnérabilité pour renforcer leur pouvoir d’agir. Dans cette optique, BSF adapte la plateforme Khan Academy au programme de la FWB, de la primaire au supérieur.",
+    "Envoyez votre logo": [
+      {
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/211027_BSF_Logo_BELGIQUE_Color_RGB 800px_ZMhSP.png",
+        "title": "211027_BSF_Logo_BELGIQUE_Color_RGB 800px.png",
+        "mimetype": "image/png",
+        "size": 30929,
+        "width": 800,
+        "height": 221,
+        "id": "atrq9c8lba2x7hry",
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/211027_BSF_Logo_BELGIQUE_Color_RGB%20800px_ZMhSP.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=affbdf829a154cd94024995680b9169cda67289d9b1bd428846459ce2e1aeedc&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22211027_BSF_Logo_BELGIQUE_Color_RGB%20800px.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/211027_BSF_Logo_BELGIQUE_Color_RGB%20800px_ZMhSP.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=7502f39ecd94e2b6b4e0937ada6593d7453762d5fa28d0f0dd351a614d648107&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22211027_BSF_Logo_BELGIQUE_Color_RGB%20800px.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/211027_BSF_Logo_BELGIQUE_Color_RGB%20800px_ZMhSP.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=b16c02323d3c8e4af82b71130e77387a52768815237c667be471cf330d09e6ba&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22211027_BSF_Logo_BELGIQUE_Color_RGB%20800px.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/211027_BSF_Logo_BELGIQUE_Color_RGB%20800px_ZMhSP.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=7c3328888893af2f600942407f840474aa0f55cff39367222d9eac9070989e16&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22211027_BSF_Logo_BELGIQUE_Color_RGB%20800px.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      },
+      {
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/khan-logo_light-bg_HHhQ5.png",
+        "title": "khan-logo_light-bg.png",
+        "mimetype": "image/png",
+        "size": 16203,
+        "width": 1011,
+        "height": 248,
+        "id": "atemjaz1eim3qkdt",
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/khan-logo_light-bg_HHhQ5.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=bfd818aa6d3c6f785da1560a5434771c4f9b913344e81282a8d9b8e5d48c74c5&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22khan-logo_light-bg.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/khan-logo_light-bg_HHhQ5.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=42e8ab1929dd2acf11211350237d907166e2b8d853d912e06495bd4d65d277fb&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22khan-logo_light-bg.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/khan-logo_light-bg_HHhQ5.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=0606cc12d46234e1c805c9679ca494fadb69e058e6662c37e7c95cc666c38eb7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22khan-logo_light-bg.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/07/60e65c63f9091a580cbaec91b037645612f9eb7e/khan-logo_light-bg_HHhQ5.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=1865122ad9a001966be2dfe807b9da7151e7857132342b312525c852d0fccb94&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22khan-logo_light-bg.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      }
+    ],
+    "Heure": null,
+    "Jours_id": null,
+    "Statut": "A valider",
+    "Espaces_id": null,
+    "CreatedAt": "2025-07-07 08:14:25+00:00",
+    "UpdatedAt": null,
+    "Jours": null,
+    "Espaces": null
+  },
+  {
+    "ID": 332,
+    "Prénom": "severine",
+    "Nom": "de sadeleer",
+    "Email": "severinedesadeleer@gmail.com",
+    "GSM": "0477779218",
+    "Site internet": "www.amagirafe.org",
+    "Choisissez un titre court": "AMA : correspondance scolaire numérique entre écoles à travers le monde",
+    "À qui s'adresse atelier ?": "Professeurs, parents et enfants",
+    "Niveau d'enseignement": "Maternelle et primaire",
+    "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+    "Décrivez brièvement votre animation pour les visiteurs": "Les visiteurs découvriront la plateforme AMA, exploreront les contenus pédagogiques et comprendront la richesse des échanges entre les écoles participantes au projet.",
+    "À propos de vous": "Passionnée par la transmission, je suis anthropologue spécialisée en santé publique et agréée pour l’enseignement secondaire supérieur. Fondatrice du projet AMA la Girafe, né de la volonté de connecter les élèves du monde autour de thématiques citoyennes et interculturelles.",
+    "Envoyez votre logo": [
+      {
+        "id": "atfkjvr5bmd4kd6u",
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png",
+        "title": "Logo-AMA-HD-01.png",
+        "mimetype": "image/png",
+        "size": 34060,
+        "width": 753,
+        "height": 1498,
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=1f21af2a5eaa640d7cb5d48855b4dbcf9cdaf6ad4c6ef1f0119269bbeee1d03a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo-AMA-HD-01.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=d9eca3b5eac1f91083aa34176a39d2e92ca0cb5f4a80dea9188c05f5d525523a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo-AMA-HD-01.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=0a35a942913b29fdcf545f5df1cdb617d6cffc1210db59406e3d4be4a0ed9077&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo-AMA-HD-01.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/06/24/60e65c63f9091a580cbaec91b037645612f9eb7e/Logo-AMA-HD-01_sV9K7.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=4233063188576f2efc9bcff321164d025e10e6d545b6d7ba49294e5271a5ac2a&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22Logo-AMA-HD-01.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      }
+    ],
+    "Heure": null,
+    "Jours_id": null,
+    "Statut": "A valider",
+    "Espaces_id": 34,
+    "CreatedAt": "2025-07-23 07:49:46+00:00",
+    "UpdatedAt": null,
+    "Jours": null,
+    "Espaces": {
+      "Id": 34,
+      "Title": "Village numérique"
+    }
+  },
+  {
+    "ID": 343,
+    "Prénom": "Alain",
+    "Nom": "Leuregans",
+    "Email": "alain.leuregans@signpost.eu",
+    "GSM": "+32 472 07 10 95",
+    "Site internet": "https://signpost.be/fr-be/",
+    "Choisissez un titre court": "Chromebooks en classe : exploitez leur plein potentiel",
+    "À qui s'adresse atelier ?": "Professionnels",
+    "Niveau d'enseignement": "Primaire et secondaire",
+    "Type d'enseignement": "Enseignement ordinaire et spécialisé",
+    "Décrivez brièvement votre animation pour les visiteurs": "Découvrez comment exploiter tout le potentiel des Chromebooks en classe. Cette session interactive vous fera découvrir leurs atouts majeurs : démarrage en moins de 10 secondes, mises à jour automatiques, sécurité intégrée, autonomie jusqu’à 12h, travail hors ligne, accès rapide au cloud et parfaite intégration avec Google Workspace for Education. Idéal pour un usage pédagogique fluide et sécurisé.",
+    "À propos de vous": "Signpost propose des solutions numériques pour l’enseignement, combinant matériel, logiciels et support. Achat ou location de portables et Chromebooks configurés selon les besoins de l’école. La location mensuelle rend la technologie plus accessible. Chaque appareil est livré prêt à l’emploi, dans une housse antichoc, avec un Windows préinstallé et un code-barres pour une gestion simplifiée. Idéal pour le primaire, secondaire, promo-soc et supérieur.",
+    "Envoyez votre logo": [
+      {
+        "url": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/30/60e65c63f9091a580cbaec91b037645612f9eb7e/black-green_Tbt9k.png",
+        "title": "black-green.png",
+        "mimetype": "image/png",
+        "size": 52825,
+        "width": 3396,
+        "height": 1003,
+        "id": "at0f9aqtclp5p22l",
+        "thumbnails": {
+          "tiny": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/30/60e65c63f9091a580cbaec91b037645612f9eb7e/black-green_Tbt9k.png/tiny.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=4b9b30234708afff549d0fc8906bb03c5700b8071204b1113fb5fa4aa2147149&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22black-green.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "small": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/30/60e65c63f9091a580cbaec91b037645612f9eb7e/black-green_Tbt9k.png/small.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=af1148ecffbd0156dcec39871c0139052519f94c734efca36f6b140d88406139&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22black-green.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          },
+          "card_cover": {
+            "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/thumbnails/2025/07/30/60e65c63f9091a580cbaec91b037645612f9eb7e/black-green_Tbt9k.png/card_cover.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=baa0fb345c87449f9cac6033da34ebe39e0e457280533e7ed367c047ad8cd96c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22black-green.png%22&response-content-type=image%2Fjpeg&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          }
+        },
+        "signedUrl": "https://nocohub-001-prod-app-attachments.s3.us-east-2.amazonaws.com/nc/uploads/2025/07/30/60e65c63f9091a580cbaec91b037645612f9eb7e/black-green_Tbt9k.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATUJCOBWTFSXT22F2%2F20250804%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250804T155308Z&X-Amz-Expires=7613&X-Amz-Signature=8d6f0dc4dda339ccc6d1e45c813292528b9441ec2e0f93a34f584adb652165bb&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22black-green.png%22&response-content-type=image%2Fpng&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+      }
+    ],
+    "Heure": null,
+    "Jours_id": null,
+    "Statut": "A valider",
+    "Espaces_id": null,
+    "CreatedAt": "2025-07-30 12:43:29+00:00",
+    "UpdatedAt": null,
+    "Jours": null,
+    "Espaces": null
   }
 ]

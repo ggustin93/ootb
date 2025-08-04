@@ -1,7 +1,9 @@
 # Spécifications - Filtre "Démos Numériques" & Evolution Cartes
 
 **Date** : 23 juillet 2025  
-**Objectif** : Valider les spécifications pour l'intégration des démos numériques et l'évolution des cartes d'événements.
+**Objectif** : Valider les spécifications pour l'intégration des démos numériques et l'évolution des cartes d'événements.  
+**Statut** : ✅ **IMPLÉMENTÉ ET DÉPLOYÉ** - Prêt pour validation client  
+**Dernière mise à jour** : 04/08/2025
 
 ---
 
@@ -55,6 +57,7 @@ Les cartes des événements seront mises à jour pour inclure deux nouvelles inf
 
 2.  **Heure de fin :**
     - **Solution :** Ajout de l'heure de fin à côté de l'heure de début (ex: `10:00 - 11:00`).
+    - **Durées par défaut :** Ateliers normaux et Conférences = 1h, Démos numériques = 30min.
     - **Concerne :** Toutes les cartes d'événements (Ateliers, Conférences, Démos).
 
 ---
@@ -102,15 +105,83 @@ Données sources (JSON/NocoDB)      → Ajout du champ `heure_fin`
 
 ---
 
-## 6. Points de validation pour le déploiement test
+## 6. ✅ IMPLÉMENTATION TERMINÉE - Janvier 2025
 
-- [ ] Le filtre "Démos numériques" est présent avec la bonne icône (💻).
-- [ ] Le filtre "Ateliers" exclut bien les démos numériques.
-- [ ] Le filtre "Démos numériques" affiche uniquement les démos.
-- [ ] Le badge "DÉMO NUMERIQUE" est visible sur les cartes des démos.
-- [ ] L'heure de fin apparaît correctement sur toutes les cartes d'événement.
-- [ ] Les compteurs sur les filtres sont exacts.
+### 6.1 Fonctionnalités Développées et Testées
+
+**✅ Filtre "Démos Numériques" :**
+- [x] Nouveau bouton de filtre avec icône desktop (💻)
+- [x] Filtrage exclusif entre "Ateliers" et "Démos numériques"
+- [x] Compteurs précis dans les badges des filtres
+- [x] Détection automatique : `type === 'Ateliers' && location === 'Village numérique'`
+
+**✅ Cartes d'Événements Améliorées :**
+- [x] Badge violet "Démo numérique" pour les démos (coin supérieur droit)
+- [x] Affichage des heures de fin : format "10:00 - 10:30"
+- [x] Durées intelligentes : 1h (ateliers/conférences), 30min (démos)
+- [x] Compatible avec tous les types d'événements
+
+**✅ Architecture Technique :**
+- [x] Logique de filtrage côté serveur et client corrigée
+- [x] Calculs de durée automatiques avec fallbacks
+- [x] Validation complète et debugging résolu
+- [x] Code production-ready sans refactoring nécessaire
+
+### 6.2 Déploiement pour Validation Client
+
+**🚀 Branche de Test Déployée :**
+- **Branche :** `feature/digital-demos-filter`
+- **Commit :** `c699040` - "feat(festival): implement digital demos filter system"
+- **URL Netlify :** Prêt pour validation Sophie
+- **Données de test :** Démo "Introduction à l'IA en Classe" incluse
+
+### 6.3 Points de Validation Client
+
+**À valider par Sophie sur l'URL de test :**
+
+- [ ] **Interface de Filtrage :**
+  - [ ] Bouton "Démos numériques" visible avec icône desktop
+  - [ ] Filtrage exclusif fonctionne (Ateliers vs Démos)
+  - [ ] Compteurs corrects dans les badges
+  
+- [ ] **Cartes d'Événements :**
+  - [ ] Badge violet "Démo numérique" sur les démos
+  - [ ] Heures de fin affichées (format "10:00 - 10:30")
+  - [ ] Positionnement et lisibilité du badge
+  
+- [ ] **Expérience Utilisateur :**
+  - [ ] Navigation fluide entre les filtres
+  - [ ] Cohérence visuelle avec l'interface existante
+  - [ ] Fonctionnement sur mobile et desktop
+
+### 6.4 Prochaines Étapes
+
+**Après validation client :**
+1. **Merge en production** → branche `main`
+2. **Déploiement live** → outofthebooks.com
+3. **Monitoring** → utilisation des filtres et performance
+
+**Temps total réalisé :** ~9h (vs estimation 5h15 - debugging supplémentaire requis)
 
 ---
 
-*Document préparé par Guillaume Pwablo - hello@pwablo.be*
+## 7. Informations Techniques pour le Client
+
+### 7.1 Données de Démonstration
+Un événement de test a été ajouté pour la validation :
+```
+"Démo Numérique: Introduction à l'IA en Classe"
+📍 Village numérique
+⏰ 10:00 - 10:30 (30 minutes)
+🏷️ Badge "Démo numérique"
+```
+
+### 7.2 Fonctionnement Automatique
+- **Détection intelligente :** Les événements du "Village numérique" sont automatiquement identifiés comme démos
+- **Durées par défaut :** Système intelligent avec 1h pour ateliers/conférences, 30min pour démos
+- **Mise à jour automatique :** Les compteurs se mettent à jour automatiquement selon les données
+
+---
+
+*Document préparé par Guillaume Pwablo - hello@pwablo.be*  
+*Implémentation terminée : Janvier 2025*

@@ -33,13 +33,10 @@ Ce document explique l'organisation des fichiers liés au festival dans le proje
 
 ### Composants UI
 
-- `src/components/ui/DayFilter.astro` : Composant de filtrage par jour
-  - Permet de filtrer les événements par jour et par type
-  - Gère la pagination des événements
-
-- `src/components/ui/EventCard.astro` : Carte d'événement
-  - Affiche les détails d'un événement
-  - Gère différents types d'événements (Conférences, Ateliers, Stands)
+- `src/components/ui/DayFilter.astro` : Système de filtrage et rendu d'événements
+  - Contient la classe EventRenderer pour le rendu côté client
+  - Gère le filtrage par jour et par type avec pagination
+  - Affiche les détails des événements avec badges (démos numériques, validation)
 
 ## Flux de données
 
@@ -47,7 +44,7 @@ Ce document explique l'organisation des fichiers liés au festival dans le proje
 2. En mode test, les événements fictifs de `config/festival.ts` sont utilisés
 3. Les événements sont organisés par jour avec `organizeEventsByDay()`
 4. Le composant `DayFilter.astro` affiche les événements avec pagination
-5. Chaque événement est rendu avec le composant `EventCard.astro`
+5. Chaque événement est rendu côté client avec la classe EventRenderer dans DayFilter.astro
 
 ## Bonnes pratiques
 

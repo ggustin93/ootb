@@ -2,20 +2,43 @@
 
 <!-- What works. What's left to build. Current status. Known issues. -->
 
-## Current Date: 31/05/2025
+## Current Date: 17/08/2025
 
 ## Current Status
+- **E2E Testing Suite**: ✅ COMPLETED - Comprehensive end-to-end testing implementation
+    - 10 test scenarios covering all critical user paths (100% pass rate)
+    - Desktop browser coverage: Chrome, Firefox, Safari  
+    - Mobile tests disabled (different menu structure)
+    - Automated validation for badge consistency, navigation, and festival filters
+- **README Documentation**: ✅ UPDATED - Enhanced with NocoDB tables, Brevo integration, and testing information
+    - Detailed NocoDB database structure documentation
+    - Brevo newsletter synchronization documentation
+    - "Nos Contenus" content system description
+    - Comprehensive E2E testing documentation
 - **TinaCMS Ticketing Integration**: ✅ COMPLETED - Complete integration of TinaCMS content management for festival ticketing modal
-    - Rich text editor implementation for ticketing modal content
-    - Seamless data flow from CMS to modal display
-    - Client-friendly content editing interface
-    - Enhanced typography and text formatting
 - **Festival Event Filters UI/UX**: ✅ COMPLETED - UI/UX enhancements for event filters are complete and functional
-    - Dynamic filter titles, button state management, and pagination positioning implemented
-    - Code refactoring with utility classes completed
 - **Performance**: All previous performance optimizations maintained and stable
 
 ## What Works
+
+### E2E Testing Suite
+- **Comprehensive Test Coverage**: 10 test scenarios covering all critical user paths
+    - Badge consistency validation across pages
+    - Navigation and anchor scrolling functionality  
+    - Festival page filters and responsive behavior
+- **Browser Compatibility**: Desktop Chrome, Firefox, Safari support
+- **Test Organization**: Structured test scenarios in `/tests/e2e/scenarios/`
+- **CI Integration**: Automated testing with retry logic and HTML reporting
+- **Performance**: 100% pass rate on all core functionality tests
+- **Configuration**: Mobile tests disabled due to different menu structure
+
+### Documentation System
+- **README Enhancement**: Comprehensive project documentation including:
+    - NocoDB database tables structure (conferences, workshops, stands)
+    - Newsletter integration with Brevo API and subscriber management
+    - "Nos Contenus" content system with educational resources
+    - Complete E2E testing strategy and configuration
+- **Technical Details**: API integrations, content processing pipeline, deployment strategy
 
 ### TinaCMS Content Management System
 - **Ticketing Content Management**: 
@@ -70,6 +93,8 @@
 - **Advanced Rich Text Features**: Future enhancements for more complex formatting (currently basic rich text support)
 - **Content Versioning**: Potential content history/versioning features in TinaCMS
 - **Multi-language Support**: Internationalization for ticketing content (if needed)
+- **Test Coverage Expansion**: Consider adding integration tests for API endpoints
+- **Performance Monitoring**: Real-world usage metrics and performance tracking
 
 ## Known Issues
 - **TinaCMS Display**: Rich text fields occasionally show `[object Object]` in admin interface (content functions correctly on frontend)

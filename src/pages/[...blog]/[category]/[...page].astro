@@ -234,7 +234,7 @@ const metadata = {
                 {/* MODIFICATION TEMPORAIRE: Catégorie "premium" masquée - Pour réactiver, supprimer "key !== 'premium'" du filtre ci-dessous */}
                 {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all' && key !== 'premium').map(([key, config]) => (
                   <a
-                    href={`/category/${key.toLowerCase()}#category-content`}
+                    href={`/category/${key.toLowerCase()}/#category-content`}
                     class:list={[
                       'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
                       'transition-all duration-300',

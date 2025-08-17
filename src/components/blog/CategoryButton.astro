@@ -20,10 +20,10 @@ const {
 } = Astro.props;
 
 // Utiliser le href tel quel, sans ajouter d'ancre pour /blog
-// Pour les autres liens de catégorie, ajouter l'ancre
+// Pour les autres liens de catégorie, ajouter l'ancre avec trailing slash
 const finalHref = href === '/blog' 
   ? href 
-  : href + (href.startsWith('/category/') ? '#category-content' : '');
+  : href + (href.startsWith('/category/') ? '/#category-content' : '');
 
 // Générer un ID unique pour ce bouton
 const buttonId = `category-btn-${Math.random().toString(36).substring(2, 9)}`;

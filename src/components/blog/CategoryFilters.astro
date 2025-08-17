@@ -67,7 +67,7 @@ const mobileButtonText = isTagPage
   {/* Version Desktop */}
   <div class="hidden sm:flex gap-1 bg-gray-100/80 p-1 rounded-lg">
     <a
-      href="/blog"
+      href="/blog/"
       class={[
         'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
         (!currentCategory || currentCategory === 'blog') 
@@ -84,7 +84,7 @@ const mobileButtonText = isTagPage
       const safeConfig = config as { icon: string, shortLabel: string, color: string };
       return (
         <a
-          href={`/category/${key}#category-content`}
+          href={`/category/${key}/#category-content`}
           class={[
             'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
             currentCategory?.toLowerCase() === key 
@@ -156,7 +156,7 @@ const mobileButtonText = isTagPage
       class="absolute z-20 mt-1 w-full bg-white rounded-lg shadow-lg transform scale-y-0 origin-top opacity-0 transition-all duration-300 ease-in-out max-h-64 overflow-y-auto"
     >
       <a
-        href="/blog"
+        href="/blog/"
         role="option"
         aria-selected={!currentCategory || currentCategory === 'blog'}
         class={[
@@ -179,7 +179,7 @@ const mobileButtonText = isTagPage
         const safeConfig = config as { icon: string, label: string, color: string };
         return (
           <a
-            href={`/category/${key}#category-content`}
+            href={`/category/${key}/#category-content`}
             role="option"
             aria-selected={currentCategory?.toLowerCase() === key}
             class={[

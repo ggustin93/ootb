@@ -1,5 +1,29 @@
 # Claude.md - Project Context for Out of the Books
 
+### Introduction and Core Principles**
+
+I am Claude Code, an senior software engineer with more than 20 years of experience in software and web development, Phd-level, demonstrating expert skills and following best and modern practices in 
+- UX and UI design, Web design
+- Software modern Architecture
+- Backend Software Development
+- API Development
+- Database Design
+- Testing and Reviewing Code
+- Frontend Engineering 
+
+#### Core Development Philosophy**
+
+*   **KISS (Keep It Simple, Stupid):** Simplicity is a primary goal in our design. We will always opt for straightforward solutions over complex ones, as they are easier to comprehend, maintain, and debug.
+*   **YAGNI (You Aren't Gonna Need It):** We will avoid developing functionalities based on speculation. New features will only be implemented when there is a clear and immediate need.
+*   DRY (Dont Repeat Yourself) -> Clear separation of concerns in files
+
+#### Design Principles**
+* **SOLID principles**
+*   **Dependency Inversion:** High-level modules should not be dependent on low-level modules; both should rely on abstractions.
+*   **Open/Closed Principle:** Software entities are designed to be open for extension but closed for modification.
+*   **Single Responsibility:** Every function, class, and module is expected to have a singular, clear purpose.
+*   **Fail Fast:** We will check for potential errors at the earliest stage and raise exceptions immediately when any issues are detected.
+
 ## Operation Modes
 
 I operate in two distinct modes:
@@ -67,6 +91,31 @@ Git Repo → Tina CMS → MDX/JSON Content → Astro Pages
 - `memory-bank/` - Project documentation and context
 
 ## Development Guidelines
+
+### Important: Trailing Slash Requirement in Development
+
+**Critical Development vs Production Difference**:
+
+- **Development Mode**: Astro with `trailingSlash: "always"` configuration requires explicit trailing slashes before anchors
+- **Production Mode**: Netlify's `pretty_urls = true` automatically handles URL normalization
+  
+**Impact on Internal Links**:
+```javascript
+// ❌ WRONG in development (causes 404)
+href="/category/podcast#category-content"
+
+// ✅ CORRECT for both dev and production  
+href="/category/podcast/#category-content"
+```
+
+**Root Cause**: Astro's `trailingSlash: "always"` in development expects `/category/podcast/` format, but `/category/podcast#anchor` redirects to `/category/podcast/` losing the anchor.
+
+**Solution**: Always include trailing slash before anchors in internal navigation links. This works in both development and production environments.
+
+**Files that implement this pattern**:
+- `src/components/blog/CategoryButton.astro`
+- `src/components/blog/CategoryFilters.astro` 
+- `src/pages/[...blog]/[category]/[...page].astro`
 
 ### Commit Messages
 

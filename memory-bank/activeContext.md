@@ -2,9 +2,59 @@
 
 <!-- Current work focus. Recent changes. Next steps. Active decisions and considerations. -->
 
-## Current Date: 31/05/2025
+## Current Date: 17/08/2025
 
-## Current Focus: ✅ COMPLETED - TinaCMS Integration for Festival Ticketing Modal
+## Current Focus: ✅ COMPLETED - Badge Consistency & Trailing Slash Development Issues
+
+Successfully resolved badge display inconsistencies across homepage and blog pages, and fixed critical trailing slash navigation issues in development mode.
+
+### Key Achievements:
+
+1. **Badge Consistency Fix**: Resolved badge display inconsistency where "Fiches" pédagogiques badges weren't showing correctly on homepage vs blog page
+   - Updated FeaturedContentSection.astro to use centralized CONTENT_TYPES configuration
+   - Fixed Card.astro icon mapping (tabler:school → tabler:file-text for fiches)
+   - Updated List.astro to use CONTENT_TYPES.shortLabel for consistent plural forms
+   - All badges now show consistent labels: "Fiches", "Podcasts", "Émissions TV", etc.
+
+2. **Trailing Slash Development Issue Fix**: Resolved 404 errors in development mode when clicking category filter links
+   - **Root Cause**: Astro's `trailingSlash: "always"` configuration requires trailing slashes in development
+   - **Production Difference**: Netlify's `pretty_urls = true` handles this automatically in production
+   - **Solution**: Added trailing slash before anchors in all category filter links
+   - **Files Updated**: CategoryButton.astro, CategoryFilters.astro (2 occurrences), [category]/[...page].astro, blog.json
+   - **URL Pattern**: `/category/podcast#category-content` → `/category/podcast/#category-content`
+
+3. **Comprehensive E2E Testing**: Created and verified complete user journey testing with Playwright
+   - Homepage badge consistency verification
+   - Navigation from homepage to blog to filtered podcasts
+   - Category filtering functionality validation
+   - Trailing slash navigation testing
+   - Saved test file: `tests/e2e/badge-consistency-navigation.spec.js`
+
+### Technical Details:
+
+**Trailing Slash Development vs Production Behavior**:
+- **Development**: Astro with `trailingSlash: "always"` requires explicit trailing slash before anchors
+- **Production**: Netlify's `pretty_urls = true` automatically handles URL normalization
+- **Impact**: Category filter links needed `/category/type/#anchor` format in development
+- **Solution**: Updated all internal category links to include trailing slash before anchors
+
+**Files Modified**:
+- `src/components/sections/FeaturedContentSection.astro`: Badge configuration centralization
+- `src/components/ui/Card.astro`: Icon mapping correction for fiche type
+- `src/components/blog/List.astro`: Consistent badge label usage
+- `src/components/blog/CategoryButton.astro`: Trailing slash before anchor
+- `src/components/blog/CategoryFilters.astro`: Trailing slash in both desktop and mobile versions
+- `src/pages/[...blog]/[category]/[...page].astro`: Category link trailing slash
+- `src/content/blog/blog.json`: Content configuration (verified)
+
+### Next Steps:
+- All issues resolved and tested
+- E2E test available for future regression testing
+- Documentation updated for trailing slash particularity
+
+---
+
+## Previous Focus (as of 31/05/2025): ✅ COMPLETED - TinaCMS Integration for Festival Ticketing Modal
 
 Successfully integrated TinaCMS content management for the festival ticketing modal, enabling the client to easily update ticketing information through a user-friendly rich text editor.
 

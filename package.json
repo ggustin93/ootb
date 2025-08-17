@@ -36,7 +36,10 @@
         "fetch:festival": "node src/scripts/build-festival-data.js --fetch-only",
         "build:events": "node src/scripts/build-festival-data.js --reset",
         "build:events:no-reset": "node src/scripts/build-festival-data.js --no-reset",
-        "build:fiches": "node src/scripts/build-fiches-pedagogiques.js"
+        "build:fiches": "node src/scripts/build-fiches-pedagogiques.js",
+        "test:e2e": "playwright test",
+        "test:e2e:ui": "playwright test --ui",
+        "test:e2e:debug": "playwright test --debug"
     },
     "dependencies": {
         "@astrojs/netlify": "^6.2.3",
@@ -93,6 +96,7 @@
         "@eslint/js": "^9.16.0",
         "@iconify-json/flat-color-icons": "^1.2.0",
         "@iconify-json/tabler": "^1.2.10",
+        "@playwright/test": "^1.54.2",
         "@tailwindcss/forms": "^0.5.9",
         "@tailwindcss/typography": "^0.5.15",
         "@types/eslint__js": "^8.42.3",

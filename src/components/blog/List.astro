@@ -2,6 +2,7 @@
 import type { Post } from '~/types';
 import Card from '~/components/ui/Card.astro';
 import { getFormattedDate } from '~/utils/utils';
+import { CONTENT_TYPES } from '~/config/content-types';
 
 export interface Props {
   posts?: Array<Post>;
@@ -18,19 +19,6 @@ const typeMapping: Record<string, CardType> = {
   podcast: 'podcast',
   tv: 'tv',
   premium: 'premium'
-};
-
-// Fonction pour formater le titre de la catégorie
-const formatCategoryTitle = (title: string) => {
-  const categoryTitles: Record<string, string> = {
-    actualite: 'Actualité',
-    fiche: 'Fiche pédagogique',
-    live: 'Live Facebook',
-    podcast: 'Podcast',
-    tv: 'Émission TV',
-    premium: 'Contenu Premium'
-  };
-  return categoryTitles[title.toLowerCase()] || title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
 };
 
 // Limiter à 9 articles par page pour le format 3x3
@@ -51,7 +39,7 @@ const displayedPosts = posts.slice(0, 9);
             description={post.description}
             image={post.image}
             category={{
-              title: formatCategoryTitle(post.category?.title || ''),
+              title: CONTENT_TYPES[post.category?.slug as keyof typeof CONTENT_TYPES]?.shortLabel || post.category?.title || '',
               slug: post.category?.slug || 'actualite'
             }}
             tags={[]}

@@ -126,7 +126,7 @@
       "heroDescription": "Explorez notre sélection de contenus hors-série pour approfondir vos connaissances pédagogiques",
       "links": [
         { "icon": "tabler:coffee", "label": "Faire un don", "url": "https://buymeacoffee.com/outofthebooks", "variant": "premium-primary" },
-        { "icon": "tabler:arrow-left", "label": "Retour aux contenus", "url": "/blog#category-content", "variant": "premium-secondary" }
+        { "icon": "tabler:arrow-left", "label": "Retour aux contenus", "url": "/blog/#category-content", "variant": "premium-secondary" }
       ],
       "qrCode": {
         "src": "~/assets/images/bmc_qr.png",
@@ -200,7 +200,7 @@
       ],
       "links": [
         { "icon": "tabler:coffee", "label": "Faire un don", "url": "https://buymeacoffee.com/outofthebooks", "variant": "premium-primary" },
-        { "icon": "tabler:arrow-left", "label": "Retour aux contenus", "url": "/blog#category-content", "variant": "premium-secondary" }
+        { "icon": "tabler:arrow-left", "label": "Retour aux contenus", "url": "/blog/#category-content", "variant": "premium-secondary" }
       ],
       "qrCode": {
         "src": "~/assets/images/bmc_qr.png",

@@ -3,15 +3,7 @@ import { Icon } from 'astro-icon/components';
 import Card from '~/components/ui/Card.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import { findDiverseLatestPosts } from '~/utils/blog';
-
-// Category label mapping
-const CATEGORY_LABELS = {
-  actualite: 'Actualité',
-  podcast: 'Podcast',
-  tv: 'Émission',
-  live: 'Live',
-  premium: 'Premium'
-};
+import { CONTENT_TYPES } from '~/config/content-types';
 
 interface FeaturedContent {
   href: string;
@@ -42,13 +34,13 @@ const {
   title = "Actualités du moment",
   description = "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
   buttonText = "Voir tout",
-  buttonLink = "/blog",
+  buttonLink = "/blog/",
   contents = latestPosts.map(post => ({
     href: post.permalink,
     title: post.title,
     description: post.description,
     image: post.image,
-    badge: CATEGORY_LABELS[post.category.slug as keyof typeof CATEGORY_LABELS] || post.category.slug,
+    badge: CONTENT_TYPES[post.category.slug as keyof typeof CONTENT_TYPES]?.shortLabel || post.category.slug,
     type: post.category.slug === 'podcast' ? 'podcast' : 
            post.category.slug === 'tv' ? 'tv' : 'default',
     meta: {

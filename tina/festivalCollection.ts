@@ -232,29 +232,118 @@ export const festivalCollection: Collection = {
     },
     {
       type: "object",
-      name: "programme",
-      label: "Programme",
-      ui: {
-        itemProps: (_item) => {
-          return { label: "Section programme" };
-        },
-      },
+      name: "programLink",
+      label: "Bannière Programme (PDF)",
+      description: "Configuration de la bannière avec téléchargements PDF",
       fields: [
+        {
+          type: "boolean",
+          name: "enabled",
+          label: "Activer la bannière",
+          description: "Activer ou désactiver l'affichage de la bannière programme avec téléchargements",
+        },
         {
           type: "string",
           name: "title",
-          label: "Titre",
-          required: true,
+          label: "Titre de la bannière",
+          description: "Titre principal de la bannière (ex: Programme du Festival 2025)",
         },
         {
           type: "string",
           name: "description",
           label: "Description",
-          ui: {
-            component: "textarea",
-          },
-          required: true,
-        }
+          description: "Description sous le titre",
+        },
+        {
+          type: "object",
+          name: "familyPdf",
+          label: "Programme Familles",
+          description: "Configuration du bouton Programme Familles",
+          fields: [
+            {
+              type: "boolean",
+              name: "enabled",
+              label: "Activer",
+              description: "Activer le bouton Programme Familles",
+            },
+            {
+              type: "string",
+              name: "text",
+              label: "Texte du bouton",
+              description: "Texte affiché sur le bouton (ex: Programme Familles)",
+            },
+            {
+              type: "string",
+              name: "url",
+              label: "URL du PDF",
+              description: "Lien vers le PDF Programme Familles",
+            },
+          ],
+        },
+        {
+          type: "object",
+          name: "ebookPdf",
+          label: "EBOOK Complet",
+          description: "Configuration du bouton EBOOK Complet",
+          fields: [
+            {
+              type: "boolean",
+              name: "enabled",
+              label: "Activer",
+              description: "Activer le bouton EBOOK Complet",
+            },
+            {
+              type: "string",
+              name: "text",
+              label: "Texte du bouton",
+              description: "Texte affiché sur le bouton (ex: EBOOK Complet)",
+            },
+            {
+              type: "string",
+              name: "url",
+              label: "URL du PDF",
+              description: "Lien vers l'EBOOK complet",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: "object",
+      name: "ticketing",
+      label: "Billetterie",
+      description: "Configuration de la billetterie du festival",
+      fields: [
+        {
+          type: "rich-text",
+          name: "modalText",
+          label: "Texte du modal de billetterie",
+          description: "Texte affiché dans la fenêtre de réservation des tickets",
+        },
+        {
+          type: "string",
+          name: "ifpcButtonLabel",
+          label: "Texte du bouton IFPC",
+          description: "Libellé du bouton pour la billetterie IFPC",
+        },
+        {
+          type: "string",
+          name: "ifpcButtonUrl",
+          label: "URL du bouton IFPC",
+          description: "Lien pour la billetterie IFPC",
+        },
+        {
+          type: "string",
+          name: "weezeventButtonLabel",
+          label: "Texte du bouton Weezevent",
+          description: "Libellé du bouton pour la billetterie Weezevent",
+        },
+        {
+          type: "string",
+          name: "weezeventButtonUrl",
+          label: "URL du bouton Weezevent",
+          description: "Lien pour la billetterie Weezevent",
+        },
       ],
     },
     {

@@ -17,13 +17,12 @@ export const prerender = true;
 
 // Import du contenu depuis le fichier JSON
 import festivalContent from '~/content/festival/tina/index.json';
-import siteContent from '~/content/site/settings.json';  // Importer les paramètres du site
 
 // Extraction des données du fichier JSON
-const { metadata, hero, about, gallery, stats, programme, themes: themeData, accessibility, partenaires: partenaireData } = festivalContent;
+const { metadata, hero, about, gallery, stats, themes: themeData, accessibility, partenaires: partenaireData } = festivalContent;
 
-// Récupérer les paramètres du festival depuis le fichier settings.json
-const { festival: festivalSettings } = siteContent;
+// Paramètres de la bannière programme (gérés dans la page Festival)
+const { programLink, ticketing } = festivalContent;
 
 // Import de l'utilitaire findImage pour résoudre les chemins d'images
 import { findImage } from '~/utils/images';
@@ -43,6 +42,7 @@ const eventsByDay = eventsData as EventsByDay;
     date={hero.date}
     location={hero.location}
     description={hero.description}
+    ticketingConfig={ticketing}
   >
   </FestivalHeroSection>
 
@@ -158,25 +158,48 @@ const eventsByDay = eventsData as EventsByDay;
             <Icon name="tabler:calendar" class="w-5 h-5" />
             <span>Planning</span>
           </SectionDivider>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-2 md:mb-6 text-sky-900 tracking-tight">{programme.title}</h2>
-          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-4 md:mb-8 font-light tracking-wide leading-relaxed">
-            {programme.description}
-          </p>
-          {festivalSettings.programLink && festivalSettings.programLink.enabled && (
-            <div class="flex justify-center">
-              <Button
-                href={festivalSettings.programLink.url}
-                variant="outline" 
-                size="md"
-                icon="tabler:external-link"
-                iconPosition="right"
-                class="mx-auto"
-                target="_blank"
-              >
-                {festivalSettings.programLink.text || "Voir le programme complet"}
-              </Button>
-            </div>
-          )}
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-2 md:mb-6 text-sky-900 tracking-tight">{programLink.title}</h2>
+          
+          <!-- Description principale avec largeur étendue -->
+          <div class="max-w-3xl mx-auto mb-6 md:mb-8">
+            <p class="text-lg md:text-xl text-gray-600 font-light tracking-wide leading-relaxed mb-6">
+              {programLink.description}
+            </p>
+            
+            {/* Bloc de liens programme avec style amélioré */}
+            {programLink && programLink.enabled && (
+              <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mb-3">
+                  {programLink.familyPdf && programLink.familyPdf.enabled && (
+                    <a
+                      href={programLink.familyPdf.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 px-4 py-2.5 border-2 border-[--ootb-orange] text-[--ootb-orange] bg-white hover:bg-[--ootb-orange] hover:text-white rounded-xl font-medium transition-all duration-200 text-sm md:text-base"
+                    >
+                      <Icon name="tabler:download" class="w-4 h-4" />
+                      {programLink.familyPdf.text}
+                    </a>
+                  )}
+                  
+                  {programLink.ebookPdf && programLink.ebookPdf.enabled && (
+                    <a
+                      href={programLink.ebookPdf.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 px-4 py-2.5 border-2 border-[--ootb-orange] text-[--ootb-orange] bg-white hover:bg-[--ootb-orange] hover:text-white rounded-xl font-medium transition-all duration-200 text-sm md:text-base"
+                    >
+                      <Icon name="tabler:book" class="w-4 h-4" />
+                      {programLink.ebookPdf.text}
+                    </a>
+                  )}
+                </div>
+                <p class="text-sm text-gray-600 text-center">
+                  ou explorez les événements ci-dessous ↓
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
         <div class="bg-white rounded-[32px] shadow-xl p-4 md:p-8 mb-16 relative z-10">

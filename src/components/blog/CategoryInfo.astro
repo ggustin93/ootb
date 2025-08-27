@@ -3,7 +3,9 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import { CONTENT_TYPES } from '~/config/content-types';
 import Button from '~/components/ui/Button.astro';
+import PartnerGrid from '~/components/blog/PartnerGrid.astro';
 import blogData from '~/content/blog/blog.json';
+import { TinaMarkdown } from 'tinacms/dist/rich-text';
 
 interface Props {
   type: keyof typeof CONTENT_TYPES;
@@ -16,7 +18,19 @@ interface Link {
   icon: string;
   label: string;
   url: string;
-  variant?: "premium-primary" | "premium-secondary" | "link" | "primary" | "secondary" | "outline" | "ghost" | "blue" | "outline-blue" | "card" | "outline-podcast" | "outline-tv";
+  variant?:
+    | 'premium-primary'
+    | 'premium-secondary'
+    | 'link'
+    | 'primary'
+    | 'secondary'
+    | 'outline'
+    | 'ghost'
+    | 'blue'
+    | 'outline-blue'
+    | 'card'
+    | 'outline-podcast'
+    | 'outline-tv';
 }
 
 // Type pour le QR code
@@ -26,13 +40,24 @@ interface QRCode {
   caption: string;
 }
 
+// Type pour la description (peut être string, array, ou objet rich text)
+type DescriptionData = string | string[] | any;
+
+// Type pour les partenaires
+interface Partner {
+  name: string;
+  logo: string;
+  alt?: string;
+}
+
 // Type pour les infos de catégorie
 interface CategoryInfoData {
   colorVariable: string;
   logo?: string;
   title: string;
-  description: string[];
+  description: DescriptionData;
   links: Link[];
+  partners?: Partner[];
   qrCode?: QRCode;
 }
 
@@ -41,92 +66,117 @@ const categoryInfos = blogData.categoryInfo as Record<string, CategoryInfoData>;
 const config = categoryInfos[type];
 
 if (!config) return null;
+
 ---
 
-{type === 'premium' ? (
-  <div class="bg-gradient-to-br from-amber-50 to-transparent p-4 sm:p-8 rounded-2xl mb-12">
-    <div class="max-w-3xl mx-auto">
-      <p class="text-gray-700 text-base sm:text-lg mb-4 sm:mb-6">
-        {config.description[0]}
-      </p>
-      
-      <div class="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 justify-between">
-        <div class="space-y-4 flex-1">
-          <p class="text-gray-700 text-sm sm:text-base">
-            {config.description[1]}
+{
+  type === 'premium' ? (
+    <div class="bg-gradient-to-br from-amber-50 to-transparent p-4 sm:p-8 rounded-2xl mb-12">
+      <div class="max-w-3xl mx-auto">
+        {Array.isArray(config.description) ? (
+          <p class="text-gray-700 text-base sm:text-lg mb-4 sm:mb-6">{config.description[0]}
           </p>
-          
-          <div class="flex flex-wrap gap-3 sm:gap-4 mt-4 sm:mt-6">
-            {config.links.map((link: Link) => (
-              <Button 
-                href={link.url}
-                variant={link.variant}
-                icon={link.icon}
-                class="w-full sm:w-auto"
-              >
-                {link.label}
-              </Button>
-            ))}
+        ) : typeof config.description === 'string' ? (
+          <p class="text-gray-700 text-base sm:text-lg mb-4 sm:mb-6">{config.description.split('\n\n')[0]}</p>
+        ) : (
+          <div class="prose prose-sm max-w-none text-gray-700 mb-4 sm:mb-6">
+            <TinaMarkdown content={config.description} />
           </div>
-        </div>
+        )}
 
-        {config.qrCode && (
-          <div class="transform hover:scale-105 transition-all duration-300 mt-6 lg:mt-0">
-            <div class="bg-white p-3 sm:p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-              <Image
-                src={/* @vite-ignore */ import(config.qrCode.src)}
-                alt={config.qrCode.alt}
-                width={120}
-                height={120}
-                class="w-[120px] sm:w-[160px] h-auto mx-auto"
-              />
-              <p class="text-xs text-gray-500 mt-2 text-center">{config.qrCode.caption}</p>
+        <div class="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 justify-between">
+          <div class="space-y-4 flex-1">
+            {Array.isArray(config.description) ? (
+              <p class="text-gray-700 text-sm sm:text-base">{config.description[1]}</p>
+            ) : typeof config.description === 'string' ? (
+              <p class="text-gray-700 text-sm sm:text-base">{config.description.split('\n\n')[1]}</p>
+            ) : null}
+
+            <div class="flex flex-wrap gap-3 sm:gap-4 mt-4 sm:mt-6">
+              {config.links.map((link: Link) => (
+                <Button href={link.url} variant={link.variant} icon={link.icon} class="w-full sm:w-auto">
+                  {link.label}
+                </Button>
+              ))}
             </div>
           </div>
-        )}
+
+          {config.qrCode && (
+            <div class="transform hover:scale-105 transition-all duration-300 mt-6 lg:mt-0">
+              <div class="bg-white p-3 sm:p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                <Image
+                  src={/* @vite-ignore */ import(config.qrCode.src)}
+                  alt={config.qrCode.alt}
+                  width={120}
+                  height={120}
+                  class="w-[120px] sm:w-[160px] h-auto mx-auto"
+                />
+                <p class="text-xs text-gray-500 mt-2 text-center">{config.qrCode.caption}</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-) : (
-  <div class="border rounded-lg p-4 sm:p-6 mb-8" style={`
+  ) : (
+    <div
+      class="border rounded-lg p-4 sm:p-6 mb-8"
+      data-testid="category-info"
+      style={`
     background-color: color-mix(in srgb, ${config.colorVariable} 5%, transparent);
     border-color: color-mix(in srgb, ${config.colorVariable} 20%, transparent);
-  `}>
-    <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
-      {config.logo && (
-        <div class="flex-shrink-0 w-full sm:w-48">
-          <Image
-            src={config.logo}
-            alt={`Logo ${config.title}`}
-            width={300}
-            height={167}
-            class="w-full h-auto"
-          />
-        </div>
-      )}
-      <div class="flex-grow">
-        <h3 class="font-heading text-lg sm:text-xl mb-2" style={`color: ${config.colorVariable}`}>
-          {config.title}
-        </h3>
-        {config.description.map((paragraph: string) => (
-          <p class="mb-3 text-sm sm:text-base text-gray-600">
-            {paragraph}
-          </p>
-        ))}
-        {config.links.length > 0 && (
-          <div class="flex flex-wrap items-center gap-3 sm:gap-4 text-sm">
-            {config.links.map((link: Link) => (
-              <a 
-                href={link.url}
-                class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-300"
-              >
-                <Icon name={link.icon} class="w-4 sm:w-5 h-4 sm:h-5" />
-                <span>{link.label}</span>
-              </a>
-            ))}
+  `}
+    >
+      <div class="flex flex-col lg:flex-row gap-4 sm:gap-6 items-start">
+        {config.logo && (
+          <div class="flex-shrink-0 w-full lg:w-auto lg:max-w-[280px] space-y-3">
+            <Image
+              src={config.logo}
+              alt={`Logo ${config.title}`}
+              width={300}
+              height={167}
+              class="w-full max-w-[200px] lg:max-w-none h-auto"
+            />
+            {config.partners && config.partners.length > 0 && (
+              <PartnerGrid partners={config.partners} title="Nos partenaires" className="mt-1" />
+            )}
           </div>
         )}
+        <div class="flex-1 lg:pl-6">
+          <h3
+            class="font-heading text-lg sm:text-xl mb-2 text-center lg:text-left"
+            style={`color: ${config.colorVariable}`}
+          >
+            {config.title}
+          </h3>
+          {Array.isArray(config.description) ? (
+            config.description.map((paragraph: string) => (
+              <p class="mb-3 text-sm sm:text-base text-gray-600 text-center lg:text-left">{paragraph}</p>
+            ))
+          ) : typeof config.description === 'string' ? (
+            config.description.split('\n\n').map((paragraph: string) => (
+              <p class="mb-3 text-sm sm:text-base text-gray-600 text-center lg:text-left">{paragraph}</p>
+            ))
+          ) : (
+            <div class="prose prose-sm max-w-none text-gray-600 text-center lg:text-left">
+              <TinaMarkdown content={config.description} />
+            </div>
+          )}
+          {config.links.length > 0 && (
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 text-sm mt-4">
+              {config.links.map((link: Link) => (
+                <a
+                  href={link.url}
+                  class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-300"
+                >
+                  <Icon name={link.icon} class="w-4 sm:w-5 h-4 sm:h-5" />
+                  <span>{link.label}</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-)}
+  )
+}

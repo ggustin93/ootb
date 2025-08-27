@@ -3,6 +3,119 @@
     "title": "Nos contenus",
     "description": "Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation"
   },
+  "categoryInfo": {
+    "tv": {
+      "colorVariable": "var(--ootb-green)",
+      "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1741786364/e57c2b_df52671ae61441c381d84bc2e805a342_mv2_zmzxqf.webp",
+      "title": "Pédagoscope, une émission éducative diffusée tous les 15 jours sur TVCOM",
+      "description": "Tous les 15 jours, suivez Renaud Keymeulen et Sophie Vanden Plas alors qu'ils explorent la transition de l'école à la maison. Ensemble, ils vous offriront des idées novatrices à partir de thèmes captivants.\n\nÀ chaque épisode, vous découvrirez un expert en plateau qui vous apportera un éclairage précis et concret sur la question. Nous irons également sur le terrain à la rencontre d'un enseignant inspirant qui met en pratique ces idées novatrices dans sa propre classe. Une émission réalisée en collaboration avec nos partenaires.\n",
+      "links": [
+        {
+          "icon": "tabler:brand-facebook",
+          "label": "Suivez-nous sur Facebook",
+          "url": "https://facebook.com/pedagoscope"
+        },
+        {
+          "icon": "tabler:mail",
+          "label": "Contactez-nous",
+          "url": "mailto:contact@pedagoscope.be"
+        }
+      ],
+      "partners": [
+        {
+          "name": "TV COM",
+          "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1756285708/logo_tvcom_hxp7uv.png",
+          "alt": "Logo de TV COM"
+        },
+        {
+          "name": "Province du Brabant wallon",
+          "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1756285305/logo_bw_compressed_sa7dit.jpg",
+          "alt": "Logo de la Province du Brabant wallon"
+        }
+      ]
+    },
+    "podcast": {
+      "colorVariable": "var(--ootb-violet)",
+      "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1741786365/LOGO_EDUCATION_MODE-EMPLOI_HORIZONTAL_COLOR_bhg5fl.avif",
+      "title": "Éducation : mode d'emploi",
+      "description": "Bienvenue dans Éducation : mode d'emploi, votre nouveau Podcast pour la rentrée.\n\nCe podcast est votre rendez-vous incontournable, que vous soyez enseignant ou parent, pour découvrir des solutions concrètes aux défis éducatifs du quotidien.\n\nÉducation : mode d'emploi, c'est plus qu'un podcast, c'est une communauté engagée à transformer l'éducation et à faire une vraie différence. Produit en collaboration avec nos partenaires.\n",
+      "links": [
+        {
+          "icon": "tabler:brand-spotify",
+          "label": "Écoutez sur Spotify",
+          "url": "https://open.spotify.com/show/education-mode-emploi"
+        },
+        {
+          "icon": "tabler:brand-apple",
+          "label": "Apple Podcasts",
+          "url": "https://podcasts.apple.com/education-mode-emploi"
+        },
+        {
+          "icon": "tabler:brand-youtube",
+          "label": "YouTube",
+          "url": "https://youtube.com/@education-mode-emploi"
+        },
+        {
+          "icon": "tabler:microphone",
+          "label": "Ausha",
+          "url": "https://podcast.ausha.co/education-mode-d-emploi"
+        }
+      ],
+      "partners": [
+        {
+          "name": "Éditions Plantyn",
+          "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1756285386/logo_plantyn_v3fjb0.png",
+          "alt": "Logo des Éditions Plantyn"
+        }
+      ]
+    },
+    "fiche": {
+      "colorVariable": "var(--ootb-blue)",
+      "title": "Fiches pédagogiques",
+      "description": "Des ressources pratiques et détaillées pour enrichir vos cours et activités pédagogiques.\n",
+      "links": []
+    },
+    "actualite": {
+      "colorVariable": "var(--content-actualite)",
+      "title": "Actualités pédagogiques",
+      "description": "Restez informé des dernières nouvelles et tendances dans le monde de l'éducation.\n",
+      "links": []
+    },
+    "live": {
+      "colorVariable": "var(--content-live)",
+      "title": "Lives Facebook",
+      "description": "Participez à nos sessions en direct pour interagir avec des experts de l'éducation.\n",
+      "links": [
+        {
+          "icon": "tabler:brand-facebook",
+          "label": "Suivez nos lives",
+          "url": "#"
+        }
+      ]
+    },
+    "premium": {
+      "colorVariable": "var(--ootb-yellow)",
+      "title": "Contenu Premium",
+      "description": "Les contenus premium seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.,En devenant contributeur premium sur Buy Me a Coffee, vous recevrez automatiquement accès à notre newsletter exclusive. Celle-ci vous donnera accès à du contenu hors-série et en avant-première !\n",
+      "links": [
+        {
+          "icon": "tabler:coffee",
+          "label": "Faire un don",
+          "url": "https://buymeacoffee.com/outofthebooks"
+        },
+        {
+          "icon": "tabler:arrow-left",
+          "label": "Retour aux contenus",
+          "url": "/blog/#category-content"
+        }
+      ],
+      "qrCode": {
+        "src": "~/assets/images/bmc_qr.png",
+        "alt": "QR Code Buy Me a Coffee",
+        "caption": "Scanner pour contribuer"
+      }
+    }
+  },
   "hero": {
     "title": "Nos contenus",
     "description": "Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation",
@@ -34,58 +147,9 @@
       "titleSuffix": "contenus",
       "pageTitle": "Tous nos contenus",
       "actionLabel": "Voir tous les contenus",
-      "color": "var(--gray-800)",
       "icon": "tabler:layout-grid",
       "variant": "default",
       "description": "Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation"
-    },
-    
-    "podcast": {
-      "label": "PODCASTS",
-      "shortLabel": "Podcasts",
-      "titlePrefix": "Nos",
-      "titleSuffix": "podcasts",
-      "pageTitle": "Nos podcasts",
-      "actionLabel": "Écouter les podcasts",
-      "color": "var(--content-podcast)",
-      "icon": "tabler:microphone",
-      "variant": "podcast",
-      "description": "Écoutez nos discussions enrichissantes sur les enjeux de l'éducation moderne",
-      "links": [
-        { "icon": "tabler:brand-spotify", "label": "Écoutez sur Spotify", "url": "https://open.spotify.com/show/education-mode-emploi" },
-        { "icon": "tabler:brand-apple", "label": "Apple Podcasts", "url": "https://podcasts.apple.com/education-mode-emploi" },
-        { "icon": "tabler:brand-youtube", "label": "YouTube", "url": "https://youtube.com/@education-mode-emploi" },
-        { "icon": "tabler:microphone", "label": "Ausha", "url": "https://podcast.ausha.co/education-mode-d-emploi" }
-      ]
-    },
-    "tv": {
-      "label": "ÉMISSIONS TV",
-      "shortLabel": "Émissions TV",
-      "titlePrefix": "Nos",
-      "titleSuffix": "émissions",
-      "pageTitle": "Nos émissions TV",
-      "actionLabel": "Voir les émissions",
-      "color": "var(--content-tv)",
-      "icon": "tabler:device-tv",
-      "variant": "emission",
-      "description": "Regardez nos émissions pédagogiques pour découvrir de nouvelles approches éducatives",
-      "links": [
-        { "icon": "tabler:brand-facebook", "label": "Suivez-nous sur Facebook", "url": "https://facebook.com/pedagoscope" },
-        { "icon": "tabler:mail", "label": "Contactez-nous", "url": "mailto:contact@pedagoscope.be" }
-      ]
-    },
-   
-    "live": {
-      "label": "LIVES FACEBOOK",
-      "shortLabel": "Lives",
-      "titlePrefix": "Nos",
-      "titleSuffix": "lives",
-      "pageTitle": "Nos lives Facebook",
-      "actionLabel": "Voir les lives",
-      "color": "var(--content-live)",
-      "icon": "tabler:brand-facebook",
-      "variant": "live",
-      "description": "Participez à nos sessions en direct et interagissez avec notre communauté d'enseignants"
     },
     "actualite": {
       "label": "ACTUALITÉS",
@@ -94,9 +158,9 @@
       "titleSuffix": "actualités",
       "pageTitle": "Nos actualités",
       "actionLabel": "Voir les actualités",
-      "color": "var(--content-actualite)",
       "icon": "tabler:news",
       "variant": "actualite",
+      "color": "var(--content-actualite)",
       "description": "Restez informé des dernières innovations pédagogiques et des actualités du monde de l'éducation"
     },
     "fiche": {
@@ -106,12 +170,81 @@
       "titleSuffix": "fiches",
       "pageTitle": "Nos fiches pédagogiques",
       "actionLabel": "Voir les fiches",
-      "color": "var(--content-fiche)",
       "icon": "tabler:file-text",
       "variant": "appel",
+      "color": "var(--ootb-blue)",
       "description": "Des ressources pratiques et détaillées pour enrichir vos cours et activités pédagogiques"
     },
-    
+    "live": {
+      "label": "LIVES FACEBOOK",
+      "shortLabel": "Lives",
+      "titlePrefix": "Nos",
+      "titleSuffix": "lives",
+      "pageTitle": "Nos lives Facebook",
+      "actionLabel": "Voir les lives",
+      "icon": "tabler:brand-facebook",
+      "variant": "live",
+      "color": "var(--content-live)",
+      "description": "Participez à nos sessions en direct et interagissez avec notre communauté d'enseignants"
+    },
+    "podcast": {
+      "label": "PODCASTS",
+      "shortLabel": "Podcasts",
+      "titlePrefix": "Nos",
+      "titleSuffix": "podcasts",
+      "pageTitle": "Nos podcasts",
+      "actionLabel": "Écouter les podcasts",
+      "icon": "tabler:microphone",
+      "variant": "podcast",
+      "color": "var(--ootb-violet)",
+      "description": "Écoutez nos discussions enrichissantes sur les enjeux de l'éducation moderne\n",
+      "links": [
+        {
+          "icon": "tabler:brand-spotify",
+          "label": "Écoutez sur Spotify",
+          "url": "https://open.spotify.com/show/education-mode-emploi"
+        },
+        {
+          "icon": "tabler:brand-apple",
+          "label": "Apple Podcasts",
+          "url": "https://podcasts.apple.com/education-mode-emploi"
+        },
+        {
+          "icon": "tabler:brand-youtube",
+          "label": "YouTube",
+          "url": "https://youtube.com/@education-mode-emploi"
+        },
+        {
+          "icon": "tabler:microphone",
+          "label": "Ausha",
+          "url": "https://podcast.ausha.co/education-mode-d-emploi"
+        }
+      ]
+    },
+    "tv": {
+      "label": "ÉMISSIONS TV",
+      "shortLabel": "Émissions TV",
+      "titlePrefix": "Nos",
+      "titleSuffix": "émissions",
+      "pageTitle": "Nos émissions TV",
+      "actionLabel": "Voir les émissions",
+      "icon": "tabler:device-tv",
+      "variant": "emission",
+      "color": "var(--ootb-green)",
+      "description": "Regardez nos émissions pédagogiques pour découvrir de nouvelles approches éducatives\n",
+      "links": [
+        {
+          "icon": "tabler:brand-facebook",
+          "label": "Suivez-nous sur Facebook",
+          "url": "https://facebook.com/pedagoscope"
+        },
+        {
+          "icon": "tabler:mail",
+          "label": "Contactez-nous",
+          "url": "mailto:contact@pedagoscope.be"
+        }
+      ]
+    },
     "premium": {
       "label": "PREMIUM",
       "shortLabel": "Premium",
@@ -119,88 +252,23 @@
       "titleSuffix": "premium",
       "pageTitle": "Contenu hors-série exclusif",
       "actionLabel": "Découvrir le premium",
-      "color": "var(--content-premium)",
       "icon": "tabler:crown",
       "variant": "festival",
       "description": "Accédez à du contenu hors-série exclusif : interviews approfondies, analyses détaillées et ressources inédites",
       "heroDescription": "Explorez notre sélection de contenus hors-série pour approfondir vos connaissances pédagogiques",
       "links": [
-        { "icon": "tabler:coffee", "label": "Faire un don", "url": "https://buymeacoffee.com/outofthebooks", "variant": "premium-primary" },
-        { "icon": "tabler:arrow-left", "label": "Retour aux contenus", "url": "/blog/#category-content", "variant": "premium-secondary" }
-      ],
-      "qrCode": {
-        "src": "~/assets/images/bmc_qr.png",
-        "alt": "QR Code Buy Me a Coffee",
-        "caption": "Scanner pour contribuer"
-      }
-    }
-  },
-  "categoryInfo": {
-    "tv": {
-      "colorVariable": "var(--ootb-green)",
-      "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1741786364/e57c2b_df52671ae61441c381d84bc2e805a342_mv2_zmzxqf.webp",
-      "title": "Pédagoscope, une émission éducative diffusée tous les 15 jours sur TVCOM",
-      "description": [
-        "Tous les 15 jours, suivez Renaud Keymeulen et Sophie Vanden Plas alors qu'ils explorent la transition de l'école à la maison. Ensemble, ils vous offriront des idées novatrices à partir de thèmes captivants.",
-        "À chaque épisode, vous découvrirez un expert en plateau qui vous apportera un éclairage précis et concret sur la question. Nous irons également sur le terrain à la rencontre d'un enseignant inspirant qui met en pratique ces idées novatrices dans sa propre classe."
-      ],
-      "links": [
-        { "icon": "tabler:brand-facebook", "label": "Suivez-nous sur Facebook", "url": "https://facebook.com/pedagoscope" },
-        { "icon": "tabler:mail", "label": "Contactez-nous", "url": "mailto:contact@pedagoscope.be" }
-      ]
-    },
-    "podcast": {
-      "colorVariable": "var(--ootb-violet)",
-      "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1741786365/LOGO_EDUCATION_MODE-EMPLOI_HORIZONTAL_COLOR_bhg5fl.avif",
-      "title": "Éducation : mode d'emploi",
-      "description": [
-        "Bienvenue dans Éducation : mode d'emploi, votre nouveau Podcast pour la rentrée.",
-        "Ce podcast est votre rendez-vous incontournable, que vous soyez enseignant ou parent, pour découvrir des solutions concrètes aux défis éducatifs du quotidien.",
-        "Éducation : mode d'emploi, c'est plus qu'un podcast, c'est une communauté engagée à transformer l'éducation et à faire une vraie différence."
-      ],
-      "links": [
-        { "icon": "tabler:brand-spotify", "label": "Écoutez sur Spotify", "url": "https://open.spotify.com/show/education-mode-emploi" },
-        { "icon": "tabler:brand-apple", "label": "Apple Podcasts", "url": "https://podcasts.apple.com/education-mode-emploi" },
-        { "icon": "tabler:brand-youtube", "label": "YouTube", "url": "https://youtube.com/@education-mode-emploi" },
-        { "icon": "tabler:microphone", "label": "Ausha", "url": "https://podcast.ausha.co/education-mode-d-emploi" }
-      ]
-    },
-    "fiche": {
-      "colorVariable": "var(--ootb-blue)",
-      "title": "Fiches pédagogiques",
-      "description": [
-        "Des ressources pratiques et détaillées pour enrichir vos cours et activités pédagogiques."
-      ],
-      "links": []
-    },
-    "actualite": {
-      "colorVariable": "var(--content-actualite)",
-      "title": "Actualités pédagogiques",
-      "description": [
-        "Restez informé des dernières nouvelles et tendances dans le monde de l'éducation."
-      ],
-      "links": []
-    },
-    "live": {
-      "colorVariable": "var(--content-live)",
-      "title": "Lives Facebook",
-      "description": [
-        "Participez à nos sessions en direct pour interagir avec des experts de l'éducation."
-      ],
-      "links": [
-        { "icon": "tabler:brand-facebook", "label": "Suivez nos lives", "url": "#" }
-      ]
-    },
-    "premium": {
-      "colorVariable": "var(--ootb-yellow)",
-      "title": "Contenu Premium",
-      "description": [
-        "Les contenus premium seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.",
-        "En devenant contributeur premium sur Buy Me a Coffee, vous recevrez automatiquement accès à notre newsletter exclusive. Celle-ci vous donnera accès à du contenu hors-série et en avant-première !"
-      ],
-      "links": [
-        { "icon": "tabler:coffee", "label": "Faire un don", "url": "https://buymeacoffee.com/outofthebooks", "variant": "premium-primary" },
-        { "icon": "tabler:arrow-left", "label": "Retour aux contenus", "url": "/blog/#category-content", "variant": "premium-secondary" }
+        {
+          "icon": "tabler:coffee",
+          "label": "Faire un don",
+          "url": "https://buymeacoffee.com/outofthebooks",
+          "variant": "premium-primary"
+        },
+        {
+          "icon": "tabler:arrow-left",
+          "label": "Retour aux contenus",
+          "url": "/blog/#category-content",
+          "variant": "premium-secondary"
+        }
       ],
       "qrCode": {
         "src": "~/assets/images/bmc_qr.png",
@@ -209,4 +277,4 @@
       }
     }
   }
-} 
+}

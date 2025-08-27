@@ -233,8 +233,8 @@ export const festivalCollection: Collection = {
     {
       type: "object",
       name: "programLink",
-      label: "Bannière Programme (PDF)",
-      description: "Configuration de la bannière avec téléchargements PDF",
+      label: "Section Programme",
+      description: "Configuration de la bannière avec téléchargements PDF et eBook",
       fields: [
         {
           type: "boolean",

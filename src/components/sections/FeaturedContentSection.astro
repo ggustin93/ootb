@@ -4,6 +4,7 @@ import Card from '~/components/ui/Card.astro';
 import SectionDivider from '~/components/ui/SectionDivider.astro';
 import { findDiverseLatestPosts } from '~/utils/blog';
 import { CONTENT_TYPES } from '~/config/content-types';
+import type { Post } from '~/types';
 
 interface FeaturedContent {
   href: string;
@@ -11,7 +12,7 @@ interface FeaturedContent {
   description: string;
   image: string;
   badge: string;
-  type: 'podcast' | 'tv' | 'default';
+  category: Post['category'];
   meta: {
     duration: string;
     expert: string;
@@ -35,14 +36,13 @@ const {
   description = "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
   buttonText = "Voir tout",
   buttonLink = "/blog/",
-  contents = latestPosts.map(post => ({
+  contents = latestPosts.map((post): FeaturedContent => ({
     href: post.permalink,
     title: post.title,
     description: post.description,
     image: post.image,
     badge: CONTENT_TYPES[post.category.slug as keyof typeof CONTENT_TYPES]?.shortLabel || post.category.slug,
-    type: post.category.slug === 'podcast' ? 'podcast' : 
-           post.category.slug === 'tv' ? 'tv' : 'default',
+    category: post.category,
     meta: {
       duration: post.duration || '5 min',
       expert: post.expert || 'Out of the Books',
@@ -92,7 +92,7 @@ const {
           title={content.title}
           image={content.image}
           badge={content.badge}
-          type={content.type}
+          category={content.category}
           meta={content.meta}
           description={content.description}
           class="transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl"

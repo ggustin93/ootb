@@ -7,21 +7,6 @@
     "language": "fr",
     "defaultSocialImage": "/images/assets/ootb-social-card.jpg"
   },
-  "festival": {
-    "showUnpublishedEvents": true,
-    "ticketing": {
-      "modalText": "Le Festival Out of the Books est reconnu par l'IFPC. Pour vous y inscrire, rendez-vous sur le site de l’IFPC ci-dessous. Vous aurez besoin d’une clé d’inscription aux formations (C.I.F.) disponible auprès de votre direction. La référence du code consacré à cette formation porte le numéro: «120102406/53576 ; 53577 et 53578». Pour toute autre inscription, cliquez sur \"billetterie générale\".\n",
-      "ifpcButtonLabel": "Billetterie IFPC",
-      "ifpcButtonUrl": "https://ifpc-fwb.be",
-      "weezeventButtonLabel": "Billetterie générale",
-      "weezeventButtonUrl": "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
-    },
-    "programLink": {
-      "enabled": false,
-      "text": "Voir le programme complet",
-      "url": "https://indd.adobe.com/view/7bf541a0-d836-436c-b34a-68b6431b8fd0"
-    }
-  },
   "system": {
     "triggerDeployment": false,
     "deploymentTimestamp": "2025-07-20T12:23:46.238Z"

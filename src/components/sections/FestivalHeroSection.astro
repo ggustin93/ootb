@@ -5,7 +5,7 @@ import GradientHeroSection from './GradientHeroSection.astro';
 import TicketingButton from '../ui/TicketingButton';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import type { ImageMetadata } from 'astro';
-import siteSettings from '~/content/site/settings.json';
+// Removed import of site settings; ticketingConfig now comes from props
 
 interface Button {
   href: string;
@@ -27,6 +27,15 @@ interface FloatingIcon {
   animation?: 'float' | 'float-delayed' | 'none';
 }
 
+// Minimal local type for ticketing config
+interface TicketingConfig {
+  modalText?: unknown;
+  ifpcButtonLabel?: string;
+  ifpcButtonUrl?: string;
+  weezeventButtonLabel?: string;
+  weezeventButtonUrl?: string;
+}
+
 interface Props {
   logo: ImageMetadata;
   heroImage: ImageMetadata;
@@ -36,6 +45,7 @@ interface Props {
   buttons?: Array<Button>;
   floatingIcons?: Array<FloatingIcon>;
   imageBackgroundColor?: string;
+  ticketingConfig?: TicketingConfig;
 }
 
 const { 
@@ -59,10 +69,11 @@ const {
     }
   ],
   floatingIcons = [],
-  imageBackgroundColor = '--ootb-orange'
+  imageBackgroundColor = '--ootb-orange',
+  ticketingConfig
 } = Astro.props;
 
-const ticketingConfig = siteSettings.festival.ticketing;
+// Removed siteSettings usage
 
 const getButtonClass = (variant: 'primary' | 'secondary') => {
   if (variant === 'primary') {

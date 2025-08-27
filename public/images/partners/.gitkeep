@@ -1,0 +1,14 @@
+# Partner Logos Directory
+
+This directory contains partner logos for the blog categories.
+
+## Required logos:
+- logo-tvcom.webp (TV COM partner for "Émissions TV" category)
+- logo-brabant-wallon.webp (Province du Brabant wallon partner for "Émissions TV" category)
+- logo-plantyn.webp (Éditions Plantyn partner for "Podcasts" category)
+
+## Format requirements:
+- Preferred: .webp for optimal performance
+- Fallback: .png with transparency
+- Recommended size: 200x100px max
+- Optimized for web display

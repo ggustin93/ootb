@@ -39,21 +39,6 @@ export const siteSettingsCollection: Collection = {
       language: "fr",
       defaultSocialImage: "/images/assets/ootb-social-card.jpg"
     },
-    festival: {
-      showUnpublishedEvents: false,
-      ticketing: {
-        modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.",
-        ifpcButtonLabel: "Billetterie IFPC",
-        ifpcButtonUrl: "https://ifpc-fwb.be",
-        weezeventButtonLabel: "Billetterie générale",
-        weezeventButtonUrl: "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
-      },
-      programLink: {
-        enabled: false,
-        text: "Voir le programme complet",
-        url: "#"
-      }
-    },
     system: {
       deploymentTimestamp: new Date().toISOString()
     },
@@ -123,92 +108,6 @@ export const siteSettingsCollection: Collection = {
           label: "Image sociale par défaut",
           description: "Image utilisée pour les partages sociaux quand aucune image spécifique n'est fournie (1200x630px recommandé)",
           required: false,
-        }
-      ]
-    },
-    {
-      type: "object",
-      name: "festival",
-      label: "Paramètres du Festival",
-      description: "Configuration spécifique au festival",
-      fields: [
-        {
-          type: "boolean",
-          name: "showUnpublishedEvents",
-          label: "Afficher les événements non publiés",
-          description: "⚠️ ATTENTION : Uniquement pour les tests ! Activez cette option pour afficher temporairement les événements en cours de validation (statut différent de 'Publié').",
-          ui: {
-            description: "Cette option permet de prévisualiser les événements avant publication. Désactivez-la avant la mise en ligne officielle du programme."
-          }
-        },
-        {
-          type: "object",
-          name: "ticketing",
-          label: "Billetterie",
-          description: "Configuration de la billetterie du festival",
-          fields: [
-            {
-              type: "rich-text",
-              name: "modalText",
-              label: "Texte du modal de billetterie",
-              description: "Texte affiché dans la fenêtre de réservation des tickets",
-              required: true
-            },
-            {
-              type: "string",
-              name: "ifpcButtonLabel",
-              label: "Texte du bouton IFPC",
-              description: "Libellé du bouton pour la billetterie IFPC",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "ifpcButtonUrl",
-              label: "URL du bouton IFPC",
-              description: "Lien pour la billetterie IFPC",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "weezeventButtonLabel",
-              label: "Texte du bouton Weezevent",
-              description: "Libellé du bouton pour la billetterie Weezevent",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "weezeventButtonUrl",
-              label: "URL du bouton Weezevent",
-              description: "Lien pour la billetterie Weezevent",
-              required: true,
-            }
-          ],
-        },
-        {
-          type: "object",
-          name: "programLink",
-          label: "Lien vers le programme complet",
-          description: "Configuration du bouton pour accéder au programme complet",
-          fields: [
-            {
-              type: "boolean",
-              name: "enabled",
-              label: "Activer le bouton",
-              description: "Activer ou désactiver l'affichage du bouton 'Voir le programme complet'",
-            },
-            {
-              type: "string",
-              name: "text",
-              label: "Texte du bouton",
-              description: "Texte affiché sur le bouton (ex: Voir le programme complet)",
-            },
-            {
-              type: "string",
-              name: "url",
-              label: "URL du programme",
-              description: "Lien vers le programme complet (PDF, page web, etc.)",
-            },
-          ],
         }
       ]
     },

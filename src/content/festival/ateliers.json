@@ -28,6 +28,34 @@
     "status": "Publié"
   },
   {
+    "id": "atelier-298",
+    "title": "APSchool : la solution tout-en-un pour votre école.",
+    "description": "Venez découvrir APSchool, une plateforme en ligne conçue pour simplifier la gestion quotidienne des établissements scolaires. À travers une animation conviviale, nous vous présenterons les principaux modules de l’outil. L’occasion d’échanger avec notre équipe et d’explorer concrètement comment APSchool peut répondre aux besoins de votre école.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "10:00",
+    "endTime": "10:30",
+    "location": "Village numérique",
+    "speaker": "Alain Préat",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-298.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.apschool.be",
+    "contact": {
+      "email": "info@apkiosk.com",
+      "phone": "0499/147002"
+    },
+    "status": "A valider"
+  },
+  {
     "id": "atelier-133",
     "title": "La bricolothérapie à la rescousse des apprentissages",
     "description": "Découvrez' un concept ludique et novateur pour aider les enfants à mieux rentrer dans les apprentissages",
@@ -52,6 +80,34 @@
     "contact": {
       "email": "laplaze.sophie@wanadoo.fr",
       "phone": "0677189840"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-232",
+    "title": "AMA : correspondance scolaire numérique entre écoles à travers le monde",
+    "description": "Les visiteurs découvriront la plateforme AMA, exploreront les contenus pédagogiques et comprendront la richesse des échanges entre les écoles participantes au projet.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "11:00",
+    "endTime": "11:30",
+    "location": "Village numérique",
+    "speaker": "Severine de sadeleer",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-232.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.amagirafe.org",
+    "contact": {
+      "email": "severinedesadeleer@gmail.com",
+      "phone": "0477779218"
     },
     "status": "Publié"
   },
@@ -84,6 +140,62 @@
     "status": "Publié"
   },
   {
+    "id": "atelier-265",
+    "title": "Créer des exercices numériques avec BookWidgets",
+    "description": "Lors de cet atelier, découvrez comment créer facilement des exercices numériques interactifs avec BookWidgets : quiz, mots croisés, cartes flash et bien plus. Dimitri de BookWidgtets vous présentera des exemples concrets, les bases pour concevoir vos propres activités adaptées à toutes les matières et à tous les niveaux, ainsi que des astuces pour gagner un temps lors de la correction. Chaque participant recevra une gift card pour tester l’outil gratuitement pendant 3 mois.\n\n",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "12:00",
+    "endTime": "12:30",
+    "location": "Village numérique",
+    "speaker": "Dimitri Bongers",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-265.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.bookwidgets.com/fr",
+    "contact": {
+      "email": "dimitri@bookwidgets.com",
+      "phone": "0032470043443"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-344",
+    "title": "Pelckmans Portail : un atout pour aujourd’hui et pour demain",
+    "description": "Dans un enseignement en constante évolution, Pelckmans, votre partenaire éducatif, vous offre un soutien incontournable pour vous faire gagner du temps! Découvrez comment nos ressources numériques peuvent vous inspirer, vous faciliter la vie et aider vos élèves !",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "13:00",
+    "endTime": "13:30",
+    "location": "Village numérique",
+    "speaker": "Lut Lambert",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-344.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://www.editionspelckmans.be/",
+    "contact": {
+      "email": "lut.lambert@pelckmans.be",
+      "phone": "0496164145"
+    },
+    "status": "Publié"
+  },
+  {
     "id": "atelier-34",
     "title": "L’ipad au service des élèves à besoins pédagogiques particuliers ",
     "description": "L’atelier se déroulera sous forme de questions-réponses afin de répondre à vos craintes dans l’arrivée de l’outil iPad dans la scolarité de votre élève. \nAfin de répondre à vos questions, nous aurons des iPad à disposition pour vous faire une petite démo de certaines fonctionnalités. ",
@@ -108,6 +220,34 @@
     "contact": {
       "email": "asblcoeuracorps@gmail.com",
       "phone": "0497156430"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-233",
+    "title": "OUAIP.BE : au service de vos élèves !",
+    "description": "Cette séance débutera par une courte présentation de Ouaip.be, de sa philosophie et de ses atouts. Ensuite, place à la démonstration concrète :\n-prise en main de l’interface enseignant ;\n-sélection et planification d’un contenu (titre) à destination des élèves ;\n-création et gestion d’un groupe‑classe, assignation du contenu…\nEnfin, un temps interactif prendra place sous forme de questions‑réponses, pour échanger et explorer les possibilités offertes par l’outil.",
+    "type": "Ateliers",
+    "day": "Mercredi",
+    "time": "14:00",
+    "endTime": "14:30",
+    "location": "Village numérique",
+    "speaker": "Benoit  Monnoyer",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-233.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "https://ouaip.be/",
+    "contact": {
+      "email": "info@ouaip.be",
+      "phone": "032473663284"
     },
     "status": "Publié"
   },
@@ -140,226 +280,30 @@
     "status": "Publié"
   },
   {
-    "id": "atelier-232",
-    "title": "AMA : correspondance scolaire numérique entre écoles à travers le monde",
-    "description": "Les visiteurs découvriront la plateforme AMA, exploreront les contenus pédagogiques et comprendront la richesse des échanges entre les écoles participantes au projet.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "15:30",
-    "endTime": "16:00",
-    "location": "Village numérique",
-    "speaker": "Severine de sadeleer",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-232.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Maternelle et primaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle et primaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.amagirafe.org",
-    "contact": {
-      "email": "severinedesadeleer@gmail.com",
-      "phone": "0477779218"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-233",
-    "title": "OUAIP.BE : au service de vos élèves !",
-    "description": "Cette séance débutera par une courte présentation de Ouaip.be, de sa philosophie et de ses atouts. Ensuite, place à la démonstration concrète :\n-prise en main de l’interface enseignant ;\n-sélection et planification d’un contenu (titre) à destination des élèves ;\n-création et gestion d’un groupe‑classe, assignation du contenu…\nEnfin, un temps interactif prendra place sous forme de questions‑réponses, pour échanger et explorer les possibilités offertes par l’outil.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "Village numérique",
-    "speaker": "Benoit  Monnoyer",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-233.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "https://ouaip.be/",
-    "contact": {
-      "email": "info@ouaip.be",
-      "phone": "032473663284"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-265",
-    "title": "Créer des exercices numériques avec BookWidgets",
-    "description": "Lors de cet atelier, découvrez comment créer facilement des exercices numériques interactifs avec BookWidgets : quiz, mots croisés, cartes flash et bien plus. Dimitri de BookWidgtets vous présentera des exemples concrets, les bases pour concevoir vos propres activités adaptées à toutes les matières et à tous les niveaux, ainsi que des astuces pour gagner un temps lors de la correction. Chaque participant recevra une gift card pour tester l’outil gratuitement pendant 3 mois.\n\n",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "Village numérique",
-    "speaker": "Dimitri Bongers",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-265.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.bookwidgets.com/fr",
-    "contact": {
-      "email": "dimitri@bookwidgets.com",
-      "phone": "0032470043443"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-298",
-    "title": "APSchool : la solution tout-en-un pour votre école.",
-    "description": "Venez découvrir APSchool, une plateforme en ligne conçue pour simplifier la gestion quotidienne des établissements scolaires. À travers une animation conviviale, nous vous présenterons les principaux modules de l’outil. L’occasion d’échanger avec notre équipe et d’explorer concrètement comment APSchool peut répondre aux besoins de votre école.",
+    "id": "atelier-352",
+    "title": "Hopper et le trésor de barbe-pique",
+    "description": "Une présentation du jeu \"Hopper et le trésor de barbe-pique\" qui sortira en décembre. Comment rendre un jeu vidéo accessible a des enfants et inclure leur retour dans le processus de fabrication du jeu.",
     "type": "Ateliers",
     "day": "Mercredi",
     "time": "À définir",
     "endTime": "",
     "location": "À définir",
-    "speaker": "Alain Préat",
+    "speaker": "Arthur Rogery",
     "organization": "",
-    "image": "/images/events/ateliers/atelier-298.webp",
+    "image": "/images/events/ateliers/atelier-352.webp",
     "speakerImage": null,
     "tags": [
-      "Professeurs",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.apschool.be",
-    "contact": {
-      "email": "info@apkiosk.com",
-      "phone": "0499/147002"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-299",
-    "title": "Enseigner la dactylographie avec le programme Typ10",
-    "description": "Au cours de cette démonstration, vous aurez un aperçu d’un cours de dactylographie selon la méthode Typ10. Vous serez initié(e)s aux différentes étapes du processus d'apprentissage, à l'utilisation du cahier d'exercices numérique ainsi qu'à la manière dont Typ10 utilise les différents canaux d'apprentissage. Ensuite, vous découvrirez la plateforme en ligne avec ses différentes fonctionnalités et outils. Nous vous donnerons également un aperçu de l'outil de suivi, destiné aux enseignants.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Sophia Seaton",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-299.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
+      " parents et enfants",
       "Primaire et secondaire",
       "Enseignement ordinaire et spécialisé"
     ],
-    "target": "Professeurs",
+    "target": " parents et enfants",
     "level": "Primaire et secondaire",
     "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.typ10.fr",
+    "url": "n-zone.be",
     "contact": {
-      "email": "ruth.houben@c-explore.com",
-      "phone": "0484564140"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-331",
-    "title": "Renforcer l’engagement collectif et individuel en maths/sciences avec Khan Academy",
-    "description": "Cet atelier vous invite à découvrir Khan Academy, plateforme en ligne 100% gratuite d’apprentissage des maths et des sciences. Les enseignants peuvent y créer des classes, assigner des exercices, faire de la différenciation et suivre en direct la progression de chaque élève. Vous vivrez l’expérience côté « Apprenant » grâce à l’activité CourseAuxAcquis. L’occasion de tester concrètement l’outil tout en explorant des stratégies simples et efficaces pour motiver les apprenants.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Manon Michaux",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-331.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "Bibliothèques Sans Frontières Belgique - Découvrez nos projets",
-    "contact": {
-      "email": "manon.michaux@bibliosansfrontieres.be",
-      "phone": "+32(0) 460 35 06 64"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-332",
-    "title": "AMA : correspondance scolaire numérique entre écoles à travers le monde",
-    "description": "Les visiteurs découvriront la plateforme AMA, exploreront les contenus pédagogiques et comprendront la richesse des échanges entre les écoles participantes au projet.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "Village numérique",
-    "speaker": "severine de sadeleer",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-232.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Maternelle et primaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle et primaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.amagirafe.org",
-    "contact": {
-      "email": "severinedesadeleer@gmail.com",
-      "phone": "0477779218"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-343",
-    "title": "Chromebooks en classe : exploitez leur plein potentiel",
-    "description": "Découvrez comment exploiter tout le potentiel des Chromebooks en classe. Cette session interactive vous fera découvrir leurs atouts majeurs : démarrage en moins de 10 secondes, mises à jour automatiques, sécurité intégrée, autonomie jusqu’à 12h, travail hors ligne, accès rapide au cloud et parfaite intégration avec Google Workspace for Education. Idéal pour un usage pédagogique fluide et sécurisé.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Alain Leuregans",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-343.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professionnels",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professionnels",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "https://signpost.be/fr-be/",
-    "contact": {
-      "email": "alain.leuregans@signpost.eu",
-      "phone": "+32 472 07 10 95"
+      "email": "aro@n-zone.be",
+      "phone": "+33645462138"
     },
     "status": "A valider"
   },
@@ -392,6 +336,34 @@
     "status": "Publié"
   },
   {
+    "id": "atelier-351",
+    "title": "APSchool : la solution tout-en-un pour votre école.",
+    "description": "Venez découvrir APSchool, une plateforme en ligne conçue pour simplifier la gestion quotidienne des établissements scolaires. À travers une animation conviviale, nous vous présenterons les principaux modules de l’outil. L’occasion d’échanger avec notre équipe et d’explorer concrètement comment APSchool peut répondre aux besoins de votre école.",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "10:00",
+    "endTime": "10:30",
+    "location": "Village numérique",
+    "speaker": "Alain Préat",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-298.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.apschool.be",
+    "contact": {
+      "email": "info@apkiosk.com",
+      "phone": "0499/147002"
+    },
+    "status": "A valider"
+  },
+  {
     "id": "atelier-199",
     "title": "L'atelier philo: un outil pour penser ensemble. ",
     "description": "L'atelier philo est un outil pédagogique qui favorise l'apprentissage de la pensée en s'appuyant sur la maîtrise des mouvements de pensée et la réflexion collective. Ce n'est ni un cours de philosophie ni d'histoire de la philosophie: aucun prérequis n'est nécessaire. Durant cet atelier, le participant expérimentera le processus et acquéra des outils concrets pour développer la pensée de ses apprenants.",
@@ -416,6 +388,34 @@
     "contact": {
       "email": "h.caels@mailfence.com",
       "phone": "+32494485945"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-346",
+    "title": "Créer des exercices numériques avec BookWidgets",
+    "description": "Lors de cet atelier, découvrez comment créer facilement des exercices numériques interactifs avec BookWidgets : quiz, mots croisés, cartes flash et bien plus. Dimitri de BookWidgtets vous présentera des exemples concrets, les bases pour concevoir vos propres activités adaptées à toutes les matières et à tous les niveaux, ainsi que des astuces pour gagner un temps lors de la correction. Chaque participant recevra une gift card pour tester l’outil gratuitement pendant 3 mois.\n\n",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "11:00",
+    "endTime": "11:30",
+    "location": "Village numérique",
+    "speaker": "Dimitri Bongers",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-265.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.bookwidgets.com/fr",
+    "contact": {
+      "email": "dimitri@bookwidgets.com",
+      "phone": "0032470043443"
     },
     "status": "Publié"
   },
@@ -448,6 +448,62 @@
     "status": "Publié"
   },
   {
+    "id": "atelier-343",
+    "title": "Chromebooks en classe : exploitez leur plein potentiel",
+    "description": "Découvrez comment exploiter tout le potentiel des Chromebooks en classe. Cette session interactive vous fera découvrir leurs atouts majeurs : démarrage en moins de 10 secondes, mises à jour automatiques, sécurité intégrée, autonomie jusqu’à 12h, travail hors ligne, accès rapide au cloud et parfaite intégration avec Google Workspace for Education. Idéal pour un usage pédagogique fluide et sécurisé.",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "12:00",
+    "endTime": "12:30",
+    "location": "Village numérique",
+    "speaker": "Alain Leuregans",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-343.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professionnels",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://signpost.be/fr-be/",
+    "contact": {
+      "email": "alain.leuregans@signpost.eu",
+      "phone": "+32 472 07 10 95"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-331",
+    "title": "Renforcer l’engagement collectif et individuel en maths/sciences avec Khan Academy",
+    "description": "Cet atelier vous invite à découvrir Khan Academy, plateforme en ligne 100% gratuite d’apprentissage des maths et des sciences. Les enseignants peuvent y créer des classes, assigner des exercices, faire de la différenciation et suivre en direct la progression de chaque élève. Vous vivrez l’expérience côté « Apprenant » grâce à l’activité CourseAuxAcquis. L’occasion de tester concrètement l’outil tout en explorant des stratégies simples et efficaces pour motiver les apprenants.",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "13:00",
+    "endTime": "13:30",
+    "location": "Village numérique",
+    "speaker": "Manon Michaux",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-331.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "Bibliothèques Sans Frontières Belgique - Découvrez nos projets",
+    "contact": {
+      "email": "manon.michaux@bibliosansfrontieres.be",
+      "phone": "+32(0) 460 35 06 64"
+    },
+    "status": "Publié"
+  },
+  {
     "id": "atelier-137",
     "title": "Apprendre les fractions en s'amusant",
     "description": "Deux activités distinctes. Un restaurant des Pizzas et l'usine des fractions. Il faut une bonne heure par activités,  ou les deux activités le même jour, une durée d 1h30 - 1h45 L'idée de mettre les participants dans la peau des élèves et de vivre concrètement l'approche de la fraction à travers ces deux activités données en 3ème P et 4ème P",
@@ -472,6 +528,34 @@
     "contact": {
       "email": "dominiquepaq@gmail.com",
       "phone": "0474416871"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-332",
+    "title": "AMA : correspondance scolaire numérique entre écoles à travers le monde",
+    "description": "Les visiteurs découvriront la plateforme AMA, exploreront les contenus pédagogiques et comprendront la richesse des échanges entre les écoles participantes au projet.",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "14:00",
+    "endTime": "14:30",
+    "location": "Village numérique",
+    "speaker": "severine de sadeleer",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-232.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.amagirafe.org",
+    "contact": {
+      "email": "severinedesadeleer@gmail.com",
+      "phone": "0477779218"
     },
     "status": "Publié"
   },
@@ -532,6 +616,34 @@
     "status": "Publié"
   },
   {
+    "id": "atelier-299",
+    "title": "Enseigner la dactylographie avec le programme Typ10",
+    "description": "Au cours de cette démonstration, vous aurez un aperçu d’un cours de dactylographie selon la méthode Typ10. Vous serez initié(e)s aux différentes étapes du processus d'apprentissage, à l'utilisation du cahier d'exercices numérique ainsi qu'à la manière dont Typ10 utilise les différents canaux d'apprentissage. Ensuite, vous découvrirez la plateforme en ligne avec ses différentes fonctionnalités et outils. Nous vous donnerons également un aperçu de l'outil de suivi, destiné aux enseignants.",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "15:00",
+    "endTime": "15:30",
+    "location": "Village numérique",
+    "speaker": "Sophia Seaton",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-299.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.typ10.fr",
+    "contact": {
+      "email": "ruth.houben@c-explore.com",
+      "phone": "0484564140"
+    },
+    "status": "Publié"
+  },
+  {
     "id": "atelier-2",
     "title": "Les algorithmes dès la maternelle",
     "description": "Cet atelier vise à explorer la manière dont les concepts d’algorithmes peuvent être introduits et enseignés dès le plus jeune âge notamment à travers des activités débranchées et l’utilisation de la robotique pédagogique. Les participants découvriront et expérimenteront des activités ludiques et adaptées pour développer les compétences numériques des enfants dès la maternelle, en mettant l’accent sur la logique, la pensée informatique et la résolution de problèmes.",
@@ -556,6 +668,34 @@
     "contact": {
       "email": "sonia@codenplay.be",
       "phone": "0474935440"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-348",
+    "title": "Chromebooks en classe : exploitez leur plein potentiel",
+    "description": "Découvrez comment exploiter tout le potentiel des Chromebooks en classe. Cette session interactive vous fera découvrir leurs atouts majeurs : démarrage en moins de 10 secondes, mises à jour automatiques, sécurité intégrée, autonomie jusqu’à 12h, travail hors ligne, accès rapide au cloud et parfaite intégration avec Google Workspace for Education. Idéal pour un usage pédagogique fluide et sécurisé.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "10:00",
+    "endTime": "10:30",
+    "location": "Village numérique",
+    "speaker": "Alain Leuregans",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-343.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professionnels",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://signpost.be/fr-be/",
+    "contact": {
+      "email": "alain.leuregans@signpost.eu",
+      "phone": "+32 472 07 10 95"
     },
     "status": "Publié"
   },
@@ -588,6 +728,34 @@
     "status": "Publié"
   },
   {
+    "id": "atelier-345",
+    "title": "OUAIP.BE : au service de vos élèves !",
+    "description": "Cette séance débutera par une courte présentation de Ouaip.be, de sa philosophie et de ses atouts. Ensuite, place à la démonstration concrète :\n-prise en main de l’interface enseignant ;\n-sélection et planification d’un contenu (titre) à destination des élèves ;\n-création et gestion d’un groupe‑classe, assignation du contenu…\nEnfin, un temps interactif prendra place sous forme de questions‑réponses, pour échanger et explorer les possibilités offertes par l’outil.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "11:00",
+    "endTime": "11:30",
+    "location": "Village numérique",
+    "speaker": "Benoit  Monnoyer",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-233.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "https://ouaip.be/",
+    "contact": {
+      "email": "info@ouaip.be",
+      "phone": "032473663284"
+    },
+    "status": "Publié"
+  },
+  {
     "id": "atelier-166",
     "title": "Optimiser la lisibilité des supports pédagogiques : bonnes pratiques et outils ",
     "description": "La lisibilité des supports de cours joue un rôle essentiel dans l’apprentissage, en particulier pour les élèves à besoins spécifiques. Cet atelier mettra en lumière les critères à privilégier pour choisir une police d’écriture adaptée et pour garantir une mise en page claire et accessible. Des outils et astuces pratiques seront présentés afin d’adapter vos supports pédagogiques et d’en améliorer la lisibilité pour tous les apprenants",
@@ -616,6 +784,62 @@
     "status": "Publié"
   },
   {
+    "id": "atelier-350",
+    "title": "Enseigner la dactylographie avec le programme Typ10",
+    "description": "Au cours de cette démonstration, vous aurez un aperçu d’un cours de dactylographie selon la méthode Typ10. Vous serez initié(e)s aux différentes étapes du processus d'apprentissage, à l'utilisation du cahier d'exercices numérique ainsi qu'à la manière dont Typ10 utilise les différents canaux d'apprentissage. Ensuite, vous découvrirez la plateforme en ligne avec ses différentes fonctionnalités et outils. Nous vous donnerons également un aperçu de l'outil de suivi, destiné aux enseignants.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "12:00",
+    "endTime": "12:30",
+    "location": "Village numérique",
+    "speaker": "Sophia Seaton",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-299.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.typ10.fr",
+    "contact": {
+      "email": "ruth.houben@c-explore.com",
+      "phone": "0484564140"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-349",
+    "title": "Pelckmans Portail : un atout pour aujourd’hui et pour demain",
+    "description": "Dans un enseignement en constante évolution, Pelckmans, votre partenaire éducatif, vous offre un soutien incontournable pour vous faire gagner du temps! Découvrez comment nos ressources numériques peuvent vous inspirer, vous faciliter la vie et aider vos élèves !",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "13:00",
+    "endTime": "13:30",
+    "location": "Village numérique",
+    "speaker": "Lut Lambert",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-344.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://www.editionspelckmans.be/",
+    "contact": {
+      "email": "lut.lambert@pelckmans.be",
+      "phone": "0496164145"
+    },
+    "status": "Publié"
+  },
+  {
     "id": "atelier-6",
     "title": "Vous reprendrez bien un peu d'estime de soi?",
     "description": "Estime de soi, confiance en soi, affirmation de soi.\nKésaco??\nVenez le découvrir lors d'un atelier ludo-pédagogique!\nLeurs différences, leurs similitudes et comment développer chacune d'elles afin de se sentir à sa place partout où on se trouve.\n",
@@ -640,6 +864,34 @@
     "contact": {
       "email": "christellerasez@coeurdonniere.com",
       "phone": "0472/403.756"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-347",
+    "title": "Renforcer l’engagement collectif et individuel en maths/sciences avec Khan Academy",
+    "description": "Cet atelier vous invite à découvrir Khan Academy, plateforme en ligne 100% gratuite d’apprentissage des maths et des sciences. Les enseignants peuvent y créer des classes, assigner des exercices, faire de la différenciation et suivre en direct la progression de chaque élève. Vous vivrez l’expérience côté « Apprenant » grâce à l’activité CourseAuxAcquis. L’occasion de tester concrètement l’outil tout en explorant des stratégies simples et efficaces pour motiver les apprenants.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "14:00",
+    "endTime": "14:30",
+    "location": "Village numérique",
+    "speaker": "Manon Michaux",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-331.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "Bibliothèques Sans Frontières Belgique - Découvrez nos projets",
+    "contact": {
+      "email": "manon.michaux@bibliosansfrontieres.be",
+      "phone": "+32(0) 460 35 06 64"
     },
     "status": "Publié"
   },

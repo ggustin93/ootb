@@ -414,19 +414,33 @@ const eventsByDay = eventsData as EventsByDay;
           <div class="group bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
             <div class="aspect-[4/3] relative flex items-center justify-center p-4">
               <div class="absolute inset-0 bg-gradient-to-br from-[#e4451e]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-              <Image
-                src={partenaire.logo}
-                alt="Logo partenaire"
-                class="max-h-full w-auto object-contain relative z-10"
-                widths={[150, 300]}
-                sizes="(max-width: 768px) 150px, 300px"
-                loading="lazy"
-                cloudinaryOptions={{
-                  quality: "auto:eco",
-                  crop: "scale",
-                  dpr: "auto"
-                }}
-              />
+              {partenaire.url ? (
+                <a 
+                  href={partenaire.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="flex items-center justify-center w-full h-full"
+                  aria-label={`Visiter le site de ${partenaire.nom || 'ce partenaire'}`}
+                >
+                  <Image
+                    src={partenaire.logo}
+                    alt={`Logo ${partenaire.nom || 'partenaire'}`}
+                    class="max-h-full w-auto object-contain relative z-10"
+                    widths={[150, 300]}
+                    sizes="(max-width: 768px) 150px, 300px"
+                    loading="lazy"
+                  />
+                </a>
+              ) : (
+                <Image
+                  src={partenaire.logo}
+                  alt={`Logo ${partenaire.nom || 'partenaire'}`}
+                  class="max-h-full w-auto object-contain relative z-10"
+                  widths={[150, 300]}
+                  sizes="(max-width: 768px) 150px, 300px"
+                  loading="lazy"
+                />
+              )}
             </div>
           </div>
         ))}

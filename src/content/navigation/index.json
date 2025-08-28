@@ -162,9 +162,17 @@
     ],
     "actions": [
       {
-        "text": "Rejoindre la communauté",
-        "href": "/#rejoindre",
-        "variant": "outline"
+        "mode": "community",
+        "festivalButton": {
+          "text": "Prendre votre ticket",
+          "href": "/festival/#tickets/",
+          "variant": "outline"
+        },
+        "communityButton": {
+          "text": "Rejoindre la communauté",
+          "href": "/#rejoindre",
+          "variant": "outline"
+        }
       }
     ]
   },
@@ -302,7 +310,7 @@
       },
       {
         "ariaLabel": "Spotify",
-        "icon": "tabler:brand-spotify", 
+        "icon": "tabler:brand-spotify",
         "href": "https://open.spotify.com/show/4yTxSH2wLtptZQ8Ly4D6DI?si=ub-5Jr9uRjuedLDysvfc7Q"
       }
     ],

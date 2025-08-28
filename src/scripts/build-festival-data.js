@@ -8,6 +8,7 @@ import fetch from 'node-fetch';
 import sharp from 'sharp';
 import dotenv from 'dotenv';
 import { Api } from 'nocodb-sdk';
+import { Poppler } from 'node-poppler';
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -50,7 +51,7 @@ try {
   const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
   showUnpublishedEvents = settings?.festival?.showUnpublishedEvents ?? true;
 } catch (error) {
-  console.warn('⚠️ Impossible de charger settings.json, utilisation des valeurs par défaut');
+  console.warn('⚠️ Impossible de charger settings.json, utilisation des valeurs par défaut:', error.message);
 }
 
 // GARDE-FOU DE SÉCURITÉ: En production sur main, on ne montre JAMAIS les événements non publiés
@@ -647,8 +648,9 @@ async function fetchConferences() {
 // Convertir les stands en événements
 function convertStandsToEvents(stands) {
   return stands.map(stand => {
-    // Extraire le logo
-    const logo = stand["Envoyez votre logo"]?.[0]?.signedUrl || null;
+    // Extraire le logo (prendre le plus récent si plusieurs fichiers)
+    const logoFiles = stand["Envoyez votre logo"] || [];
+    const logo = logoFiles.length > 0 ? logoFiles[logoFiles.length - 1]?.signedUrl : null;
     
     // Normaliser le jour
     const normalizedDay = normalizeDay(stand.Jours);
@@ -709,8 +711,9 @@ function convertStandsToEvents(stands) {
 // Convertir les ateliers en événements
 function convertAteliersToEvents(ateliers) {
   return ateliers.map(atelier => {
-    // Extraire le logo
-    const logo = atelier["Envoyez votre logo"]?.[0]?.signedUrl || null;
+    // Extraire le logo (prendre le plus récent si plusieurs fichiers)
+    const logoFiles = atelier["Envoyez votre logo"] || [];
+    const logo = logoFiles.length > 0 ? logoFiles[logoFiles.length - 1]?.signedUrl : null;
     const speakerImage = atelier["Envoyez une photo de vous"]?.[0]?.signedUrl || null;
     
     // Normaliser le jour
@@ -777,8 +780,9 @@ function convertAteliersToEvents(ateliers) {
 // Convertir les conférences en événements
 function convertConferencesToEvents(conferences) {
   return conferences.map(conference => {
-    // Extraire les images
-    const logo = conference["Envoyez votre logo"]?.[0]?.signedUrl || null;
+    // Extraire les images (prendre le plus récent si plusieurs fichiers)
+    const logoFiles = conference["Envoyez votre logo"] || [];
+    const logo = logoFiles.length > 0 ? logoFiles[logoFiles.length - 1]?.signedUrl : null;
     const speakerImage = conference["Envoyez une photo de vous"]?.[0]?.signedUrl || null;
     
     // Normaliser le jour
@@ -937,6 +941,68 @@ async function processEventImages(events) {
   return events;
 }
 
+/**
+ * Converts a PDF buffer to a PNG image buffer using node-poppler
+ * @param {Buffer} pdfBuffer - The PDF file buffer
+ * @param {string} eventId - Event ID for logging purposes
+ * @returns {Promise<Buffer|null>} PNG image buffer or null on failure
+ */
+async function convertPdfToImageBuffer(pdfBuffer, eventId) {
+  const tempDir = path.join(ROOT_DIR, 'temp', `pdf-conversion-${eventId}-${Date.now()}`);
+  const tempPdfPath = path.join(tempDir, 'input.pdf');
+  const outputPngPath = path.join(tempDir, 'output'); // Sans extension, pdfToCairo l'ajoute
+  
+  try {
+    // Créer le répertoire temporaire
+    await fs.promises.mkdir(tempDir, { recursive: true });
+    
+    // Écrire le PDF buffer dans un fichier temporaire
+    await fs.promises.writeFile(tempPdfPath, pdfBuffer);
+    
+    // Initialiser l'instance Poppler
+    const poppler = new Poppler();
+    
+    // Configuration pour la conversion PDF vers PNG haute qualité
+    const options = {
+      firstPageToConvert: 1,
+      lastPageToConvert: 1,
+      pngFile: true,
+      resolutionXYAxis: 300, // 300 DPI pour une haute qualité
+      singleFile: true, // Un seul fichier de sortie
+    };
+    
+    // Convertir le PDF en PNG avec pdfToCairo
+    await poppler.pdfToCairo(tempPdfPath, outputPngPath, options);
+    
+    // Vérifier que le fichier PNG a été créé (pdfToCairo ajoute automatiquement .png)
+    const actualPngPath = `${outputPngPath}.png`;
+    if (!fs.existsSync(actualPngPath)) {
+      // Lister les fichiers créés pour le débogage
+      const files = fs.readdirSync(tempDir);
+      throw new Error(`Fichier PNG converti non trouvé. Attendu: ${actualPngPath}, Fichiers créés: ${files.join(', ')}`);
+    }
+    
+    // Lire l'image PNG convertie
+    const pngBuffer = await fs.promises.readFile(actualPngPath);
+    console.log(`✅ PDF converti avec succès pour ${eventId} (${pngBuffer.length} bytes)`);
+    
+    return pngBuffer;
+    
+  } catch (error) {
+    console.error(`❌ Erreur lors de la conversion PDF pour ${eventId}:`, error.message);
+    return null;
+  } finally {
+    // Nettoyage : supprimer le répertoire temporaire
+    try {
+      if (fs.existsSync(tempDir)) {
+        await fs.promises.rm(tempDir, { recursive: true, force: true });
+      }
+    } catch (cleanupError) {
+      console.warn(`⚠️ Erreur lors du nettoyage pour ${eventId}:`, cleanupError.message);
+    }
+  }
+}
+
 // Télécharger et optimiser une image
 async function downloadAndOptimizeImage(
   imageUrl,
@@ -965,6 +1031,16 @@ async function downloadAndOptimizeImage(
     // Déterminer les chemins de destination
     const srcDir = path.join(IMAGES_SRC_DIR, eventType);
     const publicDir = path.join(IMAGES_PUBLIC_DIR, eventType);
+    const publicFilePath = path.join(publicDir, `${fileName}.webp`);
+
+    // Vérifier si l'image existe déjà, sauf si l'option --force-images est activée
+    const args = process.argv.slice(2);
+    if (fs.existsSync(publicFilePath) && !args.includes('--force-images')) {
+      // Mettre en cache et retourner le chemin existant
+      const optimizedPath = getImagePath(eventType, fileName);
+      imageUrlCache.set(imageUrl, optimizedPath);
+      return optimizedPath;
+    }
     
     // S'assurer que les répertoires existent
     await fs.promises.mkdir(srcDir, { recursive: true });
@@ -985,12 +1061,57 @@ async function downloadAndOptimizeImage(
         r: 255, g: 255, b: 255, alpha: 1
       };
       
-      // Charger l'image originale
-      const originalImage = sharp(buffer);
+      // Détecter et convertir les PDFs et ICOs si nécessaire
+      const contentType = response.headers.get('content-type') || '';
+      const urlLower = imageUrl.toLowerCase();
+      let imageBuffer = buffer;
+      let wasConverted = false;
+      
+      if (contentType === 'application/pdf' || urlLower.endsWith('.pdf')) {
+        console.log(`📄 Conversion PDF détectée pour ${eventId}`);
+        imageBuffer = await convertPdfToImageBuffer(buffer, eventId);
+        wasConverted = true;
+        if (!imageBuffer) {
+          console.error(`⚠️ Échec de la conversion PDF pour ${eventId}, utilisation d'une image de remplacement`);
+          return await createPlaceholderImage(srcDir, publicDir, fileName, eventType, imageUrlCache, imageUrl);
+        }
+      } else if (contentType === 'image/x-icon' || 
+                 contentType === 'image/vnd.microsoft.icon' || 
+                 urlLower.endsWith('.ico')) {
+        console.log(`🔮 Conversion ICO détectée pour ${eventId}`);
+        // Sharp supporte nativement les fichiers .ico, pas besoin de conversion spéciale
+        // Mais on log pour la traçabilité
+        wasConverted = true;
+      }
+      
+      // Charger l'image (originale ou convertie depuis PDF)
+      const originalImage = sharp(imageBuffer);
       
       // Utiliser un fit différent pour les images de conférenciers
       const fitOption = isSpeakerImage ? 'cover' : 'inside';
       const positionOption = isSpeakerImage ? 'north' : 'center';
+      
+      // Configuration WebP optimisée selon le type de fichier source
+      let webpOptions = { quality: 80 };
+      
+      if (urlLower.endsWith('.ico')) {
+        // Optimisation spéciale pour les fichiers ICO (souvent des logos)
+        webpOptions = {
+          quality: 85,           // Qualité plus élevée pour les logos
+          alphaQuality: 100,     // Préserver la transparence à 100%
+          preset: 'icon',        // Preset optimisé pour les icônes
+          effort: 6,             // Effort maximal pour la compression
+          lossless: false        // Mode lossy mais haute qualité
+        };
+      } else if (urlLower.endsWith('.pdf')) {
+        // Configuration pour les PDFs convertis
+        webpOptions = {
+          quality: 82,           // Légèrement plus haute pour les PDFs vectoriels
+          alphaQuality: 95,      // Bonne qualité alpha
+          smartSubsample: true,  // Optimisation du sous-échantillonnage
+          effort: 4              // Effort équilibré
+        };
+      }
       
       // Générer la version principale (400px) dans le dossier public
       await originalImage
@@ -1000,7 +1121,7 @@ async function downloadAndOptimizeImage(
           withoutEnlargement: true,
           background: whiteBackground
         })
-        .webp({ quality: 80 })
+        .webp(webpOptions)
         .toFile(path.join(publicDir, `${fileName}.webp`));
       
       // Générer également une version dans src/assets pour le développement local
@@ -1013,13 +1134,19 @@ async function downloadAndOptimizeImage(
             withoutEnlargement: true,
             background: whiteBackground
           })
-          .webp({ quality: 80 })
+          .webp(webpOptions)
           .toFile(path.join(srcDir, `${fileName}.webp`));
       }
       
       // Stocker le chemin dans le cache
       const optimizedPath = getImagePath(eventType, fileName);
       imageUrlCache.set(imageUrl, optimizedPath);
+      
+      // Log de succès avec indication du type de conversion
+      if (wasConverted) {
+        const conversionType = urlLower.endsWith('.pdf') ? 'PDF' : 'ICO';
+        console.log(`✅ ${conversionType} converti et optimisé pour ${eventId} → ${optimizedPath}`);
+      }
       
       return optimizedPath;
       
@@ -1412,4 +1539,12 @@ import events from '../content/festival/events.json';
 main().catch(error => {
   console.error('❌ Erreur lors de la génération des données statiques:', error);
   process.exit(1);
-}); 
+});
+
+// Exporter les fonctions pour les tests
+export {
+  downloadAndOptimizeImage,
+  createPlaceholderImage,
+  getImagePath,
+  convertPdfToImageBuffer
+}; 

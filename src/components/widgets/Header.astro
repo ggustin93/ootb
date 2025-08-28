@@ -8,6 +8,12 @@ import { getHomePermalink } from '~/utils/permalinks';
 import { trimSlash } from '~/utils/permalinks';
 import type { CallToAction } from '~/types';
 
+interface ActionConfig extends CallToAction {
+  mode?: 'festival' | 'community';
+  festivalButton?: CallToAction;
+  communityButton?: CallToAction;
+}
+
 interface Link {
   text?: string;
   href?: string;
@@ -24,7 +30,7 @@ export interface Props {
   id?: string;
   links?: Array<MenuLink>;
   mobileLinks?: Array<{ title: string; links: Array<Link> }>;
-  actions?: Array<CallToAction>;
+  actions?: Array<ActionConfig>;
   isSticky?: boolean;
   isDark?: boolean;
   isFullWidth?: boolean;
@@ -150,11 +156,30 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         {
           actions?.length ? (
             <span class="ml-4 rtl:ml-0 rtl:mr-4">
-              {actions.map((btnProps) => (
-                <Button {...btnProps} class="text-[--ootb-turquoise] border-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_15%)] hover:text-white transition-all duration-300">
-                  {btnProps.text}
-                </Button>
-              ))}
+              {actions.map((actionConfig) => {
+                // Nouveau système de toggle intelligent
+                if (actionConfig.mode && actionConfig.festivalButton && actionConfig.communityButton) {
+                  const activeButton = actionConfig.mode === 'festival' 
+                    ? actionConfig.festivalButton 
+                    : actionConfig.communityButton;
+                  
+                  return (
+                    <Button 
+                      {...activeButton}
+                      class="text-[--ootb-turquoise] border-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_15%)] hover:text-white transition-all duration-300"
+                    >
+                      {activeButton.text}
+                    </Button>
+                  );
+                } else {
+                  // Fallback pour l'ancienne structure (rétrocompatibilité)
+                  return (
+                    <Button {...actionConfig} class="text-[--ootb-turquoise] border-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_15%)] hover:text-white transition-all duration-300">
+                      {actionConfig.text}
+                    </Button>
+                  );
+                }
+              })}
             </span>
           ) : (
             ''

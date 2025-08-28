@@ -25,12 +25,14 @@
         {
           "name": "TV COM",
           "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1756285708/logo_tvcom_hxp7uv.png",
-          "alt": "Logo de TV COM"
+          "alt": "Logo de TV COM",
+          "url": "https://www.tvcom.be/"
         },
         {
           "name": "Province du Brabant wallon",
           "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1756285305/logo_bw_compressed_sa7dit.jpg",
-          "alt": "Logo de la Province du Brabant wallon"
+          "alt": "Logo de la Province du Brabant wallon",
+          "url": "https://www.brabantwallon.be/"
         }
       ]
     },
@@ -65,7 +67,8 @@
         {
           "name": "Éditions Plantyn",
           "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1756285386/logo_plantyn_v3fjb0.png",
-          "alt": "Logo des Éditions Plantyn"
+          "alt": "Logo des Éditions Plantyn",
+          "url": "https://www.plantyn.com/"
         }
       ]
     },

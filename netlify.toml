@@ -4,7 +4,7 @@
 
 [build]
   publish = "dist"                     # Répertoire à déployer
-  command = "npm run build:netlify"    # Commande de build pour le déploiement
+  command = "bash scripts/smart-build.sh"    # Build intelligent avec Poppler conditionnel
   functions = "netlify/functions"      # Emplacement des fonctions serverless
 
 [dev]

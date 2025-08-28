@@ -555,10 +555,22 @@ export const festivalCollection: Collection = {
           },
           fields: [
             {
+              type: "string",
+              name: "nom",
+              label: "Nom du partenaire",
+              required: true,
+            },
+            {
               type: "image",
               name: "logo",
               label: "Logo",
               required: true,
+            },
+            {
+              type: "string",
+              name: "url",
+              label: "Site web",
+              description: "URL vers le site du partenaire (optionnel)",
             },
           ],
         },

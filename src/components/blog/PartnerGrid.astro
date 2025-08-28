@@ -1,10 +1,10 @@
 ---
-import { Image } from 'astro:assets';
 
 interface Partner {
   name: string;
   logo: string;
   alt?: string;
+  url?: string;
 }
 
 interface Props {
@@ -35,13 +35,31 @@ if (!partners || partners.length === 0) {
   <div class={`gap-2 ${partners.length >= 2 ? 'grid grid-cols-2' : 'flex flex-col'}`}>
     {partners.map((partner) => (
       <div class="partner-item-compact flex items-center justify-center bg-white dark:bg-gray-800 rounded-md p-2 shadow-sm hover:shadow-md transition-all duration-300">
-        <img
-          src={partner.logo}
-          alt={partner.alt || `Logo de ${partner.name}`}
-          class="h-12 max-w-full object-contain transition-all duration-300"
-          loading="lazy"
-          decoding="async"
-        />
+        {partner.url ? (
+          <a 
+            href={partner.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="flex items-center justify-center w-full h-full"
+            aria-label={`Visiter le site de ${partner.name}`}
+          >
+            <img
+              src={partner.logo}
+              alt={partner.alt || `Logo de ${partner.name}`}
+              class="h-12 max-w-full object-contain transition-all duration-300"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+        ) : (
+          <img
+            src={partner.logo}
+            alt={partner.alt || `Logo de ${partner.name}`}
+            class="h-12 max-w-full object-contain transition-all duration-300"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
       </div>
     ))}
   </div>

@@ -2779,6 +2779,96 @@
       "shared": true
     },
     {
+      "id": "stand-1357",
+      "title": "Du bénévolat structuré pour des écoles renforcées",
+      "description": "“Nous rêvons d’écoles où chaque élève s’épanouit dans un climat de sérénité, de confiance et de solidarité. Notre mission : créer des partenariats bénévoles durables, surtout dans les écoles accueillant un public défavorisé ; soutenir les équipes éducatives dans une culture du bénévolat ; et accueillir toute personne désireuse de s’engager selon ses compétences et disponibilités.”",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Guénola de Lhoneux",
+      "organization": "",
+      "image": "/images/events/stands/stand-1357.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "www.lesabs.be",
+      "contact": {
+        "email": "info@lesabs.be",
+        "phone": "0476051827"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1358",
+      "title": "Optimisation Infrastructure IT",
+      "description": "Multimedian optimise les infrastructures IT pour les écoles en Wallonie et à Bruxelles depuis plus de 10 ans. Nous proposons des solutions sur mesure, incluant l'installation de réseaux performants et la mise en place d’écrans interactifs ViewSonic, pour des classes plus dynamiques. Notre équipe assure également un support et une maintenance continue ainsi que des formations pour les enseignants.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Maxime Depaepe",
+      "organization": "",
+      "image": "/images/events/stands/stand-1358.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "multimedian.be",
+      "contact": {
+        "email": "marketing@multimedian.be",
+        "phone": "010 39 79 06"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1359",
+      "title": "YOU ROCK! Le programme de cohésion qui fait groover les équipes",
+      "description": "YOU ROCK! propose une trajectoire de formation et de teambuilding qui remet l’humain au centre. Grâce à l’Indice de Cohésion d’Équipe (ICE), un outil innovant canadien, nous mesurons communication, collaboration, clarté et connexion. Notre approche allie diagnostic, coaching,  intelligence émotionnelle et co-construction pour développer engagement, résilience et performance durables au sein des équipes éducatives.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Isabelle De Wulf",
+      "organization": "",
+      "image": "/images/events/stands/stand-1359.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professionnels",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professionnels",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.isabelledewulf.be/coaching",
+      "contact": {
+        "email": "isabelledewulf.be@gmail.com",
+        "phone": "0476929885"
+      },
+      "status": "A valider",
+      "theme": "",
+      "shared": true
+    },
+    {
       "id": "atelier-352",
       "title": "Hopper et le trésor de barbe-pique",
       "description": "Une présentation du jeu \"Hopper et le trésor de barbe-pique\" qui sortira en décembre. Comment rendre un jeu vidéo accessible a des enfants et inclure leur retour dans le processus de fabrication du jeu.",

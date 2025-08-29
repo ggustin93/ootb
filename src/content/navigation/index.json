@@ -162,8 +162,8 @@
     ],
     "actions": [
       {
-        "text": "Rejoindre la communauté",
-        "href": "/#rejoindre",
+        "text": "Prendre votre ticket",
+        "href": "/#tickets/",
         "variant": "outline"
       }
     ]
@@ -302,7 +302,7 @@
       },
       {
         "ariaLabel": "Spotify",
-        "icon": "tabler:brand-spotify", 
+        "icon": "tabler:brand-spotify",
         "href": "https://open.spotify.com/show/4yTxSH2wLtptZQ8Ly4D6DI?si=ub-5Jr9uRjuedLDysvfc7Q"
       }
     ],

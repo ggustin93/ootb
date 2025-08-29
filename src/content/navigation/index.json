@@ -163,7 +163,7 @@
     "actions": [
       {
         "text": "Prendre votre ticket",
-        "href": "/#tickets/",
+        "href": "/festival/#tickets/",
         "variant": "outline"
       }
     ]

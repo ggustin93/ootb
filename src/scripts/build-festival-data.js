@@ -948,6 +948,12 @@ async function processEventImages(events) {
  * @returns {Promise<Buffer|null>} PNG image buffer or null on failure
  */
 async function convertPdfToImageBuffer(pdfBuffer, eventId) {
+  // Vérifier si la conversion PDF est désactivée (environnement Netlify sans Poppler)
+  if (process.env.PDF_CONVERSION_DISABLED === 'true') {
+    console.log(`⚠️ Conversion PDF désactivée pour ${eventId} (environnement sans Poppler)`);
+    return null;
+  }
+
   const tempDir = path.join(ROOT_DIR, 'temp', `pdf-conversion-${eventId}-${Date.now()}`);
   const tempPdfPath = path.join(tempDir, 'input.pdf');
   const outputPngPath = path.join(tempDir, 'output'); // Sans extension, pdfToCairo l'ajoute

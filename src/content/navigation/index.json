@@ -162,17 +162,9 @@
     ],
     "actions": [
       {
-        "mode": "community",
-        "festivalButton": {
-          "text": "Prendre votre ticket",
-          "href": "/festival/#tickets/",
-          "variant": "outline"
-        },
-        "communityButton": {
-          "text": "Rejoindre la communauté",
-          "href": "/#rejoindre",
-          "variant": "outline"
-        }
+        "text": "Prendre votre ticket",
+        "href": "/festival/#tickets/",
+        "variant": "outline"
       }
     ]
   },

@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 import { getPermalink } from '~/utils/permalinks';
 import Button from '~/components/ui/Button.astro';
 import { getFormattedDate } from '~/utils/utils';
+import { CONTENT_TYPES } from '~/config/content-types';
 
 // Vérifie si une image est fournie
 const hasCustomImage = (url?: string) => !!url && url.trim() !== '';
@@ -48,63 +49,32 @@ const {
   class: className = ''
 } = Astro.props;
 
-// Configuration des types de cartes avec les variables de couleur OOTB
-const typeConfig = {
-  actualite: {
-    icon: 'tabler:news',
-    label: 'Lire l\'actualité',
-    color: 'var(--content-actualite)',
-    badgeIcon: 'tabler:news',
-  },
-  fiche: {
-    icon: 'tabler:file-text',
-    label: 'Consulter la fiche',
-    color: 'var(--content-fiche)',
-    badgeIcon: 'tabler:file-text',
-  },
-  live: {
-    icon: 'tabler:broadcast',
-    label: 'Voir le live Facebook',
-    color: 'var(--content-live)',
-    badgeIcon: 'tabler:brand-facebook',
-  },
-  podcast: {
-    icon: 'tabler:brand-spotify',
-    label: 'Écouter l\'épisode',
-    color: 'var(--content-podcast)',
-    badgeIcon: 'tabler:microphone',
-  },
-  tv: {
-    icon: 'tabler:player-play',
-    label: 'Regarder l\'émission',
-    color: 'var(--content-tv)',
-    badgeIcon: 'tabler:video',
-  },
-  premium: {
-    icon: 'tabler:crown',
-    label: 'Accéder au contenu premium',
-    color: 'var(--content-premium)',
-    badgeIcon: 'tabler:crown',
-  },
-  default: {
-    icon: 'tabler:article',
-    label: 'Lire l\'article',
-    color: 'var(--content-actualite)',
-    badgeIcon: 'tabler:article',
-  }
-} as const;
+// Default config
+const defaultConfig = {
+  icon: 'tabler:article',
+  label: 'Lire l\'article',
+  color: 'var(--content-actualite)',
+  badgeIcon: 'tabler:article',
+};
 
 // Types pour éviter les erreurs
-type ContentType = keyof typeof typeConfig;
+type ContentType = keyof typeof CONTENT_TYPES;
 
 // Détermine le type final en fonction de la catégorie ou du type explicite
 const finalType: ContentType = category?.slug?.toLowerCase() 
-  ? Object.keys(typeConfig).includes(category.slug.toLowerCase()) 
+  ? Object.keys(CONTENT_TYPES).includes(category.slug.toLowerCase()) 
     ? category.slug.toLowerCase() as ContentType
-    : type
-  : type;
+    : type in CONTENT_TYPES ? type as ContentType : 'actualite'
+  : type in CONTENT_TYPES ? type as ContentType : 'actualite';
 
-const config = typeConfig[finalType];
+const contentTypeConfig = CONTENT_TYPES[finalType] || CONTENT_TYPES.actualite;
+
+const config = {
+  icon: contentTypeConfig.icon || defaultConfig.icon,
+  label: contentTypeConfig.actionLabel || defaultConfig.label,
+  color: contentTypeConfig.color || defaultConfig.color,
+  badgeIcon: contentTypeConfig.icon || defaultConfig.badgeIcon,
+};
 
 // Format date
 const formatPublishDate = (date?: Date | string) => {
@@ -178,31 +148,15 @@ if (meta?.publishDate && !formattedPublishDate) {
       <div 
         class:list={[
           'w-full h-full flex items-center justify-center',
-          {
-            'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]': finalType === 'actualite',
-            'bg-[color-mix(in_srgb,var(--content-live)_30%,white)]': finalType === 'live',
-            'bg-[color-mix(in_srgb,var(--content-fiche)_30%,white)]': finalType === 'fiche',
-            'bg-[color-mix(in_srgb,var(--content-podcast)_30%,white)]': finalType === 'podcast',
-            'bg-[color-mix(in_srgb,var(--content-tv)_30%,white)]': finalType === 'tv',
-            'bg-[color-mix(in_srgb,var(--content-premium)_30%,white)]': finalType === 'premium',
-            'bg-[color-mix(in_srgb,#64748b_30%,white)]': finalType === 'default'
-          }
         ]}
+        style={`background-color: color-mix(in srgb, ${config.color} 30%, white)`}
       >
         <Icon 
           name={config.icon} 
           class:list={[
             'w-16 h-16 opacity-90',
-            {
-              'text-[var(--content-actualite)]': finalType === 'actualite',
-              'text-[var(--content-live)]': finalType === 'live',
-              'text-[var(--content-fiche)]': finalType === 'fiche',
-              'text-[var(--content-podcast)]': finalType === 'podcast',
-              'text-[var(--content-tv)]': finalType === 'tv',
-              'text-[var(--content-premium)]': finalType === 'premium',
-              'text-gray-700': finalType === 'default'
-            }
           ]}
+          style={`color: ${config.color}`}
         />
       </div>
     )}
@@ -212,16 +166,8 @@ if (meta?.publishDate && !formattedPublishDate) {
       class:list={[
         'inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white',
         'transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105',
-        {
-          'bg-[var(--content-actualite)]': finalType === 'actualite',
-          'bg-[var(--content-live)]': finalType === 'live',
-          'bg-[var(--content-fiche)]': finalType === 'fiche',
-          'bg-[var(--content-podcast)]': finalType === 'podcast',
-          'bg-[var(--content-tv)]': finalType === 'tv',
-          'bg-[var(--content-premium)]': finalType === 'premium',
-          'bg-slate-500': finalType === 'default'
-        }
       ]}
+      style={`background-color: ${config.color}`}
     >
       <span class="transform skew-x-[12deg] flex items-center gap-1.5">
         <Icon name={config.badgeIcon} class="w-4 h-4" />
@@ -327,17 +273,12 @@ if (meta?.publishDate && !formattedPublishDate) {
         'text-gray-700 dark:text-gray-300 group/btn',
         'inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium',
         'transform transition-all duration-300',
-        {
-          'bg-[color-mix(in_srgb,var(--content-actualite)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-actualite)_15%,transparent)] border-[color-mix(in_srgb,var(--content-actualite)_25%,transparent)]': finalType === 'actualite',
-          'bg-[color-mix(in_srgb,var(--content-live)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-live)_15%,transparent)] border-[color-mix(in_srgb,var(--content-live)_25%,transparent)]': finalType === 'live',
-          'bg-[color-mix(in_srgb,var(--content-fiche)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-fiche)_15%,transparent)] border-[color-mix(in_srgb,var(--content-fiche)_25%,transparent)]': finalType === 'fiche',
-          'bg-[color-mix(in_srgb,var(--content-podcast)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-podcast)_15%,transparent)] border-[color-mix(in_srgb,var(--content-podcast)_25%,transparent)]': finalType === 'podcast',
-          'bg-[color-mix(in_srgb,var(--content-tv)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-tv)_15%,transparent)] border-[color-mix(in_srgb,var(--content-tv)_25%,transparent)]': finalType === 'tv',
-          'bg-[color-mix(in_srgb,var(--content-premium)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--content-premium)_15%,transparent)] border-[color-mix(in_srgb,var(--content-premium)_25%,transparent)]': finalType === 'premium',
-          'bg-[color-mix(in_srgb,#64748b_10%,transparent)] hover:bg-[color-mix(in_srgb,#64748b_15%,transparent)] border-[color-mix(in_srgb,#64748b_25%,transparent)]': finalType === 'default'
-        },
         'border rounded-xl shadow-sm hover:shadow'
       ]}
+      style={`
+        background-color: color-mix(in srgb, ${config.color} 10%, transparent);
+        border-color: color-mix(in srgb, ${config.color} 25%, transparent);
+      `}
       aria-label={config.label}
     >
       <span class="font-medium">{config.label}</span>
@@ -375,7 +316,15 @@ if (meta?.publishDate && !formattedPublishDate) {
     );
   }
 
-  article:hover::before {
-    opacity: 0.8;
+  article:hover .group-hover\\/btn {
+    background-color: color-mix(in srgb, var(--hover-color) 15%, transparent) !important;
+  }
+
+  article {
+    --hover-color: var(--default-hover-color, #64748b);
+  }
+
+  article:hover {
+    --hover-color: ${config.color};
   }
 </style>

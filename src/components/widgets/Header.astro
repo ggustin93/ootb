@@ -8,6 +8,13 @@ import { getHomePermalink } from '~/utils/permalinks';
 import { trimSlash } from '~/utils/permalinks';
 import type { CallToAction } from '~/types';
 
+interface ActionConfig extends CallToAction {
+  mode?: 'festival' | 'community' | 'custom';
+  festivalButton?: CallToAction;
+  communityButton?: CallToAction;
+  customButton?: CallToAction;
+}
+
 interface Link {
   text?: string;
   href?: string;
@@ -24,7 +31,7 @@ export interface Props {
   id?: string;
   links?: Array<MenuLink>;
   mobileLinks?: Array<{ title: string; links: Array<Link> }>;
-  actions?: Array<CallToAction>;
+  actions?: Array<ActionConfig>;
   isSticky?: boolean;
   isDark?: boolean;
   isFullWidth?: boolean;
@@ -150,11 +157,29 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         {
           actions?.length ? (
             <span class="ml-4 rtl:ml-0 rtl:mr-4">
-              {actions.map((btnProps) => (
-                <Button {...btnProps} class="text-[--ootb-turquoise] border-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_15%)] hover:text-white transition-all duration-300">
-                  {btnProps.text}
-                </Button>
-              ))}
+              {actions.map((actionConfig) => {
+                // Système de toggle intelligent avec support du mode custom
+                let activeButton;
+                
+                if (actionConfig.mode === 'festival' && actionConfig.festivalButton) {
+                  activeButton = actionConfig.festivalButton;
+                } else if (actionConfig.mode === 'community' && actionConfig.communityButton) {
+                  activeButton = actionConfig.communityButton;
+                } else if (actionConfig.mode === 'custom' && actionConfig.customButton) {
+                  activeButton = actionConfig.customButton;
+                }
+                
+                if (activeButton) {
+                  return (
+                    <Button 
+                      {...activeButton}
+                      class="text-[--ootb-turquoise] border-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_15%)] hover:text-white transition-all duration-300"
+                    >
+                      {activeButton.text}
+                    </Button>
+                  );
+                }
+              })}
             </span>
           ) : (
             ''
@@ -209,14 +234,29 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       {/* Boutons d'action pour mobile */}
       {actions?.length && (
         <div class="mt-8 pt-8 border-t border-gray-200">
-          {actions.map((btnProps) => (
-            <Button 
-              {...btnProps} 
-              class="w-full mb-4 last:mb-0 text-[--ootb-turquoise] border-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_15%)] hover:text-white transition-all duration-300"
-            >
-              {btnProps.text}
-            </Button>
-          ))}
+          {actions.map((actionConfig) => {
+            // Même système de toggle intelligent pour mobile
+            let activeButton;
+            
+            if (actionConfig.mode === 'festival' && actionConfig.festivalButton) {
+              activeButton = actionConfig.festivalButton;
+            } else if (actionConfig.mode === 'community' && actionConfig.communityButton) {
+              activeButton = actionConfig.communityButton;
+            } else if (actionConfig.mode === 'custom' && actionConfig.customButton) {
+              activeButton = actionConfig.customButton;
+            }
+            
+            if (activeButton) {
+              return (
+                <Button 
+                  {...activeButton}
+                  class="w-full mb-4 last:mb-0 text-[--ootb-turquoise] border-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_15%)] hover:text-white transition-all duration-300"
+                >
+                  {activeButton.text}
+                </Button>
+              );
+            }
+          })}
         </div>
       )}
     </div>

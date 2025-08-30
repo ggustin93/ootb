@@ -255,7 +255,24 @@ if (!teamImage) {
           {partenaires.liste.map(partenaire => (
             <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 sm:p-6 text-center hover:shadow-md relative group flex items-center justify-center">
               <div class="h-16 sm:h-20 md:h-24 flex items-center justify-center w-full">
-                <a href={partenaire.lien} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-full h-full">
+                {partenaire.lien && partenaire.lien !== '#' ? (
+                  <a 
+                    href={partenaire.lien} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="flex items-center justify-center w-full h-full"
+                    aria-label={`Visiter le site de ${partenaire.nom}`}
+                  >
+                    <Image
+                      src={partenaire.logo}
+                      alt={`Logo ${partenaire.nom}`}
+                      class="max-h-14 sm:max-h-16 md:max-h-20 w-auto object-contain"
+                      widths={[100, 120, 200]}
+                      sizes="(max-width: 480px) 100px, (max-width: 640px) 120px, 200px"
+                      loading="lazy"
+                    />
+                  </a>
+                ) : (
                   <Image
                     src={partenaire.logo}
                     alt={`Logo ${partenaire.nom}`}
@@ -264,7 +281,7 @@ if (!teamImage) {
                     sizes="(max-width: 480px) 100px, (max-width: 640px) 120px, 200px"
                     loading="lazy"
                   />
-                </a>
+                )}
               </div>
             </div>
           ))}

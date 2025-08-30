@@ -68,3 +68,9 @@ src/assets/images/events/
 # Playwright reports and test results
 /tests/test-results/
 /tests/playwright-report/
+/tests/screenshots/
+.playwright-mcp/*
+.serena/*
+memory-bank/MAINTENANCE/*
+claudedocs/*
+.mcp.json 

@@ -110,33 +110,128 @@ export const navigationCollection: Collection = {
           list: true,
           ui: {
             itemProps: (item) => ({
-              label: item.text || "Nouveau bouton",
+              label: item.mode === 'festival' ? 'Mode Festival' : item.mode === 'community' ? 'Mode Communauté' : 'Mode Personnalisé',
             }),
+            max: 1,
+            description: "Configuration du bouton principal du header avec toggle intelligent"
           },
           fields: [
             {
               type: "string",
-              name: "text",
-              label: "Texte",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "href",
-              label: "Lien",
-              description: "Utilisez '/page' pour les liens internes ou 'https://...' pour les liens externes",
-              required: true,
-            },
-            {
-              type: "string",
-              name: "variant",
-              label: "Variante",
+              name: "mode",
+              label: "Mode du bouton",
+              description: "Choisir l'action principale du header",
               options: [
-                { label: "Primaire", value: "primary" },
-                { label: "Secondaire", value: "secondary" },
-                { label: "Contour", value: "outline" },
+                { label: "Festival - Prendre votre ticket", value: "festival" },
+                { label: "Communauté - Rejoindre la communauté", value: "community" },
+                { label: "Personnalisé - Configuration libre", value: "custom" }
               ],
               required: true,
+            },
+            {
+              type: "object",
+              name: "festivalButton",
+              label: "Configuration Bouton Festival",
+              ui: { 
+                component: "group", 
+                description: "Configuration pour la période du festival (billetterie)" 
+              },
+              fields: [
+                {
+                  type: "string",
+                  name: "text",
+                  label: "Texte",
+                  required: true,
+                },
+                {
+                  type: "string",
+                  name: "href",
+                  label: "Lien",
+                  description: "URL vers la billetterie",
+                  required: true,
+                },
+                {
+                  type: "string",
+                  name: "variant",
+                  label: "Variante",
+                  options: [
+                    { label: "Primaire", value: "primary" },
+                    { label: "Secondaire", value: "secondary" },
+                    { label: "Contour", value: "outline" },
+                  ],
+                  required: true,
+                },
+              ],
+            },
+            {
+              type: "object",
+              name: "communityButton",
+              label: "Configuration Bouton Communauté",
+              ui: { 
+                component: "group", 
+                description: "Configuration pour rejoindre la communauté" 
+              },
+              fields: [
+                {
+                  type: "string",
+                  name: "text",
+                  label: "Texte",
+                  required: true,
+                },
+                {
+                  type: "string",
+                  name: "href",
+                  label: "Lien",
+                  description: "Ancre vers la section rejoindre ou autre",
+                  required: true,
+                },
+                {
+                  type: "string",
+                  name: "variant",
+                  label: "Variante",
+                  options: [
+                    { label: "Primaire", value: "primary" },
+                    { label: "Secondaire", value: "secondary" },
+                    { label: "Contour", value: "outline" },
+                  ],
+                  required: true,
+                },
+              ],
+            },
+            {
+              type: "object",
+              name: "customButton",
+              label: "Configuration Bouton Personnalisé",
+              ui: { 
+                component: "group", 
+                description: "Configuration libre pour un bouton personnalisé" 
+              },
+              fields: [
+                {
+                  type: "string",
+                  name: "text",
+                  label: "Texte",
+                  required: true,
+                },
+                {
+                  type: "string",
+                  name: "href",
+                  label: "Lien",
+                  description: "URL ou ancre personnalisée",
+                  required: true,
+                },
+                {
+                  type: "string",
+                  name: "variant",
+                  label: "Variante",
+                  options: [
+                    { label: "Primaire", value: "primary" },
+                    { label: "Secondaire", value: "secondary" },
+                    { label: "Contour", value: "outline" },
+                  ],
+                  required: true,
+                },
+              ],
             },
           ],
         },

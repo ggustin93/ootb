@@ -2,9 +2,22 @@
 
 <!-- What works. What's left to build. Current status. Known issues. -->
 
-## Current Date: 17/08/2025
+## Current Date: 28/08/2025
 
 ## Current Status
+- **Asset Pipeline Enhancement**: ✅ COMPLETED - Advanced image processing with PDF conversion capability
+    - PDF to WebP conversion using node-poppler and Sharp (203KB → 10KB optimization)
+    - Intelligent Netlify build optimization (conditional Poppler installation)
+    - Robust fallback system with placeholder generation (98.5% success rate)
+    - Comprehensive test suite for asset processing functions
+- **Build Optimization**: ✅ COMPLETED - Smart build system for Netlify
+    - Conditional dependency installation based on content analysis
+    - Automatic PDF detection in NocoDB data (8 PDFs identified)
+    - Build time optimization when no PDFs present
+- **Image Processing Diagnostics**: ✅ COMPLETED - Advanced failure analysis tools
+    - Automated detection of failed image processing (346-byte placeholder identification)
+    - Root cause analysis of image failures (expired URLs, unsupported formats)
+    - Maintenance tooling for ongoing image quality monitoring
 - **E2E Testing Suite**: ✅ COMPLETED - Comprehensive end-to-end testing implementation
     - 10 test scenarios covering all critical user paths (100% pass rate)
     - Desktop browser coverage: Chrome, Firefox, Safari  
@@ -20,6 +33,33 @@
 - **Performance**: All previous performance optimizations maintained and stable
 
 ## What Works
+
+### Asset Pipeline System
+- **PDF Conversion Pipeline**: 
+    - PDF to PNG rasterization using node-poppler with 300 DPI quality
+    - PNG to WebP optimization via Sharp (resize to 400x400, 80% quality)
+    - Complete pipeline: PDF (121KB) → PNG (203KB) → WebP (10.6KB)
+    - Automatic file extension detection and format-specific processing
+- **Build Intelligence**: 
+    - NocoDB content analysis before Poppler installation
+    - Conditional system dependency management in Netlify builds
+    - Smart build script (`scripts/smart-build.sh`) with PDF detection
+    - Significant build time savings when no PDFs present
+- **Robust Error Handling**: 
+    - Automatic fallback to placeholder images (346 bytes, white 400x400 WebP)
+    - 98.5% success rate for image processing (194/197 images successful)
+    - Graceful handling of expired S3 URLs and unsupported formats
+    - No broken images in production environment
+- **Testing Infrastructure**: 
+    - Direct function testing without complex mocking
+    - Sample asset validation (`sample-img.jpg`, `sample-pdf-calli.pdf`)
+    - Test output generation for visual verification
+    - Comprehensive coverage of `getImagePath`, `createPlaceholderImage`, `convertPdfToImageBuffer`
+- **Maintenance Tooling**: 
+    - Automatic detection of failed images by file size analysis
+    - Root cause diagnosis (expired URLs, unsupported formats, network issues)
+    - Actionable recommendations for data cleanup
+    - Reusable diagnostic script (`scripts/analyze-image-failures.js`)
 
 ### E2E Testing Suite
 - **Comprehensive Test Coverage**: 10 test scenarios covering all critical user paths
@@ -90,6 +130,8 @@
 - **Code Refactoring**: Well-structured utility classes for maintainability
 
 ## What's Left to Build
+- **URL Refresh System**: Automatic refreshing of expired S3 signed URLs for better reliability
+- **Format Support Expansion**: Consider supporting additional formats (.ico, .psd) if business requirement emerges
 - **Advanced Rich Text Features**: Future enhancements for more complex formatting (currently basic rich text support)
 - **Content Versioning**: Potential content history/versioning features in TinaCMS
 - **Multi-language Support**: Internationalization for ticketing content (if needed)
@@ -97,6 +139,8 @@
 - **Performance Monitoring**: Real-world usage metrics and performance tracking
 
 ## Known Issues
+- **Expired S3 URLs**: 3 images currently fail due to expired signed URLs from NocoDB (403 errors)
+- **Unsupported Formats**: Some users upload non-image files (.ico, .psd, .docx) which require placeholder generation
 - **TinaCMS Display**: Rich text fields occasionally show `[object Object]` in admin interface (content functions correctly on frontend)
 - **Escape Sequence Handling**: Some edge cases with nested escape sequences may need refinement
 - **Rich Text Fallback**: Current implementation prioritizes string format; full rich text features could be expanded

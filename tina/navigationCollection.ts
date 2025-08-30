@@ -110,7 +110,7 @@ export const navigationCollection: Collection = {
           list: true,
           ui: {
             itemProps: (item) => ({
-              label: item.mode === 'festival' ? '🎪 Mode Festival' : '🤝 Mode Communauté',
+              label: item.mode === 'festival' ? 'Mode Festival' : item.mode === 'community' ? 'Mode Communauté' : 'Mode Personnalisé',
             }),
             max: 1,
             description: "Configuration du bouton principal du header avec toggle intelligent"
@@ -122,8 +122,9 @@ export const navigationCollection: Collection = {
               label: "Mode du bouton",
               description: "Choisir l'action principale du header",
               options: [
-                { label: "🎪 Période Festival - Prendre votre ticket", value: "festival" },
-                { label: "🤝 Normal - Rejoindre la communauté", value: "community" }
+                { label: "Festival - Prendre votre ticket", value: "festival" },
+                { label: "Communauté - Rejoindre la communauté", value: "community" },
+                { label: "Personnalisé - Configuration libre", value: "custom" }
               ],
               required: true,
             },
@@ -182,6 +183,41 @@ export const navigationCollection: Collection = {
                   name: "href",
                   label: "Lien",
                   description: "Ancre vers la section rejoindre ou autre",
+                  required: true,
+                },
+                {
+                  type: "string",
+                  name: "variant",
+                  label: "Variante",
+                  options: [
+                    { label: "Primaire", value: "primary" },
+                    { label: "Secondaire", value: "secondary" },
+                    { label: "Contour", value: "outline" },
+                  ],
+                  required: true,
+                },
+              ],
+            },
+            {
+              type: "object",
+              name: "customButton",
+              label: "Configuration Bouton Personnalisé",
+              ui: { 
+                component: "group", 
+                description: "Configuration libre pour un bouton personnalisé" 
+              },
+              fields: [
+                {
+                  type: "string",
+                  name: "text",
+                  label: "Texte",
+                  required: true,
+                },
+                {
+                  type: "string",
+                  name: "href",
+                  label: "Lien",
+                  description: "URL ou ancre personnalisée",
                   required: true,
                 },
                 {

@@ -549,8 +549,8 @@ export const festivalCollection: Collection = {
           label: "Liste des partenaires",
           list: true,
           ui: {
-            itemProps: (_item) => {
-              return { label: "Partenaire" };
+            itemProps: (item) => {
+              return { label: item?.nom || "Nouveau Partenaire" };
             },
           },
           fields: [

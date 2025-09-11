@@ -84,8 +84,8 @@
     }
   ],
   "programLink": {
-    "enabled": false,
-    "title": "Programme du Festival 2025",
+    "enabled": true,
+    "title": "Programme du Festival 2025 ",
     "description": "Découvrez toutes les conférences, ateliers et stands sur les 3 jours",
     "familyPdf": {
       "enabled": true,
@@ -95,7 +95,7 @@
     "ebookPdf": {
       "enabled": true,
       "text": "Programme complet (3 jours)",
-      "url": "https://indd.adobe.com/view/7bf541a0-d836-436c-b34a-68b6431b8fd0"
+      "url": "https://indd.adobe.com/view/5526681c-72b7-422d-8350-3be9d80b2196"
     }
   },
   "ticketing": {

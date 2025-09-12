@@ -54,7 +54,7 @@
         "email": "info@apkiosk.com",
         "phone": "0499/147002"
       },
-      "status": "A valider"
+      "status": "Publié"
     },
     {
       "id": "conference-2",
@@ -421,34 +421,6 @@
       "status": "Publié"
     },
     {
-      "id": "conference-13",
-      "title": "L'autorité parentale au service de l'épanouissement de l'enfant",
-      "description": "Vous vous sentez parfois perdu entre bienveillance et autorité avec vos enfants ? Vous hésitez entre poser des limites claires et préserver une relation harmonieuse ? Cette conférence est faite pour vous ! \n\nNous explorerons ensemble des pistes concrètes pour poser des repères solides sans basculer dans l'autoritarisme ou le laxisme. Comment poser des limites tout en restant à l’écoute ? Quelle place donner aux émotions dans l’éducation ? Et comment utiliser la sanction de manière constructive ?\n\n Un échange riche pour vous aider à trouver l’équilibre qui vous convient et accompagner vos enfants avec confiance et sérénité. 💡✨",
-      "type": "Conférences",
-      "day": "Mercredi",
-      "time": "14:00",
-      "endTime": "15:00",
-      "location": "Albert Einstein",
-      "speaker": "Marina Blanchart",
-      "organization": "",
-      "image": "/images/events/conferences/conference-13.webp",
-      "speakerImage": "/images/events/conferences/speaker-conference-13.webp",
-      "tags": [
-        "Parents",
-        "Maternelle-primaire et secondaire",
-        "Enseignement ordinaire et spécialisé"
-      ],
-      "target": "Parents",
-      "level": "Maternelle-primaire et secondaire",
-      "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "www.virages-consultations.com",
-      "contact": {
-        "email": "marina.blanchart@virages-formations.com",
-        "phone": "0486031759"
-      },
-      "status": "Publié"
-    },
-    {
       "id": "conference-35",
       "title": "Comment accompagner les enfants dans leurs devoirs?",
       "description": "Le moment des devoirs est un enfer…\nVotre enfant refuse de travailler, est très lent, bouge sans cesse, s'énerve au moment des devoirs...\nLa conférence \"Comment accompagner les enfants dans leurs devoirs ?\" est pour vous ! \nDes outils concrets seront proposés aux parents et aux enseignants. Ceux-ci ont pour but de déminer une relation parent-enfant souvent conflictuelle et remplie de stress et de permettre à l'enfant ainsi qu'au parent de mieux s'armer pour gagner en autonomie. \n\n",
@@ -473,6 +445,34 @@
       "contact": {
         "email": "aurore.evocation@gmail.com",
         "phone": "0477/88.52.15"
+      },
+      "status": "Publié"
+    },
+    {
+      "id": "conference-364",
+      "title": "Aborder le (cyber)harcèlement en classe",
+      "description": "Vos élèves vous partagent des problèmes qu’ils ont pu avoir en ligne mais vous ne savez pas toujours comment y répondre ? Vous prenez connaissance de cas s’apparentant à du (cyber)harcèlement mais ne savez pas comment traiter le sujet avec vos élèves ?\nDurant cet atelier, nous aborderons la thématique du (cyber)harcèlement : comment l'aborder en classe, comment sensibiliser vos élèves à celui-ci... Nous vous présenterons plusieurs activités à réaliser en classe et des conseils pratiques.",
+      "type": "Conférences",
+      "day": "Mercredi",
+      "time": "14:00",
+      "endTime": "15:00",
+      "location": "Albert Einstein",
+      "speaker": "Brieuc Tollenaere",
+      "organization": "",
+      "image": "/images/events/conferences/conference-364.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-364.webp",
+      "tags": [
+        "Professeurs",
+        "Primaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "www.bibliosansfrontieres.be",
+      "contact": {
+        "email": "brieuc.tollenaere@bibliosansfrontieres.be",
+        "phone": "0472654341"
       },
       "status": "Publié"
     },
@@ -533,30 +533,30 @@
       "status": "Publié"
     },
     {
-      "id": "conference-364",
-      "title": "Aborder le (cyber)harcèlement en classe",
-      "description": "Vos élèves vous partagent des problèmes qu’ils ont pu avoir en ligne mais vous ne savez pas toujours comment y répondre ? Vous prenez connaissance de cas s’apparentant à du (cyber)harcèlement mais ne savez pas comment traiter le sujet avec vos élèves ?\nDurant cet atelier, nous aborderons la thématique du (cyber)harcèlement : comment l'aborder en classe, comment sensibiliser vos élèves à celui-ci... Nous vous présenterons plusieurs activités à réaliser en classe et des conseils pratiques.",
+      "id": "conference-13",
+      "title": "L'autorité parentale au service de l'épanouissement de l'enfant",
+      "description": "Vous vous sentez parfois perdu entre bienveillance et autorité avec vos enfants ? Vous hésitez entre poser des limites claires et préserver une relation harmonieuse ? Cette conférence est faite pour vous ! \n\nNous explorerons ensemble des pistes concrètes pour poser des repères solides sans basculer dans l'autoritarisme ou le laxisme. Comment poser des limites tout en restant à l’écoute ? Quelle place donner aux émotions dans l’éducation ? Et comment utiliser la sanction de manière constructive ?\n\n Un échange riche pour vous aider à trouver l’équilibre qui vous convient et accompagner vos enfants avec confiance et sérénité. 💡✨",
       "type": "Conférences",
       "day": "Mercredi",
       "time": "15:15",
       "endTime": "16:15",
       "location": "Albert Einstein",
-      "speaker": "Brieuc Tollenaere",
+      "speaker": "Marina Blanchart",
       "organization": "",
-      "image": "/images/events/conferences/conference-364.webp",
-      "speakerImage": "/images/events/conferences/speaker-conference-364.webp",
+      "image": "/images/events/conferences/conference-13.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-13.webp",
       "tags": [
-        "Professeurs",
-        "Primaire",
-        "Enseignement ordinaire"
+        "Parents",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
       ],
-      "target": "Professeurs",
-      "level": "Primaire",
-      "teachingType": "Enseignement ordinaire",
-      "url": "www.bibliosansfrontieres.be",
+      "target": "Parents",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": " www.ressources-parents.com ",
       "contact": {
-        "email": "brieuc.tollenaere@bibliosansfrontieres.be",
-        "phone": "0472654341"
+        "email": "marina.blanchart@virages-formations.com",
+        "phone": "0486031759"
       },
       "status": "Publié"
     },
@@ -2869,30 +2869,60 @@
       "shared": true
     },
     {
-      "id": "atelier-352",
-      "title": "Hopper et le trésor de barbe-pique",
-      "description": "Une présentation du jeu \"Hopper et le trésor de barbe-pique\" qui sortira en décembre. Comment rendre un jeu vidéo accessible a des enfants et inclure leur retour dans le processus de fabrication du jeu.",
+      "id": "stand-1360",
+      "title": "Addmire - Rendre la science accessible, vivante et engageante avec des expériences immersives",
+      "description": "Vivez la science autrement grâce à la réalité virtuelle ! \nAvec Addmire, explorez l’intérieur d’animaux en 3D, manipulez les éléments du tableau périodique ou partez à la découverte de l’espace. Un atelier immersif qui rend les sciences accessibles, ludiques et inoubliables pour petits et grands. ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Nathan Puozzo",
+      "organization": "",
+      "image": "/images/events/stands/stand-1360.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Secondaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Secondaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://addmire.net/",
+      "contact": {
+        "email": "nathan.puozzo@addmire.net",
+        "phone": "0475646397"
+      },
+      "status": "A valider",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "atelier-353",
+      "title": "L'agenda numérique de l'enseignant",
+      "description": "L'agenda numérique de l'enseignant est un outil pour ordinateur ou tablette qui facilitera chaque aspect de votre organisation dans votre travail d'enseignant.",
       "type": "Ateliers",
       "day": "Mercredi",
       "time": "À définir",
       "endTime": "",
       "location": "À définir",
-      "speaker": "Arthur Rogery",
+      "speaker": "Mathilde Tholet",
       "organization": "",
-      "image": "/images/events/ateliers/atelier-352.webp",
+      "image": "/images/events/ateliers/atelier-353.webp",
       "speakerImage": null,
       "tags": [
-        " parents et enfants",
-        "Primaire et secondaire",
-        "Enseignement ordinaire et spécialisé"
+        "Professeurs",
+        "Maternelle et primaire",
+        "Enseignement ordinaire"
       ],
-      "target": " parents et enfants",
-      "level": "Primaire et secondaire",
-      "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "n-zone.be",
+      "target": "Professeurs",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://lesprepasdemathilde.com/",
       "contact": {
-        "email": "aro@n-zone.be",
-        "phone": "+33645462138"
+        "email": "lesprepasdemathilde@gmail.com",
+        "phone": "+32498203760"
       },
       "status": "A valider"
     }
@@ -2980,7 +3010,7 @@
         "email": "info@apkiosk.com",
         "phone": "0499/147002"
       },
-      "status": "A valider"
+      "status": "Publié"
     },
     {
       "id": "conference-10",
@@ -3383,7 +3413,7 @@
       "time": "13:15",
       "endTime": "14:15",
       "location": "Espace atelier",
-      "speaker": "DOMINIQUE PAQUOT",
+      "speaker": "Rémy Van de Moosdyk",
       "organization": "",
       "image": "/images/events/ateliers/atelier-137.webp",
       "speakerImage": null,
@@ -3397,7 +3427,7 @@
       "teachingType": "Enseignement ordinaire et spécialisé",
       "url": "",
       "contact": {
-        "email": "dominiquepaq@gmail.com",
+        "email": "remy@pedagogia.be",
         "phone": "0474416871"
       },
       "status": "Publié"
@@ -3451,7 +3481,7 @@
       "target": "Parents",
       "level": "Maternelle-primaire et secondaire",
       "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "www.virages-formations.com",
+      "url": " www.virages-consultations.com",
       "contact": {
         "email": "marina.blanchart@virages-formations.com",
         "phone": "0486031759"
@@ -4325,6 +4355,34 @@
       "contact": {
         "email": "g.bragard@bayard.be",
         "phone": "0473/420762"
+      },
+      "status": "Publié"
+    },
+    {
+      "id": "atelier-352",
+      "title": "Hopper et le trésor de barbe-pique",
+      "description": "Une présentation du jeu \"Hopper et le trésor de barbe-pique\" qui sortira en décembre. Comment rendre un jeu vidéo accessible a des enfants et inclure leur retour dans le processus de fabrication du jeu.",
+      "type": "Ateliers",
+      "day": "Vendredi",
+      "time": "15:00",
+      "endTime": "15:30",
+      "location": "Village numérique",
+      "speaker": "Arthur Rogery",
+      "organization": "",
+      "image": "/images/events/ateliers/atelier-352.webp",
+      "speakerImage": null,
+      "tags": [
+        " parents et enfants",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": " parents et enfants",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "n-zone.be",
+      "contact": {
+        "email": "aro@n-zone.be",
+        "phone": "+33645462138"
       },
       "status": "Publié"
     },

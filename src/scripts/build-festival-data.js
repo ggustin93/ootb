@@ -465,6 +465,47 @@ function saveRawData(dataList, filename) {
 }
 
 /**
+ * Charge les données depuis le cache local
+ * @param {string} dataType - Le type de données (stands, ateliers, conferences)
+ * @returns {Promise<Array>} - Les données du cache ou null si erreur
+ */
+async function loadCachedData(dataType) {
+  const cacheFile = path.join(RAW_DATA_DIR, `${dataType}_raw.json`);
+  
+  try {
+    if (!fs.existsSync(cacheFile)) {
+      console.warn(`⚠️ Fichier de cache non trouvé: ${cacheFile}`);
+      return null;
+    }
+    
+    const cacheData = await fs.promises.readFile(cacheFile, 'utf8');
+    const parsedData = JSON.parse(cacheData);
+    
+    // Valider la structure du cache
+    if (!Array.isArray(parsedData)) {
+      console.error(`❌ Format de cache invalide pour ${dataType}: attendu array, reçu ${typeof parsedData}`);
+      return null;
+    }
+    
+    // Vérifier l'âge du cache
+    const stats = fs.statSync(cacheFile);
+    const ageHours = (Date.now() - stats.mtime.getTime()) / (1000 * 60 * 60);
+    const ageDays = Math.floor(ageHours / 24);
+    
+    if (ageDays > 0) {
+      console.warn(`⚠️ Cache de ${dataType} date de ${ageDays} jour(s)`);
+    }
+    
+    console.log(`✅ ${parsedData.length} ${dataType} chargés depuis le cache`);
+    return parsedData;
+    
+  } catch (error) {
+    console.error(`❌ Erreur lors du chargement du cache ${dataType}:`, error.message);
+    return null;
+  }
+}
+
+/**
  * Vérifie si les données ont changé par rapport aux données précédemment sauvegardées
  * @param {Array} newDataList - La nouvelle liste d'éléments récupérée de l'API
  * @param {string} dataType - Le type de données (stands, ateliers, conferences)
@@ -604,7 +645,19 @@ async function fetchStands() {
     const dataChanged = checkIfDataChanged(allStands, 'stands');
     return { list: allStands, dataChanged: dataChanged };
   } catch (error) {
-    console.error('❌ Erreur finale lors de la récupération des stands:', error);
+    console.error('❌ Erreur lors de la récupération des stands depuis l\'API:', error.message);
+    
+    // Fallback: utiliser les données en cache si disponibles
+    console.warn('⚠️ Tentative de chargement depuis le cache...');
+    const cachedData = await loadCachedData('stands');
+    
+    if (cachedData && cachedData.length > 0) {
+      console.warn('⚠️ ATTENTION: Utilisation des données en CACHE pour les stands');
+      console.warn('⚠️ Vérifiez le token NocoDB dans les variables d\'environnement');
+      return { list: cachedData, dataChanged: false }; // Pas de changement, on utilise le cache
+    }
+    
+    console.error('❌ Aucune donnée disponible pour les stands (ni API, ni cache)');
     return { list: [], dataChanged: true }; // Indiquer un changement en cas d'erreur pour forcer la regénération
   }
 }
@@ -622,7 +675,19 @@ async function fetchAteliers() {
     const dataChanged = checkIfDataChanged(allAteliers, 'ateliers');
     return { list: allAteliers, dataChanged: dataChanged };
   } catch (error) {
-    console.error('❌ Erreur finale lors de la récupération des ateliers:', error);
+    console.error('❌ Erreur lors de la récupération des ateliers depuis l\'API:', error.message);
+    
+    // Fallback: utiliser les données en cache si disponibles
+    console.warn('⚠️ Tentative de chargement depuis le cache...');
+    const cachedData = await loadCachedData('ateliers');
+    
+    if (cachedData && cachedData.length > 0) {
+      console.warn('⚠️ ATTENTION: Utilisation des données en CACHE pour les ateliers');
+      console.warn('⚠️ Vérifiez le token NocoDB dans les variables d\'environnement');
+      return { list: cachedData, dataChanged: false }; // Pas de changement, on utilise le cache
+    }
+    
+    console.error('❌ Aucune donnée disponible pour les ateliers (ni API, ni cache)');
     return { list: [], dataChanged: true };
   }
 }
@@ -640,7 +705,19 @@ async function fetchConferences() {
     const dataChanged = checkIfDataChanged(allConferences, 'conferences');
     return { list: allConferences, dataChanged: dataChanged };
   } catch (error) {
-    console.error('❌ Erreur finale lors de la récupération des conférences:', error);
+    console.error('❌ Erreur lors de la récupération des conférences depuis l\'API:', error.message);
+    
+    // Fallback: utiliser les données en cache si disponibles
+    console.warn('⚠️ Tentative de chargement depuis le cache...');
+    const cachedData = await loadCachedData('conferences');
+    
+    if (cachedData && cachedData.length > 0) {
+      console.warn('⚠️ ATTENTION: Utilisation des données en CACHE pour les conférences');
+      console.warn('⚠️ Vérifiez le token NocoDB dans les variables d\'environnement');
+      return { list: cachedData, dataChanged: false }; // Pas de changement, on utilise le cache
+    }
+    
+    console.error('❌ Aucune donnée disponible pour les conférences (ni API, ni cache)');
     return { list: [], dataChanged: true };
   }
 }

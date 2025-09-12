@@ -53,7 +53,7 @@
       "email": "info@apkiosk.com",
       "phone": "0499/147002"
     },
-    "status": "A valider"
+    "status": "Publié"
   },
   {
     "id": "atelier-133",
@@ -280,30 +280,30 @@
     "status": "Publié"
   },
   {
-    "id": "atelier-352",
-    "title": "Hopper et le trésor de barbe-pique",
-    "description": "Une présentation du jeu \"Hopper et le trésor de barbe-pique\" qui sortira en décembre. Comment rendre un jeu vidéo accessible a des enfants et inclure leur retour dans le processus de fabrication du jeu.",
+    "id": "atelier-353",
+    "title": "L'agenda numérique de l'enseignant",
+    "description": "L'agenda numérique de l'enseignant est un outil pour ordinateur ou tablette qui facilitera chaque aspect de votre organisation dans votre travail d'enseignant.",
     "type": "Ateliers",
     "day": "Mercredi",
     "time": "À définir",
     "endTime": "",
     "location": "À définir",
-    "speaker": "Arthur Rogery",
+    "speaker": "Mathilde Tholet",
     "organization": "",
-    "image": "/images/events/ateliers/atelier-352.webp",
+    "image": "/images/events/ateliers/atelier-353.webp",
     "speakerImage": null,
     "tags": [
-      " parents et enfants",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
+      "Professeurs",
+      "Maternelle et primaire",
+      "Enseignement ordinaire"
     ],
-    "target": " parents et enfants",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "n-zone.be",
+    "target": "Professeurs",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "https://lesprepasdemathilde.com/",
     "contact": {
-      "email": "aro@n-zone.be",
-      "phone": "+33645462138"
+      "email": "lesprepasdemathilde@gmail.com",
+      "phone": "+32498203760"
     },
     "status": "A valider"
   },
@@ -361,7 +361,7 @@
       "email": "info@apkiosk.com",
       "phone": "0499/147002"
     },
-    "status": "A valider"
+    "status": "Publié"
   },
   {
     "id": "atelier-199",
@@ -512,7 +512,7 @@
     "time": "13:15",
     "endTime": "14:15",
     "location": "Espace atelier",
-    "speaker": "DOMINIQUE PAQUOT",
+    "speaker": "Rémy Van de Moosdyk",
     "organization": "",
     "image": "/images/events/ateliers/atelier-137.webp",
     "speakerImage": null,
@@ -526,7 +526,7 @@
     "teachingType": "Enseignement ordinaire et spécialisé",
     "url": "",
     "contact": {
-      "email": "dominiquepaq@gmail.com",
+      "email": "remy@pedagogia.be",
       "phone": "0474416871"
     },
     "status": "Publié"
@@ -920,6 +920,34 @@
     "contact": {
       "email": "g.bragard@bayard.be",
       "phone": "0473/420762"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-352",
+    "title": "Hopper et le trésor de barbe-pique",
+    "description": "Une présentation du jeu \"Hopper et le trésor de barbe-pique\" qui sortira en décembre. Comment rendre un jeu vidéo accessible a des enfants et inclure leur retour dans le processus de fabrication du jeu.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "15:00",
+    "endTime": "15:30",
+    "location": "Village numérique",
+    "speaker": "Arthur Rogery",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-352.webp",
+    "speakerImage": null,
+    "tags": [
+      " parents et enfants",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": " parents et enfants",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "n-zone.be",
+    "contact": {
+      "email": "aro@n-zone.be",
+      "phone": "+33645462138"
     },
     "status": "Publié"
   }

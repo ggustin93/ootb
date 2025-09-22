@@ -154,6 +154,10 @@
           {
             "text": "Gare de Wavre à 10 min à pied",
             "icon": "tabler:train"
+          },
+          {
+            "text": "Covoiturage: https://togetzer.com/covoiturage-evenement/nitwui#",
+            "icon": "co"
           }
         ]
       },

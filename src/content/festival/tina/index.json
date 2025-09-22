@@ -256,6 +256,11 @@
         "nom": "Maisons Clothes",
         "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543141/maisons_clothes_logo_klpljg.svg",
         "url": "https://www.maisonsclothes.be/"
+      },
+      {
+        "nom": "Qpics Moments' Catcher",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543280/QPICS_Logo_2022_crop_Black_ycm58i.png",
+        "url": "https://qpics.be/galeries"
       }
     ]
   }

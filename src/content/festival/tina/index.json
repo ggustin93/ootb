@@ -276,6 +276,11 @@
         "nom": "Ciaco = Papeteries",
         "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543588/ciaco_logo_a9tes1.svg",
         "url": "https://www.ciaco.coop/"
+      },
+      {
+        "nom": "Art de Vue",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758544027/art_de_vue_logo_pnshmo.png",
+        "url": "https://artdevue.be/"
       }
     ]
   }

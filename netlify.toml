@@ -18,7 +18,7 @@
 # =====================================
 
 [build.environment]
-  NODE_VERSION = "20.11.0"             # Version Node.js à utiliser
+  NODE_VERSION = "22"                  # Version Node.js à utiliser
   SHARP_IGNORE_GLOBAL_LIBVIPS = "1"    # Optimisation pour Sharp
   NETLIFY = "true"                     # Indicateur d'environnement Netlify
   # Optimisations de cache

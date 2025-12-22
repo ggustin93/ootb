@@ -204,7 +204,7 @@
     "time": "14:00",
     "endTime": "15:00",
     "location": "Albert Einstein",
-    "speaker": "Brieuc Tollenaere",
+    "speaker": "Caroline Gevers",
     "organization": "",
     "image": "/images/events/conferences/conference-364.webp",
     "speakerImage": "/images/events/conferences/speaker-conference-364.webp",
@@ -315,7 +315,7 @@
     "day": "Jeudi",
     "time": "09:00",
     "endTime": "10:00",
-    "location": "Albert Einstein",
+    "location": "Nelson Mandela",
     "speaker": "Luc  de Brabandere",
     "organization": "",
     "image": "/images/events/conferences/conference-166.webp",
@@ -784,6 +784,34 @@
     "status": "Publié"
   },
   {
+    "id": "conference-629",
+    "title": "L'IA de Google au service de l'éducation : des outils gratuits pour enseigner et apprendre",
+    "description": "L'intelligence artificielle n'est plus une perspective lointaine, elle est un outil concret au service de l'éducation. Découvrez comment les outils d'IA gratuits et sécurisés de Google peuvent transformer vos méthodes d'enseignement et d'apprentissage. De l'aide à la création de contenu à la personnalisation des parcours étudiants, explorez des stratégies pratiques pour renforcer votre approche pédagogique tout en maintenant un cadre éthique et sécurisé.",
+    "type": "Conférences",
+    "day": "Vendredi",
+    "time": "10:00",
+    "endTime": "11:00",
+    "location": "Albert Einstein",
+    "speaker": "Alain Doutrelepont",
+    "organization": "",
+    "image": "/images/events/conferences/conference-629.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-629.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "alain.doutrelepont@edunum.be",
+      "phone": "+32495792189"
+    },
+    "status": "Publié"
+  },
+  {
     "id": "conference-4",
     "title": "Babaoo : Atelier découverte d'un outil digital pour développer ses fonctions exécutives",
     "description": "Aujourd'hui plus que jamais, les enfants ont besoin de comprendre le fonctionnement de leur cerveau pour l'utiliser efficacement ! Avec Babaoo, les enfants comprennent pourquoi les fonctions exécutives sont si importantes, mais ils apprennent aussi à développer de nouveaux réflexes cognitifs, et de nouvelles stratégies d'apprentissage, tout en s'amusant ! Venez découvrir cette application neuroéducative, à utiliser à la maison, à l'école, ou en cabinet de consultation !",
@@ -808,34 +836,6 @@
     "contact": {
       "email": "alexandra@babaoo.com",
       "phone": "0478 700 701"
-    },
-    "status": "Publié"
-  },
-  {
-    "id": "conference-397",
-    "title": "Les ambitions du tronc commun",
-    "description": "L'instauration d'un nouveau curriculum de formation commune, ambitieux, pluridisciplinaire et allongé vise à assurer à notre système éducatif à la fois plus d'équité et plus d'efficacité. On présentera les enjeux de cette vaste réforme, ce qui a déjà été engrangé et les étapes suivantes.",
-    "type": "Conférences",
-    "day": "Vendredi",
-    "time": "10:15",
-    "endTime": "11:15",
-    "location": "Albert Einstein",
-    "speaker": "Marc Romainville",
-    "organization": "",
-    "image": "/images/events/conferences/conference-397.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-397.webp",
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "",
-    "contact": {
-      "email": "marc.romainville@unamur.be",
-      "phone": "0472956354"
     },
     "status": "Publié"
   },
@@ -1092,30 +1092,30 @@
     "status": "Publié"
   },
   {
-    "id": "conference-366",
-    "title": "La concentration",
-    "description": "Comment améliorer sa concentration ?\nComment garder nos élèves \"focus\" ?\nEtre conscient des premiers signes de la distraction \nPrendre conscience qu’on est en train de se laisser distraire\nDistractions internes \nDistractions externes \nOutils pratiques",
+    "id": "conference-630",
+    "title": "Attention, concentration et pauses actives",
+    "description": "Au 21ème siècle, maintenir l’attention en classe est un défi majeur. Faire des pauses actives est une solution accessible à tous et facile à mettre place. Découvrez les 4 clés pour des pauses actives efficaces et expérimentez des activités concrètes à pratiquer avec ses élèves, à tout âge et pour tous les profils.",
     "type": "Conférences",
     "day": "Vendredi",
     "time": "14:00",
     "endTime": "15:00",
     "location": "Benjamin Franklin",
-    "speaker": "Philippe Dehaes",
+    "speaker": "Guillaume Bousquet",
     "organization": "",
-    "image": "/images/events/conferences/conference-366.webp",
-    "speakerImage": "/images/events/conferences/speaker-conference-366.webp",
+    "image": "/images/events/conferences/conference-630.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-630.webp",
     "tags": [
       "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire"
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
     ],
     "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://pedagovie.fr",
     "contact": {
-      "email": "m4cbydehaes@gmail.com",
-      "phone": "+32475287587"
+      "email": "pedagovie@gmail.com",
+      "phone": "33609613896"
     },
     "status": "Publié"
   },

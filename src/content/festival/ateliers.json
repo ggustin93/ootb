@@ -285,9 +285,9 @@
     "description": "L'agenda numérique de l'enseignant est un outil pour ordinateur ou tablette qui facilitera chaque aspect de votre organisation dans votre travail d'enseignant.",
     "type": "Ateliers",
     "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
+    "time": "15:00",
+    "endTime": "15:30",
+    "location": "Village numérique",
     "speaker": "Mathilde Tholet",
     "organization": "",
     "image": "/images/events/ateliers/atelier-353.webp",
@@ -305,7 +305,7 @@
       "email": "lesprepasdemathilde@gmail.com",
       "phone": "+32498203760"
     },
-    "status": "A valider"
+    "status": "Publié"
   },
   {
     "id": "atelier-101",

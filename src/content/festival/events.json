@@ -457,7 +457,7 @@
       "time": "14:00",
       "endTime": "15:00",
       "location": "Albert Einstein",
-      "speaker": "Brieuc Tollenaere",
+      "speaker": "Caroline Gevers",
       "organization": "",
       "image": "/images/events/conferences/conference-364.webp",
       "speakerImage": "/images/events/conferences/speaker-conference-364.webp",
@@ -501,6 +501,34 @@
       "contact": {
         "email": "alexandra@babaoo.com",
         "phone": "0478 700 701"
+      },
+      "status": "Publié"
+    },
+    {
+      "id": "atelier-353",
+      "title": "L'agenda numérique de l'enseignant",
+      "description": "L'agenda numérique de l'enseignant est un outil pour ordinateur ou tablette qui facilitera chaque aspect de votre organisation dans votre travail d'enseignant.",
+      "type": "Ateliers",
+      "day": "Mercredi",
+      "time": "15:00",
+      "endTime": "15:30",
+      "location": "Village numérique",
+      "speaker": "Mathilde Tholet",
+      "organization": "",
+      "image": "/images/events/ateliers/atelier-353.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle et primaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://lesprepasdemathilde.com/",
+      "contact": {
+        "email": "lesprepasdemathilde@gmail.com",
+        "phone": "+32498203760"
       },
       "status": "Publié"
     },
@@ -2181,7 +2209,7 @@
     {
       "id": "stand-892",
       "title": "IFPC",
-      "description": "Institut de la Formation Professionnelle Continue.\n\n(Pour les questions - à qui s'adresse le stand et niveau d'enseignement - concernant l'IFPC, j'aurai dû tout cocher.)\n",
+      "description": "Institut de la Formation Professionnelle Continue.\n\n",
       "type": "Stands",
       "day": "Mercredi",
       "time": "Tous les jours",
@@ -2894,37 +2922,159 @@
         "email": "nathan.puozzo@addmire.net",
         "phone": "0475646397"
       },
-      "status": "A valider",
+      "status": "Publié",
       "theme": "",
       "shared": true
     },
     {
-      "id": "atelier-353",
-      "title": "L'agenda numérique de l'enseignant",
-      "description": "L'agenda numérique de l'enseignant est un outil pour ordinateur ou tablette qui facilitera chaque aspect de votre organisation dans votre travail d'enseignant.",
-      "type": "Ateliers",
+      "id": "stand-1361",
+      "title": "Monsieur Nicolas - Spectacle Jeune Public",
+      "description": "Deux Albums et un spectacle de chansons pour les enfants de 3 à 8 ans \n- La tête dans les nuages \n- Le calendrier perpétuel des fêtes et des anniversaires de Monsieur Non-Non. ",
+      "type": "Stands",
       "day": "Mercredi",
-      "time": "À définir",
+      "time": "Tous les jours",
       "endTime": "",
       "location": "À définir",
-      "speaker": "Mathilde Tholet",
+      "speaker": "Nicolas  Van Overstraeten",
       "organization": "",
-      "image": "/images/events/ateliers/atelier-353.webp",
+      "image": "/images/events/stands/stand-1361.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.monsieurnicolas.be",
+      "contact": {
+        "email": "nicolasvo@icloud.com",
+        "phone": "0479546559"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1362",
+      "title": "immersion dans le monde ludique et educatif",
+      "description": "Plongez dans une expérience de jeu immersive avec Les Schtroumpfs, où aventure et fantaisie se mêlent pour divertir petits et grands.\nEn parallèle, découvrez une expérience ludique et éducative autour de Georges Lemaître, le père de la théorie du Big Bang.\nUn voyage unique qui allie divertissement et apprentissage scientifique.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "salvatore bordonaro",
+      "organization": "",
+      "image": "/images/events/stands/stand-1362.webp",
+      "speakerImage": null,
+      "tags": [
+        "Parents et enfants",
+        "Secondaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Parents et enfants",
+      "level": "Secondaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://www.uclouvain.be/fr/instituts-recherche/ilc/miil",
+      "contact": {
+        "email": "salvatore.bordonaro@uclouvain.be",
+        "phone": "0495251308"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1364",
+      "title": "Le spécialiste des écrans interactif Promethean",
+      "description": "Venez découvrir les derniers modèles de chez Promethean ainsi que les services que propose Koésio aux établissements scolaires",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Benoit Beaujean",
+      "organization": "",
+      "image": "/images/events/stands/stand-1364.webp",
       "speakerImage": null,
       "tags": [
         "Professeurs",
-        "Maternelle et primaire",
-        "Enseignement ordinaire"
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
       ],
       "target": "Professeurs",
-      "level": "Maternelle et primaire",
-      "teachingType": "Enseignement ordinaire",
-      "url": "https://lesprepasdemathilde.com/",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.Koesio.be",
       "contact": {
-        "email": "lesprepasdemathilde@gmail.com",
-        "phone": "+32498203760"
+        "email": "benoit.beaujean@koesio.com",
+        "phone": "0496/538 245"
       },
-      "status": "A valider"
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1365",
+      "title": "Apprendre en jouant avec Cat's Family ",
+      "description": "De nombreux jeux et manuels associés pour apprendre en jouant : calcul mental, résolution de problèmes, fractions, orthographe, grammaire, conjugaison, vocabulaire, repères spatio-temporels, émotions, intelligences multiples.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "François  Petit",
+      "organization": "",
+      "image": "/images/events/stands/stand-1365.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.catsfamily.net",
+      "contact": {
+        "email": "Contact@catsfamily.net",
+        "phone": "0033781171311"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1366",
+      "title": "Test",
+      "description": "test test test test test test test test test test test test test test test test ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Test test",
+      "organization": "",
+      "image": "/images/events/stands/stand-1366.webp",
+      "speakerImage": null,
+      "tags": [
+        "Jeunes enfants",
+        "Secondaire",
+        "Enseignement spécialisé"
+      ],
+      "target": "Jeunes enfants",
+      "level": "Secondaire",
+      "teachingType": "Enseignement spécialisé",
+      "url": "pwablo.be",
+      "contact": {
+        "email": "test@test.be",
+        "phone": "+32494878936"
+      },
+      "status": "A valider",
+      "theme": "",
+      "shared": true
     }
   ],
   "Jeudi": [
@@ -2936,7 +3086,7 @@
       "day": "Jeudi",
       "time": "09:00",
       "endTime": "10:00",
-      "location": "Albert Einstein",
+      "location": "Nelson Mandela",
       "speaker": "Luc  de Brabandere",
       "organization": "",
       "image": "/images/events/conferences/conference-166.webp",
@@ -3799,6 +3949,34 @@
       "status": "Publié"
     },
     {
+      "id": "conference-629",
+      "title": "L'IA de Google au service de l'éducation : des outils gratuits pour enseigner et apprendre",
+      "description": "L'intelligence artificielle n'est plus une perspective lointaine, elle est un outil concret au service de l'éducation. Découvrez comment les outils d'IA gratuits et sécurisés de Google peuvent transformer vos méthodes d'enseignement et d'apprentissage. De l'aide à la création de contenu à la personnalisation des parcours étudiants, explorez des stratégies pratiques pour renforcer votre approche pédagogique tout en maintenant un cadre éthique et sécurisé.",
+      "type": "Conférences",
+      "day": "Vendredi",
+      "time": "10:00",
+      "endTime": "11:00",
+      "location": "Albert Einstein",
+      "speaker": "Alain Doutrelepont",
+      "organization": "",
+      "image": "/images/events/conferences/conference-629.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-629.webp",
+      "tags": [
+        "Professeurs",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "",
+      "contact": {
+        "email": "alain.doutrelepont@edunum.be",
+        "phone": "+32495792189"
+      },
+      "status": "Publié"
+    },
+    {
       "id": "conference-4",
       "title": "Babaoo : Atelier découverte d'un outil digital pour développer ses fonctions exécutives",
       "description": "Aujourd'hui plus que jamais, les enfants ont besoin de comprendre le fonctionnement de leur cerveau pour l'utiliser efficacement ! Avec Babaoo, les enfants comprennent pourquoi les fonctions exécutives sont si importantes, mais ils apprennent aussi à développer de nouveaux réflexes cognitifs, et de nouvelles stratégies d'apprentissage, tout en s'amusant ! Venez découvrir cette application neuroéducative, à utiliser à la maison, à l'école, ou en cabinet de consultation !",
@@ -3823,34 +4001,6 @@
       "contact": {
         "email": "alexandra@babaoo.com",
         "phone": "0478 700 701"
-      },
-      "status": "Publié"
-    },
-    {
-      "id": "conference-397",
-      "title": "Les ambitions du tronc commun",
-      "description": "L'instauration d'un nouveau curriculum de formation commune, ambitieux, pluridisciplinaire et allongé vise à assurer à notre système éducatif à la fois plus d'équité et plus d'efficacité. On présentera les enjeux de cette vaste réforme, ce qui a déjà été engrangé et les étapes suivantes.",
-      "type": "Conférences",
-      "day": "Vendredi",
-      "time": "10:15",
-      "endTime": "11:15",
-      "location": "Albert Einstein",
-      "speaker": "Marc Romainville",
-      "organization": "",
-      "image": "/images/events/conferences/conference-397.webp",
-      "speakerImage": "/images/events/conferences/speaker-conference-397.webp",
-      "tags": [
-        "Professeurs, parents et enfants",
-        "Maternelle-primaire et secondaire",
-        "Enseignement ordinaire et spécialisé"
-      ],
-      "target": "Professeurs, parents et enfants",
-      "level": "Maternelle-primaire et secondaire",
-      "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "",
-      "contact": {
-        "email": "marc.romainville@unamur.be",
-        "phone": "0472956354"
       },
       "status": "Publié"
     },
@@ -4303,30 +4453,30 @@
       "status": "Publié"
     },
     {
-      "id": "conference-366",
-      "title": "La concentration",
-      "description": "Comment améliorer sa concentration ?\nComment garder nos élèves \"focus\" ?\nEtre conscient des premiers signes de la distraction \nPrendre conscience qu’on est en train de se laisser distraire\nDistractions internes \nDistractions externes \nOutils pratiques",
+      "id": "conference-630",
+      "title": "Attention, concentration et pauses actives",
+      "description": "Au 21ème siècle, maintenir l’attention en classe est un défi majeur. Faire des pauses actives est une solution accessible à tous et facile à mettre place. Découvrez les 4 clés pour des pauses actives efficaces et expérimentez des activités concrètes à pratiquer avec ses élèves, à tout âge et pour tous les profils.",
       "type": "Conférences",
       "day": "Vendredi",
       "time": "14:00",
       "endTime": "15:00",
       "location": "Benjamin Franklin",
-      "speaker": "Philippe Dehaes",
+      "speaker": "Guillaume Bousquet",
       "organization": "",
-      "image": "/images/events/conferences/conference-366.webp",
-      "speakerImage": "/images/events/conferences/speaker-conference-366.webp",
+      "image": "/images/events/conferences/conference-630.webp",
+      "speakerImage": "/images/events/conferences/speaker-conference-630.webp",
       "tags": [
         "Professeurs",
-        "Primaire et secondaire",
-        "Enseignement ordinaire"
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
       ],
       "target": "Professeurs",
-      "level": "Primaire et secondaire",
-      "teachingType": "Enseignement ordinaire",
-      "url": "",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://pedagovie.fr",
       "contact": {
-        "email": "m4cbydehaes@gmail.com",
-        "phone": "+32475287587"
+        "email": "pedagovie@gmail.com",
+        "phone": "33609613896"
       },
       "status": "Publié"
     },

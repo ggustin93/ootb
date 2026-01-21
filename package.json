@@ -40,7 +40,7 @@
         "test:e2e": "playwright test",
         "test:e2e:ui": "playwright test --ui",
         "test:e2e:debug": "playwright test --debug",
-        "postinstall": "playwright install --with-deps chromium"
+        "postinstall": "[ \"$CI\" = 'true' ] || playwright install --with-deps chromium"
     },
     "dependencies": {
         "@astrojs/netlify": "^6.2.3",

@@ -100,14 +100,18 @@ export const festivalCollection: Collection = {
       description: 'Sélectionnez les 3 dates du festival. L\'année sera calculée automatiquement.',
       ui: {
         itemProps: (item) => {
-          // Afficher le jour de la semaine calculé depuis la date (timezone-safe)
+          // Afficher la date complète (jour, date, mois, année) - timezone-safe
           if (item?.date) {
             const d = new Date(item.date);
-            const dayName = new Intl.DateTimeFormat('fr-FR', {
+            const fullDate = new Intl.DateTimeFormat('fr-FR', {
               weekday: 'long',
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
               timeZone: 'Europe/Brussels'
             }).format(d);
-            return { label: dayName.charAt(0).toUpperCase() + dayName.slice(1) };
+            // Capitaliser la première lettre
+            return { label: fullDate.charAt(0).toUpperCase() + fullDate.slice(1) };
           }
           return { label: 'Nouveau jour' };
         }

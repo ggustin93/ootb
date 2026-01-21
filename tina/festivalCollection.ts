@@ -97,7 +97,7 @@ export const festivalCollection: Collection = {
       label: '📅 Dates du Festival',
       type: 'object',
       list: true,
-      description: 'Sélectionnez les 3 dates du festival. L\'année sera calculée automatiquement.',
+      description: 'Sélectionnez les 3 dates du festival.',
       ui: {
         itemProps: (item) => {
           // Afficher la date complète (jour, date, mois, année) - timezone-safe

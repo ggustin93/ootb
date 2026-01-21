@@ -143,8 +143,54 @@ console.log(`   - Chemin des images dans JSON: ${getImagePath('example', 'exampl
 console.log(`   - Images source: ${IMAGES_SRC_DIR}`);
 console.log(`   - Images public: ${IMAGES_PUBLIC_DIR}`);
 
-// Jours du festival
-const DAYS = ['Mercredi', 'Jeudi', 'Vendredi'];
+// Jours du festival - chargement depuis TinaCMS avec fallback défensif
+/**
+ * Load festival days from TinaCMS with fallback.
+ * NEVER breaks the build - always returns valid array.
+ */
+function loadFestivalDays() {
+  const TINA_PATH = path.join(ROOT_DIR, 'src/content/festival/tina/index.json');
+  const DEFAULT_DAYS = ['Mercredi', 'Jeudi', 'Vendredi'];
+
+  try {
+    if (!fs.existsSync(TINA_PATH)) {
+      console.warn(`[WARN] Tina config not found at ${TINA_PATH}, using defaults`);
+      return DEFAULT_DAYS;
+    }
+
+    const tinaContent = JSON.parse(fs.readFileSync(TINA_PATH, 'utf8'));
+
+    if (!tinaContent.festivalDates || !Array.isArray(tinaContent.festivalDates)) {
+      console.warn('[WARN] Invalid festivalDates in Tina config, using defaults');
+      return DEFAULT_DAYS;
+    }
+
+    // Calculer les noms de jours depuis les dates ISO (timezone-safe)
+    const days = tinaContent.festivalDates.map(d => {
+      const date = new Date(d.date);
+      // CRITICAL: explicit timezone pour éviter décalage de jour
+      const dayName = new Intl.DateTimeFormat('fr-FR', {
+        weekday: 'long',
+        timeZone: 'Europe/Brussels'
+      }).format(date);
+      return dayName.charAt(0).toUpperCase() + dayName.slice(1);
+    }).filter(Boolean);
+
+    if (days.length === 0) {
+      console.warn('[WARN] No valid days found in Tina config, using defaults');
+      return DEFAULT_DAYS;
+    }
+
+    console.log(`[INFO] Loaded ${days.length} festival days from TinaCMS: ${days.join(', ')}`);
+    return days;
+
+  } catch (error) {
+    console.error(`[ERROR] Failed to load festival days: ${error.message}`);
+    return DEFAULT_DAYS;
+  }
+}
+
+const DAYS = loadFestivalDays();
 
 /**
  * Initialise l'API NocoDB avec le token d'authentification

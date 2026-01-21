@@ -93,6 +93,36 @@ export const festivalCollection: Collection = {
       ],
     },
     {
+      name: 'festivalDates',
+      label: '📅 Dates du Festival',
+      type: 'object',
+      list: true,
+      description: 'Sélectionnez les 3 dates du festival. L\'année sera calculée automatiquement.',
+      ui: {
+        itemProps: (item) => {
+          // Afficher le jour de la semaine calculé depuis la date (timezone-safe)
+          if (item?.date) {
+            const d = new Date(item.date);
+            const dayName = new Intl.DateTimeFormat('fr-FR', {
+              weekday: 'long',
+              timeZone: 'Europe/Brussels'
+            }).format(d);
+            return { label: dayName.charAt(0).toUpperCase() + dayName.slice(1) };
+          }
+          return { label: 'Nouveau jour' };
+        }
+      },
+      fields: [
+        {
+          name: 'date',
+          label: 'Date',
+          type: 'datetime',
+          required: true,
+          description: 'Le nom du jour sera calculé automatiquement depuis cette date'
+        }
+      ]
+    },
+    {
       type: "object",
       name: "about",
       label: "Section À propos",

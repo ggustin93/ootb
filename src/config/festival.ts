@@ -5,6 +5,51 @@
  */
 
 import { events as eventsRecord } from '~/data/festival/index';
+import festivalContent from '~/content/festival/tina/index.json';
+
+// Type pour les dates du festival depuis Tina (simplifié - dayNumber supprimé)
+interface FestivalDateEntry {
+  date: string;
+}
+
+// Utilitaire de formatage centralisé (timezone-safe)
+function formatFestivalDate(isoDate: string) {
+  const date = new Date(isoDate);
+  const options = { timeZone: 'Europe/Brussels' } as const;
+  const dayName = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', ...options }).format(date);
+  const displayDate = new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: '2-digit', ...options }).format(date);
+
+  return {
+    dayName: dayName.charAt(0).toUpperCase() + dayName.slice(1),
+    displayDate
+  };
+}
+
+// Construire la config des jours depuis Tina avec fallback défensif
+const buildDayConfig = () => {
+  const dates = (festivalContent as { festivalDates?: FestivalDateEntry[] }).festivalDates || [];
+  const dayDates: Record<string, string> = {};
+  const days: string[] = [];
+
+  if (dates.length === 0) {
+    // Fallback défensif - ne jamais casser le build
+    console.warn('[festival.ts] festivalDates manquant dans Tina, utilisation des valeurs par défaut');
+    return {
+      days: ['Mercredi', 'Jeudi', 'Vendredi'] as const,
+      dayDates: { 'Mercredi': '30/09', 'Jeudi': '01/10', 'Vendredi': '02/10' }
+    };
+  }
+
+  dates.forEach((d) => {
+    const { dayName, displayDate } = formatFestivalDate(d.date);
+    days.push(dayName);
+    dayDates[dayName] = displayDate;
+  });
+
+  return { days: days as unknown as readonly ['Mercredi', 'Jeudi', 'Vendredi'], dayDates };
+};
+
+const { days: festivalDays, dayDates: festivalDayDates } = buildDayConfig();
 
 // Mode test pour le développement
 export const TEST_MODE = false;
@@ -12,26 +57,23 @@ export const TEST_MODE = false;
 // Transformer l'objet events en tableau plat pour les tests
 export const events = Object.values(eventsRecord).flat();
 
-// Jours du festival
+// Jours du festival (dynamique depuis TinaCMS)
 export const FESTIVAL_DAYS = {
-  // Jours du festival (ordre chronologique)
-  days: ['Mercredi', 'Jeudi', 'Vendredi'] as const,
-  
+  // Jours du festival (ordre chronologique) - calculés depuis TinaCMS
+  days: festivalDays,
+
   // Mapping des valeurs numériques vers les jours (utilisé dans la conversion des données NocoDB)
+  // Note: Ce mapping reste stable car NocoDB stocke des IDs numériques, pas des dates
   dayMapping: {
     0: 'Les trois jours',
-    1: 'Mercredi',
-    2: 'Jeudi',
-    3: 'Vendredi'
+    1: festivalDays[0] || 'Mercredi',
+    2: festivalDays[1] || 'Jeudi',
+    3: festivalDays[2] || 'Vendredi'
   },
-  
-  // Dates associées à chaque jour
-  dayDates: {
-    'Mercredi': '01/10',
-    'Jeudi': '02/10',
-    'Vendredi': '03/10'
-  },
-  
+
+  // Dates associées à chaque jour - calculées depuis TinaCMS
+  dayDates: festivalDayDates,
+
   // Valeur par défaut pour les jours non définis
   defaultDay: 'À définir'
 };
@@ -74,7 +116,7 @@ export const EVENT_TYPES = {
   }
 };
 
-// Configuration par défaut pour le composant DayFilter
+// Configuration par défaut pour le composant DayFilter (dynamique depuis TinaCMS)
 export const DAY_FILTER_CONFIG = {
   allDaysLabel: 'Tous les jours',
   globalViewLabel: 'Vue globale',
@@ -85,11 +127,11 @@ export const DAY_FILTER_CONFIG = {
   nextLabel: 'Suivant',
   pageLabel: 'Page',
   onLabel: 'sur',
-  days: [
-    { name: 'Mercredi', date: '01/10' },
-    { name: 'Jeudi', date: '02/10' },
-    { name: 'Vendredi', date: '03/10' }
-  ],
+  // Générer les jours dynamiquement depuis TinaCMS
+  days: festivalDays.map((name) => ({
+    name,
+    date: festivalDayDates[name] || ''
+  })),
   eventTypes: [
     { name: 'Conférences', icon: 'tabler:presentation' },
     { name: 'Ateliers', icon: 'tabler:tool' },
@@ -97,13 +139,23 @@ export const DAY_FILTER_CONFIG = {
   ]
 };
 
-// Configuration complète du festival
+// Calculer l'année de l'édition depuis la première date du festival
+const computeEditionYear = (): number => {
+  const dates = (festivalContent as { festivalDates?: FestivalDateEntry[] }).festivalDates || [];
+  if (dates.length > 0 && dates[0]?.date) {
+    return new Date(dates[0].date).getFullYear();
+  }
+  return 2026; // Fallback défensif
+};
+const editionYear = computeEditionYear();
+
+// Configuration complète du festival (dynamique depuis TinaCMS)
 export const FESTIVAL_CONFIG = {
   // Informations générales
   name: 'Festival Out of the Books',
-  edition: '2025',
-  dates: '1-3 octobre 2025',
-  location: 'Bruxelles, Belgique',
+  edition: String(editionYear),
+  dates: (festivalContent as { hero?: { date?: string } }).hero?.date || `30 septembre - 2 octobre ${editionYear}`,
+  location: 'La Sucrerie - Wavre, Belgique',
   
   // Configuration des composants
   programme: {

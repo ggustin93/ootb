@@ -1,28 +1,24 @@
 import type { Event } from '~/types/festival';
-import { 
-  fetchStands, 
-  fetchSessions, 
-  convertStandsToEvents, 
-  convertSessionsToEvents 
+import {
+  fetchStands,
+  fetchSessions,
+  convertStandsToEvents,
+  convertSessionsToEvents
 } from './api/nocodb';
-import { TEST_MODE, events as dummyEvents } from '~/config/festival';
+import { TEST_MODE, events as dummyEvents, FESTIVAL_DAYS, type FestivalDay as ConfigFestivalDay } from '~/config/festival';
 import { NOCODB_CONFIG, calculateSimilarity } from '~/config/nocodb';
-import { 
+import {
   processEventImages,
   optimizeAllExistingImages,
   resetImageProcessingSession,
   getImagePath
 } from './imageProcessor';
 
-// Jours du festival avec leurs dates
-export const days = ['Mercredi', 'Jeudi', 'Vendredi'] as const;
-export type FestivalDay = typeof days[number] | 'À définir';
+// Jours du festival avec leurs dates - CENTRALISÉ depuis TinaCMS via festival.ts
+export const days = FESTIVAL_DAYS.days;
+export type FestivalDay = ConfigFestivalDay;
 
-export const dayDates: Record<typeof days[number], string> = {
-  'Mercredi': '01/10',
-  'Jeudi': '02/10',
-  'Vendredi': '03/10'
-};
+export const dayDates = FESTIVAL_DAYS.dayDates as Record<typeof days[number], string>;
 
 // Types d'événements
 export const eventTypes = ['Conférences', 'Ateliers', 'Stands'];

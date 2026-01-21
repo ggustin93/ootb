@@ -4,18 +4,23 @@
     "description": "Le Festival Out of the Books est un événement dédié à l'innovation pédagogique avec des conférences, ateliers et rencontres pour repenser l'éducation de demain.",
     "image": "~/assets/images/banniere_festival.jpeg"
   },
+  "festivalDates": [
+    { "date": "2026-09-30T12:00:00.000Z" },
+    { "date": "2026-10-01T12:00:00.000Z" },
+    { "date": "2026-10-02T12:00:00.000Z" }
+  ],
   "hero": {
     "logo": "~/assets/images/logo_festival_white.svg",
     "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742476885/1007-OOTB-S1-137_1_uhptbc.jpg",
-    "date": "01, 02 et 03 octobre 2025",
+    "date": "30 septembre, 1 et 2 octobre 2026",
     "location": "La Sucrerie - Wavre",
     "description": "Trois jours de conférences, d'ateliers et de rencontres pour repenser l'éducation de demain en famille et entre professionnels de l'éducation. "
   },
   "about": {
     "title": "Le festival des pédagogies innovantes",
-    "description": "Trois jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes, pour repenser l'éducation de demain en FAMILLE ( journée spéciale le mercredi 1er octobre) et entre professionnels de l'éducation.  ",
+    "description": "Trois jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes, pour repenser l'éducation de demain en FAMILLE (journée spéciale le mercredi 30 septembre) et entre professionnels de l'éducation.",
     "videoId": "RV53ARsieko",
-    "videoTitle": "Festival Out of the Books 2025",
+    "videoTitle": "Festival Out of the Books 2026",
     "paragraphs": [
       "Le Festival Out of the Books est le rendez-vous incontournable des acteurs de l'éducation innovante. Notre mission ? Créer un espace d'échange et d'inspiration où enseignants, PARENTS et professionnels de l'éducation peuvent découvrir, partager et s'enrichir mutuellement. Au programme : des conférences inspirantes, des ateliers pratiques, des démonstrations pédagogiques et de nombreuses opportunités de networking. Une expérience immersive unique pour explorer les pédagogies de demain."
     ]
@@ -89,7 +94,7 @@
     "description": "Découvrez toutes les conférences, ateliers et stands sur les 3 jours",
     "familyPdf": {
       "enabled": true,
-      "text": "Journée des familles (mercredi 1er octobre)",
+      "text": "Journée des familles (mercredi 30 septembre)",
       "url": "https://indd.adobe.com/view/1dcfa897-0c15-4bb7-8e76-118c0a663242"
     },
     "ebookPdf": {

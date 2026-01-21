@@ -1,12 +1,27 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
+ * Playwright Configuration - Best Practices 2024
  * @see https://playwright.dev/docs/test-configuration
+ * @see https://playwright.dev/docs/best-practices
  */
 export default defineConfig({
   testDir: './tests/e2e',
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: 'tests/test-results/',
+
+  /* Global timeout for each test */
+  timeout: 30_000,
+
+  /* Configuration for expect assertions - auto-retrying with sensible defaults */
+  expect: {
+    /* Maximum time expect() should wait for the condition to be met */
+    timeout: 5_000,
+    toHaveScreenshot: {
+      maxDiffPixels: 10,
+    },
+  },
+
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -24,6 +39,12 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    /* Screenshot on failure for better debugging */
+    screenshot: 'only-on-failure',
+
+    /* Video recording on retry */
+    video: 'on-first-retry',
   },
 
   /* Configure projects for major browsers - Desktop only */

@@ -144,21 +144,14 @@
 #   force = true
 
 # =====================================
-# REDIRECTIONS ADMIN VERS AUTRE SERVEUR
+# API CLOUDINARY (TinaCMS Media)
 # =====================================
 
-# Redirection de la route /admin vers Vercel
+# API: Cloudinary media handler pour TinaCMS
 [[redirects]]
-  from = "/admin"                       # Route admin de base
-  to = "https://outofthebooks.vercel.app/admin"
-  status = 301                          # Redirection permanente
-  force = true
-
-# Redirection des sous-routes /admin/* vers Vercel
-[[redirects]]
-  from = "/admin/*"                     # Toutes les sous-routes admin
-  to = "https://outofthebooks.vercel.app/admin/:splat"
-  status = 301                          # Redirection permanente
+  from = "/api/cloudinary/*"
+  to = "/.netlify/functions/cloudinary-media"
+  status = 200
   force = true
 
 # =====================================

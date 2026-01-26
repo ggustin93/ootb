@@ -1,6 +1,8 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { isAuthorized } from '@tinacms/auth';
 
+const VERSION = 'v2-bypass-test';
+
 // Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -245,7 +247,7 @@ export const handler = async (event) => {
     return {
       statusCode: 401,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Unauthorized' }),
+      body: JSON.stringify({ message: 'Unauthorized', version: VERSION }),
     };
   }
 

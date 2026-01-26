@@ -1,2 +1,0 @@
-/admin    https://outofthebooks.vercel.app/admin    301!
-/admin/*  https://outofthebooks.vercel.app/admin/:splat    301! 

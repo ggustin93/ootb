@@ -44,11 +44,18 @@ function cloudinaryToTina(file) {
 // Check authorization
 async function checkAuth(event) {
   try {
-    if (process.env.NODE_ENV === 'development' || process.env.CONTEXT === 'dev') {
-      console.log('[Auth] Dev mode - allowing');
+    const context = process.env.CONTEXT || 'unknown';
+    const nodeEnv = process.env.NODE_ENV || 'unknown';
+
+    console.log('[Auth] Context:', context, 'NODE_ENV:', nodeEnv);
+
+    // Allow in development or deploy previews
+    if (nodeEnv === 'development' || context === 'dev' || context === 'deploy-preview') {
+      console.log('[Auth] Dev/Preview mode - allowing');
       return true;
     }
-    // Create request-like object for isAuthorized
+
+    // In production, check TinaCloud auth
     const req = {
       headers: event.headers,
     };

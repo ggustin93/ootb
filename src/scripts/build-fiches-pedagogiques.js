@@ -201,35 +201,40 @@ async function fetchFichesPedagogiques() {
 }
 
 /**
- * Extrait la publishDate existante d'un fichier MDX s'il existe
- * @param {string} slug - Le slug du fichier à vérifier
- * @returns {string|null} - La publishDate existante ou null
+ * Collecte les publishDates existantes de tous les fichiers MDX du répertoire des fiches.
+ * Doit être appelée AVANT la suppression des fichiers pour conserver les dates.
+ * @returns {Map<string, string>} - Map slug -> publishDate
  */
-function getExistingPublishDate(slug) {
+function collectExistingPublishDates() {
+  const dateMap = new Map();
   try {
-    const filePath = path.join(FICHES_DIR, `${slug}.mdx`);
-    if (!fs.existsSync(filePath)) return null;
+    if (!fs.existsSync(FICHES_DIR)) return dateMap;
 
-    const content = fs.readFileSync(filePath, 'utf8');
-    const match = content.match(/publishDate:\s*(.+)/);
-    if (match) {
-      const dateStr = match[1].trim().replace(/^["']|["']$/g, '');
-      // Vérifier que c'est une date valide
-      const date = new Date(dateStr);
-      if (!isNaN(date.getTime())) {
-        return dateStr;
+    const files = fs.readdirSync(FICHES_DIR).filter(f => f.endsWith('.mdx'));
+    for (const file of files) {
+      const slug = file.replace('.mdx', '');
+      const filePath = path.join(FICHES_DIR, file);
+      const content = fs.readFileSync(filePath, 'utf8');
+      const match = content.match(/publishDate:\s*(.+)/);
+      if (match) {
+        const dateStr = match[1].trim().replace(/^["']|["']$/g, '');
+        const date = new Date(dateStr);
+        if (!isNaN(date.getTime())) {
+          dateMap.set(slug, dateStr);
+        }
       }
     }
-    return null;
-  } catch {
-    return null;
+    console.log(`📅 ${dateMap.size} dates existantes collectées avant régénération.`);
+  } catch (error) {
+    console.error('❌ Erreur lors de la collecte des dates existantes:', error);
   }
+  return dateMap;
 }
 
 /**
  * Convertit les fiches au format MDX
  */
-function convertFichesToMDX(fiches) {
+function convertFichesToMDX(fiches, existingDates = new Map()) {
   console.log('🔄 Conversion des fiches au format MDX...');
 
   return fiches.map((fiche, index) => {
@@ -250,8 +255,8 @@ function convertFichesToMDX(fiches) {
         `${edition}-${baseSlug}-${index + 1}`;
 
       // Déterminer la date de publication en fonction de l'édition
-      // D'abord, vérifier si le fichier existe déjà avec une date valide
-      const existingDate = getExistingPublishDate(slug);
+      // D'abord, vérifier si une date existante a été collectée avant suppression
+      const existingDate = existingDates.get(slug);
       let publishDate;
 
       if (existingDate) {
@@ -571,14 +576,17 @@ async function main() {
     }
     
     console.log('🔄 Des modifications ont été détectées, mise à jour des fiches en cours...');
-    
+
+    // Collecter les dates existantes AVANT de supprimer les fichiers
+    const existingDates = collectExistingPublishDates();
+
     // Supprimer uniquement les fiches qui ont été modifiées ou supprimées
     const fichesToRemove = [...changedItems, ...removedItems];
     cleanSpecificFiches(fichesToRemove);
-    
-    // Convertir uniquement les fiches modifiées ou ajoutées
+
+    // Convertir uniquement les fiches modifiées ou ajoutées, en préservant les dates existantes
     const fichesToGenerate = [...changedItems, ...addedItems];
-    const mdxFiches = convertFichesToMDX(fichesToGenerate);
+    const mdxFiches = convertFichesToMDX(fichesToGenerate, existingDates);
     
     // Sauvegarder les fiches
     await saveFichesToFiles(mdxFiches);

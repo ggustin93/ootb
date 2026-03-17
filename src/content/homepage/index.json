@@ -86,14 +86,12 @@
       "firstLine": "Ensemble, construisons l'éducation de demain !",
       "secondLine": ""
     },
-    "intro": "",
-    "description": "Votre soutien est essentiel pour garantir la pérennité de nos actions : créer des ressources pédagogiques innovantes, faire évoluer le Festival, donner la parole aux experts et accompagner enseignants, futurs enseignants, parents et élèves face aux défis de notre époque.",
-    "closingText": "Grâce à vous, nous pouvons continuer à agir. Rejoignez-nous pour bâtir une école plus motivante et efficace !",
+    "intro": "Notre campagne de crowdfunding est lancée !\n\nNous avons besoin de vous pour financer la production d’une nouvelle saison complète de notre podcast Éducation : mode d’emploi 🎙️\n30 épisodes, avec des invités de qualité et des thématiques qui questionnent, inspirent et outillent enseignants, parents et tous ceux qui s’intéressent à l’éducation.\nNotre ambition : continuer à proposer des contenus accessibles, concrets et utiles pour mieux comprendre les enjeux éducatifs d’aujourd’hui et accompagner les jeunes sur le chemin des apprentissages.\n👉 Découvrez le projet et soutenez la campagne ici :  https://app.mymoojo.com/.../podcast-education-mode-demploi\nChaque contribution compte pour nous permettre de poursuivre l’aventure et de faire vivre ce projet qui nous tient profondément à cœur.\nParce que nous en sommes convaincues :\ninvestir dans l’éducation, c’est investir dans l’avenir de notre société. 💛",
     "buttons": {
       "primary": {
         "text": "Faire un don",
-        "href": "https://buymeacoffee.com/outofthebooks",
-        "icon": "tabler:coffee"
+        "href": "https://app.mymoojo.com/project/podcast-education-mode-demploi",
+        "icon": "tabler:moojo"
       },
       "secondary": {
         "text": "Scanner le QR code",
@@ -114,13 +112,7 @@
       {
         "text": "Accompagner enseignants, futurs enseignants, parents et élèves"
       }
-    ],
-    "qrCode": {
-      "image": "~/assets/images/bmc_qr.png",
-      "title": "Soutenez-nous !",
-      "caption": "",
-      "link": "https://buymeacoffee.com/outofthebooks"
-    }
+    ]
   },
   "newsletter": {
     "title": "Restez connectés",

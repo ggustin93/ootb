@@ -11,7 +11,7 @@
         "dev": "astro dev && tinacms dev",
         "start": "astro dev",
         "build": "astro build && npx tinacms build",
-        "build:netlify": "NETLIFY=true NODE_ENV=production npm run clean && npm run optimize:prebuild && astro build --silent",
+        "build:netlify": "NETLIFY=true NODE_ENV=production npm run clean && npm run optimize:prebuild && astro build --silent && npx tinacms build",
         "optimize:prebuild": "node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js",
         "preview": "astro preview",
         "astro": "astro",

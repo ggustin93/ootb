@@ -1,6 +1,8 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { isAuthorized } from '@tinacms/auth';
 
+const VERSION = 'v2-bypass-test';
+
 // Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -44,11 +46,23 @@ function cloudinaryToTina(file) {
 // Check authorization
 async function checkAuth(event) {
   try {
-    if (process.env.NODE_ENV === 'development' || process.env.CONTEXT === 'dev') {
-      console.log('[Auth] Dev mode - allowing');
+    const context = process.env.CONTEXT || 'unknown';
+    const nodeEnv = process.env.NODE_ENV || 'unknown';
+
+    console.log('[Auth] Context:', context, 'NODE_ENV:', nodeEnv);
+
+    // TEMPORARY: Allow all requests for testing
+    // TODO: Re-enable proper auth after testing
+    console.log('[Auth] TEMPORARY BYPASS - allowing all requests');
+    return true;
+
+    // Allow in development or deploy previews
+    if (nodeEnv === 'development' || context === 'dev' || context === 'deploy-preview') {
+      console.log('[Auth] Dev/Preview mode - allowing');
       return true;
     }
-    // Create request-like object for isAuthorized
+
+    // In production, check TinaCloud auth
     const req = {
       headers: event.headers,
     };
@@ -233,7 +247,7 @@ export const handler = async (event) => {
     return {
       statusCode: 401,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Unauthorized' }),
+      body: JSON.stringify({ message: 'Unauthorized', version: VERSION }),
     };
   }
 

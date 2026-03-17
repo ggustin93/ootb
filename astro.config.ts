@@ -25,9 +25,6 @@ export default defineConfig({
  experimental: {
    clientPrerender: true
  },
- redirects: {
-   '/admin': '/admin/index.html'
- },
  integrations: [
    sitemap({
      filter: (page) => 

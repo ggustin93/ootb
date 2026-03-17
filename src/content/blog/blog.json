@@ -103,8 +103,8 @@
       "links": [
         {
           "icon": "tabler:coffee",
-          "label": "Faire un don",
-          "url": "https://buymeacoffee.com/outofthebooks"
+          "label": "Faites un don - notre campagne de crowdfunding est en cours (mars 20236)",
+          "url": "https://app.mymoojo.com/project/podcast-education-mode-demploi"
         },
         {
           "icon": "tabler:arrow-left",
@@ -163,7 +163,6 @@
       "actionLabel": "Voir les actualités",
       "icon": "tabler:news",
       "variant": "actualite",
-      "color": "var(--content-actualite)",
       "description": "Restez informé des dernières innovations pédagogiques et des actualités du monde de l'éducation"
     },
     "fiche": {
@@ -175,7 +174,6 @@
       "actionLabel": "Voir les fiches",
       "icon": "tabler:file-text",
       "variant": "appel",
-      "color": "var(--ootb-blue)",
       "description": "Des ressources pratiques et détaillées pour enrichir vos cours et activités pédagogiques"
     },
     "live": {
@@ -187,7 +185,6 @@
       "actionLabel": "Voir les lives",
       "icon": "tabler:brand-facebook",
       "variant": "live",
-      "color": "var(--content-live)",
       "description": "Participez à nos sessions en direct et interagissez avec notre communauté d'enseignants"
     },
     "podcast": {
@@ -199,7 +196,6 @@
       "actionLabel": "Écouter les podcasts",
       "icon": "tabler:microphone",
       "variant": "podcast",
-      "color": "var(--ootb-violet)",
       "description": "Écoutez nos discussions enrichissantes sur les enjeux de l'éducation moderne\n",
       "links": [
         {
@@ -233,7 +229,6 @@
       "actionLabel": "Voir les émissions",
       "icon": "tabler:device-tv",
       "variant": "emission",
-      "color": "var(--ootb-green)",
       "description": "Regardez nos émissions pédagogiques pour découvrir de nouvelles approches éducatives\n",
       "links": [
         {

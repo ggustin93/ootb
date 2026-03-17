@@ -1,68 +1,28 @@
 # Système d'Authentification Simplifié
 
-Ce document décrit l'approche simplifiée utilisée pour protéger le tableau de bord administratif d'Out of the Books.
-
 ## Architecture
 
-Notre système d'authentification utilise une approche minimaliste avec Supabase Auth et Netlify Functions :
-
-```
-┌─────────────┐     ┌───────────────┐     ┌──────────────┐
-│ Utilisateur │────▶│ /dashboard*   │────▶│ auth-check.js│
-└─────────────┘     └───────────────┘     └──────────────┘
-                           │                      │
-                           │                      ▼
-                           │               ┌──────────────┐
-                           │               │  Supabase    │
-                           │               │    Auth      │
-                           │               └──────────────┘
-                           │                      │
-                           ▼                      ▼
-                    ┌──────────────┐      ┌──────────────┐
-                    │   Dashboard   │◀─────│  Authentifié │
-                    └──────────────┘      └──────────────┘
-                                                 │
-                                                 ▼
-                                          ┌──────────────┐
-                                          │     Login    │
-                                          └──────────────┘
+```text
+Utilisateur → /dashboard* → auth-check.js → Supabase Auth
+                                ↓
+                          Authentifié → Dashboard
+                          Non auth.  → /login
 ```
 
 ## Composants
 
-### 1. Middleware d'Authentification (`auth-check.js`)
+### 1. Middleware (`auth-check.js`)
 
-Fonction serverless légère qui :
-- Vérifie la présence et la validité du token dans les cookies
-- Permet l'accès au dashboard si l'utilisateur est authentifié
-- Redirige vers `/login` en cas d'échec
+- Vérifie token dans les cookies
+- Valide avec `supabase.auth.getUser()`
+- Redirige vers `/login` si échec
 
-```javascript
-// Extrait simplifié
-if (!accessToken) {
-  return { statusCode: 302, headers: { 'Location': '/login' }, body: '' };
-}
+### 2. API Login/Logout
 
-// Vérification avec Supabase
-const { data, error } = await supabase.auth.getUser();
-if (error) {
-  return { statusCode: 302, headers: { 'Location': '/login' }, body: '' };
-}
-
-// Utilisateur authentifié, permettre l'accès
-return { statusCode: 200, body: '' };
-```
-
-### 2. API de Connexion/Déconnexion
-
-Endpoints simples pour gérer l'authentification utilisateur :
-
-- **Connexion** (`api/login.js`) : Authentifie via Supabase et définit les cookies de session
-- **Déconnexion** (`api/logout.js`) : Supprime les cookies et déconnecte la session Supabase
+- `api/login.js` : authentifie via Supabase, définit cookies session
+- `api/logout.js` : supprime cookies, déconnecte session
 
 ### 3. Configuration Netlify
-
-Une seule règle dans `netlify.toml` :
 
 ```toml
 [[redirects]]
@@ -72,18 +32,8 @@ Une seule règle dans `netlify.toml` :
   force = true
 ```
 
-## Avantages
-
-Cette approche est :
-
-1. **Simple** : Seulement 3 fichiers nécessaires (vs 10+ avant)
-2. **Rapide** : Minimum de redirections et de vérifications
-3. **Fiable** : Moins de points de défaillance
-4. **Maintenable** : Code facile à comprendre et à modifier
-
 ## Sécurité
 
-- Cookies HttpOnly avec SameSite=Lax
+- Cookies HttpOnly + SameSite=Lax
 - Vérification côté serveur avec Supabase Auth
-- Redirections sécurisées
-- Tokens d'authentification stockés de manière sécurisée 
+- Seulement 3 fichiers nécessaires

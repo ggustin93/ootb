@@ -1,39 +1,31 @@
 # Scripts Python OOTB
 
-Ce dossier contient les scripts Python utilisés pour diverses tâches d'automatisation du projet OOTB.
+Scripts Python d'automatisation du projet.
+
+> **Note** : Ce script référence Directus, qui a été remplacé par NocoDB. Vérifier la compatibilité avant utilisation.
 
 ## Installation
 
-1. Activer l'environnement virtuel :
 ```bash
 cd scripts/python
-source .venv/bin/activate  # Sur Unix/MacOS
-# ou
-.venv\Scripts\activate  # Sur Windows
-```
-
-2. Installer les dépendances :
-```bash
+python -m venv .venv        # Créer l'environnement virtuel (première fois)
+source .venv/bin/activate   # Unix/macOS
 pip install -r requirements.txt
 ```
 
 ## Scripts disponibles
 
-### festival_form_creator.py
-Script pour créer automatiquement les formulaires d'inscription du festival dans Directus.
+- `festival_form_creator.py` - Création automatique des formulaires d'inscription festival
 
-Pour l'exécuter :
 ```bash
 python festival_form_creator.py
 ```
 
-## Structure du dossier
+## Structure
+
 ```
 scripts/python/
-├── .venv/              # Environnement virtuel Python
-├── requirements.txt    # Dépendances Python
-└── festival_form_creator.py  # Script de création des formulaires
+  .venv/                    # Environnement virtuel (a creer avec `python -m venv .venv`)
+  requirements.txt          # Dépendances
+  festival_form_creator.py  # Script formulaires
 ```
-
-## Note importante
-Ces scripts sont séparés du code principal Node.js/Astro et ont leur propre environnement virtuel Python pour éviter toute confusion ou conflit avec le reste du projet. 

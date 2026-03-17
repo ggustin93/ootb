@@ -1,26 +1,16 @@
 # Scripts
 
-This directory contains utility scripts for the OOTB project.
+Scripts utilitaires pour le projet OOTB.
 
 ## Image Processing
 
-- `analyze-image-failures.js` - Analyzes failed image processing and diagnoses root causes
-- `smart-build.sh` - Intelligent build script that conditionally installs Poppler based on PDF detection  
-- `check-pdf-needs.js` - Detects if PDF conversion is needed before installing Poppler
+- `analyze-image-failures.js` - Diagnostic des échecs de traitement d'images (URLs expirées, formats non supportés)
+- `smart-build.sh` - Build intelligent avec installation conditionnelle de Poppler (si PDFs détectés)
+- `check-pdf-needs.js` - Détection du besoin de conversion PDF
 
-## Usage
+## Utilisation
 
-### Analyze Image Failures
 ```bash
-node scripts/analyze-image-failures.js
+node scripts/analyze-image-failures.js   # Analyser les images en échec
+bash scripts/smart-build.sh              # Build avec Poppler conditionnel
 ```
-Automatically detects failed images (placeholders) and analyzes the root causes such as:
-- Expired S3 URLs
-- Unsupported file formats (.ico, .psd, .docx)
-- Network connectivity issues
-
-### Smart Build with Conditional Poppler Installation
-```bash
-bash scripts/smart-build.sh
-```
-Intelligently installs Poppler only when PDFs are detected in the NocoDB data, optimizing build times.

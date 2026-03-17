@@ -250,12 +250,12 @@
       ]
     },
     "premium": {
-      "label": "PREMIUM",
-      "shortLabel": "Premium",
-      "titlePrefix": "Contenu",
-      "titleSuffix": "premium",
-      "pageTitle": "Contenu hors-série exclusif",
-      "actionLabel": "Découvrir le premium",
+      "label": "NOUS SOUTENIR",
+      "shortLabel": "Nous soutenir",
+      "titlePrefix": "",
+      "titleSuffix": "Nous soutenir",
+      "pageTitle": "Nous soutenir",
+      "actionLabel": "Nous soutenir",
       "icon": "tabler:crown",
       "variant": "festival",
       "color": "var(--content-premium)",

@@ -406,7 +406,7 @@ export async function findTags(): Promise<Taxonomy[]> {
 }
 
 export const findDiverseLatestPosts = async ({ count = 3 }: { count?: number } = {}): Promise<Post[]> => {
-  const allPosts = await getCollection('post', (post) => 
+  const allPosts = await getCollection('post', (post) =>
     post.data.published
   );
 
@@ -415,42 +415,26 @@ export const findDiverseLatestPosts = async ({ count = 3 }: { count?: number } =
     allPosts.map(post => getNormalizedPost(post))
   );
 
-  // Sort by publish date
+  // Sort by publish date (newest first)
   const sortedPosts = normalizedPosts
     .sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime());
 
-  // Prioritize diversity of content types
-  const contentTypes = ['actualite', 'podcast', 'tv', 'live', 'premium', 'fiche'];
-  const diversePosts: Post[] = [];
-  const usedTypes = new Set<string>();
+  // Select the most recent posts, but avoid more than 2 of the same content type
+  const selectedPosts: Post[] = [];
+  const typeCounts = new Map<string, number>();
+  const maxPerType = 2;
 
   for (const post of sortedPosts) {
-    if (
-      !usedTypes.has(post.category.slug) && 
-      contentTypes.includes(post.category.slug)
-    ) {
-      diversePosts.push(post);
-      usedTypes.add(post.category.slug);
+    const typeCount = typeCounts.get(post.category.slug) || 0;
+    if (typeCount < maxPerType) {
+      selectedPosts.push(post);
+      typeCounts.set(post.category.slug, typeCount + 1);
     }
 
-    // If we have at least 3 different types, fill the rest with latest posts
-    if (diversePosts.length >= count) {
+    if (selectedPosts.length >= count) {
       break;
     }
   }
 
-  // If we don't have enough diverse posts, fill with latest
-  while (diversePosts.length < count) {
-    const nextPost = sortedPosts.find(
-      post => !diversePosts.some(p => p.id === post.id)
-    );
-    
-    if (nextPost) {
-      diversePosts.push(nextPost);
-    } else {
-      break;
-    }
-  }
-
-  return diversePosts.slice(0, count);
+  return selectedPosts;
 };

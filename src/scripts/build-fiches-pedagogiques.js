@@ -201,11 +201,37 @@ async function fetchFichesPedagogiques() {
 }
 
 /**
+ * Extrait la publishDate existante d'un fichier MDX s'il existe
+ * @param {string} slug - Le slug du fichier à vérifier
+ * @returns {string|null} - La publishDate existante ou null
+ */
+function getExistingPublishDate(slug) {
+  try {
+    const filePath = path.join(FICHES_DIR, `${slug}.mdx`);
+    if (!fs.existsSync(filePath)) return null;
+
+    const content = fs.readFileSync(filePath, 'utf8');
+    const match = content.match(/publishDate:\s*(.+)/);
+    if (match) {
+      const dateStr = match[1].trim().replace(/^["']|["']$/g, '');
+      // Vérifier que c'est une date valide
+      const date = new Date(dateStr);
+      if (!isNaN(date.getTime())) {
+        return dateStr;
+      }
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Convertit les fiches au format MDX
  */
 function convertFichesToMDX(fiches) {
   console.log('🔄 Conversion des fiches au format MDX...');
-  
+
   return fiches.map((fiche, index) => {
     try {
       // Création du slug à partir du titre avec un ID unique pour éviter les collisions
@@ -214,21 +240,26 @@ function convertFichesToMDX(fiches) {
         strict: true,
         remove: /[*+~.()'"!:@]/g
       });
-      
+
       // Récupérer l'édition depuis les données ou utiliser l'année par défaut
       const edition = fiche.Edition || EDITION_YEAR;
-      
+
       // Ajouter l'édition et l'ID pour garantir l'unicité
-      const slug = fiche.Id ? 
-        `${edition}-${baseSlug}-${fiche.Id}` : 
+      const slug = fiche.Id ?
+        `${edition}-${baseSlug}-${fiche.Id}` :
         `${edition}-${baseSlug}-${index + 1}`;
-      
+
       // Déterminer la date de publication en fonction de l'édition
+      // D'abord, vérifier si le fichier existe déjà avec une date valide
+      const existingDate = getExistingPublishDate(slug);
       let publishDate;
-      
-      // Si l'édition est 2025 ou non définie/égale à l'année courante, utiliser la date courante
-      if (parseInt(edition) >= 2025 || !fiche.Edition) {
-        // Utiliser la date actuelle ou la date de création de la fiche si disponible
+
+      if (existingDate) {
+        // Conserver la date existante pour ne pas perturber l'ordre de la homepage
+        publishDate = existingDate;
+        console.log(`📅 Fiche "${fiche.Title || 'sans titre'}" (édition ${edition}): date existante conservée: ${publishDate}`);
+      } else if (parseInt(edition) >= 2025 || !fiche.Edition) {
+        // Nouvelle fiche 2025+ : utiliser la date courante (première génération uniquement)
         const now = new Date();
         const year = now.getFullYear();
         const month = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -236,30 +267,30 @@ function convertFichesToMDX(fiches) {
         const hours = now.getHours().toString().padStart(2, '0');
         const minutes = now.getMinutes().toString().padStart(2, '0');
         const seconds = now.getSeconds().toString().padStart(2, '0');
-        
+
         publishDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.001Z`;
-        
-        console.log(`📅 Fiche "${fiche.Title || 'sans titre'}" (édition ${edition}): date courante utilisée: ${publishDate}`);
+
+        console.log(`📅 Fiche "${fiche.Title || 'sans titre'}" (édition ${edition}): nouvelle fiche, date courante utilisée: ${publishDate}`);
       } else {
         // Pour les éditions 2024 et antérieures, conserver le système de date aléatoire
         const publishYear = parseInt(edition) || new Date().getFullYear();
-        
+
         // Génération d'une date aléatoire dans l'année d'édition
         const randomMonth = Math.floor(Math.random() * 12) + 1; // Mois entre 1 et 12
         const maxDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][randomMonth - 1]; // Jours par mois
         const randomDay = Math.floor(Math.random() * maxDay) + 1; // Jour entre 1 et max pour le mois
-        
+
         // Format de la date avec padding pour mois et jours à 2 chiffres
         const paddedMonth = randomMonth.toString().padStart(2, '0');
         const paddedDay = randomDay.toString().padStart(2, '0');
-        
-        // Construction de la date ISO avec heure aléatoire 
+
+        // Construction de la date ISO avec heure aléatoire
         const randomHour = Math.floor(Math.random() * 24);
         const randomMinute = Math.floor(Math.random() * 60);
         const randomSecond = Math.floor(Math.random() * 60);
-        
+
         publishDate = `${publishYear}-${paddedMonth}-${paddedDay}T${randomHour.toString().padStart(2, '0')}:${randomMinute.toString().padStart(2, '0')}:${randomSecond.toString().padStart(2, '0')}.001Z`;
-        
+
         console.log(`📅 Fiche "${fiche.Title || 'sans titre'}" (édition ${edition}): date aléatoire générée: ${publishDate}`);
       }
       

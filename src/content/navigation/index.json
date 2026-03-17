@@ -162,10 +162,10 @@
     ],
     "actions": [
       {
-        "mode": "custom",
+        "mode": "festival",
         "festivalButton": {
-          "text": "Faire un don",
-          "href": "https://app.mymoojo.com/project/podcast-education-mode-demploi",
+          "text": "Prendre votre ticket",
+          "href": "/#tickets",
           "variant": "outline"
         },
         "communityButton": {

@@ -54,5 +54,929 @@
       "phone": "+3362613386"
     },
     "status": "A valider"
+  },
+  {
+    "id": "conference-633",
+    "title": "L'alphabet simplifié : c'est quoi? pourquoi? pour qui? ",
+    "description": "Cette conférence propose une introduction claire et accessible à l'alphabet simplifié : ce que c'est, d'où il vient, pourquoi il a été conçu (faciliter le geste graphique, le rendre lisible, rapide et sans douleur) et pour qui il est particulièrement pertinent (enfants et adolescents ayant une écriture dysgraphique, ceux présentant une dyspraxie visuo-spatiale et tous les autres). L'objectif est de donner des repères concrets et susciter la réflexion sur l'écriture cursive et inclusive. ",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Elise  Verstraeten",
+    "organization": "",
+    "image": "/images/events/conferences/conference-633.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-633.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.lettresaelise.com",
+    "contact": {
+      "email": "eliseverstraeten@gmail.com",
+      "phone": "0485195635 "
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-634",
+    "title": "Quel avenir pour les écoles et les enseignants ?",
+    "description": "A l'heure de l'intelligence artificielle et alors que les enseignants sont soumis à \"l'obligation de résultat\", l'école que nous connaissons est-elle condamnée ? Va-t-on vers une systématisation du numérique censé s'adapter parfaitement à chacun et chacune ? L'institution scolaire va-t-elle éclater en une multitude d'officines pour répondre aux exigences des parents ? Ou bien peut-on penser un avenir pour l'école et les enseignants qui promeuvent une pédagogie à hauteur humaine ?",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Philippe  Meirieu",
+    "organization": "",
+    "image": "/images/events/conferences/conference-634.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-634.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.meirieu.com",
+    "contact": {
+      "email": "philippe.meirieu@orange.fr",
+      "phone": "00 33 6 33 20 89 63"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-635",
+    "title": "Comment développer la culture de la coopération dans nos classes ?",
+    "description": "Dans un monde menacé par la montée de l'individualisme et des communautarismes, il est essentiel de développer dans nos classes une véritable culture de la coopération. Nous examinerons les différents dispositifs qui permettent cela et nous demanderons comment l'école peut devenir ainsi un lieu, tout à la fois, d'émancipation et de solidarité. Coopérer pour apprendre, en étant rigoureux sur les savoirs à acquérir, pourrait ainsi faire de l'École un levier essentiel pour préparer un mode plus juste et fraternel.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Philippe  Meirieu",
+    "organization": "",
+    "image": "/images/events/conferences/conference-635.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-635.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.meirieu.com",
+    "contact": {
+      "email": "philippe.meirieu@orange.fr",
+      "phone": "00 33 6 33 20 89 63"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-636",
+    "title": "Apprendre à se mettre au travail et à maintenir l’effort : les outils de la volition au service des élèves ",
+    "description": "Se mettre au travail et persévérer dans l’effort est un véritable défi pour de nombreux élèves.\nCette conférence propose de découvrir la volition, cette compétence clé qui permet de passer à l’action et de maintenir l’engagement dans la durée.\nÀ partir de recherches récentes, elle met en lumière des stratégies concrètes et explicites pour aider les élèves à mieux s’engager, persévérer et devenir progressivement plus autonomes dans leurs apprentissages.\n",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Sophie Vanden Plas",
+    "organization": "",
+    "image": "/images/events/conferences/conference-636.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-636.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.sophievandenplas.be",
+    "contact": {
+      "email": "sophie@outofthebooks.com",
+      "phone": "0476462425"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-637",
+    "title": "tous accros aux écrans ? Clés pour reprendre le contrôle ",
+    "description": "Une intervention pour comprendre pourquoi nos cerveaux sont si sensibles aux écrans, sans culpabiliser ni diaboliser le numérique. À partir de mon regard de psychiatre, j’explorerai les mécanismes cérébraux, émotionnels et sociaux qui nous captent, tout en reconnaissant les ressources qu’offrent les outils digitaux. L’objectif est de redonner du pouvoir d’agir grâce à des stratégies concrètes, simples et applicables pour retrouver choix, présence et équilibre dans notre quotidien connecté.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Caroline  depuydt",
+    "organization": "",
+    "image": "/images/events/conferences/conference-637.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-637.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "c.depuydt@epsylon.be",
+      "phone": "0478961817"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-638",
+    "title": "Sensibilisation à la problématique du décrochage scolaire, des pistes, des leviers pour mieux y remédier.",
+    "description": "Odyssée accompagne des jeunes de 12 à 20 ans, en décrochage scolaire ou en risque de l'être, à se remettre en projet et redevenir acteurs de leur avenir. C'est une problématique multifactorielle qui touche actuellement près d'un jeune sur dix. Mieux comprendre les causes et les précurseurs est nécessaire pour réagir rapidement. Lors de ce moment de partage, nous verrons ensemble des pistes et des leviers pour tenter de remédier à cette problématique qui peut toucher n'importe quel jeune.\n\n",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Catherine Sztencel",
+    "organization": "",
+    "image": "/images/events/conferences/conference-638.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-638.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.odysseeasbl.be",
+    "contact": {
+      "email": "direction@odysseeasbl.be",
+      "phone": "0476/26 19 98"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-639",
+    "title": "Redonner le goût de lire à nos ados à l'ère du numérique. Quand la BD se fait outil pédagogique.",
+    "description": "Le constat est sans équivoque: sous l'influence des écrans, nos ados lisent de moins en moins de livres. L'effort, l'ennui, la lenteur, le déplaisir, voilà leurs arguments. Et si la BD constituait pour eux une nouvelle porte d’entrée vers la lecture ?  C'est ce que propose la BD Zebraska, une fable futuriste explorant sans fard la complexité d’être un enfant différent et complétée d'un indispensable carnet pédagogique afin de susciter dialogue et compréhension en milieu scolaire et familial.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Isabelle Bary",
+    "organization": "",
+    "image": "/images/events/conferences/conference-639.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-639.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.isabellebary.be",
+    "contact": {
+      "email": "isabelle.bary@skynet.be",
+      "phone": "00 32 475 65 23 25"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-640",
+    "title": "Devoirs: mode d'emploi pour les parents.",
+    "description": "Conférence interactive destinée aux parents, enseignants et enfants du primaire et du secondaire. Comment aborder le temps des devoirs sans stress ni conflits ? Nous explorerons les émotions des enfants et des adultes, la roue des apprentissages et les différentes stratégies possibles. Des outils concrets et directement applicables seront proposés pour chaque étape du temps des devoirs, afin de favoriser un climat serein et motivant.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Aurore et Stéphanie Leblicq et Masse",
+    "organization": "",
+    "image": "/images/events/conferences/conference-640.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-640.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.evocation.be",
+    "contact": {
+      "email": "aurore.evocation@gmail.com et stephanie.evocation@gmail.com",
+      "phone": "0477/885215 et 0497/701347"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-641",
+    "title": "Pourquoi les élèves ne lisent-ils pas et ne comprennent-ils pas le consignes?",
+    "description": "Pourquoi les élèves ne lisent-ils pas les consignes ?\nPourquoi les élèves ne comprennent-ils pas les consignes ?\nIl s’agit bien de deux questions totalement différentes :\n•\tLa première concerne l’intérêt que les élèves manifestent vis-à-vis des consignes, des démarches proposées et des savoirs dispensés dans les cours suivant leur rapport à l’école.\n•\tLa deuxième concerne la compréhension : c’est-à-dire la transformation des informations en représentations mentales, la création de liens avec les données jointes, la conscience des attentes méthodologiques ou culturelles de l’enseignant.\nLes consignes constituent des textes clés au carrefour des métiers d’enseignant et d’apprenant. Les causes des difficultés appartiennent soit au texte, soit à l’apprenant, soit à la méthodologie.\n",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Stéphane HOEBEN",
+    "organization": "",
+    "image": "/images/events/conferences/conference-641.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-641.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.atzeo.com",
+    "contact": {
+      "email": "info@atzeo.com",
+      "phone": "+320472371242"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-642",
+    "title": "Les consignes. Pourquoi ne les lisent-ils pas et ne les comprennent-ils pas?",
+    "description": "Pourquoi les élèves ne lisent-ils pas les consignes ?\nPourquoi les élèves ne comprennent-ils pas les consignes ?\nIl s’agit bien de deux questions totalement différentes :\n•\tLa première concerne l’intérêt que les élèves manifestent vis-à-vis des consignes, des démarches proposées et des savoirs dispensés dans les cours suivant leur rapport à l’école.\n•\tLa deuxième concerne la compréhension : c’est-à-dire la transformation des informations en représentations mentales, la création de liens avec les données jointes, la conscience des attentes méthodologiques ou culturelles de l’enseignant.\nLes consignes constituent des textes clés au carrefour des métiers d’enseignant et d’apprenant. Les causes des difficultés appartiennent soit au texte, soit à l’apprenant, soit à la méthodologie.\n",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Stéphane HOEBEN",
+    "organization": "",
+    "image": "/images/events/conferences/conference-642.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-642.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.atzeo.com",
+    "contact": {
+      "email": "info@atzeo.com",
+      "phone": "0472371244"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-643",
+    "title": "Comment accompagner un enfant avec autisme?",
+    "description": "On estime aujourd’hui qu’environ 1 % des enfants sont concernés par un Trouble du Spectre de l’Autisme (TSA). Cela signifie que d’une part, la majorité d’entre nous a déjà rencontré (ou rencontrera) un ou plusieurs enfants autistes, et que d’autre part, l’autisme se manifeste sous des présentations variées, constituant un ensemble hétérogène. En fonction de son expérience et de ses connaissances, chacun possède donc une perception personnelle et probablement diverse de l’autisme. Quoi qu’il en soit, il est indéniable qu’une rencontre avec un enfant autiste ne laisse jamais indifférent. Cette conférence cerne divers aspects du Spectre et offre des pistes d’actions, de réactions pertinentes.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Nastasia BLAISE",
+    "organization": "",
+    "image": "/images/events/conferences/conference-643.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-643.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle et primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle et primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://www.perspectivautisme.com/",
+    "contact": {
+      "email": "nastasia.blaise@gmail.com",
+      "phone": "0497530422"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-644",
+    "title": "Comprendre les effets des écrans sur les comportements cognitifs et relationnels.",
+    "description": "Cette conférence offre un regard clair sur l’impact du temps d’écran chez les enfants (les jeunes) et les défis liés à l’usage croissant des technologies. À partir de données scientifiques récentes, Ariane HEBERT, psychologue, démystifie les effets du numérique sur le sommeil, l’attention, les émotions et la santé mentale, puis propose des stratégies concrètes pour encadrer leur utilisation et favoriser un équilibre sain.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Ariane Hébert",
+    "organization": "",
+    "image": "/images/events/conferences/conference-644.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-644.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.boiteapsy.com",
+    "contact": {
+      "email": "ariane@boiteapsy.com",
+      "phone": "450-704-4441 ou 0472 37 12 42 (Stéphane)"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-645",
+    "title": "Comment gérer l'anxiété et les émotions des enfants d'aujourd'hui?",
+    "description": "Cette conférence pratique et dynamique clarifie la différence entre peur, stress et anxiété, et explique leur impact réel sur l’enfant. On y explore les principaux facteurs qui contribuent à l’anxiété (biologiques, environnementaux et psychosociaux), ainsi que des stratégies concrètes de prévention et d’intervention tirées de l’approche cognitive, comportementale et physiologique. La conférence aide également à reconnaître les signes qui nécessitent une consultation professionnelle.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Ariane Hébert",
+    "organization": "",
+    "image": "/images/events/conferences/conference-645.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-645.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.boiteapsy.com",
+    "contact": {
+      "email": "ariane@boiteapsy.cum",
+      "phone": "450-704-4441 ou 0472371242 (StéPhane H.)"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-646",
+    "title": "Bienvenue au magasin KIGUERITOUT",
+    "description": "Séraphine vous attend dans son magasin Kigueritout pour une conférenscène sensible et immersive.\nEntre établi, objets et silences, elle éclaire autrement les troubles des apprentissages et ouvre un atelier où les mains rassurent la tête.\nÀ la lumière de la Bricolothérapie, elle élargit les chemins d’apprendre.\nChaque enfant est le magicien de sa vie.\nLa Bricolothérapie lui rappelle qu’il a déjà le pouvoir… entre ses mains.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Sophie LAPLAZE",
+    "organization": "",
+    "image": "/images/events/conferences/conference-646.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-646.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.bricolotherapie.com",
+    "contact": {
+      "email": "laplaze.sophie@wanadoo.fr",
+      "phone": "0677189840"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-647",
+    "title": "Faire évoluer sa posture de formateur/enseignant à l'ère de l’IA ? ",
+    "description": "Et si l’intelligence artificielle devenait votre meilleure alliée pédagogique ?\n\nAu programme : une évolution du rôle d'enseignant vers celui d'expert, coach et facilitateur, des repères concrets pour choisir les outils en cohérence avec vos valeurs et vos objectifs, des stratégies pour structurer, illustrer, simplifier et différencier les apprentissages, ainsi que des balises claires pour intégrer l’IA de façon éthique, transparente et responsable.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Jonathan Ponsard",
+    "organization": "",
+    "image": "/images/events/conferences/conference-647.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-647.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://edu-lab.be/",
+    "contact": {
+      "email": "jonathan.ponsard@technofuturtic.be",
+      "phone": "0496428724"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-648",
+    "title": "Les réflexes archaïques, des clés de compréhension des difficultés et troubles d'apprentissage?",
+    "description": "Cette conférence propose une introduction aux réflexes archaïques et à leur rôle dans le développement de l’enfant. Souvent méconnue, la persistance de certains réflexes peut notamment impacter l’attention, la posture, la lecture, l’écriture ou la coordination. Lors de cette intervention, les enseignants découvriront des clés de compréhension concrètes pour mieux appréhender certaines difficultés et troubles d’apprentissage en milieu scolaire.\n",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Bastiane Meurice et Cécile Warrot Ecole des Réflexes",
+    "organization": "",
+    "image": "/images/events/conferences/conference-648.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-648.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.ecoledesreflexes.com",
+    "contact": {
+      "email": "teamreflexeskra@gmail.com",
+      "phone": "0470 75 24 41"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-649",
+    "title": "L'enseignement explicite des apprentissages ",
+    "description": "Cet atelier présente l’enseignement explicite, une approche structurée qui met l’accent sur la clarté des explications, le modelage pas à pas, la pratique guidée soutenue et la rétroaction. Les participants verront  des stratégies d’enseignement efficaces afin de créer des conditions d’apprentissage où la réussite devient possible. L’atelier combine apports théoriques et quelques exemples concrets pour permettre une appropriation rapide et transférable en classe.\n",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Steve Bissonnette",
+    "organization": "",
+    "image": "/images/events/conferences/conference-649.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-649.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://www.teluq.ca/siteweb/univ/sbissonn.html",
+    "contact": {
+      "email": "steve.bissonnette@teluq.ca",
+      "phone": "Professeur Université TÉLUQ, Canada"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-650",
+    "title": "L'enseignement explicite des comportements",
+    "description": "L’enseignement explicite des comportements permet d’améliorer rapidement et durablement le climat de classe. L’atelier propose aux participants de découvrir une démarche structurée où les comportements attendus sont définis clairement, enseignés comme de véritables contenus d’apprentissage, modélisés, pratiqués et renforcés de manière cohérente. À partir d’exemples concrets et d’outils, l’atelier met en lumière l’importance des pratiques préventives, de la clarté des attentes et de la constance des interventions pour réduire les écarts de conduite et maximiser le temps consacré à l’apprentissage. Les participants repartent avec des stratégies immédiatement applicables pour instaurer des routines efficaces, soutenir la réussite des élèves et renforcer la cohérence des pratiques au sein de leur milieu.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Steve Bissonnette",
+    "organization": "",
+    "image": "/images/events/conferences/conference-650.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-650.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://www.teluq.ca/siteweb/univ/sbissonn.html",
+    "contact": {
+      "email": "steve.bissonnette@teluq.ca",
+      "phone": "Professeur Université TÉLUQ, Canada"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-651",
+    "title": "Devenez une Cyber School : accompagner les élèves face aux défis du numérique dès le primaire",
+    "description": "Comment accompagner les élèves face aux défis du numérique dès le primaire ?\nCette conférence invite enseignant·es et directions à découvrir la méthode Cyber School de Bibliothèques Sans Frontières : un dispositif de formation et d’activités clé en main pour développer la citoyenneté numérique, le bien‑être et la sécurité en ligne. Objectif : aider les enfants, avec l’appui des enseignants et des parents, à comprendre, utiliser et participer au monde numérique de façon autonome, critique et responsable.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Brieuc Tollenaere",
+    "organization": "",
+    "image": "/images/events/conferences/conference-651.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-651.webp",
+    "tags": [
+      "Professionnels",
+      "Primaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Primaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://www.bibliosansfrontieres.be/",
+    "contact": {
+      "email": "brieuc.tollenaere@bibliosansfrontieres.be",
+      "phone": "0472/65.43.41"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-652",
+    "title": "Techni'Kit 2.0 : des techniques actives & participatives pour dynamiser vos classes",
+    "description": "Découvrez et pratiquez ensemble des techniques actives et participatives pour dynamiser vos cours ! Le Techni’Kit 2.0, outil gratuit largement utilisé dans le secteur Jeunesse, vous aidera à renforcer la cohésion de vos groupes classe, faire émerger des représentations, générer des idées, synthétiser, réactiver des contenus, évaluer, analyser, débriefer et maintenir l’attention de vos élèves.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Résonance  asbl",
+    "organization": "",
+    "image": "/images/events/conferences/conference-652.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-652.webp",
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.resonanceasbl.be",
+    "contact": {
+      "email": "virginie.goethals@resonanceasbl.be",
+      "phone": "022302606"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-653",
+    "title": "Collaborer, être créatif  et se mettre en projet pour développer un max de compétences (dont le FMTTN)",
+    "description": "Et si vos élèves devenaient des co-créateurs engagés plutôt que de simples consommateurs de technologies ? Découvrez comment la démarche STEAM permet de développer les compétences du XXIe siècle et du FMTTN à travers des projets concrets : préserver les coraux avec l’IA, créer des poubelles connectées, développer des films d'animation ou podcasts... le tout en agissant pour les ODD. Repartez avec des idées et des projets concrets à tester en classe !",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Jessica Dejas",
+    "organization": "",
+    "image": "/images/events/conferences/conference-653.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-653.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://edu-lab.be/",
+    "contact": {
+      "email": "jessicadejas@gmail.com",
+      "phone": "0495854775"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-654",
+    "title": "L'engagement pédagogique par le jeu pour l'apprentissage des langues",
+    "description": "L’apprentissage des langues, particulièrement pour le néerlandais, se heurte souvent à une barrière invisible : le blocage cognitif. Cette conférence propose de renverser ce paradigme en utilisant le jeu comme un outil de déconditionnement. L'objectif est de démontrer comment l'activité ludique permet de contourner le filtre affectif qui empêche la production orale spontanée.\nLe jeu neutralise l'erreur : le principal frein à l'apprentissage est la peur du jugement et de la faute. En détournant des jeux du quotidien en outils d'apprentissage, on déplace l'enjeu : l'objectif n'est plus de \"bien parler\", mais de \"gagner la partie\". La règle grammaticale ou l’apprentissage de vocabulaire, autrefois perçus comme des obstacles, deviennent des outils au service du jeu. L'inhibition disparaît au profit de l'efficacité.\nGamification : l’utilisation d’applications ludiques et de quiz (type Kahoot ou outils interactifs) transforme la perception de l’effort. Les jeux numériques exploitent les mécanismes de la dopamine et de la gratification immédiate. Là où un exercice de syntaxe classique ou de restitution de vocabulaire génère de la fatigue mentale, le format \"défi\" stimule l'attention et la mémorisation à long terme. Le passage vers le néerlandais (ou l’anglais) se fait alors de manière fluide, sans la charge cognitive liée à la peur de la confusion entre les structures linguistiques.\nLa conférence explorera comment les jeux, quiz et les simulations créent un espace sécurisé. Cette approche permet de reconstruire la confiance en soi pour que l'apprenant·e ose enfin s'approprier la langue de manière autonome.\nEn conclusion, cette présentation fournira des pistes concrètes pour transformer les jeux du quotidien en laboratoire linguistique. Il ne s'agit pas d'ajouter du divertissement à l'étude, mais de restructurer radicalement l'apprentissage autour de l'engagement. En libérant l'élève du carcan de la règle pure, on lui redonne le plaisir de l'échange et la maîtrise réelle de ses compétences et un environnement stimulant pour dépasser les blocages affectifs et cognitifs.\n",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Véronique Maon",
+    "organization": "",
+    "image": "/images/events/conferences/conference-654.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-654.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "",
+    "contact": {
+      "email": "vero.maon@gmail.com",
+      "phone": "0488111421"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-655",
+    "title": "Instaurer le quart d'heure de lecture en classe",
+    "description": "Conférence — Mettre en place le quart d’heure de lecture en classe\nAvec Mélanie Roland (Alice Jeunesse) et Fanny Deschamps (Versant Sud)\n\nComment installer concrètement un quart d’heure de lecture dans une classe ?\nPar où commencer ? Quels livres proposer ? Comment embarquer tous les élèves, même les plus réticents ?\n\nÀ partir de leurs rencontres avec le public et de leur expérience d’éditrices, Mélanie Roland et Fanny Deschamps partageront des pistes concrètes et des conseils pratiques pour faire de ce moment de lecture un rendez-vous simple, régulier et motivant.\n\nUne rencontre pensée pour celles et ceux qui veulent se lancer… ou ajuster ce temps de lecture au quotidien.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Coralie Ramon",
+    "organization": "",
+    "image": "/images/events/conferences/conference-655.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-655.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "toutlemondelit@adeb.be",
+      "phone": "0473467298"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-656",
+    "title": "La méthode Mbo Mpenza",
+    "description": "J’ai subi la discrimination. Cette expérience m’a poussé à créer la Méthode Mbo Mpenza. Dans cette conférence, je montre aux enseignants, comment transformer ces situations en apprentissages concrets. \nÀ travers 3 piliers, sensibilisation, éducation, action, je partage des outils simples pour renforcer le respect, prévenir le harcèlement et améliorer le climat scolaire.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Mbo Mpenza",
+    "organization": "",
+    "image": "/images/events/conferences/conference-656.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-656.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.mbompenza.com",
+    "contact": {
+      "email": "mbo.mpenza@mmperformance.be",
+      "phone": "+32484818878"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-657",
+    "title": "Conditions for Introducing AI in Schools / Organizational Perspective",
+    "description": "The presentation addresses the conditions for using AI in teaching at an organizational level, as well as competence development and capacity-building not only among AI frontrunners but across the entire organization—through both formal training and informal forums and communities. It also covers the development of a digital foundation course that all students receive, and how we handle the legal aspects of using AI in education.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Christina Oehlenschlager Stoltze",
+    "organization": "",
+    "image": "/images/events/conferences/conference-657.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-657.webp",
+    "tags": [
+      "Professionnels",
+      "Secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.randersstatsskole.dk",
+    "contact": {
+      "email": "cs@randersstatsskole.dk",
+      "phone": "+4528439473"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-658",
+    "title": "Enseigner avec l’IA pour soutenir l’éducation dans les établissements d’enseignement secondaire",
+    "description": "1.\tJ’ai travaillé avec des élèves en sciences en les laissant utiliser l’IA/CoPilot pour créer un guide d’exercices pour une expérience, au lieu de leur fournir un guide prêt à l’emploi.\n2.\tJ’ai également travaillé avec différents prompts pour générer des idées, formuler des problématiques, définir des méthodes et effectuer des recherches bibliographiques pour un travail plus important en deuxième année (Biotechnologie et Mathématiques niveau avancé). En permettant aux élèves d’utiliser l’IA dans un cadre ouvert en classe, avec des possibilités d’accompagnement et de réflexion sur leur travail, nous pensons que leur esprit critique, leurs connaissances disciplinaires et leurs compétences rédactionnelles seront renforcés. Nous partons également du principe que les élèves utiliseront l’IA quoi qu’il en soit ; en l’intégrant à l’enseignement, il devient possible pour l’enseignant d’analyser et d’accompagner la manière dont les élèves utilisent l’IA :\n",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Regin Pindstrup",
+    "organization": "",
+    "image": "/images/events/conferences/conference-658.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-658.webp",
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "",
+    "contact": {
+      "email": "rr@randersstatsskole.dk",
+      "phone": "+45 31377465"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-659",
+    "title": "Lektor",
+    "description": "La présentation aborde à la fois les défis et les avantages de l’IA dans l’enseignement. Dans le lycée danois, nous avons travaillé à éliminer la problématique de la tricherie et à utiliser l’IA de manière constructive. Cela nous a apporté des expériences précieuses que je partagerai dans ma présentation. Dans la présentation, je donnerai également des exemples d’exercices utiles qui aident les élèves à développer un usage constructif de l’IA.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Christian Langballe",
+    "organization": "",
+    "image": "/images/events/conferences/conference-659.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-659.webp",
+    "tags": [
+      "Professeurs",
+      "Secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "www.Randersstatsskole.dk",
+    "contact": {
+      "email": "cw@randersstatsskole.dk",
+      "phone": "+4527288684"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-660",
+    "title": "l’épuisement des enseignants : comprendre les cercles vicieux pour reprendre la main",
+    "description": "Conférence sur l'épuisement des enseignants abordé à travers le modèle systémique de Palo Alto.\nAnalyse des cercles vicieux relationnels et pistes de régulation pour restaurer marges de manoeuvre et coopération.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "VIRAGES VIRAGES",
+    "organization": "",
+    "image": "/images/events/conferences/conference-660.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-660.webp",
+    "tags": [
+      "Professionnels",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.virages-consultations.com",
+    "contact": {
+      "email": "bonjour@virages.org",
+      "phone": "0485473627"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-661",
+    "title": "Agents IA dans l’enseignement",
+    "description": "L’objectif de cette conférence est d’explorer l’utilisation d’agents d’IA comme outils d’assistance dans l’enseignement. Le point de départ est la discipline d’informatique C, un cours d’un an dans le lycée danois, où les élèves doivent apprendre à programmer et à travailler avec le design d’interaction. Les agents d’IA sont intégrés dans l’enseignement afin de donner aux élèves la possibilité d’obtenir de l’aide et du soutien dans le développement de systèmes informatiques ; par exemple la programmation et la conception d’applications dans Applab (code.org) en utilisant le langage JavaScript.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Steffen Bach",
+    "organization": "",
+    "image": "/images/events/conferences/conference-661.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-661.webp",
+    "tags": [
+      "Professeurs",
+      "Secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "sh@randersstatsskole.dk",
+      "phone": "29649455"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-662",
+    "title": "La charte Lecture confortable des éditions ZTL",
+    "description": "Qu'est-ce que la charte Lecture confortable créée en 2017 par les éditions ZTL-ZéTooLu ? Quels sont les défis techniques et pratiques autour de l'édition spécialisée pour les dys ? Pendant ce temps d'échange, Liza Todorovic prendra la parole sur notre catalogue, notre charte, notre fonctionnement interne et les espoirs que nous avons pour l'édition spécialisée. ",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Liza Todorovic",
+    "organization": "",
+    "image": "/images/events/conferences/conference-662.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-662.webp",
+    "tags": [
+      "Professionnels",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "https://www.ztl-editions.fr/",
+    "contact": {
+      "email": "communication@ztl-editions.fr",
+      "phone": "0604180211"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-663",
+    "title": "Apprendre à mobiliser les compétences transparentes...",
+    "description": "De nombreuses compétences sont attendues à l'école, à la maison et en société, mais ne sont pas enseignée ni explicitées. Dans cette conférence nous allons plonger au coeur de ces compétences \"transparentes\". Des pistes de réflexion et d'action seront proposer  pour un doux mélange entre éclairages théoriques et outils pratiques. L'objectif est de vous amener à développer une pratique quotidienne, à l'école ou à la maison, qui cultive toutes ces compétences transversales de manière explicite !",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Perrine BIGOT",
+    "organization": "",
+    "image": "/images/events/conferences/conference-663.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-663.webp",
+    "tags": [
+      "Professeurs",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "perrine.bigot@gmail.com",
+      "phone": "0468131060"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-664",
+    "title": "Comment parler de la Paix aux enfants?",
+    "description": "Dans le contexte actuel : conflits mondiaux, omniprésence des écrans, risques de (cyber--harcèlement,... il est important d'aborder de manière systématique l'éducation à la Paix et aux Valeurs avec les enfants afin de les aider à développer leurs compétences psycho-émotionnelles et les valeurs de coopération. Toutes ces techniques et  le développement de la réflexivité chez les enfants permet d'aider les élèves à se sentir bien dans leur peau pour développer leur potentiel grâce aux apprentissages.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Christine Jaminon",
+    "organization": "",
+    "image": "/images/events/conferences/conference-664.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-664.webp",
+    "tags": [
+      "Professionnels",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.peaceducation.org",
+    "contact": {
+      "email": "contact@peaceducation.org",
+      "phone": "0498517916"
+    },
+    "status": "A valider"
+  },
+  {
+    "id": "conference-665",
+    "title": "Un Jeu Dans Ma Classe",
+    "description": "Et si le jeu de société devenait un moteur pour l’école ?\nAvec Un Jeu Dans Ma Classe, les élèves découvrent des jeux, développent leurs compétences et créent des moments de partage entre parents, élèves et équipe éducative. Le jeu devient un véritable levier pédagogique et un outil pour renforcer le lien entre l’école et les familles. En prime, le dispositif permet de proposer un catalogue de jeux aux familles et de dégager une marge pour financer les projets de l’école.",
+    "type": "Conférences",
+    "day": "Mercredi",
+    "time": "À définir",
+    "endTime": "",
+    "location": "À définir",
+    "speaker": "Thibaut Quintens",
+    "organization": "",
+    "image": "/images/events/conferences/conference-665.webp",
+    "speakerImage": "/images/events/conferences/speaker-conference-665.webp",
+    "tags": [
+      "Professionnels",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professionnels",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "https://unjeudansmaclasse.com/",
+    "contact": {
+      "email": "thibaut.quintens@actingames.com",
+      "phone": "+32 485 86 48 29"
+    },
+    "status": "A valider"
   }
 ]

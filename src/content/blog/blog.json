@@ -152,6 +152,7 @@
       "actionLabel": "Voir tous les contenus",
       "icon": "tabler:layout-grid",
       "variant": "default",
+      "color": "var(--content-actualite)",
       "description": "Découvrez nos podcasts, vidéos pédagogiques, fiches pratiques et contenus premium pour transformer l'éducation"
     },
     "actualite": {
@@ -163,6 +164,7 @@
       "actionLabel": "Voir les actualités",
       "icon": "tabler:news",
       "variant": "actualite",
+      "color": "var(--content-actualite)",
       "description": "Restez informé des dernières innovations pédagogiques et des actualités du monde de l'éducation"
     },
     "fiche": {
@@ -174,6 +176,7 @@
       "actionLabel": "Voir les fiches",
       "icon": "tabler:file-text",
       "variant": "appel",
+      "color": "var(--ootb-blue)",
       "description": "Des ressources pratiques et détaillées pour enrichir vos cours et activités pédagogiques"
     },
     "live": {
@@ -185,6 +188,7 @@
       "actionLabel": "Voir les lives",
       "icon": "tabler:brand-facebook",
       "variant": "live",
+      "color": "var(--content-live)",
       "description": "Participez à nos sessions en direct et interagissez avec notre communauté d'enseignants"
     },
     "podcast": {
@@ -196,6 +200,7 @@
       "actionLabel": "Écouter les podcasts",
       "icon": "tabler:microphone",
       "variant": "podcast",
+      "color": "var(--ootb-violet)",
       "description": "Écoutez nos discussions enrichissantes sur les enjeux de l'éducation moderne\n",
       "links": [
         {
@@ -229,6 +234,7 @@
       "actionLabel": "Voir les émissions",
       "icon": "tabler:device-tv",
       "variant": "emission",
+      "color": "var(--ootb-green)",
       "description": "Regardez nos émissions pédagogiques pour découvrir de nouvelles approches éducatives\n",
       "links": [
         {
@@ -252,6 +258,7 @@
       "actionLabel": "Découvrir le premium",
       "icon": "tabler:crown",
       "variant": "festival",
+      "color": "var(--content-premium)",
       "description": "Accédez à du contenu hors-série exclusif : interviews approfondies, analyses détaillées et ressources inédites",
       "heroDescription": "Explorez notre sélection de contenus hors-série pour approfondir vos connaissances pédagogiques",
       "links": [

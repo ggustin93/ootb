@@ -479,6 +479,15 @@ export const blogCollection: Collection = {
             },
             {
               type: 'string',
+              name: 'color',
+              label: 'Couleur (technique)',
+              required: true,
+              ui: {
+                component: () => null,
+              },
+            },
+            {
+              type: 'string',
               name: 'description',
               label: 'Description',
               required: true,
@@ -542,6 +551,15 @@ export const blogCollection: Collection = {
               type: 'string',
               name: 'variant',
               label: 'Variante (technique)',
+              required: true,
+              ui: {
+                component: () => null,
+              },
+            },
+            {
+              type: 'string',
+              name: 'color',
+              label: 'Couleur (technique)',
               required: true,
               ui: {
                 component: () => null,
@@ -619,6 +637,15 @@ export const blogCollection: Collection = {
             },
             {
               type: 'string',
+              name: 'color',
+              label: 'Couleur (technique)',
+              required: true,
+              ui: {
+                component: () => null,
+              },
+            },
+            {
+              type: 'string',
               name: 'description',
               label: 'Description',
               required: true,
@@ -689,6 +716,15 @@ export const blogCollection: Collection = {
             },
             {
               type: 'string',
+              name: 'color',
+              label: 'Couleur (technique)',
+              required: true,
+              ui: {
+                component: () => null,
+              },
+            },
+            {
+              type: 'string',
               name: 'description',
               label: 'Description',
               required: true,
@@ -752,6 +788,15 @@ export const blogCollection: Collection = {
               type: 'string',
               name: 'variant',
               label: 'Variante (technique)',
+              required: true,
+              ui: {
+                component: () => null,
+              },
+            },
+            {
+              type: 'string',
+              name: 'color',
+              label: 'Couleur (technique)',
               required: true,
               ui: {
                 component: () => null,
@@ -853,6 +898,15 @@ export const blogCollection: Collection = {
               },
             },
             {
+              type: 'string',
+              name: 'color',
+              label: 'Couleur (technique)',
+              required: true,
+              ui: {
+                component: () => null,
+              },
+            },
+            {
               type: 'rich-text',
               name: 'description',
               label: 'Description',
@@ -942,6 +996,15 @@ export const blogCollection: Collection = {
               type: 'string',
               name: 'variant',
               label: 'Variante (technique)',
+              required: true,
+              ui: {
+                component: () => null,
+              },
+            },
+            {
+              type: 'string',
+              name: 'color',
+              label: 'Couleur (technique)',
               required: true,
               ui: {
                 component: () => null,

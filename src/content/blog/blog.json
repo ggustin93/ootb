@@ -98,8 +98,8 @@
     },
     "premium": {
       "colorVariable": "var(--ootb-yellow)",
-      "title": "Contenu Premium",
-      "description": "Les contenus premium seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.,En devenant contributeur premium sur Buy Me a Coffee, vous recevrez automatiquement accès à notre newsletter exclusive. Celle-ci vous donnera accès à du contenu hors-série et en avant-première !\n",
+      "title": "Notre crowdfunding est en cours",
+      "description": "Nous avons besoin de vous pour financer la production d’une nouvelle saison complète de notre podcast Éducation : mode d’emploi 🎙️\n\n30 épisodes, avec des invités de qualité et des thématiques qui questionnent, inspirent et outillent enseignants, parents et tous ceux qui s’intéressent à l’éducation.\n\nNotre ambition : continuer à proposer des contenus accessibles, concrets et utiles pour mieux comprendre les enjeux éducatifs d’aujourd’hui et accompagner les jeunes sur le chemin des apprentissages.\n\n👉 Découvrez le projet et soutenez la campagne ici :  https\\://app.mymoojo.com/.../podcast-education-mode-demploi\n\nChaque contribution compte pour nous permettre de poursuivre l’aventure et de faire vivre ce projet qui nous tient profondément à cœur.\n\nParce que nous en sommes convaincues :\n\ninvestir dans l’éducation, c’est investir dans l’avenir de notre société. 💛\n",
       "links": [
         {
           "icon": "tabler:coffee",
@@ -114,7 +114,7 @@
       ],
       "qrCode": {
         "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1773742166/g2qkmjft9ztmizughxeh.jpg",
-        "alt": "QR Code Buy Me a Coffee",
+        "alt": "QR Code MyMoojo",
         "caption": "Scanner pour contribuer - Merci!"
       }
     }

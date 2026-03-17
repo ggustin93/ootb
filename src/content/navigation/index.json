@@ -172,6 +172,11 @@
           "text": "Rejoindre la communauté",
           "href": "/#rejoindre",
           "variant": "outline"
+        },
+        "customButton": {
+          "text": "Faire un don",
+          "href": "https://app.mymoojo.com/project/podcast-education-mode-demploi",
+          "variant": "outline"
         }
       }
     ]

@@ -91,7 +91,7 @@
       "primary": {
         "text": "Faire un don",
         "href": "https://app.mymoojo.com/project/podcast-education-mode-demploi",
-        "icon": "tabler:coffee"
+        "icon": "tabler:moojo"
       },
       "secondary": {
         "text": "Scanner le QR code",

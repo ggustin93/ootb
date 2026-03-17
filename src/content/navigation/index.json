@@ -162,7 +162,7 @@
     ],
     "actions": [
       {
-        "mode": "festival",
+        "mode": "custom",
         "festivalButton": {
           "text": "Prendre votre ticket",
           "href": "/#tickets",

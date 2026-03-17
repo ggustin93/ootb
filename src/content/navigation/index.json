@@ -176,7 +176,7 @@
         "customButton": {
           "text": "Faire un don",
           "href": "https://app.mymoojo.com/project/podcast-education-mode-demploi",
-          "variant": "outline"
+          "variant": "primary"
         }
       }
     ]

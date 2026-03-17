@@ -113,9 +113,9 @@
         }
       ],
       "qrCode": {
-        "src": "~/assets/images/bmc_qr.png",
+        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1773742166/g2qkmjft9ztmizughxeh.jpg",
         "alt": "QR Code Buy Me a Coffee",
-        "caption": "Scanner pour contribuer"
+        "caption": "Scanner pour contribuer - Merci!"
       }
     }
   },

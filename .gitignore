@@ -37,6 +37,8 @@ Desktop.ini
 # IDE / Editor
 .idea/
 .cursor/
+.vscode/
+docs/
 *.swp
 *.swo
 *.bak

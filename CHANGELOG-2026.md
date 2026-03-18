@@ -5,20 +5,24 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
-## [Non publié] — 2026-03-17
+## [1.1.0] — 2026-03-18
 
-### Corrigé
-- **Build cassé** : remplacement de l'icône invalide `tabler:moojo` par `tabler:heart` dans la section Premium de la homepage — l'icône inexistante empêchait la construction du site depuis le 17/03
-- **Couleurs des catégories** : restauration des champs `color` dans les 7 contentTypes de `blog.json` (supprimés par un commit TinaCMS automatique)
-- **Protection Tina** : ajout du champ `color` caché (`component: () => null`) dans le schéma Tina de `blogCollection.ts` pour éviter toute suppression future par TinaCMS
-- **Icônes manquantes** : ajout de `tabler:brand-linkedin` et `tabler:brand-instagram` aux 4 menus déroulants d'icônes dans `homepageCollection.ts`
+### Corrigé (2026-03-18)
+- **Bug récurrent de date ("Bulle d'R")** : correction du script de génération des fiches (`src/scripts/build-fiches-pedagogiques.js`) qui réattribuait la date du jour à la fiche "Bulle d'R" à chaque build. La date d'origine (août 2025) est désormais préservée.
+- **Logique d'affichage Homepage** : vérification et confirmation de l'algorithme de diversité (max 2 contenus du même type) pour l'affichage des 3 dernières publications.
 
-### Modifié
-- **Champs icône** : conversion de 4 champs texte libre en menus déroulants dans TinaCMS (`homepageCollection.ts`) — empêche la saisie d'icônes invalides
-- **Navigation** : renommage de « Contenu premium » en « Nous soutenir » dans le menu « Nos contenus »
+### Corrigé (2026-03-17)
+- **Build cassé (HOTFIX)** : remplacement de l'icône invalide `tabler:moojo` (causant le crash du site) par `tabler:heart` dans la section Premium.
+- **Perte de données TinaCMS** : restauration des champs `color` dans `blog.json`, supprimés involontairement par un commit automatique du CMS.
+- **Protection Schéma** : sécurisation du schéma Tina (`blogCollection.ts`) avec un champ `color` caché pour empêcher toute suppression future.
+- **Icônes manquantes** : ajout de `tabler:brand-linkedin` et `tabler:brand-instagram` aux 4 menus déroulants d'icônes dans `homepageCollection.ts`.
+
+### Amélioré
+- **UX Éditeur** : remplacement des champs texte libre pour les icônes par des menus déroulants sécurisés dans TinaCMS (`homepageCollection.ts`), prévenant définitivement l'erreur "icône invalide".
+- **Navigation** : renommage de "Contenu Premium" en "Nous soutenir" dans le menu principal et sur la page dédiée, suite à la demande client.
 
 ### Ajouté
-- **Réponse Alexia** : `claudedocs/reponse-alexia-17-03-2026.md` — communication expliquant le problème de build et les correctifs
+- **Documentation** : ajout de `claudedocs/reponse-alexia-17-03-2026.md` détaillant l'incident et la résolution pour le client.
 
 ---
 

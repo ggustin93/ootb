@@ -5,7 +5,9 @@ const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || 'https://app.nocodb.com';
 const NOCODB_API_TOKEN = process.env.NOCODB_API_TOKEN;
 const NOCODB_ORG_ID = process.env.NOCODB_ORG_ID || 'noco';
 const NOCODB_PROJECT_ID = process.env.NOCODB_PROJECT_ID || 'pzafxqd4lr77r0v';
-const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID || 'mur92i1x276ldbg';
+// IMPORTANT: NOCODB_TABLE_ID env var peut contenir un View ID (utilisé par le build script).
+// On utilise NOCODB_FICHES_TABLE_ID ou NOCODB_BASE_ID (qui référence le vrai Table ID) en priorité.
+const NOCODB_TABLE_ID = process.env.NOCODB_FICHES_TABLE_ID || process.env.NOCODB_BASE_ID || 'mur92i1x276ldbg';
 
 // Initialiser l'API NocoDB
 const initNocoDBApi = () => {
@@ -118,6 +120,17 @@ export const handler = async (event) => {
     }
     
     try {
+      console.log('📋 NocoDB config:', {
+        baseURL: NOCODB_BASE_URL,
+        orgId: NOCODB_ORG_ID,
+        projectId: NOCODB_PROJECT_ID,
+        tableId: NOCODB_TABLE_ID,
+        tokenPresent: !!NOCODB_API_TOKEN,
+        envTableId: process.env.NOCODB_TABLE_ID || '(non défini)',
+        envBaseId: process.env.NOCODB_BASE_ID || '(non défini)',
+        envFichesTableId: process.env.NOCODB_FICHES_TABLE_ID || '(non défini)'
+      });
+
       // Envoyer les données à l'API NocoDB
       await api.dbTableRow.create(
         NOCODB_ORG_ID,
@@ -125,9 +138,9 @@ export const handler = async (event) => {
         NOCODB_TABLE_ID,
         formattedData
       );
-      
+
       console.log('✅ Soumission réussie');
-      
+
       return {
         statusCode: 200,
         body: JSON.stringify({
@@ -141,11 +154,17 @@ export const handler = async (event) => {
       };
     } catch (error) {
       console.error('❌ Erreur API lors de la soumission:', error);
-      
-      const errorMessage = isApiError(error) 
+      console.error('❌ Détails:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        message: error.message
+      });
+
+      const errorMessage = isApiError(error)
         ? error.response?.data?.msg || error.message || 'Erreur inconnue'
         : error.message || 'Erreur inconnue';
-      
+
       return {
         statusCode: 500,
         body: JSON.stringify({

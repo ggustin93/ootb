@@ -171,12 +171,14 @@ npm run test:e2e -- --project=chromium
 # Unit tests — all 3 functions (no API token needed, 44 tests)
 node netlify/functions/__tests__/all-functions.test.js
 
-# E2E test with real NocoDB API (requires token)
+# E2E tests with real NocoDB API (requires token)
 echo "NOCODB_API_TOKEN=your_token" > .env
 node netlify/functions/__tests__/e2e-submit-pedagogical-sheet.js
+node netlify/functions/__tests__/e2e-submit-contact.js
+node netlify/functions/__tests__/e2e-submit-newsletter.js
 ```
 
-Unit tests cover all 3 form functions (pedagogical sheet, contact, newsletter): handler modes, data formatting, field mapping, error handling, and env var isolation. The E2E test creates a `[E2E-TEST]` prefixed record, verifies it in NocoDB, then deletes it automatically. See [Netlify Functions Test Documentation](netlify/functions/__tests__/README.md) for details.
+Unit tests cover all 3 form functions (pedagogical sheet, contact, newsletter): handler modes, data formatting, field mapping, error handling, and env var isolation. E2E tests create test records, verify them in NocoDB, then delete them automatically. See [Netlify Functions Test Documentation](netlify/functions/__tests__/README.md) for details.
 
 ## Project Structure
 

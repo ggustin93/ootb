@@ -7,10 +7,19 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ## [Non publié]
 
+### Corrigé
+- **Formulaire fiche pédagogique : erreur à la soumission** — La fonction Netlify `submit-pedagogical-sheet` échouait lors de l'appel API NocoDB. Ajout de variables d'environnement dédiées (`NOCODB_FICHES_TABLE_ID`) pour éviter tout conflit potentiel avec le build script qui utilise la même env var `NOCODB_TABLE_ID` pour un View ID. Ajout de logs de diagnostic détaillés (status, response data) pour identifier la cause exacte côté Netlify.
+- **Formulaire de contact : même vulnérabilité env var** — La fonction `submit-contact` partageait les env vars génériques `NOCODB_PROJECT_ID` et `NOCODB_TABLE_ID` avec les autres fonctions, alors que chaque formulaire pointe vers un projet/table NocoDB différent. Migration vers des env vars dédiées (`NOCODB_CONTACT_PROJECT_ID`, `NOCODB_CONTACT_TABLE_ID`).
+
+### Ajouté
+- **Tests unitaires des 3 fonctions Netlify** (44 tests) — `all-functions.test.js` couvre les handlers pedagogical-sheet, contact et newsletter : modes test, formatage des données, mapping client↔serveur, gestion des erreurs, isolation des env vars entre fonctions.
+- **Tests e2e avec vrai appel NocoDB** — 3 scripts e2e (`e2e-submit-pedagogical-sheet.js`, `e2e-submit-contact.js`, `e2e-submit-newsletter.js`) : round-trip complet API avec création, vérification et suppression automatique des données de test. Garde-fous : prefix `[E2E-TEST]`, cleanup dans `finally`, refus sans token, timeout 30s.
+- **Documentation tests** — `netlify/functions/__tests__/README.md` avec quick start, référence des IDs NocoDB, table de troubleshooting.
+
 ### Maintenance
 - Nettoyage de la structure projet : suppression des fichiers de configuration VSCode inutilisés et de la documentation obsolète
 
-**Fichiers modifiés** : `.vscode/`, `docs/`, `CLAUDE.md`
+**Fichiers modifiés** : `netlify/functions/submit-pedagogical-sheet.js`, `netlify/functions/submit-contact.js`, `netlify/functions/__tests__/`, `README.md`, `CHANGELOG-2026.md`
 
 ---
 

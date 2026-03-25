@@ -6,9 +6,11 @@
 # Unit tests — toutes les fonctions (no token needed, runs offline)
 node netlify/functions/__tests__/all-functions.test.js
 
-# E2E test avec vrai NocoDB (requires token)
+# E2E tests avec vrai NocoDB (requires token)
 echo "NOCODB_API_TOKEN=your_token" > .env
 node netlify/functions/__tests__/e2e-submit-pedagogical-sheet.js
+node netlify/functions/__tests__/e2e-submit-contact.js
+node netlify/functions/__tests__/e2e-submit-newsletter.js
 ```
 
 ## Test Files
@@ -16,7 +18,9 @@ node netlify/functions/__tests__/e2e-submit-pedagogical-sheet.js
 | File | Type | Token | Scope |
 |---|---|---|---|
 | `all-functions.test.js` | Unit | No | **Les 3 fonctions** : pedagogical-sheet, contact, newsletter (44 tests) |
-| `e2e-submit-pedagogical-sheet.js` | E2E | **Yes** | Fiche pédagogique : vrai appel NocoDB API, vérification, cleanup |
+| `e2e-submit-pedagogical-sheet.js` | E2E | **Yes** | Fiche pédagogique : round-trip NocoDB API, vérification, cleanup |
+| `e2e-submit-contact.js` | E2E | **Yes** | Contact : round-trip NocoDB API, vérification, cleanup |
+| `e2e-submit-newsletter.js` | E2E | **Yes** | Newsletter : round-trip NocoDB API, gestion doublons, cleanup |
 
 ## Unit Tests (`all-functions.test.js`)
 

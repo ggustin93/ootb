@@ -165,6 +165,19 @@ npm run test:e2e -- tests/e2e/scenarios/badge-consistency.spec.js
 npm run test:e2e -- --project=chromium
 ```
 
+### Netlify Functions Testing
+
+```bash
+# Unit tests (no API token needed)
+node netlify/functions/__tests__/submit-pedagogical-sheet.test.cjs
+
+# E2E test with real NocoDB API (requires token)
+echo "NOCODB_API_TOKEN=your_token" > .env
+node netlify/functions/__tests__/e2e-submit-pedagogical-sheet.js
+```
+
+The E2E test creates a `[E2E-TEST]` prefixed record, verifies it in NocoDB, then deletes it automatically. See [Netlify Functions Test Documentation](netlify/functions/__tests__/README.md) for details.
+
 ## Project Structure
 
 ```
@@ -245,10 +258,14 @@ Content is managed through TinaCMS for real-time editing and automatically synch
 
 ## Testing Strategy
 
-### E2E Test Scenarios
+### E2E Test Scenarios (Playwright)
 - **Badge Consistency**: Validates content labeling and filter consistency across pages
 - **Navigation & Anchors**: Tests menu navigation, anchor scrolling, and SEO-friendly URLs
 - **Festival Filters**: Comprehensive testing of event type filtering, day filters, and responsive behavior
+
+### Netlify Functions Tests
+- **Unit tests** (`netlify/functions/__tests__/submit-pedagogical-sheet.test.cjs`): Table ID resolution, data formatting, client-server field mapping, error handling. No API token needed.
+- **E2E tests** (`netlify/functions/__tests__/e2e-submit-pedagogical-sheet.js`): Real NocoDB API calls — connectivity, submission via handler, record verification, automatic cleanup. Requires `NOCODB_API_TOKEN` in `.env`.
 
 ### Test Configuration
 - **Browsers**: Chrome, Firefox, Safari (desktop only - mobile uses different menu structure)

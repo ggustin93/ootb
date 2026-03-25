@@ -41,8 +41,6 @@ const TIMEOUT_MS = 30_000;
 // ─── Données test ─────────────────────────────────────
 const testFormData = {
   email: TEST_EMAIL,
-  source: 'e2e-test',
-  tags: 'e2e-test,auto-cleanup',
   privacyAccepted: true
 };
 
@@ -114,7 +112,7 @@ async function testApiConnectivity(api) {
 
     if (response.list.length > 0) {
       const sample = response.list[0];
-      for (const field of ['Email', 'Source', 'Statut']) {
+      for (const field of ['Email', "Date d'inscription", "Politique de confidentialité acceptée"]) {
         assert(field in sample, `Colonne "${field}" existe dans la table`);
       }
     }
@@ -158,9 +156,8 @@ async function testRecordExists(api) {
     if (found.length > 0) {
       const record = found[0];
       assert(record.Email === TEST_EMAIL, `Email: "${record.Email}"`);
-      assert(record.Source === 'e2e-test', `Source: "${record.Source}"`);
-      assert(record.Statut === 'Actif', `Statut: "${record.Statut}"`);
-      assert(record.Tags && record.Tags.includes('e2e-test'), `Tags: "${record.Tags}"`);
+      assert(record["Politique de confidentialité acceptée"] === true, `Politique de confidentialité acceptée: true`);
+      assert(!!record["Date d'inscription"], `Date d'inscription présente`);
     }
   } catch (err) {
     assert(false, `Lecture en base: ${err.response?.data?.msg || err.message}`);

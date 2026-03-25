@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import cloudsBg from '~/assets/images/clouds_bg.svg';
+import cloudsBgUrl from '~/assets/images/clouds_bg.svg?url';
 import type { HTMLAttributes } from 'astro/types';
 
 type Props = HTMLAttributes<'section'>;
@@ -45,12 +44,10 @@ const { class: className, ...props } = Astro.props;
       <!-- Dégradé pour renforcer la visibilité -->
       <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/30 z-10"></div>
       
-      <Image
-        src={cloudsBg}
+      <img
+        src={cloudsBgUrl}
         alt="Nuages décoratifs"
         class="w-[100%] md:w-[100%] h-auto transform"
-        widths={[1200, 1600, 2000]}
-        sizes="120vw"
         loading="eager"
         decoding="async"
       />

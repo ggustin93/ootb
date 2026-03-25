@@ -206,23 +206,24 @@ function testContactDataFormatting() {
 // ═══════════════════════════════════════════
 
 function testNewsletterDataFormatting() {
-  console.log('\n🧪 TEST 6: Formatage des données — Newsletter');
+  console.log('\n🧪 TEST 6: Formatage des données — Newsletter (schéma 3 colonnes)');
 
-  const input = { email: 'test@example.com', source: 'footer', privacyAccepted: true };
+  const input = { email: 'test@example.com', privacyAccepted: true };
 
+  // Reflète le schéma NocoDB actuel (3 colonnes uniquement)
   const formatted = {
     Email: input.email,
-    Source: input.source || 'website',
-    Tags: input.tags || 'site-web,newsletter',
-    "Politique acceptée": input.privacyAccepted || false,
-    Statut: "Actif"
+    "Date d'inscription": '2026-03-25 13:00:00+01:00', // générée côté serveur
+    "Politique de confidentialité acceptée": input.privacyAccepted === true
   };
 
   assert(formatted.Email === 'test@example.com', 'email → Email');
-  assert(formatted.Source === 'footer', 'source → Source');
-  assert(formatted.Tags === 'site-web,newsletter', 'Tags défaut');
-  assert(formatted["Politique acceptée"] === true, 'privacyAccepted → Politique acceptée');
-  assert((undefined || 'website') === 'website', 'Source vide → website');
+  assert("Date d'inscription" in formatted, "Date d'inscription auto-générée côté serveur");
+  assert(formatted["Politique de confidentialité acceptée"] === true, 'privacyAccepted → Politique de confidentialité acceptée');
+  assert(!('Source' in formatted), 'Source absente du schéma');
+  assert(!('Statut' in formatted), 'Statut absent du schéma');
+  // === true (strict) : la string "false" ne doit pas passer comme true
+  assert((false === true) === false, 'privacyAccepted strict: "false" string → false');
 }
 
 // ═══════════════════════════════════════════

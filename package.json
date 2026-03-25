@@ -1,6 +1,6 @@
 {
     "name": "@outofthebooks/website",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Site web de l'ASBL Out of the Books : plateforme collaborative dédiée à l'innovation pédagogique en Belgique francophone.",
     "type": "module",
     "private": true,

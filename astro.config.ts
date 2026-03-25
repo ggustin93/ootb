@@ -100,6 +100,7 @@ export default defineConfig({
    }),
  ],
  image: {
+   endpoint: { route: '/_image/' },
    domains: [
      'cdn.pixabay.com', 
      'image.ausha.co',  

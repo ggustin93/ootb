@@ -1,5 +1,7 @@
 import { Api } from 'nocodb-sdk';
-import * as SibApiV3Sdk from 'sib-api-v3-sdk';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 
 // Configuration NocoDB - sécurisée car exécutée côté serveur uniquement
 const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || 'https://app.nocodb.com';
@@ -297,8 +299,9 @@ export const handler = async (event) => {
       console.log('📝 Données reçues:', data);
       
       // Vérifier si les données essentielles sont présentes
-      if (!data.email) {
-        console.error('❌ Données invalides: email manquant');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!data.email || !emailRegex.test(data.email)) {
+        console.error('❌ Données invalides: email manquant ou invalide');
         return {
           statusCode: 400,
           body: JSON.stringify({
@@ -324,14 +327,11 @@ export const handler = async (event) => {
         viewId
       });
       
-      // Formater les données pour NocoDB
+      // Formater les données pour NocoDB (3 colonnes actives dans la table)
       const formattedData = {
         Email: data.email,
-        Source: data.source || 'website',
-        Tags: data.tags || 'site-web,newsletter',
-        "Date d'inscription": data["Date d'inscription"] || formatDateForNocoDB(new Date()),
-        "Politique acceptée": data.privacyAccepted || false,
-        Statut: "Actif"
+        "Date d'inscription": formatDateForNocoDB(new Date()),
+        "Politique de confidentialité acceptée": data.privacyAccepted === true
       };
       
       console.log('📝 Données formatées pour NocoDB:', formattedData);
@@ -369,14 +369,14 @@ export const handler = async (event) => {
           statusCode: 500,
           body: JSON.stringify({
             success: false,
-            message: 'Erreur d\'initialisation de l\'API NocoDB'
+            message: 'Le service d\'inscription est temporairement indisponible. Veuillez réessayer dans quelques minutes.'
           }),
           headers: {
             'Content-Type': 'application/json'
           }
         };
       }
-      
+
       // Vérifier si l'email existe déjà
       console.log(`🔍 Vérification si l'email ${data.email} existe déjà...`);
       
@@ -410,10 +410,8 @@ export const handler = async (event) => {
             tableId,
             existingId,
             {
-              Tags: formattedData.Tags,
               "Date d'inscription": formattedData["Date d'inscription"],
-              "Politique acceptée": formattedData["Politique acceptée"],
-              Statut: "Actif"
+              "Politique de confidentialité acceptée": formattedData["Politique de confidentialité acceptée"]
             }
           );
           
@@ -480,18 +478,13 @@ export const handler = async (event) => {
           }
         };
       } catch (error) {
-        console.error('❌ Erreur lors de la soumission à NocoDB:', error);
-        
-        const statusCode = isApiError(error) && error.response?.status ? error.response.status : 500;
-        const errorMessage = isApiError(error) && error.response?.data?.msg 
-          ? error.response.data.msg 
-          : (error.message || 'Erreur inconnue');
-        
+        console.error('❌ Erreur lors de la soumission à NocoDB:', error.response?.data || error.message);
+
         return {
-          statusCode,
+          statusCode: 500,
           body: JSON.stringify({
             success: false,
-            message: `Erreur lors de l'inscription: ${errorMessage}`
+            message: 'Nous n\'avons pas pu enregistrer votre inscription. Veuillez réessayer ou nous contacter si le problème persiste.'
           }),
           headers: {
             'Content-Type': 'application/json'
@@ -499,13 +492,16 @@ export const handler = async (event) => {
         };
       }
     } catch (error) {
-      console.error('❌ Erreur lors du traitement de la requête:', error);
-      
+      const isParseError = error instanceof SyntaxError;
+      console.error('❌ Erreur lors du traitement de la requête:', error.message);
+
       return {
-        statusCode: 500,
+        statusCode: isParseError ? 400 : 500,
         body: JSON.stringify({
           success: false,
-          message: `Erreur lors du traitement de la requête: ${error.message || 'Erreur inconnue'}`
+          message: isParseError
+            ? 'Requête invalide. Veuillez vérifier les données envoyées.'
+            : 'Le service d\'inscription est temporairement indisponible. Veuillez réessayer dans quelques minutes.'
         }),
         headers: {
           'Content-Type': 'application/json'

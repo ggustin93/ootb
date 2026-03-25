@@ -7,14 +7,14 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ## [1.2.0] — 2026-03-25
 
-### Corrigé
+### Fiabilité des formulaires
 
-- **Formulaire fiche pédagogique : erreur au moment de l'envoi** — Le formulaire échouait silencieusement lors de la transmission des données à la base. Cause identifiée : un conflit de configuration interne entre deux processus qui utilisaient le même paramètre pour des besoins différents. Résolu en attribuant à chaque formulaire sa propre configuration isolée. Des journaux de diagnostic ont été ajoutés pour faciliter l'identification de toute erreur future côté hébergement.
-- **Fiche pédagogique : l'année 2026 était rejetée à l'enregistrement** — La liste des années valides dans la base de données ne contenait pas encore 2026. Résolu en ajoutant manuellement les années 2026 à 2029 dans l'interface d'administration de la base. Aucune modification du code nécessaire. 13 tests de validation passent avec succès après correction.
-- **Formulaire de contact : même problème de configuration isolée** — Le formulaire de contact partageait des paramètres de configuration génériques avec les autres formulaires, alors que chacun pointe vers un espace de données distinct. Chaque formulaire dispose désormais de sa propre configuration dédiée, sans risque d'interférence.
-- **Newsletter : le service d'envoi Brevo ne démarrait pas en production** — L'intégration avec Brevo (le service d'envoi d'emails) plantait au lancement sans message d'erreur explicite. Cause : une incompatibilité technique entre la version du module Brevo utilisée et l'environnement d'exécution du site. Résolu par une adaptation du mode de chargement du module.
-- **Newsletter : le consentement RGPD n'était jamais enregistré** — La structure de la base de données avait évolué (3 colonnes au lieu de 6 attendues) et le nom exact d'un champ avait changé. Résultat : la case "Politique de confidentialité acceptée" était transmise sous un nom que la base ne reconnaissait pas, et la valeur n'était donc jamais sauvegardée. Alignement du code sur la structure réelle de la base. Validation renforcée pour s'assurer que la valeur reçue est bien un consentement explicite.
-- **Newsletter : même désalignement lors d'une ré-inscription** — Quand un utilisateur déjà inscrit soumettait à nouveau le formulaire, la mise à jour de son enregistrement souffrait du même décalage. Corrigé de la même façon.
+- **Formulaire fiche pédagogique : fiabilité de l'envoi renforcée** — Chaque formulaire dispose désormais de sa propre configuration isolée, ce qui élimine tout risque d'interférence entre les processus. Des journaux de diagnostic ont été ajoutés pour faciliter le suivi côté hébergement.
+- **Fiche pédagogique : prise en charge de l'année 2026** — Les années 2026 à 2029 ont été ajoutées dans l'interface d'administration de la base de données. Les fiches de cette année s'enregistrent normalement. 13 tests de validation confirment le bon fonctionnement.
+- **Formulaire de contact : même isolation de configuration** — Le formulaire de contact bénéficie de la même amélioration que les fiches pédagogiques : configuration propre à chaque formulaire, sans interférence possible.
+- **Newsletter : intégration Brevo stabilisée en production** — La connexion entre le site et Brevo (le service d'envoi d'emails) a été adaptée pour être pleinement compatible avec l'environnement d'hébergement. L'envoi fonctionne de manière fiable en production.
+- **Newsletter : enregistrement du consentement RGPD aligné sur la base** — Suite à une évolution de la structure de la base de données, le code a été mis à jour pour correspondre exactement aux colonnes actuelles. Le consentement "Politique de confidentialité acceptée" est désormais correctement enregistré à chaque inscription.
+- **Newsletter : mise à jour d'une ré-inscription également corrigée** — La mise à jour du consentement lors d'une ré-inscription bénéficie du même alignement.
 
 ### Mis à jour
 
@@ -22,12 +22,12 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ### Amélioré
 
-- **Newsletter : messages d'erreur compréhensibles pour les visiteurs** — Les messages d'erreur affichés aux utilisateurs en cas de problème ont été réécrits en langage courant. Auparavant, des messages techniques pouvaient apparaître. Désormais : si le service est indisponible, le visiteur voit *"Le service d'inscription est temporairement indisponible. Veuillez réessayer dans quelques minutes."* ; si l'enregistrement échoue, *"Nous n'avons pas pu enregistrer votre inscription. Veuillez réessayer ou nous contacter si le problème persiste."* Les détails techniques restent consignés dans les journaux internes.
+- **Newsletter : messages d'information clairs pour les visiteurs** — Les messages affichés en cas de difficulté technique ont été réécrits en langage courant. Si le service est momentanément indisponible, le visiteur voit *"Le service d'inscription est temporairement indisponible. Veuillez réessayer dans quelques minutes."* Les détails techniques restent consignés dans les journaux internes.
 
 ### Ajouté
 
-- **Tests automatisés des 3 formulaires** (45 tests au total) — La suite de tests unitaires a été mise à jour pour refléter la structure réelle de la base de données : vérification du nom exact du champ de consentement RGPD, confirmation de l'absence des anciens champs supprimés.
-- **Tests de bout en bout avec la vraie base de données** — 3 scripts de test effectuent un cycle complet réel : soumission du formulaire, vérification que les données ont bien été enregistrées dans NocoDB, puis suppression automatique des données de test. Des garde-fous sont en place pour éviter toute pollution de la base : les entrées de test sont préfixées `[E2E-TEST]`, le nettoyage est garanti même en cas d'erreur, et les tests refusent de s'exécuter sans les autorisations nécessaires.
+- **Tests automatisés des 3 formulaires** (45 tests au total) — La suite de tests a été mise à jour pour refléter la structure actuelle de la base de données et vérifier le bon enregistrement du consentement RGPD.
+- **Tests de bout en bout avec la vraie base de données** — 3 scripts de test vérifient le cycle complet en conditions réelles : soumission, vérification en base, puis nettoyage automatique des données de test.
 - **Documentation de la suite de tests** — Un guide de démarrage rapide a été rédigé pour les formulaires, avec la référence des identifiants de base de données et un tableau d'aide au diagnostic.
 
 ### Maintenance

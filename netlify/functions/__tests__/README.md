@@ -3,35 +3,53 @@
 ## Quick Start
 
 ```bash
-# Unit tests (no token needed, runs offline)
-node netlify/functions/__tests__/submit-pedagogical-sheet.test.cjs
+# Unit tests — toutes les fonctions (no token needed, runs offline)
+node netlify/functions/__tests__/all-functions.test.js
 
-# E2E test (requires NocoDB token)
+# E2E test avec vrai NocoDB (requires token)
 echo "NOCODB_API_TOKEN=your_token" > .env
 node netlify/functions/__tests__/e2e-submit-pedagogical-sheet.js
 ```
 
 ## Test Files
 
-| File | Type | Token needed | What it tests |
+| File | Type | Token | Scope |
 |---|---|---|---|
-| `submit-pedagogical-sheet.test.cjs` | Unit | No | Table ID resolution, data formatting, handler modes, error handling |
-| `e2e-submit-pedagogical-sheet.js` | E2E | **Yes** | Real NocoDB API: connectivity, submission, record verification, cleanup |
+| `all-functions.test.js` | Unit | No | **Les 3 fonctions** : pedagogical-sheet, contact, newsletter (44 tests) |
+| `e2e-submit-pedagogical-sheet.js` | E2E | **Yes** | Fiche pédagogique : vrai appel NocoDB API, vérification, cleanup |
 
-## Unit Tests (`submit-pedagogical-sheet.test.cjs`)
+## Unit Tests (`all-functions.test.js`)
 
-6 tests covering:
+44 tests couvrant les 3 fonctions Netlify :
 
-1. **Table ID resolution** — Verifies the fix for the `NOCODB_TABLE_ID` env var conflict (Table ID `mur92i1x276ldbg` vs View ID `vwp6ybxaurqxfimt`)
-2. **Test mode** — Handler returns `isTestMode: true` when no API token
-3. **HTTP method rejection** — GET/PUT/DELETE return 405
-4. **Invalid JSON** — Malformed body returns 500 with user-friendly message
-5. **Data formatting** — Arrays stringified, no undefined fields, correct field mapping
-6. **Client-server consistency** — All 17 form fields match between frontend and backend
+### Tests transversaux
+1. **Isolation des env vars** — Vérifie que les 3 fonctions utilisent des project/table IDs différents
+2. **Résolution Table ID** — Vérifie le fix du conflit `NOCODB_TABLE_ID` (Table vs View ID)
+
+### submit-pedagogical-sheet
+3. POST mode test (sans token) → 200, `isTestMode=true`
+4. Méthode GET → 405
+5. JSON invalide → 500 avec message user-friendly
+6. Formatage : arrays stringifiés, pas de `undefined`, mapping 17 champs client ↔ serveur
+
+### submit-contact
+7. POST mode test → 200
+8. GET diagnostic → structure attendue
+9. DELETE → 405
+10. JSON invalide → 500
+11. Formatage : `subject→Objet`, `email→Auteur`, `message→Message`
+12. Cohérence client ↔ serveur : champ `name` envoyé mais non utilisé (documenté)
+
+### submit-newsletter
+13. POST mode test → 200, `mode=test`
+14. POST sans email → 400 (validation)
+15. GET diagnostic → structure
+16. PUT → 405
+17. Formatage : `email→Email`, `source→Source`, `privacyAccepted→Politique acceptée`
 
 ## E2E Test (`e2e-submit-pedagogical-sheet.js`)
 
-Full round-trip against the real NocoDB API:
+Full round-trip avec la vraie API NocoDB :
 
 | Step | What | Safety |
 |---|---|---|
@@ -61,13 +79,16 @@ Full round-trip against the real NocoDB API:
 
 ## NocoDB ID Reference
 
-| ID | Type | Used by |
-|---|---|---|
-| `pzafxqd4lr77r0v` | Project/Base ID | All API calls (arg 2) |
-| `mur92i1x276ldbg` | **Table ID** (fiches pédagogiques) | `dbTableRow.create()` — form submission |
-| `vwp6ybxaurqxfimt` | **View ID** | `dbViewRow.list()` — build script only |
+Chaque fonction pointe vers un projet/table NocoDB **distinct** :
 
-### Env var priority for Table ID (submit function)
+| Fonction | Project ID | Table ID | Env vars dédiées |
+|---|---|---|---|
+| Fiche pédagogique | `pzafxqd4lr77r0v` | `mur92i1x276ldbg` | `NOCODB_FICHES_TABLE_ID` |
+| Contact | `pn7128r4idyluf0` | `mza30wqm38wsmib` | `NOCODB_CONTACT_PROJECT_ID`, `NOCODB_CONTACT_TABLE_ID` |
+| Newsletter | `p41z6qweidro6nu` | `m6hnpjey4laav0z` | `NOCODB_NEWSLETTER_TABLE_ID` |
+| Build (fiches, View) | `pzafxqd4lr77r0v` | `vwp6ybxaurqxfimt` | `NOCODB_TABLE_ID` (View ID!) |
+
+### Env var priority for Table ID (submit-pedagogical-sheet)
 
 ```
 NOCODB_FICHES_TABLE_ID  →  NOCODB_BASE_ID  →  'mur92i1x276ldbg' (hardcoded)

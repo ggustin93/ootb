@@ -4,8 +4,10 @@ import { Api } from 'nocodb-sdk';
 const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || 'https://app.nocodb.com';
 const NOCODB_API_TOKEN = process.env.NOCODB_API_TOKEN;
 const NOCODB_ORG_ID = process.env.NOCODB_ORG_ID || 'noco';
-const NOCODB_PROJECT_ID = process.env.NOCODB_PROJECT_ID || 'pn7128r4idyluf0';
-const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID || 'mza30wqm38wsmib';
+// IMPORTANT: Utiliser des env vars dédiées pour éviter les conflits entre fonctions.
+// Chaque fonction Netlify pointe vers un projet/table NocoDB différent.
+const NOCODB_PROJECT_ID = process.env.NOCODB_CONTACT_PROJECT_ID || 'pn7128r4idyluf0';
+const NOCODB_TABLE_ID = process.env.NOCODB_CONTACT_TABLE_ID || 'mza30wqm38wsmib';
 
 console.log('🔄 Fonction Netlify submit-contact chargée');
 console.log('📝 Configuration:', {

@@ -147,12 +147,44 @@ async function testApiConnectivity(api) {
     assert(typeof response.pageInfo !== 'undefined', 'Réponse contient pageInfo');
     console.log(`  📊 Table contient ${response.pageInfo?.totalRows ?? '?'} enregistrements`);
 
-    // Vérifier la structure des colonnes via un enregistrement existant
+    // Vérifier TOUTES les colonnes utilisées par le handler submit
+    // (les noms avec accents/espaces sont fragiles si quelqu'un les renomme dans NocoDB)
     if (response.list.length > 0) {
       const sample = response.list[0];
-      const expectedFields = ['Title', 'Description', 'Prénom', 'Nom', 'Email', 'Ecole', 'Edition'];
-      for (const field of expectedFields) {
-        assert(field in sample, `Colonne "${field}" existe dans la table`);
+      const sampleKeys = Object.keys(sample);
+
+      // Colonnes EXACTES écrites par submit-pedagogical-sheet.js (lignes 61-78)
+      const requiredFields = [
+        'Title', 'Description',
+        'Type enseignement', 'Section', 'Destinataire',
+        'Thèmes',            // accent
+        'Objectifs', 'Competences',
+        'Prénom',             // accent
+        'Nom', 'Email',
+        'Téléphone',          // accent
+        'Ecole',
+        'Déclinaisons',       // accent
+        'Conseils', 'Liens', 'LiensVIDEO', 'Edition'
+      ];
+
+      console.log(`  📋 Colonnes trouvées dans NocoDB: ${sampleKeys.filter(k => !k.startsWith('nc_')).join(', ')}`);
+
+      let missingColumns = [];
+      for (const field of requiredFields) {
+        const exists = field in sample;
+        if (exists) {
+          assert(true, `Colonne "${field}" OK`);
+        } else {
+          assert(false, `Colonne "${field}" MANQUANTE — le formulaire va échouer !`);
+          missingColumns.push(field);
+        }
+      }
+
+      if (missingColumns.length > 0) {
+        console.error(`\n  🚨 COLONNES MANQUANTES: ${missingColumns.join(', ')}`);
+        console.error(`  🚨 Quelqu'un a probablement renommé ces colonnes dans NocoDB.`);
+        console.error(`  🚨 Vérifiez la table dans NocoDB et corrigez les noms,`);
+        console.error(`  🚨 ou mettez à jour le mapping dans submit-pedagogical-sheet.js (lignes 61-78).\n`);
       }
     } else {
       console.log('  ⚠️  Table vide, impossible de vérifier les colonnes');

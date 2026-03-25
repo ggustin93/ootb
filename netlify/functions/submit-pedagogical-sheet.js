@@ -160,6 +160,8 @@ export const handler = async (event) => {
         data: error.response?.data,
         message: error.message
       });
+      console.error('❌ Champs envoyés:', Object.keys(formattedData).join(', '));
+      console.error('❌ Si erreur 422 : une colonne a probablement été renommée dans NocoDB.');
 
       const errorMessage = isApiError(error)
         ? error.response?.data?.msg || error.message || 'Erreur inconnue'

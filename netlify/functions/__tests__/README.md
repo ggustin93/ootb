@@ -73,9 +73,29 @@ Full round-trip avec la vraie API NocoDB :
 
 ### Diagnostic : identifier la cause d'une erreur de soumission
 
-Quand un formulaire retourne **"Nous n'avons pas pu enregistrer votre fiche pédagogique"** (ou une erreur similaire pour contact/newsletter), les causes possibles sont les suivantes. Le test e2e permet de les identifier :
+Quand un formulaire retourne **"Nous n'avons pas pu enregistrer votre fiche pédagogique"** (ou une erreur similaire pour contact/newsletter), les causes possibles sont les suivantes, classées par probabilité. Le test e2e permet de les identifier :
 
-#### 1. Token NocoDB expiré ou révoqué (la plus fréquente)
+#### 1. Colonne renommée ou supprimée dans NocoDB (cause la plus probable)
+
+**Pourquoi ?** NocoDB a une interface spreadsheet : un simple clic sur un en-tête de colonne permet de le renommer. Si quelqu'un renomme `Prénom` en `Prenom` ou `Type enseignement` en `Type d'enseignement`, l'API rejette la soumission car le nom de champ ne correspond plus.
+
+**Symptôme e2e** : Test B affiche `❌ FAIL: Colonne "Xxx" MANQUANTE` avec la liste exacte des colonnes problématiques. Ou bien Test B passe (colonnes OK en lecture) mais Test C échoue avec `422 Unprocessable Entity`.
+
+**Colonnes avec accents/espaces (les plus fragiles)** :
+- `Prénom` (pas `Prenom`)
+- `Téléphone` (pas `Telephone`)
+- `Thèmes` (pas `Themes`)
+- `Déclinaisons` (pas `Declinaisons`)
+- `Type enseignement` (avec espace, pas `TypeEnseignement`)
+
+**Vérification** :
+- Ouvrir la table des fiches pédagogiques dans NocoDB
+- Vérifier que les 18 colonnes existent avec les noms **exacts** : `Title`, `Description`, `Type enseignement`, `Section`, `Destinataire`, `Thèmes`, `Objectifs`, `Competences`, `Prénom`, `Nom`, `Email`, `Téléphone`, `Ecole`, `Déclinaisons`, `Conseils`, `Liens`, `LiensVIDEO`, `Edition`
+- Le test e2e liste les colonnes trouvées vs attendues pour faciliter la comparaison
+
+**Fix** : soit renommer la colonne dans NocoDB pour retrouver le nom original, soit mettre à jour le mapping dans `netlify/functions/submit-pedagogical-sheet.js` (lignes 61-78) pour utiliser le nouveau nom.
+
+#### 2. Token NocoDB expiré ou révoqué
 
 **Symptôme e2e** : Test B échoue avec `401 Unauthorized`
 
@@ -86,7 +106,7 @@ Quand un formulaire retourne **"Nous n'avons pas pu enregistrer votre fiche péd
 
 **Vérification rapide via Netlify** : Function logs → chercher `❌ Erreur API` → le status HTTP de NocoDB y sera logué.
 
-#### 2. NocoDB a changé son API (migration v1 → v2)
+#### 3. NocoDB a changé son API (migration v1 → v2)
 
 **Symptôme e2e** : Test B échoue avec `404 Not Found` ou `400 Bad Request`
 
@@ -98,7 +118,7 @@ Quand un formulaire retourne **"Nous n'avons pas pu enregistrer votre fiche péd
 
 **Fix** : mettre à jour `nocodb-sdk` dans `package.json` vers la dernière version compatible.
 
-#### 3. Conflit de variables d'environnement
+#### 4. Conflit de variables d'environnement
 
 **Symptôme e2e** : Test B passe (connectivité OK) mais Test C échoue avec `404` ou `Table not found`
 
@@ -108,17 +128,6 @@ Quand un formulaire retourne **"Nous n'avons pas pu enregistrer votre fiche péd
 - Le fix appliqué dans cette PR utilise des env vars dédiées, mais il faut que le déploiement soit fait après le merge
 
 **Fix** : merger cette PR et redéployer, OU ajouter `NOCODB_FICHES_TABLE_ID=mur92i1x276ldbg` dans les env vars Netlify.
-
-#### 4. Structure de table modifiée dans NocoDB
-
-**Symptôme e2e** : Test B passe, Test C échoue avec `422 Unprocessable Entity` ou un message mentionnant un nom de colonne
-
-**Vérification** :
-- Ouvrir la table des fiches pédagogiques dans NocoDB
-- Vérifier que les colonnes suivantes existent toujours avec les noms exacts : `Title`, `Description`, `Type enseignement`, `Section`, `Prénom`, `Nom`, `Email`, `Téléphone`, `Ecole`, `Objectifs`, `Competences`, `Destinataire`, `Thèmes`, `Déclinaisons`, `Conseils`, `Liens`, `LiensVIDEO`, `Edition`
-- Si une colonne a été renommée ou supprimée : mettre à jour le mapping dans `netlify/functions/submit-pedagogical-sheet.js` (lignes 61-80)
-
-**Fix** : aligner les noms de champs dans le code avec la structure actuelle de la table NocoDB.
 
 #### 5. Problème réseau ou NocoDB indisponible
 
@@ -134,10 +143,11 @@ Quand un formulaire retourne **"Nous n'avons pas pu enregistrer votre fiche péd
 | Symptôme du test | Cause probable | Action |
 |---|---|---|
 | `NOCODB_API_TOKEN manquant` | Pas de `.env` | `echo "NOCODB_API_TOKEN=xxx" > .env` |
+| Test B : `Colonne "Xxx" MANQUANTE` | **Colonne renommée dans NocoDB** | Renommer dans NocoDB ou aligner le code |
 | Test B : `401 Unauthorized` | Token expiré/révoqué | Régénérer dans NocoDB → mettre à jour Netlify env vars |
 | Test B : `404 Not Found` | API NocoDB v2 migration ou projet supprimé | Vérifier NocoDB, mettre à jour `nocodb-sdk` |
+| Test B passe, Test C : `422` | Colonne renommée (nom OK en lecture, rejeté en écriture) | Vérifier les noms exacts dans NocoDB |
 | Test B passe, Test C : `404` | Conflit env var Table/View ID | Merger cette PR ou ajouter `NOCODB_FICHES_TABLE_ID` |
-| Test C : `422` | Colonne renommée/supprimée dans NocoDB | Aligner le mapping dans le code |
 | Test C : `isTestMode: true` | Token non chargé par dotenv | `.env` doit être à la racine, pas dans `__tests__/` |
 | Timeout 30s | NocoDB injoignable | Vérifier réseau / status NocoDB |
 

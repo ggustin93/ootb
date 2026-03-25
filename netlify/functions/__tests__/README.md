@@ -71,15 +71,75 @@ Full round-trip avec la vraie API NocoDB :
 - **Preventive cleanup** at start (catches orphaned records from previous failed runs)
 - **30s timeout** — never hangs
 
-### Troubleshooting
+### Diagnostic : identifier la cause d'une erreur de soumission
 
-| Symptom | Cause | Fix |
+Quand un formulaire retourne **"Nous n'avons pas pu enregistrer votre fiche pédagogique"** (ou une erreur similaire pour contact/newsletter), les causes possibles sont les suivantes. Le test e2e permet de les identifier :
+
+#### 1. Token NocoDB expiré ou révoqué (la plus fréquente)
+
+**Symptôme e2e** : Test B échoue avec `401 Unauthorized`
+
+**Vérification** :
+- Aller dans NocoDB → Team & Settings → API Tokens
+- Vérifier que le token est toujours actif
+- Si expiré : générer un nouveau token et le mettre à jour dans Netlify → Site settings → Environment variables → `NOCODB_API_TOKEN`
+
+**Vérification rapide via Netlify** : Function logs → chercher `❌ Erreur API` → le status HTTP de NocoDB y sera logué.
+
+#### 2. NocoDB a changé son API (migration v1 → v2)
+
+**Symptôme e2e** : Test B échoue avec `404 Not Found` ou `400 Bad Request`
+
+**Vérification** :
+- Aller sur `https://app.nocodb.com` et vérifier si l'interface a changé
+- Vérifier la version de NocoDB (visible dans les settings)
+- Le SDK `nocodb-sdk@0.262.x` utilise l'API v1 (`/api/v1/db/data/...`). Si NocoDB a migré vers v2, le SDK doit être mis à jour dans `package.json`
+- Tester manuellement : ouvrir la table des fiches dans NocoDB et vérifier qu'elle est accessible
+
+**Fix** : mettre à jour `nocodb-sdk` dans `package.json` vers la dernière version compatible.
+
+#### 3. Conflit de variables d'environnement
+
+**Symptôme e2e** : Test B passe (connectivité OK) mais Test C échoue avec `404` ou `Table not found`
+
+**Vérification** :
+- Dans Netlify → Site settings → Environment variables, vérifier si `NOCODB_TABLE_ID` est défini
+- Si oui : cette valeur est partagée entre le build script (qui attend un View ID `vwp6ybxaurqxfimt`) et la fonction de soumission (qui attend un Table ID `mur92i1x276ldbg`)
+- Le fix appliqué dans cette PR utilise des env vars dédiées, mais il faut que le déploiement soit fait après le merge
+
+**Fix** : merger cette PR et redéployer, OU ajouter `NOCODB_FICHES_TABLE_ID=mur92i1x276ldbg` dans les env vars Netlify.
+
+#### 4. Structure de table modifiée dans NocoDB
+
+**Symptôme e2e** : Test B passe, Test C échoue avec `422 Unprocessable Entity` ou un message mentionnant un nom de colonne
+
+**Vérification** :
+- Ouvrir la table des fiches pédagogiques dans NocoDB
+- Vérifier que les colonnes suivantes existent toujours avec les noms exacts : `Title`, `Description`, `Type enseignement`, `Section`, `Prénom`, `Nom`, `Email`, `Téléphone`, `Ecole`, `Objectifs`, `Competences`, `Destinataire`, `Thèmes`, `Déclinaisons`, `Conseils`, `Liens`, `LiensVIDEO`, `Edition`
+- Si une colonne a été renommée ou supprimée : mettre à jour le mapping dans `netlify/functions/submit-pedagogical-sheet.js` (lignes 61-80)
+
+**Fix** : aligner les noms de champs dans le code avec la structure actuelle de la table NocoDB.
+
+#### 5. Problème réseau ou NocoDB indisponible
+
+**Symptôme e2e** : Timeout après 30s, ou Test B échoue avec `ECONNREFUSED` / `ENOTFOUND`
+
+**Vérification** :
+- Vérifier que `https://app.nocodb.com` est accessible depuis un navigateur
+- Vérifier le status page de NocoDB (si disponible)
+- Si auto-hébergé : vérifier que le serveur NocoDB est en ligne
+
+### Troubleshooting rapide (tests e2e)
+
+| Symptôme du test | Cause probable | Action |
 |---|---|---|
-| `NOCODB_API_TOKEN manquant` | No `.env` file | `echo "NOCODB_API_TOKEN=xxx" > .env` |
-| Test B fails: `401 Unauthorized` | Token expired or invalid | Generate a new token in NocoDB settings |
-| Test C fails: `Table not found` | Wrong Table ID | Check `NOCODB_FICHES_TABLE_ID` or `NOCODB_BASE_ID` in `.env` |
-| Test C returns `isTestMode: true` | Token not loaded | Ensure `.env` is at project root, not in `__tests__/` |
-| Timeout after 30s | NocoDB API unreachable | Check network / NocoDB status |
+| `NOCODB_API_TOKEN manquant` | Pas de `.env` | `echo "NOCODB_API_TOKEN=xxx" > .env` |
+| Test B : `401 Unauthorized` | Token expiré/révoqué | Régénérer dans NocoDB → mettre à jour Netlify env vars |
+| Test B : `404 Not Found` | API NocoDB v2 migration ou projet supprimé | Vérifier NocoDB, mettre à jour `nocodb-sdk` |
+| Test B passe, Test C : `404` | Conflit env var Table/View ID | Merger cette PR ou ajouter `NOCODB_FICHES_TABLE_ID` |
+| Test C : `422` | Colonne renommée/supprimée dans NocoDB | Aligner le mapping dans le code |
+| Test C : `isTestMode: true` | Token non chargé par dotenv | `.env` doit être à la racine, pas dans `__tests__/` |
+| Timeout 30s | NocoDB injoignable | Vérifier réseau / status NocoDB |
 
 ## NocoDB ID Reference
 

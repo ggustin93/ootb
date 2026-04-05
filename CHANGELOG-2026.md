@@ -5,6 +5,20 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.2.2] — 2026-04-05
+
+### Corrigé
+
+- **Désynchronisation du schéma Tina résolue** — Erreur `checkTinaSchema` : "The local Tina schema doesn't match the remote Tina schema". `tina-lock.json` avait été corrigé manuellement (commits `496d990`, `f8f7655`) mais restait incomplet par rapport à ce que TinaCMS génère depuis les fichiers TypeScript. Solution : `npx tinacms dev --no-server` régénère le lockfile complet sans blocage cloud — ajout de ~6,5 KB de définitions de types manquantes.
+
+### Maintenance
+
+- Documentation mise à jour : `CLAUDE.md` et `memory-bank/troubleshoot.md` — méthode correcte de régénération du lockfile (`dev --no-server` plutôt que `build`)
+
+**Fichiers modifiés** : `tina/tina-lock.json`
+
+---
+
 ## [1.2.1] — 2026-04-05
 
 ### Corrigé

@@ -1,265 +1,13 @@
 [
   {
-    "id": "atelier-354",
-    "title": "Différenciation et inclusion : comment les IA génératives peuvent soutenir nos pratiques de classe",
-    "description": "Classes chargées, hétérogénéité croissante, besoins éducatifs particuliers : l’inclusion est un défi quotidien. Cet atelier propose d’explorer comment les IA génératives peuvent soutenir concrètement la différenciation sans céder au solutionnisme technologique. À partir d’exemples disciplinaires variés (DYS, niveaux de difficulté, élèves allophones, CUA), vous repartirez avec des pistes directement transférables dans vos pratiques de classe.\n",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Mickaël  BERTRAND",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-354.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "",
-    "contact": {
-      "email": "bertrand.mickael@hotmail.fr",
-      "phone": "+33622613386"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-355",
-    "title": "Apprendre la conjugaison et la grammaire par le jeu",
-    "description": "Venez découvrir les jeux Conju Cat's sur la conjugaison et Grammi Cat's sur la grammaire (4 jeux). Différentes règles sont proposées pour les niveaux primaire et secondaire : conjugaison, classes grammaticales, fonctions grammaticales, construction de phrases... La version numérique sera également présentée.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "François Petit",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-355.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.Catsfamily.net",
-    "contact": {
-      "email": "contact@catsfamily.net",
-      "phone": "0033781171311"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-356",
-    "title": "Créer des exercices numériques avec BookWidgets",
-    "description": "BookWidgets est une plateforme belge permettant de créer des activités interactives sur mesure; p.ex. des Quiz, Feuilles de travail, Mots croisés, Trouver les différences... \nCes exercices sont directement intégrables dans des plateformes comme Smartschool, Moodle, Classroom ou Teams. \nLors de cet atelier, vous apprendrez à concevoir ces exercices numériques. Nous vous montrerons également comment les partager avec vos élèves et les corriger de manière très efficace.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Dimitri Bongers",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-356.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.bookwidgets.com/fr",
-    "contact": {
-      "email": "dimitri@bookwidgets.com",
-      "phone": "0470043443"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-357",
-    "title": "Apprendre en bougeant : initiation au Misp pour les primaires et aux techniques psychocorporelles pour les adolescents.",
-    "description": "- Présentation et initiation au Misp ( Massage In School Program) qui existe dans une trentaine de pays depuis plus de 20 ans et qui apporte tous ses bienfaits pédagogiques comme sociaux dans les classes de maternelle et primaire (concentration, apprentissages, ambiance de classe, lutte contre le harcèlement,...)\n- Présentation et initiation à la méthode Ammassado : interaction de l'Intelligence Emotionnelle et des techniques psychocorporelles dans la gestion du stress et des émotions pour de meilleurs apprentissages en secondaire.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Roxane Geerinckx",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-357.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs, parents et enfants",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire"
-    ],
-    "target": "Professeurs, parents et enfants",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire",
-    "url": "https://abme.be         -        www.ammassado.com",
-    "contact": {
-      "email": "roxane.geerinckx@gmail.com",
-      "phone": "0472 04 08 15"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-358",
-    "title": "Expérimentez l’apprentissage par le jeu avec SIX BRICKS",
-    "description": "Soutenu par la Fondation LEGO®, le concept SIX BRICKS mobilise 6 briques DUPLO® pour développer les fonctions exécutives et de nombreux apprentissages clés, de façon ludique et concrète.\nMéthode pédagogique innovante, adaptée à tous les âges et tous les contextes.\nIlse Vaesen, formatrice certifiée et pionnière francophone, anime des formations pédagogiques dynamiques qui montrent comment intégrer cette approche dans vos pratiques en classe, en soutien, en accompagnement spécialisé ou à la maison.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Ilse Vaesen",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-358.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professionnels",
-      "Maternelle-primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professionnels",
-    "level": "Maternelle-primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.sixbricks.fr",
-    "contact": {
-      "email": "contact@sixbricks.fr",
-      "phone": "+33695975303"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-359",
-    "title": "Découvrez le potentiel de l'IA pour vos cours de langues modernes, FLE et FLA",
-    "description": "Vous êtes prof de langues et vous entendez parler de l'IA partout… mais concrètement, qu'est-ce que ça change pour votre classe ?\nDans cet atelier 100 % pratique. Vous repartirez avec des ressources audio créées par vous, adaptées au niveau de vos élèves, prêtes à l'emploi.\nVous découvrirez aussi ce qu'il est vraiment possible de faire grâce à l’IA dans le cadre de vos cours de langues modernes, FLE et FLA.\nParce que l'IA ne remplace pas le prof de langues — elle lui donne des superpouvoirs.\n",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Isabelle Fievet",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-359.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.pedagokit.be",
-    "contact": {
-      "email": "isabelle@pedagokit.be",
-      "phone": "0478784089"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-360",
-    "title": "Diversifier ses supports avec l’IA",
-    "description": "Un atelier pour découvrir comment les outils d’intelligence artificielle peuvent aider à créer, adapter et différencier facilement les supports. L’IA permet de transformer rapidement des idées en ressources accessibles et personnalisées afin de mieux répondre aux besoins des élèves présentant des troubles de l’apprentissage.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Justine Michaux",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-360.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.apeda.be",
-    "contact": {
-      "email": "justine@apeda.be",
-      "phone": "0472699308"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-361",
-    "title": "Débat mouvant : Les jeunes et les réseaux sociaux à l’heure de l’IA",
-    "description": "Découvrez un atelier interactif pour questionner nos usages du numérique à l’heure de l’IA. À travers un débat mouvant, les participant·es seront invité·es à réagir à des affirmations sur les réseaux sociaux, la désinformation, les stéréotypes de genre et le sexisme ordinaire. Un moment dynamique pour confronter les points de vue, déconstruire les idées reçues et ouvrir le dialogue. L’objectif : donner des outils aux enseignants pour pouvoir mener un débat dynamique avec leur groupe classe.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Brieuc Tollenaere",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-361.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.bibliosansfrontieres.be",
-    "contact": {
-      "email": "brieuc.tollenaere@bibliosansfrontieres.be",
-      "phone": "0472/65.43.41"
-    },
-    "status": "A valider"
-  },
-  {
-    "id": "atelier-362",
-    "title": "C’est quoi pour toi « être intelligent »?",
-    "description": "Comment rebooster l’estime de soi des élèves au regard d’ateliers autour des intelligences multiples.\nDécouverte des Octofuns et des Multibrios pour les primaires.\nComment transférer l’atelier en secondaire.\nAtelier pratique.\nEnvoi du pwp théorique par la suite.",
-    "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
-    "speaker": "Christelle Rasez",
-    "organization": "",
-    "image": "/images/events/ateliers/atelier-362.webp",
-    "speakerImage": null,
-    "tags": [
-      "Professeurs",
-      "Primaire et secondaire",
-      "Enseignement ordinaire et spécialisé"
-    ],
-    "target": "Professeurs",
-    "level": "Primaire et secondaire",
-    "teachingType": "Enseignement ordinaire et spécialisé",
-    "url": "www.coeurdonniere.com",
-    "contact": {
-      "email": "christellerasez@coeurdonniere.com",
-      "phone": "0472403756"
-    },
-    "status": "A valider"
-  },
-  {
     "id": "atelier-363",
     "title": "Un Jeu Dans Ma Classe",
     "description": "Participez à un mini projet « Un Jeu Dans Ma Classe » !\nGuidés par les fiches pédagogiques, testez des jeux de société courts et dynamiques. Expérimentez la transmission des règles et l’animation d’une table : rencontres et découvertes au rendez-vous. En prime, les jeux seront disponibles à la vente et les bénéfices financeront un projet dans une école!",
     "type": "Ateliers",
-    "day": "Mercredi",
-    "time": "À définir",
-    "endTime": "",
-    "location": "À définir",
+    "day": "Jeudi",
+    "time": "10:00",
+    "endTime": "11:00",
+    "location": "Espace atelier",
     "speaker": "Thibaut Quintens",
     "organization": "",
     "image": "/images/events/ateliers/atelier-363.webp",
@@ -277,6 +25,258 @@
       "email": "thibaut.quintens@actingames.com",
       "phone": "+32 485 86 48 29"
     },
-    "status": "A valider"
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-356",
+    "title": "Créer des exercices numériques avec BookWidgets",
+    "description": "BookWidgets est une plateforme belge permettant de créer des activités interactives sur mesure; p.ex. des Quiz, Feuilles de travail, Mots croisés, Trouver les différences... \nCes exercices sont directement intégrables dans des plateformes comme Smartschool, Moodle, Classroom ou Teams. \nLors de cet atelier, vous apprendrez à concevoir ces exercices numériques. Nous vous montrerons également comment les partager avec vos élèves et les corriger de manière très efficace.",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "11:15",
+    "endTime": "12:15",
+    "location": "Espace atelier",
+    "speaker": "Dimitri Bongers",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-356.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.bookwidgets.com/fr",
+    "contact": {
+      "email": "dimitri@bookwidgets.com",
+      "phone": "0470043443"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-357",
+    "title": "Apprendre en bougeant : initiation au Misp pour les primaires et aux techniques psychocorporelles pour les adolescents.",
+    "description": "- Présentation et initiation au Misp ( Massage In School Program) qui existe dans une trentaine de pays depuis plus de 20 ans et qui apporte tous ses bienfaits pédagogiques comme sociaux dans les classes de maternelle et primaire (concentration, apprentissages, ambiance de classe, lutte contre le harcèlement,...)\n- Présentation et initiation à la méthode Ammassado : interaction de l'Intelligence Emotionnelle et des techniques psychocorporelles dans la gestion du stress et des émotions pour de meilleurs apprentissages en secondaire.",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "12:15",
+    "endTime": "13:15",
+    "location": "Espace atelier",
+    "speaker": "Roxane Geerinckx",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-357.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire",
+    "url": "https://abme.be         -        www.ammassado.com",
+    "contact": {
+      "email": "roxane.geerinckx@gmail.com",
+      "phone": "0472 04 08 15"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-355",
+    "title": "Apprendre la conjugaison et la grammaire par le jeu",
+    "description": "Venez découvrir les jeux Conju Cat's sur la conjugaison et Grammi Cat's sur la grammaire (4 jeux). Différentes règles sont proposées pour les niveaux primaire et secondaire : conjugaison, classes grammaticales, fonctions grammaticales, construction de phrases... La version numérique sera également présentée.",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "13:30",
+    "endTime": "14:30",
+    "location": "Espace atelier",
+    "speaker": "François Petit",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-355.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs, parents et enfants",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs, parents et enfants",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.Catsfamily.net",
+    "contact": {
+      "email": "contact@catsfamily.net",
+      "phone": "0033781171311"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-359",
+    "title": "Découvrez le potentiel de l'IA pour vos cours de langues modernes, FLE et FLA",
+    "description": "Vous êtes prof de langues et vous entendez parler de l'IA partout… mais concrètement, qu'est-ce que ça change pour votre classe ?\nDans cet atelier 100 % pratique. Vous repartirez avec des ressources audio créées par vous, adaptées au niveau de vos élèves, prêtes à l'emploi.\nVous découvrirez aussi ce qu'il est vraiment possible de faire grâce à l’IA dans le cadre de vos cours de langues modernes, FLE et FLA.\nParce que l'IA ne remplace pas le prof de langues — elle lui donne des superpouvoirs.\n",
+    "type": "Ateliers",
+    "day": "Jeudi",
+    "time": "14:45",
+    "endTime": "15:45",
+    "location": "Espace atelier",
+    "speaker": "Isabelle Fievet",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-359.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.pedagokit.be",
+    "contact": {
+      "email": "isabelle@pedagokit.be",
+      "phone": "0478784089"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-360",
+    "title": "Diversifier ses supports avec l’IA",
+    "description": "Un atelier pour découvrir comment les outils d’intelligence artificielle peuvent aider à créer, adapter et différencier facilement les supports. L’IA permet de transformer rapidement des idées en ressources accessibles et personnalisées afin de mieux répondre aux besoins des élèves présentant des troubles de l’apprentissage.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "10:00",
+    "endTime": "11:00",
+    "location": "Espace atelier",
+    "speaker": "Justine Michaux",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-360.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.apeda.be",
+    "contact": {
+      "email": "justine@apeda.be",
+      "phone": "0472699308"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-361",
+    "title": "Débat mouvant : Les jeunes et les réseaux sociaux à l’heure de l’IA",
+    "description": "Découvrez un atelier interactif pour questionner nos usages du numérique à l’heure de l’IA. À travers un débat mouvant, les participant·es seront invité·es à réagir à des affirmations sur les réseaux sociaux, la désinformation, les stéréotypes de genre et le sexisme ordinaire. Un moment dynamique pour confronter les points de vue, déconstruire les idées reçues et ouvrir le dialogue. L’objectif : donner des outils aux enseignants pour pouvoir mener un débat dynamique avec leur groupe classe.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "11:15",
+    "endTime": "12:15",
+    "location": "Espace atelier",
+    "speaker": "Brieuc Tollenaere",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-361.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.bibliosansfrontieres.be",
+    "contact": {
+      "email": "brieuc.tollenaere@bibliosansfrontieres.be",
+      "phone": "0472/65.43.41"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-358",
+    "title": "Expérimentez l’apprentissage par le jeu avec SIX BRICKS",
+    "description": "Soutenu par la Fondation LEGO®, le concept SIX BRICKS mobilise 6 briques DUPLO® pour développer les fonctions exécutives et de nombreux apprentissages clés, de façon ludique et concrète.\nMéthode pédagogique innovante, adaptée à tous les âges et tous les contextes.\nIlse Vaesen, formatrice certifiée et pionnière francophone, anime des formations pédagogiques dynamiques qui montrent comment intégrer cette approche dans vos pratiques en classe, en soutien, en accompagnement spécialisé ou à la maison.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "12:15",
+    "endTime": "13:15",
+    "location": "Espace atelier",
+    "speaker": "Ilse Vaesen",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-358.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professionnels",
+      "Maternelle-primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professionnels",
+    "level": "Maternelle-primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.sixbricks.fr",
+    "contact": {
+      "email": "contact@sixbricks.fr",
+      "phone": "+33695975303"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-354",
+    "title": "Différenciation et inclusion : comment les IA génératives peuvent soutenir nos pratiques de classe",
+    "description": "Classes chargées, hétérogénéité croissante, besoins éducatifs particuliers : l’inclusion est un défi quotidien. Cet atelier propose d’explorer comment les IA génératives peuvent soutenir concrètement la différenciation sans céder au solutionnisme technologique. À partir d’exemples disciplinaires variés (DYS, niveaux de difficulté, élèves allophones, CUA), vous repartirez avec des pistes directement transférables dans vos pratiques de classe.\n",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "13:30",
+    "endTime": "14:30",
+    "location": "Espace atelier",
+    "speaker": "Mickaël  BERTRAND",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-354.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "",
+    "contact": {
+      "email": "bertrand.mickael@hotmail.fr",
+      "phone": "+33622613386"
+    },
+    "status": "Publié"
+  },
+  {
+    "id": "atelier-362",
+    "title": "C’est quoi pour toi « être intelligent »?",
+    "description": "Comment rebooster l’estime de soi des élèves au regard d’ateliers autour des intelligences multiples.\nDécouverte des Octofuns et des Multibrios pour les primaires.\nComment transférer l’atelier en secondaire.\nAtelier pratique.\nEnvoi du pwp théorique par la suite.",
+    "type": "Ateliers",
+    "day": "Vendredi",
+    "time": "14:45",
+    "endTime": "15:45",
+    "location": "Espace atelier",
+    "speaker": "Christelle Rasez",
+    "organization": "",
+    "image": "/images/events/ateliers/atelier-362.webp",
+    "speakerImage": null,
+    "tags": [
+      "Professeurs",
+      "Primaire et secondaire",
+      "Enseignement ordinaire et spécialisé"
+    ],
+    "target": "Professeurs",
+    "level": "Primaire et secondaire",
+    "teachingType": "Enseignement ordinaire et spécialisé",
+    "url": "www.coeurdonniere.com",
+    "contact": {
+      "email": "christellerasez@coeurdonniere.com",
+      "phone": "0472403756"
+    },
+    "status": "Publié"
   }
 ]

@@ -5,6 +5,22 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.2.1] — 2026-04-05
+
+### Corrigé
+
+- **Accès administration TinaCMS rétabli** — Le build TinaCMS est désormais résilient aux désynchronisations de schéma GraphQL grâce à `--skip-cloud-checks`, tout en échouant sur les vraies erreurs. L'interface `/admin` se génère à nouveau correctement à chaque déploiement.
+- **Migration complète vers Netlify** — Le site est désormais entièrement hébergé sur Netlify. L'ancien lien Vercel (`outofthebooks.vercel.app`) a été retiré. Lien unique d'administration : `outofthebooks.com/admin`.
+
+### Maintenance
+
+- Suppression des vestiges Vercel (`vercel.json`, `api/cloudinary/[...media].js`) — remplacés par les fonctions Netlify existantes
+- Nettoyage de 7 branches Git mergées (local + remote)
+
+**Fichiers modifiés** : `package.json`, `vercel.json` (supprimé), `api/cloudinary/[...media].js` (supprimé)
+
+---
+
 ## [1.2.0] — 2026-03-25
 
 ### Fiabilité des formulaires

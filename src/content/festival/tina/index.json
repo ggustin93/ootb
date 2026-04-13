@@ -4,11 +4,6 @@
     "description": "Le Festival Out of the Books est un événement dédié à l'innovation pédagogique avec des conférences, ateliers et rencontres pour repenser l'éducation de demain.",
     "image": "~/assets/images/banniere_festival.jpeg"
   },
-  "festivalDates": [
-    { "date": "2026-09-30T12:00:00.000Z" },
-    { "date": "2026-10-01T12:00:00.000Z" },
-    { "date": "2026-10-02T12:00:00.000Z" }
-  ],
   "hero": {
     "logo": "~/assets/images/logo_festival_white.svg",
     "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742476885/1007-OOTB-S1-137_1_uhptbc.jpg",
@@ -16,6 +11,17 @@
     "location": "La Sucrerie - Wavre",
     "description": "Trois jours de conférences, d'ateliers et de rencontres pour repenser l'éducation de demain en famille et entre professionnels de l'éducation. "
   },
+  "festivalDates": [
+    {
+      "date": "2026-09-30T12:00:00.000Z"
+    },
+    {
+      "date": "2026-10-01T12:00:00.000Z"
+    },
+    {
+      "date": "2026-10-02T12:00:00.000Z"
+    }
+  ],
   "about": {
     "title": "Le festival des pédagogies innovantes",
     "description": "Trois jours dédiés à la découverte et au partage des pratiques pédagogiques innovantes, pour repenser l'éducation de demain en FAMILLE (journée spéciale le mercredi 30 septembre) et entre professionnels de l'éducation.",
@@ -104,7 +110,7 @@
     }
   },
   "ticketing": {
-    "modalText": "Le Festival Out of the Books est reconnu par l'IFPC. Pour vous y inscrire, rendez-vous sur le site de l’IFPC ci-dessous. Contactez votre direction pour valider votre participation avec la clé d’inscription aux formations (C.I.F.). La référence du code consacré à cette formation porte le numéro: «120102406/53576 ; 53577 et 53578». Pour toute autre inscription, cliquez sur \"billetterie générale\".\n",
+    "modalText": "Le Festival Out of the Books est reconnu par l'IFPC. Pour vous y inscrire, rendez-vous sur le site de l’IFPC ci-dessous. Contactez votre direction pour valider votre participation avec la clé d’inscription aux formations (C.I.F.). La référence du code consacré à cette formation porte le numéro: « « 120202510/sessions 58880 pour le mercredi 30 septembre; 58881  pour le jeudi 1er octobre  et 58882 pour le vendredi 2 octobre) Pour toute autre inscription, cliquez sur \"billetterie générale\".\n",
     "ifpcButtonLabel": "Billetterie IFPC",
     "ifpcButtonUrl": "https://ifpc-fwb.be",
     "weezeventButtonLabel": "Billetterie générale",

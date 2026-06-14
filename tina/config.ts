@@ -17,7 +17,9 @@ export default defineConfig({
   
   build: {
     outputFolder: "admin",
-    publicFolder: "dist",
+    // "public" (et non "dist") pour que l'admin soit servi par `astro dev` à /admin
+    // en local. En build, l'ordre `tinacms build && astro build` recopie public/admin → dist/admin.
+    publicFolder: "public",
   },
 
   media: {

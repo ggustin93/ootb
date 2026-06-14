@@ -8,10 +8,12 @@
         "node": "^20.3.0 || ^22.0.0"
     },
     "scripts": {
-        "dev": "astro dev && tinacms dev",
+        "dev": "tinacms dev -c \"astro dev\"",
+        "dev:local": "TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"astro dev\"",
+        "dev:astro": "astro dev",
         "start": "astro dev",
-        "build": "astro build && npx tinacms build",
-        "build:netlify": "NETLIFY=true NODE_ENV=production npm run clean && npm run optimize:prebuild && astro build --silent && npx tinacms build --skip-cloud-checks",
+        "build": "npx tinacms build && astro build",
+        "build:netlify": "NETLIFY=true NODE_ENV=production npm run clean && npm run optimize:prebuild && npx tinacms build --skip-cloud-checks && astro build --silent",
         "optimize:prebuild": "node src/scripts/build-festival-data.js && node src/scripts/build-fiches-pedagogiques.js",
         "preview": "astro preview",
         "astro": "astro",

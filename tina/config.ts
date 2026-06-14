@@ -6,6 +6,7 @@ import { blogCollection } from "./blogCollection";
 import { appelProjetCollection } from "./appelProjetCollection";
 import { navigationCollection } from "./navigationCollection";
 import { aboutCollection } from "./aboutCollection";
+import { erasmusCollection } from "./erasmusCollection";
 import { contactCollection } from "./contactCollection";
 import { siteSettingsCollection } from "./siteSettingsCollection";
 import { festivalCollection } from "./festivalCollection";
@@ -37,6 +38,7 @@ export default defineConfig({
       appelProjetCollection,
       blogCollection,
       aboutCollection,
+      erasmusCollection,
       contactCollection,
       siteSettingsCollection,
       navigationCollection,

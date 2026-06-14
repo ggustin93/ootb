@@ -1,0 +1,390 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
+import GradientHeroSection from '~/components/sections/GradientHeroSection.astro';
+import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
+import MediaCard from '~/components/erasmus/MediaCard.astro';
+import { resolveVideoThumbnail, hasLink } from '~/utils/erasmusMedia';
+
+import erasmusData from '~/content/erasmus-plus/index.json';
+
+export const prerender = true;
+
+const { metadata, hero, projet, partenaires, ressources, carnetDeBord } = erasmusData;
+
+// Liens d'un partenaire : privilégie la liste `liens`, repli sur `lien` unique.
+const partnerLinks = (partenaire: { lien?: string; liens?: { label?: string; url?: string }[] }) => {
+  const list = (partenaire.liens ?? []).filter((l) => hasLink(l?.url));
+  if (list.length) return list;
+  return hasLink(partenaire.lien) ? [{ label: 'Visiter le site', url: partenaire.lien }] : [];
+};
+
+// Pré-calcul des liens par partenaire (évite un double appel dans le template).
+const partenairesAvecLiens = partenaires.map((partenaire) => ({ partenaire, liens: partnerLinks(partenaire) }));
+
+// Icônes thématiques des volets (mappées sur l'ordre des volets : IA, puis Ludopédagogie)
+const voletIcons = ['tabler:robot', 'tabler:dice-5'];
+---
+
+<Layout {metadata}>
+  <!-- HERO -->
+  <GradientHeroSection>
+    <div class="max-w-6xl mx-auto relative z-10 px-4 pt-12 md:pt-20 w-full">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <!-- Texte -->
+        <div class="text-center md:text-left space-y-4 md:space-y-6">
+          <h1 class="font-heading font-bold text-white text-4xl md:text-5xl lg:text-6xl leading-tight [text-wrap:balance]">
+            {hero.titre}
+          </h1>
+          <p class="text-lg md:text-xl text-white/90 font-light border-l-4 border-[--ootb-yellow] pl-4 md:pl-6 leading-relaxed max-w-xl mx-auto md:mx-0">
+            {hero.sousTitre}
+          </p>
+          {hero.intro ? (
+            <p class="text-base md:text-lg text-white/80 leading-relaxed max-w-xl mx-auto md:mx-0">
+              {hero.intro}
+            </p>
+          ) : null}
+        </div>
+
+        <!-- Image principale -->
+        <div class="relative mt-6 md:mt-0 max-w-md mx-auto md:max-w-full md:ml-6">
+          <div class="relative z-10 rounded-2xl shadow-2xl ring-1 ring-[color-mix(in_srgb,var(--ootb-blue)_15%,white)] bg-white p-5 md:p-8 flex items-center justify-center">
+            {hero.heroImage ? (
+              <Image
+                src={hero.heroImage}
+                alt="Projet Erasmus+ — Out of the Books"
+                class="w-full h-auto object-contain rounded-lg"
+                widths={[400, 700]}
+                sizes="(max-width: 768px) 100vw, 700px"
+                loading="eager"
+                decoding="async"
+              />
+            ) : (
+              <div class="w-full aspect-[4/3] flex items-center justify-center text-[--ootb-blue]/40" aria-hidden="true">
+                <Icon name="tabler:stars" class="w-16 h-16" />
+              </div>
+            )}
+          </div>
+          <!-- Accent décoratif -->
+          <div class="absolute inset-0 rounded-2xl transform rotate-2 translate-x-3 translate-y-3 -z-10 bg-[--ootb-yellow]"></div>
+
+          <div class="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 z-30">
+            <ScrollDownArrow targetId="le-projet" label="Découvrir le projet" position="" hideOnMobile={true} class="text-white" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </GradientHeroSection>
+
+  <!-- LE PROJET -->
+  <section id="le-projet" class="py-16 bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <SectionDivider variant="blue" class="mb-8">Le projet</SectionDivider>
+        <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+          {hero.descriptif}
+        </p>
+
+        {projet?.thematiques?.length ? (
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            {projet.thematiques.map((theme, i) => (
+              <div class="flex gap-4 rounded-2xl border border-gray-100 dark:border-slate-700 bg-[color-mix(in_srgb,var(--ootb-blue)_4%,white)] dark:bg-slate-800 p-6 shadow-sm">
+                <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[color-mix(in_srgb,var(--ootb-blue)_12%,white)] dark:bg-slate-700 flex items-center justify-center text-[--ootb-blue]" aria-hidden="true">
+                  <Icon name={voletIcons[i] ?? 'tabler:bulb'} class="w-7 h-7" />
+                </div>
+                <div>
+                  <h3 class="font-handwritten text-xl md:text-2xl leading-snug text-gray-900 dark:text-white">{theme.titre}</h3>
+                  <p class="mt-2 text-gray-600 dark:text-gray-300 leading-relaxed">{theme.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {projet?.ambition ? (
+          <div class="mt-10 rounded-2xl bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-turquoise)_14%,white)] to-[color-mix(in_srgb,var(--ootb-turquoise)_5%,white)] dark:from-slate-800 dark:to-slate-800 border border-[color-mix(in_srgb,var(--ootb-turquoise)_25%,white)] dark:border-slate-700 p-6 md:p-8">
+            <h3 class="flex items-center gap-2 font-handwritten text-xl md:text-2xl text-[--ootb-turquoise]">
+              <Icon name="tabler:rocket" class="w-7 h-7" aria-hidden="true" />
+              Une ambition commune
+            </h3>
+            <p class="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">{projet.ambition}</p>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTENAIRES -->
+  <section id="partenaires" class="py-16 bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <SectionDivider variant="turquoise" class="mb-6">Nos partenaires</SectionDivider>
+
+        <p class="max-w-3xl text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-10">
+          Pour mener ce projet à l'échelle européenne, Out of the Books s'entoure de deux partenaires complémentaires, au Danemark et en France. Chacun apporte son expertise sur l'un des deux volets du projet&nbsp;: l'intelligence artificielle et le jeu au service des apprentissages.
+        </p>
+
+        <div class="space-y-6 md:space-y-8">
+          {partenairesAvecLiens.map(({ partenaire, liens }) => (
+            <article class="flex flex-col sm:flex-row gap-6 md:gap-8 bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
+              <div class="sm:w-44 md:w-52 flex-shrink-0 flex items-center justify-center sm:justify-start sm:border-r sm:border-gray-100 dark:sm:border-slate-700 sm:pr-6 md:sm:pr-8">
+                {partenaire.logo ? (
+                  <img
+                    src={partenaire.logo}
+                    alt={`Logo ${partenaire.nom}`}
+                    class="max-h-16 max-w-full w-auto object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div class="w-16 h-16 rounded-xl bg-[color-mix(in_srgb,var(--ootb-blue)_10%,white)] dark:bg-slate-700 flex items-center justify-center text-[--ootb-blue]" aria-hidden="true">
+                    <Icon name="tabler:building-community" class="w-9 h-9" />
+                  </div>
+                )}
+              </div>
+              <div class="flex-1 min-w-0">
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white">{partenaire.nom}</h2>
+                <p class="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">{partenaire.description}</p>
+                {liens.length > 0 && (
+                  <div class="mt-5 flex flex-wrap gap-2.5">
+                    {liens.map(lien => (
+                      <a
+                        href={lien.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-1.5 rounded-full border border-[color-mix(in_srgb,var(--ootb-blue)_30%,white)] bg-[color-mix(in_srgb,var(--ootb-blue)_6%,white)] dark:bg-slate-700 dark:border-slate-600 px-3.5 py-1.5 text-sm font-medium text-[--ootb-blue] dark:text-sky-300 hover:bg-[color-mix(in_srgb,var(--ootb-blue)_12%,white)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[--ootb-blue] focus-visible:ring-offset-2"
+                      >
+                        <span>{lien.label}</span>
+                        <Icon name="tabler:external-link" class="w-4 h-4" aria-hidden="true" />
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESSOURCES PÉDAGOGIQUES -->
+  {ressources?.publie !== false && (
+  <section id="ressources" class="py-16 bg-[color-mix(in_srgb,var(--ootb-blue)_5%,white)] dark:bg-slate-950">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <SectionDivider variant="orange" class="mb-12">{ressources.titre}</SectionDivider>
+
+        <!-- Onglets segmentés des volets -->
+        <div class="flex justify-center mb-12">
+          <div role="tablist" aria-label="Volets du projet" class="flex flex-col sm:flex-row gap-1.5 bg-gray-100 dark:bg-slate-800 p-1.5 rounded-2xl w-full max-w-xs sm:max-w-none sm:w-auto">
+            {ressources.volets.map((volet, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`volet-tab-${i}`}
+                aria-controls={`volet-panel-${i}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+                data-volet-tab={i}
+                class="volet-tab flex items-center justify-center gap-2.5 px-5 sm:px-7 py-3 rounded-xl font-heading text-lg sm:text-xl tracking-wide text-gray-500 dark:text-gray-300 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[--ootb-orange] focus-visible:ring-offset-2 aria-selected:bg-white dark:aria-selected:bg-slate-700 aria-selected:text-[--ootb-orange] aria-selected:shadow-md hover:text-gray-700 dark:hover:text-white aria-selected:hover:text-[--ootb-orange]"
+              >
+                <Icon name={voletIcons[i] ?? 'tabler:bookmark'} class="w-6 h-6 flex-shrink-0" aria-hidden="true" />
+                <span>{volet.nom}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          {ressources.volets.map((volet, i) => (
+            <div
+              id={`volet-panel-${i}`}
+              role="tabpanel"
+              aria-labelledby={`volet-tab-${i}`}
+              data-volet-panel={i}
+              class={i === 0 ? '' : 'hidden'}
+            >
+              <h2 class="sr-only">{volet.nom}</h2>
+
+              {/* Podcasts */}
+              {volet.podcastsPublie !== false && volet.podcasts?.length ? (
+                <div class="mb-10">
+                  <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                    <Icon name="tabler:headphones" class="w-6 h-6 text-[--ootb-orange]" aria-hidden="true" />
+                    Podcasts
+                  </h3>
+                  <ul class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 list-none p-0">
+                    {volet.podcasts.map(podcast => (
+                      <li>
+                        <MediaCard kind="podcast" title={podcast.titre} href={podcast.url} thumbnail={podcast.cover} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              {/* Vidéos */}
+              {volet.videosPublie !== false && volet.videos?.length ? (
+                <div class="mb-10">
+                  <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                    <Icon name="tabler:player-play" class="w-6 h-6 text-[--ootb-orange]" aria-hidden="true" />
+                    Vidéos
+                  </h3>
+                  <ul class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 list-none p-0">
+                    {volet.videos.map(video => (
+                      <li>
+                        <MediaCard kind="video" title={video.titre} href={video.url} thumbnail={resolveVideoThumbnail(video)} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              {/* Fiches pédagogiques */}
+              {volet.fichesPublie !== false && volet.fichesCategories?.length ? (
+                <div>
+                  <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                    <Icon name="tabler:file-text" class="w-6 h-6 text-[--ootb-orange]" aria-hidden="true" />
+                    Fiches pédagogiques
+                  </h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {volet.fichesCategories.map(cat => (
+                      <div class="overflow-hidden bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 shadow-sm">
+                        <div class="flex items-center gap-3 px-5 py-4 bg-gradient-to-r from-[color-mix(in_srgb,var(--ootb-orange)_14%,white)] to-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] dark:from-slate-700 dark:to-slate-700 border-b border-gray-100 dark:border-slate-700">
+                          <span class="flex-shrink-0 w-9 h-9 rounded-lg bg-white/70 dark:bg-slate-600 flex items-center justify-center text-[--ootb-orange]" aria-hidden="true">
+                            <Icon name="tabler:file-text" class="w-5 h-5" />
+                          </span>
+                          <h4 class="font-semibold text-gray-900 dark:text-white">{cat.categorie}</h4>
+                        </div>
+                        <ul class="space-y-2 list-none p-5">
+                          {cat.fiches.map(fiche => (
+                            <li>
+                              {hasLink(fiche.lienPdf) ? (
+                                <a
+                                  href={fiche.lienPdf}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  class="group flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-[--ootb-orange] dark:hover:text-[--ootb-orange] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[--ootb-orange] focus-visible:ring-offset-2 rounded px-1 py-0.5"
+                                >
+                                  <Icon name="tabler:download" class="w-5 h-5 flex-shrink-0 text-[--ootb-orange]" aria-hidden="true" />
+                                  <span>{fiche.titre}</span>
+                                </a>
+                              ) : (
+                                <span class="flex items-center gap-2 text-gray-400 dark:text-gray-500 px-1 py-0.5">
+                                  <Icon name="tabler:file-text" class="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                                  <span>{fiche.titre}</span>
+                                </span>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+  )}
+
+  <!-- CARNET DE BORD -->
+  {carnetDeBord?.publie !== false && (
+  <section id="carnet-de-bord" class="py-12 md:py-16 bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-[color-mix(in_srgb,var(--ootb-violet)_7%,white)] dark:bg-slate-800 rounded-2xl border border-[color-mix(in_srgb,var(--ootb-violet)_18%,white)] dark:border-slate-700 p-6 md:p-8 text-center shadow-sm">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[color-mix(in_srgb,var(--ootb-violet)_14%,white)] dark:bg-slate-700 text-[--ootb-violet] mb-4">
+            <Icon name="tabler:notebook" class="w-6 h-6" aria-hidden="true" />
+          </div>
+          <h2 class="text-xl md:text-2xl font-heading font-semibold text-gray-900 dark:text-white">{carnetDeBord.titre}</h2>
+          <p class="mt-3 text-base text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl mx-auto">{carnetDeBord.intro}</p>
+          <div class="mt-6">
+            {hasLink(carnetDeBord.lienGoogleDoc) ? (
+              <a
+                href={carnetDeBord.lienGoogleDoc}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-medium rounded-full bg-[--ootb-violet] text-white shadow-sm hover:shadow-md hover:bg-[color-mix(in_srgb,var(--ootb-violet)_90%,black)] hover:-translate-y-0.5 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[--ootb-violet] focus-visible:ring-offset-2"
+              >
+                <span>Suivre l'avancement du projet</span>
+                <Icon name="tabler:external-link" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+              </a>
+            ) : (
+              <span class="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-medium rounded-full bg-gray-100 dark:bg-slate-700 text-gray-400 dark:text-gray-500 cursor-default">
+                <Icon name="tabler:clock" class="w-5 h-5" aria-hidden="true" />
+                <span>Lien à venir</span>
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  )}
+
+  <!-- Mention de financement Union européenne -->
+  <section class="py-8 bg-[color-mix(in_srgb,var(--ootb-blue)_6%,white)] dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
+        {hero.logoUE ? (
+          <img
+            src={hero.logoUE}
+            alt="Cofinancé par l'Union européenne"
+            class="h-12 w-auto object-contain flex-shrink-0"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="flex items-center gap-2.5 text-[--ootb-blue] flex-shrink-0" role="img" aria-label="Cofinancé par l'Union européenne">
+            <Icon name="tabler:stars" class="w-9 h-9" aria-hidden="true" />
+            <span class="font-heading text-sm leading-tight text-left">Cofinancé par<br />l'Union européenne</span>
+          </div>
+        )}
+        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
+          Ce projet est cofinancé par l'Union européenne dans le cadre du programme Erasmus+. Les points de vue et avis exprimés n'engagent que leurs auteurs et ne reflètent pas nécessairement ceux de l'Union européenne.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function initVoletTabs() {
+      const tabs = Array.from(document.querySelectorAll<HTMLElement>('[data-volet-tab]'));
+      const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-volet-panel]'));
+      if (tabs.length < 2) return;
+
+      const activate = (idx: number) => {
+        tabs.forEach((tab, i) => {
+          const selected = i === idx;
+          tab.setAttribute('aria-selected', String(selected));
+          tab.setAttribute('tabindex', selected ? '0' : '-1');
+        });
+        panels.forEach((panel, i) => panel.classList.toggle('hidden', i !== idx));
+      };
+
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => activate(i));
+        tab.addEventListener('keydown', (event) => {
+          if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+          event.preventDefault();
+          const dir = event.key === 'ArrowRight' ? 1 : -1;
+          const next = (i + dir + tabs.length) % tabs.length;
+          activate(next);
+          tabs[next].focus();
+        });
+      });
+    }
+
+    // ClientRouter (View Transitions) est actif : `astro:page-load` couvre
+    // le chargement initial ET chaque navigation. Pas besoin de DOMContentLoaded
+    // (qui ferait un double-bind des écouteurs au premier rendu).
+    document.addEventListener('astro:page-load', initVoletTabs);
+  </script>
+</Layout>

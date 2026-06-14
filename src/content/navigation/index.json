@@ -11,7 +11,8 @@
           },
           {
             "text": "Billetterie",
-            "href": "/festival/#tickets"
+            "href": "/festival/#tickets",
+            "icon": "tabler:ticket"
           },
           {
             "text": "A propos",
@@ -45,23 +46,28 @@
           },
           {
             "text": "Podcasts",
-            "href": "/category/podcast/"
+            "href": "/category/podcast/",
+            "icon": "tabler:microphone"
           },
           {
             "text": "Emissions TV",
-            "href": "/category/tv/"
+            "href": "/category/tv/",
+            "icon": "tabler:device-tv"
           },
           {
             "text": "Live Facebook",
-            "href": "/category/live/"
+            "href": "/category/live/",
+            "icon": "tabler:brand-facebook"
           },
           {
             "text": "Fiches pédagogiques",
-            "href": "/category/fiche/"
+            "href": "/category/fiche/",
+            "icon": "tabler:file-text"
           },
           {
             "text": "Projet Erasmus+",
-            "href": "/4_actualites/un-projet-erasmus-pour-innover-ensemble-en-ducation-mdx/"
+            "href": "/erasmus-plus/",
+            "icon": "tabler:school"
           }
         ]
       },
@@ -116,12 +122,17 @@
             "href": "/a-propos/#equipe"
           },
           {
+            "text": "Conseil d'administration",
+            "href": "/a-propos/#conseil-administration"
+          },
+          {
             "text": "Nos partenaires",
             "href": "/a-propos/#partenaires"
           },
           {
             "text": "Nous soutenir",
-            "href": "/category/premium/#premium-section-top"
+            "href": "/category/premium/#premium-section-top",
+            "icon": "tabler:heart-handshake"
           }
         ]
       },
@@ -143,15 +154,18 @@
           },
           {
             "text": "Podcasts",
-            "href": "/category/podcast/"
+            "href": "/category/podcast/",
+            "icon": "tabler:microphone"
           },
           {
             "text": "Pédagoscope",
-            "href": "/category/tv/"
+            "href": "/category/tv/",
+            "icon": "tabler:device-tv"
           },
           {
             "text": "Projet Erasmus+",
-            "href": "/4_actualites/un-projet-erasmus-pour-innover-ensemble-en-ducation-mdx/"
+            "href": "/erasmus-plus/",
+            "icon": "tabler:school"
           },
           {
             "text": "Appel à projet",
@@ -234,7 +248,7 @@
           },
           {
             "text": "Projet Erasmus+",
-            "href": "/4_actualites/un-projet-erasmus-pour-innover-ensemble-en-ducation-mdx/"
+            "href": "/erasmus-plus/"
           }
         ]
       },
@@ -285,7 +299,7 @@
           },
           {
             "text": "Projet Erasmus+",
-            "href": "/4_actualites/un-projet-erasmus-pour-innover-ensemble-en-ducation-mdx/"
+            "href": "/erasmus-plus/"
           },
           {
             "text": "Appel à projet",

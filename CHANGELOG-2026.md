@@ -5,6 +5,32 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.3.0] — Non publié (en attente)
+
+### Ajouté
+
+- **Page dédiée « Projet Erasmus+ »** (`/erasmus-plus/`) — Nouvelle page complète remplaçant l'ancien lien vers l'article MDX. Structure éditable de bout en bout via TinaCMS : héro, section « Le projet » (thématiques + objectifs), « Nos partenaires », « Ressources » (organisées en volets à onglets : podcasts et vidéos), et « Carnet de bord ». Nouvelle collection Tina `erasmusPlus` (création/suppression désactivées, page unique).
+- **Miniatures vidéo automatiques** — Nouvel utilitaire `src/utils/erasmusMedia.ts` : un rédacteur colle simplement un lien YouTube (formats `watch`, `youtu.be`, `embed`, `shorts`, `live` pris en charge) et la miniature s'affiche automatiquement, sans upload d'image. Override manuel possible ; fallback générique (dégradé + icône) pour les liens non-YouTube.
+- **Composant `MediaCard.astro`** — Carte média unifiée pour la page Erasmus+ : dimensions identiques pour podcasts et vidéos, vignette 16:9, accent visuel cohérent (le type de média est distingué par l'icône, pas la couleur).
+- **Section « Conseil d'Administration »** (page À propos) — Nouvelle section `#conseil-administration` listant les membres (photo, nom, fonction optionnelle, lien LinkedIn), entièrement éditable via TinaCMS (`aboutCollection`).
+- **Icônes dans les menus déroulants** — Champ `icon` optionnel ajouté aux liens de navigation (`navigationCollection`), rendu dans `Header.astro` (menus desktop et méga-menu mobile). Icônes Tabler associées : Billetterie, Podcasts, Émissions TV, Live Facebook, Fiches pédagogiques, Projet Erasmus+, Nous soutenir.
+
+### Modifié
+
+- **Liens « Projet Erasmus+ » mis à jour** — Toutes les occurrences de navigation pointent désormais vers `/erasmus-plus/` au lieu de l'ancien article MDX `/4_actualites/un-projet-erasmus-pour-innover-ensemble-en-ducation-mdx/`.
+- **Menu « Qui sommes-nous »** — Ajout du lien « Conseil d'administration » (ancre `/a-propos/#conseil-administration`).
+- **Titres de sections À propos paramétrables** — Les titres des sections Missions, Valeurs et de la liste d'actions deviennent éditables via TinaCMS (`missionsTitle`, `valeursTitle`, `actionsTitle`).
+
+### Maintenance
+
+- Enregistrement de la collection `erasmusCollection` dans `tina/config.ts` ; régénération de `tina/tina-lock.json` après modification du schéma (collections Erasmus+, About, Navigation).
+
+**Fichiers ajoutés** : `src/pages/erasmus-plus.astro`, `src/content/erasmus-plus/index.json`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `tina/erasmusCollection.ts`, `public/images/erasmus/` (cats-family, cofinance-union-europeenne, randers-statsskole)
+
+**Fichiers modifiés** : `src/components/widgets/Header.astro`, `src/content/about/index.json`, `src/content/navigation/index.json`, `src/pages/a-propos.astro`, `tina/aboutCollection.ts`, `tina/navigationCollection.ts`, `tina/config.ts`, `tina/tina-lock.json`
+
+---
+
 ## [1.2.2] — 2026-04-05
 
 ### Corrigé

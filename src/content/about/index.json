@@ -39,12 +39,611 @@
     {
       "icon": "tabler:heart",
       "title": "Deux problématiques majeures de l’éducation",
-      "description": "\\[object Object]\n"
+      "description": {
+        "type": "root",
+        "children": [
+          {
+            "type": "p",
+            "children": [
+              {
+                "type": "text",
+                "text": "Au sein de l’ASBL Out of the Books, nous œuvrons pour répondre à deux problématiques majeures sociétales inhérentes à l’éducation :"
+              }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "La pénurie croissante des enseignants"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Les difficultés d’apprentissage & l’échec scolaire chez les jeunes"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "h3",
+            "children": [
+              {
+                "type": "text",
+                "text": "🎓 1. La pénurie des enseignants : une urgence sociétale"
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "🔍 Des chiffres alarmants"
+              }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "En 2022, 86 % des directeurs en FWB déclaraient que le manque d’enseignants entravait le bon fonctionnement de leur école."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "35 % des jeunes enseignants abandonnent la profession dans les 5 premières années."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Les inscriptions en Haute École ont chuté de 30 % en moins de 10 ans."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "✅ Nos actions pour attirer, soutenir et fidéliser les enseignants"
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "🏫 1. Attirer davantage de candidats vers l’enseignement"
+              }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Valoriser le métier avec des témoignages inspirants via notre appel à projets « Les enseignants ont du talent »."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Créer une immersion terrain dès la formation initiale : plus de 350 futurs enseignants participent chaque année au Festival Out of the Books pour mieux comprendre la réalité du métier."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Faire découvrir l’enseignement aux élèves du secondaire à travers des moments d’échange et de découverte du métier."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Renforcer le sentiment d’appartenance à une communauté motivée grâce à des événements qualitatifs favorisant le partage et le soutien entre pairs."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "🎓 2. Fidéliser et accompagner les enseignants en poste"
+              }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Mettre en lumière leur expertise en organisant des formations et des événements dédiés."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Soutenir la formation continue grâce au Festival, aux podcasts et à l’émission Pédagoscope, qui apportent des outils concrets et innovants pour enrichir leur pratique pédagogique."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "🏆 3. Revaloriser le métier dans la société"
+              }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Changer le regard sur l’enseignement avec des campagnes médiatiques et des partenariats (radios, TV…) pour renforcer le lien entre l’école et les familles."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "📊 Mesurer l’impact pour agir efficacement"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "children": [
+              {
+                "type": "text",
+                "text": "Nous évaluons l’efficacité de nos actions en nous appuyant sur :"
+              }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Les retours des enseignants et étudiants (questionnaires post-événements, témoignages, analyses des besoins)."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Le suivi des parcours des jeunes enseignants pour mesurer l’influence de nos actions sur leur engagement et leur maintien dans le métier."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Les collaborations avec des chercheurs en éducation pour ajuster nos initiatives et maximiser leur impact."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "h3",
+            "children": [
+              {
+                "type": "text",
+                "text": "📚 2. Les difficultés d’apprentissage & l’échec scolaire chez les jeunes"
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "🔍 Un constat préoccupant"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "children": [
+              {
+                "type": "text",
+                "text": "34 % des élèves de 15 ans en Belgique ont déjà redoublé au moins une fois (PISA 2018), le taux le plus élevé de l’OCDE."
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "✅ Nos solutions pour un enseignement plus efficace"
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "🎤 Former et outiller les enseignants pour mieux accompagner leurs élèves"
+              }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Le Festival Out of the Books : un événement unique réunissant les plus grands experts en éducation francophone."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Le podcast « Éducation : Mode d’Emploi » : un rendez-vous bimensuel avec des experts belges, suisses, québécois et français, pour partager des idées neuves et innovantes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "L’émission TV « Pédagoscope » : une plongée au cœur des pratiques pédagogiques, enrichie de reportages de terrain."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "h4",
+            "children": [
+              {
+                "type": "text",
+                "text": "📊 Mesurer l’impact pour agir efficacement"
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "children": [
+              {
+                "type": "text",
+                "text": "Nous évaluons l’impact de nos actions à travers :"
+              }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Le retour direct des enseignants et des étudiants (questionnaires post-événements, témoignages, suivi des pratiques mises en place)."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Des collaborations avec des chercheurs en éducation pour analyser les évolutions des pratiques pédagogiques."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Le suivi des enseignants formés : comment leurs nouvelles approches influencent-elles l’apprentissage et la motivation des élèves ?"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "icon": "tabler:tool",
       "title": "Nos objectifs",
-      "description": "\\[object Object]\n"
+      "description": {
+        "type": "root",
+        "children": [
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Faire de l’enseignement une profession choisie et valorisée"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Sensibiliser et encourager les vocations dès les études secondaires"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Renforcer le sentiment d’appartenance et de soutien chez les enseignants"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Améliorer l’efficacité pédagogique et lutter contre l’échec scolaire"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Offrir des outils concrets aux enseignants pour enrichir leurs pratiques"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Encourager l’innovation et la recherche en éducation"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      {
+                        "type": "text",
+                        "text": "Assurer un suivi des enseignants formés pour mesurer l’impact sur la réussite des élèves"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "p",
+            "children": [
+              {
+                "type": "text",
+                "text": "L’ensemble de nos initiatives vise à bâtir un système éducatif plus inclusif, performant et motivant pour tous.",
+                "bold": true
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "valeurs": [

@@ -101,6 +101,6 @@ export function richTextToHtml(content: TinaRichTextContent | string | null | un
   return renderNodes(nodes);
 }
 
-export function isTinaRichText(content: unknown): content is TinaRichTextContent {
-  return typeof content === 'object' && content !== null && !Array.isArray(content) && 'type' in content;
+export function isBrokenCmsPlaceholder(value: string): boolean {
+  return /^\s*\\?\[object Object\]\s*$/i.test(value.trim());
 }

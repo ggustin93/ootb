@@ -6,7 +6,7 @@ import SectionDivider from '~/components/ui/SectionDivider.astro';
 import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
 import type { ImageMetadata } from 'astro';
 import TinaRichText from '~/components/ui/TinaRichText.astro';
-import { MISSION_PROSE_CLASS, VALEUR_PROSE_CLASS } from '~/utils/tinaRichText';
+import { MISSION_PROSE_CLASS, VALEUR_PROSE_CLASS, isBrokenCmsPlaceholder } from '~/utils/tinaRichText';
 import { renderMissionHtml } from '~/utils/renderMissionHtml';
 
 // Importer les données du fichier JSON
@@ -135,11 +135,11 @@ if (!teamImage) {
             </div>
             
             <div class="mt-2">
-              {typeof mission.description === 'string' ? (
+              {typeof mission.description === 'string' && !isBrokenCmsPlaceholder(mission.description) ? (
                 <div set:html={renderMissionHtml(mission.description)} />
-              ) : (
+              ) : typeof mission.description === 'object' && mission.description !== null ? (
                 <TinaRichText content={mission.description} class={MISSION_PROSE_CLASS} />
-              )}
+              ) : null}
             </div>
           </div>
         ))}

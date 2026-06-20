@@ -10,8 +10,17 @@ import { contactCollection } from "./contactCollection";
 import { siteSettingsCollection } from "./siteSettingsCollection";
 import { festivalCollection } from "./festivalCollection";
 
+// Branche éditée par Tina, résolue dynamiquement selon le déploiement :
+// - sur Netlify, HEAD = la branche du déploiement (ex. "staging" pour staging--site.netlify.app)
+// - en production (branche main), HEAD = "main" → comportement inchangé
+// - TINA_BRANCH permet de forcer une branche en local / CI
+const branch =
+  process.env.TINA_BRANCH ||
+  process.env.HEAD ||
+  "main";
+
 export default defineConfig({
-  branch: "main",
+  branch,
   clientId: process.env.TINA_CLIENT_ID,
   token: process.env.TINA_TOKEN,
   
@@ -56,9 +65,9 @@ export default defineConfig({
   // Configuration du fournisseur Git
   gitProvider: {
     name: 'github',
-    branch: 'main',
+    branch,
     authProvider: 'github',
     autoCommit: true,
-    autoMerge: true,
+    autoMerge: false, // jamais de merge auto : les éditions staging ne remontent pas vers main
   }
 });

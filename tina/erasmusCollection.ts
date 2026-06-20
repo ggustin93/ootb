@@ -15,24 +15,24 @@ export const erasmusCollection: Collection = {
     {
       type: "object",
       name: "metadata",
-      label: "Métadonnées",
+      label: "Référencement & partage",
       ui: {
         itemProps: (_item) => {
-          return { label: "Métadonnées SEO" };
+          return { label: "Référencement & partage" };
         },
       },
       fields: [
         {
           type: "string",
           name: "title",
-          label: "Titre SEO",
+          label: "Titre (SEO)",
           description: "Titre qui apparaît dans les résultats de recherche (50-60 caractères). Ne pas inclure '| Out of the Books' car il sera ajouté automatiquement.",
           required: false,
         },
         {
           type: "string",
           name: "description",
-          label: "Description SEO",
+          label: "Description (SEO)",
           description: "Courte description pour les résultats de recherche (150-160 caractères recommandés).",
           ui: {
             component: "textarea",
@@ -51,7 +51,7 @@ export const erasmusCollection: Collection = {
     {
       type: "object",
       name: "hero",
-      label: "Section Hero",
+      label: "En-tête de page (hero)",
       fields: [
         {
           type: "string",
@@ -66,7 +66,7 @@ export const erasmusCollection: Collection = {
         {
           type: "string",
           name: "intro",
-          label: "Intro courte (héro)",
+          label: "Phrase d'accroche",
           description:
             "Courte phrase affichée sous le sous-titre, dans le héro. Idéalement 1 à 2 lignes.",
           ui: {
@@ -76,7 +76,7 @@ export const erasmusCollection: Collection = {
         {
           type: "string",
           name: "descriptif",
-          label: "Descriptif (section « Le projet »)",
+          label: "Texte de présentation du projet",
           ui: {
             component: "textarea",
           },
@@ -84,7 +84,7 @@ export const erasmusCollection: Collection = {
         {
           type: "image",
           name: "heroImage",
-          label: "Image principale (héro)",
+          label: "Image principale",
         },
         {
           type: "image",
@@ -96,7 +96,7 @@ export const erasmusCollection: Collection = {
     {
       type: "object",
       name: "projet",
-      label: "Le projet (thématiques & ambition)",
+      label: "Le projet",
       fields: [
         {
           type: "string",
@@ -193,7 +193,8 @@ export const erasmusCollection: Collection = {
         {
           type: "string",
           name: "lien",
-          label: "Lien vers le site (repli si aucun lien ci-dessous)",
+          label: "Lien principal du site",
+          description: "Utilisé si aucun lien détaillé n'est ajouté dans « Liens » ci-dessous.",
         },
         {
           type: "object",
@@ -309,7 +310,7 @@ export const erasmusCollection: Collection = {
                 {
                   type: "image",
                   name: "cover",
-                  label: "Cover",
+                  label: "Pochette (cover)",
                 },
                 {
                   type: "string",

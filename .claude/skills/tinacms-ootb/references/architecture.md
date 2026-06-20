@@ -108,7 +108,7 @@ export const erasmusCollection: Collection = {
 - **`boolean`** — toggle.
 - **`image`** — Cloudinary-backed media picker.
 - **`object`** — grouping; with **`list: true`** → repeatable group (+ `ui.itemProps`). Nests deeply: `erasmusCollection.ressources.volets[].fichesCategories[].fiches[]` is 4 levels.
-- **`rich-text`** — Tina rich-text editor; rendered via `<TinaMarkdown>` from `tinacms/dist/rich-text` (e.g. `about.missions[].description`).
+- **`rich-text`** — Tina rich-text editor; rendered at build time via `richTextToHtml()` / `<TinaRichText.astro>` (e.g. `about.missions[].description`). Do not use `<TinaMarkdown>` in Astro pages.
 
 No `reference`/`number`/`datetime` in the page collections.
 
@@ -120,7 +120,7 @@ MDX, `path: "src/content/post"`, allows create/delete, uses `mdx.resolve` for `~
 
 Two independent pipelines feed the same Astro SSG build.
 
-**Pipeline A — TinaCMS (editor, git-backed):** editor → `/admin` → edit (images → Cloudinary via Netlify function) → Save → `gitProvider` commits `src/content/**/index.json` to `main` → Netlify deploy → `astro build` reads JSON/MDX → static HTML. Astro consumes JSON by direct import (`import data from '~/content/<col>/index.json'`); rich-text via `<TinaMarkdown>`.
+**Pipeline A — TinaCMS (editor, git-backed):** editor → `/admin` → edit (images → Cloudinary via Netlify function) → Save → `gitProvider` commits `src/content/**/index.json` to `main` → Netlify deploy → `astro build` reads JSON/MDX → static HTML. Astro consumes JSON by direct import (`import data from '~/content/<col>/index.json'`); JSON `rich-text` AST → HTML via `richTextToHtml()` / `TinaRichText.astro` at build time (no Tina runtime on static pages).
 
 **Pipeline B — NocoDB (build scripts):** `src/services/api/nocodb.ts` + `src/scripts/build-*.js` fetch at build (`optimize:prebuild` / `prebuild`) → emit JSON into `src/content/festival/…` → Astro reads. Fetch-at-build-time, not commit-to-repo.
 
@@ -180,7 +180,7 @@ On save, `beforeSubmit` stamps a fresh hidden `system.deploymentTimestamp` and f
 - Config — https://tina.io/docs/reference/config
 - Collections / schema — https://tina.io/docs/reference/collections, https://tina.io/docs/schema
 - Field types — https://tina.io/docs/reference/types
-- Rich-text rendering — https://tina.io/docs/reference/types/rich-text (`<TinaMarkdown>` from `tinacms/dist/rich-text`)
+- Rich-text rendering — https://tina.io/docs/reference/types/rich-text (AST format; frontend uses `~/utils/tinaRichText.ts`, not `<TinaMarkdown>` on Astro pages)
 - Custom field UI — https://tina.io/docs/extending-tina/customize-list-ui (`itemProps`, `component`, `beforeSubmit`)
 - Media / Cloudinary — https://tina.io/docs/reference/media/external/cloudinary
 - Search — https://tina.io/docs/reference/search (TinaCloud-only)

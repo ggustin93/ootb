@@ -76,7 +76,10 @@ See `references/operations-and-pitfalls.md` for the full convention list, the sc
 
 - `list: true` → `.map(...)`; guard optional/nested lists with `?.length`.
 - **Image gotcha (high impact):** the custom `~/components/common/Image.astro` renders **nothing** (silent blank) for root-relative `public/` paths like `/images/erasmus/logo.svg`. Use `<Image>` ONLY for Cloudinary URLs, remote `https` URLs (incl. YouTube thumbnails), and `~/assets/...` imports. For `public/` brand assets use a plain `<img>` (add `loading`, `decoding`, `alt` manually). `erasmus-plus.astro` does both deliberately: hero (Cloudinary) → `<Image>`, partner/EU logos (`/images/...`) → `<img>`.
-- JSON `rich-text` field → `<TinaMarkdown content={...}/>` from `tinacms/dist/rich-text`, inside a Tailwind `prose` wrapper; keep a `typeof === 'string'` guard if the field was historically a plain string. MDX post bodies → Astro `<Content />`, never `TinaMarkdown`.
+- JSON `rich-text` field → **build-time HTML**, not `<TinaMarkdown>` (see below). Keep a `typeof === 'string'` guard if the field was historically a plain string. MDX post bodies → Astro `<Content />`, never Tina rich-text renderers.
+- **Astro static pages:** `<TinaRichText content={...} class={...} />` from `~/components/ui/TinaRichText.astro` (wraps `richTextToHtml()` from `~/utils/tinaRichText`). Prose class constants: `MISSION_PROSE_CLASS`, `VALEUR_PROSE_CLASS`, `CATEGORY_PROSE_CLASS`.
+- **React client islands** (e.g. `TicketingModal`): `richTextToHtml()` + `dangerouslySetInnerHTML` — avoids pulling `tinacms/dist/rich-text` into the client bundle.
+- **Do NOT use** `<TinaMarkdown>` from `tinacms/dist/rich-text` in `.astro` pages — it can render `[object Object]` and adds unnecessary React/tinacms JS on SSG pages.
 - Gate every URL-bearing field with `hasLink(url)` (`Boolean(url && url !== '#')`); placeholder value is `"#"`; render an inert `<span>`/`<div>` fallback so unfinished content isn't a dead link.
 - Internal links: trailing slash BEFORE the anchor (`/path/#anchor`) — `trailingSlash: "always"` drops the anchor in dev otherwise. External links: `target="_blank" rel="noopener noreferrer"`.
 

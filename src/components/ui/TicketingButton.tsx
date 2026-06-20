@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import TicketingModal from './TicketingModal';
-import type { TinaMarkdownContent } from 'tinacms/dist/rich-text';
+import type { TinaRichTextContent } from '~/utils/tinaRichText';
 
 // Define the ticketingConfig structure, same as in TicketingModalProps
 interface TicketingConfig {
-  modalText: TinaMarkdownContent | string; // Accept both string and rich text
+  modalText: TinaRichTextContent | string;
   ifpcButtonLabel: string;
   ifpcButtonUrl: string;
   weezeventButtonLabel: string;

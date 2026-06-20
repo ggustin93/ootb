@@ -95,28 +95,52 @@ Also: `aspectRatio` prop (`"16:9"` or numeric) → Cloudinary `ar_` transform; w
 
 ## 4. Rich-text fields
 
-### JSON collections → `<TinaMarkdown>`
-A `type: "rich-text"` field in a JSON collection imports as a **Tina rich-text AST object** (not a string). Render with:
+### JSON collections → `TinaRichText.astro` + `richTextToHtml()` (NOT `<TinaMarkdown>`)
 
-```astro
-import { TinaMarkdown } from 'tinacms/dist/rich-text';
+A `type: "rich-text"` field in a JSON collection imports as a **Tina rich-text AST object** (not a string):
+
+```json
+{ "type": "root", "children": [{ "type": "p", "children": [{ "type": "text", "text": "…" }] }] }
 ```
 
-`aboutCollection.ts` uses `rich-text` for `missions[].description` / `valeurs[].description`. The page defensively handles both string and AST (legacy content may be a plain string):
+**Canonical render path for Astro SSG pages** — no Tina/React runtime on static pages:
 
 ```astro
+---
+import TinaRichText from '~/components/ui/TinaRichText.astro';
+import { MISSION_PROSE_CLASS } from '~/utils/tinaRichText';
+import { renderMissionHtml } from '~/utils/renderMissionHtml';
+---
+
 {typeof mission.description === 'string' ? (
   <div set:html={renderMissionHtml(mission.description)} />
 ) : (
-  <div class="prose prose-base max-w-none ..."><TinaMarkdown content={mission.description} /></div>
+  <TinaRichText content={mission.description} class={MISSION_PROSE_CLASS} />
 )}
 ```
 
-- Wrap in a Tailwind `prose` container; tune with `prose-*` modifiers.
-- Keep the `typeof === 'string'` guard for fields that were historically plain strings.
-- Same pattern in `src/components/blog/CategoryInfo.astro`.
+- **`~/utils/tinaRichText.ts`** — `richTextToHtml()` walks the AST and returns HTML at build time; exports `TinaRichTextContent` type and hoisted prose class constants.
+- **`~/components/ui/TinaRichText.astro`** — thin wrapper: `set:html={richTextToHtml(content)}` inside a `prose` div.
+- Wrap in Tailwind `prose`; tune with `prose-*` modifiers (use exported constants, don't inline long class strings).
+- Keep the `typeof === 'string'` guard for fields that were historically plain strings (legacy emoji-formatted content may use `renderMissionHtml()` in `~/utils/renderMissionHtml.ts`).
+- Same pattern in `src/components/blog/CategoryInfo.astro` (`CATEGORY_PROSE_CLASS`).
 
-### MDX collections → Astro `<Content />` (NOT TinaMarkdown)
+**React client components** (interactive islands only):
+
+```tsx
+import { richTextToHtml, type TinaRichTextContent } from '~/utils/tinaRichText';
+
+<div
+  className="prose prose-sm max-w-none text-gray-600"
+  dangerouslySetInnerHTML={{ __html: richTextToHtml(modalText) }}
+/>
+```
+
+### Why not `<TinaMarkdown>`?
+
+`<TinaMarkdown>` from `tinacms/dist/rich-text` is a React component. Used directly in `.astro` files it can display literal `[object Object]` and ships tinacms React into pages that are otherwise pure SSG. Prefer `TinaRichText.astro` / `richTextToHtml()` — aligns with "plain static JSON imports at build time — no Tina runtime."
+
+### MDX collections → Astro `<Content />` (NOT rich-text renderers)
 Blog `post` bodies render through `src/utils/blog.ts` + Astro `<Content />`. Tina is only the editing surface. Never import `TinaMarkdown` for blog bodies.
 
 ## 5. Placeholder / conditional rendering (`url: "#"` + `hasLink()`)
@@ -183,9 +207,9 @@ tina/erasmusCollection.ts (videos[].url : string)
 - JSON collections = static import + destructure matching top-level Tina field names (`prerender = true`).
 - `list: true` → `.map(...)`; guard nested with `?.length`.
 - `<Image>` for Cloudinary + remote `https` + `~/assets/...` ONLY. `public/` `/images/...` → plain `<img>`.
-- JSON `rich-text` → `<TinaMarkdown>` in a `prose` wrapper (keep the string guard). MDX bodies → Astro `<Content />`.
+- JSON `rich-text` → `<TinaRichText>` / `richTextToHtml()` in a `prose` wrapper (keep the string guard). MDX bodies → Astro `<Content />`.
 - Gate URL fields with `hasLink()` (placeholder `"#"`); render inert fallback.
 - Internal links: trailing slash before anchor. External: `target="_blank" rel="noopener noreferrer"`.
 
 ### Relevant files
-`src/pages/erasmus-plus.astro`, `src/pages/a-propos.astro`, `src/content/erasmus-plus/index.json`, `tina/erasmusCollection.ts`, `tina/aboutCollection.ts`, `src/components/common/Image.astro`, `src/utils/images.ts`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/components/blog/CategoryButton.astro`, `src/components/blog/CategoryInfo.astro`, `src/utils/blog.ts`.
+`src/pages/erasmus-plus.astro`, `src/pages/a-propos.astro`, `src/content/erasmus-plus/index.json`, `tina/erasmusCollection.ts`, `tina/aboutCollection.ts`, `src/components/common/Image.astro`, `src/utils/images.ts`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/components/blog/CategoryButton.astro`, `src/components/blog/CategoryInfo.astro`, `src/components/ui/TinaRichText.astro`, `src/utils/tinaRichText.ts`, `src/utils/renderMissionHtml.ts`, `src/utils/blog.ts`.

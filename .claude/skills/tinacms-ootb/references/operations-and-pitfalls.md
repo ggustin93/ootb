@@ -80,6 +80,7 @@ When you see `GraphQL Schema Mismatch … Field 'xxx' was added to object type '
 - **Editing NocoDB table/column structure** — events/workshops/stands flow NocoDB → build scripts → JSON → SSG. Renaming/restructuring NocoDB fields breaks the `src/scripts/` mapping and silently empties pages. Tina does not manage that data; treat NocoDB schema as a contract with `src/services/api/nocodb/`.
 - **`public/` image paths don't render through `<Image>`** — actively worked around in `erasmus-plus.astro` (Cloudinary `heroImage` → `<Image>`; `/images/...` logos → plain `<img>`). When content can be a Cloudinary URL OR a `public/` path, render with plain `<img>` or branch on the source.
 - **Rich-text layout limits** — on 2.10.1, `rich-text` is for inline/prose content. Don't use it for structured layout (grids, cards, columns) — model those as typed `object`/`list` fields.
+- **`<TinaMarkdown>` in `.astro` pages** — renders literal `[object Object]` in some environments and pulls tinacms React into SSG pages. Use `<TinaRichText content={...} />` (`~/components/ui/TinaRichText.astro`) or `richTextToHtml()` instead. In React client islands, use `richTextToHtml()` + `dangerouslySetInnerHTML`.
 - **Using a newer Tina API** — `ui.router`, new field types, or config keys from current (3.x) docs may not exist in 2.10.1 / cli 1.12.6. If it's not already used in `tina/*.ts`, verify before relying on it.
 - **Media store is Cloudinary, not local** — Tina's image picker uploads to Cloudinary (a Cloudinary URL); legacy/static assets referenced as `/images/...` are hand-authored public paths. Both coexist in the same JSON; account for both when rendering.
 
@@ -116,4 +117,4 @@ Notes: lock regeneration must accompany the change (verify via grep, §1). `lien
 - [ ] New `public/` image field → plain `<img>`, not `<Image>`.
 
 ### Files referenced
-`CLAUDE.md` (§ TinaCMS Schema Rule), `memory-bank/troubleshoot.md`, `tina/config.ts`, `tina/erasmusCollection.ts`, `tina/aboutCollection.ts`, `src/content/erasmus-plus/index.json`, `src/pages/erasmus-plus.astro`, `src/components/common/Image.astro`, `package.json`.
+`CLAUDE.md` (§ TinaCMS Schema Rule), `memory-bank/troubleshoot.md`, `tina/config.ts`, `tina/erasmusCollection.ts`, `tina/aboutCollection.ts`, `src/content/erasmus-plus/index.json`, `src/pages/erasmus-plus.astro`, `src/pages/a-propos.astro`, `src/components/ui/TinaRichText.astro`, `src/utils/tinaRichText.ts`, `src/components/common/Image.astro`, `package.json`.

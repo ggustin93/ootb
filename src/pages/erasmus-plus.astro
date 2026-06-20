@@ -26,6 +26,11 @@ const partenairesAvecLiens = partenaires.map((partenaire) => ({ partenaire, lien
 
 // Icônes thématiques des volets (mappées sur l'ordre des volets : IA, puis Ludopédagogie)
 const voletIcons = ['tabler:robot', 'tabler:dice-5'];
+
+// Fil narratif partenaire ↔ volet : chaque partenaire incarne un volet, dans le même ordre
+// (partenaires[0] Randers = volet[0] IA ; partenaires[1] Cat's Family = volet[1] Jeu).
+const voletAccents = ['var(--ootb-blue)', 'var(--ootb-orange)']; // IA, Jeu (parallèle à voletIcons)
+const voletLabels = (ressources?.volets ?? []).map((v) => v?.nom);
 ---
 
 <Layout {metadata}>
@@ -82,7 +87,10 @@ const voletIcons = ['tabler:robot', 'tabler:dice-5'];
   <section id="le-projet" class="py-16 bg-white dark:bg-slate-900">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="blue" class="mb-8">Le projet</SectionDivider>
+        <SectionDivider variant="blue" class="mb-4">Le projet</SectionDivider>
+        <h2 class="font-heading font-bold text-gray-900 dark:text-white text-2xl md:text-3xl mb-6 [text-wrap:balance]">
+          Le projet en deux volets
+        </h2>
         <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
           {hero.descriptif}
         </p>
@@ -117,18 +125,24 @@ const voletIcons = ['tabler:robot', 'tabler:dice-5'];
   </section>
 
   <!-- PARTENAIRES -->
-  <section id="partenaires" class="py-16 bg-white dark:bg-slate-900">
+  <section id="partenaires" class="py-16 bg-[color-mix(in_srgb,var(--ootb-turquoise)_5%,white)] dark:bg-slate-900">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <SectionDivider variant="turquoise" class="mb-6">Nos partenaires</SectionDivider>
+        <SectionDivider variant="turquoise" class="mb-4">Nos partenaires</SectionDivider>
+        <h2 class="font-heading font-bold text-gray-900 dark:text-white text-2xl md:text-3xl mb-6 [text-wrap:balance]">
+          Deux partenaires européens
+        </h2>
 
         <p class="max-w-3xl text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-10">
           Pour mener ce projet à l'échelle européenne, Out of the Books s'entoure de deux partenaires complémentaires, au Danemark et en France. Chacun apporte son expertise sur l'un des deux volets du projet&nbsp;: l'intelligence artificielle et le jeu au service des apprentissages.
         </p>
 
         <div class="space-y-6 md:space-y-8">
-          {partenairesAvecLiens.map(({ partenaire, liens }) => (
-            <article class="flex flex-col sm:flex-row gap-6 md:gap-8 bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
+          {partenairesAvecLiens.map(({ partenaire, liens }, idx) => (
+            <article
+              class="flex flex-col sm:flex-row gap-6 md:gap-8 bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border border-l-4 border-gray-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
+              style={`border-left-color: ${voletAccents[idx] ?? 'var(--ootb-blue)'}`}
+            >
               <div class="sm:w-44 md:w-52 flex-shrink-0 flex items-center justify-center sm:justify-start sm:border-r sm:border-gray-100 dark:sm:border-slate-700 sm:pr-6 md:sm:pr-8">
                 {partenaire.logo ? (
                   <img
@@ -145,7 +159,16 @@ const voletIcons = ['tabler:robot', 'tabler:dice-5'];
                 )}
               </div>
               <div class="flex-1 min-w-0">
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white">{partenaire.nom}</h2>
+                {voletLabels[idx] ? (
+                  <span
+                    class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide mb-2"
+                    style={`color: ${voletAccents[idx]}`}
+                  >
+                    <Icon name={voletIcons[idx] ?? 'tabler:bookmark'} class="w-4 h-4" aria-hidden="true" />
+                    Volet · {voletLabels[idx]}
+                  </span>
+                ) : null}
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{partenaire.nom}</h3>
                 <p class="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">{partenaire.description}</p>
                 {liens.length > 0 && (
                   <div class="mt-5 flex flex-wrap gap-2.5">

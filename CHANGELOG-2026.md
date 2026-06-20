@@ -17,6 +17,11 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Environnement bac à sable TinaCMS (`staging`)** — La branche éditée par Tina est désormais résolue dynamiquement selon le déploiement (`process.env.TINA_BRANCH || process.env.HEAD || "main"`), permettant un bac à sable `staging--outofthebooks.netlify.app/admin` où les éditeurs testent le CMS et prévisualisent le contenu non publié sans impacter la production. `gitProvider.autoMerge` passé à `false` (les éditions staging ne remontent jamais automatiquement vers `main`). Production inchangée (`HEAD=main` → `branch="main"`). Modèle retenu : deux environnements indépendants — édition directe en production, bac à sable jetable côté staging (réinitialisable depuis `main`).
 - **Podcasts Erasmus+ via Ausha (smartlink)** — Le champ d'écoute des podcasts (volets « Ressources ») accepte un smartlink Ausha (*Ausha › Partager › Smartlink*) : l'éditeur colle l'URL, la carte renvoie vers « Écouter ». L'identité du workspace Ausha étant portée par le smartlink, un workspace dédié Erasmus+ fonctionne sans configuration. Les podcasts en attente affichent « Bientôt disponible » plutôt qu'un lien mort.
 - **Codage couleur par volet (page Erasmus+)** — Chaque volet porte sa couleur de marque (Intelligence artificielle = bleu, Ludopédagogie = violet), propagée via une variable CSS `--volet` aux cartes thématiques, aux partenaires (bordure latérale + chip « Volet · … »), aux onglets de ressources et aux cartes média — un fil visuel projet → partenaires → ressources.
+- **Tests unitaires rich-text Tina** — `npm run test:utils` (`node --test`) : conversion AST → HTML (`richTextToHtml`), détection des placeholders CMS corrompus (`isBrokenCmsPlaceholder`), contrat JSON des missions dans `about/index.json`.
+
+### Corrigé
+
+- **Page À propos — section « Nos Missions » affichait `[object Object]`** — Remplacement de `<TinaMarkdown>` (React/tinacms) par un rendu build-time (`TinaRichText.astro` + `richTextToHtml`) sur les pages Astro statiques ; restauration du contenu missions corrompu en JSON (chaînes littérales `"[object Object]"` sauvegardées par Tina) ; garde-fou `isBrokenCmsPlaceholder()` pour ne plus afficher ces placeholders.
 
 ### Modifié
 
@@ -29,12 +34,12 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 ### Maintenance
 
 - Enregistrement de la collection `erasmusCollection` dans `tina/config.ts` ; régénération de `tina/tina-lock.json` après modification du schéma (collections Erasmus+, About, Navigation).
-- **Skill Claude Code `tinacms-ootb`** — Documentation repo-spécifique des conventions TinaCMS (versions épinglées, régénération obligatoire de `tina-lock.json`, conventions de collections, pièges de rendu d'images) ajoutée sous `.claude/skills/tinacms-ootb/`.
+- **Skill Claude Code `tinacms-ootb`** — Documentation repo-spécifique des conventions TinaCMS (versions épinglées, régénération obligatoire de `tina-lock.json`, conventions de collections, pièges de rendu d'images) ajoutée sous `.claude/skills/tinacms-ootb/`. Mise à jour : rendu rich-text via `TinaRichText.astro` / `richTextToHtml()` (plus `<TinaMarkdown>` sur pages Astro SSG).
 - **`.gitignore`** — Ignore `.claude/settings.local.json` (réglages locaux par utilisateur) et `*.mov` (binaires/tutoriels hors dépôt).
 
-**Fichiers ajoutés** : `src/pages/erasmus-plus.astro`, `src/content/erasmus-plus/index.json`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `tina/erasmusCollection.ts`, `public/images/erasmus/` (cats-family, cofinance-union-europeenne, randers-statsskole), `.claude/skills/tinacms-ootb/`
+**Fichiers ajoutés** : `src/pages/erasmus-plus.astro`, `src/content/erasmus-plus/index.json`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/utils/tinaRichText.ts`, `src/utils/renderMissionHtml.ts`, `src/components/ui/TinaRichText.astro`, `src/utils/__tests__/tinaRichText.test.js`, `tina/erasmusCollection.ts`, `public/images/erasmus/` (cats-family, cofinance-union-europeenne, randers-statsskole), `.claude/skills/tinacms-ootb/`
 
-**Fichiers modifiés** : `src/components/widgets/Header.astro`, `src/content/about/index.json`, `src/content/navigation/index.json`, `src/pages/a-propos.astro`, `tina/aboutCollection.ts`, `tina/navigationCollection.ts`, `tina/config.ts`, `tina/tina-lock.json`, `.gitignore`
+**Fichiers modifiés** : `src/components/widgets/Header.astro`, `src/components/blog/CategoryInfo.astro`, `src/components/ui/TicketingModal.tsx`, `src/components/ui/TicketingButton.tsx`, `src/components/sections/FestivalHeroSection.astro`, `src/content/about/index.json`, `src/content/navigation/index.json`, `src/pages/a-propos.astro`, `tina/aboutCollection.ts`, `tina/navigationCollection.ts`, `tina/config.ts`, `tina/tina-lock.json`, `package.json`, `.gitignore`
 
 ---
 

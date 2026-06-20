@@ -73,6 +73,11 @@ memory-bank/
 claudedocs/
 .serena/
 .playwright-mcp/
+# Claude Code — local per-user settings (NOT .claude/ as a whole: project skills are shared)
+.claude/settings.local.json
+
+# Local screen-recording tutorials — keep binaries out of git (use Cloudinary/external)
+*.mov
 
 # Private notes
 private-notes/

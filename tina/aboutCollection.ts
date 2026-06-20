@@ -79,14 +79,6 @@ export const aboutCollection: Collection = {
         },
         {
           type: "string",
-          name: "quoteColor",
-          label: "Couleur de la citation",
-          ui: {
-            component: "color",
-          },
-        },
-        {
-          type: "string",
           name: "scrollLabel",
           label: "Texte du bouton de défilement",
         },
@@ -101,14 +93,6 @@ export const aboutCollection: Collection = {
           type: "string",
           name: "title",
           label: "Titre",
-        },
-        {
-          type: "string",
-          name: "titleColor",
-          label: "Couleur du titre",
-          ui: {
-            component: "color",
-          },
         },
         {
           type: "image",
@@ -140,14 +124,6 @@ export const aboutCollection: Collection = {
         },
         {
           type: "string",
-          name: "titleColor",
-          label: "Couleur du titre",
-          ui: {
-            component: "color",
-          },
-        },
-        {
-          type: "string",
           name: "quote",
           label: "Citation",
           ui: {
@@ -162,6 +138,11 @@ export const aboutCollection: Collection = {
             component: "textarea",
           },
         },
+        {
+          type: "string",
+          name: "actionsTitle",
+          label: "Titre de la liste d'actions",
+        },
       ],
     },
     {
@@ -169,6 +150,16 @@ export const aboutCollection: Collection = {
       name: "actions",
       label: "Nos actions",
       list: true,
+    },
+    {
+      type: "string",
+      name: "missionsTitle",
+      label: "Titre de la section Missions",
+    },
+    {
+      type: "string",
+      name: "valeursTitle",
+      label: "Titre de la section Valeurs",
     },
     {
       type: "object",
@@ -238,14 +229,6 @@ export const aboutCollection: Collection = {
         },
         {
           type: "string",
-          name: "titleColor",
-          label: "Couleur du titre",
-          ui: {
-            component: "color",
-          },
-        },
-        {
-          type: "string",
           name: "description",
           label: "Description",
           ui: {
@@ -309,8 +292,8 @@ export const aboutCollection: Collection = {
     },
     {
       type: "object",
-      name: "partenaires",
-      label: "Nos partenaires",
+      name: "conseilAdministration",
+      label: "Conseil d'Administration",
       fields: [
         {
           type: "string",
@@ -319,11 +302,57 @@ export const aboutCollection: Collection = {
         },
         {
           type: "string",
-          name: "titleColor",
-          label: "Couleur du titre",
+          name: "description",
+          label: "Description",
           ui: {
-            component: "color",
+            component: "textarea",
           },
+        },
+        {
+          type: "object",
+          name: "membres",
+          label: "Membres",
+          list: true,
+          ui: {
+            itemProps: (item) => {
+              return { label: item?.name || "Nouveau membre" };
+            },
+          },
+          fields: [
+            {
+              type: "image",
+              name: "photo",
+              label: "Photo",
+            },
+            {
+              type: "string",
+              name: "name",
+              label: "Nom",
+            },
+            {
+              type: "string",
+              name: "role",
+              label: "Fonction (optionnel)",
+              description: "Ex. Président·e, Trésorier·ère, Secrétaire…",
+            },
+            {
+              type: "string",
+              name: "linkedinUrl",
+              label: "Lien LinkedIn",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: "object",
+      name: "partenaires",
+      label: "Nos partenaires",
+      fields: [
+        {
+          type: "string",
+          name: "title",
+          label: "Titre",
         },
         {
           type: "object",

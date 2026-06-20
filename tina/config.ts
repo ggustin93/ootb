@@ -6,6 +6,7 @@ import { blogCollection } from "./blogCollection";
 import { appelProjetCollection } from "./appelProjetCollection";
 import { navigationCollection } from "./navigationCollection";
 import { aboutCollection } from "./aboutCollection";
+import { erasmusCollection } from "./erasmusCollection";
 import { contactCollection } from "./contactCollection";
 import { siteSettingsCollection } from "./siteSettingsCollection";
 import { festivalCollection } from "./festivalCollection";
@@ -26,7 +27,9 @@ export default defineConfig({
   
   build: {
     outputFolder: "admin",
-    publicFolder: "dist",
+    // "public" (et non "dist") pour que l'admin soit servi par `astro dev` à /admin
+    // en local. En build, l'ordre `tinacms build && astro build` recopie public/admin → dist/admin.
+    publicFolder: "public",
   },
 
   media: {
@@ -44,6 +47,7 @@ export default defineConfig({
       appelProjetCollection,
       blogCollection,
       aboutCollection,
+      erasmusCollection,
       contactCollection,
       siteSettingsCollection,
       navigationCollection,

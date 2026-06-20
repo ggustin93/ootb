@@ -112,15 +112,16 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
                     <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden md:inline" />
                   </button>
                   <ul class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded md:absolute pl-4 md:pl-0 md:hidden font-medium md:bg-white/90 md:min-w-[200px] drop-shadow-xl">
-                    {links.map(({ text: text2, href: href2 }) => (
+                    {links.map(({ text: text2, href: href2, icon: icon2 }) => (
                       <li>
                         <a
                           class:list={[
-                            'first:rounded-t last:rounded-b md:hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_70%)] hover:text-gray-900 dark:hover:text-white dark:hover:bg-gray-700 py-2 px-5 block whitespace-no-wrap transition-all duration-300',
+                            'first:rounded-t last:rounded-b md:hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_70%)] hover:text-gray-900 dark:hover:text-white dark:hover:bg-gray-700 py-2 px-5 flex items-center gap-2 whitespace-no-wrap transition-all duration-300',
                             { 'aw-link-active text-[--ootb-turquoise] bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_80%)]': href2 === currentPath },
                           ]}
                           href={href2}
                         >
+                          {icon2 && <Icon name={icon2} class="w-4 h-4 shrink-0 opacity-80" />}
                           {text2}
                         </a>
                       </li>
@@ -214,15 +215,16 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
             {section.title}
           </h3>
           <ul>
-            {section.links.map(({ text, href }) => (
+            {section.links.map(({ text, href, icon }) => (
               <li>
                 <a
                   class:list={[
-                    'block py-3 px-4 hover:text-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_80%)] hover:text-gray-900 transition-all duration-300 rounded-md',
+                    'flex items-center justify-center gap-2 py-3 px-4 hover:text-[--ootb-turquoise] hover:bg-[color-mix(in_srgb,var(--ootb-turquoise),transparent_80%)] hover:text-gray-900 transition-all duration-300 rounded-md',
                     { 'text-[--ootb-turquoise]': href === currentPath }
                   ]}
                   href={href}
                 >
+                  {icon && <Icon name={icon} class="w-5 h-5 shrink-0 opacity-80" />}
                   {text}
                 </a>
               </li>

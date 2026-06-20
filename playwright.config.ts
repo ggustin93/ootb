@@ -87,7 +87,9 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run dev',
+    // `npm start` = Astro seul (sans TinaCMS) : les tests e2e ciblent le front,
+    // pas l'admin Tina, et n'ont pas besoin des tokens TinaCloud.
+    command: 'npm start',
     url: 'http://localhost:4322',
     reuseExistingServer: !process.env.CI,
   },

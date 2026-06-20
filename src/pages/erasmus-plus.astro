@@ -12,7 +12,7 @@ import erasmusData from '~/content/erasmus-plus/index.json';
 
 export const prerender = true;
 
-const { metadata, hero, projet, partenaires, ressources, carnetDeBord } = erasmusData;
+const { metadata, hero, projet, partenaires, partenairesTitre, partenairesIntro, ressources, carnetDeBord, financementUE } = erasmusData;
 
 // Liens d'un partenaire : privilégie la liste `liens`, repli sur `lien` unique.
 const partnerLinks = (partenaire: { lien?: string; liens?: { label?: string; url?: string }[] }) => {
@@ -89,7 +89,7 @@ const voletLabels = (ressources?.volets ?? []).map((v) => v?.nom);
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="turquoise" class="mb-4">Le projet</SectionDivider>
         <h2 class="font-handwritten text-gray-900 dark:text-white text-3xl md:text-4xl mb-6 [text-wrap:balance]">
-          Le projet en deux volets
+          {projet?.titre ?? 'Le projet en deux volets'}
         </h2>
         <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
           {hero.descriptif}
@@ -115,7 +115,7 @@ const voletLabels = (ressources?.volets ?? []).map((v) => v?.nom);
           <div class="mt-10 rounded-2xl bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-turquoise)_14%,white)] to-[color-mix(in_srgb,var(--ootb-turquoise)_5%,white)] dark:from-slate-800 dark:to-slate-800 border border-[color-mix(in_srgb,var(--ootb-turquoise)_25%,white)] dark:border-slate-700 p-6 md:p-8">
             <h3 class="flex items-center gap-2 font-handwritten text-xl md:text-2xl text-[--ootb-turquoise]">
               <Icon name="tabler:rocket" class="w-7 h-7" aria-hidden="true" />
-              Une ambition commune
+              {projet?.ambitionTitre ?? 'Une ambition commune'}
             </h3>
             <p class="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">{projet.ambition}</p>
           </div>
@@ -130,11 +130,11 @@ const voletLabels = (ressources?.volets ?? []).map((v) => v?.nom);
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="turquoise" class="mb-4">Nos partenaires</SectionDivider>
         <h2 class="font-handwritten text-gray-900 dark:text-white text-3xl md:text-4xl mb-6 [text-wrap:balance]">
-          Deux partenaires européens
+          {partenairesTitre ?? 'Deux partenaires européens'}
         </h2>
 
         <p class="max-w-3xl text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-10">
-          Pour mener ce projet à l'échelle européenne, Out of the Books s'entoure de deux partenaires complémentaires, au Danemark et en France. Chacun apporte son expertise sur l'un des deux volets du projet&nbsp;: l'intelligence artificielle et le jeu au service des apprentissages.
+          {partenairesIntro ?? "Pour mener ce projet à l'échelle européenne, Out of the Books s'entoure de deux partenaires complémentaires, au Danemark et en France."}
         </p>
 
         <div class="space-y-6 md:space-y-8">
@@ -374,7 +374,7 @@ const voletLabels = (ressources?.volets ?? []).map((v) => v?.nom);
           </div>
         )}
         <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
-          Ce projet est cofinancé par l'Union européenne dans le cadre du programme Erasmus+. Les points de vue et avis exprimés n'engagent que leurs auteurs et ne reflètent pas nécessairement ceux de l'Union européenne.
+          {financementUE ?? "Ce projet est cofinancé par l'Union européenne dans le cadre du programme Erasmus+."}
         </p>
       </div>
     </div>

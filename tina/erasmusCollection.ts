@@ -206,7 +206,7 @@ export const erasmusCollection: Collection = {
             parse: (value) => (value === undefined ? true : value),
             format: (value) => (value === undefined ? true : value),
             description:
-              "✅ ACTIVÉ = section visible sur le site\n⚠️ DÉSACTIVÉ = section masquée",
+              "Affiche cette section sur le site. Désactivé, elle est simplement masquée — votre contenu reste enregistré et réaffichable à tout moment.",
           },
         },
         {
@@ -238,7 +238,7 @@ export const erasmusCollection: Collection = {
                 parse: (value) => (value === undefined ? true : value),
                 format: (value) => (value === undefined ? true : value),
                 description:
-                  "✅ ACTIVÉ = podcasts visibles\n⚠️ DÉSACTIVÉ = podcasts masqués (même s'il en reste)",
+                  "Affiche les podcasts de ce volet sur le site. Désactivé, ils restent enregistrés mais masqués — réaffichables quand vous voulez.",
               },
             },
             {
@@ -249,7 +249,7 @@ export const erasmusCollection: Collection = {
                 parse: (value) => (value === undefined ? true : value),
                 format: (value) => (value === undefined ? true : value),
                 description:
-                  "✅ ACTIVÉ = vidéos visibles\n⚠️ DÉSACTIVÉ = vidéos masquées (même s'il en reste)",
+                  "Affiche les vidéos de ce volet sur le site. Désactivé, elles restent enregistrées mais masquées — réaffichables quand vous voulez.",
               },
             },
             {
@@ -260,7 +260,7 @@ export const erasmusCollection: Collection = {
                 parse: (value) => (value === undefined ? true : value),
                 format: (value) => (value === undefined ? true : value),
                 description:
-                  "✅ ACTIVÉ = fiches visibles\n⚠️ DÉSACTIVÉ = fiches masquées (même s'il en reste)",
+                  "Affiche les fiches de ce volet sur le site. Désactivé, elles restent enregistrées mais masquées — réaffichables quand vous voulez.",
               },
             },
             {
@@ -287,7 +287,9 @@ export const erasmusCollection: Collection = {
                 {
                   type: "string",
                   name: "url",
-                  label: "URL",
+                  label: "🎧 Lien d'écoute (smartlink Ausha)",
+                  description:
+                    "Collez le smartlink de l'épisode (Ausha › Partager › Smartlink, format https://smartlink.ausha.co/…). Fonctionne avec n'importe quel workspace Ausha — y compris celui du projet Erasmus+.",
                 },
               ],
             },
@@ -377,7 +379,7 @@ export const erasmusCollection: Collection = {
             parse: (value) => (value === undefined ? true : value),
             format: (value) => (value === undefined ? true : value),
             description:
-              "✅ ACTIVÉ = section visible sur le site\n⚠️ DÉSACTIVÉ = section masquée",
+              "Affiche cette section sur le site. Désactivé, elle est simplement masquée — votre contenu reste enregistré et réaffichable à tout moment.",
           },
         },
         {

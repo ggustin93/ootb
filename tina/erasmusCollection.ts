@@ -99,6 +99,12 @@ export const erasmusCollection: Collection = {
       label: "Le projet (thématiques & ambition)",
       fields: [
         {
+          type: "string",
+          name: "titre",
+          label: "Titre de section",
+          description: "Titre affiché en haut de la section « Le projet » (ex. « Le projet en deux volets »).",
+        },
+        {
           type: "object",
           name: "thematiques",
           label: "Thématiques",
@@ -126,6 +132,12 @@ export const erasmusCollection: Collection = {
         },
         {
           type: "string",
+          name: "ambitionTitre",
+          label: "Titre du bloc « ambition »",
+          description: "Petit titre du bloc mis en avant (ex. « Une ambition commune »).",
+        },
+        {
+          type: "string",
           name: "ambition",
           label: "Ambition commune",
           ui: {
@@ -133,6 +145,21 @@ export const erasmusCollection: Collection = {
           },
         },
       ],
+    },
+    {
+      type: "string",
+      name: "partenairesTitre",
+      label: "Titre de la section « Nos partenaires »",
+      description: "Titre affiché en haut de la section partenaires (ex. « Deux partenaires européens »).",
+    },
+    {
+      type: "string",
+      name: "partenairesIntro",
+      label: "Introduction « Nos partenaires »",
+      description: "Paragraphe d'introduction affiché sous le titre de la section partenaires.",
+      ui: {
+        component: "textarea",
+      },
     },
     {
       type: "object",
@@ -401,6 +428,15 @@ export const erasmusCollection: Collection = {
           label: "Lien Google Doc",
         },
       ],
+    },
+    {
+      type: "string",
+      name: "financementUE",
+      label: "Mention de financement (Union européenne)",
+      description: "Texte légal de cofinancement Erasmus+. À modifier avec prudence — c'est une mention standard.",
+      ui: {
+        component: "textarea",
+      },
     },
   ],
 };

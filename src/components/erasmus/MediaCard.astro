@@ -20,14 +20,15 @@ interface Props {
   href?: string;
   thumbnail?: string | null;
   kind: 'podcast' | 'video';
+  /** Couleur d'accent du volet (fonds teintés + pastille). Défaut : orange marque. */
+  accent?: string;
 }
 
-const { title, href, thumbnail, kind } = Astro.props;
+const { title, href, thumbnail, kind, accent = 'var(--ootb-orange)' } = Astro.props;
 
 const isPodcast = kind === 'podcast';
-// Accent unique pour toute la section Ressources (cohérence visuelle) :
-// le type de média est distingué par la forme de l'icône, pas par la couleur.
-const accent = 'var(--ootb-orange)';
+// L'accent provient du volet (IA = bleu, Ludopédagogie = mauve) pour une cohérence
+// de catégorie ; le type de média reste distingué par la forme de l'icône.
 const icon = isPodcast ? 'tabler:headphones' : 'tabler:player-play';
 
 const linked = hasLink(href);
@@ -97,7 +98,19 @@ const vignetteBg = thumbnail && !isPodcast ? 'transparent' : isPodcast ? tintBg 
     )}
   </div>
 
-  <div class="p-3 flex-1 flex items-start">
+  <div class="p-3 flex-1 flex flex-col gap-1.5">
     <p class="text-sm font-medium text-gray-800 dark:text-gray-100 line-clamp-2">{title}</p>
+    {linked ? (
+      <span class="inline-flex items-center gap-1 text-xs font-medium" style={`color: ${accent};`}>
+        {isPodcast ? 'Écouter' : 'Regarder'}
+        <Icon name="tabler:external-link" class="w-3.5 h-3.5" aria-hidden="true" />
+        <span class="sr-only">(s'ouvre dans un nouvel onglet)</span>
+      </span>
+    ) : (
+      <span class="inline-flex items-center gap-1 text-xs font-medium text-gray-400 dark:text-gray-500">
+        <Icon name="tabler:clock" class="w-3.5 h-3.5" aria-hidden="true" />
+        Bientôt disponible
+      </span>
+    )}
   </div>
 </CardTag>

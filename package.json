@@ -40,6 +40,7 @@
         "build:events:no-reset": "node src/scripts/build-festival-data.js --no-reset",
         "build:fiches": "node src/scripts/build-fiches-pedagogiques.js",
         "test:utils": "node --test src/utils/__tests__/*.test.js",
+        "test:media": "node tina/media/__tests__/media-upload.test.js",
         "test:e2e": "playwright test",
         "test:e2e:ui": "playwright test --ui",
         "test:e2e:debug": "playwright test --debug",

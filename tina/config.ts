@@ -36,15 +36,9 @@ export default defineConfig({
     loadCustomStore: async () => {
       const pack = await import("next-tinacms-cloudinary");
       const { compressImage } = await import("./media/compressImage");
+      const { ensureUploadable } = await import("./media/uploadGuard");
 
       const Base = pack.TinaCloudCloudinaryMediaStore;
-
-      // Limite pratique au-delà de laquelle l'upload échoue côté Netlify
-      // (corps de fonction synchrone ~6 Mo, gonflé par le transport base64).
-      // On garde une marge : au-dessus, on affiche un message clair plutôt que
-      // de laisser la requête se faire rejeter par la plateforme (ce qui
-      // produisait un "Internal Server Error" non-JSON et une popup illisible).
-      const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // 4 Mo
 
       // Sous-classe : on compresse les images trop lourdes AVANT l'envoi, puis
       // on délègue tout le reste (list/delete/preview...) au store d'origine.
@@ -60,15 +54,11 @@ export default defineConfig({
             })
           );
 
+          // Si une image reste trop lourde après compression, on affiche un
+          // message clair plutôt que de laisser Netlify renvoyer un
+          // "Internal Server Error" non-JSON (popup illisible).
           for (const item of processed) {
-            if (item?.file && item.file.size > MAX_UPLOAD_BYTES) {
-              const mb = (item.file.size / 1024 / 1024).toFixed(1);
-              throw new Error(
-                `L'image « ${item.file.name} » est trop lourde (${mb} Mo) pour être ` +
-                  `téléversée. Merci de la réduire sous 4 Mo (par exemple via ` +
-                  `https://squoosh.app) puis de réessayer.`
-              );
-            }
+            if (item?.file) ensureUploadable(item.file);
           }
 
           return super.persist(processed);

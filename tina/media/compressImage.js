@@ -18,11 +18,28 @@
 // On ne compresse que les formats matriciels ré-encodables sans surprise.
 // (On laisse passer GIF/SVG/PDF/vidéo tels quels : rasteriser un GIF animé ou
 //  un SVG ferait plus de mal que de bien.)
-const COMPRESSIBLE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+export const COMPRESSIBLE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 // En dessous de ce seuil, l'image passe sans problème : on ne la touche pas
 // (zéro perte de qualité pour le cas courant).
-const SKIP_BELOW_BYTES = 2 * 1024 * 1024; // 2 Mo
+export const SKIP_BELOW_BYTES = 2 * 1024 * 1024; // 2 Mo
+
+/**
+ * Décision pure (testable sans navigateur) : faut-il tenter de compresser ce
+ * fichier ? True uniquement pour une image matricielle plus lourde que le seuil.
+ *
+ * @param {{ type?: string, size?: number } | null | undefined} file
+ * @returns {boolean}
+ */
+export function shouldCompress(file) {
+  return (
+    !!file &&
+    typeof file.type === "string" &&
+    COMPRESSIBLE_TYPES.has(file.type) &&
+    typeof file.size === "number" &&
+    file.size > SKIP_BELOW_BYTES
+  );
+}
 
 // Dimension max du plus grand côté après redimensionnement (largement suffisant
 // pour de l'affichage web ; une photo de CA n'a pas besoin de 6000 px).
@@ -80,13 +97,8 @@ function getDimensions(bitmap) {
  */
 export async function compressImage(file) {
   try {
-    if (
-      !file ||
-      typeof file.type !== "string" ||
-      !COMPRESSIBLE_TYPES.has(file.type) ||
-      file.size <= SKIP_BELOW_BYTES ||
-      typeof document === "undefined"
-    ) {
+    // Rien à faire (mauvais type, déjà léger, ou hors navigateur : build/SSR).
+    if (!shouldCompress(file) || typeof document === "undefined") {
       return file;
     }
 

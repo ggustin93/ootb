@@ -12,6 +12,7 @@ import ootbLogo from '~/assets/images/ootb-logo.svg';
 import Carousel from '~/components/ui/Carousel.astro';
 import Button from '~/components/ui/Button.astro';
 import ActivityCards from '~/components/sections/ActivityCards.astro';
+import EduSparkSection from '~/components/sections/EduSparkSection.astro';
 // Activer le prerendering pour cette page
 export const prerender = true;
 
@@ -19,7 +20,7 @@ export const prerender = true;
 import festivalContent from '~/content/festival/tina/index.json';
 
 // Extraction des données du fichier JSON
-const { metadata, hero, about, gallery, stats, themes: themeData, accessibility, partenaires: partenaireData } = festivalContent;
+const { metadata, hero, about, gallery, stats, themes: themeData, accessibility, partenaires: partenaireData, eduspark } = festivalContent;
 
 // Paramètres de la bannière programme (gérés dans la page Festival)
 const { programLink, ticketing } = festivalContent;
@@ -97,6 +98,9 @@ const eventsByDay = eventsData as EventsByDay;
       </div>
     </div>
   </section>
+
+  <!-- Bannière événement partenaire EduSpark (powered by Plantyn) -->
+  {eduspark && <EduSparkSection {...eduspark} />}
 
   <!-- Galerie photos des éditions précédentes -->
   <section id="gallery" class="bg-white relative overflow-hidden pt-0 pb-4 md:pt-0 md:pb-8 -mt-4 md:mt-0">

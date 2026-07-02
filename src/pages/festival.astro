@@ -99,9 +99,6 @@ const eventsByDay = eventsData as EventsByDay;
     </div>
   </section>
 
-  <!-- Bannière événement partenaire EduSpark (powered by Plantyn) -->
-  {eduspark && <EduSparkSection {...eduspark} />}
-
   <!-- Galerie photos des éditions précédentes -->
   <section id="gallery" class="bg-white relative overflow-hidden pt-0 pb-4 md:pt-0 md:pb-8 -mt-4 md:mt-0">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-0 md:py-8">
@@ -147,6 +144,9 @@ const eventsByDay = eventsData as EventsByDay;
         </div>
     </div>
   </section>
+
+  <!-- Bannière événement partenaire EduSpark (powered by Plantyn) -->
+  {eduspark && <EduSparkSection {...eduspark} />}
 
   <!-- Programme du festival -->
   <section id="programme" class="pt-16 md:pt-24 pb-8 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">

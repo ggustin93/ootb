@@ -116,15 +116,6 @@
     "weezeventButtonLabel": "Billetterie générale",
     "weezeventButtonUrl": "https://my.weezevent.com/festival-out-of-the-books-2026-la-sucrerie-a-wavre"
   },
-  "eduspark": {
-    "enabled": true,
-    "eyebrow": "Événement partenaire",
-    "title": "EduSpark, en partenariat avec Plantyn",
-    "description": "Le rendez-vous inspirant pour les directions et experts de l'enseignement en Wallonie et à Bruxelles. Rendez-vous le mercredi 30 septembre 2026 (9h-13h) au Festival Out of the Books, à La Sucrerie de Wavre.",
-    "image": "~/assets/images/eduspark-banner.png",
-    "ctaText": "S'inscrire et découvrir le programme",
-    "ctaUrl": ""
-  },
   "themes": {
     "title": "Les grands thèmes du Festival",
     "description": "Découvrez les 5 axes principaux qui seront abordés lors du festival",

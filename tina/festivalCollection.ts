@@ -382,57 +382,6 @@ export const festivalCollection: Collection = {
     },
     {
       type: "object",
-      name: "eduspark",
-      label: "Bannière EduSpark",
-      description: "Bannière événement partenaire EduSpark (powered by Plantyn) affichée sur la page Festival",
-      fields: [
-        {
-          type: "boolean",
-          name: "enabled",
-          label: "Activer la bannière",
-          description: "Afficher ou masquer la bannière EduSpark",
-        },
-        {
-          type: "string",
-          name: "eyebrow",
-          label: "Surtitre",
-          description: "Petit libellé au-dessus du titre (ex: Événement partenaire)",
-        },
-        {
-          type: "string",
-          name: "title",
-          label: "Titre",
-          description: "Titre de la section EduSpark",
-        },
-        {
-          type: "string",
-          name: "description",
-          label: "Description",
-          description: "Texte descriptif sous le titre",
-          ui: { component: "textarea" },
-        },
-        {
-          type: "image",
-          name: "image",
-          label: "Visuel de la bannière",
-          description: "Image/visuel EduSpark (cliquable vers le lien d'inscription)",
-        },
-        {
-          type: "string",
-          name: "ctaText",
-          label: "Texte du bouton",
-          description: "Libellé du bouton d'appel à l'action",
-        },
-        {
-          type: "string",
-          name: "ctaUrl",
-          label: "Lien d'inscription (Plantyn)",
-          description: "URL Plantyn vers l'inscription et le programme EduSpark",
-        },
-      ],
-    },
-    {
-      type: "object",
       name: "themes",
       label: "Thèmes",
       ui: {

@@ -1,0 +1,110 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+import SectionDivider from '~/components/ui/SectionDivider.astro';
+import { findImage } from '~/utils/images';
+
+interface Props {
+  enabled?: boolean;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+}
+
+const {
+  enabled = false,
+  eyebrow = 'Événement partenaire',
+  title = 'EduSpark, en partenariat avec Plantyn',
+  description = '',
+  image,
+  ctaText = "S'inscrire et découvrir le programme",
+  ctaUrl = '',
+} = Astro.props;
+
+// Résolution de l'image du visuel EduSpark (asset local ou URL distante)
+const bannerImage = image ? await findImage(image) : null;
+
+// Le visuel et/ou le bouton ne sont cliquables que si un lien est fourni
+const hasLink = Boolean(ctaUrl);
+---
+
+{
+  enabled && (
+    <section id="eduspark" class="py-12 md:py-20 bg-white relative overflow-hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          {/* Visuel de la bannière */}
+          <div class="order-1 md:order-none">
+            {hasLink ? (
+              <a
+                href={ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block group relative rounded-3xl overflow-hidden shadow-xl transition-transform duration-500 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[--ootb-orange]"
+                aria-label={`${title} — ${ctaText}`}
+              >
+                {bannerImage && (
+                  <Image
+                    src={bannerImage}
+                    alt={title}
+                    class="w-full h-auto"
+                    widths={[400, 800]}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </a>
+            ) : (
+              bannerImage && (
+                <div class="rounded-3xl overflow-hidden shadow-xl">
+                  <Image
+                    src={bannerImage}
+                    alt={title}
+                    class="w-full h-auto"
+                    widths={[400, 800]}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              )
+            )}
+          </div>
+
+          {/* Texte et appel à l'action */}
+          <div class="text-center md:text-left">
+            <SectionDivider variant="orange" class="mb-4 md:mb-6">
+              <Icon name="tabler:sparkles" class="w-5 h-5" />
+              <span>{eyebrow}</span>
+            </SectionDivider>
+
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-4 md:mb-6 text-sky-900 tracking-tight">
+              {title}
+            </h2>
+
+            {description && <p class="text-lg md:text-xl text-gray-600 leading-relaxed mb-6 md:mb-8">{description}</p>}
+
+            {hasLink && (
+              <a
+                href={ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group inline-flex items-center gap-3 px-6 py-3 bg-[--ootb-orange] text-white hover:bg-[#c93a17] rounded-xl font-medium transition-all duration-300 shadow-sm hover:shadow-md"
+              >
+                <span>{ctaText}</span>
+                <Icon
+                  name="tabler:arrow-right"
+                  class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

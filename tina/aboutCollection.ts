@@ -183,9 +183,10 @@ export const aboutCollection: Collection = {
           label: "Titre",
         },
         {
-          type: "rich-text",
+          type: "string",
           name: "description",
           label: "Description",
+          ui: { component: "textarea" },
         },
       ],
     },

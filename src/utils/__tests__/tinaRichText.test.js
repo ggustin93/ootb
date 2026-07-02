@@ -96,25 +96,29 @@ describe('isBrokenCmsPlaceholder', () => {
 });
 
 describe('about/index.json missions contract', () => {
-  it('stores rich-text AST, not placeholder strings', () => {
+  it('stores plain strings, not rich-text AST objects', () => {
     const about = JSON.parse(readFileSync(aboutJsonPath, 'utf8'));
+    assert.ok(about.missions?.length, 'about.json must define missions');
 
     for (const mission of about.missions) {
+      // Rich-text AST (object) in this nested JSON field is what TinaCloud
+      // serializes to "[object Object]" on save — must stay a plain string.
       assert.equal(
         typeof mission.description,
-        'object',
-        `mission "${mission.title}" must be rich-text AST, not string`
+        'string',
+        `mission "${mission.title}" must be a plain string, not rich-text AST`
       );
-      assert.equal(mission.description.type, 'root');
-      assert.ok(mission.description.children?.length, 'rich-text AST must have children');
+      assert.equal(
+        isBrokenCmsPlaceholder(mission.description),
+        false,
+        `mission "${mission.title}" holds the corrupted "[object Object]" placeholder`
+      );
     }
   });
 
-  it('renders mission content without [object Object]', () => {
+  it('mission descriptions contain real content, not placeholders', () => {
     const about = JSON.parse(readFileSync(aboutJsonPath, 'utf8'));
-    const html = richTextToHtml(about.missions[0].description);
-
-    assert.match(html, /pénurie croissante/i);
-    assert.doesNotMatch(html, /\[object Object\]/i);
+    assert.match(about.missions[0].description, /pénurie croissante/i);
+    assert.doesNotMatch(about.missions[0].description, /\[object Object\]/i);
   });
 });

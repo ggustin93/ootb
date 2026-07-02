@@ -95,3 +95,6 @@ src/assets/images/events/
 /tests/test-results/
 /tests/playwright-report/
 /tests/screenshots/
+
+# Editor / agent config
+.codex/

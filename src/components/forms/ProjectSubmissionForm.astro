@@ -399,8 +399,8 @@ const publicCible = [
     // console.log('🔄 Initialisation du formulaire...');
     
     // Éléments DOM avec types appropriés
-    const form = document.getElementById('pedagogical-sheet-form');
-    const submitButton = document.getElementById('submit-button');
+    const form = document.getElementById('pedagogical-sheet-form') as HTMLFormElement | null;
+    const submitButton = document.getElementById('submit-button') as HTMLButtonElement | null;
     const formStatus = document.getElementById('formStatus');
     const statusIcon = document.getElementById('statusIcon');
     const statusMessage = document.getElementById('statusMessage');
@@ -417,11 +417,16 @@ const publicCible = [
       console.error('❌ Certains éléments du formulaire sont manquants');
       return;
     }
+
+    const formElement = form;
+    const submitButtonElement = submitButton;
+    const formStatusElement = formStatus;
+    const statusMessageElement = statusMessage;
     
     console.log('✅ Tous les éléments du formulaire ont été trouvés');
     
     // Ajouter des placeholders vides à tous les champs pour que :not(:placeholder-shown) fonctionne
-    const inputFields = form.querySelectorAll('input[type="text"], input[type="email"], textarea[required]') as NodeListOf<HTMLInputElement | HTMLTextAreaElement>;
+    const inputFields = formElement.querySelectorAll('input[type="text"], input[type="email"], textarea[required]') as NodeListOf<HTMLInputElement | HTMLTextAreaElement>;
     inputFields.forEach(field => {
       if (!field.placeholder) {
         field.placeholder = " ";
@@ -429,7 +434,7 @@ const publicCible = [
     });
     
     // Fonction pour basculer l'affichage des messages d'erreur
-    function toggleErrorMessage(element, show) {
+    function toggleErrorMessage(element: Element | null, show: boolean) {
       if (!element) return;
       
       if (show) {
@@ -442,10 +447,11 @@ const publicCible = [
     }
     
     // Fonction pour activer/désactiver le mode chargement du bouton
-    function setButtonLoading(isLoading) {
-      submitButton.disabled = isLoading;
+    function setButtonLoading(isLoading: boolean) {
+      submitButtonElement.disabled = isLoading;
       const submitText = document.getElementById('submit-text');
       const submitLoader = document.getElementById('submit-loader');
+      if (!submitText || !submitLoader) return;
       
       if (isLoading) {
         submitText.classList.add('opacity-0');
@@ -457,24 +463,24 @@ const publicCible = [
     }
     
     // Fonction pour afficher uniquement les erreurs
-    function showError(message) {
+    function showError(message: string) {
       // console.log(`🔔 Affichage du message d'erreur: ${message}`);
       
       // Définir le message
-      statusMessage.textContent = message;
+      statusMessageElement.textContent = message;
       
       // Réinitialiser le bouton
       setButtonLoading(false);
       
       // Rendre visible
-      formStatus.classList.remove('hidden');
+      formStatusElement.classList.remove('hidden');
       
       // Faire défiler jusqu'au message
-      formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      formStatusElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     
     // Validation des types d'enseignement
-    const teachingTypeCheckboxes = document.querySelectorAll('.teaching-type-checkbox');
+    const teachingTypeCheckboxes = document.querySelectorAll<HTMLInputElement>('.teaching-type-checkbox');
     const typeError = document.getElementById('type-error');
     
     function validateTeachingTypes() {
@@ -488,7 +494,7 @@ const publicCible = [
     });
     
     // Validation des sections
-    const sectionCheckboxes = document.querySelectorAll('.section-checkbox');
+    const sectionCheckboxes = document.querySelectorAll<HTMLInputElement>('.section-checkbox');
     const sectionError = document.getElementById('section-error');
     
     function validateSections() {
@@ -502,7 +508,9 @@ const publicCible = [
     });
     
     // Validation des champs texte
-    const requiredInputs = document.querySelectorAll('input[required], textarea[required]');
+    const requiredInputs = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+      'input[required], textarea[required]'
+    );
     
     requiredInputs.forEach(input => {
       const errorMessage = input.nextElementSibling;
@@ -520,7 +528,9 @@ const publicCible = [
     });
     
     // Validation des champs optionnels avec format spécifique (URL, etc.)
-    const optionalFormattedInputs = document.querySelectorAll('input[type="url"]:not([required]), input[type="email"]:not([required]), input[type="tel"]:not([required])');
+    const optionalFormattedInputs = document.querySelectorAll<HTMLInputElement>(
+      'input[type="url"]:not([required]), input[type="email"]:not([required]), input[type="tel"]:not([required])'
+    );
     
     optionalFormattedInputs.forEach(input => {
       input.addEventListener('blur', () => {
@@ -585,7 +595,7 @@ const publicCible = [
     });
     
     // Gestion de la soumission du formulaire
-    submitButton.addEventListener('click', async () => {
+    submitButtonElement.addEventListener('click', async () => {
       // Valider tous les champs
       let isFormValid = true;
       
@@ -610,26 +620,27 @@ const publicCible = [
       }
       
       // Masquer les messages d'erreur précédents
-      formStatus.classList.add('hidden');
+      formStatusElement.classList.add('hidden');
       
       try {
         // Activer le mode chargement du bouton
         setButtonLoading(true);
         
         // Récupérer la valeur du destinataire sélectionné ou utiliser la valeur par défaut
-        const destinataireValue = form.querySelector('input[name="Destinataire"]:checked')?.value || "Non renseigné";
+        const destinataireValue =
+          formElement.querySelector<HTMLInputElement>('input[name="Destinataire"]:checked')?.value || "Non renseigné";
         
         // Préparer les données du formulaire au format JSON
-        const formData = new FormData(form);
+        const formData = new FormData(formElement);
         
         // Récupérer les types d'enseignement sélectionnés
         const teachingTypes = Array.from(
-          form.querySelectorAll('input[name="Type enseignement"]:checked')
+          formElement.querySelectorAll('input[name="Type enseignement"]:checked')
         ).map(checkbox => (checkbox as HTMLInputElement).value);
 
         // Récupérer les sections sélectionnées
         const sections = Array.from(
-          form.querySelectorAll('input[name="Section"]:checked')
+          formElement.querySelectorAll('input[name="Section"]:checked')
         ).map(checkbox => (checkbox as HTMLInputElement).value);
         
         // Convertir FormData en objet JSON

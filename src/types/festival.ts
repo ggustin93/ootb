@@ -27,6 +27,8 @@ export interface FestivalEvent {
   theme?: string;
 }
 
+export type Event = FestivalEvent;
+
 export interface EventsByDay {
   [day: string]: FestivalEvent[];
-} 
+}

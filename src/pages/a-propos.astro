@@ -6,14 +6,32 @@ import SectionDivider from '~/components/ui/SectionDivider.astro';
 import ContentHeroSection from '~/components/sections/ContentHeroSection.astro';
 import type { ImageMetadata } from 'astro';
 import TinaRichText from '~/components/ui/TinaRichText.astro';
-import { MISSION_PROSE_CLASS, VALEUR_PROSE_CLASS, isBrokenCmsPlaceholder } from '~/utils/tinaRichText';
-import { renderMissionHtml } from '~/utils/renderMissionHtml';
+import { VALEUR_PROSE_CLASS, MISSION_PROSE_CLASS, isBrokenCmsPlaceholder } from '~/utils/tinaRichText';
+import { markdownToHtml } from '~/utils/markdownToHtml';
+
+// Icônes figées par position (le champ « icône » a été retiré de Tina pour
+// simplifier l'édition côté client). Fallback si une carte est ajoutée.
+const MISSION_ICONS = ['tabler:heart', 'tabler:tool'];
+const VALEUR_ICONS = ['tabler:puzzle', 'tabler:heart-handshake', 'tabler:award', 'tabler:bulb'];
 
 // Importer les données du fichier JSON
 import aboutData from '~/content/about/index.json';
 
 // Extraction des données du fichier JSON
-const { metadata, hero, quiSommesNous, vision, actions, missionsTitle, valeursTitle, missions, valeurs, equipe, conseilAdministration, partenaires } = aboutData;
+const {
+  metadata,
+  hero,
+  quiSommesNous,
+  vision,
+  actions,
+  missionsTitle,
+  valeursTitle,
+  missions,
+  valeurs,
+  equipe,
+  conseilAdministration,
+  partenaires,
+} = aboutData;
 
 // Import de l'utilitaire findImage pour résoudre les chemins d'images
 import { findImage } from '~/utils/images';
@@ -29,7 +47,6 @@ if (!logo_blanc) {
 if (!teamImage) {
   throw new Error(`[a-propos.astro] Hero image not found at path: ${hero.heroImage}`);
 }
-
 ---
 
 <Layout {metadata}>
@@ -39,9 +56,9 @@ if (!teamImage) {
     heroImage={teamImage}
     quote={hero.quote}
     scroll={{
-      targetId: "qui-sommes-nous",
+      targetId: 'qui-sommes-nous',
       label: hero.scrollLabel,
-      hideOnMobile: true
+      hideOnMobile: true,
     }}
   />
 
@@ -50,7 +67,7 @@ if (!teamImage) {
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">{quiSommesNous.title}</SectionDivider>
-        
+
         <div class="md:flex md:gap-16 md:items-start">
           <div class="md:w-1/3 mb-8 md:mb-0">
             <div class="rounded-xl overflow-hidden shadow-md">
@@ -67,11 +84,7 @@ if (!teamImage) {
           </div>
           <div class="md:w-2/3">
             <div class="prose prose-lg max-w-none space-y-6">
-              {quiSommesNous.paragraphs.map(paragraph => (
-                <p class="text-gray-700 leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
+              {quiSommesNous.paragraphs.map((paragraph) => <p class="text-gray-700 leading-relaxed">{paragraph}</p>)}
             </div>
           </div>
         </div>
@@ -84,13 +97,15 @@ if (!teamImage) {
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">{vision.title}</SectionDivider>
-        
+
         <!-- Citation -->
-        <div class="bg-gradient-to-br from-[--ootb-turquoise] to-[color-mix(in_srgb,var(--ootb-turquoise)_80%,var(--ootb-violet))] rounded-xl p-8 shadow-lg relative overflow-hidden group mb-8">
+        <div
+          class="bg-gradient-to-br from-[--ootb-turquoise] to-[color-mix(in_srgb,var(--ootb-turquoise)_80%,var(--ootb-violet))] rounded-xl p-8 shadow-lg relative overflow-hidden group mb-8"
+        >
           <p class="font-handwritten text-2xl md:text-3xl text-white font-light leading-relaxed relative z-10">
             "{vision.quote}"
           </p>
-          
+
           <!-- Guillemets décoratifs -->
           <div class="absolute top-2 left-2 text-white/10 text-6xl font-serif">"</div>
           <div class="absolute bottom-2 right-2 text-white/10 text-6xl font-serif rotate-180">"</div>
@@ -105,12 +120,14 @@ if (!teamImage) {
             <div class="space-y-3">
               <h3 class="text-lg font-semibold text-gray-900">{vision.actionsTitle}</h3>
               <ul class="space-y-2">
-                {actions.map(action => (
-                  <li class="flex items-center gap-2">
-                    <Icon name="tabler:check" class="w-5 h-5 text-[--ootb-turquoise]" />
-                    <span class="text-gray-700">{action}</span>
-                  </li>
-                ))}
+                {
+                  actions.map((action) => (
+                    <li class="flex items-center gap-2">
+                      <Icon name="tabler:check" class="w-5 h-5 text-[--ootb-turquoise]" />
+                      <span class="text-gray-700">{action}</span>
+                    </li>
+                  ))
+                }
               </ul>
             </div>
           </div>
@@ -124,25 +141,25 @@ if (!teamImage) {
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">{missionsTitle}</SectionDivider>
-        
-        {missions.map(mission => (
-          <div class="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-md mb-8">
-            <div class="flex items-start gap-4 mb-4">
-              <div class="bg-[--ootb-turquoise] rounded-lg p-3 flex-shrink-0">
-                <Icon name={mission.icon} class="w-6 h-6 text-white" />
+
+        {
+          missions.map((mission, i) => (
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-md mb-8">
+              <div class="flex items-start gap-4 mb-4">
+                <div class="bg-[--ootb-turquoise] rounded-lg p-3 flex-shrink-0">
+                  <Icon name={MISSION_ICONS[i] ?? 'tabler:point'} class="w-6 h-6 text-white" />
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">{mission.title}</h3>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900">{mission.title}</h3>
+
+              <div class="mt-2">
+                {typeof mission.description === 'string' && !isBrokenCmsPlaceholder(mission.description) ? (
+                  <div class={MISSION_PROSE_CLASS} set:html={markdownToHtml(mission.description)} />
+                ) : null}
+              </div>
             </div>
-            
-            <div class="mt-2">
-              {typeof mission.description === 'string' && !isBrokenCmsPlaceholder(mission.description) ? (
-                <div set:html={renderMissionHtml(mission.description)} />
-              ) : typeof mission.description === 'object' && mission.description !== null ? (
-                <TinaRichText content={mission.description} class={MISSION_PROSE_CLASS} />
-              ) : null}
-            </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </section>
@@ -153,25 +170,27 @@ if (!teamImage) {
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">{valeursTitle}</SectionDivider>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {valeurs.map(valeur => (
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md relative group">
-              <div class="relative flex items-start gap-4">
-                <div class="bg-[--ootb-violet] rounded-lg p-3 ">
-                  <Icon name={valeur.icon} class="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 class="text-xl font-semibold text-gray-900 mb-2">{valeur.title}</h3>
-                  <div class="prose prose-sm max-w-none text-gray-700">
-                    {typeof valeur.description === 'string' ? (
-                      <p>{valeur.description}</p>
-                    ) : (
-                      <TinaRichText content={valeur.description} class={VALEUR_PROSE_CLASS} />
-                    )}
+          {
+            valeurs.map((valeur, i) => (
+              <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 hover:shadow-md relative group">
+                <div class="relative flex items-start gap-4">
+                  <div class="bg-[--ootb-violet] rounded-lg p-3 ">
+                    <Icon name={VALEUR_ICONS[i] ?? 'tabler:point'} class="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">{valeur.title}</h3>
+                    <div class="prose prose-sm max-w-none text-gray-700">
+                      {typeof valeur.description === 'string' ? (
+                        <p>{valeur.description}</p>
+                      ) : (
+                        <TinaRichText content={valeur.description} class={VALEUR_PROSE_CLASS} />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </div>
@@ -182,52 +201,61 @@ if (!teamImage) {
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">{equipe.title}</SectionDivider>
-        
+
         <!-- Fondatrices -->
         <div class="grid md:grid-cols-2 gap-12 mb-8">
-          {equipe.membres.slice(0, 2).map(membre => (
-            <div class="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-[color-mix(in_srgb,var(--ootb-violet)_20%,transparent)] hover:border-[color-mix(in_srgb,var(--ootb-violet)_40%,transparent)] transition-all">
-              <div class="flex items-start gap-6">
-                <div class="flex-shrink-0">
-                  <div class="relative w-24 h-24 rounded-xl overflow-hidden shadow-md border-2 border-[color-mix(in_srgb,var(--ootb-violet)_10%,white)]">
-                    <Image
-                      src={membre.photo}
-                      alt={membre.name}
-                      class="w-full h-full object-cover"
-                      widths={[96]}
-                      sizes="96px"
-                      aspectRatio="1:1"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <div class="flex-grow">
-                  <h3 class="text-xl font-semibold text-gray-900 mb-2">{membre.name}</h3>
-                  <p class="text-[var(--ootb-violet)] font-medium mb-3">{membre.role}</p>
-                  <p class="text-gray-700 mb-4">{membre.description}</p>
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-gray-600">
-                      <Icon name="tabler:mail" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                      <a href={`mailto:${membre.contact.email}`} class="hover:text-[var(--ootb-violet)]">
-                        {membre.contact.email}
-                      </a>
+          {
+            equipe.membres.slice(0, 2).map((membre) => (
+              <div class="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-[color-mix(in_srgb,var(--ootb-violet)_20%,transparent)] hover:border-[color-mix(in_srgb,var(--ootb-violet)_40%,transparent)] transition-all">
+                <div class="flex items-start gap-6">
+                  <div class="flex-shrink-0">
+                    <div class="relative w-24 h-24 rounded-xl overflow-hidden shadow-md border-2 border-[color-mix(in_srgb,var(--ootb-violet)_10%,white)]">
+                      <Image
+                        src={membre.photo}
+                        alt={membre.name}
+                        class="w-full h-full object-cover"
+                        widths={[96]}
+                        sizes="96px"
+                        aspectRatio="1:1"
+                        loading="lazy"
+                      />
                     </div>
-                    <div class="flex items-center gap-2 text-gray-600">
-                      <Icon name="tabler:phone" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                      <a href={`tel:${membre.contact.phone.replace(/[^0-9+]/g, '')}`} class="hover:text-[var(--ootb-violet)]">
-                        {membre.contact.phone}
-                      </a>
+                  </div>
+                  <div class="flex-grow">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">{membre.name}</h3>
+                    <p class="text-[var(--ootb-violet)] font-medium mb-3">{membre.role}</p>
+                    <p class="text-gray-700 mb-4">{membre.description}</p>
+                    <div class="space-y-2">
+                      <div class="flex items-center gap-2 text-gray-600">
+                        <Icon name="tabler:mail" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                        <a href={`mailto:${membre.contact.email}`} class="hover:text-[var(--ootb-violet)]">
+                          {membre.contact.email}
+                        </a>
+                      </div>
+                      <div class="flex items-center gap-2 text-gray-600">
+                        <Icon name="tabler:phone" class="w-5 h-5 text-[var(--ootb-violet)]" />
+                        <a
+                          href={`tel:${membre.contact.phone.replace(/[^0-9+]/g, '')}`}
+                          class="hover:text-[var(--ootb-violet)]"
+                        >
+                          {membre.contact.phone}
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
 
         <!-- Présentation -->
-        <div class="mt-16 bg-white/80 backdrop-blur-sm rounded-xl p-6 md:p-8 border-l-4 border-[--ootb-orange] shadow-sm">
-          <p class="text-lg text-gray-700 leading-relaxed first-letter:text-3xl first-letter:font-heading first-letter:font-semibold first-letter:text-[--ootb-orange] first-letter:mr-1 first-letter:float-left first-letter:leading-none">
+        <div
+          class="mt-16 bg-white/80 backdrop-blur-sm rounded-xl p-6 md:p-8 border-l-4 border-[--ootb-orange] shadow-sm"
+        >
+          <p
+            class="text-lg text-gray-700 leading-relaxed first-letter:text-3xl first-letter:font-heading first-letter:font-semibold first-letter:text-[--ootb-orange] first-letter:mr-1 first-letter:float-left first-letter:leading-none"
+          >
             {equipe.description}
           </p>
         </div>
@@ -236,67 +264,73 @@ if (!teamImage) {
   </section>
 
   <!-- Conseil d'Administration -->
-  {conseilAdministration?.membres?.length ? (
-    <section id="conseil-administration" class="py-16 bg-[color-mix(in_srgb,var(--ootb-violet)_5%,white)] relative overflow-hidden">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
-          <SectionDivider variant="primary" class="mb-6">{conseilAdministration.title}</SectionDivider>
-          {conseilAdministration.description && (
-            <p class="mb-10 max-w-3xl text-gray-700 leading-relaxed">
-              {conseilAdministration.description}
-            </p>
-          )}
+  {
+    conseilAdministration?.membres?.length ? (
+      <section
+        id="conseil-administration"
+        class="py-16 bg-[color-mix(in_srgb,var(--ootb-violet)_5%,white)] relative overflow-hidden"
+      >
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mx-auto">
+            <SectionDivider variant="primary" class="mb-6">
+              {conseilAdministration.title}
+            </SectionDivider>
+            {conseilAdministration.description && (
+              <p class="mb-10 max-w-3xl text-gray-700 leading-relaxed">{conseilAdministration.description}</p>
+            )}
 
-          <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 list-none p-0">
-            {conseilAdministration.membres.map(membre => (
-              <li class="group bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden border border-[color-mix(in_srgb,var(--ootb-violet)_15%,transparent)] hover:border-[color-mix(in_srgb,var(--ootb-violet)_40%,transparent)] hover:shadow-md transition-all">
-                <div class="relative w-full aspect-square overflow-hidden bg-[color-mix(in_srgb,var(--ootb-violet)_8%,white)]">
-                  {membre.photo ? (
-                    <Image
-                      src={membre.photo}
-                      alt={`Portrait de ${membre.name}`}
-                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      widths={[200, 400]}
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      aspectRatio="1:1"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div class="w-full h-full flex items-center justify-center text-[color-mix(in_srgb,var(--ootb-violet)_50%,white)]" aria-hidden="true">
-                      <Icon name="tabler:user" class="w-1/3 h-1/3" />
-                    </div>
-                  )}
-                </div>
-                <div class="p-4 text-center">
-                  <p class="font-semibold text-gray-900">{membre.name}</p>
-                  {membre.role && (
-                    <p class="text-sm text-[var(--ootb-violet)] mt-0.5">{membre.role}</p>
-                  )}
-                  {membre.linkedinUrl && membre.linkedinUrl !== '#' ? (
-                    <a
-                      href={membre.linkedinUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="mt-2 inline-flex items-center gap-1.5 text-sm text-[#0A66C2] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 rounded"
-                    >
-                      <Icon name="tabler:brand-linkedin" class="w-5 h-5" />
-                      <span>LinkedIn</span>
-                      <span class="sr-only">de {membre.name}</span>
-                    </a>
-                  ) : (
-                    <span class="mt-2 inline-flex items-center gap-1.5 text-sm text-gray-400" aria-hidden="true">
-                      <Icon name="tabler:brand-linkedin" class="w-5 h-5" />
-                      <span>LinkedIn</span>
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
+            <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 list-none p-0">
+              {conseilAdministration.membres.map((membre) => (
+                <li class="group bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden border border-[color-mix(in_srgb,var(--ootb-violet)_15%,transparent)] hover:border-[color-mix(in_srgb,var(--ootb-violet)_40%,transparent)] hover:shadow-md transition-all">
+                  <div class="relative w-full aspect-square overflow-hidden bg-[color-mix(in_srgb,var(--ootb-violet)_8%,white)]">
+                    {membre.photo ? (
+                      <Image
+                        src={membre.photo}
+                        alt={`Portrait de ${membre.name}`}
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        widths={[200, 400]}
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        aspectRatio="1:1"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div
+                        class="w-full h-full flex items-center justify-center text-[color-mix(in_srgb,var(--ootb-violet)_50%,white)]"
+                        aria-hidden="true"
+                      >
+                        <Icon name="tabler:user" class="w-1/3 h-1/3" />
+                      </div>
+                    )}
+                  </div>
+                  <div class="p-4 text-center">
+                    <p class="font-semibold text-gray-900">{membre.name}</p>
+                    {membre.role && <p class="text-sm text-[var(--ootb-violet)] mt-0.5">{membre.role}</p>}
+                    {membre.linkedinUrl && membre.linkedinUrl !== '#' ? (
+                      <a
+                        href={membre.linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="mt-2 inline-flex items-center gap-1.5 text-sm text-[#0A66C2] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 rounded"
+                      >
+                        <Icon name="tabler:brand-linkedin" class="w-5 h-5" />
+                        <span>LinkedIn</span>
+                        <span class="sr-only">de {membre.name}</span>
+                      </a>
+                    ) : (
+                      <span class="mt-2 inline-flex items-center gap-1.5 text-sm text-gray-400" aria-hidden="true">
+                        <Icon name="tabler:brand-linkedin" class="w-5 h-5" />
+                        <span>LinkedIn</span>
+                      </span>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-    </section>
-  ) : null}
+      </section>
+    ) : null
+  }
 
   <!-- Partenaires -->
   <section id="partenaires" class="py-16 bg-white relative overflow-hidden">
@@ -304,17 +338,28 @@ if (!teamImage) {
       <div class="max-w-4xl mx-auto">
         <SectionDivider variant="primary" class="mb-12">{partenaires.title}</SectionDivider>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
-          {partenaires.liste.map(partenaire => (
-            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 sm:p-6 text-center hover:shadow-md relative group flex items-center justify-center">
-              <div class="h-16 sm:h-20 md:h-24 flex items-center justify-center w-full">
-                {partenaire.lien && partenaire.lien !== '#' ? (
-                  <a 
-                    href={partenaire.lien} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="flex items-center justify-center w-full h-full"
-                    aria-label={`Visiter le site de ${partenaire.nom}`}
-                  >
+          {
+            partenaires.liste.map((partenaire) => (
+              <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 sm:p-6 text-center hover:shadow-md relative group flex items-center justify-center">
+                <div class="h-16 sm:h-20 md:h-24 flex items-center justify-center w-full">
+                  {partenaire.lien && partenaire.lien !== '#' ? (
+                    <a
+                      href={partenaire.lien}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center justify-center w-full h-full"
+                      aria-label={`Visiter le site de ${partenaire.nom}`}
+                    >
+                      <Image
+                        src={partenaire.logo}
+                        alt={`Logo ${partenaire.nom}`}
+                        class="max-h-14 sm:max-h-16 md:max-h-20 w-auto object-contain"
+                        widths={[100, 120, 200]}
+                        sizes="(max-width: 480px) 100px, (max-width: 640px) 120px, 200px"
+                        loading="lazy"
+                      />
+                    </a>
+                  ) : (
                     <Image
                       src={partenaire.logo}
                       alt={`Logo ${partenaire.nom}`}
@@ -323,20 +368,11 @@ if (!teamImage) {
                       sizes="(max-width: 480px) 100px, (max-width: 640px) 120px, 200px"
                       loading="lazy"
                     />
-                  </a>
-                ) : (
-                  <Image
-                    src={partenaire.logo}
-                    alt={`Logo ${partenaire.nom}`}
-                    class="max-h-14 sm:max-h-16 md:max-h-20 w-auto object-contain"
-                    widths={[100, 120, 200]}
-                    sizes="(max-width: 480px) 100px, (max-width: 640px) 120px, 200px"
-                    loading="lazy"
-                  />
-                )}
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </div>

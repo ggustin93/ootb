@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { isAuthorized } from '@tinacms/auth';
 
-const VERSION = 'v2-bypass-test';
+const VERSION = 'v3-auth';
 
 // Configure Cloudinary
 cloudinary.config({
@@ -43,34 +43,57 @@ function cloudinaryToTina(file) {
   };
 }
 
-// Check authorization
+// Contexte de développement LOCAL uniquement (jamais un déploiement public).
+// `netlify dev` expose CONTEXT="dev" ; NODE_ENV="development" en local.
+// Les déploiements (production, deploy-preview, branch-deploy/staging) passent
+// tous par la vraie vérification TinaCloud ci-dessous.
+function isLocalDev() {
+  const context = process.env.CONTEXT || '';
+  const nodeEnv = process.env.NODE_ENV || '';
+  return context === 'dev' || nodeEnv === 'development';
+}
+
+// Vérifie que la requête provient d'un éditeur authentifié TinaCloud.
+//
+// `isAuthorized` (@tinacms/auth) exige DEUX choses :
+//   - req.query.clientID        → ajouté par le media store (`?clientID=...`)
+//   - req.headers.authorization → token TinaCloud (via fetchWithToken)
+// Il valide le token contre https://identity.tinajs.io/.../currentUser.
+//
+// ⚠️ L'ancienne implémentation ne passait QUE `headers` (pas `query`) : `req.query`
+// était donc `undefined`, l'accès à `.clientID` levait une exception, la requête
+// tombait dans le catch → 401 systématique. C'est ce qui avait mené au bypass
+// temporaire. On reconstruit ici `req` correctement.
+//
+// Politique : fail-closed. En cas de doute (token/clientID manquant, erreur
+// réseau, exception), on REFUSE. L'endpoint fait des écritures/suppressions sur
+// Cloudinary : il ne doit jamais être ouvert à un anonyme.
 async function checkAuth(event) {
-  try {
-    const context = process.env.CONTEXT || 'unknown';
-    const nodeEnv = process.env.NODE_ENV || 'unknown';
-
-    console.log('[Auth] Context:', context, 'NODE_ENV:', nodeEnv);
-
-    // TEMPORARY: Allow all requests for testing
-    // TODO: Re-enable proper auth after testing
-    console.log('[Auth] TEMPORARY BYPASS - allowing all requests');
+  if (isLocalDev()) {
+    console.log('[Auth] Contexte dev local — accès autorisé');
     return true;
+  }
 
-    // Allow in development or deploy previews
-    if (nodeEnv === 'development' || context === 'dev' || context === 'deploy-preview') {
-      console.log('[Auth] Dev/Preview mode - allowing');
-      return true;
+  try {
+    const req = {
+      headers: event.headers || {},
+      query: event.queryStringParameters || {},
+    };
+
+    const hasClientId = typeof req.query.clientID === 'string';
+    const hasToken = typeof req.headers.authorization === 'string';
+    if (!hasClientId || !hasToken) {
+      // On ne logge JAMAIS le token lui-même, seulement sa présence.
+      console.warn('[Auth] Refus : identifiants manquants', { hasClientId, hasToken });
+      return false;
     }
 
-    // In production, check TinaCloud auth
-    const req = {
-      headers: event.headers,
-    };
     const user = await isAuthorized(req);
-    console.log('[Auth] User:', user?.verified);
-    return user && user.verified;
+    const verified = !!(user && user.verified);
+    console.log('[Auth] TinaCloud verified:', verified);
+    return verified;
   } catch (e) {
-    console.error('[Auth] Error:', e.message);
+    console.error('[Auth] Erreur de vérification (refus par défaut):', e.message);
     return false;
   }
 }

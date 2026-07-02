@@ -18,6 +18,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Podcasts Erasmus+ via Ausha (smartlink)** — Le champ d'écoute des podcasts (volets « Ressources ») accepte un smartlink Ausha (*Ausha › Partager › Smartlink*) : l'éditeur colle l'URL, la carte renvoie vers « Écouter ». L'identité du workspace Ausha étant portée par le smartlink, un workspace dédié Erasmus+ fonctionne sans configuration. Les podcasts en attente affichent « Bientôt disponible » plutôt qu'un lien mort.
 - **Codage couleur par volet (page Erasmus+)** — Chaque volet porte sa couleur de marque (Intelligence artificielle = bleu, Ludopédagogie = violet), propagée via une variable CSS `--volet` aux cartes thématiques, aux partenaires (bordure latérale + chip « Volet · … »), aux onglets de ressources et aux cartes média — un fil visuel projet → partenaires → ressources.
 - **Tests unitaires rich-text Tina** — `npm run test:utils` (`node --test`) : conversion AST → HTML (`richTextToHtml`), détection des placeholders CMS corrompus (`isBrokenCmsPlaceholder`), contrat JSON des missions dans `about/index.json`.
+- **Affiche partenaire EduSpark (page Festival)** — Nouvelle affiche cliquable au format portrait (4:5), sans texte redondant avec les infos festival, insérée entre la Rétrospective et le Programme. Double fond de marque (bande turquoise claire + bloc orange légèrement incliné) pour l'ancrer visuellement sur desktop comme sur mobile ; renvoie vers le programme EduSpark de Plantyn. Éditable via TinaCMS (activation, visuel, lien).
 
 ### Corrigé
 

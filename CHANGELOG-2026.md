@@ -5,6 +5,48 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.3.0] — Non publié (en attente)
+
+### Ajouté
+
+- **Page dédiée « Projet Erasmus+ »** (`/erasmus-plus/`) — Nouvelle page complète remplaçant l'ancien lien vers l'article MDX. Structure éditable de bout en bout via TinaCMS : héro, section « Le projet » (thématiques + objectifs), « Nos partenaires », « Ressources » (organisées en volets à onglets : podcasts et vidéos), et « Carnet de bord ». Nouvelle collection Tina `erasmusPlus` (création/suppression désactivées, page unique).
+- **Miniatures vidéo automatiques** — Nouvel utilitaire `src/utils/erasmusMedia.ts` : un rédacteur colle simplement un lien YouTube (formats `watch`, `youtu.be`, `embed`, `shorts`, `live` pris en charge) et la miniature s'affiche automatiquement, sans upload d'image. Override manuel possible ; fallback générique (dégradé + icône) pour les liens non-YouTube.
+- **Composant `MediaCard.astro`** — Carte média unifiée pour la page Erasmus+ : dimensions identiques pour podcasts et vidéos, vignette 16:9 ; le type de média reste distingué par l'icône, la couleur d'accent encode le volet.
+- **Section « Conseil d'Administration »** (page À propos) — Nouvelle section `#conseil-administration` listant les membres (photo, nom, fonction optionnelle, lien LinkedIn), entièrement éditable via TinaCMS (`aboutCollection`).
+- **Icônes dans les menus déroulants** — Champ `icon` optionnel ajouté aux liens de navigation (`navigationCollection`), rendu dans `Header.astro` (menus desktop et méga-menu mobile). Icônes Tabler associées : Billetterie, Podcasts, Émissions TV, Live Facebook, Fiches pédagogiques, Projet Erasmus+, Nous soutenir.
+- **Environnement bac à sable TinaCMS (`staging`)** — La branche éditée par Tina est désormais résolue dynamiquement selon le déploiement (`process.env.TINA_BRANCH || process.env.HEAD || "main"`), permettant un bac à sable `staging--outofthebooks.netlify.app/admin` où les éditeurs testent le CMS et prévisualisent le contenu non publié sans impacter la production. `gitProvider.autoMerge` passé à `false` (les éditions staging ne remontent jamais automatiquement vers `main`). Production inchangée (`HEAD=main` → `branch="main"`). Modèle retenu : deux environnements indépendants — édition directe en production, bac à sable jetable côté staging (réinitialisable depuis `main`).
+- **Podcasts Erasmus+ via Ausha (smartlink)** — Le champ d'écoute des podcasts (volets « Ressources ») accepte un smartlink Ausha (_Ausha › Partager › Smartlink_) : l'éditeur colle l'URL, la carte renvoie vers « Écouter ». L'identité du workspace Ausha étant portée par le smartlink, un workspace dédié Erasmus+ fonctionne sans configuration. Les podcasts en attente affichent « Bientôt disponible » plutôt qu'un lien mort.
+- **Codage couleur par volet (page Erasmus+)** — Chaque volet porte sa couleur de marque (Intelligence artificielle = bleu, Ludopédagogie = violet), propagée via une variable CSS `--volet` aux cartes thématiques, aux partenaires (bordure latérale + chip « Volet · … »), aux onglets de ressources et aux cartes média — un fil visuel projet → partenaires → ressources.
+- **Tests unitaires rich-text Tina** — `npm run test:utils` (`node --test`) : conversion AST → HTML (`richTextToHtml`), détection des placeholders CMS corrompus (`isBrokenCmsPlaceholder`), contrat JSON des missions dans `about/index.json`.
+- **Affiche partenaire EduSpark (page Festival)** — Nouvelle affiche cliquable au format portrait (4:5), sans texte redondant avec les infos festival, insérée entre la Rétrospective et le Programme. Double fond de marque (bande turquoise claire + bloc orange légèrement incliné) pour l'ancrer visuellement sur desktop comme sur mobile ; renvoie vers le programme EduSpark de Plantyn. Éditable via TinaCMS (activation, visuel, lien).
+
+### Corrigé
+
+- **Page À propos — section « Nos Missions » affichait `[object Object]`** — Remplacement de `<TinaMarkdown>` (React/tinacms) par un rendu build-time (`TinaRichText.astro` + `richTextToHtml`) sur les pages Astro statiques ; restauration du contenu missions corrompu en JSON (chaînes littérales `"[object Object]"` sauvegardées par Tina) ; garde-fou `isBrokenCmsPlaceholder()` pour ne plus afficher ces placeholders.
+
+### Modifié
+
+- **Liens « Projet Erasmus+ » mis à jour** — Toutes les occurrences de navigation pointent désormais vers `/erasmus-plus/` au lieu de l'ancien article MDX `/4_actualites/un-projet-erasmus-pour-innover-ensemble-en-ducation-mdx/`.
+- **Menu « Qui sommes-nous »** — Ajout du lien « Conseil d'administration » (ancre `/a-propos/#conseil-administration`).
+- **Titres de sections À propos paramétrables** — Les titres des sections Missions, Valeurs et de la liste d'actions deviennent éditables via TinaCMS (`missionsTitle`, `valeursTitle`, `actionsTitle`).
+- **Page Erasmus+ — rythme des sections & hiérarchie de titres** — « Nos partenaires » reçoit un fond légèrement teinté (convention de `a-propos.astro`) pour la distinguer de « Le projet » ; ajout de vrais titres `<h2>` de section (« Le projet en deux volets », « Deux partenaires européens »), noms de partenaires passés en `<h3>` (hiérarchie correcte pour l'accessibilité et le SEO) ; léger effet de survol sur les cartes.
+- **Interrupteurs « Publier » du CMS plus clairs** — Les descriptions des bascules (section, podcasts, vidéos, fiches) reformulées en langage rassurant (« Désactivé, le contenu reste enregistré et réaffichable à tout moment ») en remplacement de l'ancien « ⚠️ … masqués (même s'il en reste) ».
+- **Trio « À l'affiche » (accueil) sans fiches pédagogiques** — Le trio de contenus mis en avant sur la page d'accueil n'affiche plus les fiches pédagogiques (réservées à leur rubrique dédiée) et met en avant les autres formats (actualités, podcasts, émissions…). Le plafond de 2 contenus par catégorie reste inchangé.
+- **EduSpark repositionné et allégé** — L'ancienne bannière EduSpark (image + texte redondant avec les dates/lieu du festival) devient une affiche visuelle unique, déplacée sous la Rétrospective.
+
+### Maintenance
+
+- Enregistrement de la collection `erasmusCollection` dans `tina/config.ts` ; régénération de `tina/tina-lock.json` après modification du schéma (collections Erasmus+, About, Navigation).
+- **Skill Claude Code `tinacms-ootb`** — Documentation repo-spécifique des conventions TinaCMS (versions épinglées, régénération obligatoire de `tina-lock.json`, conventions de collections, pièges de rendu d'images) ajoutée sous `.claude/skills/tinacms-ootb/`. Mise à jour : rendu rich-text via `TinaRichText.astro` / `richTextToHtml()` (plus `<TinaMarkdown>` sur pages Astro SSG).
+- **`.gitignore`** — Ignore `.claude/settings.local.json` (réglages locaux par utilisateur) et `*.mov` (binaires/tutoriels hors dépôt).
+- Schéma Tina `eduspark` (`tina/festivalCollection.ts`) réduit à `{ enabled, image, ctaUrl }` (retrait des champs texte `eyebrow`/`title`/`description`/`ctaText` devenus inutiles) ; `tina/tina-lock.json` régénéré.
+
+**Fichiers ajoutés** : `src/pages/erasmus-plus.astro`, `src/content/erasmus-plus/index.json`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/utils/tinaRichText.ts`, `src/utils/renderMissionHtml.ts`, `src/components/ui/TinaRichText.astro`, `src/utils/__tests__/tinaRichText.test.js`, `tina/erasmusCollection.ts`, `public/images/erasmus/` (cats-family, cofinance-union-europeenne, randers-statsskole), `.claude/skills/tinacms-ootb/`
+
+**Fichiers modifiés** : `src/components/widgets/Header.astro`, `src/components/blog/CategoryInfo.astro`, `src/components/ui/TicketingModal.tsx`, `src/components/ui/TicketingButton.tsx`, `src/components/sections/FestivalHeroSection.astro`, `src/components/sections/EduSparkSection.astro`, `src/pages/festival.astro`, `src/utils/blog.ts`, `src/content/about/index.json`, `src/content/navigation/index.json`, `src/content/festival/tina/index.json`, `src/pages/a-propos.astro`, `tina/aboutCollection.ts`, `tina/navigationCollection.ts`, `tina/festivalCollection.ts`, `tina/config.ts`, `tina/tina-lock.json`, `package.json`, `.gitignore`
+
+---
+
 ## [1.2.2] — 2026-04-05
 
 ### Corrigé
@@ -52,7 +94,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ### Amélioré
 
-- **Newsletter : messages d'information clairs pour les visiteurs** — Les messages affichés en cas de difficulté technique ont été réécrits en langage courant. Si le service est momentanément indisponible, le visiteur voit *"Le service d'inscription est temporairement indisponible. Veuillez réessayer dans quelques minutes."* Les détails techniques restent consignés dans les journaux internes.
+- **Newsletter : messages d'information clairs pour les visiteurs** — Les messages affichés en cas de difficulté technique ont été réécrits en langage courant. Si le service est momentanément indisponible, le visiteur voit _"Le service d'inscription est temporairement indisponible. Veuillez réessayer dans quelques minutes."_ Les détails techniques restent consignés dans les journaux internes.
 
 ### Ajouté
 
@@ -71,6 +113,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 ## [1.1.0] — 2026-03-18
 
 ### Corrigé
+
 - **Bug récurrent de date "Bulle d'R"** : correction du script `build-fiches-pedagogiques.js` qui réattribuait `publishDate: new Date()` à la fiche "Bulle d'R" à chaque build. La date d'origine (août 2025) est désormais collectée et préservée avant la suppression/recréation des fichiers.
 - **Algorithme d'affichage Homepage** : vérification et confirmation de l'algorithme de diversité dans `src/utils/blog.ts` — les 3 dernières publications respectent un plafond souple de 2 contenus max par type (podcast, actualité, etc.)
 
@@ -81,27 +124,32 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 ## [1.0.1] — 2026-03-17
 
 ### Corrigé
+
 - **Build cassé (HOTFIX)** : remplacement de l'icône invalide `tabler:moojo` (causant le crash Astro) par `tabler:heart` dans la section Premium de `src/content/homepage/index.json`
 - **Perte de données TinaCMS** : restauration des champs `color` dans les 7 contentTypes de `src/content/blog/blog.json`, supprimés involontairement par un commit automatique du CMS
 - **Script de build Netlify** : correction pour gérer les avertissements TinaCMS sans bloquer le déploiement
 - **Libellés section Premium** : mise à jour dans `src/content/navigation/index.json` pour refléter le nouveau positionnement "Nous soutenir"
 
 ### Ajouté
+
 - **Protection du schéma Tina** : champ `color` caché ajouté dans `tina/blogCollection.ts` pour empêcher toute suppression future des couleurs de catégories par le CMS
 - **Icônes réseaux sociaux** : ajout de `tabler:brand-linkedin` et `tabler:brand-instagram` dans les 4 menus déroulants d'icônes de `tina/homepageCollection.ts`
 - **Documentation incident** : ajout de `claudedocs/reponse-alexia-17-03-2026.md` détaillant l'incident et la résolution
 
 ### Amélioré
+
 - **UX Éditeur TinaCMS** : remplacement des champs texte libre pour les icônes par des menus déroulants sécurisés dans `tina/homepageCollection.ts`, empêchant définitivement l'erreur "icône invalide"
 - **Navigation** : renommage de "Contenu Premium" en "Nous soutenir" dans le menu principal et la page dédiée
 
 ### Maintenance
+
 - Condensation de la documentation pour plus de clarté
 - Réorganisation et extension du `.gitignore`
 
 **Fichiers modifiés** : `tina/blogCollection.ts`, `tina/homepageCollection.ts`, `src/content/blog/blog.json`, `src/content/homepage/index.json`, `src/content/navigation/index.json`, `.gitignore`, `CHANGELOG-2026.md`
 
 ### Contenu éditorial (TinaCMS)
+
 - Mises à jour de contenu via le CMS (14 modifications) : section "Nous soutenir" (crowdfunding MyMoojo), ajout et modification d'articles (podcasts, actualités), mise à jour des événements du festival
 
 ---
@@ -109,10 +157,12 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 ## [1.0.0] — 2026-01-26
 
 ### Ajouté
+
 - **Handler Cloudinary pour Netlify Functions** : gestion complète des médias TinaCMS via `api/cloudinary/[...media].js` (route catch-all conforme à la doc TinaCMS)
 - **Configuration Vercel** : ajout de `vercel.json` pour le framework Astro et les routes API
 
 ### Corrigé
+
 - **Handler Cloudinary** : réécriture avec l'API Web Standard (`Request`/`Response`) pour compatibilité Vercel + Astro dans `netlify/functions/cloudinary-media.mjs`
 - **Boucle de redirection admin** : suppression du fichier `public/_redirects` causant une boucle infinie sur `/admin`
 - **Accès Cloudinary en preview** : autorisation de l'accès sur les previews de déploiement Netlify
@@ -121,11 +171,13 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Logs diagnostic** : ajout de logs pour déboguer les problèmes d'upload Cloudinary
 
 ### Maintenance
+
 - Suppression du support de Node.js 18 (conservation de v20 et v22 uniquement)
 
 **Fichiers modifiés** : `api/cloudinary/[...media].js`, `api/cloudinary/media.js`, `astro.config.ts`, `netlify.toml`, `netlify/functions/cloudinary-media.mjs`, `package.json`, `public/_redirects`, `vercel.json`
 
 ### Contenu éditorial (TinaCMS)
+
 - Mise à jour de contenu via le CMS (1 modification)
 
 ---
@@ -133,14 +185,17 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 ## [0.9.0] — 2026-01-21
 
 ### Ajouté
+
 - **Dates du festival centralisées depuis TinaCMS** : les éditeurs saisissent les dates dans `src/content/festival/tina/index.json`, les noms de jours et l'année sont calculés automatiquement via `src/config/festival.ts` (Festival 2026 : 30 sept - 2 oct)
 - **Tests E2E dates du festival** : ajout de `tests/e2e/scenarios/festival-dates.spec.js` pour vérifier l'affichage correct des dates
 
 ### Corrigé
+
 - **Affichage dates TinaCMS** : correction de l'affichage complet des dates dans l'interface d'édition via `tina/festivalCollection.ts`
 - **Description des dates** : simplification des descriptions de champs dans le schéma Tina
 
 ### Maintenance
+
 - Nettoyage de la configuration Playwright : suppression du doublon `playwright.config.js`, conservation du `.ts` uniquement
 - Ajout d'un script `postinstall` dans `package.json` pour l'installation automatique des navigateurs de test
 - Correction des violations du mode strict Playwright et tests de badges (`badge-consistency.spec.js`) rendus indépendants du contenu
@@ -148,6 +203,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 **Fichiers modifiés** : `src/config/festival.ts`, `src/content/festival/tina/index.json`, `tina/festivalCollection.ts`, `playwright.config.ts`, `package.json`, `tests/e2e/scenarios/festival-dates.spec.js`, `tests/e2e/scenarios/badge-consistency.spec.js`
 
 ### Contenu éditorial (TinaCMS)
+
 - Mises à jour de contenu via le CMS (3 modifications)
 
 ---
@@ -156,21 +212,22 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 Les mises à jour de contenu réalisées via le CMS sont regroupées ci-dessous par date.
 
-| Date | Modifications | Description |
-|------|:---:|-------------|
-| 2026-01-22 | 14 | Mises à jour massives de contenu (articles, pages) |
-| 2026-01-27 | 10 | Mises à jour de contenu (articles, événements) |
-| 2026-01-29 | 14 | Mises à jour de contenu (articles, événements, pages) |
+| Date       | Modifications | Description                                           |
+| ---------- | :-----------: | ----------------------------------------------------- |
+| 2026-01-22 |      14       | Mises à jour massives de contenu (articles, pages)    |
+| 2026-01-27 |      10       | Mises à jour de contenu (articles, événements)        |
+| 2026-01-29 |      14       | Mises à jour de contenu (articles, événements, pages) |
 
 ---
 
 ## [0.8.0] — 2026-01-01
 
 ### Maintenance (effectuée fin décembre 2025)
+
 - Migration de l'infrastructure vers Ubuntu 24.04 suite à la fin du support de la version précédente
 - Mise à jour de Node.js et des dépendances critiques pour garantir la stabilité et la sécurité
 - Restructuration du support et de la maintenance (packs prédéfinis) pour 2026
 
 ---
 
-*Ce fichier couvre les modifications depuis le 1er janvier 2026. Pour l'historique antérieur, consultez le dépôt Git.*
+_Ce fichier couvre les modifications depuis le 1er janvier 2026. Pour l'historique antérieur, consultez le dépôt Git._

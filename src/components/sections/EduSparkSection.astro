@@ -1,0 +1,68 @@
+---
+import Image from '~/components/common/Image.astro';
+import { findImage } from '~/utils/images';
+
+interface Props {
+  enabled?: boolean;
+  image?: string;
+  ctaUrl?: string;
+}
+
+const { enabled = false, image, ctaUrl = '' } = Astro.props;
+
+// Résolution de l'image de l'affiche EduSpark (asset local ou URL distante)
+const bannerImage = image ? await findImage(image) : null;
+
+// L'affiche n'est cliquable que si un lien est fourni
+const hasLink = Boolean(ctaUrl);
+
+// Affiche auto-porteuse (toutes les infos sont déjà dans le visuel) : pas de
+// titre/description dupliqués ici, seulement un alt descriptif pour l'a11y.
+const alt = 'EduSpark — programme partenaire de Plantyn, en savoir plus';
+
+// L'affiche est rendue une seule fois : conteneur cliquable (<a>) si un lien
+// est fourni, sinon <div> statique — le tag et ses attributs sont dérivés,
+// l'<Image> n'est pas dupliquée.
+const Poster = hasLink ? 'a' : 'div';
+const posterClass = 'relative block rounded-3xl overflow-hidden shadow-xl transition-transform duration-500';
+const posterProps = hasLink
+  ? {
+      href: ctaUrl,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      'aria-label': alt,
+      class: `group ${posterClass} hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[--ootb-orange]`,
+    }
+  : { class: posterClass };
+---
+
+{
+  enabled && bannerImage && (
+    <section
+      id="eduspark"
+      class="py-12 md:py-16 bg-[color-mix(in_srgb,var(--ootb-turquoise)_15%,white)] relative overflow-hidden"
+    >
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 flex justify-center">
+        {/* Double fond : la bande turquoise comble les côtés (desktop), le bloc
+            orange décalé donne la profondeur « cartes empilées ». */}
+        <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md">
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5 rotate-2 rounded-3xl bg-[--ootb-orange]"
+          />
+          <Poster {...posterProps}>
+            <Image
+              src={bannerImage}
+              alt={alt}
+              class="w-full h-auto"
+              widths={[400, 900]}
+              sizes="(max-width: 768px) 400px, 450px"
+              loading="lazy"
+              decoding="async"
+            />
+          </Poster>
+        </div>
+      </div>
+    </section>
+  )
+}

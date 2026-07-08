@@ -1,0 +1,13 @@
+---
+import { richTextToHtml, type TinaRichTextContent } from '~/utils/tinaRichText';
+
+interface Props {
+  content: TinaRichTextContent;
+  class?: string;
+}
+
+const { content, class: className = 'prose prose-base max-w-none text-gray-700' } = Astro.props;
+const html = richTextToHtml(content);
+---
+
+{html ? <div class={className} set:html={html} /> : null}

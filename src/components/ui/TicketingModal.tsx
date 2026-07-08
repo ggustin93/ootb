@@ -1,13 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Icon } from '@iconify/react';
-import { TinaMarkdown, TinaMarkdownContent } from 'tinacms/dist/rich-text';
+import { richTextToHtml, type TinaRichTextContent } from '~/utils/tinaRichText';
 
 interface TicketingModalProps {
   id: string;
   isOpen: boolean;
   onClose: () => void;
   ticketingConfig?: {
-    modalText: TinaMarkdownContent | string; // Accept both string and rich text
+    modalText: TinaRichTextContent | string;
     ifpcButtonLabel: string;
     ifpcButtonUrl: string;
     weezeventButtonLabel: string;
@@ -74,6 +74,33 @@ export default function TicketingModal({
     };
   }, [isOpen, onClose]);
 
+  const modalTextContent = useMemo(() => {
+    if (!ticketingConfig.modalText) return null;
+
+    if (typeof ticketingConfig.modalText === 'string') {
+      let cleanText = ticketingConfig.modalText.replace(/\\\\n/g, '\n');
+      cleanText = cleanText.replace(/\\\n/g, '\n');
+
+      const paragraphs = cleanText.split('\n\n').filter((p) => p.trim());
+      return (
+        <>
+          {paragraphs.map((paragraph, index) => (
+            <p key={index} className={`text-gray-600 ${index < paragraphs.length - 1 ? 'mb-4' : ''}`}>
+              {paragraph.trim()}
+            </p>
+          ))}
+        </>
+      );
+    }
+
+    return (
+      <div
+        className="prose prose-sm max-w-none text-gray-600"
+        dangerouslySetInnerHTML={{ __html: richTextToHtml(ticketingConfig.modalText) }}
+      />
+    );
+  }, [ticketingConfig.modalText]);
+
   if (!isOpen) return null;
 
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -91,33 +118,6 @@ export default function TicketingModal({
     );
     if (w) w.focus();
     return false;
-  };
-
-  // Function to render modal text based on type
-  const renderModalText = () => {
-    if (!ticketingConfig.modalText) return null;
-
-    // If it's a string, render as paragraphs
-    if (typeof ticketingConfig.modalText === 'string') {
-      // Clean up escaped newlines: \\\n -> \n
-      let cleanText = ticketingConfig.modalText.replace(/\\\\n/g, '\n');
-      // Also handle any remaining escaped backslashes
-      cleanText = cleanText.replace(/\\\n/g, '\n');
-      
-      const paragraphs = cleanText.split('\n\n').filter(p => p.trim());
-      return (
-        <>
-          {paragraphs.map((paragraph, index) => (
-            <p key={index} className={`text-gray-600 ${index < paragraphs.length - 1 ? 'mb-4' : ''}`}>
-              {paragraph.trim()}
-            </p>
-          ))}
-        </>
-      );
-    }
-
-    // If it's a rich text object, use TinaMarkdown
-    return <TinaMarkdown content={ticketingConfig.modalText} />;
   };
 
   return (
@@ -146,7 +146,7 @@ export default function TicketingModal({
 
           {/* Content */}
           <div className="mb-8 prose prose-base max-w-none text-gray-600 leading-relaxed">
-            {renderModalText()}
+            {modalTextContent}
           </div>
 
           {/* Actions */}

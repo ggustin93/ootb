@@ -1,3 +1,4 @@
+---
 import { Image } from 'astro:assets';
 import ootbLogo from '~/assets/images/ootb-logo.svg';
 
@@ -38,6 +39,7 @@ const animationClass = animation ? 'transform hover:-rotate-2 transition-transfo
 
 // Classe pour cacher sur mobile
 const mobileVisibilityClass = mobileHidden ? 'hidden md:block' : '';
+---
 
 <div class:list={[
   positionClasses[position],

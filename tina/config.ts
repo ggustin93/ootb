@@ -6,6 +6,7 @@ import { blogCollection } from "./blogCollection";
 import { appelProjetCollection } from "./appelProjetCollection";
 import { navigationCollection } from "./navigationCollection";
 import { aboutCollection } from "./aboutCollection";
+import { erasmusCollection } from "./erasmusCollection";
 import { contactCollection } from "./contactCollection";
 import { siteSettingsCollection } from "./siteSettingsCollection";
 import { festivalCollection } from "./festivalCollection";
@@ -26,13 +27,43 @@ export default defineConfig({
   
   build: {
     outputFolder: "admin",
-    publicFolder: "dist",
+    // "public" (et non "dist") pour que l'admin soit servi par `astro dev` à /admin
+    // en local. En build, l'ordre `tinacms build && astro build` recopie public/admin → dist/admin.
+    publicFolder: "public",
   },
 
   media: {
     loadCustomStore: async () => {
       const pack = await import("next-tinacms-cloudinary");
-      return pack.TinaCloudCloudinaryMediaStore;
+      const { compressImage } = await import("./media/compressImage");
+      const { ensureUploadable } = await import("./media/uploadGuard");
+
+      const Base = pack.TinaCloudCloudinaryMediaStore;
+
+      // Sous-classe : on compresse les images trop lourdes AVANT l'envoi, puis
+      // on délègue tout le reste (list/delete/preview...) au store d'origine.
+      return class CompressingCloudinaryMediaStore extends Base {
+        async persist(media: any[]) {
+          const processed = await Promise.all(
+            media.map(async (item) => {
+              if (item?.file) {
+                const file = await compressImage(item.file);
+                return { ...item, file };
+              }
+              return item;
+            })
+          );
+
+          // Si une image reste trop lourde après compression, on affiche un
+          // message clair plutôt que de laisser Netlify renvoyer un
+          // "Internal Server Error" non-JSON (popup illisible).
+          for (const item of processed) {
+            if (item?.file) ensureUploadable(item.file);
+          }
+
+          return super.persist(processed);
+        }
+      };
     },
   },
 
@@ -44,6 +75,7 @@ export default defineConfig({
       appelProjetCollection,
       blogCollection,
       aboutCollection,
+      erasmusCollection,
       contactCollection,
       siteSettingsCollection,
       navigationCollection,

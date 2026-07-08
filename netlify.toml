@@ -8,7 +8,7 @@
   functions = "netlify/functions"      # Emplacement des fonctions serverless
 
 [dev]
-  command = "npm run dev"              # Commande de développement local
+  command = "npm start"                # Astro seul (npm run dev lance aussi TinaCMS, inutile sous netlify dev)
   port = 3001                          # Port de l'interface locale
   targetPort = 4321                    # Port interne d'Astro
   framework = "astro"                  # Framework utilisé

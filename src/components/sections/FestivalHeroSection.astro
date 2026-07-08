@@ -5,6 +5,7 @@ import GradientHeroSection from './GradientHeroSection.astro';
 import TicketingButton from '../ui/TicketingButton';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import type { ImageMetadata } from 'astro';
+import type { TinaRichTextContent } from '~/utils/tinaRichText';
 // Removed import of site settings; ticketingConfig now comes from props
 
 interface Button {
@@ -29,7 +30,7 @@ interface FloatingIcon {
 
 // Minimal local type for ticketing config
 interface TicketingConfig {
-  modalText?: unknown;
+  modalText?: TinaRichTextContent | string;
   ifpcButtonLabel?: string;
   ifpcButtonUrl?: string;
   weezeventButtonLabel?: string;

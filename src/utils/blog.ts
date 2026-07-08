@@ -415,8 +415,10 @@ export const findDiverseLatestPosts = async ({ count = 3 }: { count?: number } =
     allPosts.map(post => getNormalizedPost(post))
   );
 
-  // Sort by publish date (newest first)
+  // Sort by publish date (newest first), excluding fiches pédagogiques
+  // (le trio d'accueil ne doit plus mettre en avant les fiches)
   const sortedPosts = normalizedPosts
+    .filter(post => post.category.slug !== 'fiche')
     .sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime());
 
   // Select the most recent posts, but avoid more than 2 of the same content type

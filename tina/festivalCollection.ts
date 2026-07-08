@@ -382,6 +382,32 @@ export const festivalCollection: Collection = {
     },
     {
       type: "object",
+      name: "eduspark",
+      label: "Affiche EduSpark",
+      description: "Affiche partenaire EduSpark (powered by Plantyn), affichée entre la Rétrospective et le Programme sur la page Festival",
+      fields: [
+        {
+          type: "boolean",
+          name: "enabled",
+          label: "Activer l'affiche",
+          description: "Afficher ou masquer l'affiche EduSpark",
+        },
+        {
+          type: "image",
+          name: "image",
+          label: "Visuel de l'affiche",
+          description: "Affiche EduSpark (format portrait, cliquable vers le lien d'inscription)",
+        },
+        {
+          type: "string",
+          name: "ctaUrl",
+          label: "Lien (Plantyn)",
+          description: "URL Plantyn vers laquelle l'affiche renvoie",
+        },
+      ],
+    },
+    {
+      type: "object",
       name: "themes",
       label: "Thèmes",
       ui: {

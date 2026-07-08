@@ -116,6 +116,11 @@
     "weezeventButtonLabel": "Billetterie générale",
     "weezeventButtonUrl": "https://my.weezevent.com/festival-out-of-the-books-2026-la-sucrerie-a-wavre"
   },
+  "eduspark": {
+    "enabled": true,
+    "image": "~/assets/images/eduspark-banner.png",
+    "ctaUrl": "https://www.plantyn.com/fr-BE/eduspark/outofthebooks"
+  },
   "themes": {
     "title": "Les grands thèmes du Festival",
     "description": "Découvrez les 5 axes principaux qui seront abordés lors du festival",

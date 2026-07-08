@@ -17,6 +17,10 @@ export interface Props {
 const { post } = Astro.props;
 const image = await findImage(post.image);
 const link = await getPermalink(post.permalink);
+const imageSrc = typeof image === 'string' ? image : image?.src;
+const categorySlug = typeof post.category === 'string' ? post.category : post.category?.slug;
+const categoryLabel = typeof post.category === 'string' ? post.category : post.category?.title;
+const tags = post.tags?.map((tag) => (typeof tag === 'string' ? tag : tag.title));
 
 // Déterminer le type de carte en fonction de la catégorie
 const getCardType = (category?: { slug?: string; title?: string }) => {
@@ -53,10 +57,10 @@ const formatMeta = (post: Post) => {
 
 <article class="group relative overflow-hidden rounded-xl bg-white border border-gray-200 transition-all duration-300 hover:-translate-y-0.5">
   <a href={link} class="block relative">
-    {image && (
+    {imageSrc && (
       <div class="relative h-52 overflow-hidden rounded-t-xl">
         <img
-          src={image.src}
+          src={imageSrc}
           width={400}
           height={224}
           alt={post.title}
@@ -69,16 +73,16 @@ const formatMeta = (post: Post) => {
             'rounded-full text-sm font-medium',
             'bg-white/95 border border-gray-100',
             {
-              'text-gray-700': post.category === 'actualite',
-              'text-[#0EA5E9]': post.category === 'fiche',
-              'text-[#1877F2]': post.category === 'live',
-              'text-[#8d216d]': post.category === 'podcast',
-              'text-[#22C55E]': post.category === 'tv',
-              'text-[#F43F5E]': post.category === 'premium',
+              'text-gray-700': categorySlug === 'actualite',
+              'text-[#0EA5E9]': categorySlug === 'fiche',
+              'text-[#1877F2]': categorySlug === 'live',
+              'text-[#8d216d]': categorySlug === 'podcast',
+              'text-[#22C55E]': categorySlug === 'tv',
+              'text-[#F43F5E]': categorySlug === 'premium',
             }
           ]}>
             <Icon name={post.icon || 'tabler:article'} class="w-4 h-4" />
-            {post.category}
+            {categoryLabel}
           </span>
         </div>
       </div>
@@ -95,7 +99,7 @@ const formatMeta = (post: Post) => {
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2 text-sm text-gray-500">
           <Icon name="tabler:calendar" class="w-4 h-4" />
-          <time datetime={post.publishDate}>{getFormattedDate(post.publishDate)}</time>
+          <time datetime={post.publishDate.toISOString()}>{getFormattedDate(post.publishDate)}</time>
         </div>
         {post.readingTime && (
           <div class="flex items-center gap-2 text-sm text-gray-500">
@@ -106,9 +110,9 @@ const formatMeta = (post: Post) => {
       </div>
 
       <!-- Tags -->
-      {post.tags && (
+      {tags?.length > 0 && (
         <div class="mt-4 flex flex-wrap gap-2">
-          {post.tags.map((tag: string) => (
+          {tags.map((tag) => (
             <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100/80 rounded-full">
               <Icon name="tabler:tag" class="w-3 h-3" />
               {tag}

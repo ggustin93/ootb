@@ -146,6 +146,11 @@
         "nom": "TV Com",
         "logo": "https://static.wixstatic.com/media/56c117_0943597d29324f9fbfadeefe2237eecd~mv2.jpg/v1/fill/w_296,h_148,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/ootb-partenaire-tvcom.jpg",
         "lien": "#"
+      },
+      {
+        "nom": "La Première",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1785791160/dlxxc0pyxjxtdtnukclw.jpg",
+        "lien": "https://www.rtbf.be/lapremiere"
       }
     ]
   }

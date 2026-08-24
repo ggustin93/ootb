@@ -277,6 +277,11 @@
         "nom": "Auvio Kids",
         "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1786085684/hpsp2fgmvavrru2d6gon.png",
         "url": "https://auvio.rtbf.be/kids"
+      },
+      {
+        "nom": "DaBooks",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1780573084/cnchtsdbpixmkbkgyzez.jpg",
+        "url": "https://dajobs.be/valeurs/promotion-de-la-lecture/"
       }
     ]
   }

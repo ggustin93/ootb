@@ -272,6 +272,11 @@
         "nom": "La Première",
         "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1785791160/dlxxc0pyxjxtdtnukclw.jpg",
         "url": "https://www.rtbf.be/lapremiere"
+      },
+      {
+        "nom": "Auvio Kids",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1786085684/hpsp2fgmvavrru2d6gon.png",
+        "url": "https://auvio.rtbf.be/kids"
       }
     ]
   }

@@ -239,11 +239,6 @@
         "url": "https://www.wavre.be/"
       },
       {
-        "nom": "Daoust",
-        "logo": "https://static.wixstatic.com/media/56c117_a88c6bf5870d4c1792472d4c9d4264de~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-daoust.jpg",
-        "url": "https://www.daoust.be/"
-      },
-      {
         "nom": "IFPC",
         "logo": "https://static.wixstatic.com/media/e57c2b_6bf32d95aa624c06ae30d6809dcb156f~mv2.png/v1/crop/x_0,y_242,w_2886,h_1732/fill/w_396,h_236,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20IFPC.png",
         "url": "https://www.ifpc.be/"
@@ -254,34 +249,14 @@
         "url": "https://www.tvcom.be/"
       },
       {
-        "nom": "Schtroumpfs",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758541870/LOGO_Schtroumpfs_szds1w.jpg",
-        "url": "https://www.smurf.com/fr/shop"
-      },
-      {
         "nom": "Spa",
         "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758541932/ootb-partenaire-spa_iyxpr6.jpg",
         "url": "https://www.spadel.com/fr"
       },
       {
-        "nom": "Nostalgie",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758542020/Nostalgie-CMJN-PRINT_yjkvy6.jpg",
-        "url": "https://www.nostalgie.be/choix-langue"
-      },
-      {
-        "nom": "Maisons Clothes",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543141/maisons_clothes_logo_klpljg.svg",
-        "url": "https://www.maisonsclothes.be/"
-      },
-      {
         "nom": "Qpics Moments' Catcher",
         "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543280/QPICS_Logo_2022_crop_Black_ycm58i.png",
         "url": "https://qpics.be/galeries"
-      },
-      {
-        "nom": "La classe de JJonet",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543349/Logo_LA_CLASSE_DE_JJONET_hawseq.png",
-        "url": "https://laclassedejjonet.store/"
       },
       {
         "nom": "Pépinière le Try",
@@ -294,9 +269,9 @@
         "url": "https://www.ciaco.coop/"
       },
       {
-        "nom": "Art de Vue",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758544027/art_de_vue_logo_pnshmo.png",
-        "url": "https://artdevue.be/"
+        "nom": "La Première",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1785791160/dlxxc0pyxjxtdtnukclw.jpg",
+        "url": "https://www.rtbf.be/lapremiere"
       }
     ]
   }

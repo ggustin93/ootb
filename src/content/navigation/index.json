@@ -188,7 +188,7 @@
         "festivalButton": {
           "text": "Prendre votre ticket",
           "href": "/#tickets",
-          "variant": "outline"
+          "variant": "primary"
         },
         "communityButton": {
           "text": "Rejoindre la communauté",

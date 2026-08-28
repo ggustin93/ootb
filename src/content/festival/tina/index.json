@@ -36,6 +36,16 @@
     "description": "Voici quelques teasers pour la 8ème édition de 2026 des 30 septembre, 1er et 2 octobre à la Sucrerie à Wavre",
     "photos": [
       {
+        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1780072903/fzfl2yzuu0e0otef68cc.jpg",
+        "alt": "Têtes d'affiche",
+        "title": "Des têtes d'affiche dont Steve Bissonnette, Philippe Meirieu, Ariane Hébert"
+      },
+      {
+        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1787906503/xw4qbiqfjzyxjdg69xmp.png",
+        "alt": "2 spectacles le mercredi 30 septembre",
+        "title": "Monsieur Nicolas et Dan Gagnon en spectacle! A ne pas manquer"
+      },
+      {
         "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742477393/1007-OOTB-S1-101_perrine_jpnpfa.webp",
         "alt": "Conférence principale Out of The Books",
         "title": "Conférence principale"
@@ -54,16 +64,6 @@
         "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742477965/network_u56fhi.webp",
         "alt": "Espace de networking",
         "title": "Networking & Échanges"
-      },
-      {
-        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1780072903/fzfl2yzuu0e0otef68cc.jpg",
-        "alt": "Têtes d'affiche",
-        "title": "Des têtes d'affiche dont Steve Bissonnette, Philippe Meirieu, Ariane Hébert"
-      },
-      {
-        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1787906503/xw4qbiqfjzyxjdg69xmp.png",
-        "alt": "2 spectacles le mercredi 30 septembre",
-        "title": "Monsieur Nicolas et Dan Gagnon en spectacle! A ne pas manquer"
       },
       {
         "src": "https://images.unsplash.com/photo-1558008258-3256797b43f3?q=80&w=800&auto=format&fit=crop",

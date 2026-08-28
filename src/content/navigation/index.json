@@ -187,7 +187,7 @@
         "mode": "festival",
         "festivalButton": {
           "text": "Prendre votre ticket",
-          "href": "/#tickets",
+          "href": "https://outofthebooks.com/festival/#tickets/",
           "variant": "outline"
         },
         "communityButton": {

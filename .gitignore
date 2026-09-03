@@ -98,3 +98,4 @@ src/assets/images/events/
 
 # Editor / agent config
 .codex/
+.claude/skills/

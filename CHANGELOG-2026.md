@@ -15,9 +15,18 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Toutes les fiches récupérées, au-delà de 100** — La récupération est paginée (avec un plafond de sécurité), comme pour les données festival. Avant, elle s'arrêtait aux 100 premières fiches.
 - **Token absent des journaux** — En cas d'échec, le journal n'affiche que le message d'erreur. Avant, il affichait l'objet d'erreur complet, token NocoDB compris.
 - **Vérifié avant déploiement** — Les 85 fiches de NocoDB remontent toutes en « Publié » (lecture seule). Un token invalide fait échouer le script (code de sortie 1) sans toucher aux fichiers.
-  - Dernière étape, après le déploiement : poser le filtre `Statut = Publié` sur la vue NocoDB lue par le build.
+- **La vue NocoDB reste non filtrée, volontairement** — La vue lue par le build (« Fiches - Vue table ») est aussi la vue par défaut de l'équipe. Si on la filtrait sur « Publié », les fiches « A valider » y deviendraient invisibles. Le filtre dans le code suffit : le build ne publie que les fiches « Publié », quoi que montre la vue. Pour voir les fiches en attente, l'équipe peut grouper la vue par `Statut` ou créer une vue « À valider ».
 
 **Fichiers modifiés** : `src/scripts/build-fiches-pedagogiques.js`
+
+### CI GitHub au vert (#26)
+
+- **Premier passage au vert sur `main`** — Les deux jobs échouaient, pour deux raisons :
+  - `check` : la correction du contrôle qualité (#24) n'avait jamais été fusionnée. Elle l'est maintenant.
+  - `build` : il n'avait accès ni à NocoDB ni à TinaCloud. Les secrets `NOCODB_API_TOKEN`, `TINA_CLIENT_ID` et `TINA_TOKEN` sont désormais configurés dans GitHub et transmis au build.
+- **Pas de réindexation de la recherche TinaCloud en CI** — La CI lance `tinacms build --skip-search-index`. Le build Netlify ne change pas.
+
+**Fichiers modifiés** : `.github/workflows/actions.yaml`
 
 ---
 

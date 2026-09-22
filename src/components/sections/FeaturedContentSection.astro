@@ -10,13 +10,13 @@ interface FeaturedContent {
   href: string;
   title: string;
   description: string;
-  image: string;
+  image?: string;
   badge: string;
   category: Post['category'];
   meta: {
     duration: string;
     expert: string;
-    publishDate?: string;
+    publishDate?: Date | string;
   };
 }
 
@@ -32,25 +32,26 @@ interface Props {
 const latestPosts = await findDiverseLatestPosts({ count: 3 });
 
 const {
-  title = "Actualités du moment",
+  title = 'Actualités du moment',
   description = "Découvrez nos derniers contenus : articles, podcasts, émissions TV et ressources pédagogiques pour rester à la pointe de l'innovation éducative.",
-  buttonText = "Voir tout",
-  buttonLink = "/blog/",
-  contents = latestPosts.map((post): FeaturedContent => ({
-    href: post.permalink,
-    title: post.title,
-    description: post.description,
-    image: post.image,
-    badge: CONTENT_TYPES[post.category.slug as keyof typeof CONTENT_TYPES]?.shortLabel || post.category.slug,
-    category: post.category,
-    meta: {
-      duration: post.duration || '5 min',
-      expert: post.expert || 'Out of the Books',
-      publishDate: post.publishDate
-    }
-  }))
+  buttonText = 'Voir tout',
+  buttonLink = '/blog/',
+  contents = latestPosts.map(
+    (post): FeaturedContent => ({
+      href: post.permalink,
+      title: post.title,
+      description: post.description,
+      image: post.image,
+      badge: CONTENT_TYPES[post.category.slug as keyof typeof CONTENT_TYPES]?.shortLabel || post.category.slug,
+      category: post.category,
+      meta: {
+        duration: post.duration || '5 min',
+        expert: post.expert || 'Out of the Books',
+        publishDate: post.publishDate,
+      },
+    })
+  ),
 } = Astro.props;
-
 ---
 
 <section class="px-4 bg-[color-mix(in_srgb,var(--ootb-turquoise)_10%,white)] py-12 md:py-20">
@@ -62,54 +63,50 @@ const {
           <Icon name="tabler:flame" class="w-4 h-4 text-[--ootb-turquoise]" />
           <span class="text-[--ootb-turquoise] font-medium tracking-wide">A L'AFFICHE</span>
         </SectionDivider>
-        
+
         <h2 class="font-body text-3xl md:text-4xl font-bold tracking-tight leading-tight text-gray-600 mb-4 md:mb-6">
-          {title}        
+          {title}
         </h2>
-        
+
         <p class="text-gray-600 text-lg leading-relaxed">
           {description}
         </p>
       </div>
 
-      <a 
+      <a
         href={buttonLink}
         class="group hidden md:inline-flex items-center gap-3 text-[#6ab29e] hover:text-[#5a9886] bg-white/80 hover:bg-white backdrop-blur-sm px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
       >
         <span class="font-medium">{buttonText}</span>
-        <Icon 
-          name="tabler:arrow-right" 
-          class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
-        />
+        <Icon name="tabler:arrow-right" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
       </a>
     </header>
-    
+
     <!-- Grille de contenu -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
-      {contents.map((content) => (
-        <Card
-          href={content.href}
-          title={content.title}
-          image={content.image}
-          badge={content.badge}
-          category={content.category}
-          meta={content.meta}
-          description={content.description}
-          class="transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl"
-        />
-      ))}
+      {
+        contents.map((content) => (
+          <Card
+            href={content.href}
+            title={content.title}
+            image={content.image}
+            badge={content.badge}
+            category={content.category}
+            meta={content.meta}
+            description={content.description}
+            class="transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl"
+          />
+        ))
+      }
     </div>
 
     <!-- Bouton mobile -->
-    <a 
-      href={buttonLink} 
+    <a
+      href={buttonLink}
       class="mt-8 md:hidden group flex items-center justify-center gap-3 w-full text-[#6ab29e] hover:text-[#5a9886] bg-white/80 hover:bg-white backdrop-blur-sm px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
     >
       <span class="font-medium">{buttonText}</span>
-      <Icon 
-        name="tabler:arrow-right" 
-        class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
-      />
+      <Icon name="tabler:arrow-right" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
     </a>
   </div>
-</section> 
+</section>

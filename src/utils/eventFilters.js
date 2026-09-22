@@ -12,28 +12,28 @@ export class EventFilters {
   }
 
   sortEventsByTime(events) {
-    const dayOrder = { 'Mercredi': 1, 'Jeudi': 2, 'Vendredi': 3 };
-    
+    const dayOrder = { Mercredi: 1, Jeudi: 2, Vendredi: 3 };
+
     return [...events].sort((a, b) => {
       const aType = a.getAttribute('data-type');
       const bType = b.getAttribute('data-type');
-      
+
       if (aType === 'Stands' && bType !== 'Stands') return 1;
       if (aType !== 'Stands' && bType === 'Stands') return -1;
 
       const aDay = a.getAttribute('data-day') || 'Mercredi';
       const bDay = b.getAttribute('data-day') || 'Mercredi';
-      
+
       if (aDay !== bDay) {
         return (dayOrder[aDay] || 0) - (dayOrder[bDay] || 0);
       }
 
       const aTime = a.getAttribute('data-time') || '';
       const bTime = b.getAttribute('data-time') || '';
-      
+
       if (aTime !== 'À définir' && bTime === 'À définir') return -1;
       if (aTime === 'À définir' && bTime !== 'À définir') return 1;
-      
+
       return aTime.localeCompare(bTime);
     });
   }
@@ -41,14 +41,14 @@ export class EventFilters {
   filterEvents() {
     const events = Array.from(document.querySelectorAll('.event-card'));
 
-    return events.filter(event => {
+    return events.filter((event) => {
       const eventType = event.getAttribute('data-type');
       const eventDay = event.getAttribute('data-day');
       const eventLocation = event.getAttribute('data-location');
 
       // Logique pour déterminer si un événement est une démo numérique
       const isDigitalDemo = eventType === 'Ateliers' && eventLocation === 'Village numérique';
-      
+
       let typeMatch = false;
       if (this.isAllTypesActive) {
         typeMatch = true;
@@ -72,9 +72,7 @@ export class EventFilters {
         if (eventType === 'Stands') {
           dayMatch = this.activeDays.length > 0;
         } else {
-          dayMatch = this.activeDays.some(activeDay => 
-            this.normalizeDay(activeDay) === this.normalizeDay(eventDay)
-          );
+          dayMatch = this.activeDays.some((activeDay) => this.normalizeDay(activeDay) === this.normalizeDay(eventDay));
         }
       }
 
@@ -94,7 +92,7 @@ export class EventFilters {
     if (!titleElement) return;
 
     let title = '';
-    
+
     // Helper function to get correct article and agreement for event types
     const getTypeWithArticle = (type) => {
       switch (type) {
@@ -133,14 +131,24 @@ export class EventFilters {
       }
     } else {
       // Both days and types are filtered
-      const dayText = this.activeDays.length === 1 ? this.activeDays[0] : 
-                     this.activeDays.length === 3 ? 'tous les jours' : `${this.activeDays.join(' & ')}`;
-      const typeText = this.activeTypes.length === 1 ? this.activeTypes[0] : 
-                      this.activeTypes.length === 3 ? 'tous types' : `${this.activeTypes.join(' & ')}`;
-      
+      const dayText =
+        this.activeDays.length === 1
+          ? this.activeDays[0]
+          : this.activeDays.length === 3
+            ? 'tous les jours'
+            : `${this.activeDays.join(' & ')}`;
+      const typeText =
+        this.activeTypes.length === 1
+          ? this.activeTypes[0]
+          : this.activeTypes.length === 3
+            ? 'tous types'
+            : `${this.activeTypes.join(' & ')}`;
+
       // Si on a une sélection très large, simplifier
-      if ((this.activeDays.length === 3 && this.activeTypes.length >= 2) || 
-          (this.activeDays.length >= 2 && this.activeTypes.length === 3)) {
+      if (
+        (this.activeDays.length === 3 && this.activeTypes.length >= 2) ||
+        (this.activeDays.length >= 2 && this.activeTypes.length === 3)
+      ) {
         title = 'Tous les événements';
       } else {
         title = `${typeText} - ${dayText}`;
@@ -149,4 +157,4 @@ export class EventFilters {
 
     titleElement.textContent = title;
   }
-} 
+}

@@ -88,21 +88,28 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   }));
 
   // Extraire les données média avec type non-nullable
-  const media = rawMedia ? {
-    type: rawMedia.type || (
-      category.slug === 'podcast' ? 'podcast' :
-      rawMedia.podcastUrl ? 'podcast' : 
-      rawMedia.videoUrl ? 'youtube' : 
-      rawMedia.tvcomUrl ? 'tv' : 'none'
-    ),
-    podcastUrl: rawMedia.podcastUrl,
-    showId: rawMedia.showId,
-    podcastId: rawMedia.podcastId,
-    videoUrl: rawMedia.videoUrl,
-    tvcomUrl: rawMedia.tvcomUrl,
-    iframeCode: rawMedia.iframeCode,
-    smartlinkUrl: rawMedia.smartlinkUrl
-  } : undefined;
+  const media = rawMedia
+    ? {
+        type:
+          rawMedia.type ||
+          (category.slug === 'podcast'
+            ? 'podcast'
+            : rawMedia.podcastUrl
+              ? 'podcast'
+              : rawMedia.videoUrl
+                ? 'youtube'
+                : rawMedia.tvcomUrl
+                  ? 'tv'
+                  : 'none'),
+        podcastUrl: rawMedia.podcastUrl,
+        showId: rawMedia.showId,
+        podcastId: rawMedia.podcastId,
+        videoUrl: rawMedia.videoUrl,
+        tvcomUrl: rawMedia.tvcomUrl,
+        iframeCode: rawMedia.iframeCode,
+        smartlinkUrl: rawMedia.smartlinkUrl,
+      }
+    : undefined;
 
   return {
     id: id,
@@ -124,7 +131,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     duration: duration,
     pedagogicalSheet: pedagogicalSheet,
     media: media,
-    
+
     category: category,
     tags: tags,
 
@@ -232,41 +239,31 @@ export const getStaticPathsBlogPost = async () => {
   }));
 };
 
-/** 
+/**
  * Génère les chemins statiques pour les pages de catégories du blog
  * Gère toutes les catégories, y compris premium qui peut être vide initialement
  * mais prêt à recevoir du contenu ultérieurement
  */
 export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogCategoryRouteEnabled) return [];
-  
+
   const posts = await fetchPosts();
-  
+
   // Liste exhaustive des catégories possibles, indépendamment du contenu actuel
-  const categories = new Set([
-    'blog',
-    'actualite', 
-    'fiche',
-    'live',
-    'podcast',
-    'tv',
-    'premium'
-  ]);
-  
+  const categories = new Set(['blog', 'actualite', 'fiche', 'live', 'podcast', 'tv', 'premium']);
+
   return Array.from(categories).flatMap((category) => {
     // Pour premium ou toute autre catégorie, on filtre les posts correspondants
-    const filteredPosts = posts.filter((post) => 
-      post.category?.slug === category
-    );
+    const filteredPosts = posts.filter((post) => post.category?.slug === category);
 
     return paginate(filteredPosts, {
       params: { category, blog: CATEGORY_BASE || undefined },
       pageSize: blogPostsPerPage,
-      props: { 
-        category: { 
-          slug: category, 
-          title: category 
-        } 
+      props: {
+        category: {
+          slug: category,
+          title: category,
+        },
       },
     });
   });
@@ -310,7 +307,7 @@ export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFu
 
   const posts = await fetchPosts();
   const tags: Record<string, { slug: string; title: string }> = {};
-  
+
   posts.forEach((post) => {
     if (post.tags) {
       post.tags.forEach((tag) => {
@@ -378,20 +375,20 @@ interface Taxonomy {
 export async function findCategories(): Promise<Taxonomy[]> {
   const posts = await fetchPosts();
   const categories = new Set<Taxonomy>();
-  
+
   posts.forEach((post) => {
     if (post.category) {
       categories.add(post.category);
     }
   });
-  
+
   return Array.from(categories);
 }
 
 export async function findTags(): Promise<Taxonomy[]> {
   const posts = await fetchPosts();
   const uniqueTags = new Map<string, Taxonomy>();
-  
+
   posts.forEach((post) => {
     if (post.tags) {
       post.tags.forEach((tag) => {
@@ -401,24 +398,20 @@ export async function findTags(): Promise<Taxonomy[]> {
       });
     }
   });
-  
+
   return Array.from(uniqueTags.values());
 }
 
 export const findDiverseLatestPosts = async ({ count = 3 }: { count?: number } = {}): Promise<Post[]> => {
-  const allPosts = await getCollection('post', (post) =>
-    post.data.published
-  );
+  const allPosts = await getCollection('post', (post) => post.data.published);
 
   // Convert to normalized posts
-  const normalizedPosts = await Promise.all(
-    allPosts.map(post => getNormalizedPost(post))
-  );
+  const normalizedPosts = await Promise.all(allPosts.map((post) => getNormalizedPost(post)));
 
   // Sort by publish date (newest first), excluding fiches pédagogiques
   // (le trio d'accueil ne doit plus mettre en avant les fiches)
   const sortedPosts = normalizedPosts
-    .filter(post => post.category.slug !== 'fiche')
+    .filter((post) => post.category.slug !== 'fiche')
     .sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime());
 
   // Select the most recent posts, but avoid more than 2 of the same content type

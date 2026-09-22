@@ -54,7 +54,7 @@ const testFormData = {
   Declinaisons: '',
   Conseils: '',
   Liens: '',
-  LiensVIDEO: ''
+  LiensVIDEO: '',
 };
 
 // ─── Helpers ──────────────────────────────────────────
@@ -74,7 +74,7 @@ function assert(condition, label) {
 function initApi() {
   return new Api({
     baseURL: NOCODB_BASE_URL,
-    headers: { 'xc-token': NOCODB_API_TOKEN }
+    headers: { 'xc-token': NOCODB_API_TOKEN },
   });
 }
 
@@ -82,15 +82,10 @@ function initApi() {
 async function cleanupTestRecords(api) {
   console.log('\n🧹 Nettoyage des enregistrements de test...');
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID,
-      NOCODB_PROJECT_ID,
-      NOCODB_TABLE_ID,
-      {
-        where: `(Title,like,${TEST_PREFIX})`,
-        limit: 50
-      }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      where: `(Title,like,${TEST_PREFIX})`,
+      limit: 50,
+    });
 
     const testRecords = response.list || [];
     if (testRecords.length === 0) {
@@ -100,12 +95,7 @@ async function cleanupTestRecords(api) {
 
     for (const record of testRecords) {
       try {
-        await api.dbTableRow.delete(
-          NOCODB_ORG_ID,
-          NOCODB_PROJECT_ID,
-          NOCODB_TABLE_ID,
-          record.Id
-        );
+        await api.dbTableRow.delete(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, record.Id);
         console.log(`  🗑️  Supprimé: Id=${record.Id} "${record.Title}"`);
       } catch (err) {
         console.error(`  ⚠️  Échec suppression Id=${record.Id}:`, err.response?.data || err.message);
@@ -125,22 +115,21 @@ async function testPrerequisites() {
 
   assert(!!NOCODB_API_TOKEN, 'NOCODB_API_TOKEN est défini');
   assert(NOCODB_API_TOKEN && NOCODB_API_TOKEN.length > 10, 'Token a une longueur raisonnable');
-  assert(NOCODB_TABLE_ID === 'mur92i1x276ldbg' || !!process.env.NOCODB_FICHES_TABLE_ID || !!process.env.NOCODB_BASE_ID,
-    `Table ID résolu: ${NOCODB_TABLE_ID} (pas un View ID)`);
-  assert(NOCODB_TABLE_ID !== 'vwp6ybxaurqxfimt',
-    'Table ID n\'est PAS le View ID vwp6ybxaurqxfimt');
+  assert(
+    NOCODB_TABLE_ID === 'mur92i1x276ldbg' || !!process.env.NOCODB_FICHES_TABLE_ID || !!process.env.NOCODB_BASE_ID,
+    `Table ID résolu: ${NOCODB_TABLE_ID} (pas un View ID)`
+  );
+  assert(NOCODB_TABLE_ID !== 'vwp6ybxaurqxfimt', "Table ID n'est PAS le View ID vwp6ybxaurqxfimt");
 }
 
 async function testApiConnectivity(api) {
   console.log('\n🧪 TEST B: Connectivité API NocoDB');
 
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID,
-      NOCODB_PROJECT_ID,
-      NOCODB_TABLE_ID,
-      { limit: 1, offset: 0 }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      limit: 1,
+      offset: 0,
+    });
 
     assert(response !== null && response !== undefined, 'API répond');
     assert(typeof response.list !== 'undefined', 'Réponse contient une liste');
@@ -155,19 +144,27 @@ async function testApiConnectivity(api) {
 
       // Colonnes EXACTES écrites par submit-pedagogical-sheet.js (lignes 61-78)
       const requiredFields = [
-        'Title', 'Description',
-        'Type enseignement', 'Section', 'Destinataire',
-        'Thèmes',            // accent
-        'Objectifs', 'Competences',
-        'Prénom',             // accent
-        'Nom', 'Email',
-        'Téléphone',          // accent
+        'Title',
+        'Description',
+        'Type enseignement',
+        'Section',
+        'Destinataire',
+        'Thèmes', // accent
+        'Objectifs',
+        'Competences',
+        'Prénom', // accent
+        'Nom',
+        'Email',
+        'Téléphone', // accent
         'Ecole',
-        'Déclinaisons',       // accent
-        'Conseils', 'Liens', 'LiensVIDEO', 'Edition'
+        'Déclinaisons', // accent
+        'Conseils',
+        'Liens',
+        'LiensVIDEO',
+        'Edition',
       ];
 
-      console.log(`  📋 Colonnes trouvées dans NocoDB: ${sampleKeys.filter(k => !k.startsWith('nc_')).join(', ')}`);
+      console.log(`  📋 Colonnes trouvées dans NocoDB: ${sampleKeys.filter((k) => !k.startsWith('nc_')).join(', ')}`);
 
       let missingColumns = [];
       for (const field of requiredFields) {
@@ -200,7 +197,7 @@ async function testHandlerSubmission() {
   // Simuler l'appel exactement comme le frontend le fait
   const event = {
     httpMethod: 'POST',
-    body: JSON.stringify(testFormData)
+    body: JSON.stringify(testFormData),
   };
 
   const response = await handler(event);
@@ -222,15 +219,10 @@ async function testRecordExists(api) {
   console.log('\n🧪 TEST D: Vérification en base NocoDB');
 
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID,
-      NOCODB_PROJECT_ID,
-      NOCODB_TABLE_ID,
-      {
-        where: `(Title,like,${TEST_PREFIX})`,
-        limit: 10
-      }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      where: `(Title,like,${TEST_PREFIX})`,
+      limit: 10,
+    });
 
     const found = response.list || [];
     assert(found.length > 0, `Enregistrement trouvé en base (${found.length} résultat(s))`);
@@ -245,12 +237,10 @@ async function testRecordExists(api) {
 
       // Vérifier les champs array (stockés en JSON stringifié)
       const typeEns = record['Type enseignement'];
-      assert(typeEns && typeEns.includes('Ordinaire'),
-        `Type enseignement: ${typeEns}`);
+      assert(typeEns && typeEns.includes('Ordinaire'), `Type enseignement: ${typeEns}`);
 
       const section = record.Section;
-      assert(section && section.includes('Primaire'),
-        `Section: ${section}`);
+      assert(section && section.includes('Primaire'), `Section: ${section}`);
     }
   } catch (err) {
     assert(false, `Lecture en base: ${err.response?.data?.msg || err.message}`);
@@ -294,7 +284,7 @@ async function run() {
     // D. Vérification en base (seulement si soumission OK)
     if (submissionOk) {
       // Petit délai pour propagation éventuelle
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 1000));
       await testRecordExists(api);
     }
   } finally {

@@ -64,7 +64,7 @@ export function getFromCache<T>(cachePath: string): T | null {
     // Si le fichier est corrompu, le supprimer
     try {
       fs.unlinkSync(cachePath);
-    } catch (e) {
+    } catch {
       // Ignorer les erreurs de suppression
     }
     return null;
@@ -76,9 +76,9 @@ export function getFromCache<T>(cachePath: string): T | null {
  */
 export function saveToCache<T>(cachePath: string, data: T): void {
   if (!CACHE_ENABLED) return;
-  
+
   ensureCacheDir();
-  
+
   try {
     fs.writeFileSync(cachePath, JSON.stringify(data, null, 2), 'utf-8');
   } catch (error) {
@@ -113,24 +113,24 @@ export async function getCachedPosts<T>(fetchFunction: () => Promise<T>): Promis
   // Si le cache n'est pas valide, récupérer les données fraîches
   try {
     const posts = await fetchFunction();
-    
+
     // Sauvegarder dans le cache
     saveToCache(POSTS_CACHE_FILE, posts);
-    
+
     return posts;
   } catch (error) {
     console.error(`Erreur lors de la récupération des posts: ${error}`);
     // En cas d'erreur, retourner un cache expiré si disponible
-    const expiredCache = fs.existsSync(POSTS_CACHE_FILE) 
-      ? JSON.parse(fs.readFileSync(POSTS_CACHE_FILE, 'utf-8')) as T 
+    const expiredCache = fs.existsSync(POSTS_CACHE_FILE)
+      ? (JSON.parse(fs.readFileSync(POSTS_CACHE_FILE, 'utf-8')) as T)
       : null;
-    
+
     if (expiredCache) {
       console.log('Utilisation du cache expiré comme fallback');
       return expiredCache;
     }
-    
+
     // Si pas de cache du tout, retourner un tableau vide ou rethrow
     throw error;
   }
-} 
+}

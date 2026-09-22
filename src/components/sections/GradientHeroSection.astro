@@ -7,7 +7,7 @@ type Props = HTMLAttributes<'section'>;
 const { class: className, ...props } = Astro.props;
 ---
 
-<section 
+<section
   class:list={[
     // ====== RESPONSIVE DESIGN ======
     // Mobile (<768px) :
@@ -15,20 +15,20 @@ const { class: className, ...props } = Astro.props;
     // - Fond turquoise uni sans dégradé
     // - Nuages masqués (voir plus bas)
     // - Padding bottom pour l'espacement
-    "relative min-h-0 flex items-start justify-center overflow-hidden pb-16",
-    "bg-[--ootb-turquoise]",
+    'relative min-h-0 flex items-start justify-center overflow-hidden pb-16',
+    'bg-[--ootb-turquoise]',
 
     // Desktop (≥768px) :
     // - Hauteur plein écran
     // - Dégradé subtil avec transitions
     // - Nuages visibles
-    "md:min-h-screen md:pb-0",
-    "md:bg-gradient-to-b md:from-[--ootb-turquoise] md:from-0%",
-    "md:via-[--ootb-turquoise] md:via-60%",
-    "md:via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] md:via-70%",
-    "md:via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] md:via-75%",
-    "md:to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] md:to-80%",
-    className
+    'md:min-h-screen md:pb-0',
+    'md:bg-gradient-to-b md:from-[--ootb-turquoise] md:from-0%',
+    'md:via-[--ootb-turquoise] md:via-60%',
+    'md:via-[color-mix(in_srgb,var(--ootb-turquoise)_90%,white)] md:via-70%',
+    'md:via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] md:via-75%',
+    'md:to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] md:to-80%',
+    className,
   ]}
   {...props}
 >
@@ -43,7 +43,7 @@ const { class: className, ...props } = Astro.props;
     <div class="relative w-full">
       <!-- Dégradé pour renforcer la visibilité -->
       <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/30 z-10"></div>
-      
+
       <img
         src={cloudsBgUrl}
         alt="Nuages décoratifs"
@@ -56,4 +56,4 @@ const { class: className, ...props } = Astro.props;
 
   <!-- Section blanche sous les nuages -->
   <div class="absolute bottom-[0%] md:-bottom-1 left-0 right-0 h-[1%] md:h-[19%] bg-white z-[10]"></div>
-</section> 
+</section>

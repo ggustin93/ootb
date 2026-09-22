@@ -18,27 +18,45 @@ const JSON_HEADERS = { 'content-type': 'application/json' };
 
 // Soumission française réaliste, telle qu'envoyée par ProjectSubmissionForm.astro
 const VALID_SHEET = {
-  Title: 'Le potager de l\'école',
-  Description: 'Les élèves de 5e primaire cultivent un potager et suivent la croissance des légumes toute l\'année.',
-  TypeEnseignement: ['Ordinaire'], Section: ['Primaire'],
-  Destinataire: 'Jeunes enfants', Themes: [],
-  Objectifs: 'Observer le vivant et développer l\'autonomie.',
-  Competences: 'Sciences, mathématiques, travail d\'équipe.',
-  prenom: 'Zoé', nom: 'Lefèvre', email: 'zoe.lefevre@ecole.be',
-  telephone: '', ecole: 'École communale d\'Ixelles',
-  Declinaisons: '', Conseils: '', Liens: '', LiensVIDEO: '', website: ''
+  Title: "Le potager de l'école",
+  Description: "Les élèves de 5e primaire cultivent un potager et suivent la croissance des légumes toute l'année.",
+  TypeEnseignement: ['Ordinaire'],
+  Section: ['Primaire'],
+  Destinataire: 'Jeunes enfants',
+  Themes: [],
+  Objectifs: "Observer le vivant et développer l'autonomie.",
+  Competences: "Sciences, mathématiques, travail d'équipe.",
+  prenom: 'Zoé',
+  nom: 'Lefèvre',
+  email: 'zoe.lefevre@ecole.be',
+  telephone: '',
+  ecole: "École communale d'Ixelles",
+  Declinaisons: '',
+  Conseils: '',
+  Liens: '',
+  LiensVIDEO: '',
+  website: '',
 };
 
 // Échantillon réel reçu du bot (chaînes aléatoires sans espaces, Gmail à points)
 const BOT_SAMPLE = {
   Title: 'abOsRPBdhYQhGbzLHKRrm',
   Description: 'kTnWqzXbLpRvYcMdHsJfGaUeOiQwErTyUiOpAsDfGhJk',
-  TypeEnseignement: [], Section: [],
-  Destinataire: 'Professionnels', Themes: [],
-  Objectifs: 'PzLkMjNhBgVfCdXsZa', Competences: 'QwErTyUiOpAsDf',
-  prenom: 'HgFdSaPoIu', nom: 'LkJhGfDsAq', email: 'a.b.c.d.e.f.g.h@gmail.com',
-  telephone: '0000000000', ecole: 'MnBvCxZlKj',
-  Declinaisons: '', Conseils: '', Liens: '', LiensVIDEO: ''
+  TypeEnseignement: [],
+  Section: [],
+  Destinataire: 'Professionnels',
+  Themes: [],
+  Objectifs: 'PzLkMjNhBgVfCdXsZa',
+  Competences: 'QwErTyUiOpAsDf',
+  prenom: 'HgFdSaPoIu',
+  nom: 'LkJhGfDsAq',
+  email: 'a.b.c.d.e.f.g.h@gmail.com',
+  telephone: '0000000000',
+  ecole: 'MnBvCxZlKj',
+  Declinaisons: '',
+  Conseils: '',
+  Liens: '',
+  LiensVIDEO: '',
 };
 
 function postSheet(data) {
@@ -68,8 +86,8 @@ function testEnvVarIsolation() {
   // 3 fonctions, 3 projets NocoDB différents
   const functions = {
     'pedagogical-sheet': { project: 'pzafxqd4lr77r0v', table: 'mur92i1x276ldbg' },
-    'contact':           { project: 'pn7128r4idyluf0', table: 'mza30wqm38wsmib' },
-    'newsletter':        { project: 'p41z6qweidro6nu', table: 'm6hnpjey4laav0z' },
+    contact: { project: 'pn7128r4idyluf0', table: 'mza30wqm38wsmib' },
+    newsletter: { project: 'p41z6qweidro6nu', table: 'm6hnpjey4laav0z' },
   };
 
   const entries = Object.entries(functions);
@@ -77,10 +95,8 @@ function testEnvVarIsolation() {
     for (let j = i + 1; j < entries.length; j++) {
       const [nameA, idsA] = entries[i];
       const [nameB, idsB] = entries[j];
-      assert(idsA.project !== idsB.project,
-        `${nameA} et ${nameB} ont des project IDs différents`);
-      assert(idsA.table !== idsB.table,
-        `${nameA} et ${nameB} ont des table IDs différents`);
+      assert(idsA.project !== idsB.project, `${nameA} et ${nameB} ont des project IDs différents`);
+      assert(idsA.table !== idsB.table, `${nameA} et ${nameB} ont des table IDs différents`);
     }
   }
 }
@@ -131,20 +147,38 @@ async function testPedagogicalAntiSpam() {
 
   // Via handler
   assert(isFakeSuccess(await postSheet(BOT_SAMPLE)), 'Échantillon réel du bot → faux 200');
-  assert(isFakeSuccess(await postSheet({ ...VALID_SHEET, website: 'http://spam.example' })),
-    'Champ piège rempli → faux 200');
-  assert(isFakeSuccess(await pedagogicalHandler({
-    httpMethod: 'POST', headers: JSON_HEADERS,
-    body: JSON.stringify({ ...VALID_SHEET, Description: 'mot '.repeat(6000) })
-  })), 'Corps > 20 Ko → faux 200');
-  assert(isFakeSuccess(await pedagogicalHandler({
-    httpMethod: 'POST', headers: { 'content-type': 'text/plain' }, body: JSON.stringify(VALID_SHEET)
-  })), 'Content-Type non JSON → faux 200');
-  assert(isFakeSuccess(await pedagogicalHandler({ httpMethod: 'POST', body: JSON.stringify(VALID_SHEET) })),
-    'Content-Type absent → faux 200');
+  assert(
+    isFakeSuccess(await postSheet({ ...VALID_SHEET, website: 'http://spam.example' })),
+    'Champ piège rempli → faux 200'
+  );
+  assert(
+    isFakeSuccess(
+      await pedagogicalHandler({
+        httpMethod: 'POST',
+        headers: JSON_HEADERS,
+        body: JSON.stringify({ ...VALID_SHEET, Description: 'mot '.repeat(6000) }),
+      })
+    ),
+    'Corps > 20 Ko → faux 200'
+  );
+  assert(
+    isFakeSuccess(
+      await pedagogicalHandler({
+        httpMethod: 'POST',
+        headers: { 'content-type': 'text/plain' },
+        body: JSON.stringify(VALID_SHEET),
+      })
+    ),
+    'Content-Type non JSON → faux 200'
+  );
+  assert(
+    isFakeSuccess(await pedagogicalHandler({ httpMethod: 'POST', body: JSON.stringify(VALID_SHEET) })),
+    'Content-Type absent → faux 200'
+  );
   const withCharset = await pedagogicalHandler({
-    httpMethod: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify(VALID_SHEET)
+    httpMethod: 'POST',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body: JSON.stringify(VALID_SHEET),
   });
   assert(JSON.parse(withCharset.body).isTestMode === true, 'Content-Type JSON avec charset → accepté');
 
@@ -156,23 +190,41 @@ async function testPedagogicalAntiSpam() {
   assert(isSpam({ ...VALID_SHEET, website: 'x' }) === 'honeypot', 'Champ piège → honeypot');
 
   const minLengths = {
-    Title: 5, Description: 40, Objectifs: 10, Competences: 10, prenom: 2, nom: 2, ecole: 2
+    Title: 5,
+    Description: 40,
+    Objectifs: 10,
+    Competences: 10,
+    prenom: 2,
+    nom: 2,
+    ecole: 2,
   };
   for (const [field, min] of Object.entries(minLengths)) {
     // Plusieurs mots pour isoler la règle de longueur de celle du nombre de mots
     const tooShort = 'a b c d e f g h i j k l m n o p q r s t'.slice(0, min - 1);
-    assert(isSpam({ ...VALID_SHEET, [field]: tooShort }) === `too_short:${field}`, `${field} < ${min} → too_short:${field}`);
-    assert(isSpam({ ...VALID_SHEET, [field]: undefined }) === `too_short:${field}`, `${field} manquant → too_short:${field}`);
+    assert(
+      isSpam({ ...VALID_SHEET, [field]: tooShort }) === `too_short:${field}`,
+      `${field} < ${min} → too_short:${field}`
+    );
+    assert(
+      isSpam({ ...VALID_SHEET, [field]: undefined }) === `too_short:${field}`,
+      `${field} manquant → too_short:${field}`
+    );
   }
 
   assert(isSpam({ ...VALID_SHEET, email: 'pas-un-email' }) === 'invalid_email', 'Email invalide → invalid_email');
   assert(isSpam({ ...VALID_SHEET, email: undefined }) === 'invalid_email', 'Email manquant → invalid_email');
-  assert(isSpam({ ...VALID_SHEET, Destinataire: 'Non renseigné' }) === 'invalid_destinataire',
-    'Destinataire hors liste → invalid_destinataire');
-  assert(isSpam({ ...VALID_SHEET, Description: 'motsanslesespacesquifaitplusdequarantecaracteres' }) === 'too_few_words',
-    'Description < 3 mots → too_few_words');
-  assert(isSpam({ ...VALID_SHEET, Objectifs: 'Deux mots-seulement' }) === 'too_few_words',
-    'Objectifs < 3 mots → too_few_words');
+  assert(
+    isSpam({ ...VALID_SHEET, Destinataire: 'Non renseigné' }) === 'invalid_destinataire',
+    'Destinataire hors liste → invalid_destinataire'
+  );
+  assert(
+    isSpam({ ...VALID_SHEET, Description: 'motsanslesespacesquifaitplusdequarantecaracteres' }) === 'too_few_words',
+    'Description < 3 mots → too_few_words'
+  );
+  assert(
+    isSpam({ ...VALID_SHEET, Objectifs: 'Deux mots-seulement' }) === 'too_few_words',
+    'Objectifs < 3 mots → too_few_words'
+  );
 }
 
 // ═══════════════════════════════════════════
@@ -189,8 +241,8 @@ async function testContactForm() {
       name: 'Sophie Test',
       email: 'sophie@test.com',
       subject: 'Test sujet',
-      message: 'Test message'
-    })
+      message: 'Test message',
+    }),
   });
   const body = JSON.parse(res.body);
   assert(res.statusCode === 200, 'POST → 200');
@@ -226,8 +278,8 @@ async function testNewsletter() {
     body: JSON.stringify({
       email: 'test@example.com',
       source: 'test',
-      privacyAccepted: true
-    })
+      privacyAccepted: true,
+    }),
   });
   const body = JSON.parse(res.body);
   assert(res.statusCode === 200, 'POST → 200');
@@ -237,14 +289,14 @@ async function testNewsletter() {
   // 4b. POST sans email → 400
   const r400 = await newsletterHandler({
     httpMethod: 'POST',
-    body: JSON.stringify({ source: 'test' })
+    body: JSON.stringify({ source: 'test' }),
   });
   assert(r400.statusCode === 400, 'POST sans email → 400');
 
   // 4c. GET → diagnostic mode test
   const resGet = await newsletterHandler({
     httpMethod: 'GET',
-    rawUrl: 'https://example.com/api/submit-newsletter'
+    rawUrl: 'https://example.com/api/submit-newsletter',
   });
   const bodyGet = JSON.parse(resGet.body);
   assert(resGet.statusCode === 200, 'GET (diagnostic) → 200');
@@ -266,15 +318,15 @@ function testContactDataFormatting() {
     name: 'Sophie Dupont',
     email: 'sophie@example.com',
     subject: 'Question sur le festival',
-    message: 'Bonjour, je voudrais savoir...'
+    message: 'Bonjour, je voudrais savoir...',
   };
 
   // Logique du handler (lignes 188-193)
   const formatted = {
-    Objet: input.subject || "Contact depuis le site web",
+    Objet: input.subject || 'Contact depuis le site web',
     Message: input.message,
     Auteur: input.email,
-    Statut: "En attente de réponse"
+    Statut: 'En attente de réponse',
   };
 
   assert(formatted.Objet === 'Question sur le festival', 'subject → Objet');
@@ -283,8 +335,8 @@ function testContactDataFormatting() {
   assert(!('Nom' in formatted), '"name" non mappé → NocoDB (champ ignoré)');
 
   // Subject vide → fallback
-  assert((undefined || "Contact depuis le site web") === 'Contact depuis le site web',
-    'Subject vide → fallback');
+  const emptySubject = undefined;
+  assert((emptySubject || 'Contact depuis le site web') === 'Contact depuis le site web', 'Subject vide → fallback');
 }
 
 // ═══════════════════════════════════════════
@@ -300,16 +352,20 @@ function testNewsletterDataFormatting() {
   const formatted = {
     Email: input.email,
     "Date d'inscription": '2026-03-25 13:00:00+01:00', // générée côté serveur
-    "Politique de confidentialité acceptée": input.privacyAccepted === true
+    'Politique de confidentialité acceptée': input.privacyAccepted === true,
   };
 
   assert(formatted.Email === 'test@example.com', 'email → Email');
   assert("Date d'inscription" in formatted, "Date d'inscription auto-générée côté serveur");
-  assert(formatted["Politique de confidentialité acceptée"] === true, 'privacyAccepted → Politique de confidentialité acceptée');
+  assert(
+    formatted['Politique de confidentialité acceptée'] === true,
+    'privacyAccepted → Politique de confidentialité acceptée'
+  );
   assert(!('Source' in formatted), 'Source absente du schéma');
   assert(!('Statut' in formatted), 'Statut absent du schéma');
   // === true (strict) : la string "false" ne doit pas passer comme true
-  assert((false === true) === false, 'privacyAccepted strict: "false" string → false');
+  const privacyString = 'false';
+  assert((privacyString === true) === false, 'privacyAccepted strict: "false" string → false');
 }
 
 // ═══════════════════════════════════════════
@@ -325,9 +381,8 @@ function testContactClientServerMapping() {
   const clientFields = ['name', 'email', 'subject', 'message'];
   const serverReads = ['email', 'subject', 'message'];
 
-  const unused = clientFields.filter(f => !serverReads.includes(f));
-  assert(unused.length === 1 && unused[0] === 'name',
-    `Seul "name" non utilisé côté serveur (${unused.join(', ')})`);
+  const unused = clientFields.filter((f) => !serverReads.includes(f));
+  assert(unused.length === 1 && unused[0] === 'name', `Seul "name" non utilisé côté serveur (${unused.join(', ')})`);
 }
 
 // ═══════════════════════════════════════════
@@ -347,8 +402,10 @@ function testPedagogicalTableIdResolution() {
   assert(resolve({}) === TABLE_ID, 'Aucune env var → hardcoded TABLE_ID');
   assert(resolve({ NOCODB_BASE_ID: TABLE_ID }) === TABLE_ID, 'NOCODB_BASE_ID → TABLE_ID');
   assert(resolve({ NOCODB_FICHES_TABLE_ID: TABLE_ID }) === TABLE_ID, 'NOCODB_FICHES_TABLE_ID → TABLE_ID');
-  assert(resolve({ NOCODB_FICHES_TABLE_ID: 'x', NOCODB_BASE_ID: 'y' }) === 'x',
-    'FICHES_TABLE_ID prioritaire sur BASE_ID');
+  assert(
+    resolve({ NOCODB_FICHES_TABLE_ID: 'x', NOCODB_BASE_ID: 'y' }) === 'x',
+    'FICHES_TABLE_ID prioritaire sur BASE_ID'
+  );
 
   // Le bug original
   const oldLogic = VIEW_ID; // process.env.NOCODB_TABLE_ID si défini

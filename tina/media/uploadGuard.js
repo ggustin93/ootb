@@ -23,7 +23,7 @@ export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // 4 Mo
  */
 export function tooLargeMessage(file) {
   const mb = (file.size / 1024 / 1024).toFixed(1);
-  const name = file.name || "image";
+  const name = file.name || 'image';
   return (
     `L'image « ${name} » est trop lourde (${mb} Mo) pour être téléversée. ` +
     `Merci de la réduire sous 4 Mo (par exemple via https://squoosh.app) puis de réessayer.`
@@ -38,7 +38,7 @@ export function tooLargeMessage(file) {
  * @param {number} [max=MAX_UPLOAD_BYTES]
  */
 export function ensureUploadable(file, max = MAX_UPLOAD_BYTES) {
-  if (file && typeof file.size === "number" && file.size > max) {
+  if (file && typeof file.size === 'number' && file.size > max) {
     throw new Error(tooLargeMessage(file));
   }
 }

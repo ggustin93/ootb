@@ -25,7 +25,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - run: npm ci
-      - run: npm run build
+      # = npm run build, sans indexation de la recherche TinaCloud en CI
+      - run: npm run prebuild && npx tinacms build --skip-search-index && npx astro build
+        env:
+          NOCODB_API_TOKEN: ${{ secrets.NOCODB_API_TOKEN }}
+          TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
       # - run: npm test
 
   check:

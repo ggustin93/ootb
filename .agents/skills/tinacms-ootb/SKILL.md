@@ -12,12 +12,12 @@ Use this skill whenever touching TinaCMS in this repo: editing `tina/*.ts` colle
 
 This repo runs an **older, pinned** Tina stack. Target these EXACT versions; do **not** copy APIs from current tina.io docs (3.x) without verifying they exist here. If a feature is not already used somewhere in `tina/*.ts`, treat it as unverified on this version.
 
-| Package | Version |
-|---|---|
-| `tinacms` | **2.10.1** |
-| `@tinacms/cli` | **1.12.6** |
-| `@tinacms/schema-tools` | **1.10.1** |
-| `@tinacms/graphql` | **1.6.3** |
+| Package                   | Version    |
+| ------------------------- | ---------- |
+| `tinacms`                 | **2.10.1** |
+| `@tinacms/cli`            | **1.12.6** |
+| `@tinacms/schema-tools`   | **1.10.1** |
+| `@tinacms/graphql`        | **1.6.3**  |
 | `next-tinacms-cloudinary` | **16.0.1** |
 
 Rule of thumb: **mirror existing collections** (`tina/erasmusCollection.ts`, `tina/aboutCollection.ts`) rather than inventing config from docs.

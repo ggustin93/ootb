@@ -21,7 +21,7 @@ function formatFestivalDate(isoDate: string) {
 
   return {
     dayName: dayName.charAt(0).toUpperCase() + dayName.slice(1),
-    displayDate
+    displayDate,
   };
 }
 
@@ -36,7 +36,7 @@ const buildDayConfig = () => {
     console.warn('[festival.ts] festivalDates manquant dans Tina, utilisation des valeurs par défaut');
     return {
       days: ['Mercredi', 'Jeudi', 'Vendredi'] as const,
-      dayDates: { 'Mercredi': '30/09', 'Jeudi': '01/10', 'Vendredi': '02/10' }
+      dayDates: { Mercredi: '30/09', Jeudi: '01/10', Vendredi: '02/10' },
     };
   }
 
@@ -68,52 +68,52 @@ export const FESTIVAL_DAYS = {
     0: 'Les trois jours',
     1: festivalDays[0] || 'Mercredi',
     2: festivalDays[1] || 'Jeudi',
-    3: festivalDays[2] || 'Vendredi'
+    3: festivalDays[2] || 'Vendredi',
   },
 
   // Dates associées à chaque jour - calculées depuis TinaCMS
   dayDates: festivalDayDates,
 
   // Valeur par défaut pour les jours non définis
-  defaultDay: 'À définir'
+  defaultDay: 'À définir',
 };
 
 // Types d'événements
 export const EVENT_TYPES = {
   types: ['Conférences', 'Ateliers', 'Stands'] as const,
-  
+
   // Images par défaut pour chaque type d'événement
   defaultImages: {
-    'Conférences': '/images/default-conference.jpg',
-    'Ateliers': '/images/default-workshop.jpg',
-    'Stands': '/images/default-stand.jpg'
+    Conférences: '/images/default-conference.jpg',
+    Ateliers: '/images/default-workshop.jpg',
+    Stands: '/images/default-stand.jpg',
   },
-  
+
   // Icônes pour chaque type d'événement
   icons: {
-    'Conférences': 'tabler:presentation',
-    'Ateliers': 'tabler:tool',
-    'Stands': 'tabler:building-store'
+    Conférences: 'tabler:presentation',
+    Ateliers: 'tabler:tool',
+    Stands: 'tabler:building-store',
   },
-  
+
   // Couleurs pour chaque type d'événement
   colors: {
-    'Conférences': {
+    Conférences: {
       bg: 'rgba(228, 69, 30, 0.15)',
       text: '#e4451e',
-      border: 'rgba(228, 69, 30, 0.3)'
+      border: 'rgba(228, 69, 30, 0.3)',
     },
-    'Ateliers': {
+    Ateliers: {
       bg: 'rgba(37, 99, 235, 0.15)',
       text: '#2563eb',
-      border: 'rgba(37, 99, 235, 0.3)'
+      border: 'rgba(37, 99, 235, 0.3)',
     },
-    'Stands': {
+    Stands: {
       bg: 'rgba(22, 163, 74, 0.15)',
       text: '#16a34a',
-      border: 'rgba(22, 163, 74, 0.3)'
-    }
-  }
+      border: 'rgba(22, 163, 74, 0.3)',
+    },
+  },
 };
 
 // Configuration par défaut pour le composant DayFilter (dynamique depuis TinaCMS)
@@ -130,13 +130,13 @@ export const DAY_FILTER_CONFIG = {
   // Générer les jours dynamiquement depuis TinaCMS
   days: festivalDays.map((name) => ({
     name,
-    date: festivalDayDates[name] || ''
+    date: festivalDayDates[name] || '',
   })),
   eventTypes: [
     { name: 'Conférences', icon: 'tabler:presentation' },
     { name: 'Ateliers', icon: 'tabler:tool' },
-    { name: 'Stands', icon: 'tabler:building-store' }
-  ]
+    { name: 'Stands', icon: 'tabler:building-store' },
+  ],
 };
 
 // Calculer l'année de l'édition depuis la première date du festival
@@ -156,29 +156,29 @@ export const FESTIVAL_CONFIG = {
   edition: String(editionYear),
   dates: (festivalContent as { hero?: { date?: string } }).hero?.date || `30 septembre - 2 octobre ${editionYear}`,
   location: 'La Sucrerie - Wavre, Belgique',
-  
+
   // Configuration des composants
   programme: {
     title: 'Programme du festival',
     description: 'Découvrez toutes les activités du festival',
-    dayFilter: DAY_FILTER_CONFIG
+    dayFilter: DAY_FILTER_CONFIG,
   },
-  
+
   // Paramètres de pagination
   pagination: {
-    eventsPerPage: 10
+    eventsPerPage: 10,
   },
-  
+
   // Paramètres de détection des doublons
   duplicateDetection: {
     similarityThreshold: 0.9,
-    fields: ['title', 'day', 'type']
-  }
+    fields: ['title', 'day', 'type'],
+  },
 };
 
 // Types pour les jours et types d'événements
-export type FestivalDay = typeof FESTIVAL_DAYS.days[number] | 'À définir' | 'Les trois jours';
-export type EventType = typeof EVENT_TYPES.types[number];
+export type FestivalDay = (typeof FESTIVAL_DAYS.days)[number] | 'À définir' | 'Les trois jours';
+export type EventType = (typeof EVENT_TYPES.types)[number];
 
 /**
  * Normalise un jour pour garantir la cohérence
@@ -187,12 +187,15 @@ export type EventType = typeof EVENT_TYPES.types[number];
  */
 export function normalizeDay(day: string | number | { Title?: string } | null | undefined): FestivalDay {
   if (!day) return FESTIVAL_DAYS.defaultDay as FestivalDay;
-  
+
   // Si c'est un nombre, utiliser le mapping
   if (typeof day === 'number') {
-    return (FESTIVAL_DAYS.dayMapping[day as keyof typeof FESTIVAL_DAYS.dayMapping] as FestivalDay) || (FESTIVAL_DAYS.defaultDay as FestivalDay);
+    return (
+      (FESTIVAL_DAYS.dayMapping[day as keyof typeof FESTIVAL_DAYS.dayMapping] as FestivalDay) ||
+      (FESTIVAL_DAYS.defaultDay as FestivalDay)
+    );
   }
-  
+
   // Si c'est un objet avec un Title (format NocoDB)
   if (typeof day === 'object' && day !== null) {
     if ('Title' in day && day.Title) {
@@ -200,10 +203,10 @@ export function normalizeDay(day: string | number | { Title?: string } | null | 
     }
     return FESTIVAL_DAYS.defaultDay as FestivalDay;
   }
-  
+
   // Si c'est une chaîne
   const dayStr = String(day).trim().toLowerCase();
-  
+
   if (dayStr.includes('trois') || dayStr.includes('all') || dayStr === '0') {
     return 'Les trois jours';
   } else if (dayStr.includes('mercredi') || dayStr === '1') {
@@ -213,7 +216,7 @@ export function normalizeDay(day: string | number | { Title?: string } | null | 
   } else if (dayStr.includes('vendredi') || dayStr === '3') {
     return 'Vendredi';
   }
-  
+
   return FESTIVAL_DAYS.defaultDay as FestivalDay;
 }
 
@@ -242,4 +245,4 @@ export function getIconForType(type: EventType): string {
  */
 export function getColorsForType(type: EventType): { bg: string; text: string; border: string } {
   return EVENT_TYPES.colors[type] || EVENT_TYPES.colors['Conférences'];
-} 
+}

@@ -2,3 +2,7 @@ dist
 node_modules
 .github
 .changeset
+# Contenu généré (NocoDB build scripts) ou édité via TinaCMS : ne pas reformater
+src/content/
+tina/tina-lock.json
+tina/__generated__/

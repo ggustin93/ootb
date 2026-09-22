@@ -21,26 +21,28 @@ const { photos, class: className = '' } = Astro.props;
   <div class="carousel-container relative">
     <!-- Images -->
     <div class="carousel-track flex transition-transform duration-500 ease-out">
-      {photos.map((photo, index) => (
-        <div class="carousel-slide min-w-full">
-          <div class="relative aspect-[16/9] overflow-hidden">
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              class="w-full h-full object-cover"
-              widths={[400, 800]}
-              sizes="(max-width: 768px) 400px, 800px"
-              aspectRatio="16:9"
-              loading={index === 0 ? "eager" : "lazy"}
-              decoding={index === 0 ? "sync" : "async"}
-              fetchpriority={index === 0 ? "high" : "auto"}
-            />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
-              <h3 class="text-lg md:text-xl font-semibold">{photo.title}</h3>
+      {
+        photos.map((photo, index) => (
+          <div class="carousel-slide min-w-full">
+            <div class="relative aspect-[16/9] overflow-hidden">
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                class="w-full h-full object-cover"
+                widths={[400, 800]}
+                sizes="(max-width: 768px) 400px, 800px"
+                aspectRatio="16:9"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding={index === 0 ? 'sync' : 'async'}
+                fetchpriority={index === 0 ? 'high' : 'auto'}
+              />
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
+                <h3 class="text-lg md:text-xl font-semibold">{photo.title}</h3>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
 
     <!-- Navigation buttons -->
@@ -60,15 +62,19 @@ const { photos, class: className = '' } = Astro.props;
     </button>
 
     <!-- Indicators -->
-    <div class="carousel-indicators absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5 md:space-x-2 z-10">
-      {photos.map((_, index) => (
-        <button
-          class="carousel-indicator w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/50 hover:bg-white/80 transition-all duration-300"
-          data-index={index}
-          aria-label={`Aller à l'image ${index + 1}`}
-          type="button"
-        ></button>
-      ))}
+    <div
+      class="carousel-indicators absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5 md:space-x-2 z-10"
+    >
+      {
+        photos.map((_, index) => (
+          <button
+            class="carousel-indicator w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/50 hover:bg-white/80 transition-all duration-300"
+            data-index={index}
+            aria-label={`Aller à l'image ${index + 1}`}
+            type="button"
+          />
+        ))
+      }
     </div>
   </div>
 </div>
@@ -101,7 +107,7 @@ const { photos, class: className = '' } = Astro.props;
         // Création de l'observer pour charger les ressources uniquement lorsque le carousel est visible
         this.observer = new IntersectionObserver(
           (entries) => {
-            entries.forEach(entry => {
+            entries.forEach((entry) => {
               this.isVisible = entry.isIntersecting;
               if (this.isVisible) {
                 this.preloadVisibleImages();
@@ -116,10 +122,10 @@ const { photos, class: className = '' } = Astro.props;
 
       init() {
         this.updateIndicators();
-        
+
         this.prevButton.addEventListener('click', () => this.prev());
         this.nextButton.addEventListener('click', () => this.next());
-        
+
         // Délégation d'événements pour les indicateurs
         const indicatorsContainer = this.indicators[0]?.parentElement;
         if (indicatorsContainer) {
@@ -135,19 +141,27 @@ const { photos, class: className = '' } = Astro.props;
         // Touch events for swipe
         let startX: number;
         let endX: number;
-        
-        this.container.addEventListener('touchstart', (e) => {
-          startX = e.touches[0].clientX;
-        }, { passive: true });
-        
-        this.container.addEventListener('touchend', (e) => {
-          endX = e.changedTouches[0].clientX;
-          if (startX - endX > 50) {
-            this.next();
-          } else if (endX - startX > 50) {
-            this.prev();
-          }
-        }, { passive: true });
+
+        this.container.addEventListener(
+          'touchstart',
+          (e) => {
+            startX = e.touches[0].clientX;
+          },
+          { passive: true }
+        );
+
+        this.container.addEventListener(
+          'touchend',
+          (e) => {
+            endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) {
+              this.next();
+            } else if (endX - startX > 50) {
+              this.prev();
+            }
+          },
+          { passive: true }
+        );
 
         // Ajout d'un seul écouteur de clavier global
         this.setupKeyboardNavigation();
@@ -160,13 +174,13 @@ const { photos, class: className = '' } = Astro.props;
       setupKeyboardNavigation() {
         if (!Carousel.keyboardListenerAdded) {
           Carousel.keyboardListenerAdded = true;
-          
+
           // Utilisation d'une référence faible pour éviter les fuites de mémoire
           const carousels = new Set<Carousel>();
           carousels.add(this);
-          
+
           document.addEventListener('keydown', (e) => {
-            carousels.forEach(carousel => {
+            carousels.forEach((carousel) => {
               if (carousel.isVisible) {
                 if (e.key === 'ArrowLeft') {
                   carousel.prev();
@@ -195,11 +209,11 @@ const { photos, class: className = '' } = Astro.props;
 
       preloadAdjacentImages() {
         if (!this.isVisible) return;
-        
+
         // Précharger uniquement l'image suivante pour économiser des ressources
         const preloadNext = (this.currentIndex + 1) % this.slideCount;
         const nextSlide = this.slides[preloadNext].querySelector('img');
-        
+
         if (nextSlide && nextSlide.getAttribute('loading') === 'lazy') {
           nextSlide.setAttribute('loading', 'eager');
         }
@@ -237,7 +251,7 @@ const { photos, class: className = '' } = Astro.props;
 
     // Initialize all carousels on the page
     const carouselContainers = document.querySelectorAll('.carousel-container');
-    carouselContainers.forEach(container => {
+    carouselContainers.forEach((container) => {
       new Carousel(container as HTMLElement);
     });
   }
@@ -256,30 +270,32 @@ const { photos, class: className = '' } = Astro.props;
   /* Réduit l'espace avant la section RÉTROSPECTIVE sur mobile */
   @media (max-width: 768px) {
     /* Ciblage plus général pour la section RÉTROSPECTIVE */
-    [class*="RÉTROSPECTIVE"],
-    [class*="retrospective"],
-    [class*="Retrospective"],
+    [class*='RÉTROSPECTIVE'],
+    [class*='retrospective'],
+    [class*='Retrospective'],
     .retrospective-section,
     .section-retrospective,
-    section:has(h2:contains("RÉTROSPECTIVE")),
-    div:has(> span:contains("RÉTROSPECTIVE")),
-    div:has(> [class*="RÉTROSPECTIVE"]) {
+    section:has(h2:contains('RÉTROSPECTIVE')),
+    div:has(> span:contains('RÉTROSPECTIVE')),
+    div:has(> [class*='RÉTROSPECTIVE']) {
       margin-top: 0 !important;
       padding-top: 0 !important;
     }
-    
+
     /* Réduction de l'espace entre les deux sections */
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       margin-bottom: 0.5rem !important;
     }
-    
+
     /* Ciblage spécifique de l'icône et du texte RÉTROSPECTIVE */
-    .icon-photo + span, 
-    [data-icon="photo"] + span,
+    .icon-photo + span,
+    [data-icon='photo'] + span,
     span:has(> svg) + span {
       margin-top: 0 !important;
     }
-    
+
     /* Réduction des marges générales sur mobile */
     main > section,
     main > div > section,
@@ -287,12 +303,12 @@ const { photos, class: className = '' } = Astro.props;
       margin-top: 1rem !important;
       margin-bottom: 1rem !important;
     }
-    
+
     /* Réduit l'espace avant les titres principaux */
-    h1[id*="revivez"], 
-    h2[id*="revivez"],
-    h1:contains("Revivez"),
-    h2:contains("Revivez") {
+    h1[id*='revivez'],
+    h2[id*='revivez'],
+    h1:contains('Revivez'),
+    h2:contains('Revivez') {
       margin-top: 0.5rem !important;
     }
   }

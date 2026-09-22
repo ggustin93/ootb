@@ -18,7 +18,7 @@ const typeMapping: Record<string, CardType> = {
   live: 'default',
   podcast: 'podcast',
   tv: 'tv',
-  premium: 'premium'
+  premium: 'premium',
 };
 
 // Limiter à 9 articles par page pour le format 3x3
@@ -26,39 +26,42 @@ const displayedPosts = posts.slice(0, 9);
 ---
 
 <div class="max-w-6xl mx-auto">
-  {posts && posts.length > 0 ? (
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {displayedPosts.map((post) => {
-        const publishDate = post.publishDate instanceof Date 
-          ? post.publishDate 
-          : new Date(post.publishDate);
-          
-        return (
-          <Card
-            title={post.title}
-            description={post.description}
-            image={post.image}
-            category={{
-              title: CONTENT_TYPES[post.category?.slug as keyof typeof CONTENT_TYPES]?.shortLabel || post.category?.title || '',
-              slug: post.category?.slug || 'actualite'
-            }}
-            tags={[]}
-            href={post.slug}
-            type={typeMapping[post.category?.slug || 'actualite']}
-            meta={{
-              publishDate: getFormattedDate(publishDate),
-              expert: post.expert,
-              duration: post.duration
-            }}
-          />
-        );
-      })}
-    </div>
-  ) : (
-    <div class="text-center py-8">
-      <p class="text-gray-600 dark:text-gray-400">Aucun article trouvé</p>
-    </div>
-  )}
+  {
+    posts && posts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {displayedPosts.map((post) => {
+          const publishDate = post.publishDate instanceof Date ? post.publishDate : new Date(post.publishDate);
+
+          return (
+            <Card
+              title={post.title}
+              description={post.description}
+              image={post.image}
+              category={{
+                title:
+                  CONTENT_TYPES[post.category?.slug as keyof typeof CONTENT_TYPES]?.shortLabel ||
+                  post.category?.title ||
+                  '',
+                slug: post.category?.slug || 'actualite',
+              }}
+              tags={[]}
+              href={post.slug}
+              type={typeMapping[post.category?.slug || 'actualite']}
+              meta={{
+                publishDate: getFormattedDate(publishDate),
+                expert: post.expert,
+                duration: post.duration,
+              }}
+            />
+          );
+        })}
+      </div>
+    ) : (
+      <div class="text-center py-8">
+        <p class="text-gray-600 dark:text-gray-400">Aucun article trouvé</p>
+      </div>
+    )
+  }
 </div>
 
 <style>

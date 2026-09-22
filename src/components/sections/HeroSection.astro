@@ -16,10 +16,7 @@ interface Props {
   scrollTargetId?: string; // ID de la section cible pour le défilement
 }
 
-const { 
-  image: propImage, 
-  scrollTargetId = "mission-section"
-} = Astro.props;
+const { image: propImage, scrollTargetId = 'mission-section' } = Astro.props;
 
 // Get homepage data from JSON
 const hero = homepageData.hero;
@@ -27,32 +24,32 @@ const hero = homepageData.hero;
 // Fallback values if no Tina data is available
 const defaultHero = {
   title: {
-    line1: "La plateforme",
-    line2: "des pédagogies",
-    line3: "innovantes !"
+    line1: 'La plateforme',
+    line2: 'des pédagogies',
+    line3: 'innovantes !',
   },
   badges: [
     {
-      text: "Festival",
-      link: "/festival",
-      variant: "festival"
+      text: 'Festival',
+      link: '/festival',
+      variant: 'festival',
     },
     {
-      text: "Podcast",
-      link: "/category/podcast",
-      variant: "podcast"
+      text: 'Podcast',
+      link: '/category/podcast',
+      variant: 'podcast',
     },
     {
-      text: "Émission",
-      link: "/category/tv",
-      variant: "emission"
+      text: 'Émission',
+      link: '/category/tv',
+      variant: 'emission',
     },
     {
-      text: "Appel à projets",
-      link: "/appel-a-projets",
-      variant: "appel"
-    }
-  ]
+      text: 'Appel à projets',
+      link: '/appel-a-projets',
+      variant: 'appel',
+    },
+  ],
 };
 
 const displayTitle = hero?.title || defaultHero.title;
@@ -65,26 +62,34 @@ const displayBadges = hero?.badges || defaultHero.badges;
 <GradientHeroSection>
   <!-- Éléments décoratifs flottants optimisés -->
   <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
-    <Icon name="tabler:book-2" class="absolute w-14 md:w-16 h-24 md:h-24 -rotate-[15deg] md:-rotate-12 top-[15%] md:top-[10%] left-[5%] md:left-[40%] opacity-30 transition-transform hover:-translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
-    <Icon name="tabler:book" class="absolute w-12 md:w-14 h-20 md:h-20 rotate-45 top-[35%] md:top-[40%] right-[5%] md:right-[12%] opacity-30 transition-transform hover:translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
+    <Icon
+      name="tabler:book-2"
+      class="absolute w-14 md:w-16 h-24 md:h-24 -rotate-[15deg] md:-rotate-12 top-[15%] md:top-[10%] left-[5%] md:left-[40%] opacity-30 transition-transform hover:-translate-y-2 duration-1000 text-white filter drop-shadow-lg"
+    />
+    <Icon
+      name="tabler:book"
+      class="absolute w-12 md:w-14 h-20 md:h-20 rotate-45 top-[35%] md:top-[40%] right-[5%] md:right-[12%] opacity-30 transition-transform hover:translate-y-2 duration-1000 text-white filter drop-shadow-lg"
+    />
   </div>
 
-  <div class="relative z-20 grid md:grid-cols-2 gap-8 md:gap-12 items-start max-w-6xl mx-auto px-4 md:px-8 pt-12 md:pt-32 w-full">
+  <div
+    class="relative z-20 grid md:grid-cols-2 gap-8 md:gap-12 items-start max-w-6xl mx-auto px-4 md:px-8 pt-12 md:pt-32 w-full"
+  >
     <div class="text-center md:text-left flex flex-col">
       <!-- Sur mobile: logo_garcon_blanc en haut de la page - OPTIMISÉ -->
       <div class="md:hidden mb-2 p-4 flex justify-center">
         <Image
           src={logo_garcon_blanc}
           alt="Out of the Books"
-          class="w-full h-auto max-w-[180px] mx-auto" 
+          class="w-full h-auto max-w-[180px] mx-auto"
           widths={[120, 180]}
           sizes="(max-width: 360px) 120px, 180px"
           loading="eager"
           decoding="sync"
           fetchpriority="high"
-          formats={["avif", "webp"]}
+          formats={['avif', 'webp']}
         />
-      </div> 
+      </div>
 
       <!-- Titre sur mobile -->
       <h2 class="md:hidden mb-6 mt-4 font-body text-3xl font-light max-w-lg leading-tight mx-auto py-2">
@@ -92,9 +97,15 @@ const displayBadges = hero?.badges || defaultHero.badges;
         <span class="text-[--ootb-yellow] relative font-bold italic block mb-2">
           <span class="relative font-bold">
             {displayTitle.line2}
-            <span class="absolute bottom-0 left-0 w-[102%] h-[0.07em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
-            <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.06em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
-            <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.07em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
+            <span
+              class="absolute bottom-0 left-0 w-[102%] h-[0.07em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"
+            ></span>
+            <span
+              class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.06em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"
+            ></span>
+            <span
+              class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.07em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"
+            ></span>
           </span>
         </span>
         <span class="text-white font-bold block">{displayTitle.line3}</span>
@@ -113,63 +124,77 @@ const displayBadges = hero?.badges || defaultHero.badges;
       </h1>
 
       <!-- Sur desktop: le texte après le logo -->
-      <h2 class="hidden md:block font-body text-3xl md:text-5xl font-light mb-8 md:mb-16 max-w-lg leading-tight mx-auto md:mx-0">
+      <h2
+        class="hidden md:block font-body text-3xl md:text-5xl font-light mb-8 md:mb-16 max-w-lg leading-tight mx-auto md:mx-0"
+      >
         <span class="text-white font-bold block mb-0.5">{displayTitle.line1}</span>
         <span class="text-[--ootb-yellow] relative md:ml-6 font-bold italic block mb-0.5">
           <span class="relative font-bold">
             {displayTitle.line2}
-            <span class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
-            <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
-            <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
+            <span
+              class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"
+            ></span>
+            <span
+              class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"
+            ></span>
+            <span
+              class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"
+            ></span>
           </span>
         </span>
         <span class="text-white font-bold block">{displayTitle.line3}</span>
       </h2>
 
       <!-- Section des badges responsive -->
-      <div class="flex flex-wrap md:flex-nowrap gap-3 justify-center md:justify-start items-center md:relative mt-4 md:mt-4 md:mb-4 md:w-full">
-        {displayBadges.map((badge) => (
-          <a href={badge.link} class="transform hover:scale-105 transition-all duration-300 m-0.5 md:m-0">
-            <ActionBadge variant={badge.variant as "festival" | "podcast" | "emission" | "appel" | "live" | "actualite" | undefined}>
-              {badge.text}
-            </ActionBadge>
-          </a>
-        ))}
+      <div
+        class="flex flex-wrap md:flex-nowrap gap-3 justify-center md:justify-start items-center md:relative mt-4 md:mt-4 md:mb-4 md:w-full"
+      >
+        {
+          displayBadges.map((badge) => (
+            <a href={badge.link} class="transform hover:scale-105 transition-all duration-300 m-0.5 md:m-0">
+              <ActionBadge
+                variant={
+                  badge.variant as 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite' | undefined
+                }
+              >
+                {badge.text}
+              </ActionBadge>
+            </a>
+          ))
+        }
       </div>
     </div>
 
     <!-- Image principale (desktop) -->
     <div class="relative hidden md:block px-8 pt-0 mt-[-2rem] mb-16">
       <div class="relative max-w-[500px] mx-auto">
-        {propImage ? (
-          <Image
-            src={propImage}
-            alt="Illustration principale"
-            class="relative z-20 transform hover:-rotate-2 transition-transform duration-300 w-full object-contain h-auto"
-            widths={[400, 600]}
-            sizes="(max-width: 768px) 400px, 600px"
-            loading="eager"
-            decoding="async"
-          />
-        ) : (
-          <img
-            src={defaultHeroUrl}
-            alt="Illustration principale"
-            class="relative z-20 transform hover:-rotate-2 transition-transform duration-300 w-full object-contain h-auto"
-            width={500}
-            loading="eager"
-            decoding="async"
-          />
-        )}
+        {
+          propImage ? (
+            <Image
+              src={propImage}
+              alt="Illustration principale"
+              class="relative z-20 transform hover:-rotate-2 transition-transform duration-300 w-full object-contain h-auto"
+              widths={[400, 600]}
+              sizes="(max-width: 768px) 400px, 600px"
+              loading="eager"
+              decoding="async"
+            />
+          ) : (
+            <img
+              src={defaultHeroUrl}
+              alt="Illustration principale"
+              class="relative z-20 transform hover:-rotate-2 transition-transform duration-300 w-full object-contain h-auto"
+              width={500}
+              loading="eager"
+              decoding="async"
+            />
+          )
+        }
       </div>
-      
+
       <!-- ScrollDownArrow repositionné -->
       <div class="absolute bottom-[-8rem] left-1/2 transform -translate-x-1/2 z-30">
-        <ScrollDownArrow 
-          targetId={scrollTargetId} 
-          label="Explorer l'univers" 
-          hideOnMobile={true}
-        />
+        <ScrollDownArrow targetId={scrollTargetId} label="Explorer l'univers" hideOnMobile={true} />
       </div>
     </div>
   </div>

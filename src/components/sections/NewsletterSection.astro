@@ -5,17 +5,17 @@ import homepageData from '../../content/homepage/index.json';
 
 // Configuration de la newsletter - À personnaliser selon vos besoins
 const {
-  title = "Rejoignez notre communauté éducative",
+  title = 'Rejoignez notre communauté éducative',
   description = "Recevez chaque mois une sélection d'articles, de ressources et d'événements pour innover dans votre pratique",
-  placeholder = "Votre adresse email",
+  placeholder = 'Votre adresse email',
   buttonText = "S'inscrire",
-  badgeText = "Newsletter mensuelle",
-  socialLinks = []
+  badgeText = 'Newsletter mensuelle',
+  socialLinks = [],
 } = homepageData.newsletter || {};
 
 // Configuration de l'intégration - À personnaliser même si non présent dans homepageData
-const formName = "newsletter-homepage"; // Nom du formulaire pour Netlify
-const redirectSuccess = "/merci-inscription"; // Page de redirection après succès
+const formName = 'newsletter-homepage'; // Nom du formulaire pour Netlify
+const redirectSuccess = '/merci-inscription'; // Page de redirection après succès
 
 // Configuration NocoDB - sécurisée car exécutée côté serveur uniquement
 const NOCODB_API_TOKEN = import.meta.env.NOCODB_API_TOKEN;
@@ -23,42 +23,42 @@ const isTokenValid = NOCODB_API_TOKEN && NOCODB_API_TOKEN.trim() !== '';
 console.log(`Mode détecté côté serveur pour newsletter: ${isTokenValid ? 'PRODUCTION' : 'TEST'}`);
 
 // Configuration NocoDB mise à jour avec les informations fournies
-const NOCODB_ORG_ID = "noco";
-const NOCODB_PROJECT_ID = "p41z6qweidro6nu";
-const NOCODB_TABLE_ID = "m6hnpjey4laav0z";
-const NOCODB_VIEW_ID = "vwcs0f92mc8rh0s5";
+const NOCODB_ORG_ID = 'noco';
+const NOCODB_PROJECT_ID = 'p41z6qweidro6nu';
+const NOCODB_TABLE_ID = 'm6hnpjey4laav0z';
+const NOCODB_VIEW_ID = 'vwcs0f92mc8rh0s5';
 
 const defaultSocialLinks = [
   {
     name: 'YouTube',
     icon: 'tabler:brand-youtube',
     href: 'https://www.youtube.com/@outofthebooksasbl',
-    color: 'text-[--ootb-blue]'
+    color: 'text-[--ootb-blue]',
   },
   {
     name: 'Facebook',
     icon: 'tabler:brand-facebook',
     href: 'https://www.facebook.com/outofthebooksasbl',
-    color: 'text-[--ootb-blue]'
+    color: 'text-[--ootb-blue]',
   },
   {
     name: 'LinkedIn',
     icon: 'tabler:brand-linkedin',
     href: 'https://www.linkedin.com/company/outofthebooks/',
-    color: 'text-[--ootb-blue]'
+    color: 'text-[--ootb-blue]',
   },
   {
     name: 'Instagram',
     icon: 'tabler:brand-instagram',
     href: 'https://www.instagram.com/outofthebooksasbl/',
-    color: 'text-[--ootb-blue]'
+    color: 'text-[--ootb-blue]',
   },
   {
     name: 'Spotify',
     icon: 'tabler:brand-spotify',
     href: 'https://open.spotify.com/show/4yTxSH2wLtptZQ8Ly4D6DI?si=ub-5Jr9uRjuedLDysvfc7Q',
-    color: 'text-[--ootb-blue]'
-  }
+    color: 'text-[--ootb-blue]',
+  },
 ];
 
 const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLinks;
@@ -67,20 +67,39 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
 <section id="rejoindre" class="relative py-16 md:py-24 px-4 md:px-8 mb-0 md:mb-8">
   <!-- Livres flottants externes -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <Icon name="tabler:book-2" class="absolute z-30 w-12 md:w-20 h-16 md:h-28 -rotate-[22deg] top-[25%] left-[12%] opacity-15 md:opacity-25 transition-transform hover:-translate-y-2 duration-1000 text-[--ootb-blue] filter drop-shadow-lg" />
-    <Icon name="tabler:book" class="absolute z-30 w-10 md:w-16 h-14 md:h-24 rotate-[38deg] bottom-[30%] right-[8%] opacity-15 md:opacity-25 transition-transform hover:translate-y-2 duration-1000 text-[--ootb-turquoise] filter drop-shadow-lg" />
+    <Icon
+      name="tabler:book-2"
+      class="absolute z-30 w-12 md:w-20 h-16 md:h-28 -rotate-[22deg] top-[25%] left-[12%] opacity-15 md:opacity-25 transition-transform hover:-translate-y-2 duration-1000 text-[--ootb-blue] filter drop-shadow-lg"
+    />
+    <Icon
+      name="tabler:book"
+      class="absolute z-30 w-10 md:w-16 h-14 md:h-24 rotate-[38deg] bottom-[30%] right-[8%] opacity-15 md:opacity-25 transition-transform hover:translate-y-2 duration-1000 text-[--ootb-turquoise] filter drop-shadow-lg"
+    />
   </div>
 
   <div class="max-w-6xl mx-auto">
-    <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-6 md:p-16 text-center relative overflow-hidden border border-[--ootb-turquoise]/20 hover:border-[--ootb-turquoise]/30 transition-colors duration-300">
+    <div
+      class="bg-white/90 backdrop-blur-xl rounded-3xl p-6 md:p-16 text-center relative overflow-hidden border border-[--ootb-turquoise]/20 hover:border-[--ootb-turquoise]/30 transition-colors duration-300"
+    >
       <!-- Effets décoratifs -->
       <div class="absolute inset-0 bg-white/90 backdrop-blur-xl rounded-3xl"></div>
       <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/10 to-[--ootb-turquoise]/10"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-60 bg-gradient-to-r from-blue-100/30 via-[--ootb-turquoise]/20 to-blue-100/30 blur-3xl opacity-30 rotate-12"></div>
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-60 bg-gradient-to-r from-blue-100/30 via-[--ootb-turquoise]/20 to-blue-100/30 blur-3xl opacity-30 rotate-12"
+      >
+      </div>
 
       <!-- Livres flottants internes -->
-      <Icon name="tabler:book-2" class="absolute z-30 w-10 md:w-14 h-14 md:h-20 rotate-[23deg] top-16 right-[22%] opacity-20 md:opacity-30 transition-all duration-1000 hover:rotate-[28deg] hover:-translate-y-2 text-[--ootb-turquoise] filter drop-shadow-lg" aria-hidden="true" />
-      <Icon name="tabler:book" class="absolute z-30 w-12 md:w-16 h-16 md:h-22 -rotate-[8deg] top-20 left-[18%] opacity-20 md:opacity-30 transition-all duration-1000 hover:-rotate-[12deg] hover:-translate-y-3 text-[--ootb-blue] filter drop-shadow-lg" aria-hidden="true" />
+      <Icon
+        name="tabler:book-2"
+        class="absolute z-30 w-10 md:w-14 h-14 md:h-20 rotate-[23deg] top-16 right-[22%] opacity-20 md:opacity-30 transition-all duration-1000 hover:rotate-[28deg] hover:-translate-y-2 text-[--ootb-turquoise] filter drop-shadow-lg"
+        aria-hidden="true"
+      />
+      <Icon
+        name="tabler:book"
+        class="absolute z-30 w-12 md:w-16 h-16 md:h-22 -rotate-[8deg] top-20 left-[18%] opacity-20 md:opacity-30 transition-all duration-1000 hover:-rotate-[12deg] hover:-translate-y-3 text-[--ootb-blue] filter drop-shadow-lg"
+        aria-hidden="true"
+      />
 
       <div class="relative">
         <!-- Icône et badge -->
@@ -113,9 +132,9 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
           1. Créer les variables d'environnement NOCODB_* dans .env
           2. Configurer l'API endpoint /api/submit-newsletter.ts
         -->
-        <form 
+        <form
           id="newsletter-form"
-          class="flex flex-col gap-3 md:gap-4 max-w-md mx-auto group mb-8 md:mb-12" 
+          class="flex flex-col gap-3 md:gap-4 max-w-md mx-auto group mb-8 md:mb-12"
           name={formName}
           method="POST"
           data-netlify="true"
@@ -127,36 +146,38 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
           <p class="hidden">
             <label>Ne pas remplir si vous êtes humain: <input name="bot-field" /></label>
           </p>
-          
+
           <!-- Champ email -->
           <div class="flex-1 relative">
-            <Icon 
-              name="tabler:at" 
+            <Icon
+              name="tabler:at"
               class="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
             />
-            <input 
-              type="email" 
+            <input
+              type="email"
               name="email"
               placeholder={placeholder}
               required
               class="w-full h-14 pl-14 pr-6 rounded-full text-base bg-white/80 backdrop-blur-sm border border-gray-200 focus:border-[--ootb-blue] focus:ring-2 focus:ring-[--ootb-blue]/20 outline-none transition-all placeholder:text-gray-400 peer"
             />
-            <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+            <p
+              class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message"
+            >
               Veuillez entrer une adresse email valide
             </p>
-            
+
             <!-- Champs cachés pour NocoDB -->
-            <input type="hidden" name="form-name" value={formName}>
-            <input type="hidden" name="source" value="website">
-            <input type="hidden" name="tags" value="site-web,newsletter">
-            <input type="hidden" name="redirect_url" value={redirectSuccess}>
-            <input type="hidden" name="timestamp" value="">
-            <input type="hidden" name="nocodb_org_id" value={NOCODB_ORG_ID}>
-            <input type="hidden" name="nocodb_project_id" value={NOCODB_PROJECT_ID}>
-            <input type="hidden" name="nocodb_table_id" value={NOCODB_TABLE_ID}>
-            <input type="hidden" name="nocodb_view_id" value={NOCODB_VIEW_ID}>
+            <input type="hidden" name="form-name" value={formName} />
+            <input type="hidden" name="source" value="website" />
+            <input type="hidden" name="tags" value="site-web,newsletter" />
+            <input type="hidden" name="redirect_url" value={redirectSuccess} />
+            <input type="hidden" name="timestamp" value="" />
+            <input type="hidden" name="nocodb_org_id" value={NOCODB_ORG_ID} />
+            <input type="hidden" name="nocodb_project_id" value={NOCODB_PROJECT_ID} />
+            <input type="hidden" name="nocodb_table_id" value={NOCODB_TABLE_ID} />
+            <input type="hidden" name="nocodb_view_id" value={NOCODB_VIEW_ID} />
           </div>
-          
+
           <!-- Case à cocher pour la politique de confidentialité - Style amélioré -->
           <div class="flex items-center justify-center mt-3 mb-4">
             <div class="flex items-center">
@@ -168,32 +189,49 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
                 class="w-5 h-5 border border-gray-300 rounded bg-white/80 focus:ring-2 focus:ring-[--ootb-blue]/20 text-[--ootb-blue] cursor-pointer"
               />
               <label for="privacy-policy" class="ml-3 text-sm md:text-base text-gray-600 cursor-pointer">
-                J'ai lu et j'accepte la <a href="/privacy" class="text-[--ootb-blue] hover:underline">politique de confidentialité</a>
+                J'ai lu et j'accepte la <a href="/privacy" class="text-[--ootb-blue] hover:underline"
+                  >politique de confidentialité</a
+                >
               </label>
             </div>
           </div>
           <p id="privacy-error" class="mt-1 text-xs md:text-sm text-rose-500 text-center hidden">
             Vous devez accepter la politique de confidentialité
           </p>
-          
+
           <!-- Bouton de soumission -->
-          <button 
+          <button
             type="button"
             id="newsletter-submit"
             class="h-14 px-8 rounded-full bg-[--ootb-blue] text-white hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden"
           >
             <span id="submit-text" class="relative z-10">{buttonText}</span>
             <Icon name="tabler:arrow-right" class="w-5 h-5 relative z-10" />
-            <div id="submit-loader" class="absolute inset-0 flex items-center justify-center bg-[--ootb-blue] opacity-0 transition-opacity duration-300">
-              <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <div
+              id="submit-loader"
+              class="absolute inset-0 flex items-center justify-center bg-[--ootb-blue] opacity-0 transition-opacity duration-300"
+            >
+              <svg
+                class="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
             </div>
           </button>
-          
+
           <!-- Message de statut (uniquement pour les erreurs) -->
-          <div id="newsletter-status" class="hidden mt-4 p-4 rounded-xl text-center transition-all duration-300 transform bg-rose-50 text-rose-700 border border-rose-200">
+          <div
+            id="newsletter-status"
+            class="hidden mt-4 p-4 rounded-xl text-center transition-all duration-300 transform bg-rose-50 text-rose-700 border border-rose-200"
+          >
             <div class="flex items-center justify-center gap-3">
               <span id="newsletter-status-icon" class="text-2xl">❌</span>
               <span id="newsletter-status-message" class="text-base font-medium"></span>
@@ -204,24 +242,28 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
         <!-- Réseaux sociaux -->
         <div class="border-t border-gray-100/50 pt-6 md:pt-8">
           <h3 class="text-lg font-display font-semibold text-gray-900 mb-2">Rejoignez la conversation</h3>
-          <p class="font-sans text-gray-600 text-sm mb-4 md:mb-6">Découvrez Nos contenus exclusifs sur vos réseaux préférés</p>
-          
+          <p class="font-sans text-gray-600 text-sm mb-4 md:mb-6">
+            Découvrez Nos contenus exclusifs sur vos réseaux préférés
+          </p>
+
           <div class="flex justify-center flex-wrap gap-2 md:gap-3">
-            {mergedSocialLinks.map(social => (
-              <a
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="group flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-xl bg-white/80 backdrop-blur-sm hover:bg-white border border-gray-100 hover:border-gray-200 hover:-translate-y-0.5 transition-all duration-300"
-                title={social.name}
-              >
-                <Icon 
-                  name={social.icon} 
-                  class={`w-5 h-5 ${social.color} transition-transform duration-300 group-hover:scale-110`}
-                />
-                <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{social.name}</span>
-              </a>
-            ))}
+            {
+              mergedSocialLinks.map((social) => (
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-xl bg-white/80 backdrop-blur-sm hover:bg-white border border-gray-100 hover:border-gray-200 hover:-translate-y-0.5 transition-all duration-300"
+                  title={social.name}
+                >
+                  <Icon
+                    name={social.icon}
+                    class={`w-5 h-5 ${social.color} transition-transform duration-300 group-hover:scale-110`}
+                  />
+                  <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{social.name}</span>
+                </a>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -233,19 +275,19 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
     // console.log('🔄 Script de newsletter chargé');
-    
+
     const form = document.getElementById('newsletter-form');
     const submitButton = document.getElementById('newsletter-submit');
     const statusContainer = document.getElementById('newsletter-status');
     const statusMessage = document.getElementById('newsletter-status-message');
     const privacyCheckbox = document.getElementById('privacy-policy');
     const privacyError = document.getElementById('privacy-error');
-    
+
     if (!form || !submitButton || !statusContainer) {
       console.error('❌ Éléments du formulaire non trouvés');
       return;
     }
-    
+
     // console.log('🔍 Éléments DOM trouvés:', {
     //   form: !!form,
     //   submitButton: !!submitButton,
@@ -256,7 +298,7 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
     //   privacyCheckbox: !!privacyCheckbox,
     //   privacyError: !!privacyError
     // });
-    
+
     // Formater la date au format ISO avec timezone
     function formatDateForNocoDB(date) {
       const d = new Date(date);
@@ -266,63 +308,63 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
       const hours = String(d.getHours()).padStart(2, '0');
       const minutes = String(d.getMinutes()).padStart(2, '0');
       const seconds = String(d.getSeconds()).padStart(2, '0');
-      
+
       // Calculer le décalage horaire en heures et minutes
       const timezoneOffset = -d.getTimezoneOffset();
       const offsetHours = Math.floor(Math.abs(timezoneOffset) / 60);
       const offsetMinutes = Math.abs(timezoneOffset) % 60;
       const timezoneString = `${timezoneOffset >= 0 ? '+' : '-'}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`;
-      
+
       return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}${timezoneString}`;
     }
-    
+
     // Ajouter un timestamp au moment de la soumission
     const timestampField = form.querySelector('input[name="timestamp"]');
     if (timestampField) {
       const now = new Date();
       timestampField.value = now.toISOString();
     }
-    
+
     // Fonction pour afficher uniquement les erreurs
     function showError(message) {
       // console.log(`🔔 Affichage du message d'erreur: ${message}`);
-      
+
       // Définir le message
       statusMessage.textContent = message;
-      
+
       // Réinitialiser le bouton
       submitButton.disabled = false;
       document.getElementById('submit-text').classList.remove('opacity-0');
       document.getElementById('submit-loader').classList.remove('opacity-100');
-      
+
       // Rendre visible
       statusContainer.classList.remove('hidden');
     }
-    
+
     // Fonction simplifiée pour activer le mode chargement du bouton
     function setButtonLoading(isLoading) {
       submitButton.disabled = isLoading;
       const loader = document.getElementById('submit-loader');
-      
+
       if (isLoading) {
         loader.classList.add('opacity-100');
       } else {
         loader.classList.remove('opacity-100');
       }
     }
-    
+
     // Validation des champs
     const emailInput = form.querySelector('input[name="email"]');
-    
+
     if (emailInput) {
-      emailInput.addEventListener('invalid', function() {
+      emailInput.addEventListener('invalid', function () {
         const errorMessage = this.nextElementSibling;
         if (errorMessage && errorMessage.classList.contains('validation-message')) {
           errorMessage.classList.add('visible', 'opacity-100', 'translate-y-0');
         }
       });
-      
-      emailInput.addEventListener('input', function() {
+
+      emailInput.addEventListener('input', function () {
         const errorMessage = this.nextElementSibling;
         if (errorMessage && errorMessage.classList.contains('validation-message')) {
           if (this.validity.valid) {
@@ -331,15 +373,15 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
             errorMessage.classList.add('visible', 'opacity-100', 'translate-y-0');
           }
         }
-        
+
         // Réinitialiser les messages lors de la saisie
         statusContainer.classList.add('hidden');
       });
     }
-    
+
     // Gestion de la case à cocher politique de confidentialité
     if (privacyCheckbox && privacyError) {
-      privacyCheckbox.addEventListener('change', function() {
+      privacyCheckbox.addEventListener('change', function () {
         if (this.checked) {
           privacyError.classList.add('hidden');
           // Réinitialiser les messages lors du changement
@@ -347,19 +389,19 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
         }
       });
     }
-    
+
     // Gestion de la soumission du formulaire
     function handleSubmit() {
       // console.log('🔄 Fonction handleSubmit appelée');
-      
+
       // Si le bouton est désactivé (traitement en cours), ne rien faire
       if (submitButton.disabled) {
         // console.log('⚠️ Soumission ignorée: traitement déjà en cours');
         return;
       }
-      
+
       // console.log('🔍 Validation du formulaire...');
-      
+
       // Vérifier spécifiquement la case à cocher
       if (privacyCheckbox && !privacyCheckbox.checked) {
         console.error('❌ Politique de confidentialité non acceptée');
@@ -367,27 +409,27 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
         privacyCheckbox.focus();
         return;
       }
-      
+
       if (!form.checkValidity()) {
         console.error('❌ Validation échouée: formulaire invalide');
         form.reportValidity();
         return;
       }
-      
+
       // console.log('✅ Formulaire valide, préparation de la soumission...');
-      
+
       // Masquer les messages d'erreur précédents
       statusContainer.classList.add('hidden');
-      
+
       try {
         // Activer le mode chargement du bouton
         setButtonLoading(true);
-        
+
         // Préparer les données du formulaire au format JSON
         const formData = new FormData(form);
         const now = new Date();
         const formattedDate = formatDateForNocoDB(now);
-        
+
         // Convertir FormData en objet JSON
         const jsonData = {
           email: formData.get('email'),
@@ -399,54 +441,54 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
           nocodb_org_id: formData.get('nocodb_org_id'),
           nocodb_project_id: formData.get('nocodb_project_id'),
           nocodb_table_id: formData.get('nocodb_table_id'),
-          nocodb_view_id: formData.get('nocodb_view_id')
+          nocodb_view_id: formData.get('nocodb_view_id'),
         };
-        
+
         // console.log('🚀 Soumission du formulaire à l\'API...');
         // console.log('📝 Données envoyées:', jsonData);
-        
+
         // Envoyer les données à l'endpoint API sécurisé
         fetch('/api/submit-newsletter', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(jsonData)
+          body: JSON.stringify(jsonData),
         })
-        .then(response => response.json())
-        .then(result => {
-          // console.log('📄 Données de réponse:', result);
-          
-          if (result.success) {
-            // console.log('✅ Soumission réussie:', result);
-            
-            // Rediriger directement sans message
-            const redirectUrl = form.getAttribute('action');
-            if (redirectUrl) {
-              window.location.href = redirectUrl;
+          .then((response) => response.json())
+          .then((result) => {
+            // console.log('📄 Données de réponse:', result);
+
+            if (result.success) {
+              // console.log('✅ Soumission réussie:', result);
+
+              // Rediriger directement sans message
+              const redirectUrl = form.getAttribute('action');
+              if (redirectUrl) {
+                window.location.href = redirectUrl;
+              }
+            } else {
+              console.error('❌ Erreur lors de la soumission');
+              showError(result.message || "Une erreur est survenue lors de l'inscription.");
             }
-          } else {
+          })
+          .catch(() => {
             console.error('❌ Erreur lors de la soumission');
-            showError(result.message || 'Une erreur est survenue lors de l\'inscription.');
-          }
-        })
-        .catch((_err) => {
-          console.error('❌ Erreur lors de la soumission');
-          showError('Une erreur est survenue lors de la communication avec le serveur.');
-        });
-      } catch (_err) {
+            showError('Une erreur est survenue lors de la communication avec le serveur.');
+          });
+      } catch {
         console.error('❌ Erreur lors de la soumission');
         showError('Une erreur est survenue lors de la communication avec le serveur.');
       }
     }
-    
+
     // Attacher l'événement click au bouton
     // console.log('🔄 Attachement de l\'événement click au bouton...');
-    submitButton.addEventListener('click', function(_event) {
+    submitButton.addEventListener('click', function (_event) {
       // console.log('🖱️ Événement click détecté sur le bouton');
       handleSubmit();
     });
-    
+
     // console.log('✅ Initialisation du formulaire newsletter terminée');
   });
 </script>
@@ -459,9 +501,17 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
 
   /* Police système optimisée pour le corps du texte */
   .font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif;
   }
-  
+
   /* Animation de pulsation pour le traitement */
   .pulse {
     animation: pulse 2s infinite;
@@ -481,7 +531,7 @@ const mergedSocialLinks = socialLinks.length > 0 ? socialLinks : defaultSocialLi
       transform: scale(1);
     }
   }
-  
+
   /* Styles pour les messages d'erreur sous les champs */
   .peer:invalid:not(:placeholder-shown) ~ .validation-message {
     @apply visible opacity-100 translate-y-0;

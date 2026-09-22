@@ -22,13 +22,10 @@ function writeNavigationFile(data) {
     fs.writeFileSync(navigationFilePath, JSON.stringify(data, null, 2), 'utf8');
     return true;
   } catch (error) {
-    console.error('Erreur lors de l\'écriture dans le fichier de navigation:', error);
+    console.error("Erreur lors de l'écriture dans le fichier de navigation:", error);
     return false;
   }
 }
 
 // Exporter les fonctions pour les utiliser dans Tina
-export {
-  readNavigationFile,
-  writeNavigationFile,
-}; 
+export { readNavigationFile, writeNavigationFile };

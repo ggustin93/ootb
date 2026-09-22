@@ -16,10 +16,10 @@ const AUTO_REFRESH_INTERVAL = 15 * 60 * 1000; // 15 minutes en millisecondes
  */
 export function initCache(): void {
   console.log('🚀 Initialisation du cache...');
-  
+
   // Réinitialiser le flag de traitement des images
   resetImageProcessingSession();
-  
+
   if (ENABLE_AUTO_REFRESH) {
     if (!isDataCached()) {
       console.log('📦 Aucune donnée en cache, démarrage du rafraîchissement automatique...');
@@ -34,4 +34,4 @@ export function initCache(): void {
 }
 
 // Initialiser le cache au chargement du module
-initCache(); 
+initCache();

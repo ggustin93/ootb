@@ -13,29 +13,29 @@ export function CalloutBox({ type = 'info', title, children }: CalloutBoxProps) 
       border: 'border-blue-200',
       text: 'text-blue-800',
       accent: 'text-blue-500',
-      icon: 'tabler:info-circle'
+      icon: 'tabler:info-circle',
     },
     warning: {
       bg: 'bg-yellow-50',
       border: 'border-yellow-200',
       text: 'text-yellow-800',
       accent: 'text-yellow-500',
-      icon: 'tabler:alert-triangle'
+      icon: 'tabler:alert-triangle',
     },
     tip: {
       bg: 'bg-green-50',
       border: 'border-green-200',
       text: 'text-green-800',
       accent: 'text-green-500',
-      icon: 'tabler:bulb'
+      icon: 'tabler:bulb',
     },
     important: {
       bg: 'bg-red-50',
       border: 'border-red-200',
       text: 'text-red-800',
       accent: 'text-red-500',
-      icon: 'tabler:alert-circle'
-    }
+      icon: 'tabler:alert-circle',
+    },
   };
 
   const styles = config[type];
@@ -51,12 +51,8 @@ export function CalloutBox({ type = 'info', title, children }: CalloutBoxProps) 
             {type === 'tip' && (
               <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             )}
-            {type === 'important' && (
-              <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            )}
-            {(type === 'info' || !type) && (
-              <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            )}
+            {type === 'important' && <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+            {(type === 'info' || !type) && <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
           </svg>
         </span>
         <div className={`${styles.text} prose prose-sm max-w-none`}>
@@ -66,4 +62,4 @@ export function CalloutBox({ type = 'info', title, children }: CalloutBoxProps) 
       </div>
     </div>
   );
-} 
+}

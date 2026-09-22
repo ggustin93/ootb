@@ -12,15 +12,15 @@ interface Props {
   tvcomUrl?: string;
 }
 
-const { 
-  mediaType = 'none', 
-  podcastUrl = '', 
-  showId = '', 
+const {
+  mediaType = 'none',
+  podcastUrl = '',
+  showId = '',
   podcastId = '',
   iframeCode = '',
   smartlinkUrl = '',
-  videoUrl = '', 
-  tvcomUrl = '' 
+  videoUrl = '',
+  tvcomUrl = '',
 } = Astro.props;
 ---
 
@@ -46,12 +46,14 @@ const {
         <option value="youtube" selected={mediaType === 'youtube'}>Vidéo YouTube</option>
         <option value="tv" selected={mediaType === 'tv'}>Émission TV</option>
       </select>
-      {Astro.url.pathname.includes('/category/podcast') && (
-        <p class="mt-2 text-sm text-green-600 dark:text-green-400">
-          <Icon name="tabler:info-circle" class="w-4 h-4 inline-block mr-1" />
-          Pour les contenus de catégorie "podcast", le type de média est automatiquement défini.
-        </p>
-      )}
+      {
+        Astro.url.pathname.includes('/category/podcast') && (
+          <p class="mt-2 text-sm text-green-600 dark:text-green-400">
+            <Icon name="tabler:info-circle" class="w-4 h-4 inline-block mr-1" />
+            Pour les contenus de catégorie "podcast", le type de média est automatiquement défini.
+          </p>
+        )
+      }
     </div>
 
     <!-- Champs pour Podcast -->
@@ -60,20 +62,22 @@ const {
         <p class="text-sm text-blue-700 dark:text-blue-300 flex items-start">
           <Icon name="tabler:info-circle" class="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
           <span>
-            Pour les podcasts, vous devez obligatoirement remplir les champs <strong>Code iframe Ausha</strong> et <strong>URL Smartlink Ausha</strong> dans la section "Méthode recommandée".
+            Pour les podcasts, vous devez obligatoirement remplir les champs <strong>Code iframe Ausha</strong> et <strong
+              >URL Smartlink Ausha</strong
+            > dans la section "Méthode recommandée".
           </span>
         </p>
       </div>
-      
+
       <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
         <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Méthode recommandée</h4>
-        
+
         <!-- Code iframe -->
         <div class="mb-4">
           <label for="iframeCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Code iframe Ausha
             <span class="text-xs text-gray-500 dark:text-gray-400 font-normal ml-1">
-              (Copier-coller depuis Ausha > Partager > Smartplayer)
+              (Copier-coller depuis Ausha &gt; Partager &gt; Smartplayer)
             </span>
           </label>
           <textarea
@@ -82,7 +86,8 @@ const {
             rows="4"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             placeholder='<iframe name="Ausha Podcast Player" frameborder="0" loading="lazy" id="ausha-FzFa" height="220" style="border: none; width:100%; height:220px" src="https://player.ausha.co/?showId=mw1jzt8lqP9L&color=%23751CBF&podcastId=k1E5AFYnQA1N&v=3&playerId=ausha-FzFa"></iframe><script src="https://player.ausha.co/ausha-player.js"></script>'
-          >{iframeCode}</textarea>
+            >{iframeCode}</textarea
+          >
         </div>
 
         <!-- Smartlink URL -->
@@ -90,7 +95,7 @@ const {
           <label for="smartlinkUrl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             URL Smartlink Ausha
             <span class="text-xs text-gray-500 dark:text-gray-400 font-normal ml-1">
-              (Copier-coller depuis Ausha > Partager > Smartlink)
+              (Copier-coller depuis Ausha &gt; Partager &gt; Smartlink)
             </span>
           </label>
           <input
@@ -106,7 +111,7 @@ const {
 
       <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
         <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Méthode alternative (ancienne)</h4>
-        
+
         <!-- URL du podcast -->
         <div class="mb-4">
           <label for="podcastUrl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -195,18 +200,18 @@ const {
   const mediaTypeSelect = document.getElementById('mediaType');
 
   if (mediaTypeSelect) {
-    mediaTypeSelect.addEventListener('change', function() {
+    mediaTypeSelect.addEventListener('change', function () {
       const selectedValue = (this as HTMLSelectElement).value;
-      
+
       // Masquer tous les champs
-      document.querySelectorAll('[data-media-type]').forEach(el => {
+      document.querySelectorAll('[data-media-type]').forEach((el) => {
         el.classList.add('hidden');
       });
-      
+
       // Afficher les champs correspondants au type sélectionné
       if (selectedValue !== 'none') {
         document.querySelector(`[data-media-type="${selectedValue}"]`)?.classList.remove('hidden');
       }
     });
   }
-</script> 
+</script>

@@ -34,12 +34,12 @@
     --radius: 0.5rem;
 
     /* Content type colors */
-    --content-actualite: #4B5563;
+    --content-actualite: #4b5563;
     --content-fiche: #0890bd;
-    --content-live: #1877F2;
+    --content-live: #1877f2;
     --content-podcast: #921e6d;
     --content-tv: #40ad50;
-    --content-premium:#f9b004;
+    --content-premium: #f9b004;
 
     --ootb-orange: #e7461c;
     --ootb-violet: #921e6d;
@@ -47,7 +47,6 @@
     --ootb-blue: #0890bd;
     --ootb-turquoise: #69b29e;
     --ootb-yellow: #f9b004;
-
   }
 
   * {
@@ -60,7 +59,6 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-
 }
 
 @layer utilities {
@@ -185,4 +183,3 @@
     --chart-5: 340 75% 55%;
   }
 }
-

@@ -41,7 +41,7 @@ const TIMEOUT_MS = 30_000;
 // ─── Données test ─────────────────────────────────────
 const testFormData = {
   email: TEST_EMAIL,
-  privacyAccepted: true
+  privacyAccepted: true,
 };
 
 // ─── Helpers ──────────────────────────────────────────
@@ -61,17 +61,17 @@ function assert(condition, label) {
 function initApi() {
   return new Api({
     baseURL: NOCODB_BASE_URL,
-    headers: { 'xc-token': NOCODB_API_TOKEN }
+    headers: { 'xc-token': NOCODB_API_TOKEN },
   });
 }
 
 async function cleanupTestRecords(api) {
   console.log('\n🧹 Nettoyage des enregistrements de test...');
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID,
-      { where: `(Email,eq,${TEST_EMAIL})`, limit: 50 }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      where: `(Email,eq,${TEST_EMAIL})`,
+      limit: 50,
+    });
     const testRecords = response.list || [];
     if (testRecords.length === 0) {
       console.log('  Aucun enregistrement de test à supprimer.');
@@ -102,17 +102,17 @@ async function testPrerequisites() {
 async function testApiConnectivity(api) {
   console.log('\n🧪 TEST B: Connectivité API NocoDB (table Newsletter)');
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID,
-      { limit: 1, offset: 0 }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      limit: 1,
+      offset: 0,
+    });
     assert(response !== null && response !== undefined, 'API répond');
     assert(typeof response.list !== 'undefined', 'Réponse contient une liste');
     console.log(`  📊 Table contient ${response.pageInfo?.totalRows ?? '?'} enregistrements`);
 
     if (response.list.length > 0) {
       const sample = response.list[0];
-      for (const field of ['Email', "Date d'inscription", "Politique de confidentialité acceptée"]) {
+      for (const field of ['Email', "Date d'inscription", 'Politique de confidentialité acceptée']) {
         assert(field in sample, `Colonne "${field}" existe dans la table`);
       }
     }
@@ -126,15 +126,17 @@ async function testHandlerSubmission() {
 
   const event = {
     httpMethod: 'POST',
-    body: JSON.stringify(testFormData)
+    body: JSON.stringify(testFormData),
   };
 
   const response = await handler(event);
   const body = JSON.parse(response.body);
 
   // Newsletter retourne 201 pour une création
-  assert(response.statusCode === 201 || response.statusCode === 200,
-    `Status HTTP: ${response.statusCode} (attendu: 200 ou 201)`);
+  assert(
+    response.statusCode === 201 || response.statusCode === 200,
+    `Status HTTP: ${response.statusCode} (attendu: 200 ou 201)`
+  );
   assert(body.success === true, `success: ${body.success}`);
 
   if (!body.success) {
@@ -146,17 +148,17 @@ async function testHandlerSubmission() {
 async function testRecordExists(api) {
   console.log('\n🧪 TEST D: Vérification en base NocoDB');
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID,
-      { where: `(Email,eq,${TEST_EMAIL})`, limit: 10 }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      where: `(Email,eq,${TEST_EMAIL})`,
+      limit: 10,
+    });
     const found = response.list || [];
     assert(found.length > 0, `Enregistrement trouvé en base (${found.length})`);
 
     if (found.length > 0) {
       const record = found[0];
       assert(record.Email === TEST_EMAIL, `Email: "${record.Email}"`);
-      assert(record["Politique de confidentialité acceptée"] === true, `Politique de confidentialité acceptée: true`);
+      assert(record['Politique de confidentialité acceptée'] === true, `Politique de confidentialité acceptée: true`);
       assert(!!record["Date d'inscription"], `Date d'inscription présente`);
     }
   } catch (err) {
@@ -169,7 +171,7 @@ async function testDuplicateHandling() {
 
   const event = {
     httpMethod: 'POST',
-    body: JSON.stringify(testFormData)
+    body: JSON.stringify(testFormData),
   };
 
   const response = await handler(event);
@@ -204,7 +206,7 @@ async function run() {
 
     const ok = await testHandlerSubmission();
     if (ok) {
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 1000));
       await testRecordExists(api);
       // Test de re-soumission (doublon)
       await testDuplicateHandling();
@@ -220,5 +222,8 @@ async function run() {
   process.exit(failed > 0 ? 1 : 0);
 }
 
-const timeout = setTimeout(() => { console.error('\n🛑 TIMEOUT'); process.exit(2); }, TIMEOUT_MS);
+const timeout = setTimeout(() => {
+  console.error('\n🛑 TIMEOUT');
+  process.exit(2);
+}, TIMEOUT_MS);
 run().finally(() => clearTimeout(timeout));

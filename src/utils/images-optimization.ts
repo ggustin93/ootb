@@ -8,6 +8,7 @@ type Layout = 'fixed' | 'constrained' | 'fullWidth' | 'cover' | 'responsive' | '
 
 export interface ImageProps extends Omit<HTMLAttributes<'img'>, 'src'> {
   src?: string | ImageMetadata | null;
+  inferSize?: boolean;
   width?: string | number | null;
   height?: string | number | null;
   alt?: string | null;
@@ -229,29 +230,29 @@ export const astroAsseetsOptimizer: ImagesOptimizer = async (
   // Si formats est défini, générer des images pour chaque format
   if (formats && Array.isArray(formats) && formats.length > 0) {
     const results = [];
-    
+
     for (const fmt of formats) {
       const formatResults = await Promise.all(
         breakpoints.map(async (w: number) => {
-          const result = await getImage({ 
-            src: image, 
-            width: w, 
-            inferSize: true, 
-            format: fmt as "png" | "jpg" | "jpeg" | "tiff" | "webp" | "gif" | "svg" | "avif"
+          const result = await getImage({
+            src: image,
+            width: w,
+            inferSize: true,
+            format: fmt as 'png' | 'jpg' | 'jpeg' | 'tiff' | 'webp' | 'gif' | 'svg' | 'avif',
           });
 
           return {
             src: result?.src,
             width: result?.attributes?.width ?? w,
             height: result?.attributes?.height,
-            format: fmt
+            format: fmt,
           };
         })
       );
-      
+
       results.push(...formatResults);
     }
-    
+
     return results;
   }
 
@@ -264,7 +265,7 @@ export const astroAsseetsOptimizer: ImagesOptimizer = async (
         src: result?.src,
         width: result?.attributes?.width ?? w,
         height: result?.attributes?.height,
-        format: format
+        format: format,
       };
     })
   );
@@ -363,14 +364,9 @@ export async function getImagesOptimized(
   breakpoints = [...new Set(breakpoints)].sort((a, b) => a - b);
 
   // Utiliser formats s'il est défini, sinon utiliser format
-  const srcset = (await transform(
-    image, 
-    breakpoints, 
-    Number(width) || undefined, 
-    Number(height) || undefined, 
-    format,
-    formats
-  ))
+  const srcset = (
+    await transform(image, breakpoints, Number(width) || undefined, Number(height) || undefined, format, formats)
+  )
     .map(({ src, width }) => `${src} ${width}w`)
     .join(', ');
 

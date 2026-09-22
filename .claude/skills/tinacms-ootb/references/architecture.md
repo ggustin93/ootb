@@ -6,20 +6,21 @@
 
 This site runs an **older, specific** TinaCMS line. Work MUST target these versions.
 
-| Package | Pinned (`package.json`) | Installed |
-|---|---|---|
-| `tinacms` | `^2.10.1` | 2.10.1 |
-| `@tinacms/cli` | `^1.12.6` | 1.12.6 |
-| `@tinacms/schema-tools` | `1.10.1` | (transitive of tinacms 2.10.1) |
-| `@tinacms/graphql` | `1.6.3` | (transitive) |
-| `@tinacms/app` | `2.3.11` | 2.3.11 |
-| `@tinacms/search` | `1.1.3` | (transitive) |
-| `next-tinacms-cloudinary` | `^16.0.1` | 16.0.1 |
-| `@tinacms/auth` | `^1.0.11` | 1.1.1 (used by the Cloudinary Netlify function) |
+| Package                   | Pinned (`package.json`) | Installed                                       |
+| ------------------------- | ----------------------- | ----------------------------------------------- |
+| `tinacms`                 | `^2.10.1`               | 2.10.1                                          |
+| `@tinacms/cli`            | `^1.12.6`               | 1.12.6                                          |
+| `@tinacms/schema-tools`   | `1.10.1`                | (transitive of tinacms 2.10.1)                  |
+| `@tinacms/graphql`        | `1.6.3`                 | (transitive)                                    |
+| `@tinacms/app`            | `2.3.11`                | 2.3.11                                          |
+| `@tinacms/search`         | `1.1.3`                 | (transitive)                                    |
+| `next-tinacms-cloudinary` | `^16.0.1`               | 16.0.1                                          |
+| `@tinacms/auth`           | `^1.0.11`               | 1.1.1 (used by the Cloudinary Netlify function) |
 
 Node engine: `^20.3.0 || ^22.0.0`. Netlify builds on Node 22 (`netlify.toml`).
 
 **Things that differ in newer TinaCMS — match this repo's exact shape:**
+
 - The `gitProvider` block (self-hosted/Tina-backend feature) has shifted across releases — do not add new keys.
 - `search` config keys (`indexBatchSize`, `maxSearchIndexFieldLength`, `stopwordLanguages`) are stable in 1.1.x.
 - `ui.itemTable` / `tableColumns` (used in `postsCollection.js`) is an older list-view API — keep its current shape.
@@ -29,19 +30,26 @@ Node engine: `^20.3.0 || ^22.0.0`. Netlify builds on Node 22 (`netlify.toml`).
 Full file: `tina/config.ts` (~66 lines). Imports each collection from its own module and passes them into `schema.collections`.
 
 ```ts
-import { defineConfig } from "tinacms";
-import { postsCollection } from "./postsCollection";
+import { defineConfig } from 'tinacms';
+import { postsCollection } from './postsCollection';
 // ...one import per collection file...
 
 export default defineConfig({
-  branch: "main",
+  branch: 'main',
   clientId: process.env.TINA_CLIENT_ID,
   token: process.env.TINA_TOKEN,
-  build:  { outputFolder: "admin", publicFolder: "public" },
-  media:  { loadCustomStore: async () => (await import("next-tinacms-cloudinary")).TinaCloudCloudinaryMediaStore },
-  schema: { collections: [ /* ...12 collections... */ ] },
-  search: { tina: { indexerToken: process.env.TINA_SEARCH_TOKEN, stopwordLanguages: ['fra','eng'] },
-            indexBatchSize: 100, maxSearchIndexFieldLength: 200 },
+  build: { outputFolder: 'admin', publicFolder: 'public' },
+  media: { loadCustomStore: async () => (await import('next-tinacms-cloudinary')).TinaCloudCloudinaryMediaStore },
+  schema: {
+    collections: [
+      /* ...12 collections... */
+    ],
+  },
+  search: {
+    tina: { indexerToken: process.env.TINA_SEARCH_TOKEN, stopwordLanguages: ['fra', 'eng'] },
+    indexBatchSize: 100,
+    maxSearchIndexFieldLength: 200,
+  },
   gitProvider: { name: 'github', branch: 'main', authProvider: 'github', autoCommit: true, autoMerge: true },
 });
 ```
@@ -55,19 +63,19 @@ export default defineConfig({
 
 ## 2. Collections registry (`schema.collections`)
 
-| # | Symbol | File | `name` | `label` | `path` | `format` |
-|---|---|---|---|---|---|---|
-| 1 | `postsCollection` | `tina/postsCollection.js` | `post` | 📚 Gestion des contenus | `src/content/post` | `mdx` |
-| 2 | `homepageCollection` | `tina/homepageCollection.ts` | homepage | 📄 Page - Accueil | `src/content/homepage` | `json` |
-| 3 | `festivalCollection` | `tina/festivalCollection.ts` | festival | — | `src/content/festival` | `json` |
-| 4 | `appelProjetCollection` | `tina/appelProjetCollection.ts` | appelProjet | — | `src/content/appel_projet` | `json` |
-| 5 | `blogCollection` | `tina/blogCollection.ts` | `blog` | 📄 Page - Nos contenus | `src/content/blog` | `json` |
-| 6 | `aboutCollection` | `tina/aboutCollection.ts` | `about` | 📄 Page - À propos | `src/content/about` | `json` |
-| 7 | `erasmusCollection` | `tina/erasmusCollection.ts` | `erasmusPlus` | 📄 Page - Erasmus+ | `src/content/erasmus-plus` | `json` |
-| 8 | `contactCollection` | `tina/contactCollection.ts` | contact | — | `src/content/contact` | `json` |
-| 9 | `siteSettingsCollection` | `tina/siteSettingsCollection.ts` | `siteSettings` | ⚙️ Paramètres généraux | `src/content/site` | `json` |
-| 10 | `navigationCollection` | `tina/navigationCollection.ts` | navigation | — | `src/content/navigation` | `json` |
-| 11–12 | `termsCollection`, `privacyCollection` | `tina/legalCollection.ts` | terms / privacy | — | (legal) | `json` |
+| #     | Symbol                                 | File                             | `name`          | `label`                 | `path`                     | `format` |
+| ----- | -------------------------------------- | -------------------------------- | --------------- | ----------------------- | -------------------------- | -------- |
+| 1     | `postsCollection`                      | `tina/postsCollection.js`        | `post`          | 📚 Gestion des contenus | `src/content/post`         | `mdx`    |
+| 2     | `homepageCollection`                   | `tina/homepageCollection.ts`     | homepage        | 📄 Page - Accueil       | `src/content/homepage`     | `json`   |
+| 3     | `festivalCollection`                   | `tina/festivalCollection.ts`     | festival        | —                       | `src/content/festival`     | `json`   |
+| 4     | `appelProjetCollection`                | `tina/appelProjetCollection.ts`  | appelProjet     | —                       | `src/content/appel_projet` | `json`   |
+| 5     | `blogCollection`                       | `tina/blogCollection.ts`         | `blog`          | 📄 Page - Nos contenus  | `src/content/blog`         | `json`   |
+| 6     | `aboutCollection`                      | `tina/aboutCollection.ts`        | `about`         | 📄 Page - À propos      | `src/content/about`        | `json`   |
+| 7     | `erasmusCollection`                    | `tina/erasmusCollection.ts`      | `erasmusPlus`   | 📄 Page - Erasmus+      | `src/content/erasmus-plus` | `json`   |
+| 8     | `contactCollection`                    | `tina/contactCollection.ts`      | contact         | —                       | `src/content/contact`      | `json`   |
+| 9     | `siteSettingsCollection`               | `tina/siteSettingsCollection.ts` | `siteSettings`  | ⚙️ Paramètres généraux  | `src/content/site`         | `json`   |
+| 10    | `navigationCollection`                 | `tina/navigationCollection.ts`   | navigation      | —                       | `src/content/navigation`   | `json`   |
+| 11–12 | `termsCollection`, `privacyCollection` | `tina/legalCollection.ts`        | terms / privacy | —                       | (legal)                    | `json`   |
 
 - **One collection per file** (except `legalCollection.ts`, which exports two).
 - `postsCollection` is the only **`.js`** + **`mdx`** collection; it imports `mediaFields` etc. from `tina/mediaFields.js`.
@@ -78,15 +86,17 @@ export default defineConfig({
 ### 3.1 Single-instance page collection (dominant)
 
 ```ts
-import type { Collection } from "tinacms";
+import type { Collection } from 'tinacms';
 
 export const erasmusCollection: Collection = {
-  name: "erasmusPlus",
-  label: "📄 Page - Erasmus+",
-  path: "src/content/erasmus-plus",
-  format: "json",
+  name: 'erasmusPlus',
+  label: '📄 Page - Erasmus+',
+  path: 'src/content/erasmus-plus',
+  format: 'json',
   ui: { allowedActions: { create: false, delete: false } }, // single page → no add/remove
-  fields: [ /* ... */ ],
+  fields: [
+    /* ... */
+  ],
 };
 ```
 
@@ -142,15 +152,16 @@ flowchart TD
 
 ## 5. Environment variables & build commands
 
-| Var | Purpose | Referenced in |
-|---|---|---|
-| `TINA_CLIENT_ID` | TinaCloud project id | `tina/config.ts` |
-| `TINA_TOKEN` | TinaCloud content token | `tina/config.ts` |
-| `TINA_SEARCH_TOKEN` | Search indexer (TinaCloud only) | `tina/config.ts`, `tina/README-SEARCH.md` |
-| `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | Cloudinary media store | `netlify/functions/cloudinary-media.mjs`, `.env.example` |
-| `NOCODB_BASE_URL` / `NOCODB_API_TOKEN` | NocoDB pipeline (separate) | `src/config/nocodb.ts`, `.env.example` |
+| Var                                                                      | Purpose                         | Referenced in                                            |
+| ------------------------------------------------------------------------ | ------------------------------- | -------------------------------------------------------- |
+| `TINA_CLIENT_ID`                                                         | TinaCloud project id            | `tina/config.ts`                                         |
+| `TINA_TOKEN`                                                             | TinaCloud content token         | `tina/config.ts`                                         |
+| `TINA_SEARCH_TOKEN`                                                      | Search indexer (TinaCloud only) | `tina/config.ts`, `tina/README-SEARCH.md`                |
+| `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | Cloudinary media store          | `netlify/functions/cloudinary-media.mjs`, `.env.example` |
+| `NOCODB_BASE_URL` / `NOCODB_API_TOKEN`                                   | NocoDB pipeline (separate)      | `src/config/nocodb.ts`, `.env.example`                   |
 
 Scripts (`package.json`):
+
 - **`npm run dev`** → `tinacms dev -c "astro dev"` — lance TinaCMS local (GraphQL filesystem sur :4001) + Astro (:4321) ensemble ; admin sur `http://localhost:4321/admin/index.html`. Variantes : `npm run dev:local` (`TINA_PUBLIC_IS_LOCAL=true …`, édition filesystem garantie sans cloud), `npm start` / `npm run dev:astro` (Astro seul, sans Tina), `npm run tina` = `tinacms dev` (Tina seul, sert aussi à régénérer `tina-lock.json` via `--no-server`).
 - **`npm run build`** → `astro build && npx tinacms build`.
 - **`build:netlify`** → `… astro build --silent && npx tinacms build --skip-cloud-checks`. `optimize:prebuild` runs the NocoDB scripts first; `--skip-cloud-checks` avoids failing the deploy on a transient/mismatched cloud check.
@@ -188,6 +199,7 @@ On save, `beforeSubmit` stamps a fresh hidden `system.deploymentTimestamp` and f
 - CLI — https://tina.io/docs/cli-overview (`tinacms dev`, `tinacms build`, `--skip-cloud-checks`, `--skip-search-index`)
 
 ### Key file paths
+
 - Config: `tina/config.ts`
 - Collections: `tina/*Collection.ts` (+ `postsCollection.js`, `mediaFields.js`)
 - Schema lock (regenerate after edits): `tina/tina-lock.json`

@@ -50,10 +50,10 @@ interface Props {
   imageAspectRatio?: string;
 }
 
-const { 
-  logo, 
-  logoClass = "w-[160px] md:w-[350px] h-auto mx-auto md:mx-0 px-5 md:px-2",
-  heroImage, 
+const {
+  logo,
+  logoClass = 'w-[160px] md:w-[350px] h-auto mx-auto md:mx-0 px-5 md:px-2',
+  heroImage,
   quote,
   quoteColor = '--ootb-yellow',
   stats = [],
@@ -61,14 +61,17 @@ const {
   floatingIcons = [],
   scroll,
   imageBackgroundColor = '--ootb-yellow',
-  imageAspectRatio = '4:3'
+  imageAspectRatio = '4:3',
 } = Astro.props;
 
 const getIconSize = (size: 'sm' | 'md' | 'lg') => {
   switch (size) {
-    case 'sm': return 'w-16 h-16';
-    case 'md': return 'w-20 h-28';
-    case 'lg': return 'w-24 h-32';
+    case 'sm':
+      return 'w-16 h-16';
+    case 'md':
+      return 'w-20 h-28';
+    case 'lg':
+      return 'w-24 h-32';
   }
 };
 
@@ -81,100 +84,114 @@ const isStringUrl = (src: string | ImageMetadata): src is string => typeof src =
     <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
       <div class="text-center md:text-left space-y-3 md:space-y-5 md:flex md:flex-col md:justify-center">
         <h1 class="flex justify-center md:justify-start pb-3 md:pb-5 px-4">
-          {isStringUrl(logo) ? (
-            <Image
-              src={logo}
-              alt="Out of the Books"
-              class={logoClass}
-              widths={[300, 700]}
-              sizes="(max-width: 768px) 300px, 700px"
-              loading="eager"
-              decoding="async"
-              formats={["avif", "webp", "jpg"]}
-            />
-          ) : (
-            <Image
-              src={logo}
-              alt="Out of the Books" 
-              class={logoClass}
-              widths={[300, 700]}
-              sizes="(max-width: 768px) 300px, 700px"
-              loading="eager"
-              decoding="async"
-              formats={["avif", "webp", "jpg"]}
-            />
-          )}
+          {
+            isStringUrl(logo) ? (
+              <Image
+                src={logo}
+                alt="Out of the Books"
+                class={logoClass}
+                widths={[300, 700]}
+                sizes="(max-width: 768px) 300px, 700px"
+                loading="eager"
+                decoding="async"
+                formats={['avif', 'webp', 'jpg']}
+              />
+            ) : (
+              <Image
+                src={logo}
+                alt="Out of the Books"
+                class={logoClass}
+                widths={[300, 700]}
+                sizes="(max-width: 768px) 300px, 700px"
+                loading="eager"
+                decoding="async"
+                formats={['avif', 'webp', 'jpg']}
+              />
+            )
+          }
         </h1>
-        <blockquote class="text-lg md:text-xl lg:text-2xl text-white/90 font-light border-l-4 pl-4 md:pl-6 leading-relaxed max-w-3xl mt-3 md:mt-5" style={`border-color: var(${quoteColor})`}>
+        <blockquote
+          class="text-lg md:text-xl lg:text-2xl text-white/90 font-light border-l-4 pl-4 md:pl-6 leading-relaxed max-w-3xl mt-3 md:mt-5"
+          style={`border-color: var(${quoteColor})`}
+        >
           {quote}
         </blockquote>
 
-        {stats.length > 0 && (
-          <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start mt-4">
-            {stats.map(({ icon, value }) => (
-              <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
-                <Icon name={icon} class="w-5 h-5 text-white" />
-                <span class="text-white text-sm md:text-base">{value}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        {
+          stats.length > 0 && (
+            <div class="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start mt-4">
+              {stats.map(({ icon, value }) => (
+                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
+                  <Icon name={icon} class="w-5 h-5 text-white" />
+                  <span class="text-white text-sm md:text-base">{value}</span>
+                </div>
+              ))}
+            </div>
+          )
+        }
 
-        {buttons.length > 0 && (
-          <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start mt-4">
-            {buttons.map(({ href, icon, label, variant = 'primary', size = 'md' }) => (
-              <Button {href} {variant} {size} {icon} class="whitespace-nowrap w-full sm:w-auto justify-center">
-                {label}
-              </Button>
-            ))}
-          </div>
-        )}
+        {
+          buttons.length > 0 && (
+            <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start mt-4">
+              {buttons.map(({ href, icon, label, variant = 'primary', size = 'md' }) => (
+                <Button {href} {variant} {size} {icon} class="whitespace-nowrap w-full sm:w-auto justify-center">
+                  {label}
+                </Button>
+              ))}
+            </div>
+          )
+        }
       </div>
 
       <!-- Image/Logo -->
       <div class="relative mt-6 md:mt-0 max-w-md mx-auto md:max-w-full md:ml-6">
         <div class="relative z-10">
-          {isStringUrl(heroImage) ? (
-            <Image
-              src={heroImage}
-              alt="Hero image"
-              class="rounded-2xl shadow-xl w-full"
-              widths={[400, 700]}
-              sizes="(max-width: 768px) 100vw, 700px"
-              aspectRatio={imageAspectRatio}
-              loading="eager"
-              decoding="async"
-            />
-          ) : (
-            <Image
-              src={heroImage}
-              alt="Hero image"
-              class="rounded-2xl shadow-xl w-full"
-              widths={[400, 700]}
-              sizes="(max-width: 768px) 100vw, 700px"
-              aspectRatio={imageAspectRatio}
-              loading="eager"
-              decoding="async"
-            />
-          )}
+          {
+            isStringUrl(heroImage) ? (
+              <Image
+                src={heroImage}
+                alt="Hero image"
+                class="rounded-2xl shadow-xl w-full"
+                widths={[400, 700]}
+                sizes="(max-width: 768px) 100vw, 700px"
+                aspectRatio={imageAspectRatio}
+                loading="eager"
+                decoding="async"
+              />
+            ) : (
+              <Image
+                src={heroImage}
+                alt="Hero image"
+                class="rounded-2xl shadow-xl w-full"
+                widths={[400, 700]}
+                sizes="(max-width: 768px) 100vw, 700px"
+                aspectRatio={imageAspectRatio}
+                loading="eager"
+                decoding="async"
+              />
+            )
+          }
         </div>
         <!-- Élément décoratif derrière l'image -->
-        <div 
+        <div
           class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10"
           style={`background-color: var(${imageBackgroundColor})`}
-        ></div>
-        
-        {scroll && (
-          <div class="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 z-30">
-            <ScrollDownArrow 
-              targetId={scroll.targetId}
-              label={scroll.label}
-              position=""
-              hideOnMobile={scroll.hideOnMobile}
-              class="text-white"
-            />
-          </div>
-        )}
+        >
+        </div>
+
+        {
+          scroll && (
+            <div class="absolute bottom-[-2.5rem] left-1/2 transform -translate-x-1/2 z-30">
+              <ScrollDownArrow
+                targetId={scroll.targetId}
+                label={scroll.label}
+                position=""
+                hideOnMobile={scroll.hideOnMobile}
+                class="text-white"
+              />
+            </div>
+          )
+        }
       </div>
     </div>
   </div>
@@ -182,32 +199,35 @@ const isStringUrl = (src: string | ImageMetadata): src is string => typeof src =
   <slot />
 
   <!-- Icônes flottantes -->
-  {floatingIcons.map(({ name, size, position, rotate, animation }) => (
-    <div
-      class:list={[
-        'absolute',
-        getIconSize(size),
-        'opacity-30',
-        { 'transition-transform hover:-translate-y-2 duration-1000': !animation },
-        { 'animate-float': animation === 'float' },
-        { 'animate-float-delayed': animation === 'float-delayed' }
-      ]}
-      style={{
-        top: position.top,
-        left: position.left,
-        right: position.right,
-        bottom: position.bottom,
-        transform: rotate ? `rotate(${rotate})` : undefined
-      }}
-    >
-      <Icon name={name} class="w-full h-full text-white filter drop-shadow-lg" />
-    </div>
-  ))}
+  {
+    floatingIcons.map(({ name, size, position, rotate, animation }) => (
+      <div
+        class:list={[
+          'absolute',
+          getIconSize(size),
+          'opacity-30',
+          { 'transition-transform hover:-translate-y-2 duration-1000': !animation },
+          { 'animate-float': animation === 'float' },
+          { 'animate-float-delayed': animation === 'float-delayed' },
+        ]}
+        style={{
+          top: position.top,
+          left: position.left,
+          right: position.right,
+          bottom: position.bottom,
+          transform: rotate ? `rotate(${rotate})` : undefined,
+        }}
+      >
+        <Icon name={name} class="w-full h-full text-white filter drop-shadow-lg" />
+      </div>
+    ))
+  }
 </GradientHeroSection>
 
 <style>
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0) rotate(0);
       opacity: 0.2;
     }
@@ -218,7 +238,8 @@ const isStringUrl = (src: string | ImageMetadata): src is string => typeof src =
   }
 
   @keyframes float-delayed {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0) rotate(0);
       opacity: 0.15;
     }

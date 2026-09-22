@@ -10,12 +10,12 @@ interface Props {
         categoryFilters: {
           allLabel: string;
           mobileSelectLabel: string;
-        }
-      }
-    }
-  }
+        };
+      };
+    };
+  };
   isTagPage?: boolean;
-  currentTag?: { slug: string; title: string; };
+  currentTag?: { slug: string; title: string };
 }
 
 const { currentCategory, blogConfig, isTagPage = false, currentTag } = Astro.props;
@@ -37,29 +37,29 @@ const allCategories = [
 // Amélioration de la vérification de sécurité pour l'accès aux propriétés dynamiques
 const getCurrentCategoryLabel = (category: string | undefined): string => {
   if (!category || category === 'blog') return allLabel;
-  
+
   // Chercher la catégorie dans notre liste complète
   const foundCategory = allCategories.find(([key]) => key === category.toLowerCase());
   if (foundCategory) {
     return (foundCategory[1] as { shortLabel: string }).shortLabel;
   }
-  
+
   return mobileSelectLabel;
 };
 
 // Générer des IDs uniques si nous sommes sur la page des tags
-const buttonId = isTagPage ? "tag-category-button" : "category-button";
-const dropdownId = isTagPage ? "tag-category-dropdown" : "category-dropdown";
-const overlayId = isTagPage ? "tag-dropdown-overlay" : "dropdown-overlay";
-const dropdownIconId = isTagPage ? "tag-dropdown-icon" : "dropdown-icon";
-const selectedCategoryId = isTagPage ? "tag-selected-category" : "selected-category";
-const selectedIconId = isTagPage ? "tag-selected-icon" : "selected-icon";
+const buttonId = isTagPage ? 'tag-category-button' : 'category-button';
+const dropdownId = isTagPage ? 'tag-category-dropdown' : 'category-dropdown';
+const overlayId = isTagPage ? 'tag-dropdown-overlay' : 'dropdown-overlay';
+const dropdownIconId = isTagPage ? 'tag-dropdown-icon' : 'dropdown-icon';
+const selectedCategoryId = isTagPage ? 'tag-selected-category' : 'selected-category';
+const selectedIconId = isTagPage ? 'tag-selected-icon' : 'selected-icon';
 
 // Texte adapté pour la version mobile
-const mobileButtonText = isTagPage 
-  ? currentTag 
+const mobileButtonText = isTagPage
+  ? currentTag
     ? `Filtrer "${currentTag.title.length > 12 ? currentTag.title.substring(0, 10) + '...' : currentTag.title}"`
-    : "Filtrer par catégorie" 
+    : 'Filtrer par catégorie'
   : getCurrentCategoryLabel(currentCategory);
 ---
 
@@ -70,36 +70,35 @@ const mobileButtonText = isTagPage
       href="/blog/"
       class={[
         'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
-        (!currentCategory || currentCategory === 'blog') 
-          ? 'bg-white text-gray-900 shadow-sm' 
-          : 'text-gray-600 hover:text-gray-900'
+        !currentCategory || currentCategory === 'blog'
+          ? 'bg-white text-gray-900 shadow-sm'
+          : 'text-gray-600 hover:text-gray-900',
       ].join(' ')}
     >
       <Icon name="tabler:layout-grid" class="w-4 h-4" />
       <span class="text-sm">{allLabel}</span>
     </a>
 
-    {allCategories.map(([key, config]) => {
-      // S'assurer que config est correctement typé
-      const safeConfig = config as { icon: string, shortLabel: string, color: string };
-      return (
-        <a
-          href={`/category/${key}/#category-content`}
-          class={[
-            'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
-            currentCategory?.toLowerCase() === key 
-              ? [
-                  'bg-white shadow-sm',
-                  `text-[${safeConfig.color}]`
-                ].join(' ')
-              : 'text-gray-600 hover:text-gray-900'
-          ].join(' ')}
-        >
-          <Icon name={safeConfig.icon || 'tabler:file'} class="w-4 h-4" />
-          <span class="text-sm">{safeConfig.shortLabel || key}</span>
-        </a>
-      );
-    })}
+    {
+      allCategories.map(([key, config]) => {
+        // S'assurer que config est correctement typé
+        const safeConfig = config as { icon: string; shortLabel: string; color: string };
+        return (
+          <a
+            href={`/category/${key}/#category-content`}
+            class={[
+              'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+              currentCategory?.toLowerCase() === key
+                ? ['bg-white shadow-sm', `text-[${safeConfig.color}]`].join(' ')
+                : 'text-gray-600 hover:text-gray-900',
+            ].join(' ')}
+          >
+            <Icon name={safeConfig.icon || 'tabler:file'} class="w-4 h-4" />
+            <span class="text-sm">{safeConfig.shortLabel || key}</span>
+          </a>
+        );
+      })
+    }
   </div>
 
   {/* Version Mobile - Menu personnalisé */}
@@ -113,44 +112,52 @@ const mobileButtonText = isTagPage
       class="flex items-center justify-between w-full bg-gray-100/80 rounded-lg px-4 py-2.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300"
     >
       <span class="flex items-center gap-2 truncate max-w-[80%]">
-        {isTagPage ? (
-          <>
-            <Icon id={selectedIconId} name="tabler:tag" class="w-4 h-4 flex-shrink-0" />
-            <span id={selectedCategoryId} class="text-sm font-medium truncate">
-              {mobileButtonText}
-            </span>
-          </>
-        ) : (
-          <>
-            {/* Trouver l'icône de la catégorie courante */}
-            {(() => {
-              if (!currentCategory || currentCategory === 'blog') {
+        {
+          isTagPage ? (
+            <>
+              <Icon id={selectedIconId} name="tabler:tag" class="w-4 h-4 flex-shrink-0" />
+              <span id={selectedCategoryId} class="text-sm font-medium truncate">
+                {mobileButtonText}
+              </span>
+            </>
+          ) : (
+            <>
+              {/* Trouver l'icône de la catégorie courante */}
+              {(() => {
+                if (!currentCategory || currentCategory === 'blog') {
+                  return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4 flex-shrink-0" />;
+                }
+
+                const foundCategory = allCategories.find(([key]) => key === currentCategory.toLowerCase());
+                if (foundCategory) {
+                  return (
+                    <Icon
+                      id={selectedIconId}
+                      name={(foundCategory[1] as { icon: string }).icon}
+                      class="w-4 h-4 flex-shrink-0"
+                    />
+                  );
+                }
+
                 return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4 flex-shrink-0" />;
-              }
-              
-              const foundCategory = allCategories.find(([key]) => key === currentCategory.toLowerCase());
-              if (foundCategory) {
-                return <Icon id={selectedIconId} name={(foundCategory[1] as {icon: string}).icon} class="w-4 h-4 flex-shrink-0" />;
-              }
-              
-              return <Icon id={selectedIconId} name="tabler:layout-grid" class="w-4 h-4 flex-shrink-0" />;
-            })()}
-            
-            <span id={selectedCategoryId} class="text-sm font-medium truncate">
-              {mobileButtonText}
-            </span>
-          </>
-        )}
+              })()}
+
+              <span id={selectedCategoryId} class="text-sm font-medium truncate">
+                {mobileButtonText}
+              </span>
+            </>
+          )
+        }
       </span>
-      <Icon 
+      <Icon
         id={dropdownIconId}
-        name="tabler:chevron-down" 
-        class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0" 
+        name="tabler:chevron-down"
+        class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0"
       />
     </button>
-    
-    <div 
-      id={dropdownId} 
+
+    <div
+      id={dropdownId}
       role="listbox"
       aria-labelledby="category-label"
       class="absolute z-20 mt-1 w-full bg-white rounded-lg shadow-lg transform scale-y-0 origin-top opacity-0 transition-all duration-300 ease-in-out max-h-64 overflow-y-auto"
@@ -161,9 +168,7 @@ const mobileButtonText = isTagPage
         aria-selected={!currentCategory || currentCategory === 'blog'}
         class={[
           'flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors',
-          (!currentCategory || currentCategory === 'blog') 
-            ? 'bg-gray-50 text-gray-900 font-medium' 
-            : 'text-gray-600'
+          !currentCategory || currentCategory === 'blog' ? 'bg-gray-50 text-gray-900 font-medium' : 'text-gray-600',
         ].join(' ')}
         data-value="blog"
         data-icon="tabler:layout-grid"
@@ -174,33 +179,33 @@ const mobileButtonText = isTagPage
       </a>
 
       {/* Afficher toutes les catégories dans une seule boucle */}
-      {allCategories.map(([key, config]) => {
-        // S'assurer que config est correctement typé
-        const safeConfig = config as { icon: string, label: string, color: string };
-        return (
-          <a
-            href={`/category/${key}/#category-content`}
-            role="option"
-            aria-selected={currentCategory?.toLowerCase() === key}
-            class={[
-              'flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors',
-              currentCategory?.toLowerCase() === key 
-                ? 'bg-gray-50 font-medium' 
-                : 'text-gray-600'
-            ].join(' ')}
-            data-value={key}
-            data-icon={safeConfig.icon || 'tabler:file'}
-            data-color={safeConfig.color}
-            tabindex="0"
-            style={currentCategory?.toLowerCase() === key ? `color: ${safeConfig.color};` : ''}
-          >
-            <Icon name={safeConfig.icon || 'tabler:file'} class="w-4 h-4" />
-            <span class="text-sm">{safeConfig.label || key}</span>
-          </a>
-        );
-      })}
+      {
+        allCategories.map(([key, config]) => {
+          // S'assurer que config est correctement typé
+          const safeConfig = config as { icon: string; label: string; color: string };
+          return (
+            <a
+              href={`/category/${key}/#category-content`}
+              role="option"
+              aria-selected={currentCategory?.toLowerCase() === key}
+              class={[
+                'flex items-center gap-2 px-4 py-3 hover:bg-gray-50 transition-colors',
+                currentCategory?.toLowerCase() === key ? 'bg-gray-50 font-medium' : 'text-gray-600',
+              ].join(' ')}
+              data-value={key}
+              data-icon={safeConfig.icon || 'tabler:file'}
+              data-color={safeConfig.color}
+              tabindex="0"
+              style={currentCategory?.toLowerCase() === key ? `color: ${safeConfig.color};` : ''}
+            >
+              <Icon name={safeConfig.icon || 'tabler:file'} class="w-4 h-4" />
+              <span class="text-sm">{safeConfig.label || key}</span>
+            </a>
+          );
+        })
+      }
     </div>
-    
+
     {/* Overlay pour fermer le menu en cliquant ailleurs */}
     <div id={overlayId} class="fixed inset-0 z-10 bg-black/10 hidden backdrop-blur-sm"></div>
   </div>
@@ -210,24 +215,24 @@ const mobileButtonText = isTagPage
   // Script amélioré pour garantir le fonctionnement du menu déroulant
   document.addEventListener('astro:page-load', initializeDropdowns);
   document.addEventListener('DOMContentLoaded', initializeDropdowns);
-  
+
   function initializeDropdowns() {
     // Initialiser les deux types de dropdown
     setupDropdown('category-button', 'category-dropdown', 'dropdown-overlay', 'dropdown-icon');
     setupDropdown('tag-category-button', 'tag-category-dropdown', 'tag-dropdown-overlay', 'tag-dropdown-icon');
   }
-  
+
   function setupDropdown(buttonId: string, dropdownId: string, overlayId: string, iconId: string) {
     const button = document.getElementById(buttonId);
     const dropdown = document.getElementById(dropdownId);
     const overlay = document.getElementById(overlayId);
     const icon = document.getElementById(iconId);
-    
+
     // Si les éléments n'existent pas sur cette page, on s'arrête
     if (!button || !dropdown) return;
-    
+
     console.log(`Initialisation du dropdown: ${buttonId}`);
-    
+
     // Fonction pour ouvrir le dropdown
     const openDropdown = () => {
       dropdown.classList.remove('scale-y-0', 'opacity-0');
@@ -236,7 +241,7 @@ const mobileButtonText = isTagPage
       button.setAttribute('aria-expanded', 'true');
       icon?.classList.add('rotate-180');
     };
-    
+
     // Fonction pour fermer le dropdown
     const closeDropdown = () => {
       dropdown.classList.remove('scale-y-100', 'opacity-100');
@@ -245,12 +250,12 @@ const mobileButtonText = isTagPage
       button.setAttribute('aria-expanded', 'false');
       icon?.classList.remove('rotate-180');
     };
-    
+
     // Gestion du clic sur le bouton
     button.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const isOpen = dropdown.classList.contains('scale-y-100');
       if (isOpen) {
         closeDropdown();
@@ -258,7 +263,7 @@ const mobileButtonText = isTagPage
         openDropdown();
       }
     });
-    
+
     // Fermer le dropdown si on clique ailleurs
     document.addEventListener('click', (e) => {
       const target = e.target as Node;
@@ -266,19 +271,19 @@ const mobileButtonText = isTagPage
         closeDropdown();
       }
     });
-    
+
     // Fermer le dropdown si on clique sur l'overlay
     overlay?.addEventListener('click', () => {
       closeDropdown();
     });
-    
+
     // Gestion des options du dropdown
     const options = dropdown.querySelectorAll('a[role="option"]');
-    options.forEach(option => {
+    options.forEach((option) => {
       option.addEventListener('click', () => {
         // Fermer le dropdown quand une option est sélectionnée
         closeDropdown();
       });
     });
   }
-</script> 
+</script>

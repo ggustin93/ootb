@@ -38,7 +38,8 @@ Desktop.ini
 .idea/
 .cursor/
 .vscode/
-docs/
+docs/*
+!docs/agents/
 *.swp
 *.swo
 *.bak

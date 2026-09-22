@@ -10,9 +10,40 @@
  * Usage: node netlify/functions/__tests__/all-functions.test.js
  */
 
-import { handler as pedagogicalHandler } from '../submit-pedagogical-sheet.js';
+import { handler as pedagogicalHandler, isSpam } from '../submit-pedagogical-sheet.js';
 import { handler as contactHandler } from '../submit-contact.js';
 import { handler as newsletterHandler } from '../submit-newsletter.js';
+
+const JSON_HEADERS = { 'content-type': 'application/json' };
+
+// Soumission française réaliste, telle qu'envoyée par ProjectSubmissionForm.astro
+const VALID_SHEET = {
+  Title: 'Le potager de l\'école',
+  Description: 'Les élèves de 5e primaire cultivent un potager et suivent la croissance des légumes toute l\'année.',
+  TypeEnseignement: ['Ordinaire'], Section: ['Primaire'],
+  Destinataire: 'Jeunes enfants', Themes: [],
+  Objectifs: 'Observer le vivant et développer l\'autonomie.',
+  Competences: 'Sciences, mathématiques, travail d\'équipe.',
+  prenom: 'Zoé', nom: 'Lefèvre', email: 'zoe.lefevre@ecole.be',
+  telephone: '', ecole: 'École communale d\'Ixelles',
+  Declinaisons: '', Conseils: '', Liens: '', LiensVIDEO: '', website: ''
+};
+
+// Échantillon réel reçu du bot (chaînes aléatoires sans espaces, Gmail à points)
+const BOT_SAMPLE = {
+  Title: 'abOsRPBdhYQhGbzLHKRrm',
+  Description: 'kTnWqzXbLpRvYcMdHsJfGaUeOiQwErTyUiOpAsDfGhJk',
+  TypeEnseignement: [], Section: [],
+  Destinataire: 'Professionnels', Themes: [],
+  Objectifs: 'PzLkMjNhBgVfCdXsZa', Competences: 'QwErTyUiOpAsDf',
+  prenom: 'HgFdSaPoIu', nom: 'LkJhGfDsAq', email: 'a.b.c.d.e.f.g.h@gmail.com',
+  telephone: '0000000000', ecole: 'MnBvCxZlKj',
+  Declinaisons: '', Conseils: '', Liens: '', LiensVIDEO: ''
+};
+
+function postSheet(data) {
+  return pedagogicalHandler({ httpMethod: 'POST', headers: JSON_HEADERS, body: JSON.stringify(data) });
+}
 
 let passed = 0;
 let failed = 0;
@@ -61,19 +92,8 @@ function testEnvVarIsolation() {
 async function testPedagogicalSheet() {
   console.log('\n🧪 TEST 2: submit-pedagogical-sheet');
 
-  // 2a. POST valide → mode test
-  const res = await pedagogicalHandler({
-    httpMethod: 'POST',
-    body: JSON.stringify({
-      Title: 'Test', Description: 'Desc',
-      TypeEnseignement: ['Ordinaire'], Section: ['Primaire'],
-      Destinataire: 'Test', Themes: [],
-      Objectifs: 'Obj', Competences: 'Comp',
-      prenom: 'A', nom: 'B', email: 'a@b.com',
-      telephone: '', ecole: 'E',
-      Declinaisons: '', Conseils: '', Liens: '', LiensVIDEO: ''
-    })
-  });
+  // 2a. POST valide → mode test (non-régression)
+  const res = await postSheet(VALID_SHEET);
   const body = JSON.parse(res.body);
   assert(res.statusCode === 200, 'POST → 200');
   assert(body.success === true, 'success=true');
@@ -84,9 +104,75 @@ async function testPedagogicalSheet() {
   assert(r405.statusCode === 405, 'GET → 405');
 
   // 2c. JSON invalide
-  const r500 = await pedagogicalHandler({ httpMethod: 'POST', body: '{bad' });
+  const r500 = await pedagogicalHandler({ httpMethod: 'POST', headers: JSON_HEADERS, body: '{bad' });
   assert(r500.statusCode === 500, 'JSON invalide → 500');
   assert(JSON.parse(r500.body).success === false, 'success=false sur erreur');
+}
+
+// ═══════════════════════════════════════════
+//  2bis. PEDAGOGICAL SHEET — ANTI-SPAM
+// ═══════════════════════════════════════════
+
+// Un rejet renvoie le succès "production" (200, isTestMode=false) sans toucher NocoDB.
+// Sans token, seul un rejet peut produire isTestMode=false : c'est le signal observable.
+function isFakeSuccess(res) {
+  const b = JSON.parse(res.body);
+  return res.statusCode === 200 && b.success === true && b.isTestMode === false;
+}
+
+async function testPedagogicalAntiSpam() {
+  console.log('\n🧪 TEST 2bis: submit-pedagogical-sheet — anti-spam');
+
+  // Avec un token, un vrai envoi renvoie aussi isTestMode=false (et écrirait dans NocoDB)
+  if (process.env.NOCODB_API_TOKEN) {
+    assert(false, 'NOCODB_API_TOKEN doit être absent pour ces tests');
+    return;
+  }
+
+  // Via handler
+  assert(isFakeSuccess(await postSheet(BOT_SAMPLE)), 'Échantillon réel du bot → faux 200');
+  assert(isFakeSuccess(await postSheet({ ...VALID_SHEET, website: 'http://spam.example' })),
+    'Champ piège rempli → faux 200');
+  assert(isFakeSuccess(await pedagogicalHandler({
+    httpMethod: 'POST', headers: JSON_HEADERS,
+    body: JSON.stringify({ ...VALID_SHEET, Description: 'mot '.repeat(6000) })
+  })), 'Corps > 20 Ko → faux 200');
+  assert(isFakeSuccess(await pedagogicalHandler({
+    httpMethod: 'POST', headers: { 'content-type': 'text/plain' }, body: JSON.stringify(VALID_SHEET)
+  })), 'Content-Type non JSON → faux 200');
+  assert(isFakeSuccess(await pedagogicalHandler({ httpMethod: 'POST', body: JSON.stringify(VALID_SHEET) })),
+    'Content-Type absent → faux 200');
+  const withCharset = await pedagogicalHandler({
+    httpMethod: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body: JSON.stringify(VALID_SHEET)
+  });
+  assert(JSON.parse(withCharset.body).isTestMode === true, 'Content-Type JSON avec charset → accepté');
+
+  // Via isSpam (pur)
+  assert(isSpam(VALID_SHEET) === null, 'Soumission française réaliste → null');
+  assert(isSpam({ ...VALID_SHEET, email: 'direction@ecole-saint-joseph.be' }) === null, 'Email .be → null');
+  assert(isSpam({ ...VALID_SHEET, website: '' }) === null, 'Champ piège vide → null');
+  assert(isSpam(BOT_SAMPLE) !== null, 'Échantillon du bot → rejeté');
+  assert(isSpam({ ...VALID_SHEET, website: 'x' }) === 'honeypot', 'Champ piège → honeypot');
+
+  const minLengths = {
+    Title: 5, Description: 40, Objectifs: 10, Competences: 10, prenom: 2, nom: 2, ecole: 2
+  };
+  for (const [field, min] of Object.entries(minLengths)) {
+    // Plusieurs mots pour isoler la règle de longueur de celle du nombre de mots
+    const tooShort = 'a b c d e f g h i j k l m n o p q r s t'.slice(0, min - 1);
+    assert(isSpam({ ...VALID_SHEET, [field]: tooShort }) === `too_short:${field}`, `${field} < ${min} → too_short:${field}`);
+    assert(isSpam({ ...VALID_SHEET, [field]: undefined }) === `too_short:${field}`, `${field} manquant → too_short:${field}`);
+  }
+
+  assert(isSpam({ ...VALID_SHEET, email: 'pas-un-email' }) === 'invalid_email', 'Email invalide → invalid_email');
+  assert(isSpam({ ...VALID_SHEET, email: undefined }) === 'invalid_email', 'Email manquant → invalid_email');
+  assert(isSpam({ ...VALID_SHEET, Destinataire: 'Non renseigné' }) === 'invalid_destinataire',
+    'Destinataire hors liste → invalid_destinataire');
+  assert(isSpam({ ...VALID_SHEET, Description: 'motsanslesespacesquifaitplusdequarantecaracteres' }) === 'too_few_words',
+    'Description < 3 mots → too_few_words');
+  assert(isSpam({ ...VALID_SHEET, Objectifs: 'Deux mots-seulement' }) === 'too_few_words',
+    'Objectifs < 3 mots → too_few_words');
 }
 
 // ═══════════════════════════════════════════
@@ -289,6 +375,7 @@ async function runAllTests() {
 
   // Async (handlers)
   await testPedagogicalSheet();
+  await testPedagogicalAntiSpam();
   await testContactForm();
   await testNewsletter();
 

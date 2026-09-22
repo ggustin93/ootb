@@ -17,14 +17,14 @@ node netlify/functions/__tests__/e2e-submit-newsletter.js
 
 | File | Type | Token | Scope |
 |---|---|---|---|
-| `all-functions.test.js` | Unit | No | **Les 3 fonctions** : pedagogical-sheet, contact, newsletter (44 tests) |
+| `all-functions.test.js` | Unit | No | **Les 3 fonctions** : pedagogical-sheet (dont anti-spam), contact, newsletter (75 tests) |
 | `e2e-submit-pedagogical-sheet.js` | E2E | **Yes** | Fiche pédagogique : round-trip NocoDB API, vérification, cleanup |
 | `e2e-submit-contact.js` | E2E | **Yes** | Contact : round-trip NocoDB API, vérification, cleanup |
 | `e2e-submit-newsletter.js` | E2E | **Yes** | Newsletter : round-trip NocoDB API, gestion doublons, cleanup |
 
 ## Unit Tests (`all-functions.test.js`)
 
-44 tests couvrant les 3 fonctions Netlify :
+75 tests couvrant les 3 fonctions Netlify :
 
 ### Tests transversaux
 1. **Isolation des env vars** — Vérifie que les 3 fonctions utilisent des project/table IDs différents
@@ -35,6 +35,18 @@ node netlify/functions/__tests__/e2e-submit-newsletter.js
 4. Méthode GET → 405
 5. JSON invalide → 500 avec message user-friendly
 6. Formatage : arrays stringifiés, pas de `undefined`, mapping 17 champs client ↔ serveur
+
+### submit-pedagogical-sheet — anti-spam (`isSpam` + handler)
+
+Un rejet renvoie le **même 200 de succès** qu'un vrai envoi (`isTestMode: false`), sans appel NocoDB, et logue `spam rejected: <raison>` sans données personnelles.
+
+- Échantillon réel du bot (chaînes sans espaces, Gmail à points) → rejeté
+- Soumission française réaliste (accents, apostrophes, email `.be`) → acceptée
+- Champ piège `website` rempli → `honeypot`
+- Corps > 20 Ko → `body_too_large` ; `Content-Type` absent ou non JSON → `invalid_content_type`
+- Chaque champ requis manquant ou trop court (Title 5, Description 40, Objectifs/Competences 10, prénom/nom/école 2) → `too_short:<champ>`
+- Email invalide → `invalid_email` ; `Destinataire` hors des 6 valeurs du formulaire → `invalid_destinataire`
+- Description ou Objectifs < 3 mots → `too_few_words`
 
 ### submit-contact
 7. POST mode test → 200

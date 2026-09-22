@@ -7,6 +7,17 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ## [1.3.0] — Non publié (en attente)
 
+### Anti-spam du formulaire « Appel à projets » (#21)
+
+- **Les fausses fiches n'arrivent plus dans NocoDB** — Le serveur vérifie chaque envoi avant de l'enregistrer. Il écarte les envois trop volumineux ou mal formés, les champs manquants ou trop courts, les emails invalides, les publics cibles inconnus et les textes de moins de 3 mots. Le robot actuel envoie des chaînes aléatoires sans espaces : il est désormais bloqué.
+- **Champ piège invisible** — Le formulaire contient un champ caché que seuls les robots remplissent. Il reste inaccessible au clavier et aux lecteurs d'écran.
+- **Aucun signal pour le robot** — Un envoi refusé reçoit la même confirmation qu'un vrai envoi. Le robot ne peut donc pas s'adapter.
+- **Rien ne change pour les enseignants, et aucune fiche perdue** — Pas de captcha ni d'étape en plus. Le formulaire applique les mêmes règles que le serveur avant l'envoi (champs obligatoires remplis, au moins 3 mots dans « Description » et « Objectifs »). En cas d'oubli, l'enseignant voit un message d'erreur au lieu d'une confirmation trompeuse.
+- **Journaux conformes au RGPD** — Chaque refus est journalisé avec un code de raison (`spam rejected: <raison>`), sans aucune donnée personnelle. Les journaux existants (mode test, erreurs NocoDB) n'affichent plus les données soumises.
+- **Tests** — La suite hors ligne des formulaires passe de 45 à 75 tests. Elle couvre notamment l'échantillon réel du robot, une soumission française réaliste et chacune des règles de refus.
+
+**Fichiers modifiés** : `netlify/functions/submit-pedagogical-sheet.js`, `src/components/forms/ProjectSubmissionForm.astro`, `netlify/functions/__tests__/all-functions.test.js`, `netlify/functions/__tests__/README.md`
+
 ### Ajouté
 
 - **Page dédiée « Projet Erasmus+ »** (`/erasmus-plus/`) — Nouvelle page complète remplaçant l'ancien lien vers l'article MDX. Structure éditable de bout en bout via TinaCMS : héro, section « Le projet » (thématiques + objectifs), « Nos partenaires », « Ressources » (organisées en volets à onglets : podcasts et vidéos), et « Carnet de bord ». Nouvelle collection Tina `erasmusPlus` (création/suppression désactivées, page unique).

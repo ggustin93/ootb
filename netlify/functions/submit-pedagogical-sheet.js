@@ -34,6 +34,65 @@ const isApiError = (error) => {
   return error && typeof error === 'object' && 'response' in error;
 };
 
+// ─── Garde anti-spam ───────────────────────────────────────────────
+const MAX_BODY_BYTES = 20 * 1024;
+// Même regex permissive que submit-newsletter
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Miroir des valeurs "Public cible" de ProjectSubmissionForm.astro
+const DESTINATAIRES = [
+  'Jeunes enfants',
+  'Parents et enfants',
+  'Parents',
+  'Professeurs, parents et enfants',
+  'Professeurs',
+  'Professionnels'
+];
+// Miroir des minlength du formulaire
+const MIN_LENGTHS = {
+  Title: 5,
+  Description: 40,
+  Objectifs: 10,
+  Competences: 10,
+  prenom: 2,
+  nom: 2,
+  ecole: 2
+};
+
+const text = (value) => (typeof value === 'string' ? value.trim() : '');
+const wordCount = (value) => text(value).split(/\s+/).filter(Boolean).length;
+
+/**
+ * Détecte une soumission automatisée ou incohérente.
+ * @param {Record<string, unknown>} data - corps JSON parsé
+ * @returns {string|null} code de raison du rejet, ou null si la soumission est acceptée
+ */
+export const isSpam = (data) => {
+  if (!data || typeof data !== 'object') return 'invalid_body';
+  if (text(data.website) !== '') return 'honeypot';
+  for (const [field, min] of Object.entries(MIN_LENGTHS)) {
+    if (text(data[field]).length < min) return `too_short:${field}`;
+  }
+  if (!EMAIL_REGEX.test(text(data.email))) return 'invalid_email';
+  if (!DESTINATAIRES.includes(data.Destinataire)) return 'invalid_destinataire';
+  if (wordCount(data.Description) < 3 || wordCount(data.Objectifs) < 3) return 'too_few_words';
+  return null;
+};
+
+const SUCCESS_MESSAGE = 'Merci pour votre contribution ! Votre fiche pédagogique a été enregistrée avec succès et sera examinée par notre équipe.';
+
+// Réponse identique à un vrai succès pour ne donner aucun signal au bot. Aucun appel NocoDB.
+const rejectSpam = (reason) => {
+  console.warn(`spam rejected: ${reason}`);
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ success: true, message: SUCCESS_MESSAGE, isTestMode: false }),
+    headers: { 'Content-Type': 'application/json' }
+  };
+};
+
+const getHeader = (headers, name) =>
+  Object.entries(headers || {}).find(([key]) => key.toLowerCase() === name)?.[1] || '';
+
 export const handler = async (event) => {
   // Vérifier si c'est une requête POST
   if (event.httpMethod !== 'POST') {
@@ -50,12 +109,21 @@ export const handler = async (event) => {
     };
   }
 
+  // Contrôles avant parsing
+  if (Buffer.byteLength(event.body || '') > MAX_BODY_BYTES) return rejectSpam('body_too_large');
+  if (!getHeader(event.headers, 'content-type').toLowerCase().includes('application/json')) {
+    return rejectSpam('invalid_content_type');
+  }
+
   try {
     // Vérifier si nous sommes en mode test (pour le développement)
     const isTestMode = !NOCODB_API_TOKEN || NOCODB_API_TOKEN.trim() === '';
     
     // Récupérer les données du formulaire (en JSON)
     const data = JSON.parse(event.body);
+
+    const spamReason = isSpam(data);
+    if (spamReason) return rejectSpam(spamReason);
     
     // Formater les données pour NocoDB
     const formattedData = {
@@ -82,7 +150,7 @@ export const handler = async (event) => {
     // Mode test - simuler une soumission réussie
     if (isTestMode) {
       console.log('🧪 Mode TEST: simulation de la soumission');
-      console.log('📝 Données qui seraient envoyées:', formattedData);
+      console.log('📝 Champs qui seraient envoyés:', Object.keys(formattedData).join(', '));
       
       // Simuler un délai de traitement
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -145,7 +213,7 @@ export const handler = async (event) => {
         statusCode: 200,
         body: JSON.stringify({
           success: true,
-          message: 'Merci pour votre contribution ! Votre fiche pédagogique a été enregistrée avec succès et sera examinée par notre équipe.',
+          message: SUCCESS_MESSAGE,
           isTestMode: false
         }),
         headers: {
@@ -153,11 +221,11 @@ export const handler = async (event) => {
         }
       };
     } catch (error) {
-      console.error('❌ Erreur API lors de la soumission:', error);
-      console.error('❌ Détails:', {
+      // Pas d'objet error brut ni de response.data : ils peuvent contenir les données soumises (PII)
+      console.error('❌ Erreur API lors de la soumission:', {
         status: error.response?.status,
         statusText: error.response?.statusText,
-        data: error.response?.data,
+        msg: error.response?.data?.msg,
         message: error.message
       });
       console.error('❌ Champs envoyés:', Object.keys(formattedData).join(', '));
@@ -180,7 +248,8 @@ export const handler = async (event) => {
       };
     }
   } catch (error) {
-    console.error('❌ Erreur lors du traitement de la requête:', error);
+    // error.message d'un JSON.parse peut citer le corps soumis (PII) : on ne logue que le type
+    console.error('❌ Erreur lors du traitement de la requête:', error.name);
     
     return {
       statusCode: 500,

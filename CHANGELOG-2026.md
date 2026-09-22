@@ -9,8 +9,9 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ### Modération des fiches et build fiable (#22)
 
-- **Seules les fiches « Publié » sont en ligne** — Le build ne publie que les fiches au statut « Publié » dans NocoDB, avec le même filtre que les données festival. Un spam qui passerait l'anti-spam reste en « A valider » et n'apparaît jamais sur le site. Pour publier une fiche, l'équipe passe son statut à « Publié », puis clique sur « Redéployer le site web ».
-- **Plus aucune fiche effacée en cas de panne NocoDB** — Si NocoDB ne répond pas ou refuse le token, le build s'arrête avec une erreur, avant toute modification des fichiers. Avant, il recevait une liste vide et pouvait supprimer toutes les fiches publiées.
+- **Seules les fiches « Publié » sont en ligne** — Le build ne publie que les fiches au statut « Publié » dans NocoDB, comme les données festival en production. Un spam qui passerait l'anti-spam reste en « A valider » et n'apparaît jamais sur le site. Pour publier une fiche, l'équipe passe son statut à « Publié », puis clique sur « Redéployer le site web ».
+  - Limite connue : repasser en « A valider » une fiche déjà en ligne ne la retire pas du site lors d'un build Netlify. Son fichier est versionné dans le dépôt : il faut le supprimer à la main.
+- **Plus aucune fiche effacée en cas de panne NocoDB** — Si NocoDB ne répond pas ou refuse le token, le build s'arrête avec une erreur, avant toute modification des fichiers. Il s'arrête aussi si aucune fiche « Publié » ne remonte (vue mal filtrée, par exemple). Avant, il recevait une liste vide et pouvait supprimer toutes les fiches publiées.
 - **Toutes les fiches récupérées, au-delà de 100** — La récupération est paginée (avec un plafond de sécurité), comme pour les données festival. Avant, elle s'arrêtait aux 100 premières fiches.
 - **Token absent des journaux** — En cas d'échec, le journal n'affiche que le message d'erreur. Avant, il affichait l'objet d'erreur complet, token NocoDB compris.
 - **Vérifié avant déploiement** — Les 85 fiches de NocoDB remontent toutes en « Publié » (lecture seule). Un token invalide fait échouer le script (code de sortie 1) sans toucher aux fichiers.

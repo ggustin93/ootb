@@ -176,6 +176,7 @@ function initNocoDBApi() {
  * Récupère toutes les fiches publiées depuis NocoDB (paginé).
  * Lève une erreur si NocoDB échoue : ne jamais continuer avec une liste
  * vide ou partielle, sinon les fiches publiées seraient supprimées.
+ * @returns {Promise<Array>} - Fiches au statut « Publié »
  */
 async function fetchFichesPedagogiques() {
   console.log('📥 Récupération des fiches pédagogiques depuis NocoDB...');
@@ -203,8 +204,8 @@ async function fetchFichesPedagogiques() {
     if (response.pageInfo?.isLastPage || response.list.length < limit) break;
   }
 
-  // Filtre défensif, en miroir des données festival : même si la vue NocoDB
-  // n'est pas filtrée, seules les fiches « Publié » sont publiées.
+  // Filtre défensif (comme les données festival en production) : même si la
+  // vue NocoDB n'est pas filtrée, seules les fiches « Publié » sont publiées.
   const fiches = all.filter(fiche => fiche.Statut === 'Publié');
   console.log(`✅ ${all.length} fiches récupérées, ${fiches.length} au statut « Publié ».`);
 
@@ -574,11 +575,14 @@ async function main() {
   // le build s'arrête avant toute suppression de fichier)
   const fiches = await fetchFichesPedagogiques();
 
+  // Une liste vide signale une vue ou un filtre mal configuré : sans ce garde,
+  // toutes les fiches déjà générées seraient supprimées.
+  if (fiches.length === 0) {
+    throw new Error('Aucune fiche « Publié » récupérée, arrêt pour ne rien supprimer.');
+  }
+
   // Vérifier si les données ont changé
   const { hasChanges, changedItems, removedItems, addedItems } = checkIfDataChanged(fiches);
-
-  // Sauvegarder les données brutes (fiches publiées uniquement)
-  saveRawData({ list: fiches }, RAW_DATA_FILENAME);
 
   if (!hasChanges) {
     console.log('✅ Aucune modification détectée. Aucune action nécessaire.');
@@ -600,6 +604,10 @@ async function main() {
 
   // Sauvegarder les fiches
   await saveFichesToFiles(mdxFiches);
+
+  // Sauvegarder les données brutes en dernier : si la génération échoue, le
+  // build suivant détecte encore les modifications (fiches publiées uniquement)
+  saveRawData({ list: fiches }, RAW_DATA_FILENAME);
 
   console.log('✨ Génération des fiches pédagogiques terminée avec succès!');
 }

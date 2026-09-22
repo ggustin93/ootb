@@ -5,7 +5,23 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
-## [1.3.0] — Non publié (en attente)
+## [1.3.2] — 2026-09-22
+
+### Modération des fiches et build fiable (#22)
+
+- **Seules les fiches « Publié » sont en ligne** — Le build ne publie que les fiches au statut « Publié » dans NocoDB, comme les données festival en production. Un spam qui passerait l'anti-spam reste en « A valider » et n'apparaît jamais sur le site. Pour publier une fiche, l'équipe passe son statut à « Publié », puis clique sur « Redéployer le site web ».
+  - Limite connue : repasser en « A valider » une fiche déjà en ligne ne la retire pas du site lors d'un build Netlify. Son fichier est versionné dans le dépôt : il faut le supprimer à la main.
+- **Plus aucune fiche effacée en cas de panne NocoDB** — Si NocoDB ne répond pas ou refuse le token, le build s'arrête avec une erreur, avant toute modification des fichiers. Il s'arrête aussi si aucune fiche « Publié » ne remonte (vue mal filtrée, par exemple). Avant, il recevait une liste vide et pouvait supprimer toutes les fiches publiées.
+- **Toutes les fiches récupérées, au-delà de 100** — La récupération est paginée (avec un plafond de sécurité), comme pour les données festival. Avant, elle s'arrêtait aux 100 premières fiches.
+- **Token absent des journaux** — En cas d'échec, le journal n'affiche que le message d'erreur. Avant, il affichait l'objet d'erreur complet, token NocoDB compris.
+- **Vérifié avant déploiement** — Les 85 fiches de NocoDB remontent toutes en « Publié » (lecture seule). Un token invalide fait échouer le script (code de sortie 1) sans toucher aux fichiers.
+  - Dernière étape, après le déploiement : poser le filtre `Statut = Publié` sur la vue NocoDB lue par le build.
+
+**Fichiers modifiés** : `src/scripts/build-fiches-pedagogiques.js`
+
+---
+
+## [1.3.1] — 2026-09-22
 
 ### Anti-spam du formulaire « Appel à projets » (#21)
 
@@ -17,6 +33,17 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Tests** — La suite hors ligne des formulaires passe de 45 à 75 tests. Elle couvre notamment l'échantillon réel du robot, une soumission française réaliste et chacune des règles de refus.
 
 **Fichiers modifiés** : `netlify/functions/submit-pedagogical-sheet.js`, `src/components/forms/ProjectSubmissionForm.astro`, `netlify/functions/__tests__/all-functions.test.js`, `netlify/functions/__tests__/README.md`
+
+### Base NocoDB des fiches pédagogiques
+
+- **Fausses fiches supprimées** — Les 5 fiches générées par le robot et encore présentes dans NocoDB ont été supprimées, avant qu'un build ne les publie. Les 85 fiches restantes ont été vérifiées une à une : toutes sont légitimes.
+- **Nouveau champ « Statut »** (« A valider » par défaut, « Publié ») — C'est le même champ que dans les tables du festival (stands, ateliers, conférences). Les 85 fiches existantes sont passées à « Publié » automatiquement, sans cochage manuel. Toute nouvelle fiche, qu'elle arrive par le formulaire ou par une saisie manuelle, reste en « A valider » jusqu'à validation par l'équipe.
+  - Le site ne filtre pas encore sur ce statut. Le filtre arrive avec #22.
+- **Bouton « Redéployer le site web »** — Nouvelle table « Actions spéciales » dans la base des fiches, avec un bouton « Exécuter » qui relance le build Netlify. C'est le même script que dans la base festival. Il permet de mettre en ligne une fiche validée sans attendre le prochain déploiement.
+
+---
+
+## [1.3.0] — 2026-07-08
 
 ### Ajouté
 

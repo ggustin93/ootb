@@ -5,6 +5,28 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.3.3] — 2026-09-22
+
+### Sécurité : dépendances critiques (#31)
+
+- **`sharp` 0.35.4 partout** — Le build télécharge les photos envoyées via les formulaires publics du festival et les décode avec `sharp`. Avant 0.35.4, `sharp` embarquait une libheif vulnérable : un AVIF piégé pouvait exécuter du code pendant le build Netlify, là où se trouvent les tokens NocoDB et TinaCloud. C'est aussi le vecteur de l'alerte Astro « RCE through AVIF image optimization ». `sharp` passe en `^0.35.4`, et un `overrides` force la même version pour Astro, `astro-compress` et `ipx`.
+- **`tar` 7.5.22 et `fast-xml-parser` 5.11.1** — Versions corrigées, obtenues par un rafraîchissement du lockfile dans les plages de versions existantes.
+- **`swiper` supprimé** — Il n'était utilisé nulle part.
+- **CI : Node 18 retiré de la matrice de build** — `sharp` 0.35 exige Node ≥ 20.9. Node 18 était déjà exclu par le champ `engines` du projet, et Netlify utilise Node 22.
+- **TinaCMS inchangé** — `@tinacms/cli` 1.12.6, `tinacms` 2.10.1 et `@tinacms/graphql` 1.6.3 restent identiques, tout comme `tina/tina-lock.json`. Aucun override ne touche l'arbre de Tina, et le bloc `resolutions` n'a pas bougé.
+  - Seul effet indirect : `sharp` 0.35.4 exige `semver` ^7.8.5. La copie partagée passe de 7.7.3 à 7.8.5, et l'arbre de Tina l'utilise aussi (via `better-sqlite3` › `prebuild-install` › `node-abi`, un outil d'installation). C'est une mise à jour mineure, et aucune version de paquet Tina ne change.
+- **Vérifié** — `npm run check`, les tests utilitaires et les 75 tests des fonctions Netlify passent. `npm run build` passe : les 158 images du festival sont régénérées avec `sharp` 0.35 et vérifiées visuellement.
+  - Limite connue : deux sources restent en image de remplacement, un fichier EPS (stand 1451) et un logo ICO (conférence 640). Le comportement est identique avec l'ancien `sharp` 0.34.5, donc ce n'est pas une régression.
+
+**Fichiers modifiés** : `package.json`, `package-lock.json`, `.github/workflows/actions.yaml`
+
+### Risques acceptés (hors ticket)
+
+- **`@tinacms/cli` < 2.1.8, `jsonpath-plus` et `dompurify` (via Tina)** — Ils ne concernent que le serveur de dev local ou l'admin, réservé aux éditeurs authentifiés. Mettre à jour la stack Tina est jugé trop risqué pour ce gain.
+- **`astro` < 7.2.8** — Le vecteur exploitable est neutralisé par la mise à jour de `sharp`. La migration vers Astro 7 est reportée.
+
+---
+
 ## [1.3.2] — 2026-09-22
 
 ### Modération des fiches et build fiable (#22)

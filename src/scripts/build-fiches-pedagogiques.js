@@ -173,31 +173,42 @@ function initNocoDBApi() {
 }
 
 /**
- * Récupère les fiches pédagogiques depuis NocoDB
+ * Récupère toutes les fiches publiées depuis NocoDB (paginé).
+ * Lève une erreur si NocoDB échoue : ne jamais continuer avec une liste
+ * vide ou partielle, sinon les fiches publiées seraient supprimées.
  */
 async function fetchFichesPedagogiques() {
-  try {
-    console.log('📥 Récupération des fiches pédagogiques depuis NocoDB...');
-    
-    const api = initNocoDBApi();
-    
+  console.log('📥 Récupération des fiches pédagogiques depuis NocoDB...');
+
+  const api = initNocoDBApi();
+  const limit = 100;
+  const maxPages = 50;
+  const all = [];
+
+  for (let page = 0; ; page++) {
+    if (page >= maxPages) {
+      throw new Error(`Plafond de ${maxPages} pages atteint, récupération incomplète.`);
+    }
     const response = await api.dbViewRow.list(
       NOCODB_ORG_ID,
       NOCODB_PROJECT_ID,
       NOCODB_BASE_ID,
-      NOCODB_TABLE_ID, {
-      "offset": 0,
-      "limit": 100, // Augmenter si nécessaire
-      "where": ""
-    });
-    
-    console.log(`✅ ${response.list.length} fiches pédagogiques récupérées.`);
-    
-    return response;
-  } catch (error) {
-    console.error('❌ Erreur lors de la récupération des fiches pédagogiques:', error);
-    return { list: [] };
+      NOCODB_TABLE_ID,
+      { offset: page * limit, limit, where: '' }
+    );
+    if (!Array.isArray(response?.list)) {
+      throw new Error('Réponse NocoDB invalide (list absente).');
+    }
+    all.push(...response.list);
+    if (response.pageInfo?.isLastPage || response.list.length < limit) break;
   }
+
+  // Filtre défensif, en miroir des données festival : même si la vue NocoDB
+  // n'est pas filtrée, seules les fiches « Publié » sont publiées.
+  const fiches = all.filter(fiche => fiche.Statut === 'Publié');
+  console.log(`✅ ${all.length} fiches récupérées, ${fiches.length} au statut « Publié ».`);
+
+  return fiches;
 }
 
 /**
@@ -559,46 +570,43 @@ async function saveFichesToFiles(fiches) {
 async function main() {
   console.log('🚀 Démarrage de la génération des fiches pédagogiques...');
   
-  try {
-    // Récupérer les fiches depuis NocoDB
-    const response = await fetchFichesPedagogiques();
-    const fiches = response.list || [];
-    
-    // Vérifier si les données ont changé
-    const { hasChanges, changedItems, removedItems, addedItems } = checkIfDataChanged(fiches);
-    
-    // Sauvegarder les données brutes
-    saveRawData(response, RAW_DATA_FILENAME);
-    
-    if (!hasChanges) {
-      console.log('✅ Aucune modification détectée. Aucune action nécessaire.');
-      return;
-    }
-    
-    console.log('🔄 Des modifications ont été détectées, mise à jour des fiches en cours...');
+  // Récupérer les fiches depuis NocoDB (lève une erreur en cas d'échec :
+  // le build s'arrête avant toute suppression de fichier)
+  const fiches = await fetchFichesPedagogiques();
 
-    // Collecter les dates existantes AVANT de supprimer les fichiers
-    const existingDates = collectExistingPublishDates();
+  // Vérifier si les données ont changé
+  const { hasChanges, changedItems, removedItems, addedItems } = checkIfDataChanged(fiches);
 
-    // Supprimer uniquement les fiches qui ont été modifiées ou supprimées
-    const fichesToRemove = [...changedItems, ...removedItems];
-    cleanSpecificFiches(fichesToRemove);
+  // Sauvegarder les données brutes (fiches publiées uniquement)
+  saveRawData({ list: fiches }, RAW_DATA_FILENAME);
 
-    // Convertir uniquement les fiches modifiées ou ajoutées, en préservant les dates existantes
-    const fichesToGenerate = [...changedItems, ...addedItems];
-    const mdxFiches = convertFichesToMDX(fichesToGenerate, existingDates);
-    
-    // Sauvegarder les fiches
-    await saveFichesToFiles(mdxFiches);
-    
-    console.log('✨ Génération des fiches pédagogiques terminée avec succès!');
-  } catch (error) {
-    console.error('❌ Erreur lors de la génération des fiches pédagogiques:', error);
+  if (!hasChanges) {
+    console.log('✅ Aucune modification détectée. Aucune action nécessaire.');
+    return;
   }
+
+  console.log('🔄 Des modifications ont été détectées, mise à jour des fiches en cours...');
+
+  // Collecter les dates existantes AVANT de supprimer les fichiers
+  const existingDates = collectExistingPublishDates();
+
+  // Supprimer uniquement les fiches qui ont été modifiées ou supprimées
+  const fichesToRemove = [...changedItems, ...removedItems];
+  cleanSpecificFiches(fichesToRemove);
+
+  // Convertir uniquement les fiches modifiées ou ajoutées, en préservant les dates existantes
+  const fichesToGenerate = [...changedItems, ...addedItems];
+  const mdxFiches = convertFichesToMDX(fichesToGenerate, existingDates);
+
+  // Sauvegarder les fiches
+  await saveFichesToFiles(mdxFiches);
+
+  console.log('✨ Génération des fiches pédagogiques terminée avec succès!');
 }
 
 // Exécution du script
 main().catch(error => {
-  console.error('❌ Erreur fatale:', error);
+  // Message seul : l'objet d'erreur axios contient le header xc-token
+  console.error('❌ Erreur fatale:', error.message);
   process.exit(1);
 }); 

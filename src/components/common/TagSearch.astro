@@ -14,7 +14,7 @@ interface Props {
   label?: string;
   showPostResults?: boolean;
   currentPath?: string;
-  currentTag?: { slug: string; title: string; };
+  currentTag?: { slug: string; title: string };
 }
 
 // Récupérer le chemin actuel pour détecter si on est sur la page /blog
@@ -28,14 +28,14 @@ const currentTagFromPath = isTagPage ? decodeURIComponent(currentPath.split('/ta
 const {
   tags,
   posts = [],
-  placeholder = "Ex: IA, Montessori, inclusion, ...",
+  placeholder = 'Ex: IA, Montessori, inclusion, ...',
   label = "Rechercher par thématique ou titre d'article :",
   showPostResults = true,
-  currentTag
+  currentTag,
 } = Astro.props;
 
 // Déterminer le tag actuel (priorité à celui passé en prop)
-const activeTag = currentTag || (isTagPage ? tags.find(t => t.slug === currentTagFromPath) : null);
+const activeTag = currentTag || (isTagPage ? tags.find((t) => t.slug === currentTagFromPath) : null);
 
 // Sérialiser les données pour le lazy loading
 const serializedTags = JSON.stringify(tags);
@@ -46,12 +46,17 @@ const contentTypes = CONTENT_TYPES;
 <div class="mb-4">
   <div class="flex justify-between items-center mb-3">
     <div class="text-white/90 text-sm uppercase tracking-wider font-medium">{label}</div>
-    {isTagPage && (
-      <a href="/blog/" class="text-white/80 hover:text-white text-sm flex items-center gap-1 transition-colors duration-200">
-        <Icon name="tabler:x" class="w-4 h-4" />
-        <span>Réinitialiser le filtre</span>
-      </a>
-    )}
+    {
+      isTagPage && (
+        <a
+          href="/blog/"
+          class="text-white/80 hover:text-white text-sm flex items-center gap-1 transition-colors duration-200"
+        >
+          <Icon name="tabler:x" class="w-4 h-4" />
+          <span>Réinitialiser le filtre</span>
+        </a>
+      )
+    }
   </div>
   <div class="relative">
     <input
@@ -61,26 +66,26 @@ const contentTypes = CONTENT_TYPES;
       class="w-full px-5 py-4 pl-12 text-gray-700 bg-white/95 backdrop-blur-sm border border-white/20 rounded-full focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300"
       autocomplete="off"
     />
-    {activeTag ? (
-      <div class="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-1.5">
-        <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
-      </div>
-    ) : (
-      <Icon 
-        name="tabler:search" 
-        class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" 
-      />
-    )}
+    {
+      activeTag ? (
+        <div class="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-1.5">
+          <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
+        </div>
+      ) : (
+        <Icon name="tabler:search" class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+      )
+    }
     <!-- Conteneur vide pour les suggestions - sera rempli dynamiquement -->
-    <div id="search-suggestions" class="absolute w-full mt-2 bg-white rounded-xl shadow-lg overflow-hidden hidden z-50 p-2">
+    <div
+      id="search-suggestions"
+      class="absolute w-full mt-2 bg-white rounded-xl shadow-lg overflow-hidden hidden z-50 p-2"
+    >
       <div class="max-h-64 overflow-y-auto">
         <div class="px-4 py-3 text-gray-500 text-center" id="loading-indicator">
           <div class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-gray-400 mr-2"></div>
           Chargement...
         </div>
-        <div id="no-results" class="px-4 py-3 text-gray-500 text-center hidden">
-          Aucun résultat trouvé
-        </div>
+        <div id="no-results" class="px-4 py-3 text-gray-500 text-center hidden">Aucun résultat trouvé</div>
       </div>
     </div>
   </div>
@@ -92,7 +97,7 @@ const contentTypes = CONTENT_TYPES;
     let mouseOverSuggestions = false;
     let debounceTimer;
     const MAX_VISIBLE_RESULTS = 50; // Limiter à 50 résultats maximum
-    
+
     // État pour le lazy loading
     let isDataLoaded = false;
     let tags = [];
@@ -102,48 +107,48 @@ const contentTypes = CONTENT_TYPES;
     const searchSuggestions = document.getElementById('search-suggestions');
     const loadingIndicator = document.getElementById('loading-indicator');
     const noResultsMessage = document.getElementById('no-results');
-    
+
     // Si un tag actif est défini, mettre à jour le placeholder
     if (activeTag && searchInput) {
       searchInput.placeholder = `Tag actuel : ${activeTag.title}`;
     }
-    
+
     // Fonction pour charger les données
     function loadSearchData() {
       if (isDataLoaded) return Promise.resolve();
-      
+
       return new Promise((resolve) => {
         // Simuler un petit délai pour montrer l'indicateur de chargement
         setTimeout(() => {
           // Désérialiser les données
           tags = JSON.parse(serializedTags);
           posts = JSON.parse(serializedPosts);
-          
+
           // Dédupliquer les posts par titre
           const uniquePosts = [];
           const seenTitles = new Set();
-          
-          posts.forEach(post => {
+
+          posts.forEach((post) => {
             if (!seenTitles.has(post.title)) {
               seenTitles.add(post.title);
               uniquePosts.push(post);
             }
           });
-          
+
           posts = uniquePosts;
-          
+
           // Générer le HTML des suggestions
           const suggestionsContainer = searchSuggestions.querySelector('.max-h-64');
-          
+
           // Nettoyer le conteneur avant d'ajouter de nouvelles sections
           // Garder uniquement l'indicateur de chargement et le message "aucun résultat"
           const elementsToKeep = ['loading-indicator', 'no-results'];
-          Array.from(suggestionsContainer.children).forEach(child => {
+          Array.from(suggestionsContainer.children).forEach((child) => {
             if (!elementsToKeep.includes(child.id)) {
               child.remove();
             }
           });
-          
+
           // Créer la section des tags
           if (tags.length > 0) {
             const tagsSection = document.createElement('div');
@@ -152,8 +157,8 @@ const contentTypes = CONTENT_TYPES;
                 Thématiques
               </div>
             `;
-            
-            tags.forEach(tag => {
+
+            tags.forEach((tag) => {
               const button = document.createElement('button');
               button.className = 'w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-gray-700';
               button.setAttribute('data-tag-slug', tag.slug);
@@ -169,10 +174,10 @@ const contentTypes = CONTENT_TYPES;
               `;
               tagsSection.appendChild(button);
             });
-            
+
             suggestionsContainer.appendChild(tagsSection);
           }
-          
+
           // Créer la section des posts
           if (showPostResults && posts.length > 0) {
             const postsSection = document.createElement('div');
@@ -181,8 +186,8 @@ const contentTypes = CONTENT_TYPES;
                 Ressources
               </div>
             `;
-            
-            posts.forEach(post => {
+
+            posts.forEach((post) => {
               const button = document.createElement('button');
               button.className = 'w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-gray-700';
               button.setAttribute('data-post-slug', post.slug);
@@ -191,7 +196,7 @@ const contentTypes = CONTENT_TYPES;
                 button.setAttribute('data-post-category', post.category);
               }
               button.setAttribute('data-result-type', 'post');
-              
+
               let categoryLabel = '';
               if (post.category) {
                 if (post.category in contentTypes) {
@@ -200,7 +205,7 @@ const contentTypes = CONTENT_TYPES;
                   categoryLabel = post.category;
                 }
               }
-              
+
               button.innerHTML = `
                 <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -217,33 +222,33 @@ const contentTypes = CONTENT_TYPES;
               `;
               postsSection.appendChild(button);
             });
-            
+
             suggestionsContainer.appendChild(postsSection);
           }
-          
+
           // Cacher l'indicateur de chargement
           if (loadingIndicator) {
             loadingIndicator.classList.add('hidden');
           }
-          
+
           isDataLoaded = true;
-          
+
           // Initialiser les événements sur les boutons
           initSuggestionButtons();
-          
+
           resolve();
         }, 100);
       });
     }
-    
+
     function initSuggestionButtons() {
       const suggestionButtons = document.querySelectorAll('#search-suggestions button');
-      
+
       // Gérer la sélection d'une suggestion
-      suggestionButtons?.forEach(button => {
+      suggestionButtons?.forEach((button) => {
         button.addEventListener('click', () => {
           const resultType = button.getAttribute('data-result-type');
-          
+
           if (resultType === 'tag') {
             const tagSlug = button.getAttribute('data-tag-slug');
             if (tagSlug) {
@@ -251,7 +256,7 @@ const contentTypes = CONTENT_TYPES;
             }
           } else if (resultType === 'post') {
             const postSlug = button.getAttribute('data-post-slug');
-            
+
             if (postSlug) {
               // Pour tous les types de contenu, utiliser le format direct sans préfixe /blog/
               // Format attendu: /[slug]
@@ -276,28 +281,28 @@ const contentTypes = CONTENT_TYPES;
 
     function filterSuggestions(searchTerm) {
       if (!isDataLoaded) return false;
-      
+
       let hasVisibleSuggestions = false;
       let visibleTags = 0;
       let visiblePosts = 0;
-      
+
       const suggestionButtons = document.querySelectorAll('#search-suggestions button');
 
       // Optimisation : normaliser le terme de recherche une seule fois
       const normalizedSearch = searchTerm
         .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
 
-      suggestionButtons?.forEach(button => {
+      suggestionButtons?.forEach((button) => {
         const resultType = button.getAttribute('data-result-type');
         let title = '';
-        
+
         if (resultType === 'tag') {
           title = button.getAttribute('data-tag-title') || '';
         } else if (resultType === 'post') {
           title = button.getAttribute('data-post-title') || '';
-          
+
           // Sur la page principale du blog, on affiche tous les types de posts
           // Sur les autres pages, on filtre si nécessaire
           if (!isMainBlogPage) {
@@ -320,11 +325,11 @@ const contentTypes = CONTENT_TYPES;
 
         const normalizedTitle = title
           .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
 
         const isVisible = normalizedSearch === '' || normalizedTitle.includes(normalizedSearch);
-        
+
         // Optimisation : limiter le nombre de résultats visibles
         if (isVisible) {
           if (resultType === 'post') {
@@ -337,7 +342,7 @@ const contentTypes = CONTENT_TYPES;
           } else if (resultType === 'tag') {
             visibleTags++;
           }
-          
+
           button.style.display = '';
           hasVisibleSuggestions = true;
         } else {
@@ -346,16 +351,22 @@ const contentTypes = CONTENT_TYPES;
       });
 
       // Gérer l'affichage des sections et du message "aucun résultat"
-      const tagSection = document.querySelector('#search-suggestions > div > div:first-of-type:not(#loading-indicator):not(#no-results)');
-      const postSection = showPostResults ? document.querySelector('#search-suggestions > div > div:nth-of-type(2):not(#loading-indicator):not(#no-results)') : null;
-      
+      const tagSection = document.querySelector(
+        '#search-suggestions > div > div:first-of-type:not(#loading-indicator):not(#no-results)'
+      );
+      const postSection = showPostResults
+        ? document.querySelector(
+            '#search-suggestions > div > div:nth-of-type(2):not(#loading-indicator):not(#no-results)'
+          )
+        : null;
+
       if (tagSection) {
         tagSection.style.display = visibleTags > 0 ? '' : 'none';
       }
-      
+
       if (postSection) {
         postSection.style.display = visiblePosts > 0 ? '' : 'none';
-        
+
         // Ajouter un message si le nombre de résultats est limité
         const limitMessage = document.getElementById('limit-message');
         if (visiblePosts > MAX_VISIBLE_RESULTS) {
@@ -370,7 +381,7 @@ const contentTypes = CONTENT_TYPES;
           limitMessage.remove();
         }
       }
-      
+
       if (noResultsMessage) {
         noResultsMessage.classList.toggle('hidden', hasVisibleSuggestions);
       }
@@ -382,7 +393,7 @@ const contentTypes = CONTENT_TYPES;
     searchInput?.addEventListener('focus', () => {
       isSearchFocused = true;
       showSuggestions();
-      
+
       // Charger les données si ce n'est pas déjà fait
       if (!isDataLoaded) {
         loadSearchData().then(() => {
@@ -414,17 +425,17 @@ const contentTypes = CONTENT_TYPES;
       const target = e.target;
       if (!target) return;
       const searchTerm = target.value;
-      
+
       // Charger les données si ce n'est pas déjà fait
       if (!isDataLoaded) {
         loadSearchData().then(() => {
           // Effacer le timer précédent
           clearTimeout(debounceTimer);
-          
+
           // Définir un nouveau timer (200ms de délai)
           debounceTimer = setTimeout(() => {
             const hasResults = filterSuggestions(searchTerm);
-            
+
             if (hasResults || searchTerm === '') {
               showSuggestions();
             } else {
@@ -435,11 +446,11 @@ const contentTypes = CONTENT_TYPES;
       } else {
         // Effacer le timer précédent
         clearTimeout(debounceTimer);
-        
+
         // Définir un nouveau timer (200ms de délai)
         debounceTimer = setTimeout(() => {
           const hasResults = filterSuggestions(searchTerm);
-          
+
           if (hasResults || searchTerm === '') {
             showSuggestions();
           } else {
@@ -484,4 +495,4 @@ const contentTypes = CONTENT_TYPES;
     background-color: rgba(156, 163, 175, 0.5);
     border-radius: 3px;
   }
-</style> 
+</style>

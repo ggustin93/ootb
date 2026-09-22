@@ -9,14 +9,14 @@ interface Props {
   thumbnailQuality?: 'default' | 'hqdefault' | 'mqdefault' | 'sddefault' | 'maxresdefault';
 }
 
-const { 
-  videoId, 
-  title, 
+const {
+  videoId,
+  title,
   className = '',
   autoplay = false,
   muted = false,
   controls = true,
-  thumbnailQuality = 'hqdefault'
+  thumbnailQuality = 'hqdefault',
 } = Astro.props;
 
 // Construction de l'URL avec les paramètres dynamiques
@@ -28,24 +28,37 @@ const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/${thumbnailQuality}.jpg`
 
 <div class="relative">
   {/* Fond orange avec glow */}
-  <div class="absolute -inset-8 bg-[--ootb-orange] rounded-[2.5rem] -rotate-2 -z-10 shadow-[0_0_30px_rgba(228,69,30,0.3)]"></div>
+  <div
+    class="absolute -inset-8 bg-[--ootb-orange] rounded-[2.5rem] -rotate-2 -z-10 shadow-[0_0_30px_rgba(228,69,30,0.3)]"
+  >
+  </div>
 
   {/* Conteneur de la vidéo */}
-  <div class={`relative aspect-video ${className} lite-youtube-container`} data-video-id={videoId} data-embed-url={embedUrl}>
+  <div
+    class={`relative aspect-video ${className} lite-youtube-container`}
+    data-video-id={videoId}
+    data-embed-url={embedUrl}
+  >
     <div class="lite-youtube-placeholder w-full h-full rounded-2xl overflow-hidden cursor-pointer relative">
-      <img 
-        src={thumbnailUrl} 
+      <img
+        src={thumbnailUrl}
         alt={title}
         class="w-full h-full object-cover transition-opacity duration-300"
         loading="lazy"
         decoding="async"
       />
       <div class="play-button absolute inset-0 flex items-center justify-center">
-        <svg class="w-20 h-20 text-white opacity-90 hover:opacity-100 transition-opacity duration-300" viewBox="0 0 24 24" fill="currentColor">
+        <svg
+          class="w-20 h-20 text-white opacity-90 hover:opacity-100 transition-opacity duration-300"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
           <path d="M8 5v14l11-7z"></path>
         </svg>
       </div>
-      <div class="absolute bottom-4 left-4 right-4 text-white text-lg font-medium bg-black/50 p-2 rounded backdrop-blur-sm">
+      <div
+        class="absolute bottom-4 left-4 right-4 text-white text-lg font-medium bg-black/50 p-2 rounded backdrop-blur-sm"
+      >
         {title}
       </div>
     </div>
@@ -57,15 +70,15 @@ const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/${thumbnailQuality}.jpg`
   // Fonction pour initialiser les conteneurs YouTube
   function initYouTubePlayers() {
     const containers = document.querySelectorAll('.lite-youtube-container');
-    
-    containers.forEach(container => {
+
+    containers.forEach((container) => {
       const placeholder = container.querySelector('.lite-youtube-placeholder');
       const iframeContainer = container.querySelector('.lite-youtube-iframe');
       const videoId = container.getAttribute('data-video-id');
       const embedUrl = container.getAttribute('data-embed-url');
-      
+
       if (!placeholder || !iframeContainer || !videoId || !embedUrl) return;
-      
+
       placeholder.addEventListener('click', () => {
         // Créer l'iframe seulement au clic
         const iframe = document.createElement('iframe');
@@ -77,27 +90,27 @@ const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/${thumbnailQuality}.jpg`
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
         iframe.allowFullscreen = true;
         iframe.className = 'w-full h-full rounded-2xl absolute inset-0';
-        
+
         // Ajouter l'iframe et masquer la miniature
         iframeContainer.appendChild(iframe);
         iframeContainer.classList.remove('hidden');
         placeholder.classList.add('hidden');
-        
+
         // Informer Google Analytics de l'interaction (si disponible)
         if (typeof window !== 'undefined' && 'gtag' in window) {
           // @ts-expect-error - gtag peut ne pas être reconnu par TypeScript
           window.gtag('event', 'play_video', {
-            'event_category': 'Videos',
-            'event_label': videoId
+            event_category: 'Videos',
+            event_label: videoId,
           });
         }
       });
     });
   }
-  
+
   // Initialiser au chargement de la page
   document.addEventListener('DOMContentLoaded', initYouTubePlayers);
-  
+
   // Réinitialiser lors des navigations Astro (pour la navigation sans rechargement)
   document.addEventListener('astro:page-load', initYouTubePlayers);
 </script>
@@ -106,11 +119,11 @@ const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/${thumbnailQuality}.jpg`
   .play-button {
     filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.5));
   }
-  
+
   .lite-youtube-placeholder:hover .play-button svg {
     transform: scale(1.1);
   }
-  
+
   .play-button svg {
     transition: transform 0.3s ease;
   }

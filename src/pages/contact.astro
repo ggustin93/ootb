@@ -18,33 +18,47 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
 ---
 
 <Layout metadata={metadata}>
-  <div class="relative min-h-screen flex flex-col justify-start bg-gradient-to-b from-[color-mix(in_srgb,var(--ootb-blue)_2%,white)] via-white to-[color-mix(in_srgb,var(--ootb-turquoise)_3%,white)] dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 overflow-x-hidden pb-12">
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(var(--ootb-blue-rgb),0.03),transparent_40%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(var(--ootb-blue-rgb),0.05),transparent_40%)]"></div>
-      
-      {/* Éléments décoratifs flottants */}
-      <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute w-8 md:w-12 h-12 md:h-16 -rotate-[15deg] top-[15%] left-[85%] opacity-20 transition-transform hover:-translate-y-2 duration-1000 dark:opacity-10">
-          <Icon name="tabler:book-2" class="w-full h-full text-[--ootb-violet]" />
-        </div>
-        
-        <div class="absolute w-6 md:w-10 h-10 md:h-14 rotate-45 bottom-[10%] left-[8%] opacity-20 transition-transform hover:translate-y-2 duration-1000 dark:opacity-10">
-          <Icon name="tabler:book" class="w-full h-full text-[--ootb-blue]" />
-        </div>
+  <div
+    class="relative min-h-screen flex flex-col justify-start bg-gradient-to-b from-[color-mix(in_srgb,var(--ootb-blue)_2%,white)] via-white to-[color-mix(in_srgb,var(--ootb-turquoise)_3%,white)] dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 overflow-x-hidden pb-12"
+  >
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(var(--ootb-blue-rgb),0.03),transparent_40%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(var(--ootb-blue-rgb),0.05),transparent_40%)]"
+    >
+    </div>
 
-        <div class="absolute w-7 md:w-11 h-11 md:h-15 -rotate-12 bottom-[20%] right-[15%] opacity-20 transition-transform hover:-translate-y-3 duration-1000 dark:opacity-10">
-          <Icon name="tabler:notebook" class="w-full h-full text-[--ootb-turquoise]" />
-        </div>
-
-        <div class="absolute w-5 md:w-8 h-8 md:h-12 rotate-[25deg] top-[35%] left-[15%] opacity-15 transition-transform hover:translate-y-2 duration-1000 dark:opacity-5">
-          <Icon name="tabler:books" class="w-full h-full text-sky-700" />
-        </div>
-
-        <div class="absolute w-6 md:w-9 h-9 md:h-13 -rotate-[8deg] top-[60%] right-[25%] opacity-10 transition-transform hover:-translate-y-2 duration-1000 dark:opacity-5">
-          <Icon name="tabler:book-upload" class="w-full h-full text-[--ootb-orange]" />
-        </div>
+    {/* Éléments décoratifs flottants */}
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute w-8 md:w-12 h-12 md:h-16 -rotate-[15deg] top-[15%] left-[85%] opacity-20 transition-transform hover:-translate-y-2 duration-1000 dark:opacity-10"
+      >
+        <Icon name="tabler:book-2" class="w-full h-full text-[--ootb-violet]" />
       </div>
+
+      <div
+        class="absolute w-6 md:w-10 h-10 md:h-14 rotate-45 bottom-[10%] left-[8%] opacity-20 transition-transform hover:translate-y-2 duration-1000 dark:opacity-10"
+      >
+        <Icon name="tabler:book" class="w-full h-full text-[--ootb-blue]" />
+      </div>
+
+      <div
+        class="absolute w-7 md:w-11 h-11 md:h-15 -rotate-12 bottom-[20%] right-[15%] opacity-20 transition-transform hover:-translate-y-3 duration-1000 dark:opacity-10"
+      >
+        <Icon name="tabler:notebook" class="w-full h-full text-[--ootb-turquoise]" />
+      </div>
+
+      <div
+        class="absolute w-5 md:w-8 h-8 md:h-12 rotate-[25deg] top-[35%] left-[15%] opacity-15 transition-transform hover:translate-y-2 duration-1000 dark:opacity-5"
+      >
+        <Icon name="tabler:books" class="w-full h-full text-sky-700" />
+      </div>
+
+      <div
+        class="absolute w-6 md:w-9 h-9 md:h-13 -rotate-[8deg] top-[60%] right-[25%] opacity-10 transition-transform hover:-translate-y-2 duration-1000 dark:opacity-5"
+      >
+        <Icon name="tabler:book-upload" class="w-full h-full text-[--ootb-orange]" />
+      </div>
+    </div>
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 md:pt-8 md:pb-10 flex-1 flex flex-col">
-      
       {/* En-tête */}
       <div class="text-center max-w-3xl mx-auto mb-6 md:mb-8">
         <SectionDivider variant="sky" class="mb-4">{hero.title}</SectionDivider>
@@ -57,7 +71,9 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
       </div>
 
       {/* Formulaire et informations de contact intégrés */}
-      <div class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100 dark:border-gray-700">
+      <div
+        class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100 dark:border-gray-700"
+      >
         <div class="absolute -top-14 -left-6 md:-top-16 md:-left-8 z-10 pointer-events-none">
           <Image
             src={OotbLogo}
@@ -65,12 +81,12 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
             class="w-20 h-20 md:w-28 md:h-28 transform -rotate-12 drop-shadow-lg"
           />
         </div>
-        
+
         <div class="grid md:grid-cols-3 gap-6 md:gap-8">
           {/* Formulaire */}
           <div class="md:col-span-2">
-            <form 
-              id="contact-form" 
+            <form
+              id="contact-form"
               class="space-y-5 relative z-0"
               method="POST"
               data-netlify="true"
@@ -84,7 +100,7 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
                   Ne pas remplir si vous êtes humain: <input name="bot-field" />
                 </label>
               </p>
-              
+
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                 <div>
                   <label class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2" for="name">
@@ -99,7 +115,9 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
                     required
                     minlength="2"
                   />
-                  <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+                  <p
+                    class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message"
+                  >
                     Veuillez entrer un nom valide (2 caractères minimum)
                   </p>
                 </div>
@@ -115,7 +133,9 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
                     class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900 peer"
                     required
                   />
-                  <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+                  <p
+                    class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message"
+                  >
                     Veuillez entrer une adresse email valide
                   </p>
                 </div>
@@ -134,7 +154,9 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
                   required
                   minlength="3"
                 />
-                <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+                <p
+                  class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message"
+                >
                   Veuillez entrer un sujet valide (3 caractères minimum)
                 </p>
               </div>
@@ -150,9 +172,10 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
                   rows="5"
                   class="w-full px-4 py-3 text-base rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[--ootb-blue] focus:border-transparent transition duration-200 hover:bg-white dark:hover:bg-gray-900 peer"
                   required
-                  minlength="10"
-                ></textarea>
-                <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message">
+                  minlength="10"></textarea>
+                <p
+                  class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible validation-message"
+                >
                   Veuillez entrer un message valide (10 caractères minimum)
                 </p>
               </div>
@@ -166,17 +189,29 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
               </div>
 
               <div class="pt-2">
-                <button 
+                <button
                   type="button"
                   id="submit-button"
                   class="inline-flex items-center justify-center gap-2 font-medium rounded-full px-8 py-3 bg-[--ootb-blue] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)] shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[--ootb-blue] hover:-translate-y-0.5 w-full md:w-auto text-base relative overflow-hidden"
                 >
                   <span id="submit-text" class="relative z-10">{form.button}</span>
                   <Icon name="tabler:arrow-right" class="w-5 h-5 relative z-10" />
-                  <div id="submit-loader" class="absolute inset-0 flex items-center justify-center bg-[--ootb-blue] opacity-0 transition-opacity duration-300">
-                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <div
+                    id="submit-loader"
+                    class="absolute inset-0 flex items-center justify-center bg-[--ootb-blue] opacity-0 transition-opacity duration-300"
+                  >
+                    <svg
+                      class="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                   </div>
                 </button>
@@ -186,44 +221,94 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
 
           {/* Informations de contact */}
           <div class="space-y-3 md:space-y-4 flex flex-col justify-center mt-6 md:mt-0">
-            
             {/* Téléphone */}
-            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20">
+            <div
+              class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20"
+            >
               <div class="flex items-start sm:items-center gap-3 mb-1">
-                <div class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
-                    <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                <div
+                  class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                  >
+                    <path
+                      d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"
+                    ></path>
                   </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight">{contactInfo.phone.title}</h3>
+                <h3
+                  class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight"
+                >
+                  {contactInfo.phone.title}
+                </h3>
               </div>
-              <p class="text-base text-gray-600 dark:text-gray-400 pl-11 font-medium break-words">{contactInfo.phone.value}</p>
+              <p class="text-base text-gray-600 dark:text-gray-400 pl-11 font-medium break-words">
+                {contactInfo.phone.value}
+              </p>
             </div>
 
             {/* Email */}
-            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20">
+            <div
+              class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20"
+            >
               <div class="flex items-start sm:items-center gap-3 mb-1">
-                <div class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
-                    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
-                    <path d="M3 7l9 6l9 -6" />
+                <div
+                  class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                  >
+                    <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path>
+                    <path d="M3 7l9 6l9 -6"></path>
                   </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight">{contactInfo.email.title}</h3>
+                <h3
+                  class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight"
+                >
+                  {contactInfo.email.title}
+                </h3>
               </div>
-              <p class="text-base text-gray-600 dark:text-gray-400 pl-11 font-medium break-words">{contactInfo.email.value}</p>
+              <p class="text-base text-gray-600 dark:text-gray-400 pl-11 font-medium break-words">
+                {contactInfo.email.value}
+              </p>
             </div>
 
             {/* Adresse */}
-            <div class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20">
+            <div
+              class="bg-gradient-to-br from-[color-mix(in_srgb,var(--ootb-blue)_8%,white)] to-white/95 dark:from-[color-mix(in_srgb,var(--ootb-blue)_15%,#1f2937)] dark:to-gray-800/95 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-blue-50 dark:border-blue-900/20"
+            >
               <div class="flex items-start sm:items-center gap-3 mb-1">
-                <div class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
-                  <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-                  <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
-                </svg>
+                <div
+                  class="text-[--ootb-blue] bg-blue-50 dark:bg-blue-900/30 p-2 rounded-full transition-all duration-300 group-hover:scale-110 shadow-sm flex-shrink-0 mt-0.5 sm:mt-0"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    fill="none"
+                  >
+                    <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
+                    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
+                  </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight">{contactInfo.address.title}</h3>
+                <h3
+                  class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-[--ootb-blue] dark:group-hover:text-blue-300 transition-colors duration-300 leading-tight"
+                >
+                  {contactInfo.address.title}
+                </h3>
               </div>
               <p class="text-base text-gray-600 dark:text-gray-400 pl-11 font-medium break-words">
                 {contactInfo.address.value}
@@ -271,12 +356,12 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
   }
 
   /* Styles pour les champs invalides */
-  input:invalid:not(:placeholder-shown), 
+  input:invalid:not(:placeholder-shown),
   textarea:invalid:not(:placeholder-shown) {
     @apply border-rose-300 focus:border-rose-500 focus:ring-rose-500/20;
   }
 
-  input:valid:not(:placeholder-shown), 
+  input:valid:not(:placeholder-shown),
   textarea:valid:not(:placeholder-shown) {
     @apply border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500/20;
   }
@@ -289,18 +374,18 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
 
 <script is:inline>
   // console.log('🔄 Script de contact chargé');
-  
+
   // Fonction pour initialiser le formulaire après le chargement du DOM
   function initContactForm() {
     // console.log('🔄 Initialisation du formulaire de contact...');
-    
+
     // Éléments DOM
     const form = document.getElementById('contact-form');
     const submitButton = document.getElementById('submit-button');
     const formStatus = document.getElementById('formStatus');
     const statusIcon = document.getElementById('statusIcon');
     const statusMessage = document.getElementById('statusMessage');
-    
+
     // console.log('🔍 Éléments DOM trouvés:', {
     //   form: !!form,
     //   submitButton: !!submitButton,
@@ -308,28 +393,28 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
     //   statusIcon: !!statusIcon,
     //   statusMessage: !!statusMessage
     // });
-    
+
     if (!form || !submitButton || !formStatus) {
       console.error('❌ Éléments du formulaire non trouvés');
       return;
     }
-    
+
     // Ajouter des placeholders vides à tous les champs pour que :not(:placeholder-shown) fonctionne
     const inputFields = form.querySelectorAll('input[type="text"], input[type="email"], textarea[required]');
-    inputFields.forEach(field => {
+    inputFields.forEach((field) => {
       if (!field.placeholder) {
-        field.placeholder = " ";
+        field.placeholder = ' ';
       }
-      
+
       // Ajouter des écouteurs d'événements pour afficher les messages d'erreur
-      field.addEventListener('invalid', function() {
+      field.addEventListener('invalid', function () {
         const errorMessage = this.nextElementSibling;
         if (errorMessage && errorMessage.classList.contains('validation-message')) {
           errorMessage.classList.add('visible', 'opacity-100', 'translate-y-0');
         }
       });
-      
-      field.addEventListener('input', function() {
+
+      field.addEventListener('input', function () {
         const errorMessage = this.nextElementSibling;
         if (errorMessage && errorMessage.classList.contains('validation-message')) {
           if (this.validity.valid) {
@@ -340,53 +425,53 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
         }
       });
     });
-    
+
     // Fonctions pour afficher les messages de statut
     function showStatus(message, type) {
       // console.log(`🔔 Affichage du message de statut (${type}): ${message}`);
-      
+
       // Réinitialiser les classes
       formStatus.className = 'my-6 p-6 rounded-xl text-center transition-all duration-300 transform';
-      
+
       // Ajouter la classe correspondant au type
       formStatus.classList.add(type);
-      
+
       // Définir l'icône et le message
       if (type === 'error') {
         statusIcon.innerHTML = '❌';
         statusMessage.textContent = message;
         // Animation pour erreur
         formStatus.classList.add('scale-100', 'translate-y-0');
-        
+
         // Réinitialiser le bouton
         setButtonLoading(false);
       } else if (type === 'processing') {
         // Ne plus afficher le message de traitement dans le conteneur de statut
         // car nous utilisons maintenant l'animation dans le bouton
         formStatus.classList.add('hidden');
-        
+
         // Activer le mode chargement du bouton
         setButtonLoading(true);
         return;
       }
-      
+
       // Rendre visible
       formStatus.classList.remove('hidden');
-      
+
       // Faire défiler jusqu'au message
       formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    
+
     function showError(message) {
       showStatus(message, 'error');
     }
-    
+
     // Fonction pour activer/désactiver le mode chargement du bouton
     function setButtonLoading(isLoading) {
       submitButton.disabled = isLoading;
       const loader = document.getElementById('submit-loader');
       const submitText = document.getElementById('submit-text');
-      
+
       if (isLoading) {
         loader.classList.add('opacity-100');
         submitText.classList.add('opacity-0');
@@ -395,16 +480,16 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
         submitText.classList.remove('opacity-0');
       }
     }
-    
+
     // Gestion de la soumission du formulaire
     function handleSubmit() {
       // console.log('🔄 Fonction handleSubmit appelée');
-      
+
       // console.log('🔍 Validation du formulaire...');
-      
+
       // Vérifier manuellement chaque champ et afficher les messages d'erreur
       let isValid = true;
-      inputFields.forEach(field => {
+      inputFields.forEach((field) => {
         if (!field.validity.valid) {
           isValid = false;
           const errorMessage = field.nextElementSibling;
@@ -413,81 +498,81 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
           }
         }
       });
-      
+
       if (!form.checkValidity() || !isValid) {
         console.error('❌ Validation échouée: formulaire invalide');
         form.reportValidity();
         return;
       }
-      
+
       // console.log('✅ Formulaire valide, préparation de la soumission...');
-      
+
       try {
         // Afficher le message de traitement
         showStatus('Traitement en cours...', 'processing');
-        
+
         // Préparer les données du formulaire au format JSON
         const formData = new FormData(form);
-        
+
         // Convertir FormData en objet JSON
         const jsonData = {
           name: formData.get('name'),
           email: formData.get('email'),
           subject: formData.get('subject'),
-          message: formData.get('message')
+          message: formData.get('message'),
         };
-        
+
         // Soumettre à l'API personnalisée
         // console.log('🚀 Soumission du formulaire à l\'API...');
         // console.log('📝 Données envoyées:', jsonData);
-        
+
         // Envoyer les données à l'endpoint API sécurisé
         fetch('/api/submit-contact', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(jsonData)
+          body: JSON.stringify(jsonData),
         })
-        .then(response => {
-          // console.log('📥 Réponse reçue:', response);
-          return response.json();
-        })
-        .then(result => {
-          // console.log('📄 Données de réponse:', result);
-          
-          if (result.success) {
-            // console.log('✅ Soumission réussie:', result);
-            
-            // Après le succès de l'API, soumettre le formulaire natif à Netlify
+          .then((response) => {
+            // console.log('📥 Réponse reçue:', response);
+            return response.json();
+          })
+          .then((result) => {
+            // console.log('📄 Données de réponse:', result);
+
+            if (result.success) {
+              // console.log('✅ Soumission réussie:', result);
+
+              // Après le succès de l'API, soumettre le formulaire natif à Netlify
+              form.submit();
+            } else {
+              console.error("❌ Erreur lors de la soumission à l'API");
+              showError(result.message || 'Une erreur est survenue lors de la soumission du formulaire.');
+            }
+          })
+          .catch(() => {
+            // En cas d'erreur avec l'API, soumettre quand même à Netlify
+            console.error("❌ Erreur lors de la soumission à l'API");
+            console.log('📋 Tentative de soumission via Netlify Forms');
             form.submit();
-          } else {
-            console.error('❌ Erreur lors de la soumission à l\'API');
-            showError(result.message || 'Une erreur est survenue lors de la soumission du formulaire.');
-          }
-        })
-        .catch(() => {
-          // En cas d'erreur avec l'API, soumettre quand même à Netlify
-          console.error('❌ Erreur lors de la soumission à l\'API');
-          console.log('📋 Tentative de soumission via Netlify Forms');
-          form.submit();
-        });
+          });
       } catch {
         console.error('❌ Erreur lors de la soumission');
         showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
       }
     }
-    
+
     // Attacher l'événement click au bouton
     // console.log('🔄 Attachement de l\'événement click au bouton...');
-    submitButton.addEventListener('click', function(_event) {
+    submitButton.addEventListener('click', function (_event) {
       // console.log('🖱️ Événement click détecté sur le bouton');
       handleSubmit();
     });
-    
+
     // console.log('✅ Initialisation du formulaire terminée');
   }
-  
+
   // Attacher l'initialisation au chargement du DOM
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initContactForm);

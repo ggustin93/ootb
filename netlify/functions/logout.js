@@ -12,34 +12,34 @@ export const handler = async (event) => {
   if (event.httpMethod !== 'GET') {
     return {
       statusCode: 405,
-      body: JSON.stringify({ message: 'Méthode non autorisée' })
+      body: JSON.stringify({ message: 'Méthode non autorisée' }),
     };
   }
 
   try {
     // Déconnecter l'utilisateur
     await supabase.auth.signOut();
-    
+
     // Supprimer les cookies (concaténés en une seule chaîne)
     const cookieString = [
       'sb-access-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
-      'sb-refresh-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'
+      'sb-refresh-token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0',
     ].join(', ');
-    
+
     return {
       statusCode: 302,
       headers: {
-        'Location': '/login',
+        Location: '/login',
         'Set-Cookie': cookieString,
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
       },
-      body: ''
+      body: '',
     };
   } catch (error) {
     console.error('Erreur de déconnexion:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Erreur serveur' })
+      body: JSON.stringify({ message: 'Erreur serveur' }),
     };
   }
-}; 
+};

@@ -37,22 +37,12 @@ interface Props {
   class?: string;
 }
 
-const { 
-  title,
-  description,
-  image, 
-  badge,
-  href,
-  type = 'default',
-  category,
-  meta,
-  class: className = ''
-} = Astro.props;
+const { title, description, image, badge, href, type = 'default', category, meta, class: className = '' } = Astro.props;
 
 // Default config
 const defaultConfig = {
   icon: 'tabler:article',
-  label: 'Lire l\'article',
+  label: "Lire l'article",
   color: 'var(--content-actualite)',
   badgeIcon: 'tabler:article',
 };
@@ -61,11 +51,15 @@ const defaultConfig = {
 type ContentType = keyof typeof CONTENT_TYPES;
 
 // Détermine le type final en fonction de la catégorie ou du type explicite
-const finalType: ContentType = category?.slug?.toLowerCase() 
-  ? Object.keys(CONTENT_TYPES).includes(category.slug.toLowerCase()) 
-    ? category.slug.toLowerCase() as ContentType
-    : type in CONTENT_TYPES ? type as ContentType : 'actualite'
-  : type in CONTENT_TYPES ? type as ContentType : 'actualite';
+const finalType: ContentType = category?.slug?.toLowerCase()
+  ? Object.keys(CONTENT_TYPES).includes(category.slug.toLowerCase())
+    ? (category.slug.toLowerCase() as ContentType)
+    : type in CONTENT_TYPES
+      ? (type as ContentType)
+      : 'actualite'
+  : type in CONTENT_TYPES
+    ? (type as ContentType)
+    : 'actualite';
 
 const contentTypeConfig = CONTENT_TYPES[finalType] || CONTENT_TYPES.actualite;
 
@@ -82,25 +76,26 @@ const formatPublishDate = (date?: Date | string) => {
   try {
     // Si la date est déjà au format français (ex: "24 mai 2023")
     if (typeof date === 'string') {
-      const frenchDateRegex = /^(\d{1,2}) (janv\.|févr\.|mars|avr\.|mai|juin|juil\.|août|sept\.|oct\.|nov\.|déc\.) (\d{4})$/i;
+      const frenchDateRegex =
+        /^(\d{1,2}) (janv\.|févr\.|mars|avr\.|mai|juin|juil\.|août|sept\.|oct\.|nov\.|déc\.) (\d{4})$/i;
       if (date.match(frenchDateRegex)) {
         return date; // Retourner la date déjà formatée
       }
     }
-    
+
     // Si la date est une chaîne, essayer de la parser en Date
     const dateObj = typeof date === 'string' ? new Date(date) : date;
-    
+
     // Vérifier si la date est valide
     if (isNaN(dateObj.getTime())) {
       console.warn(`Date invalide: ${date}`);
       return null;
     }
-    
+
     // Ajuster la date pour le fuseau horaire UTC+1 (Europe/Paris)
     // Cela garantit que les dates à 23h00 UTC s'affichent correctement le jour suivant
     const adjustedDate = new Date(dateObj);
-    
+
     return getFormattedDate(adjustedDate);
   } catch (error) {
     console.error('Erreur de formatage de date:', error, 'Date reçue:', date);
@@ -111,116 +106,117 @@ const formatPublishDate = (date?: Date | string) => {
 // Image source - utiliser l'image fournie ou afficher un fond coloré
 const useCustomImage = hasCustomImage(image);
 
-const formattedPublishDate = meta?.publishDate 
-  ? formatPublishDate(meta.publishDate) 
-  : null;
-
+const formattedPublishDate = meta?.publishDate ? formatPublishDate(meta.publishDate) : null;
 
 // Vérifier si la date a pu être formatée
 if (meta?.publishDate && !formattedPublishDate) {
   console.warn(`Impossible de formater la date: ${meta.publishDate} pour "${title}"`);
 }
 
+// Date affichée sur la carte
+const getDisplayDate = (): string => {
+  // Vérifier si la date est déjà une chaîne formatée (comme "24 févr. 2025" ou "24 mai 2023")
+  if (meta?.publishDate && typeof meta.publishDate === 'string') {
+    const frenchDateRegex =
+      /^(\d{1,2}) (janv\.|févr\.|mars|avr\.|mai|juin|juil\.|août|sept\.|oct\.|nov\.|déc\.) (\d{4})$/i;
+    if (meta.publishDate.match(frenchDateRegex)) {
+      // La date est déjà au format français, la retourner telle quelle
+      return meta.publishDate;
+    }
+  }
+
+  // Sinon, essayer de formater normalement
+  if (meta?.publishDate) {
+    try {
+      const dateObj = new Date(meta.publishDate);
+
+      // Vérifier si la date est valide avant d'essayer d'extraire les parties
+      if (isNaN(dateObj.getTime())) {
+        console.warn(`Date invalide pour "${title}":`, meta.publishDate);
+        return 'Date non disponible';
+      }
+
+      const jour = dateObj.getDate();
+      const mois = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'][
+        dateObj.getMonth()
+      ];
+      const annee = dateObj.getFullYear();
+      return `${jour} ${mois} ${annee}`;
+    } catch (error) {
+      console.error('Erreur lors du traitement de la date:', error);
+      return 'Date non disponible';
+    }
+  } else if (formattedPublishDate) {
+    return formattedPublishDate;
+  }
+  return 'Date non disponible';
+};
 ---
 
-<article 
+<article
   class:list={[
     'flex flex-col rounded-2xl overflow-hidden h-full',
     'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm',
     'border border-gray-200/50 dark:border-gray-700/50',
     'shadow-sm hover:shadow-md transition-all duration-300',
     'hover:translate-y-[-4px]',
-    className
+    className,
   ]}
 >
   <div class="relative aspect-[16/9] overflow-hidden">
-    {useCustomImage ? (
-      <Image 
-        src={image}
-        alt={title}
-        class="w-full h-full object-cover"
-        width={400}
-        height={225}
-        loading="lazy"
-        decoding="async"
-      />
-    ) : (
-      <div 
-        class:list={[
-          'w-full h-full flex items-center justify-center',
-        ]}
-        style={`background-color: color-mix(in srgb, ${config.color} 30%, white)`}
-      >
-        <Icon 
-          name={config.icon} 
-          class:list={[
-            'w-16 h-16 opacity-90',
-          ]}
-          style={`color: ${config.color}`}
+    {
+      useCustomImage ? (
+        <Image
+          src={image}
+          alt={title}
+          class="w-full h-full object-cover"
+          width={400}
+          height={225}
+          loading="lazy"
+          decoding="async"
         />
-      </div>
-    )}
-    {(badge || category) && (
-  <div class="absolute top-4 left-4 z-10">
-    <span 
-      class:list={[
-        'inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white',
-        'transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105',
-      ]}
-      style={`background-color: ${config.color}`}
-    >
-      <span class="transform skew-x-[12deg] flex items-center gap-1.5">
-        <Icon name={config.badgeIcon} class="w-4 h-4" />
-        {badge || category?.title || category?.slug}
-      </span>
-    </span>
-  </div>
-)}
+      ) : (
+        <div
+          class:list={['w-full h-full flex items-center justify-center']}
+          style={`background-color: color-mix(in srgb, ${config.color} 30%, white)`}
+        >
+          <Icon name={config.icon} class:list={['w-16 h-16 opacity-90']} style={`color: ${config.color}`} />
+        </div>
+      )
+    }
+    {
+      (badge || category) && (
+        <div class="absolute top-4 left-4 z-10">
+          <span
+            class:list={[
+              'inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white',
+              'transform skew-x-[-12deg] shadow-md transition-transform duration-300 group-hover:scale-105',
+            ]}
+            style={`background-color: ${config.color}`}
+          >
+            <span class="transform skew-x-[12deg] flex items-center gap-1.5">
+              <Icon name={config.badgeIcon} class="w-4 h-4" />
+              {badge || category?.title || category?.slug}
+            </span>
+          </span>
+        </div>
+      )
+    }
     <div class="absolute bottom-4 right-4 z-10">
       <span class="bg-black/60 text-white text-xs px-2.5 py-1 rounded-full font-medium">
-        {(() => {
-          // Vérifier si la date est déjà une chaîne formatée (comme "24 févr. 2025" ou "24 mai 2023")
-          if (meta?.publishDate && typeof meta.publishDate === 'string') {
-            const frenchDateRegex = /^(\d{1,2}) (janv\.|févr\.|mars|avr\.|mai|juin|juil\.|août|sept\.|oct\.|nov\.|déc\.) (\d{4})$/i;
-            if (meta.publishDate.match(frenchDateRegex)) {
-              // La date est déjà au format français, la retourner telle quelle
-              return meta.publishDate;
-            }
-          }
-          
-          // Sinon, essayer de formater normalement
-          if (meta?.publishDate) {
-            try {
-              const dateObj = new Date(meta.publishDate);
-              
-              // Vérifier si la date est valide avant d'essayer d'extraire les parties
-              if (isNaN(dateObj.getTime())) {
-                console.warn(`Date invalide pour "${title}":`, meta.publishDate);
-                return 'Date non disponible';
-              }
-              
-              const jour = dateObj.getDate();
-              const mois = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."][dateObj.getMonth()];
-              const annee = dateObj.getFullYear();
-              return `${jour} ${mois} ${annee}`;
-            } catch (error) {
-              console.error("Erreur lors du traitement de la date:", error);
-              return 'Date non disponible';
-            }
-          } else if (formattedPublishDate) {
-            return formattedPublishDate;
-          }
-          return 'Date non disponible';
-        })()}
+        {getDisplayDate()}
       </span>
     </div>
-    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    >
+    </div>
   </div>
 
   <div class="p-6 flex flex-col flex-grow">
     <h3 class="flex-grow">
-      <a 
-        href={getPermalink(href, 'post')} 
+      <a
+        href={getPermalink(href, 'post')}
         class="text-2xl font-bold mb-2 line-clamp-2 text-gray-900 hover:text-[var(--hover-color)] transition-colors duration-300"
         aria-label={`Lire ${title}`}
       >
@@ -228,43 +224,49 @@ if (meta?.publishDate && !formattedPublishDate) {
       </a>
     </h3>
 
-    {description && (
-      <p class="text-gray-600 dark:text-gray-400 line-clamp-3 mt-3 mb-4 text-base group-hover:text-gray-900 dark:group-hover:text-gray-300">
-        {description}
-        <span class="inline-block ml-1 text-gray-400 dark:text-gray-500" aria-label="Suite du texte disponible">…</span>
-      </p>
-    )}
-    
-    {(meta?.duration || meta?.expert || meta?.contributors || meta?.episode) && (
-      <div class="flex items-center gap-4 text-sm text-gray-600 flex-wrap">
-        {meta.duration && (
-          <div class="inline-flex items-center gap-1.5">
-            <Icon name="tabler:clock" class="h-4 w-4 text-gray-500 opacity-70" />
-            <span>{meta.duration}</span>
-          </div>
-        )}
-        {(meta.expert || meta.contributors) && (
-          <div class="inline-flex items-center gap-1.5">
-            <Icon name="tabler:users" class="h-4 w-4 text-gray-500 opacity-70" />
-            <span>
-              {meta.expert && meta.contributors 
-                ? `${meta.expert}, ${meta.contributors}`
-                : (meta.expert || meta.contributors)}
-            </span>
-          </div>
-        )}
-        {meta.episode && (
-          <div class="inline-flex items-center gap-1.5">
-            <Icon name="tabler:device-tv" class="h-4 w-4 text-gray-500 opacity-70" />
-            <span>{meta.episode}</span>
-          </div>
-        )}
-      </div>
-    )}
+    {
+      description && (
+        <p class="text-gray-600 dark:text-gray-400 line-clamp-3 mt-3 mb-4 text-base group-hover:text-gray-900 dark:group-hover:text-gray-300">
+          {description}
+          <span class="inline-block ml-1 text-gray-400 dark:text-gray-500" aria-label="Suite du texte disponible">
+            …
+          </span>
+        </p>
+      )
+    }
+
+    {
+      (meta?.duration || meta?.expert || meta?.contributors || meta?.episode) && (
+        <div class="flex items-center gap-4 text-sm text-gray-600 flex-wrap">
+          {meta.duration && (
+            <div class="inline-flex items-center gap-1.5">
+              <Icon name="tabler:clock" class="h-4 w-4 text-gray-500 opacity-70" />
+              <span>{meta.duration}</span>
+            </div>
+          )}
+          {(meta.expert || meta.contributors) && (
+            <div class="inline-flex items-center gap-1.5">
+              <Icon name="tabler:users" class="h-4 w-4 text-gray-500 opacity-70" />
+              <span>
+                {meta.expert && meta.contributors
+                  ? `${meta.expert}, ${meta.contributors}`
+                  : meta.expert || meta.contributors}
+              </span>
+            </div>
+          )}
+          {meta.episode && (
+            <div class="inline-flex items-center gap-1.5">
+              <Icon name="tabler:device-tv" class="h-4 w-4 text-gray-500 opacity-70" />
+              <span>{meta.episode}</span>
+            </div>
+          )}
+        </div>
+      )
+    }
   </div>
-  
+
   <div class="p-6 pt-0 mb-6">
-    <Button 
+    <Button
       href={getPermalink(href, 'post')}
       variant="card"
       icon={config.icon}
@@ -273,13 +275,8 @@ if (meta?.publishDate && !formattedPublishDate) {
         'text-gray-700 dark:text-gray-300 group/btn',
         'inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium',
         'transform transition-all duration-300',
-        'border rounded-xl shadow-sm hover:shadow'
+        'border rounded-xl shadow-sm hover:shadow',
       ]}
-      style={`
-        background-color: color-mix(in srgb, ${config.color} 10%, transparent);
-        border-color: color-mix(in srgb, ${config.color} 25%, transparent);
-      `}
-      aria-label={config.label}
     >
       <span class="font-medium">{config.label}</span>
       <span class="ml-1 transform transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
@@ -293,27 +290,19 @@ if (meta?.publishDate && !formattedPublishDate) {
     position: relative;
     isolation: isolate;
   }
-  
+
   article::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(
-      to bottom right,
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.05)
-    );
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
     border-radius: 1rem;
     backdrop-filter: blur(8px);
   }
 
   .dark article::before {
-    background: linear-gradient(
-      to bottom right,
-      rgba(30, 41, 59, 0.2),
-      rgba(30, 41, 59, 0.05)
-    );
+    background: linear-gradient(to bottom right, rgba(30, 41, 59, 0.2), rgba(30, 41, 59, 0.05));
   }
 
   article:hover .group-hover\\/btn {

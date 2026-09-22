@@ -44,10 +44,11 @@ const vignetteBg = thumbnail && !isPodcast ? 'transparent' : isPodcast ? tintBg 
 ---
 
 <CardTag
-  {...(linked ? { href, target: '_blank', rel: 'noopener noreferrer' } : {})}
+  {...linked ? { href, target: '_blank', rel: 'noopener noreferrer' } : {}}
   class:list={[
     'group flex h-full flex-col bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm transition-all',
-    linked && 'hover:shadow-md hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+    linked &&
+      'hover:shadow-md hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
   ]}
   style={linked ? `--tw-ring-color: ${accent};` : undefined}
 >
@@ -55,62 +56,70 @@ const vignetteBg = thumbnail && !isPodcast ? 'transparent' : isPodcast ? tintBg 
     class="relative aspect-video flex items-center justify-center overflow-hidden dark:bg-slate-700"
     style={`background: ${vignetteBg};`}
   >
-    {thumbnail ? (
-      <Image
-        src={thumbnail}
-        alt={`${isPodcast ? 'Pochette du podcast' : 'Miniature de la vidéo'} : ${title}`}
-        class:list={[
-          'w-full h-full transition-transform duration-500 group-hover:scale-105',
-          isPodcast ? 'object-contain p-3' : 'object-cover',
-        ]}
-        style={isPodcast ? `background: ${tintBg};` : undefined}
-        widths={[200, 400]}
-        sizes="(max-width: 1024px) 50vw, 25vw"
-        aspectRatio="16:9"
-        loading="lazy"
-      />
-    ) : isPodcast ? (
-      <Icon
-        name={icon}
-        class="w-12 h-12"
-        style={`color: color-mix(in srgb, ${accent} 55%, white);`}
-        aria-hidden="true"
-      />
-    ) : null}
+    {
+      thumbnail ? (
+        <Image
+          src={thumbnail}
+          alt={`${isPodcast ? 'Pochette du podcast' : 'Miniature de la vidéo'} : ${title}`}
+          class:list={[
+            'w-full h-full transition-transform duration-500 group-hover:scale-105',
+            isPodcast ? 'object-contain p-3' : 'object-cover',
+          ]}
+          style={isPodcast ? `background: ${tintBg};` : undefined}
+          widths={[200, 400]}
+          sizes="(max-width: 1024px) 50vw, 25vw"
+          aspectRatio="16:9"
+          loading="lazy"
+        />
+      ) : isPodcast ? (
+        <Icon
+          name={icon}
+          class="w-12 h-12"
+          style={`color: color-mix(in srgb, ${accent} 55%, white);`}
+          aria-hidden="true"
+        />
+      ) : null
+    }
 
-    {/* Pastille de lecture : seul indicateur pour les vidéos (tous états) ;
-        pour les podcasts, uniquement en survol quand une pochette existe. */}
-    {(!isPodcast || thumbnail) && (
-      <div
-        class:list={[
-          'flex items-center justify-center transition-opacity',
-          thumbnail ? 'absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100' : '',
-        ]}
-      >
-        <span class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow" aria-hidden="true">
-          <Icon
-            name={isPodcast ? 'tabler:headphones' : 'tabler:player-play-filled'}
-            class:list={['w-6 h-6', !isPodcast && 'ml-0.5']}
-            style={`color: ${accent};`}
-          />
-        </span>
-      </div>
-    )}
+    {
+      /* Pastille de lecture : seul indicateur pour les vidéos (tous états) ;
+        pour les podcasts, uniquement en survol quand une pochette existe. */
+    }
+    {
+      (!isPodcast || thumbnail) && (
+        <div
+          class:list={[
+            'flex items-center justify-center transition-opacity',
+            thumbnail ? 'absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100' : '',
+          ]}
+        >
+          <span class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow" aria-hidden="true">
+            <Icon
+              name={isPodcast ? 'tabler:headphones' : 'tabler:player-play-filled'}
+              class:list={['w-6 h-6', !isPodcast && 'ml-0.5']}
+              style={`color: ${accent};`}
+            />
+          </span>
+        </div>
+      )
+    }
   </div>
 
   <div class="p-3 flex-1 flex flex-col gap-1.5">
     <p class="text-sm font-medium text-gray-800 dark:text-gray-100 line-clamp-2">{title}</p>
-    {linked ? (
-      <span class="inline-flex items-center gap-1 text-xs font-medium" style={`color: ${accent};`}>
-        {isPodcast ? 'Écouter' : 'Regarder'}
-        <Icon name="tabler:external-link" class="w-3.5 h-3.5" aria-hidden="true" />
-        <span class="sr-only">(s'ouvre dans un nouvel onglet)</span>
-      </span>
-    ) : (
-      <span class="inline-flex items-center gap-1 text-xs font-medium text-gray-400 dark:text-gray-500">
-        <Icon name="tabler:clock" class="w-3.5 h-3.5" aria-hidden="true" />
-        Bientôt disponible
-      </span>
-    )}
+    {
+      linked ? (
+        <span class="inline-flex items-center gap-1 text-xs font-medium" style={`color: ${accent};`}>
+          {isPodcast ? 'Écouter' : 'Regarder'}
+          <Icon name="tabler:external-link" class="w-3.5 h-3.5" aria-hidden="true" />
+          <span class="sr-only">(s'ouvre dans un nouvel onglet)</span>
+        </span>
+      ) : (
+        <span class="inline-flex items-center gap-1 text-xs font-medium text-gray-400 dark:text-gray-500">
+          <Icon name="tabler:clock" class="w-3.5 h-3.5" aria-hidden="true" />
+          Bientôt disponible
+        </span>
+      )
+    }
   </div>
 </CardTag>

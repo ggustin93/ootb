@@ -110,11 +110,7 @@ async function listMedia(params) {
 
   console.log('[List] Query:', query);
 
-  const response = await cloudinary.search
-    .expression(query)
-    .max_results(limit)
-    .next_cursor(offset)
-    .execute();
+  const response = await cloudinary.search.expression(query).max_results(limit).next_cursor(offset).execute();
 
   const files = response.resources.map(cloudinaryToTina);
 
@@ -155,21 +151,18 @@ async function uploadMedia(event) {
   try {
     // Parse multipart form data
     const contentType = event.headers['content-type'] || '';
-    let file, directory = '';
+    let file,
+      directory = '';
 
     if (contentType.includes('multipart/form-data')) {
       // Handle multipart - extract boundary and parse
       const boundary = contentType.split('boundary=')[1];
-      const body = event.isBase64Encoded
-        ? Buffer.from(event.body, 'base64').toString('binary')
-        : event.body;
+      const body = event.isBase64Encoded ? Buffer.from(event.body, 'base64').toString('binary') : event.body;
 
       // Simple multipart parser
       const parts = body.split(`--${boundary}`);
       for (const part of parts) {
         if (part.includes('name="file"')) {
-          const match = part.match(/filename="([^"]+)"/);
-          const filename = match ? match[1] : 'upload';
           const dataStart = part.indexOf('\r\n\r\n') + 4;
           const dataEnd = part.lastIndexOf('\r\n');
           const fileData = part.slice(dataStart, dataEnd);

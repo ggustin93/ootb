@@ -5,7 +5,60 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
-## [1.3.0] — Non publié (en attente)
+## [1.3.2] — 2026-09-22
+
+### Modération des fiches et build fiable (#22)
+
+- **Seules les fiches « Publié » sont en ligne** — Le build ne publie que les fiches au statut « Publié » dans NocoDB, comme les données festival en production. Un spam qui passerait l'anti-spam reste en « A valider » et n'apparaît jamais sur le site. Pour publier une fiche, l'équipe passe son statut à « Publié », puis clique sur « Redéployer le site web ».
+  - Limite connue : repasser en « A valider » une fiche déjà en ligne ne la retire pas du site lors d'un build Netlify. Son fichier est versionné dans le dépôt : il faut le supprimer à la main.
+- **Plus aucune fiche effacée en cas de panne NocoDB** — Si NocoDB ne répond pas ou refuse le token, le build s'arrête avec une erreur, avant toute modification des fichiers. Il s'arrête aussi si aucune fiche « Publié » ne remonte (vue mal filtrée, par exemple). Avant, il recevait une liste vide et pouvait supprimer toutes les fiches publiées.
+- **Toutes les fiches récupérées, au-delà de 100** — La récupération est paginée (avec un plafond de sécurité), comme pour les données festival. Avant, elle s'arrêtait aux 100 premières fiches.
+- **Token absent des journaux** — En cas d'échec, le journal n'affiche que le message d'erreur. Avant, il affichait l'objet d'erreur complet, token NocoDB compris.
+- **Vérifié avant déploiement** — Les 85 fiches de NocoDB remontent toutes en « Publié » (lecture seule). Un token invalide fait échouer le script (code de sortie 1) sans toucher aux fichiers.
+- **La vue NocoDB reste non filtrée, volontairement** — La vue lue par le build (« Fiches - Vue table ») est aussi la vue par défaut de l'équipe. Si on la filtrait sur « Publié », les fiches « A valider » y deviendraient invisibles. Le filtre dans le code suffit : le build ne publie que les fiches « Publié », quoi que montre la vue. Pour voir les fiches en attente, l'équipe dispose de deux nouvelles vues (voir ci-dessous).
+
+**Fichiers modifiés** : `src/scripts/build-fiches-pedagogiques.js`
+
+### Base NocoDB des fiches pédagogiques
+
+- **Vue « Fiches - Vue par statut »** — Toutes les fiches, groupées en « A valider » et « Publié ». Elle donne la vue d'ensemble.
+- **Vue « Fiches - À valider »** — Une file de modération : elle ne montre que les fiches en attente (filtre `Statut = A valider`). L'équipe passe une fiche en « Publié » pour la mettre en ligne, ou la supprime si c'est un spam. Quand la vue est vide, il n'y a plus rien à traiter.
+- **Vue du build inchangée** — « Fiches - Vue table » reste la vue par défaut, sans filtre, et c'est toujours elle que lit le build. Elle contient 85 fiches, toutes « Publié ».
+
+### CI GitHub au vert (#26)
+
+- **Premier passage au vert sur `main`** — Les deux jobs échouaient, pour deux raisons :
+  - `check` : la correction du contrôle qualité (#24) n'avait jamais été fusionnée. Elle l'est maintenant.
+  - `build` : il n'avait accès ni à NocoDB ni à TinaCloud. Les secrets `NOCODB_API_TOKEN`, `TINA_CLIENT_ID` et `TINA_TOKEN` sont désormais configurés dans GitHub et transmis au build.
+- **Pas de réindexation de la recherche TinaCloud en CI** — La CI lance `tinacms build --skip-search-index`. Le build Netlify ne change pas.
+
+**Fichiers modifiés** : `.github/workflows/actions.yaml`
+
+---
+
+## [1.3.1] — 2026-09-22
+
+### Anti-spam du formulaire « Appel à projets » (#21)
+
+- **Les fausses fiches n'arrivent plus dans NocoDB** — Le serveur vérifie chaque envoi avant de l'enregistrer. Il écarte les envois trop volumineux ou mal formés, les champs manquants ou trop courts, les emails invalides, les publics cibles inconnus et les textes de moins de 3 mots. Le robot actuel envoie des chaînes aléatoires sans espaces : il est désormais bloqué.
+- **Champ piège invisible** — Le formulaire contient un champ caché que seuls les robots remplissent. Il reste inaccessible au clavier et aux lecteurs d'écran.
+- **Aucun signal pour le robot** — Un envoi refusé reçoit la même confirmation qu'un vrai envoi. Le robot ne peut donc pas s'adapter.
+- **Rien ne change pour les enseignants, et aucune fiche perdue** — Pas de captcha ni d'étape en plus. Le formulaire applique les mêmes règles que le serveur avant l'envoi (champs obligatoires remplis, au moins 3 mots dans « Description » et « Objectifs »). En cas d'oubli, l'enseignant voit un message d'erreur au lieu d'une confirmation trompeuse.
+- **Journaux conformes au RGPD** — Chaque refus est journalisé avec un code de raison (`spam rejected: <raison>`), sans aucune donnée personnelle. Les journaux existants (mode test, erreurs NocoDB) n'affichent plus les données soumises.
+- **Tests** — La suite hors ligne des formulaires passe de 45 à 75 tests. Elle couvre notamment l'échantillon réel du robot, une soumission française réaliste et chacune des règles de refus.
+
+**Fichiers modifiés** : `netlify/functions/submit-pedagogical-sheet.js`, `src/components/forms/ProjectSubmissionForm.astro`, `netlify/functions/__tests__/all-functions.test.js`, `netlify/functions/__tests__/README.md`
+
+### Base NocoDB des fiches pédagogiques
+
+- **Fausses fiches supprimées** — Les 5 fiches générées par le robot et encore présentes dans NocoDB ont été supprimées, avant qu'un build ne les publie. Les 85 fiches restantes ont été vérifiées une à une : toutes sont légitimes.
+- **Nouveau champ « Statut »** (« A valider » par défaut, « Publié ») — C'est le même champ que dans les tables du festival (stands, ateliers, conférences). Les 85 fiches existantes sont passées à « Publié » automatiquement, sans cochage manuel. Toute nouvelle fiche, qu'elle arrive par le formulaire ou par une saisie manuelle, reste en « A valider » jusqu'à validation par l'équipe.
+  - Le site ne filtre pas encore sur ce statut. Le filtre arrive avec #22.
+- **Bouton « Redéployer le site web »** — Nouvelle table « Actions spéciales » dans la base des fiches, avec un bouton « Exécuter » qui relance le build Netlify. C'est le même script que dans la base festival. Il permet de mettre en ligne une fiche validée sans attendre le prochain déploiement.
+
+---
+
+## [1.3.0] — 2026-07-08
 
 ### Ajouté
 
@@ -40,6 +93,16 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Skill Claude Code `tinacms-ootb`** — Documentation repo-spécifique des conventions TinaCMS (versions épinglées, régénération obligatoire de `tina-lock.json`, conventions de collections, pièges de rendu d'images) ajoutée sous `.claude/skills/tinacms-ootb/`. Mise à jour : rendu rich-text via `TinaRichText.astro` / `richTextToHtml()` (plus `<TinaMarkdown>` sur pages Astro SSG).
 - **`.gitignore`** — Ignore `.claude/settings.local.json` (réglages locaux par utilisateur) et `*.mov` (binaires/tutoriels hors dépôt).
 - Schéma Tina `eduspark` (`tina/festivalCollection.ts`) réduit à `{ enabled, image, ctaUrl }` (retrait des champs texte `eyebrow`/`title`/`description`/`ctaText` devenus inutiles) ; `tina/tina-lock.json` régénéré.
+
+### Qualité du code : contrôle qualité au vert (#24)
+
+- **`npm run check` passe à nouveau (0 erreur)** — Le contrôle qualité exécuté avant chaque livraison était en échec depuis longtemps : 90 erreurs de types, 140 erreurs ESLint et 417 fichiers mal formatés. Il redevient un vrai filet de sécurité : toute nouvelle erreur saute aux yeux au lieu de se perdre dans le bruit.
+- **Erreurs corrigées à la source, sans les masquer** — Les propriétés des composants correspondent maintenant aux données qu'ils reçoivent réellement (images Cloudinary, en-tête, cartes, héro du festival, événements NocoDB…). Aucune erreur n'est réduite au silence (`any`, `@ts-ignore` ou `eslint-disable`).
+- **Formatage automatique cohérent** — Le code suit désormais une seule convention Prettier. Le contenu généré ou édité via TinaCMS (`src/content/`, `tina-lock.json`) est exclu du formatage, pour que les builds et les éditions CMS ne produisent pas de modifications parasites.
+- **Code mort supprimé** — Trois fichiers que plus rien n'importait sont supprimés (`PhotoGallery.astro`, `lib/posts.ts`, `LandingLayout.astro`). Deux d'entre eux importaient des fichiers inexistants. Un doublon d'animations dans `tailwind.config.js`, qui écrasait silencieusement la première définition, est aussi supprimé.
+- **Petites corrections visibles** — Le bouton de don de la section « Nous soutenir » ouvre désormais le lien externe de façon sécurisée (`rel="noopener noreferrer"`, que le bouton ignorait auparavant).
+- **Aucune régression** — Le build produit les mêmes 379 pages qu'avant, avec des animations CSS identiques. Tous les tests hors ligne passent.
+- **Point ouvert** — La page `dashboard` a toujours été indexable par les moteurs de recherche : son réglage « noindex » n'était jamais pris en compte. Il reste à décider si elle doit être masquée.
 
 **Fichiers ajoutés** : `src/pages/erasmus-plus.astro`, `src/content/erasmus-plus/index.json`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/utils/tinaRichText.ts`, `src/utils/renderMissionHtml.ts`, `src/components/ui/TinaRichText.astro`, `src/utils/__tests__/tinaRichText.test.js`, `tina/erasmusCollection.ts`, `public/images/erasmus/` (cats-family, cofinance-union-europeenne, randers-statsskole), `.claude/skills/tinacms-ootb/`
 

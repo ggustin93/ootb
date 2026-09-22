@@ -10,16 +10,10 @@ const { size = 'md' } = Astro.props;
 const sizes = {
   sm: 'w-32',
   md: 'w-48',
-  lg: 'w-64'
+  lg: 'w-64',
 };
 ---
 
 <div class={sizes[size]}>
-  <img
-    src={logoHeaderUrl}
-    alt="Out of the Books"
-    class="w-full h-auto"
-    width={256}
-    height={64}
-  />
-</div> 
+  <img src={logoHeaderUrl} alt="Out of the Books" class="w-full h-auto" width={256} height={64} />
+</div>

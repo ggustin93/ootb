@@ -14,6 +14,8 @@ TINA_SEARCH_TOKEN=votre_token
 
 Configuration dans `tina/config.ts` :
 
+<!-- snippet partiel, pas du TS valide -->
+<!-- prettier-ignore -->
 ```typescript
 search: {
   tina: {

@@ -6,7 +6,7 @@ export const navigationPlugin: Plugin = {
   __type: 'content-creator',
   name: 'Navigation Editor',
   fields: navigationCollection.fields,
-  async onSubmit(values, cms) {
+  async onSubmit(values) {
     // Enregistrer les valeurs dans le fichier JSON
     try {
       const response = await fetch('/api/navigation/update', {
@@ -16,14 +16,14 @@ export const navigationPlugin: Plugin = {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error('Erreur lors de la mise à jour de la navigation');
       }
-      
+
       return { status: 'success', message: 'Navigation mise à jour avec succès' };
-    } catch (error) {
+    } catch {
       return { status: 'error', message: 'Erreur lors de la mise à jour de la navigation' };
     }
   },
-}; 
+};

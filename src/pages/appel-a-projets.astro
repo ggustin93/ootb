@@ -15,31 +15,34 @@ import appelProjetData from '~/content/appel_projet/index.json';
 const { metadata, hero, criteres, processus, formulaire } = appelProjetData;
 
 // Extraction des étapes du processus pour le mapping
-const processSteps = processus.steps.map(step => ({
-  icon: step.title === 'Soumission' ? 'tabler:bulb' : 
-        step.title === 'Évaluation' ? 'tabler:messages' : 'tabler:check',
+const processSteps = processus.steps.map((step) => ({
+  icon: step.title === 'Soumission' ? 'tabler:bulb' : step.title === 'Évaluation' ? 'tabler:messages' : 'tabler:check',
   title: step.title,
-  description: step.description
+  description: step.description,
 }));
 
 // Extraction des critères pour le mapping
-const criteria = criteres.items.map(item => ({
-  icon: item.title === 'Innovation pédagogique' ? 'tabler:bulb-filled' :
-        item.title === 'Impact mesurable' ? 'tabler:chart-dots' :
-        item.title === 'Facilement reproductible' ? 'tabler:repeat' : 'tabler:users',
+const criteria = criteres.items.map((item) => ({
+  icon:
+    item.title === 'Innovation pédagogique'
+      ? 'tabler:bulb-filled'
+      : item.title === 'Impact mesurable'
+        ? 'tabler:chart-dots'
+        : item.title === 'Facilement reproductible'
+          ? 'tabler:repeat'
+          : 'tabler:users',
   title: item.title,
-  description: item.description
+  description: item.description,
 }));
 
 // Préparation des boutons avec les propriétés correctes pour ContentHeroSection
-const heroButtons = hero.buttons.map(button => ({
+const heroButtons = hero.buttons.map((button) => ({
   href: button.href,
   icon: button.icon,
   label: button.label,
-  variant: button.variant === 'outline-blue' ? 'outline-blue' : 'secondary',
-  size: 'lg'
+  variant: button.variant === 'outline-blue' ? ('outline-blue' as const) : ('secondary' as const),
+  size: 'lg' as const,
 }));
-
 ---
 
 <Layout {metadata}>
@@ -53,7 +56,7 @@ const heroButtons = hero.buttons.map(button => ({
     scroll={{
       targetId: hero.scroll.targetId,
       label: hero.scroll.label,
-      hideOnMobile: true
+      hideOnMobile: true,
     }}
     imageBackgroundColor="--ootb-blue"
   />
@@ -62,11 +65,7 @@ const heroButtons = hero.buttons.map(button => ({
   <section id="criteres" class="pt-16 pb-6 md:pb-10 relative bg-white scroll-mt-16">
     <!-- Image de fond avec overlay -->
     <div class="absolute inset-0">
-      <img
-        src={criteres.backgroundImage}
-        alt="Collaboration éducative"
-        class="w-full h-full object-cover opacity-5"
-      />
+      <img src={criteres.backgroundImage} alt="Collaboration éducative" class="w-full h-full object-cover opacity-5" />
       <div class="absolute inset-0 bg-white/90"></div>
     </div>
 
@@ -83,23 +82,21 @@ const heroButtons = hero.buttons.map(button => ({
         </div>
 
         <div class="grid sm:grid-cols-2 gap-6">
-          {criteria.map((item) => (
-            <div class="group bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-white/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div class="flex items-start gap-4">
-                <div class="inline-flex items-center justify-center w-12 h-12 bg-[#6ab29e]/10 text-[--ootb-blue] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <Icon name={item.icon} class="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 class="text-xl md:text-2xl font-semibold text-sky-900 mb-2">
-                    {item.title}
-                  </h3>
-                  <p class="text-sm text-gray-600">
-                    {item.description}
-                  </p>
+          {
+            criteria.map((item) => (
+              <div class="group bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-white/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="flex items-start gap-4">
+                  <div class="inline-flex items-center justify-center w-12 h-12 bg-[#6ab29e]/10 text-[--ootb-blue] rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <Icon name={item.icon} class="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 class="text-xl md:text-2xl font-semibold text-sky-900 mb-2">{item.title}</h3>
+                    <p class="text-sm text-gray-600">{item.description}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
 
         <!-- Vidéo ou image inspirante -->
@@ -115,7 +112,7 @@ const heroButtons = hero.buttons.map(button => ({
               loading="lazy"
               decoding="async"
               class="w-full h-full object-cover"
-            />            
+            />
           </div>
         </div>
       </div>
@@ -142,54 +139,49 @@ const heroButtons = hero.buttons.map(button => ({
         <div class="grid md:grid-cols-2 gap-8 items-center">
           <!-- Cartes à gauche -->
           <div class="space-y-6 h-full">
-            {processSteps.map((step) => (
-              <div class="bg-[var(--ootb-blue)] rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-start gap-5">
-                  <div class="bg-white/10 rounded-lg p-3 shrink-0">
-                    <Icon name={step.icon} class="w-6 h-6 text-white" />
-                  </div>
-                  <div class="min-w-0">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-2 text-white">
-                      {step.title}
-                    </h3>
-                    <p class="text-white/90 leading-relaxed">{step.description}</p>
+            {
+              processSteps.map((step) => (
+                <div class="bg-[var(--ootb-blue)] rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-start gap-5">
+                    <div class="bg-white/10 rounded-lg p-3 shrink-0">
+                      <Icon name={step.icon} class="w-6 h-6 text-white" />
+                    </div>
+                    <div class="min-w-0">
+                      <h3 class="text-xl md:text-2xl font-semibold mb-2 text-white">{step.title}</h3>
+                      <p class="text-white/90 leading-relaxed">{step.description}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            }
           </div>
-          
+
           <!-- Vidéo à droite -->
           <div class="relative order-first md:order-last h-full">
             <div class="h-full">
               <div class="aspect-[9/16] w-full relative">
                 <!-- Image de couverture -->
                 <div id="video-cover" class="absolute inset-0 z-10 cursor-pointer">
-                  <img 
-                    src={bgVideo.src} 
-                    alt="Aperçu de la vidéo" 
+                  <img
+                    src={bgVideo.src}
+                    alt="Aperçu de la vidéo"
                     class="rounded-2xl shadow-xl w-full h-full object-cover"
                     width={bgVideo.width}
                     height={bgVideo.height}
                   />
                   <!-- Icône de lecture -->
                   <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-16 h-16 md:w-20 md:h-20 bg-black/30 backdrop-blur-sm rounded-full flex items-center justify-center transition-transform hover:scale-110">
+                    <div
+                      class="w-16 h-16 md:w-20 md:h-20 bg-black/30 backdrop-blur-sm rounded-full flex items-center justify-center transition-transform hover:scale-110"
+                    >
                       <Icon name="tabler:player-play-filled" class="w-8 h-8 md:w-10 md:h-10 text-white" />
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Vidéo -->
-                <video
-                  id="project-video"
-                  class="rounded-2xl shadow-xl w-full h-full object-cover"
-                  preload="metadata"
-                >
-                  <source 
-                    src={processus.videoUrl}
-                    type="video/mp4"
-                  />
+                <video id="project-video" class="rounded-2xl shadow-xl w-full h-full object-cover" preload="metadata">
+                  <source src={processus.videoUrl} type="video/mp4" />
                   Votre navigateur ne supporte pas la lecture de vidéos.
                 </video>
               </div>
@@ -201,7 +193,10 @@ const heroButtons = hero.buttons.map(button => ({
   </section>
 
   <!-- Formulaire - RESTE EN DERNIER -->
-  <section id="formulaire" class="py-24 md:py-32 bg-gradient-to-b from-[--ootb-blue] from-0% via-[#4a90c9] via-60% to-[--ootb-blue] to-100% scroll-mt-16 mt-8">
+  <section
+    id="formulaire"
+    class="py-24 md:py-32 bg-gradient-to-b from-[--ootb-blue] from-0% via-[#4a90c9] via-60% to-[--ootb-blue] to-100% scroll-mt-16 mt-8"
+  >
     <div class="container mx-auto px-4">
       <div class="max-w-3xl mx-auto text-center mb-16">
         <SectionDivider variant="white" class="mb-6">
@@ -215,7 +210,7 @@ const heroButtons = hero.buttons.map(button => ({
           {formulaire.description}
         </p>
       </div>
-      
+
       <div class="relative z-10">
         <ProjectSubmissionForm />
       </div>
@@ -226,7 +221,8 @@ const heroButtons = hero.buttons.map(button => ({
 <style>
   /* Animations raffinées */
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0) rotate(0);
       opacity: 0.2;
     }
@@ -237,7 +233,8 @@ const heroButtons = hero.buttons.map(button => ({
   }
 
   @keyframes float-delayed {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0) rotate(0);
       opacity: 0.15;
     }
@@ -259,12 +256,12 @@ const heroButtons = hero.buttons.map(button => ({
   .process-step {
     @apply relative overflow-hidden;
   }
-  
+
   .process-step::before {
     content: '';
     @apply absolute inset-0 bg-gradient-to-br from-[#6ab29e]/5 to-transparent opacity-0 transition-opacity duration-300 rounded-2xl;
   }
-  
+
   .process-step:hover::before {
     @apply opacity-100;
   }
@@ -283,22 +280,22 @@ const heroButtons = hero.buttons.map(button => ({
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const videoCover = document.getElementById('video-cover');
-    const video = document.getElementById('project-video');
-    
+    const video = document.getElementById('project-video') as HTMLVideoElement | null;
+
     if (videoCover && video) {
       videoCover.addEventListener('click', () => {
         // Masquer la couverture
         videoCover.style.display = 'none';
-        
+
         // Lancer la vidéo
         video.controls = true;
-        video.play().catch(error => {
+        video.play().catch((error: unknown) => {
           console.error('Erreur lors de la lecture de la vidéo:', error);
           // En cas d'erreur, réafficher la couverture
           videoCover.style.display = 'block';
         });
       });
-      
+
       // Réafficher la couverture lorsque la vidéo se termine
       video.addEventListener('ended', () => {
         videoCover.style.display = 'block';

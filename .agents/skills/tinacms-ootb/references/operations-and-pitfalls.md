@@ -7,6 +7,7 @@
 **After ANY change to a `tina/*.ts` file — add / remove / rename a field, collection, or type — regenerate and commit `tina/tina-lock.json` in the same change.**
 
 **Why it's non-negotiable** (source: `CLAUDE.md` § "TinaCMS Schema Rule (CRITICAL)" + `memory-bank/troubleshoot.md`):
+
 - TinaCloud reads `tina/tina-lock.json` **from git** as its schema source of truth. It does **not** re-derive the schema from the TypeScript config.
 - The TinaCloud "Re-sync" button only re-indexes **content**, never the schema.
 - `tinacms build --skip-cloud-checks` (Netlify builds) reads the existing lock; it does **not** regenerate it.
@@ -43,7 +44,7 @@ If the mismatch persists, the lock wasn't fully written — increase `sleep` to 
 
 ### ⚠️ The "tiny diff" trap
 
-`tina/tina-lock.json` is a **single minified line**. `git diff --stat` shows "1 file changed" with a trivial line delta **even when the schema changed substantially** — and an *unchanged* lock looks identical. **Do not trust diff size.** Verify by content:
+`tina/tina-lock.json` is a **single minified line**. `git diff --stat` shows "1 file changed" with a trivial line delta **even when the schema changed substantially** — and an _unchanged_ lock looks identical. **Do not trust diff size.** Verify by content:
 
 ```bash
 grep -c '"ambition"' tina/tina-lock.json        # > 0 after adding field `ambition`
@@ -117,4 +118,5 @@ Notes: lock regeneration must accompany the change (verify via grep, §1). `lien
 - [ ] New `public/` image field → plain `<img>`, not `<Image>`.
 
 ### Files referenced
+
 `CLAUDE.md` (§ TinaCMS Schema Rule), `memory-bank/troubleshoot.md`, `tina/config.ts`, `tina/erasmusCollection.ts`, `tina/aboutCollection.ts`, `src/content/erasmus-plus/index.json`, `src/pages/erasmus-plus.astro`, `src/pages/a-propos.astro`, `src/components/ui/TinaRichText.astro`, `src/utils/tinaRichText.ts`, `src/components/common/Image.astro`, `package.json`.

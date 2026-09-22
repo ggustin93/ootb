@@ -61,11 +61,7 @@ describe('content JSON integrity', () => {
       }
       const hits = [];
       collectCorruptedPaths(data, '', hits);
-      assert.deepEqual(
-        hits,
-        [],
-        `corrupted CMS placeholder in ${rel} at: ${hits.join(', ')}`
-      );
+      assert.deepEqual(hits, [], `corrupted CMS placeholder in ${rel} at: ${hits.join(', ')}`);
     });
   }
 });

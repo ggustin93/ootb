@@ -22,4 +22,4 @@ export interface Event {
   };
 }
 
-export type EventsByDay = Record<string, Event[]>; 
+export type EventsByDay = Record<string, Event[]>;

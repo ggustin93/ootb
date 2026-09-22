@@ -80,8 +80,8 @@
     },
     "actualite": {
       "colorVariable": "var(--content-actualite)",
-      "title": "Actualités pédagogiques",
-      "description": "Restez informé des dernières nouvelles et tendances dans le monde de l'éducation.\n",
+      "title": "Actualités de l'Asbl et de ses événements et initiatives",
+      "description": "Découvrez tout ce que nous vous proposons lors du Festival, au travers des projets d'enseignants, du projet Erasmus+\n",
       "links": []
     },
     "live": {

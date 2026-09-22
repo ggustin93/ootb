@@ -28,17 +28,17 @@ export const getStaticPaths = (async ({ paginate }) => {
   return paths;
 }) satisfies GetStaticPaths;
 
-type Props = InferGetStaticPropsType<typeof getStaticPaths> & { 
+type Props = InferGetStaticPropsType<typeof getStaticPaths> & {
   category: Record<string, string>;
-  tag?: { slug: string; title: string; }; // Ajout du tag optionnel
+  tag?: { slug: string; title: string }; // Ajout du tag optionnel
 };
 
 const { page, category, tag } = Astro.props as Props;
 const currentPage = page.currentPage ?? 1;
 
-const allTags = await findTags().then(tags => {
+const allTags = await findTags().then((tags) => {
   const uniqueTags = new Map();
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     if (!uniqueTags.has(tag.slug)) {
       uniqueTags.set(tag.slug, tag);
     }
@@ -54,44 +54,12 @@ const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
 const allPosts = await getCachedPosts(fetchPosts);
 // Filtrer pour ne garder que les posts de la catégorie actuelle
 const searchablePosts = allPosts
-  .filter(post => post.category?.slug === category.slug)
-  .map(post => ({
+  .filter((post) => post.category?.slug === category.slug)
+  .map((post) => ({
     slug: post.slug,
     title: post.title || '',
-    category: post.category?.slug
+    category: post.category?.slug,
   }));
-
-// Configuration des filtres
-const FILTER_TYPES = {
-  all: {
-    icon: 'tabler:layout-grid',
-    label: 'Tous',
-  },
-  actualite: {
-    icon: 'tabler:news',
-    label: 'Actualités',
-  },
-  fiche: {
-    icon: 'tabler:file-text',
-    label: 'Fiches',
-  },
-  live: {
-    icon: 'tabler:brand-facebook',
-    label: 'Lives',
-  },
-  podcast: {
-    icon: 'tabler:brand-spotify',
-    label: 'Podcasts',
-  },
-  tv: {
-    icon: 'tabler:device-tv',
-    label: 'Emissions TV',
-  },
-  premium: {
-    icon: 'tabler:crown',
-    label: 'Nous soutenir',
-  }
-} as const;
 
 // Extraction des données
 const { hero } = sharedData;
@@ -120,7 +88,9 @@ const metadata = {
         <div class="grid md:grid-cols-12 gap-12 items-center">
           <!-- Mascotte (cachée sur mobile, visible sur desktop) -->
           <div class="hidden md:block relative order-2 md:order-1 md:col-span-5 -mt-8">
-            <div class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300">
+            <div
+              class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300"
+            >
               <Image
                 src={ootbLogo}
                 alt="Out of the Books Mascotte"
@@ -135,23 +105,25 @@ const metadata = {
           <!-- Contenu textuel -->
           <div class="text-center md:text-left order-1 md:order-2 md:col-span-7">
             <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
-              {(!category.slug || category.slug === 'blog') 
-                ? hero.title
-                : `${CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.titlePrefix} ${CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.label}`
+              {
+                !category.slug || category.slug === 'blog'
+                  ? hero.title
+                  : `${CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.titlePrefix} ${CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.label}`
               }
             </h1>
             <p class="text-xl text-white/90 font-light mb-8 max-w-xl mx-auto md:mx-0">
-              {(!category.slug || category.slug === 'blog')
-                ? hero.description
-                : CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.description
+              {
+                !category.slug || category.slug === 'blog'
+                  ? hero.description
+                  : CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.description
               }
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch 
-              tags={initialTags} 
+            <TagSearch
+              tags={initialTags}
               posts={searchablePosts}
-              placeholder={search.placeholder} 
+              placeholder={search.placeholder}
               label={search.thematicLabel}
             />
 
@@ -177,21 +149,25 @@ const metadata = {
               />
 
               <!-- Autres filtres - Structure harmonisée comme dans [...page].astro -->
-              {/* MODIFICATION TEMPORAIRE: Catégorie "premium" masquée - Pour réactiver, supprimer "key !== 'premium'" du filtre ci-dessous */}
-              {Object.entries(CONTENT_TYPES)
-                .filter(([key]) => key !== 'all' && key !== 'premium')
-                .map(([key, config]) => {
-                  const isActive = key.toLowerCase() === category.slug?.toLowerCase();
-                  return (
-                    <CategoryButton
-                      href={`/category/${key}`}
-                      icon={config.icon}
-                      label={config.shortLabel}
-                      color={config.color}
-                      isActive={isActive}
-                    />
-                  );
-                })}
+              {
+                /* MODIFICATION TEMPORAIRE: Catégorie "premium" masquée - Pour réactiver, supprimer "key !== 'premium'" du filtre ci-dessous */
+              }
+              {
+                Object.entries(CONTENT_TYPES)
+                  .filter(([key]) => key !== 'all' && key !== 'premium')
+                  .map(([key, config]) => {
+                    const isActive = key.toLowerCase() === category.slug?.toLowerCase();
+                    return (
+                      <CategoryButton
+                        href={`/category/${key}`}
+                        icon={config.icon}
+                        label={config.shortLabel}
+                        color={config.color}
+                        isActive={isActive}
+                      />
+                    );
+                  })
+              }
             </div>
           </div>
         </div>
@@ -199,12 +175,11 @@ const metadata = {
     </div>
   </GradientHeroSection>
 
-  <ScrollDownArrow 
-    targetId="category-filters" 
-    label={category.slug 
-      ? CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.actionLabel 
-      : "Voir tous les contenus"
-    }
+  <ScrollDownArrow
+    targetId="category-filters"
+    label={category.slug
+      ? CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.actionLabel
+      : 'Voir tous les contenus'}
     position="left-[20%] bottom-[20%]"
     class="text-white hidden md:flex"
     hideOnMobile={true}
@@ -213,150 +188,156 @@ const metadata = {
   <section id="category-content" class="py-4 -mt-8 bg-white relative z-10">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
-        {category.slug === 'premium' ? (
-          <>
-            <div id="premium-section-top" class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
-              <h2 class="text-2xl sm:text-3xl font-body font-semibold flex items-center gap-3">
-                <Icon name="tabler:crown" class="w-8 h-8 text-[--ootb-yellow]" />
-                {CONTENT_TYPES.premium.pageTitle}
-              </h2>
+        {
+          category.slug === 'premium' ? (
+            <>
+              <div
+                id="premium-section-top"
+                class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8"
+              >
+                <h2 class="text-2xl sm:text-3xl font-body font-semibold flex items-center gap-3">
+                  <Icon name="tabler:crown" class="w-8 h-8 text-[--ootb-yellow]" />
+                  {CONTENT_TYPES.premium.pageTitle}
+                </h2>
 
-              {/* Filtres minimalistes - version desktop uniquement */}
-              <div class="hidden sm:flex gap-1 bg-gray-100/80 p-1 rounded-lg">
-                <a
-                  href="/blog#category-content"
-                  class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
-                >
-                  <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4" />
-                  <span class="text-xs sm:text-sm">{CONTENT_TYPES.all.shortLabel}</span>
-                </a>
-
-                {/* MODIFICATION TEMPORAIRE: Catégorie "premium" masquée - Pour réactiver, supprimer "key !== 'premium'" du filtre ci-dessous */}
-                {Object.entries(CONTENT_TYPES).filter(([key]) => key !== 'all' && key !== 'premium').map(([key, config]) => (
+                {/* Filtres minimalistes - version desktop uniquement */}
+                <div class="hidden sm:flex gap-1 bg-gray-100/80 p-1 rounded-lg">
                   <a
-                    href={`/category/${key.toLowerCase()}/#category-content`}
-                    class:list={[
-                      'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
-                      'transition-all duration-300',
-                      key === 'premium' ? [
-                        'bg-white shadow-sm',
-                        'text-[--ootb-yellow]'
-                      ] : [
-                        'text-gray-600 hover:text-gray-900'
-                      ]
-                    ]}
+                    href="/blog#category-content"
+                    class="flex items-center gap-2 px-3 py-1.5 rounded text-sm text-gray-600 hover:text-gray-900"
                   >
-                    <Icon name={config.icon} class="w-4 h-4" />
-                    <span class="text-xs sm:text-sm">{config.shortLabel}</span>
+                    <Icon name={CONTENT_TYPES.all.icon} class="w-4 h-4" />
+                    <span class="text-xs sm:text-sm">{CONTENT_TYPES.all.shortLabel}</span>
                   </a>
-                ))}
-              </div>
-              
-              {/* Version mobile pour Premium - utilise le composant CategoryFilters */}
-              <div class="sm:hidden">
-                <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
-              </div>
-            </div>
 
-            {/* Encart explicatif */}
-            <div class="bg-gradient-to-br from-amber-50 to-transparent p-8 rounded-2xl mb-12">
-              <div class="max-w-3xl mx-auto">
-                <p class="text-gray-700 text-lg mb-6">
-                  Les contenus réservés à nos soutiens seront bientôt disponibles. Restez à l'écoute pour découvrir nos contenus exclusifs et enrichissants.
-                </p>
-                
-                <div class="flex flex-col sm:flex-row items-center gap-8 justify-between">
-                  <div class="space-y-4 flex-1">
-                    <p class="text-gray-700">
-                      En nous soutenant sur <Button 
-                        href="https://buymeacoffee.com/outofthebooks" 
-                        variant="link" 
-                        size="sm"
-                        icon="tabler:coffee"
-                        class="text-[--ootb-yellow] hover:text-amber-500 font-semibold"
-                      >Buy Me a Coffee</Button>, vous recevrez automatiquement accès à notre newsletter exclusive.
-                    </p>
-                    <p class="text-gray-600">
-                      Celle-ci vous donnera accès à du contenu hors-série et en avant-première !
-                      <span class="text-amber-600 font-medium">Plus d'informations à venir.</span>
-                    </p>
-                    
-                    <div class="flex flex-wrap gap-4 mt-6">
-                      <Button 
-                        href="https://buymeacoffee.com/outofthebooks" 
-                        variant="premium-primary"
-                        icon="tabler:coffee"
+                  {/* MODIFICATION TEMPORAIRE: Catégorie "premium" masquée - Pour réactiver, supprimer "key !== 'premium'" du filtre ci-dessous */}
+                  {Object.entries(CONTENT_TYPES)
+                    .filter(([key]) => key !== 'all' && key !== 'premium')
+                    .map(([key, config]) => (
+                      <a
+                        href={`/category/${key.toLowerCase()}/#category-content`}
+                        class:list={[
+                          'flex items-center gap-2 px-3 py-1.5 rounded text-sm',
+                          'transition-all duration-300',
+                          key === 'premium'
+                            ? ['bg-white shadow-sm', 'text-[--ootb-yellow]']
+                            : ['text-gray-600 hover:text-gray-900'],
+                        ]}
                       >
-                        Faire un don
-                      </Button>
-                      <Button 
-                        href="/blog#category-content" 
-                        variant="premium-secondary"
-                        icon="tabler:arrow-left"
-                        class="back-button"
-                      >
-                        Retour
-                      </Button>
+                        <Icon name={config.icon} class="w-4 h-4" />
+                        <span class="text-xs sm:text-sm">{config.shortLabel}</span>
+                      </a>
+                    ))}
+                </div>
+
+                {/* Version mobile pour Premium - utilise le composant CategoryFilters */}
+                <div class="sm:hidden">
+                  <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
+                </div>
+              </div>
+
+              {/* Encart explicatif */}
+              <div class="bg-gradient-to-br from-amber-50 to-transparent p-8 rounded-2xl mb-12">
+                <div class="max-w-3xl mx-auto">
+                  <p class="text-gray-700 text-lg mb-6">
+                    Les contenus réservés à nos soutiens seront bientôt disponibles. Restez à l'écoute pour découvrir
+                    nos contenus exclusifs et enrichissants.
+                  </p>
+
+                  <div class="flex flex-col sm:flex-row items-center gap-8 justify-between">
+                    <div class="space-y-4 flex-1">
+                      <p class="text-gray-700">
+                        En nous soutenant sur{' '}
+                        <Button
+                          href="https://buymeacoffee.com/outofthebooks"
+                          variant="link"
+                          size="sm"
+                          icon="tabler:coffee"
+                          class="text-[--ootb-yellow] hover:text-amber-500 font-semibold"
+                        >
+                          Buy Me a Coffee
+                        </Button>
+                        , vous recevrez automatiquement accès à notre newsletter exclusive.
+                      </p>
+                      <p class="text-gray-600">
+                        Celle-ci vous donnera accès à du contenu hors-série et en avant-première !
+                        <span class="text-amber-600 font-medium">Plus d'informations à venir.</span>
+                      </p>
+
+                      <div class="flex flex-wrap gap-4 mt-6">
+                        <Button
+                          href="https://buymeacoffee.com/outofthebooks"
+                          variant="premium-primary"
+                          icon="tabler:coffee"
+                        >
+                          Faire un don
+                        </Button>
+                        <Button
+                          href="/blog#category-content"
+                          variant="premium-secondary"
+                          icon="tabler:arrow-left"
+                          class="back-button"
+                        >
+                          Retour
+                        </Button>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* QR Code */}
-                  <div class="transform hover:scale-105 transition-all duration-300">
-                    <div class="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
-                      <Image
-                        src={import('~/assets/images/bmc_qr.png')}
-                        alt="QR Code Buy Me a Coffee"
-                        width={160}
-                        height={160}
-                        class="w-full h-auto"
-                      />
-                      <p class="text-xs text-gray-500 mt-2 text-center">Scanner pour contribuer</p>
+                    {/* QR Code */}
+                    <div class="transform hover:scale-105 transition-all duration-300">
+                      <div class="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <Image
+                          src={import('~/assets/images/bmc_qr.png')}
+                          alt="QR Code Buy Me a Coffee"
+                          width={160}
+                          height={160}
+                          class="w-full h-auto"
+                        />
+                        <p class="text-xs text-gray-500 mt-2 text-center">Scanner pour contribuer</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* En-tête avec titre et filtres */}
-            <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
-              <h2 class="hidden sm:flex text-2xl sm:text-3xl font-body font-semibold items-center gap-3">
-                {(!category.slug || category.slug === 'blog') 
-                  ? "Tous les contenus" 
-                  : CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.label
-                }
-                {tag && (
-                  <span class="inline-flex items-center gap-3 ml-3">
-                    <span class="text-gray-400">•</span>
-                    <span class="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
-                      <Icon name="tabler:tag" class="w-4 h-4 text-gray-500" />
-                      <span class="text-sm text-gray-800 font-medium">{tag.title}</span>
+            </>
+          ) : (
+            <>
+              {/* En-tête avec titre et filtres */}
+              <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
+                <h2 class="hidden sm:flex text-2xl sm:text-3xl font-body font-semibold items-center gap-3">
+                  {!category.slug || category.slug === 'blog'
+                    ? 'Tous les contenus'
+                    : CONTENT_TYPES[category.slug as keyof typeof CONTENT_TYPES]?.label}
+                  {tag && (
+                    <span class="inline-flex items-center gap-3 ml-3">
+                      <span class="text-gray-400">•</span>
+                      <span class="inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
+                        <Icon name="tabler:tag" class="w-4 h-4 text-gray-500" />
+                        <span class="text-sm text-gray-800 font-medium">{tag.title}</span>
+                      </span>
                     </span>
-                  </span>
-                )}
-              </h2>
-              <div id="category-filters">
-                <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
-              </div>
-            </div>
-
-            {/* Encart explicatif conditionnel selon la catégorie */}
-            {category.slug && (
-              <CategoryInfo type={category.slug as keyof typeof CONTENT_TYPES} />
-            )}
-
-            {/* Liste des articles si pas en mode premium */}
-            {category.slug !== 'premium' && (
-              <>
-                <BlogList posts={page.data} />
-                <div class="mt-12">
-                  <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+                  )}
+                </h2>
+                <div id="category-filters">
+                  <CategoryFilters currentCategory={category.slug} blogConfig={sharedData} />
                 </div>
-              </>
-            )}
-          </>
-        )}
+              </div>
+
+              {/* Encart explicatif conditionnel selon la catégorie */}
+              {category.slug && <CategoryInfo type={category.slug as keyof typeof CONTENT_TYPES} />}
+
+              {/* Liste des articles si pas en mode premium */}
+              {category.slug !== 'premium' && (
+                <>
+                  <BlogList posts={page.data} />
+                  <div class="mt-12">
+                    <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+                  </div>
+                </>
+              )}
+            </>
+          )
+        }
       </div>
     </div>
   </section>
@@ -367,7 +348,7 @@ const metadata = {
   details[open] > div {
     animation: slideDown 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   @keyframes slideDown {
     from {
       opacity: 0;
@@ -380,7 +361,8 @@ const metadata = {
   }
 
   /* Transitions douces */
-  a, button {
+  a,
+  button {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -388,7 +370,7 @@ const metadata = {
   html {
     scroll-behavior: smooth;
   }
-  
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -403,19 +385,25 @@ const metadata = {
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
-  
+
   /* Style pour les boutons de filtre */
   .group:hover {
     ring-color: var(--hover-ring-color) !important;
   }
-  
+
   /* Animation de surbrillance pour le défilement */
   @keyframes highlightPulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
-    50% { box-shadow: 0 0 20px 0 rgba(0, 128, 128, 0.2); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+    0% {
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+    50% {
+      box-shadow: 0 0 20px 0 rgba(0, 128, 128, 0.2);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
   }
-  
+
   .scroll-highlight {
     animation: highlightPulse 1s ease-in-out;
   }
@@ -425,7 +413,7 @@ const metadata = {
   // Fonction directement inspirée de ScrollDownArrow.astro
   function scrollToElement(elementId: string) {
     const targetElement = document.getElementById(elementId);
-    
+
     if (targetElement) {
       const headerOffset = 100;
       const elementPosition = targetElement.getBoundingClientRect().top;
@@ -433,7 +421,7 @@ const metadata = {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     } else {
       // Fallback comme dans ScrollDownArrow si l'élément n'est pas trouvé
@@ -441,7 +429,7 @@ const metadata = {
       const currentPosition = window.pageYOffset;
       window.scrollTo({
         top: currentPosition + defaultScrollDistance,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
@@ -454,7 +442,7 @@ const metadata = {
     // Utiliser requestAnimationFrame pour s'assurer que le DOM est prêt
     requestAnimationFrame(() => {
       const targetElement = document.getElementById('category-content');
-      
+
       if (targetElement) {
         const headerOffset = 100;
         const elementPosition = targetElement.getBoundingClientRect().top;
@@ -462,9 +450,9 @@ const metadata = {
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
-        
+
         // Ajouter un effet visuel subtil pour attirer l'attention
         targetElement.classList.add('scroll-highlight');
         setTimeout(() => {
@@ -475,7 +463,7 @@ const metadata = {
         const defaultScrollDistance = window.innerHeight * 0.8;
         window.scrollTo({
           top: defaultScrollDistance,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }
     });
@@ -489,13 +477,13 @@ const metadata = {
   function handleAnchorClick(e: Event) {
     const target = e.currentTarget as HTMLAnchorElement;
     const href = target.getAttribute('href');
-    
+
     // Vérifier si le lien pointe vers une autre catégorie
     if (href && (href.startsWith('/category/') || href === '/blog')) {
       // Si le lien contient un ancre mais pointe vers une autre page, laisser la navigation se faire normalement
       const currentPath = window.location.pathname;
       const targetPath = href.split('#')[0];
-      
+
       // Si on est déjà sur la même page, empêcher la navigation et faire défiler vers l'ancre
       if (currentPath === targetPath) {
         e.preventDefault();
@@ -528,7 +516,7 @@ const metadata = {
   document.addEventListener('DOMContentLoaded', () => {
     // Vérifier si nous avons un hash dans l'URL
     const hash = window.location.hash;
-    
+
     // Traiter le hash pour le défilement
     if (hash) {
       setTimeout(() => {
@@ -543,25 +531,27 @@ const metadata = {
     }
 
     // Ajout des écouteurs d'événements sur les liens avec ancre
-    document.querySelectorAll('a[href*="#category-filters"], a[href*="#premium-section-top"], a[href*="#category-content"]').forEach(link => {
-      link.addEventListener('click', handleAnchorClick);
-    });
-    
+    document
+      .querySelectorAll('a[href*="#category-filters"], a[href*="#premium-section-top"], a[href*="#category-content"]')
+      .forEach((link) => {
+        link.addEventListener('click', handleAnchorClick);
+      });
+
     // Gestion du bouton de retour
     setupBackButton();
   });
-  
+
   // Configuration du bouton de retour
   function setupBackButton() {
     const backButtons = document.querySelectorAll('.back-button');
-    
-    backButtons.forEach(button => {
+
+    backButtons.forEach((button) => {
       button.addEventListener('click', (e) => {
         e.preventDefault();
-        
+
         // Vérifier s'il y a un historique de navigation
         const referrer = document.referrer;
-        
+
         // Si on a un referrer et qu'il est sur le même domaine
         if (referrer && referrer.includes(window.location.hostname)) {
           // Revenir à la page précédente
@@ -574,4 +564,3 @@ const metadata = {
     });
   }
 </script>
-

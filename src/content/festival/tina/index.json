@@ -6,7 +6,7 @@
   },
   "hero": {
     "logo": "~/assets/images/logo_festival_white.svg",
-    "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742476885/1007-OOTB-S1-137_1_uhptbc.jpg",
+    "heroImage": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1748970468/Copie_de_Certification_IFPC_z3gnbu.png",
     "date": "30 septembre, 1 et 2 octobre 2026",
     "location": "La Sucrerie - Wavre",
     "description": "Trois jours de conférences, d'ateliers et de rencontres pour repenser l'éducation de demain en famille et entre professionnels de l'éducation. "
@@ -32,9 +32,19 @@
     ]
   },
   "gallery": {
-    "title": "Revivez les moments forts",
-    "description": "Plongez dans l'ambiance des éditions précédentes du festival",
+    "title": "Au programme de cette année:",
+    "description": "Voici quelques teasers pour la 8ème édition de 2026 des 30 septembre, 1er et 2 octobre à la Sucrerie à Wavre",
     "photos": [
+      {
+        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1780072903/fzfl2yzuu0e0otef68cc.jpg",
+        "alt": "Têtes d'affiche",
+        "title": "Des têtes d'affiche dont Steve Bissonnette, Philippe Meirieu, Ariane Hébert"
+      },
+      {
+        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1787906503/xw4qbiqfjzyxjdg69xmp.png",
+        "alt": "2 spectacles le mercredi 30 septembre",
+        "title": "Monsieur Nicolas et Dan Gagnon en spectacle! A ne pas manquer"
+      },
       {
         "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742477393/1007-OOTB-S1-101_perrine_jpnpfa.webp",
         "alt": "Conférence principale Out of The Books",
@@ -56,16 +66,6 @@
         "title": "Networking & Échanges"
       },
       {
-        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742478210/hand_pan_tyxcf1.webp",
-        "alt": "Espace détente",
-        "title": "Espace détente & café"
-      },
-      {
-        "src": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1742478983/1007-OOTB-S1-123_sgggt4.avif",
-        "alt": "Espace de discussion",
-        "title": "Discussions informelles"
-      },
-      {
         "src": "https://images.unsplash.com/photo-1558008258-3256797b43f3?q=80&w=800&auto=format&fit=crop",
         "alt": "Présentation interactive",
         "title": "Présentations interactives"
@@ -79,13 +79,13 @@
       "icon": "tabler:presentation"
     },
     {
-      "number": "20+",
+      "number": "10+",
       "label": "ateliers pratiques",
       "icon": "tabler:tool"
     },
     {
       "number": "80+",
-      "label": "intervenants",
+      "label": "exposants",
       "icon": "tabler:users"
     },
     {
@@ -95,18 +95,18 @@
     }
   ],
   "programLink": {
-    "enabled": false,
+    "enabled": true,
     "title": "Programme du Festival 2026 ",
     "description": "Découvrez toutes les conférences, ateliers et stands sur les 3 jours",
     "familyPdf": {
       "enabled": true,
       "text": "Journée des familles (mercredi 30 septembre)",
-      "url": "https://indd.adobe.com/view/1dcfa897-0c15-4bb7-8e76-118c0a663242"
+      "url": "https://indd.adobe.com/view/dfbfdfaa-04ad-429d-a67b-7ae21dcaa902"
     },
     "ebookPdf": {
       "enabled": true,
       "text": "Programme complet (3 jours)",
-      "url": "https://indd.adobe.com/view/5526681c-72b7-422d-8350-3be9d80b2196"
+      "url": "https://indd.adobe.com/view/a62f45c4-a760-4ef1-8f92-d4ce15533b54"
     }
   },
   "ticketing": {
@@ -172,7 +172,7 @@
             "icon": "tabler:train"
           },
           {
-            "text": "Covoiturage: https://togetzer.com/covoiturage-evenement/nitwui#",
+            "text": "Covoiturage: https://togetzer.com/covoiturage-evenement/468v1m",
             "icon": "tabler:car"
           }
         ]
@@ -182,7 +182,7 @@
         "icon": "tabler:clock",
         "infos": [
           {
-            "text": "Ouverture : 8h45",
+            "text": "Ouverture : 8h30",
             "icon": "tabler:door-enter"
           },
           {
@@ -190,7 +190,7 @@
             "icon": "tabler:door-exit"
           },
           {
-            "text": "Restauration sur place avec Traiteur (viennoiserie, poke bowls, wraps)",
+            "text": "Restauration sur place avec le traiteur \" La Cerisaie\" (viennoiserie, poke bowls, wraps)",
             "icon": "tabler:coffee"
           }
         ]
@@ -239,11 +239,6 @@
         "url": "https://www.wavre.be/"
       },
       {
-        "nom": "Daoust",
-        "logo": "https://static.wixstatic.com/media/56c117_a88c6bf5870d4c1792472d4c9d4264de~mv2.jpg/v1/fill/w_280,h_167,al_c,lg_1,q_80,enc_avif,quality_auto/ootb-partenaire-daoust.jpg",
-        "url": "https://www.daoust.be/"
-      },
-      {
         "nom": "IFPC",
         "logo": "https://static.wixstatic.com/media/e57c2b_6bf32d95aa624c06ae30d6809dcb156f~mv2.png/v1/crop/x_0,y_242,w_2886,h_1732/fill/w_396,h_236,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20IFPC.png",
         "url": "https://www.ifpc.be/"
@@ -254,34 +249,14 @@
         "url": "https://www.tvcom.be/"
       },
       {
-        "nom": "Schtroumpfs",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758541870/LOGO_Schtroumpfs_szds1w.jpg",
-        "url": "https://www.smurf.com/fr/shop"
-      },
-      {
         "nom": "Spa",
         "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758541932/ootb-partenaire-spa_iyxpr6.jpg",
         "url": "https://www.spadel.com/fr"
       },
       {
-        "nom": "Nostalgie",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758542020/Nostalgie-CMJN-PRINT_yjkvy6.jpg",
-        "url": "https://www.nostalgie.be/choix-langue"
-      },
-      {
-        "nom": "Maisons Clothes",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543141/maisons_clothes_logo_klpljg.svg",
-        "url": "https://www.maisonsclothes.be/"
-      },
-      {
         "nom": "Qpics Moments' Catcher",
         "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543280/QPICS_Logo_2022_crop_Black_ycm58i.png",
         "url": "https://qpics.be/galeries"
-      },
-      {
-        "nom": "La classe de JJonet",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758543349/Logo_LA_CLASSE_DE_JJONET_hawseq.png",
-        "url": "https://laclassedejjonet.store/"
       },
       {
         "nom": "Pépinière le Try",
@@ -294,9 +269,29 @@
         "url": "https://www.ciaco.coop/"
       },
       {
-        "nom": "Art de Vue",
-        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1758544027/art_de_vue_logo_pnshmo.png",
-        "url": "https://artdevue.be/"
+        "nom": "La Première",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1785791160/dlxxc0pyxjxtdtnukclw.jpg",
+        "url": "https://www.rtbf.be/lapremiere"
+      },
+      {
+        "nom": "Auvio Kids",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1786085684/hpsp2fgmvavrru2d6gon.png",
+        "url": "https://auvio.rtbf.be/kids"
+      },
+      {
+        "nom": "DaBooks",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1780573084/cnchtsdbpixmkbkgyzez.jpg",
+        "url": "https://dajobs.be/valeurs/promotion-de-la-lecture/"
+      },
+      {
+        "nom": "Famileo",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1785791112/qkuhcc5w8hgxjp3w2v4i.png",
+        "url": "https://www.famileo.com/famileo/fr-FR/"
+      },
+      {
+        "nom": "EduLab",
+        "logo": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1785791172/rrttpn0bni2ej6iydb1x.png",
+        "url": "https://edu-lab.be/"
       }
     ]
   }

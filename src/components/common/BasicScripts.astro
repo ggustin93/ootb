@@ -75,7 +75,7 @@ import { UI } from 'astrowind:config';
 
             window.scrollTo({
               top: offsetPosition,
-              behavior: 'smooth'
+              behavior: 'smooth',
             });
             // console.log('Scrolled to:', offsetPosition);
           }
@@ -211,10 +211,14 @@ import { UI } from 'astrowind:config';
   });
 
   // ADD EVENT LISTENER FOR HASH CHANGES
-  window.addEventListener('hashchange', function() {
-    // console.log('hashchange event triggered!'); // For debugging
-    handleAnchorScroll();
-  }, false);
+  window.addEventListener(
+    'hashchange',
+    function () {
+      // console.log('hashchange event triggered!'); // For debugging
+      handleAnchorScroll();
+    },
+    false
+  );
 </script>
 
 <script is:inline>

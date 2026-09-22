@@ -22,44 +22,47 @@ const mission = homepageData.mission;
 // Fallback values if no Tina data is available
 const defaultMission = {
   title: "Innover pour l'éducation de demain",
-  description: "La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.",
+  description:
+    "La mission d'Out of the Books est de connecter et d'inspirer les acteurs du changement éducatif à travers la Francophonie. Nous créons des espaces d'échange et d'apprentissage pour les enseignants, les directions, les parents et tous ceux qui souhaitent réinventer l'éducation.",
   features: [
     { text: "Créer des espaces d'échange et d'apprentissage" },
-    { text: "Connecter les acteurs du changement éducatif" },
-    { text: "Inspirer l'innovation dans l'éducation" }
+    { text: 'Connecter les acteurs du changement éducatif' },
+    { text: "Inspirer l'innovation dans l'éducation" },
   ],
   cta: {
-    text: "En savoir plus sur notre mission",
-    link: "/a-propos"
-  }
+    text: 'En savoir plus sur notre mission',
+    link: '/a-propos',
+  },
 };
 
 // Détermine si l'image du JSON est une URL Cloudinary
-const isCloudinaryUrl = mission?.image && (
-  mission.image.includes('cloudinary.com') || 
-  mission.image.startsWith('https://') || 
-  mission.image.startsWith('http://')
-);
+const isCloudinaryUrl =
+  mission?.image &&
+  (mission.image.includes('cloudinary.com') ||
+    mission.image.startsWith('https://') ||
+    mission.image.startsWith('http://'));
 
 // Use props if provided, otherwise use Tina data with fallback
 // Si l'image du JSON est une URL Cloudinary, l'utiliser directement
 const displayImage = propImage || (isCloudinaryUrl ? mission.image : teamImage);
-const displayFeatures = propFeatures || mission?.features?.map(f => f.text) || defaultMission.features.map(f => f.text);
+const displayFeatures =
+  propFeatures || mission?.features?.map((f) => f.text) || defaultMission.features.map((f) => f.text);
 const displayTitle = mission?.title || defaultMission.title;
 const displayDescription = mission?.description || defaultMission.description;
 const displayCta = mission?.cta || defaultMission.cta;
 
 // Dimensions optimales pour l'image de mission
-const mobileWidth = 480;  // Largeur optimale pour mobile
+const mobileWidth = 480; // Largeur optimale pour mobile
 const mobileHeight = 480; // Hauteur optimale pour mobile (ratio 1:1)
 ---
+
 <section class="md:pb-16 md:pt-12 pb-8 px-4 md:px-8 bg-[#FFFFFF] relative isolate md:-mt-32" id="mission-section">
   <!-- Base layer avec z-index très élevé -->
   <div class="absolute inset-0 bg-[#FFFFFF] z-[150]"></div>
-  
+
   <!-- Séparateur avec z-index plus élevé -->
   <div class="md:hidden w-full h-12 bg-gradient-to-b from-[--ootb-turquoise]/5 to-transparent z-[151]"></div>
-  
+
   <!-- Contenu principal avec z-index encore plus élevé -->
   <div class="max-w-6xl mx-auto relative z-[152]">
     <!-- Contenu principal -->
@@ -70,7 +73,7 @@ const mobileHeight = 480; // Hauteur optimale pour mobile (ratio 1:1)
           <Icon name="tabler:target" class="w-4 h-4 text-[--ootb-turquoise]" />
           <span class="text-[--ootb-turquoise] font-medium tracking-wide">NOTRE MISSION</span>
         </SectionDivider>
-        
+
         <h2 class="font-body text-3xl md:text-4xl font-bold tracking-tight leading-tight text-[--ootb-blue] mb-4">
           {displayTitle}
         </h2>
@@ -79,9 +82,15 @@ const mobileHeight = 480; // Hauteur optimale pour mobile (ratio 1:1)
       <!-- Image (à gauche - 2/5) -->
       <div class="relative group w-full md:col-span-2">
         <!-- Effet de relief pour l'image -->
-        <div class="absolute inset-0 bg-gradient-to-r from-[--ootb-turquoise]/8 to-[--ootb-violet]/8 rounded-xl md:rounded-2xl transform rotate-2 scale-[1.02] blur-[2px] transition-transform group-hover:rotate-1 z-[1]"></div>
-        <div class="absolute -inset-1 bg-gradient-to-r from-[--ootb-turquoise]/15 to-[--ootb-violet]/15 rounded-xl md:rounded-2xl transform -rotate-1 opacity-75 z-[2]"></div>
-        <Image 
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-[--ootb-turquoise]/8 to-[--ootb-violet]/8 rounded-xl md:rounded-2xl transform rotate-2 scale-[1.02] blur-[2px] transition-transform group-hover:rotate-1 z-[1]"
+        >
+        </div>
+        <div
+          class="absolute -inset-1 bg-gradient-to-r from-[--ootb-turquoise]/15 to-[--ootb-violet]/15 rounded-xl md:rounded-2xl transform -rotate-1 opacity-75 z-[2]"
+        >
+        </div>
+        <Image
           src={displayImage}
           alt="L'équipe Out of the Books en action"
           class="relative z-[3] rounded-xl md:rounded-2xl shadow-xl transform transition-all duration-300 group-hover:scale-[1.02] w-full object-cover"
@@ -113,14 +122,16 @@ const mobileHeight = 480; // Hauteur optimale pour mobile (ratio 1:1)
         </p>
 
         <ul class="space-y-4">
-          {displayFeatures.map((feature: string) => (
-            <li class="flex items-start gap-3 group">
-              <span class="flex-shrink-0 w-5 h-5 mt-1 rounded-full bg-[--ootb-turquoise]/8 flex items-center justify-center">
-                <Icon name="tabler:circle-check-filled" class="w-5 h-5 text-[--ootb-turquoise]" />
-              </span>
-              <span class="text-gray-600 text-lg leading-relaxed">{feature}</span>
-            </li>
-          ))}
+          {
+            displayFeatures.map((feature: string) => (
+              <li class="flex items-start gap-3 group">
+                <span class="flex-shrink-0 w-5 h-5 mt-1 rounded-full bg-[--ootb-turquoise]/8 flex items-center justify-center">
+                  <Icon name="tabler:circle-check-filled" class="w-5 h-5 text-[--ootb-turquoise]" />
+                </span>
+                <span class="text-gray-600 text-lg leading-relaxed">{feature}</span>
+              </li>
+            ))
+          }
         </ul>
 
         <!-- Bouton amélioré -->
@@ -138,4 +149,4 @@ const mobileHeight = 480; // Hauteur optimale pour mobile (ratio 1:1)
       </div>
     </div>
   </div>
-</section> 
+</section>

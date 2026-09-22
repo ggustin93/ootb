@@ -29,11 +29,7 @@ export const VALEUR_PROSE_CLASS = 'prose prose-sm max-w-none text-gray-700';
 export const CATEGORY_PROSE_CLASS = 'prose prose-sm max-w-none text-gray-700';
 
 function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function renderLeaf(node: TinaNode): string {

@@ -6,31 +6,30 @@ import Button from '~/components/ui/Button.astro';
 import homepageData from '../../content/homepage/index.json';
 import ootbLogo from '~/assets/images/ootb-logo.svg';
 
-const { 
-  heroImage = ootbLogo, 
-  title: { 
-    firstLine = 'Soutenez-nous', 
-    secondLine = '' 
-  } = {}, 
-  intro = 'Ensemble, construisons l\'éducation de demain !',
-  description = 'Votre soutien est essentiel pour garantir la pérennité de nos actions : créer des ressources pédagogiques innovantes, faire évoluer le Festival, donner la parole aux experts et accompagner enseignants, futurs enseignants, parents et élèves face aux défis de notre époque.',
-  closingText = 'Grâce à vous, nous pouvons continuer à agir. Rejoignez-nous pour bâtir une école plus motivante et efficace !',
-  features = [],
+const {
+  heroImage = ootbLogo,
   buttons = {
     primary: {
       text: 'Faire un don',
       href: 'https://buymeacoffee.com/outofthebooks',
-      icon: 'tabler:coffee'
-    }
+      icon: 'tabler:coffee',
+    },
   },
-  qrCode = {
-    image: '~/assets/images/bmc_qr.png',
-    title: 'Soutenez-nous !',
-    caption: '',
-    link: 'https://buymeacoffee.com/outofthebooks'
-  }
 } = homepageData.premium;
+
+// Not (yet) editable in homepage/index.json — static copy.
+const description =
+  'Votre soutien est essentiel pour garantir la pérennité de nos actions : créer des ressources pédagogiques innovantes, faire évoluer le Festival, donner la parole aux experts et accompagner enseignants, futurs enseignants, parents et élèves face aux défis de notre époque.';
+const closingText =
+  'Grâce à vous, nous pouvons continuer à agir. Rejoignez-nous pour bâtir une école plus motivante et efficace !';
+const qrCode = {
+  image: '~/assets/images/bmc_qr.png',
+  title: 'Soutenez-nous !',
+  caption: '',
+  link: 'https://buymeacoffee.com/outofthebooks',
+};
 ---
+
 <section class="px-4 md:px-8 py-16 md:py-20 bg-[--ootb-turquoise] text-white relative overflow-hidden">
   <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
     <Image
@@ -43,8 +42,14 @@ const {
       loading="lazy"
       decoding="async"
     />
-    <Icon name="tabler:heart" class="absolute w-20 h-24 -rotate-12 top-[10%] left-[35%] opacity-20 transition-transform hover:-translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
-    <Icon name="tabler:book" class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000 text-white filter drop-shadow-lg" />
+    <Icon
+      name="tabler:heart"
+      class="absolute w-20 h-24 -rotate-12 top-[10%] left-[35%] opacity-20 transition-transform hover:-translate-y-2 duration-1000 text-white filter drop-shadow-lg"
+    />
+    <Icon
+      name="tabler:book"
+      class="absolute w-16 h-20 rotate-45 bottom-[20%] right-[25%] opacity-20 transition-transform hover:translate-y-2 duration-1000 text-white filter drop-shadow-lg"
+    />
   </div>
 
   <div class="max-w-6xl mx-auto relative z-10">
@@ -54,21 +59,27 @@ const {
           <Icon name="tabler:heart-handshake" class="w-4 h-4 mr-1 md:mt-0 -mt-0.5" />
           Soutenez-nous
         </SectionDivider>
-        
+
         <h2 class="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-white mb-8">
           <span class="text-[--ootb-yellow] relative font-bold italic">
             Ensemble
-            <span class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
-            <span class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
-            <span class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
+            <span
+              class="absolute bottom-0 left-0 w-[102%] h-[0.06em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"
+            ></span>
+            <span
+              class="absolute bottom-[0.08em] left-0 w-[101%] h-[0.05em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"
+            ></span>
+            <span
+              class="absolute bottom-[-0.08em] left-0 w-[103%] h-[0.06em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"
+            ></span>
           </span>
           <span>, construisons l'éducation de demain !</span>
         </h2>
-        
+
         <p class="text-lg leading-relaxed text-white/90 mb-8 max-w-xl">
           {description}
         </p>
-        
+
         <p class="text-lg font-medium text-white/90 mb-10 max-w-xl">
           {closingText}
         </p>
@@ -89,11 +100,13 @@ const {
       </div>
 
       <div id="qr-code" class="hidden lg:flex justify-center items-center">
-        <div class="bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 flex flex-col items-center max-w-md">
+        <div
+          class="bg-white p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 flex flex-col items-center max-w-md"
+        >
           <h3 class="text-3xl font-bold text-[--ootb-turquoise] mb-8 text-center">{qrCode.title}</h3>
-          
+
           <a href={qrCode.link} target="_blank" rel="noopener noreferrer" class="block">
-            <Image 
+            <Image
               src={qrCode.image}
               alt="QR code pour nous soutenir via Buy Me a Coffee"
               class="w-full max-w-[320px] h-auto"
@@ -114,17 +127,17 @@ const {
   a:has(img) {
     position: relative;
   }
-  
+
   a:has(img)::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: 8px;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
     opacity: 0;
     transition: opacity 1s ease;
   }
-  
+
   a:has(img):hover::after {
     opacity: 1;
   }

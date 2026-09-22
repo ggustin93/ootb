@@ -10,8 +10,8 @@ export function useEvents(day: string) {
     queryKey: ['events', day],
     queryFn: async () => {
       // Simuler un délai de chargement pour la démo
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       // Remplacer par votre vraie API
       const response = await fetch(`/api/events/${day}`);
       if (!response.ok) {
@@ -21,4 +21,4 @@ export function useEvents(day: string) {
     },
     gcTime: 1000 * 60 * 30, // 30 minutes
   });
-} 
+}

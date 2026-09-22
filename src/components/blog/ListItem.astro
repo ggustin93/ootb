@@ -1,9 +1,6 @@
 ---
-import type { ImageMetadata } from 'astro';
-import Card from '~/components/ui/Card.astro';
 import { Icon } from 'astro-icon/components';
 
-import { APP_BLOG } from 'astrowind:config';
 import type { Post } from '~/types';
 
 import { getPermalink } from '~/utils/permalinks';
@@ -21,108 +18,91 @@ const imageSrc = typeof image === 'string' ? image : image?.src;
 const categorySlug = typeof post.category === 'string' ? post.category : post.category?.slug;
 const categoryLabel = typeof post.category === 'string' ? post.category : post.category?.title;
 const tags = post.tags?.map((tag) => (typeof tag === 'string' ? tag : tag.title));
-
-// Déterminer le type de carte en fonction de la catégorie
-const getCardType = (category?: { slug?: string; title?: string }) => {
-  if (!category?.title) return 'default';
-  
-  const categoryName = category.title.toLowerCase();
-  switch (categoryName) {
-    case 'podcast':
-      return 'podcast';
-    case 'premium':
-      return 'default';
-    default:
-      return 'default';
-  }
-};
-
-// Formater les métadonnées pour le composant Card
-const formatMeta = (post: Post) => {
-  if (post.category?.title?.toLowerCase() === 'podcast') {
-    return {
-      episode: `EP. ${post.episode}`,
-      duration: post.readingTime,
-      expert: post.author
-    };
-  }
-  return {
-    duration: post.readingTime,
-    expert: post.author,
-    contributors: post.contributors,
-    date: getFormattedDate(post.publishDate)
-  };
-};
 ---
 
-<article class="group relative overflow-hidden rounded-xl bg-white border border-gray-200 transition-all duration-300 hover:-translate-y-0.5">
+<article
+  class="group relative overflow-hidden rounded-xl bg-white border border-gray-200 transition-all duration-300 hover:-translate-y-0.5"
+>
   <a href={link} class="block relative">
-    {imageSrc && (
-      <div class="relative h-52 overflow-hidden rounded-t-xl">
-        <img
-          src={imageSrc}
-          width={400}
-          height={224}
-          alt={post.title}
-          class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
-        />
-        <!-- Badge de type de contenu -->
-        <div class="absolute top-4 right-4">
-          <span class:list={[
-            'inline-flex items-center gap-1.5 py-1.5 px-3',
-            'rounded-full text-sm font-medium',
-            'bg-white/95 border border-gray-100',
-            {
-              'text-gray-700': categorySlug === 'actualite',
-              'text-[#0EA5E9]': categorySlug === 'fiche',
-              'text-[#1877F2]': categorySlug === 'live',
-              'text-[#8d216d]': categorySlug === 'podcast',
-              'text-[#22C55E]': categorySlug === 'tv',
-              'text-[#F43F5E]': categorySlug === 'premium',
-            }
-          ]}>
-            <Icon name={post.icon || 'tabler:article'} class="w-4 h-4" />
-            {categoryLabel}
-          </span>
+    {
+      imageSrc && (
+        <div class="relative h-52 overflow-hidden rounded-t-xl">
+          <img
+            src={imageSrc}
+            width={400}
+            height={224}
+            alt={post.title}
+            class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+          />
+          {/* Badge de type de contenu */}
+          <div class="absolute top-4 right-4">
+            <span
+              class:list={[
+                'inline-flex items-center gap-1.5 py-1.5 px-3',
+                'rounded-full text-sm font-medium',
+                'bg-white/95 border border-gray-100',
+                {
+                  'text-gray-700': categorySlug === 'actualite',
+                  'text-[#0EA5E9]': categorySlug === 'fiche',
+                  'text-[#1877F2]': categorySlug === 'live',
+                  'text-[#8d216d]': categorySlug === 'podcast',
+                  'text-[#22C55E]': categorySlug === 'tv',
+                  'text-[#F43F5E]': categorySlug === 'premium',
+                },
+              ]}
+            >
+              <Icon name={post.icon || 'tabler:article'} class="w-4 h-4" />
+              {categoryLabel}
+            </span>
+          </div>
         </div>
-      </div>
-    )}
-    
+      )
+    }
+
     <div class="relative p-6">
-      <h3 class="text-xl font-bold leading-tight mb-2 text-gray-900 group-hover:text-[#6ab29e] transition-colors duration-300">
+      <h3
+        class="text-xl font-bold leading-tight mb-2 text-gray-900 group-hover:text-[#6ab29e] transition-colors duration-300"
+      >
         {post.title}
       </h3>
       <p class="text-gray-600 text-sm line-clamp-2 mb-4">
         {post.excerpt}
       </p>
-      
+
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2 text-sm text-gray-500">
           <Icon name="tabler:calendar" class="w-4 h-4" />
           <time datetime={post.publishDate.toISOString()}>{getFormattedDate(post.publishDate)}</time>
         </div>
-        {post.readingTime && (
-          <div class="flex items-center gap-2 text-sm text-gray-500">
-            <Icon name="tabler:clock" class="w-4 h-4" />
-            {post.readingTime}
-          </div>
-        )}
+        {
+          post.readingTime && (
+            <div class="flex items-center gap-2 text-sm text-gray-500">
+              <Icon name="tabler:clock" class="w-4 h-4" />
+              {post.readingTime}
+            </div>
+          )
+        }
       </div>
 
       <!-- Tags -->
-      {tags?.length > 0 && (
-        <div class="mt-4 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100/80 rounded-full">
-              <Icon name="tabler:tag" class="w-3 h-3" />
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
+      {
+        tags && tags.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100/80 rounded-full">
+                <Icon name="tabler:tag" class="w-3 h-3" />
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
 
       <!-- Bordure au survol -->
-      <div class="absolute inset-x-0 bottom-0 h-0.5 bg-[#6ab29e] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+      <div
+        class="absolute inset-x-0 bottom-0 h-0.5 bg-[#6ab29e] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+      >
+      </div>
     </div>
   </a>
 </article>

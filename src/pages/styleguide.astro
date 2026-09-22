@@ -11,24 +11,24 @@ import Card from '~/components/ui/Card.astro';
 import Link from '~/components/ui/Link.astro';
 
 const colors = {
-  'Violet': { value: 'var(--ootb-violet)', hex: '#921e6d' },
-  'Orange': { value: 'var(--ootb-orange)', hex: '#e7461c' },
-  'Green': { value: 'var(--ootb-green)', hex: '#40ad50' },
-  'Blue': { value: 'var(--ootb-blue)', hex: '#0890bd' },
-  'Turquoise': { value: 'var(--ootb-turquoise)', hex: '#69b29e' },
-  'Yellow': { value: 'var(--ootb-yellow)', hex: '#f9b004' },
+  Violet: { value: 'var(--ootb-violet)', hex: '#921e6d' },
+  Orange: { value: 'var(--ootb-orange)', hex: '#e7461c' },
+  Green: { value: 'var(--ootb-green)', hex: '#40ad50' },
+  Blue: { value: 'var(--ootb-blue)', hex: '#0890bd' },
+  Turquoise: { value: 'var(--ootb-turquoise)', hex: '#69b29e' },
+  Yellow: { value: 'var(--ootb-yellow)', hex: '#f9b004' },
 };
 
 const pangrams = {
-  en: "The quick brown fox jumps over the lazy dog",
-  fr: "Portez ce vieux whisky au juge blond qui fume"
+  en: 'The quick brown fox jumps over the lazy dog',
+  fr: 'Portez ce vieux whisky au juge blond qui fume',
 };
 
 const sections = [
   {
     id: 'fondations',
     title: 'Fondations',
-    subsections: ['Typographie', 'Couleurs', 'Grille & Layout']
+    subsections: ['Typographie', 'Couleurs', 'Grille & Layout'],
   },
   {
     id: 'composants',
@@ -36,23 +36,23 @@ const sections = [
     subsections: [
       {
         title: 'Atomes',
-        items: ['Couleurs', 'Typographie', 'Icônes', 'Boutons', 'Badges']
+        items: ['Couleurs', 'Typographie', 'Icônes', 'Boutons', 'Badges'],
       },
       {
         title: 'Molécules',
-        items: ['Logo', 'Action Badges', 'Boutons avec icônes', 'Navigation']
+        items: ['Logo', 'Action Badges', 'Boutons avec icônes', 'Navigation'],
       },
       {
         title: 'Organismes',
-        items: ['Hero Section', 'Navigation principale', 'Footer']
-      }
-    ]
+        items: ['Hero Section', 'Navigation principale', 'Footer'],
+      },
+    ],
   },
   {
     id: 'developpeur',
     title: 'Guide Développeur',
-    subsections: ['Configuration', 'Accessibilité', 'Performance', 'Code Snippets']
-  }
+    subsections: ['Configuration', 'Accessibilité', 'Performance', 'Code Snippets'],
+  },
 ];
 ---
 
@@ -64,43 +64,51 @@ const sections = [
     <nav class="mb-16 p-8 bg-gray-50 rounded-xl">
       <h2 class="text-2xl font-semibold mb-6 text-[--ootb-turquoise]">Table des matières</h2>
       <div class="grid md:grid-cols-3 gap-8">
-        {sections.map((section, sectionIndex) => (
-          <div>
-            <a href={`#${section.id}`} class="text-lg font-medium hover:text-[--ootb-turquoise] transition-colors">
-              {sectionIndex + 1}. {section.title}
-            </a>
-            <ul class="mt-2 space-y-4">
-              {section.subsections.map((sub, subIndex) => {
-                if (typeof sub === 'string') {
-                  return (
-                    <li>
-                      <a href={`#${section.id}-${sub.toLowerCase().replace(/\s+/g, '-')}`} 
-                         class="text-sm text-gray-600 hover:text-[--ootb-turquoise] transition-colors">
-                        {sectionIndex + 1}.{subIndex + 1}. {sub}
-                      </a>
-                    </li>
-                  );
-                } else {
-                  return (
-                    <li class="space-y-2">
-                      <p class="text-sm font-medium text-gray-700">{sectionIndex + 1}.{subIndex + 1}. {sub.title}</p>
-                      <ul class="ml-4 space-y-1">
-                        {sub.items.map((item, itemIndex) => (
-                          <li>
-                            <a href={`#${section.id}-${item.toLowerCase().replace(/\s+/g, '-')}`}
-                               class="text-sm text-gray-600 hover:text-[--ootb-turquoise] transition-colors">
-                              {sectionIndex + 1}.{subIndex + 1}.{itemIndex + 1}. {item}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  );
-                }
-              })}
-            </ul>
-          </div>
-        ))}
+        {
+          sections.map((section, sectionIndex) => (
+            <div>
+              <a href={`#${section.id}`} class="text-lg font-medium hover:text-[--ootb-turquoise] transition-colors">
+                {sectionIndex + 1}. {section.title}
+              </a>
+              <ul class="mt-2 space-y-4">
+                {section.subsections.map((sub, subIndex) => {
+                  if (typeof sub === 'string') {
+                    return (
+                      <li>
+                        <a
+                          href={`#${section.id}-${sub.toLowerCase().replace(/\s+/g, '-')}`}
+                          class="text-sm text-gray-600 hover:text-[--ootb-turquoise] transition-colors"
+                        >
+                          {sectionIndex + 1}.{subIndex + 1}. {sub}
+                        </a>
+                      </li>
+                    );
+                  } else {
+                    return (
+                      <li class="space-y-2">
+                        <p class="text-sm font-medium text-gray-700">
+                          {sectionIndex + 1}.{subIndex + 1}. {sub.title}
+                        </p>
+                        <ul class="ml-4 space-y-1">
+                          {sub.items.map((item, itemIndex) => (
+                            <li>
+                              <a
+                                href={`#${section.id}-${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                class="text-sm text-gray-600 hover:text-[--ootb-turquoise] transition-colors"
+                              >
+                                {sectionIndex + 1}.{subIndex + 1}.{itemIndex + 1}. {item}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            </div>
+          ))
+        }
       </div>
     </nav>
 
@@ -115,8 +123,7 @@ const sections = [
           {
             Object.entries(colors).map(([name, { value, hex }]) => (
               <div class="overflow-hidden rounded-xl">
-                <div class="h-32 p-6" style={{ backgroundColor: value }}>
-                </div>
+                <div class="h-32 p-6" style={{ backgroundColor: value }} />
                 <div class="p-4 bg-gray-50">
                   <p class="font-body font-semibold mb-1">{name}</p>
                   <p class="text-sm font-mono text-gray-500">{value}</p>
@@ -131,7 +138,7 @@ const sections = [
       <!-- Typographie -->
       <div id="fondations-typographie" class="mb-16 p-8 bg-gray-50 rounded-xl">
         <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Système Typographique</h3>
-        
+
         <div class="space-y-12">
           <!-- Hiérarchie -->
           <div>
@@ -164,12 +171,14 @@ const sections = [
           <div>
             <h4 class="text-lg font-semibold mb-4">Variations Raleway</h4>
             <div class="space-y-4">
-              {['light', 'normal', 'medium', 'semibold', 'bold'].map((weight) => (
-                <div>
-                  <p class="text-sm text-gray-500 mb-2">font-{weight}</p>
-                  <p class={`font-body font-${weight} text-xl`}>{pangrams.fr}</p>
-                </div>
-              ))}
+              {
+                ['light', 'normal', 'medium', 'semibold', 'bold'].map((weight) => (
+                  <div>
+                    <p class="text-sm text-gray-500 mb-2">font-{weight}</p>
+                    <p class={`font-body font-${weight} text-xl`}>{pangrams.fr}</p>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </div>
@@ -178,7 +187,7 @@ const sections = [
       <!-- Grille & Layout -->
       <div id="fondations-espacement-grille" class="p-8 bg-gray-50 rounded-xl">
         <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Grille & Layout</h3>
-        
+
         <div class="space-y-12">
           <!-- Largeurs -->
           <div>
@@ -217,11 +226,11 @@ const sections = [
               <div class="flex flex-col md:grid md:grid-cols-5 gap-8 md:gap-16">
                 <!-- Image (2/5) -->
                 <div class="md:col-span-2 bg-[--ootb-turquoise]/10 rounded-xl p-8 flex items-center justify-center">
-                  <p class="text-center text-sm font-medium">Image<br/>2/5 colonnes</p>
+                  <p class="text-center text-sm font-medium">Image<br />2/5 colonnes</p>
                 </div>
                 <!-- Contenu (3/5) -->
                 <div class="md:col-span-3 bg-[--ootb-turquoise]/10 rounded-xl p-8 flex items-center justify-center">
-                  <p class="text-center text-sm font-medium">Contenu<br/>3/5 colonnes</p>
+                  <p class="text-center text-sm font-medium">Contenu<br />3/5 colonnes</p>
                 </div>
               </div>
             </div>
@@ -233,10 +242,12 @@ const sections = [
             <h4 class="text-lg font-semibold mb-4">Layout Featured Content</h4>
             <div class="border-2 border-[--ootb-violet] rounded-xl p-8">
               <!-- En-tête -->
-              <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-8 bg-[--ootb-violet]/10 rounded-xl p-4">
+              <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-8 bg-[--ootb-violet]/10 rounded-xl p-4"
+              >
                 <p class="text-center text-sm font-medium">En-tête flexible</p>
               </div>
-              
+
               <!-- Grille de contenu -->
               <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-[--ootb-violet]/10 rounded-xl aspect-[4/3] flex items-center justify-center">
@@ -311,15 +322,15 @@ const sections = [
                 <div class="space-y-4">
                   <!-- Podcast -->
                   <div class="bg-gray-50 p-6 rounded-xl">
-                    <Button 
+                    <Button
                       variant="card"
                       icon="tabler:brand-spotify"
                       iconPosition="left"
                       class="bg-[color-mix(in_srgb,var(--ootb-violet)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--ootb-violet)_20%,transparent)]"
                     >
                       <span class="font-medium">Écouter l'épisode</span>
-                      <Icon 
-                        name="tabler:chevron-right" 
+                      <Icon
+                        name="tabler:chevron-right"
                         class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5"
                         slot="icon-right"
                       />
@@ -328,15 +339,15 @@ const sections = [
 
                   <!-- TV -->
                   <div class="bg-gray-50 p-6 rounded-xl">
-                    <Button 
+                    <Button
                       variant="card"
                       icon="tabler:player-play"
                       iconPosition="left"
                       class="bg-[color-mix(in_srgb,var(--ootb-green)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--ootb-green)_20%,transparent)]"
                     >
                       <span class="font-medium">Regarder l'émission</span>
-                      <Icon 
-                        name="tabler:chevron-right" 
+                      <Icon
+                        name="tabler:chevron-right"
                         class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5"
                         slot="icon-right"
                       />
@@ -345,15 +356,15 @@ const sections = [
 
                   <!-- Premium -->
                   <div class="bg-gray-50 p-6 rounded-xl">
-                    <Button 
+                    <Button
                       variant="card"
                       icon="tabler:crown"
                       iconPosition="left"
                       class="bg-[color-mix(in_srgb,var(--ootb-orange)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--ootb-orange)_20%,transparent)]"
                     >
                       <span class="font-medium">Accéder au contenu premium</span>
-                      <Icon 
-                        name="tabler:chevron-right" 
+                      <Icon
+                        name="tabler:chevron-right"
                         class="w-5 h-5 transition-transform duration-300 group-hover/button:translate-x-0.5"
                         slot="icon-right"
                       />
@@ -366,12 +377,8 @@ const sections = [
               <div>
                 <p class="text-sm text-gray-600 mb-4">Avec icônes</p>
                 <div class="flex flex-wrap gap-4">
-                  <Button icon="tabler:arrow-right" iconPosition="right">
-                    Suite
-                  </Button>
-                  <Button variant="secondary" icon="tabler:download">
-                    Télécharger
-                  </Button>
+                  <Button icon="tabler:arrow-right" iconPosition="right"> Suite </Button>
+                  <Button variant="secondary" icon="tabler:download"> Télécharger </Button>
                 </div>
               </div>
 
@@ -396,19 +403,13 @@ const sections = [
                 <p class="text-sm text-gray-600 mb-4">Styles de liens</p>
                 <div class="space-y-4">
                   <div>
-                    <Link href="#" icon="tabler:external-link">
-                      Lien externe
-                    </Link>
+                    <Link href="#" icon="tabler:external-link"> Lien externe </Link>
                   </div>
                   <div>
-                    <Link href="#" icon="tabler:arrow-right">
-                      Lien avec flèche
-                    </Link>
+                    <Link href="#" icon="tabler:arrow-right"> Lien avec flèche </Link>
                   </div>
                   <div>
-                    <Link href="#" icon="tabler:download" iconPosition="left">
-                      Télécharger le document
-                    </Link>
+                    <Link href="#" icon="tabler:download" iconPosition="left"> Télécharger le document </Link>
                   </div>
                 </div>
               </div>
@@ -499,8 +500,6 @@ const sections = [
               </div>
             </div>
           </div>
-
-         
         </div>
 
         <!-- Organismes -->
@@ -524,14 +523,22 @@ const sections = [
                 <h1 class="font-heading text-6xl md:text-7xl font-bold leading-none tracking-tight text-white mb-8">
                   OUT OF THE BOOKS
                 </h1>
-                
+
                 <h2 class="font-sans text-3xl md:text-4xl font-light italic mb-12">
-                  <span class="text-white block">La plateforme des pédagogies <span class="relative">
-                    <span class="text-[--ootb-yellow]">innovantes !</span>
-                    <span class="absolute bottom-0 left-0 w-[102%] h-[0.12em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"></span>
-                    <span class="absolute bottom-[0.1em] left-0 w-[101%] h-[0.08em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"></span>
-                    <span class="absolute bottom-[-0.1em] left-0 w-[103%] h-[0.1em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"></span>
-                  </span></span>
+                  <span class="text-white block"
+                    >La plateforme des pédagogies <span class="relative">
+                      <span class="text-[--ootb-yellow]">innovantes !</span>
+                      <span
+                        class="absolute bottom-0 left-0 w-[102%] h-[0.12em] bg-[--ootb-yellow] rounded-full transform -rotate-1 translate-x-[-1%]"
+                      ></span>
+                      <span
+                        class="absolute bottom-[0.1em] left-0 w-[101%] h-[0.08em] bg-[--ootb-yellow]/70 rounded-full transform rotate-[0.5deg] translate-x-[-2%]"
+                      ></span>
+                      <span
+                        class="absolute bottom-[-0.1em] left-0 w-[103%] h-[0.1em] bg-[--ootb-yellow]/60 rounded-full transform -rotate-[1.5deg] translate-x-[1%]"
+                      ></span>
+                    </span></span
+                  >
                 </h2>
 
                 <div class="flex flex-wrap gap-3">
@@ -548,7 +555,8 @@ const sections = [
           <div id="composants-gradient-hero-section" class="p-8 bg-gray-50 rounded-xl mb-8">
             <h4 class="text-lg font-semibold mb-4">Gradient Hero Section</h4>
             <div class="bg-[--ootb-turquoise] p-8 rounded-lg">
-              <pre class="text-sm text-white font-mono overflow-x-auto">
+              <pre
+                class="text-sm text-white font-mono overflow-x-auto">
                 <code>{
 `
 // Dégradé vertical avec 4 points d'arrêt
@@ -560,7 +568,11 @@ via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] via-75%
 to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
                 }</code>
               </pre>
-              <p class="mt-4 text-sm text-white/80">Un dégradé progressif qui maintient une zone turquoise solide jusqu'à 60%, puis transite doucement vers le blanc en trois étapes (90%, 60%, puis 30% de turquoise) pour une meilleure intégration avec les nuages.</p>
+              <p class="mt-4 text-sm text-white/80">
+                Un dégradé progressif qui maintient une zone turquoise solide jusqu'à 60%, puis transite doucement vers
+                le blanc en trois étapes (90%, 60%, puis 30% de turquoise) pour une meilleure intégration avec les
+                nuages.
+              </p>
             </div>
           </div>
 
@@ -580,9 +592,9 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
                     badge="Épisode 12"
                     type="podcast"
                     meta={{
-                      expert: "Marie Dubois",
-                      duration: "45 min",
-                      episode: "EP12"
+                      expert: 'Marie Dubois',
+                      duration: '45 min',
+                      episode: 'EP12',
                     }}
                     class="transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
                   />
@@ -601,8 +613,8 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
                     badge="Émission"
                     type="tv"
                     meta={{
-                      duration: "26 min",
-                      contributors: "Équipe OOTB"
+                      duration: '26 min',
+                      contributors: 'Équipe OOTB',
                     }}
                     class="transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
                   />
@@ -615,7 +627,7 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
         <!-- Icônes et éléments graphiques -->
         <div id="composants-graphiques" class="p-8 bg-gray-50 rounded-xl mb-8">
           <h4 class="text-lg font-semibold mb-4">Iconographie & Éléments graphiques</h4>
-          
+
           <!-- Icônes Tabler -->
           <div class="mb-12">
             <p class="text-sm text-gray-600 mb-4">Icônes fonctionnelles</p>
@@ -638,8 +650,10 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
               </div>
             </div>
             <p class="text-sm text-gray-600 mt-4">
-              Utilisation de Tabler Icons, une suite d'icônes open source minimaliste et cohérente 
-              (<Link href="https://tabler-icons.io" external>tabler-icons.io</Link>)
+              Utilisation de Tabler Icons, une suite d'icônes open source minimaliste et cohérente (<Link
+                href="https://tabler-icons.io"
+                external>tabler-icons.io</Link
+              >)
             </p>
           </div>
 
@@ -647,17 +661,37 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
           <div class="mb-12">
             <p class="text-sm text-gray-600 mb-4">Icônes décoratives</p>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div class="aspect-square bg-[--ootb-turquoise]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-turquoise]/20 transition-colors">
-                <Icon name="tabler:book-2" class="w-12 h-12 text-[--ootb-turquoise] transform group-hover:rotate-12 transition-transform" />
+              <div
+                class="aspect-square bg-[--ootb-turquoise]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-turquoise]/20 transition-colors"
+              >
+                <Icon
+                  name="tabler:book-2"
+                  class="w-12 h-12 text-[--ootb-turquoise] transform group-hover:rotate-12 transition-transform"
+                />
               </div>
-              <div class="aspect-square bg-[--ootb-violet]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-violet]/20 transition-colors">
-                <Icon name="tabler:pencil" class="w-12 h-12 text-[--ootb-violet] transform group-hover:-rotate-12 transition-transform" />
+              <div
+                class="aspect-square bg-[--ootb-violet]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-violet]/20 transition-colors"
+              >
+                <Icon
+                  name="tabler:pencil"
+                  class="w-12 h-12 text-[--ootb-violet] transform group-hover:-rotate-12 transition-transform"
+                />
               </div>
-              <div class="aspect-square bg-[--ootb-green]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-green]/20 transition-colors">
-                <Icon name="tabler:notebook" class="w-12 h-12 text-[--ootb-green] transform group-hover:scale-110 transition-transform" />
+              <div
+                class="aspect-square bg-[--ootb-green]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-green]/20 transition-colors"
+              >
+                <Icon
+                  name="tabler:notebook"
+                  class="w-12 h-12 text-[--ootb-green] transform group-hover:scale-110 transition-transform"
+                />
               </div>
-              <div class="aspect-square bg-[--ootb-blue]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-blue]/20 transition-colors">
-                <Icon name="tabler:books" class="w-12 h-12 text-[--ootb-blue] transform group-hover:rotate-6 transition-transform" />
+              <div
+                class="aspect-square bg-[--ootb-blue]/10 rounded-xl p-4 flex items-center justify-center group hover:bg-[--ootb-blue]/20 transition-colors"
+              >
+                <Icon
+                  name="tabler:books"
+                  class="w-12 h-12 text-[--ootb-blue] transform group-hover:rotate-6 transition-transform"
+                />
               </div>
             </div>
           </div>
@@ -668,7 +702,10 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <!-- Nuages avec dégradé -->
               <div class="bg-[--ootb-turquoise] rounded-xl relative overflow-hidden h-64">
-                <div class="absolute inset-0 bg-gradient-to-b from-[--ootb-turquoise] from-5% via-[--ootb-turquoise] via-60% via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] via-75% to-[color-mix(in_srgb,var(--ootb-turquoise)_20%,white)] to-100%"></div>
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-[--ootb-turquoise] from-5% via-[--ootb-turquoise] via-60% via-[color-mix(in_srgb,var(--ootb-turquoise)_60%,white)] via-75% to-[color-mix(in_srgb,var(--ootb-turquoise)_20%,white)] to-100%"
+                >
+                </div>
                 <Image
                   src={cloudsBg}
                   alt="Motif de nuages"
@@ -690,21 +727,30 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
                   <div class="flex flex-col items-center">
                     <div class="w-20 h-28 bg-[--ootb-violet] rounded-lg transform -rotate-6 shadow-lg relative">
                       <div class="absolute inset-0 bg-black/5 rounded-lg"></div>
-                      <Icon name="tabler:book" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80" />
+                      <Icon
+                        name="tabler:book"
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80"
+                      />
                     </div>
                     <p class="text-sm text-gray-600 mt-3">Violet</p>
                   </div>
                   <div class="flex flex-col items-center">
                     <div class="w-20 h-28 bg-[--ootb-turquoise] rounded-lg shadow-lg relative">
                       <div class="absolute inset-0 bg-black/5 rounded-lg"></div>
-                      <Icon name="tabler:book-2" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80" />
+                      <Icon
+                        name="tabler:book-2"
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80"
+                      />
                     </div>
                     <p class="text-sm text-gray-600 mt-3">Turquoise</p>
                   </div>
                   <div class="flex flex-col items-center">
                     <div class="w-20 h-28 bg-[--ootb-green] rounded-lg transform rotate-6 shadow-lg relative">
                       <div class="absolute inset-0 bg-black/5 rounded-lg"></div>
-                      <Icon name="tabler:books" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80" />
+                      <Icon
+                        name="tabler:books"
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-white/80"
+                      />
                     </div>
                     <p class="text-sm text-gray-600 mt-3">Vert</p>
                   </div>
@@ -727,14 +773,20 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
               <div class="p-4 bg-white rounded-lg">
                 <p class="text-sm font-medium mb-2">Rotation</p>
                 <div class="flex justify-center">
-                  <Icon name="tabler:book-2" class="w-8 h-8 text-[--ootb-violet] hover:rotate-12 transition-transform duration-300" />
+                  <Icon
+                    name="tabler:book-2"
+                    class="w-8 h-8 text-[--ootb-violet] hover:rotate-12 transition-transform duration-300"
+                  />
                 </div>
                 <p class="text-xs text-gray-500 mt-2 text-center">hover:rotate-12</p>
               </div>
               <div class="p-4 bg-white rounded-lg">
                 <p class="text-sm font-medium mb-2">Scale</p>
                 <div class="flex justify-center">
-                  <Icon name="tabler:books" class="w-8 h-8 text-[--ootb-green] hover:scale-110 transition-transform duration-300" />
+                  <Icon
+                    name="tabler:books"
+                    class="w-8 h-8 text-[--ootb-green] hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
                 <p class="text-xs text-gray-500 mt-2 text-center">hover:scale-110</p>
               </div>
@@ -751,7 +803,7 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
       <!-- Organisation des styles -->
       <div id="developpeur-styles" class="mb-16 p-8 bg-gray-50 rounded-xl">
         <h3 class="text-xl mb-6 text-[--ootb-turquoise] font-body font-semibold">Organisation des styles</h3>
-        
+
         <div class="space-y-12">
           <!-- CustomStyles.astro -->
           <div>
@@ -759,7 +811,8 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
             <p class="text-gray-600 mb-4">Source unique de vérité pour les couleurs de marque et styles globaux.</p>
             <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
               <code class="block whitespace-pre">
-{`// src/components/CustomStyles.astro
+                {
+                  `// src/components/CustomStyles.astro
 :root {
   /* Couleurs primaires de la marque */
   --ootb-violet: #921e6d;
@@ -774,7 +827,8 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
   --ootb-gray-100: #f3f4f6;
   --ootb-gray-700: #374151;
   --ootb-gray-900: #111827;
-}`}
+}`
+                }
               </code>
             </div>
             <ul class="list-disc list-inside text-gray-600 space-y-2">
@@ -791,7 +845,8 @@ to-[color-mix(in_srgb,var(--ootb-turquoise)_30%,white)] to-80%`
             <p class="text-gray-600 mb-4">Mapping sémantique des couleurs et configuration Tailwind.</p>
             <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
               <code class="block whitespace-pre">
-{`// tailwind.config.js
+                {
+                  `// tailwind.config.js
 export default {
   theme: {
     extend: {
@@ -816,7 +871,8 @@ export default {
       }
     }
   }
-}`}
+}`
+                }
               </code>
             </div>
             <ul class="list-disc list-inside text-gray-600 space-y-2">
@@ -833,7 +889,8 @@ export default {
             <p class="text-gray-600 mb-4">Utilitaires et variations de couleurs.</p>
             <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm mb-4">
               <code class="block whitespace-pre">
-{`/* src/assets/styles/tailwind.css */
+                {
+                  `/* src/assets/styles/tailwind.css */
 @layer utilities {
   /* Utilitaires pour les fonds avec opacité */
   .bg-content-actualite { 
@@ -845,7 +902,8 @@ export default {
   .bg-content-tv { 
     @apply bg-[color-mix(in_srgb,theme(colors.content.tv)_10%,transparent)]; 
   }
-}`}
+}`
+                }
               </code>
             </div>
             <ul class="list-disc list-inside text-gray-600 space-y-2">
@@ -858,7 +916,7 @@ export default {
           <!-- Bonnes pratiques -->
           <div>
             <h4 class="text-lg font-semibold mb-4">Bonnes pratiques</h4>
-            
+
             <!-- Ordre de priorité -->
             <div class="mb-8">
               <p class="font-medium mb-2">Hiérarchie des couleurs :</p>
@@ -877,7 +935,8 @@ export default {
               <p class="font-medium mb-2">Exemples d'utilisation :</p>
               <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm">
                 <code class="block whitespace-pre">
-{`<!-- Utilisation des couleurs de marque -->
+                  {
+                    `<!-- Utilisation des couleurs de marque -->
 <div class="text-brand-violet">
   Texte en violet de marque
 </div>
@@ -890,7 +949,8 @@ export default {
 <!-- Utilisation des fonds avec opacité -->
 <div class="bg-content-podcast hover:bg-content-podcast/20">
   Fond pour le podcast
-</div>`}
+</div>`
+                  }
                 </code>
               </div>
             </div>
@@ -951,7 +1011,8 @@ export default {
               Hero Section
             </summary>
             <div class="mt-4 bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">
-              {`<section class="relative bg-[--ootb-turquoise] overflow-hidden">
+              {
+                `<section class="relative bg-[--ootb-turquoise] overflow-hidden">
   <!-- Fond décoratif -->
   <Image
     src={cloudsBg}
@@ -991,7 +1052,8 @@ export default {
       <ActionBadge variant="appel">Appel à projets</ActionBadge>
     </div>
   </div>
-</section>`}
+</section>`
+              }
             </div>
           </details>
 
@@ -1000,7 +1062,8 @@ export default {
               Action Badge Component
             </summary>
             <div class="mt-4 bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">
-              {`---
+              {
+                `---
 interface Props {
   variant?: 'festival' | 'podcast' | 'emission' | 'appel';
   class?: string;
@@ -1031,7 +1094,8 @@ const variants = {
   <span class="transform skew-x-[16deg] font-body italic font-extrabold uppercase tracking-wide px-2 py-1">
     <slot />
   </span>
-</span>`}
+</span>`
+              }
             </div>
           </details>
 
@@ -1040,7 +1104,8 @@ const variants = {
               Underline Effect
             </summary>
             <div class="mt-4 bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm">
-              {`<span class="relative inline-block">
+              {
+                `<span class="relative inline-block">
   <span class="text-[--ootb-yellow]">innovantes !</span>
   <!-- Ligne principale -->
   <span class="absolute bottom-0 left-0 w-[102%] h-[0.12em] 
@@ -1057,11 +1122,12 @@ const variants = {
     bg-[--ootb-yellow]/60 rounded-full 
     transform -rotate-[1.5deg] translate-x-[1%]">
   </span>
-</span>`}
+</span>`
+              }
             </div>
           </details>
         </div>
       </div>
     </section>
   </main>
-</Layout> 
+</Layout>

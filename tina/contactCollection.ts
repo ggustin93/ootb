@@ -1,10 +1,10 @@
-import type { Collection } from "tinacms";
+import type { Collection } from 'tinacms';
 
 export const contactCollection: Collection = {
-  name: "contact",
-  label: "📄 Page - Contact",
-  path: "src/content/contact",
-  format: "json",
+  name: 'contact',
+  label: '📄 Page - Contact',
+  path: 'src/content/contact',
+  format: 'json',
   ui: {
     allowedActions: {
       create: false,
@@ -13,190 +13,192 @@ export const contactCollection: Collection = {
   },
   defaultItem: () => ({
     metadata: {
-      title: "Contact | Out of the Books",
-      description: "Contactez l'équipe d'Out of the Books pour toute question concernant nos événements, nos contenus ou nos partenariats."
-    }
+      title: 'Contact | Out of the Books',
+      description:
+        "Contactez l'équipe d'Out of the Books pour toute question concernant nos événements, nos contenus ou nos partenariats.",
+    },
   }),
   fields: [
     {
-      type: "object",
-      name: "metadata",
-      label: "Métadonnées",
+      type: 'object',
+      name: 'metadata',
+      label: 'Métadonnées',
       ui: {
         itemProps: (_item) => {
-          return { label: "Métadonnées SEO" };
+          return { label: 'Métadonnées SEO' };
         },
       },
       fields: [
         {
-          type: "string",
-          name: "title",
-          label: "Titre SEO",
-          description: "Titre qui apparaît dans les résultats de recherche (50-60 caractères). Ne pas inclure '| Out of the Books' car il sera ajouté automatiquement.",
+          type: 'string',
+          name: 'title',
+          label: 'Titre SEO',
+          description:
+            "Titre qui apparaît dans les résultats de recherche (50-60 caractères). Ne pas inclure '| Out of the Books' car il sera ajouté automatiquement.",
           required: false,
         },
         {
-          type: "string",
-          name: "description",
-          label: "Description SEO",
-          description: "Courte description pour les résultats de recherche (150-160 caractères recommandés).",
+          type: 'string',
+          name: 'description',
+          label: 'Description SEO',
+          description: 'Courte description pour les résultats de recherche (150-160 caractères recommandés).',
           ui: {
-            component: "textarea",
+            component: 'textarea',
           },
           required: false,
         },
         {
-          type: "image",
-          name: "image",
-          label: "Image de partage",
-          description: "Image utilisée lors du partage sur les réseaux sociaux (1200x630px recommandé).",
+          type: 'image',
+          name: 'image',
+          label: 'Image de partage',
+          description: 'Image utilisée lors du partage sur les réseaux sociaux (1200x630px recommandé).',
           required: false,
         },
       ],
     },
     {
-      type: "object",
-      name: "hero",
-      label: "Section Hero",
+      type: 'object',
+      name: 'hero',
+      label: 'Section Hero',
       fields: [
         {
-          type: "string",
-          name: "title",
-          label: "Titre",
+          type: 'string',
+          name: 'title',
+          label: 'Titre',
         },
         {
-          type: "string",
-          name: "subtitle",
-          label: "Sous-titre",
+          type: 'string',
+          name: 'subtitle',
+          label: 'Sous-titre',
         },
         {
-          type: "string",
-          name: "description",
-          label: "Description",
+          type: 'string',
+          name: 'description',
+          label: 'Description',
           ui: {
-            component: "textarea",
+            component: 'textarea',
           },
         },
       ],
     },
     {
-      type: "object",
-      name: "form",
-      label: "Formulaire",
+      type: 'object',
+      name: 'form',
+      label: 'Formulaire',
       fields: [
         {
-          type: "object",
-          name: "name",
-          label: "Champ Nom",
+          type: 'object',
+          name: 'name',
+          label: 'Champ Nom',
           fields: [
             {
-              type: "string",
-              name: "label",
-              label: "Libellé",
+              type: 'string',
+              name: 'label',
+              label: 'Libellé',
             },
             {
-              type: "string",
-              name: "placeholder",
+              type: 'string',
+              name: 'placeholder',
               label: "Texte d'exemple",
             },
           ],
         },
         {
-          type: "object",
-          name: "email",
-          label: "Champ Email",
+          type: 'object',
+          name: 'email',
+          label: 'Champ Email',
           fields: [
             {
-              type: "string",
-              name: "label",
-              label: "Libellé",
+              type: 'string',
+              name: 'label',
+              label: 'Libellé',
             },
             {
-              type: "string",
-              name: "placeholder",
+              type: 'string',
+              name: 'placeholder',
               label: "Texte d'exemple",
             },
           ],
         },
         {
-          type: "object",
-          name: "message",
-          label: "Champ Message",
+          type: 'object',
+          name: 'message',
+          label: 'Champ Message',
           fields: [
             {
-              type: "string",
-              name: "label",
-              label: "Libellé",
+              type: 'string',
+              name: 'label',
+              label: 'Libellé',
             },
             {
-              type: "string",
-              name: "placeholder",
+              type: 'string',
+              name: 'placeholder',
               label: "Texte d'exemple",
             },
           ],
         },
         {
-          type: "string",
-          name: "button",
-          label: "Texte du bouton",
+          type: 'string',
+          name: 'button',
+          label: 'Texte du bouton',
         },
       ],
     },
     {
-      type: "object",
-      name: "contactInfo",
-      label: "Informations de contact",
+      type: 'object',
+      name: 'contactInfo',
+      label: 'Informations de contact',
       fields: [
         {
-          type: "object",
-          name: "phone",
-          label: "Téléphone",
+          type: 'object',
+          name: 'phone',
+          label: 'Téléphone',
           fields: [
             {
-              type: "string",
-              name: "title",
-              label: "Titre",
+              type: 'string',
+              name: 'title',
+              label: 'Titre',
             },
             {
-              type: "string",
-              name: "value",
-              label: "Numéro de téléphone",
+              type: 'string',
+              name: 'value',
+              label: 'Numéro de téléphone',
             },
           ],
         },
         {
-          type: "object",
-          name: "email",
-          label: "Email",
+          type: 'object',
+          name: 'email',
+          label: 'Email',
           fields: [
             {
-              type: "string",
-              name: "title",
-              label: "Titre",
+              type: 'string',
+              name: 'title',
+              label: 'Titre',
             },
             {
-              type: "string",
-              name: "value",
-              label: "Adresse email",
+              type: 'string',
+              name: 'value',
+              label: 'Adresse email',
             },
           ],
         },
         {
-          type: "object",
-          name: "address",
-          label: "Adresse",
+          type: 'object',
+          name: 'address',
+          label: 'Adresse',
           fields: [
             {
-              type: "string",
-              name: "title",
-              label: "Titre",
+              type: 'string',
+              name: 'title',
+              label: 'Titre',
             },
             {
-              type: "string",
-              name: "value",
-              label: "Adresse postale",
+              type: 'string',
+              name: 'value',
+              label: 'Adresse postale',
               ui: {
-                component: "textarea",
+                component: 'textarea',
               },
             },
           ],
@@ -204,4 +206,4 @@ export const contactCollection: Collection = {
       ],
     },
   ],
-}; 
+};

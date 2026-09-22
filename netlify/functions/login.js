@@ -12,15 +12,15 @@ export const handler = async (event) => {
     method: event.httpMethod,
     path: event.path,
     headers: Object.keys(event.headers),
-    host: event.headers.host
+    host: event.headers.host,
   });
-  
+
   // Traiter uniquement les requêtes POST
   if (event.httpMethod !== 'POST') {
     console.log('❌ API Login : Méthode non autorisée', event.httpMethod);
     return {
       statusCode: 405,
-      body: JSON.stringify({ message: 'Méthode non autorisée' })
+      body: JSON.stringify({ message: 'Méthode non autorisée' }),
     };
   }
 
@@ -28,73 +28,73 @@ export const handler = async (event) => {
     // Récupérer les données de connexion
     const body = JSON.parse(event.body || '{}');
     const { email, password, redirectTo = '/dashboard' } = body;
-    
-    console.log('📝 API Login : Données reçues', { 
+
+    console.log('📝 API Login : Données reçues', {
       email: email ? email.substring(0, 3) + '...' : 'non défini',
       hasPassword: !!password,
-      redirectTo
+      redirectTo,
     });
-    
+
     // Vérifier que les données sont présentes
     if (!email || !password) {
       console.log('❌ API Login : Données manquantes');
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Email et mot de passe requis' })
+        body: JSON.stringify({ message: 'Email et mot de passe requis' }),
       };
     }
-    
+
     // Connexion avec Supabase
     console.log('🔄 API Login : Tentative de connexion avec Supabase');
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
-      password
+      password,
     });
-    
+
     // Gérer les erreurs de connexion
     if (error) {
       console.error('❌ API Login : Erreur connexion', error.message);
       return {
         statusCode: 401,
-        body: JSON.stringify({ message: 'Identifiants incorrects' })
+        body: JSON.stringify({ message: 'Identifiants incorrects' }),
       };
     }
-    
+
     console.log('✅ API Login : Connexion réussie pour', data.user.email);
-    
+
     // Nous utilisons directement le redirectTo sans modification
     let finalRedirectUrl = redirectTo;
     console.log('🔄 API Login : Redirection vers', finalRedirectUrl);
-    
+
     // Définir les cookies pour l'authentification
     // Utiliser des jetons plus courts pour éviter les problèmes de troncature
     const accessToken = data.session.access_token;
     const refreshToken = data.session.refresh_token;
-    
+
     console.log('🍪 API Login : Génération cookies et redirection');
-    
+
     // Concaténer les cookies en une seule chaîne pour éviter les problèmes avec Netlify
     const cookieString = [
       `sb-access-token=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
-      `sb-refresh-token=${refreshToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`
+      `sb-refresh-token=${refreshToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
     ].join(', ');
-    
+
     return {
       statusCode: 302,
       headers: {
-        'Location': finalRedirectUrl,
+        Location: finalRedirectUrl,
         'Set-Cookie': cookieString,
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
+        Pragma: 'no-cache',
+        Expires: '0',
       },
-      body: ''
+      body: '',
     };
   } catch (error) {
     console.error('❌ API Login : Erreur générale', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Erreur serveur' })
+      body: JSON.stringify({ message: 'Erreur serveur' }),
     };
   }
-}; 
+};

@@ -25,15 +25,15 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths> & {
-  tag: { slug: string; title: string; };
+  tag: { slug: string; title: string };
 };
 
 const { page, tag } = Astro.props as Props;
 const currentPage = page.currentPage ?? 1;
 
-const allTags = await findTags().then(tags => {
+const allTags = await findTags().then((tags) => {
   const uniqueTags = new Map();
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     if (!uniqueTags.has(tag.slug)) {
       uniqueTags.set(tag.slug, tag);
     }
@@ -49,11 +49,11 @@ const initialTags = allTags.slice(0, MAX_VISIBLE_TAGS);
 const allPosts = await getCachedPosts(fetchPosts);
 // Pour la page de tag, nous voulons tous les posts qui ont ce tag
 const searchablePosts = allPosts
-  .filter(post => post.tags?.some(t => t.slug === tag.slug))
-  .map(post => ({
+  .filter((post) => post.tags?.some((t) => t.slug === tag.slug))
+  .map((post) => ({
     slug: post.slug,
     title: post.title || '',
-    category: post.category?.slug
+    category: post.category?.slug,
   }));
 
 // Extraction correcte des données du JSON
@@ -83,7 +83,9 @@ const metadata = {
         <div class="grid md:grid-cols-12 gap-12 items-center">
           <!-- Mascotte (cachée sur mobile, visible sur desktop) -->
           <div class="hidden md:block relative order-2 md:order-1 md:col-span-5 -mt-8">
-            <div class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300">
+            <div
+              class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300"
+            >
               <Image
                 src={ootbLogo}
                 alt="Out of the Books Mascotte"
@@ -105,10 +107,10 @@ const metadata = {
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch 
-              tags={initialTags} 
+            <TagSearch
+              tags={initialTags}
               posts={searchablePosts}
-              placeholder={search.placeholder} 
+              placeholder={search.placeholder}
               label={search.thematicLabel}
               currentTag={tag}
             />
@@ -125,25 +127,25 @@ const metadata = {
 
             <!-- Filtres -->
             <div class="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start mb-4">
-              <CategoryButton 
+              <CategoryButton
                 href="/blog"
                 icon={CONTENT_TYPES.all.icon}
                 label={CONTENT_TYPES.all.shortLabel}
                 isActive={!tag}
-                withAnchor={true}
               />
 
-              {Object.entries(CONTENT_TYPES)
-                .filter(([key]) => key !== 'all' && key !== 'premium')
-                .map(([key, config]) => (
-                  <CategoryButton 
-                    href={`/category/${key}`}
-                    icon={config.icon}
-                    label={config.shortLabel}
-                    color={config.color}
-                    withAnchor={true}
-                  />
-                ))}
+              {
+                Object.entries(CONTENT_TYPES)
+                  .filter(([key]) => key !== 'all' && key !== 'premium')
+                  .map(([key, config]) => (
+                    <CategoryButton
+                      href={`/category/${key}`}
+                      icon={config.icon}
+                      label={config.shortLabel}
+                      color={config.color}
+                    />
+                  ))
+              }
             </div>
           </div>
         </div>
@@ -151,8 +153,8 @@ const metadata = {
     </div>
   </GradientHeroSection>
 
-  <ScrollDownArrow 
-    targetId="tag-content" 
+  <ScrollDownArrow
+    targetId="tag-content"
     label={`Voir les contenus liés à "${tag.title}"`}
     position="left-[20%] bottom-[20%]"
     class="text-[--ootb-yellow] hidden md:flex"
@@ -165,22 +167,19 @@ const metadata = {
         <!-- Filtres minimalistes -->
         <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 sm:justify-between mb-8">
           <h2 class="text-3xl font-body font-semibold">
-            {tag.slug && (
-              <span class="inline-flex items-center gap-3">
-                <span class="text-gray-600">Contenus liés à</span>
-                <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
-                  <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
-                  <span class="text-gray-800 font-medium">{tag.title}</span>
+            {
+              tag.slug && (
+                <span class="inline-flex items-center gap-3">
+                  <span class="text-gray-600">Contenus liés à</span>
+                  <span class="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
+                    <Icon name="tabler:tag" class="w-5 h-5 text-gray-500" />
+                    <span class="text-gray-800 font-medium">{tag.title}</span>
+                  </span>
                 </span>
-              </span>
-            )}
+              )
+            }
           </h2>
-          <CategoryFilters 
-            currentCategory="" 
-            blogConfig={tagData} 
-            isTagPage={true} 
-            currentTag={tag}
-          />
+          <CategoryFilters currentCategory="" blogConfig={tagData} isTagPage={true} currentTag={tag} />
         </div>
 
         <BlogList posts={page.data} />
@@ -197,7 +196,7 @@ const metadata = {
   details[open] > div {
     animation: slideDown 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   @keyframes slideDown {
     from {
       opacity: 0;
@@ -210,12 +209,14 @@ const metadata = {
   }
 
   /* Transitions douces */
-  a, button {
+  a,
+  button {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
@@ -224,7 +225,8 @@ const metadata = {
   }
 
   @keyframes float-delayed {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {

@@ -18,7 +18,7 @@
 // On ne compresse que les formats matriciels ré-encodables sans surprise.
 // (On laisse passer GIF/SVG/PDF/vidéo tels quels : rasteriser un GIF animé ou
 //  un SVG ferait plus de mal que de bien.)
-export const COMPRESSIBLE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+export const COMPRESSIBLE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 // En dessous de ce seuil, l'image passe sans problème : on ne la touche pas
 // (zéro perte de qualité pour le cas courant).
@@ -34,9 +34,9 @@ export const SKIP_BELOW_BYTES = 2 * 1024 * 1024; // 2 Mo
 export function shouldCompress(file) {
   return (
     !!file &&
-    typeof file.type === "string" &&
+    typeof file.type === 'string' &&
     COMPRESSIBLE_TYPES.has(file.type) &&
-    typeof file.size === "number" &&
+    typeof file.size === 'number' &&
     file.size > SKIP_BELOW_BYTES
   );
 }
@@ -54,14 +54,14 @@ const QUALITY = 0.82;
  * n'est pas disponible.
  */
 async function loadBitmap(file) {
-  if (typeof createImageBitmap === "function") {
+  if (typeof createImageBitmap === 'function') {
     try {
-      return await createImageBitmap(file, { imageOrientation: "from-image" });
-    } catch (_) {
+      return await createImageBitmap(file, { imageOrientation: 'from-image' });
+    } catch {
       // certains navigateurs ne supportent pas l'option -> on retente sans
       try {
         return await createImageBitmap(file);
-      } catch (_) {
+      } catch {
         /* on bascule sur le fallback <img> ci-dessous */
       }
     }
@@ -98,7 +98,7 @@ function getDimensions(bitmap) {
 export async function compressImage(file) {
   try {
     // Rien à faire (mauvais type, déjà léger, ou hors navigateur : build/SSR).
-    if (!shouldCompress(file) || typeof document === "undefined") {
+    if (!shouldCompress(file) || typeof document === 'undefined') {
       return file;
     }
 
@@ -110,20 +110,18 @@ export async function compressImage(file) {
     const targetW = Math.round(width * scale);
     const targetH = Math.round(height * scale);
 
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
     canvas.width = targetW;
     canvas.height = targetH;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) return file;
     ctx.drawImage(bitmap, 0, 0, targetW, targetH);
-    if (typeof bitmap.close === "function") bitmap.close();
+    if (typeof bitmap.close === 'function') bitmap.close();
 
     // On garde le PNG en PNG pour préserver la transparence ; JPEG/WebP -> JPEG.
-    const outType = file.type === "image/png" ? "image/png" : "image/jpeg";
+    const outType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
 
-    const blob = await new Promise((resolve) =>
-      canvas.toBlob(resolve, outType, QUALITY)
-    );
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, outType, QUALITY));
     if (!blob) return file;
 
     // Si la "compression" a paradoxalement grossi le fichier, on garde l'original.
@@ -132,8 +130,8 @@ export async function compressImage(file) {
     // On conserve le nom d'origine (Tina l'envoie comme champ `filename`),
     // en ajustant l'extension si on a transcodé en JPEG.
     let name = file.name;
-    if (outType === "image/jpeg" && !/\.jpe?g$/i.test(name)) {
-      name = name.replace(/\.[^.]+$/, "") + ".jpg";
+    if (outType === 'image/jpeg' && !/\.jpe?g$/i.test(name)) {
+      name = name.replace(/\.[^.]+$/, '') + '.jpg';
     }
 
     return new File([blob], name, {
@@ -142,7 +140,7 @@ export async function compressImage(file) {
     });
   } catch (e) {
     // Filet de sécurité absolu : en cas de pépin, on renvoie l'original.
-    console.warn("[tina-media] compression ignorée, fichier original conservé:", e);
+    console.warn('[tina-media] compression ignorée, fichier original conservé:', e);
     return file;
   }
 }

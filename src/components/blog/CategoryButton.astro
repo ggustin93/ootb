@@ -10,20 +10,11 @@ interface Props {
   mobileIconOnly?: boolean;
 }
 
-const { 
-  href, 
-  icon, 
-  label, 
-  color = '#1f2937', 
-  isActive = false,
-  mobileIconOnly = false
-} = Astro.props;
+const { href, icon, label, color = '#1f2937', isActive = false, mobileIconOnly = false } = Astro.props;
 
 // Utiliser le href tel quel, sans ajouter d'ancre pour /blog
 // Pour les autres liens de catégorie, ajouter l'ancre avec trailing slash
-const finalHref = href === '/blog' 
-  ? href 
-  : href + (href.startsWith('/category/') ? '/#category-content' : '');
+const finalHref = href === '/blog' ? href : href + (href.startsWith('/category/') ? '/#category-content' : '');
 
 // Générer un ID unique pour ce bouton
 const buttonId = `category-btn-${Math.random().toString(36).substring(2, 9)}`;
@@ -40,31 +31,26 @@ const buttonId = `category-btn-${Math.random().toString(36).substring(2, 9)}`;
     'ring-2',
     // Optimisation tactile pour mobile
     'min-h-[40px]',
-    isActive ? [
-      'scale-105 shadow-lg'
-    ] : [
-      'hover:-translate-y-1'
-    ]
+    isActive ? ['scale-105 shadow-lg'] : ['hover:-translate-y-1'],
   ]}
-  style={isActive 
-    ? `background-color: white; color: ${color}; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};` 
-    : `background-color: ${color}; color: white; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};`
-  }
+  style={isActive
+    ? `background-color: white; color: ${color}; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};`
+    : `background-color: ${color}; color: white; --hover-text-color: ${color}; --hover-ring-color: ${color}; --tw-ring-color: ${color};`}
   aria-current={isActive ? 'page' : undefined}
   data-category-button
 >
   <span class="transform skew-x-[12deg] flex items-center gap-1.5 sm:gap-2.5">
-    <Icon 
-      name={icon} 
+    <Icon
+      name={icon}
       class:list={[
         'transition-transform duration-300 group-hover:scale-110 group-hover:text-[var(--hover-text-color)]',
-        mobileIconOnly ? 'w-5 h-5' : 'w-4 h-4'
-      ]} 
+        mobileIconOnly ? 'w-5 h-5' : 'w-4 h-4',
+      ]}
     />
-    <span 
+    <span
       class:list={[
         'font-bold uppercase tracking-wide italic transition-colors duration-300 group-hover:text-[var(--hover-text-color)]',
-        mobileIconOnly ? 'hidden sm:inline' : 'text-xs sm:text-sm'
+        mobileIconOnly ? 'hidden sm:inline' : 'text-xs sm:text-sm',
       ]}
     >
       {label}
@@ -92,24 +78,24 @@ const buttonId = `category-btn-${Math.random().toString(36).substring(2, 9)}`;
   document.addEventListener('astro:page-load', () => {
     initCategoryButton(buttonId, href);
   });
-  
+
   document.addEventListener('DOMContentLoaded', () => {
     initCategoryButton(buttonId, href);
   });
-  
+
   function initCategoryButton(id, _href) {
     const button = document.getElementById(id);
     if (!button) return;
-    
+
     button.addEventListener('click', (e) => {
       // Si on est déjà sur la page active, ne rien faire
       if (button.getAttribute('aria-current') === 'page') {
         e.preventDefault();
         return;
       }
-      
+
       // Pour les autres cas, laisser la navigation se faire normalement
       // L'ancre dans le href s'occupera du défilement
     });
   }
-</script> 
+</script>

@@ -34,24 +34,34 @@ The `post` collection (`format: "mdx"`, `rich-text` field `isBody: true`) is **n
 A `list: true` object becomes a **JSON array** → render with `.map(...)`. Guard optional/nested lists with `?.length`.
 
 ```astro
-{volet.podcasts?.length ? (
-  <ul class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 list-none p-0">
-    {volet.podcasts.map(podcast => (
-      <li><MediaCard kind="podcast" title={podcast.titre} href={podcast.url} thumbnail={podcast.cover} /></li>
-    ))}
-  </ul>
-) : null}
+{
+  volet.podcasts?.length ? (
+    <ul class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 list-none p-0">
+      {volet.podcasts.map((podcast) => (
+        <li>
+          <MediaCard kind="podcast" title={podcast.titre} href={podcast.url} thumbnail={podcast.cover} />
+        </li>
+      ))}
+    </ul>
+  ) : null
+}
 ```
 
 Doubly-nested (fiches inside categories):
 
 ```astro
-{volet.fichesCategories.map(cat => (
-  <div class="...card...">
-    <h4>{cat.categorie}</h4>
-    <ul>{cat.fiches.map(fiche => (<li>…</li>))}</ul>
-  </div>
-))}
+{
+  volet.fichesCategories.map((cat) => (
+    <div class="...card...">
+      <h4>{cat.categorie}</h4>
+      <ul>
+        {cat.fiches.map((fiche) => (
+          <li>…</li>
+        ))}
+      </ul>
+    </div>
+  ))
+}
 ```
 
 - Card grids: `grid grid-cols-2 lg:grid-cols-4` (media), `grid-cols-1 md:grid-cols-2` (fiches/partners).
@@ -62,34 +72,42 @@ Doubly-nested (fiches inside categories):
 `src/components/common/Image.astro` (using `findImage` from `src/utils/images.ts`) is the optimizing image component. **It does not work for every path** — the single most important rendering pitfall.
 
 ### When `<Image>` WORKS
+
 1. **Cloudinary URLs** (`res.cloudinary.com`, the Tina media store) — custom transform pipeline, `srcset` widths `[400,800,1200]`. Happy path for Tina-uploaded media (e.g. `hero.heroImage`).
 2. **Remote `https://` URLs** (Unpic-compatible, Unsplash, generic) — YouTube thumbnails (`i.ytimg.com/...`) fall here and render fine.
 3. **Local `~/assets/images/...` imports** — globbed → `ImageMetadata` → Astro asset optimizer.
 
 ### THE GOTCHA — root-relative `public/` paths render NOTHING
+
 For `/images/erasmus/logo.svg` (a `public/` file): `findImage` hits the `startsWith('/')` branch and returns the string unchanged; back in `Image.astro` it is not Cloudinary/Unpic/Unsplash and does **not** start with `http(s)`, so it falls through every branch → `image` stays `undefined` → component renders `<Fragment />` (nothing). **Silent blank — no error, no broken-image icon.**
 
 ### THE RULE
+
 > For static brand/UI assets in `public/` (root-relative `/images/...`), use a plain `<img>` — never `<Image>`. Reserve `<Image>` for Cloudinary/remote URLs and `~/assets/...` imports.
 
 `erasmus-plus.astro` does both deliberately: `hero.heroImage` (Cloudinary) → `<Image>`; partner `logo` + `logoUE` (`/images/erasmus/*`) → plain `<img>`:
 
 ```astro
-<img src={partenaire.logo} alt={`Logo ${partenaire.nom}`}
-     class="max-h-16 w-auto object-contain" loading="lazy" decoding="async" />
+<img
+  src={partenaire.logo}
+  alt={`Logo ${partenaire.nom}`}
+  class="max-h-16 w-auto object-contain"
+  loading="lazy"
+  decoding="async"
+/>
 ```
 
 When using plain `<img>` for `public/` assets, manually add `loading`, `decoding`, and a meaningful `alt`.
 
 ### Cloudinary transform options (`cloudinaryOptions` prop)
 
-| Option | Values | Default |
-|---|---|---|
-| `quality` | `number \| 'auto'` | `'auto:good'` |
-| `format` | `'auto' \| 'webp' \| 'jpg' \| 'avif'` | `'webp'` |
-| `crop` | `'fill' \| 'scale' \| 'fit' \| 'limit'` | `'fill'` |
-| `dpr` | `'auto' \| 1 \| 2 \| 3` | `'auto'` |
-| `gravity` | `'auto' \| 'center' \| 'faces'` | `'auto'` |
+| Option    | Values                                  | Default       |
+| --------- | --------------------------------------- | ------------- |
+| `quality` | `number \| 'auto'`                      | `'auto:good'` |
+| `format`  | `'auto' \| 'webp' \| 'jpg' \| 'avif'`   | `'webp'`      |
+| `crop`    | `'fill' \| 'scale' \| 'fit' \| 'limit'` | `'fill'`      |
+| `dpr`     | `'auto' \| 1 \| 2 \| 3`                 | `'auto'`      |
+| `gravity` | `'auto' \| 'center' \| 'faces'`         | `'auto'`      |
 
 Also: `aspectRatio` prop (`"16:9"` or numeric) → Cloudinary `ar_` transform; width hard-capped at 1200px.
 
@@ -112,11 +130,13 @@ import { MISSION_PROSE_CLASS } from '~/utils/tinaRichText';
 import { renderMissionHtml } from '~/utils/renderMissionHtml';
 ---
 
-{typeof mission.description === 'string' ? (
-  <div set:html={renderMissionHtml(mission.description)} />
-) : (
-  <TinaRichText content={mission.description} class={MISSION_PROSE_CLASS} />
-)}
+{
+  typeof mission.description === 'string' ? (
+    <div set:html={renderMissionHtml(mission.description)} />
+  ) : (
+    <TinaRichText content={mission.description} class={MISSION_PROSE_CLASS} />
+  )
+}
 ```
 
 - **`~/utils/tinaRichText.ts`** — `richTextToHtml()` walks the AST and returns HTML at build time; exports `TinaRichTextContent` type and hoisted prose class constants.
@@ -133,7 +153,7 @@ import { richTextToHtml, type TinaRichTextContent } from '~/utils/tinaRichText';
 <div
   className="prose prose-sm max-w-none text-gray-600"
   dangerouslySetInnerHTML={{ __html: richTextToHtml(modalText) }}
-/>
+/>;
 ```
 
 ### Why not `<TinaMarkdown>`?
@@ -141,6 +161,7 @@ import { richTextToHtml, type TinaRichTextContent } from '~/utils/tinaRichText';
 `<TinaMarkdown>` from `tinacms/dist/rich-text` is a React component. Used directly in `.astro` files it can display literal `[object Object]` and ships tinacms React into pages that are otherwise pure SSG. Prefer `TinaRichText.astro` / `richTextToHtml()` — aligns with "plain static JSON imports at build time — no Tina runtime."
 
 ### MDX collections → Astro `<Content />` (NOT rich-text renderers)
+
 Blog `post` bodies render through `src/utils/blog.ts` + Astro `<Content />`. Tina is only the editing surface. Never import `TinaMarkdown` for blog bodies.
 
 ## 5. Placeholder / conditional rendering (`url: "#"` + `hasLink()`)
@@ -152,11 +173,15 @@ const hasLink = (url?: string): boolean => Boolean(url && url !== '#');
 ```
 
 ```astro
-{hasLink(fiche.lienPdf) ? (
-  <a href={fiche.lienPdf} target="_blank" rel="noopener noreferrer">…</a>
-) : (
-  <span class="...muted...">…</span>
-)}
+{
+  hasLink(fiche.lienPdf) ? (
+    <a href={fiche.lienPdf} target="_blank" rel="noopener noreferrer">
+      …
+    </a>
+  ) : (
+    <span class="...muted...">…</span>
+  )
+}
 ```
 
 Richer variant `partnerLinks()` normalizes the partner link model — prefers the `liens[]` list (each filtered by `hasLink`), falls back to single `lien` labeled "Visiter le site":
@@ -212,4 +237,5 @@ tina/erasmusCollection.ts (videos[].url : string)
 - Internal links: trailing slash before anchor. External: `target="_blank" rel="noopener noreferrer"`.
 
 ### Relevant files
+
 `src/pages/erasmus-plus.astro`, `src/pages/a-propos.astro`, `src/content/erasmus-plus/index.json`, `tina/erasmusCollection.ts`, `tina/aboutCollection.ts`, `src/components/common/Image.astro`, `src/utils/images.ts`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/components/blog/CategoryButton.astro`, `src/components/blog/CategoryInfo.astro`, `src/components/ui/TinaRichText.astro`, `src/utils/tinaRichText.ts`, `src/utils/renderMissionHtml.ts`, `src/utils/blog.ts`.

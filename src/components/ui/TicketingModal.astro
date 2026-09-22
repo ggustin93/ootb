@@ -1,10 +1,10 @@
 ---
 /**
  * ⚠️ ATTENTION ⚠️
- * 
+ *
  * Ce fichier n'est pas utilisé dans l'application.
  * La version React (TicketingModal.tsx) est utilisée à la place.
- * 
+ *
  * Ce fichier est conservé pour référence ou utilisation future potentielle.
  */
 import { Icon } from 'astro-icon/components';
@@ -16,12 +16,7 @@ interface Props {
 const { id } = Astro.props;
 ---
 
-<ticketing-modal
-  id={id}
-  class="fixed inset-0 z-50 hidden"
-  role="dialog"
-  aria-modal="true"
->
+<ticketing-modal id={id} class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
   <!-- Overlay -->
   <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" data-close></div>
 
@@ -31,11 +26,7 @@ const { id } = Astro.props;
       <!-- Header -->
       <div class="flex justify-between items-start mb-6">
         <h2 class="text-2xl font-medium text-gray-900">Réserver mes tickets</h2>
-        <button
-          type="button"
-          class="text-gray-400 hover:text-gray-500 transition-colors"
-          data-close
-        >
+        <button type="button" class="text-gray-400 hover:text-gray-500 transition-colors" data-close>
           <span class="sr-only">Fermer</span>
           <Icon name="tabler:x" class="w-6 h-6" />
         </button>
@@ -44,7 +35,8 @@ const { id } = Astro.props;
       <!-- Content -->
       <div class="mb-8">
         <p class="text-gray-600 mb-4">
-          Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.
+          Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous
+          vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.
         </p>
       </div>
 
@@ -101,9 +93,11 @@ const { id } = Astro.props;
       }
 
       // Fermer le modal
-      if (target.hasAttribute('data-close') || 
-          (target.closest('[data-close]')) || 
-          (target === this.querySelector('.fixed.inset-0'))) {
+      if (
+        target.hasAttribute('data-close') ||
+        target.closest('[data-close]') ||
+        target === this.querySelector('.fixed.inset-0')
+      ) {
         this.classList.add('hidden');
         document.body.style.overflow = '';
       }

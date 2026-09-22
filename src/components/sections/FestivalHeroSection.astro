@@ -5,7 +5,7 @@ import GradientHeroSection from './GradientHeroSection.astro';
 import TicketingButton from '../ui/TicketingButton';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import type { ImageMetadata } from 'astro';
-import type { TinaRichTextContent } from '~/utils/tinaRichText';
+import type { TicketingConfig } from '../ui/TicketingModal';
 // Removed import of site settings; ticketingConfig now comes from props
 
 interface Button {
@@ -28,18 +28,9 @@ interface FloatingIcon {
   animation?: 'float' | 'float-delayed' | 'none';
 }
 
-// Minimal local type for ticketing config
-interface TicketingConfig {
-  modalText?: TinaRichTextContent | string;
-  ifpcButtonLabel?: string;
-  ifpcButtonUrl?: string;
-  weezeventButtonLabel?: string;
-  weezeventButtonUrl?: string;
-}
-
 interface Props {
-  logo: ImageMetadata;
-  heroImage: ImageMetadata;
+  logo: ImageMetadata | string;
+  heroImage: ImageMetadata | string;
   date: string;
   location: string;
   description: string;
@@ -49,10 +40,10 @@ interface Props {
   ticketingConfig?: TicketingConfig;
 }
 
-const { 
-  logo, 
-  heroImage, 
-  date, 
+const {
+  logo,
+  heroImage,
+  date,
   location,
   description,
   buttons = [
@@ -60,18 +51,18 @@ const {
       href: '#tickets',
       icon: 'tabler:ticket',
       label: 'Réserver mes tickets',
-      variant: 'primary'
+      variant: 'primary',
     },
     {
       href: '#programme',
       icon: 'tabler:calendar-event',
       label: 'Programme',
-      variant: 'secondary'
-    }
+      variant: 'secondary',
+    },
   ],
   floatingIcons = [],
   imageBackgroundColor = '--ootb-orange',
-  ticketingConfig
+  ticketingConfig,
 } = Astro.props;
 
 // Removed siteSettings usage
@@ -85,9 +76,12 @@ const getButtonClass = (variant: 'primary' | 'secondary') => {
 
 const getIconSize = (size: 'sm' | 'md' | 'lg') => {
   switch (size) {
-    case 'sm': return 'w-16 h-16';
-    case 'md': return 'w-20 h-28';
-    case 'lg': return 'w-24 h-32';
+    case 'sm':
+      return 'w-16 h-16';
+    case 'md':
+      return 'w-20 h-28';
+    case 'lg':
+      return 'w-24 h-32';
   }
 };
 ---
@@ -108,7 +102,10 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
               decoding="async"
             />
           </h1>
-          <blockquote class="text-xl md:text-2xl text-white/90 font-light mt-4 md:mt-6 mb-8 md:mb-10 border-l-4 pl-6 md:pl-8 leading-relaxed max-w-3xl" style={`border-color: var(--ootb-orange)`}>
+          <blockquote
+            class="text-xl md:text-2xl text-white/90 font-light mt-4 md:mt-6 mb-8 md:mb-10 border-l-4 pl-6 md:pl-8 leading-relaxed max-w-3xl"
+            style={`border-color: var(--ootb-orange)`}
+          >
             <div class="flex items-center gap-3 mb-3">
               <Icon name="tabler:calendar" class="w-6 h-6 text-white/80" />
               <p>{date}</p>
@@ -121,33 +118,37 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
           </blockquote>
 
           <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center md:justify-start mt-4">
-            {buttons.map(({ href, icon, label, variant }) => {
-              const isTicketButton = href === '#tickets';
-              if (isTicketButton) {
+            {
+              buttons.map(({ href, icon, label, variant }) => {
+                const isTicketButton = href === '#tickets';
+                if (isTicketButton) {
+                  return (
+                    <TicketingButton
+                      icon={icon.replace('tabler:', '')}
+                      label={label}
+                      variant={variant}
+                      ticketingConfig={ticketingConfig}
+                      client:load
+                      _openOnLoad={Astro.url.hash === '#tickets'}
+                      className="w-full sm:w-auto"
+                    />
+                  );
+                }
                 return (
-                  <TicketingButton
-                    icon={icon.replace('tabler:', '')}
-                    label={label}
-                    variant={variant}
-                    ticketingConfig={ticketingConfig}
-                    client:load
-                    _openOnLoad={Astro.url.hash === '#tickets'}
-                    className="w-full sm:w-auto"
-                  />
+                  <a href={href} class={`${getButtonClass(variant)} w-full sm:w-auto justify-center`}>
+                    <Icon name={icon} class="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-0.5" />
+                    <span class="font-medium">{label}</span>
+                  </a>
                 );
-              }
-              return (
-                <a href={href} class={`${getButtonClass(variant)} w-full sm:w-auto justify-center`}>
-                  <Icon name={icon} class="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-0.5" />
-                  <span class="font-medium">{label}</span>
-                </a>
-              );
-            })}
+              })
+            }
           </div>
         </div>
 
         <div class="relative md:ml-6 mt-8 md:mt-0 block">
-          <div class="relative z-10 transform hover:scale-[1.02] transition-transform duration-500 max-w-[550px] mx-auto">
+          <div
+            class="relative z-10 transform hover:scale-[1.02] transition-transform duration-500 max-w-[550px] mx-auto"
+          >
             <Image
               src={heroImage}
               alt="Festival Out of the Books"
@@ -158,22 +159,19 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
               loading="eager"
               decoding="async"
               fetchpriority="high"
-              formats={["avif","webp", "jpg"]}
+              formats={['avif', 'webp', 'jpg']}
               id="hero-image-debug"
             />
           </div>
-          <div 
+          <div
             class="absolute inset-0 rounded-2xl transform rotate-3 translate-x-4 translate-y-4 -z-10 max-w-[550px] mx-auto"
             style={`background-color: var(${imageBackgroundColor})`}
-          ></div>
-          
+          >
+          </div>
+
           <!-- ScrollDownArrow ajouté -->
           <div class="absolute bottom-[-8rem] left-1/2 transform -translate-x-1/2 z-30">
-            <ScrollDownArrow 
-              targetId="features"
-              label="En savoir plus"
-              hideOnMobile={true}
-            />
+            <ScrollDownArrow targetId="features" label="En savoir plus" hideOnMobile={true} />
           </div>
         </div>
       </div>
@@ -183,27 +181,29 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
   <slot />
 
   <!-- Icônes flottantes -->
-  {floatingIcons.map(({ name, size, position, rotate, animation }) => (
-    <div
-      class:list={[
-        'absolute',
-        getIconSize(size),
-        'opacity-30',
-        { 'transition-transform hover:-translate-y-2 duration-1000': !animation },
-        { 'animate-float': animation === 'float' },
-        { 'animate-float-delayed': animation === 'float-delayed' }
-      ]}
-      style={{
-        top: position.top,
-        left: position.left,
-        right: position.right,
-        bottom: position.bottom,
-        transform: rotate ? `rotate(${rotate})` : undefined
-      }}
-    >
-      <Icon name={name} class="w-full h-full text-white filter drop-shadow-lg" />
-    </div>
-  ))}
+  {
+    floatingIcons.map(({ name, size, position, rotate, animation }) => (
+      <div
+        class:list={[
+          'absolute',
+          getIconSize(size),
+          'opacity-30',
+          { 'transition-transform hover:-translate-y-2 duration-1000': !animation },
+          { 'animate-float': animation === 'float' },
+          { 'animate-float-delayed': animation === 'float-delayed' },
+        ]}
+        style={{
+          top: position.top,
+          left: position.left,
+          right: position.right,
+          bottom: position.bottom,
+          transform: rotate ? `rotate(${rotate})` : undefined,
+        }}
+      >
+        <Icon name={name} class="w-full h-full text-white filter drop-shadow-lg" />
+      </div>
+    ))
+  }
 
   <!-- Suppression des cartes d'activités qui sont maintenant gérées par le composant ActivityCards -->
 </GradientHeroSection>
@@ -238,9 +238,10 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
     @apply bg-white/95 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
     border: 1px solid rgba(255, 255, 255, 0.4);
   }
-  
+
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0) rotate(0);
       opacity: 0.2;
     }
@@ -251,7 +252,8 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
   }
 
   @keyframes float-delayed {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0) rotate(0);
       opacity: 0.15;
     }
@@ -270,5 +272,3 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
     animation-delay: -2s;
   }
 </style>
-
-

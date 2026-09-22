@@ -6,28 +6,28 @@ export const GET: APIRoute = async () => {
     console.log('API: Récupération des stands depuis NocoDB...');
     const standsData = await fetchStands();
     console.log(`API: ${standsData.list.length} stands récupérés`);
-    
+
     // Convertir les stands en événements
     const events = convertStandsToEvents(standsData.list);
     console.log(`API: ${events.length} événements créés`);
-    
+
     // Organiser les événements par jour
     const eventsByDay = organizeEventsByDay(events);
     console.log(`API: Événements organisés par jour: ${Object.keys(eventsByDay).join(', ')}`);
-    
+
     return new Response(
       JSON.stringify({
         success: true,
         data: {
           events: events,
-          eventsByDay: eventsByDay
-        }
+          eventsByDay: eventsByDay,
+        },
       }),
       {
         status: 200,
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       }
     );
   } catch (error) {
@@ -35,14 +35,14 @@ export const GET: APIRoute = async () => {
     return new Response(
       JSON.stringify({
         success: false,
-        error: 'Erreur lors de la récupération des événements'
+        error: 'Erreur lors de la récupération des événements',
       }),
       {
         status: 500,
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       }
     );
   }
-} 
+};

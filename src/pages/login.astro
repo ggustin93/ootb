@@ -8,13 +8,13 @@ const errorCode = Astro.url.searchParams.get('error');
 let errorMessage = '';
 
 if (errorCode === 'invalid_credentials') {
-  errorMessage = "Email ou mot de passe incorrect.";
+  errorMessage = 'Email ou mot de passe incorrect.';
 } else if (errorCode === 'auth_error') {
   errorMessage = "Une erreur s'est produite lors de l'authentification.";
 } else if (errorCode === 'session_expired') {
-  errorMessage = "Votre session a expiré. Veuillez vous reconnecter.";
+  errorMessage = 'Votre session a expiré. Veuillez vous reconnecter.';
 } else if (errorCode === 'auth_required') {
-  errorMessage = "Vous devez être connecté pour accéder à cette page.";
+  errorMessage = 'Vous devez être connecté pour accéder à cette page.';
 }
 
 // Paramètre de redirection
@@ -25,30 +25,24 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
   <main class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
     <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
       <div class="text-center">
-        <h1 class="mt-6 text-3xl font-bold text-gray-900">
-          Connexion à l'administration
-        </h1>
-        <p class="mt-2 text-sm text-gray-600">
-          Connectez-vous pour accéder au tableau de bord
-        </p>
+        <h1 class="mt-6 text-3xl font-bold text-gray-900">Connexion à l'administration</h1>
+        <p class="mt-2 text-sm text-gray-600">Connectez-vous pour accéder au tableau de bord</p>
       </div>
 
-      {errorMessage && (
-        <div 
-          class="bg-red-50 border-l-4 border-red-500 p-4 mb-4" 
-          role="alert"
-          aria-live="assertive"
-        >
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <Icon name="tabler:alert-circle" class="h-5 w-5 text-red-500" />
-            </div>
-            <div class="ml-3">
-              <p class="text-sm text-red-700">{errorMessage}</p>
+      {
+        errorMessage && (
+          <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4" role="alert" aria-live="assertive">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <Icon name="tabler:alert-circle" class="h-5 w-5 text-red-500" />
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-red-700">{errorMessage}</p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
       <div class="mt-8">
         <form id="login-form" class="space-y-6" novalidate>
@@ -58,13 +52,13 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Icon name="tabler:mail" class="h-5 w-5 text-gray-400" />
               </div>
-              <input 
-                id="email" 
-                name="email" 
-                type="email" 
-                autocomplete="email" 
-                required 
-                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all" 
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all"
                 placeholder="votre@email.com"
                 aria-required="true"
                 aria-describedby="email-error"
@@ -82,13 +76,13 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Icon name="tabler:lock" class="h-5 w-5 text-gray-400" />
               </div>
-              <input 
-                id="password" 
-                name="password" 
-                type="password" 
-                autocomplete="current-password" 
-                required 
-                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all" 
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                class="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-all"
                 placeholder="••••••••"
                 aria-required="true"
                 aria-describedby="password-error"
@@ -100,7 +94,7 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
           <input type="hidden" id="redirect" value={redirectTo} />
 
           <div>
-            <Button 
+            <Button
               type="submit"
               variant="blue"
               size="lg"
@@ -128,7 +122,7 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
     const emailError = document.getElementById('email-error') as HTMLDivElement;
     const passwordError = document.getElementById('password-error') as HTMLDivElement;
     const redirectInput = document.getElementById('redirect') as HTMLInputElement;
-    
+
     // Validation des champs
     const validateEmail = (email: string): boolean => {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -147,10 +141,10 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
       emailInput.classList.remove('border-red-500');
       return true;
     };
-    
+
     const validatePassword = (password: string): boolean => {
       if (!password) {
-        passwordError.textContent = "Le mot de passe est requis";
+        passwordError.textContent = 'Le mot de passe est requis';
         passwordError.classList.remove('hidden');
         passwordInput.classList.add('border-red-500');
         return false;
@@ -159,43 +153,43 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
       passwordInput.classList.remove('border-red-500');
       return true;
     };
-    
+
     // Événements de validation
     emailInput?.addEventListener('blur', () => {
       validateEmail(emailInput.value);
     });
-    
+
     passwordInput?.addEventListener('blur', () => {
       validatePassword(passwordInput.value);
     });
-    
+
     // Supprimer l'erreur quand l'utilisateur commence à taper
     emailInput?.addEventListener('input', () => {
       emailError.classList.add('hidden');
       emailInput.classList.remove('border-red-500');
     });
-    
+
     passwordInput?.addEventListener('input', () => {
       passwordError.classList.add('hidden');
       passwordInput.classList.remove('border-red-500');
     });
-    
+
     if (form) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const email = emailInput?.value || '';
         const password = passwordInput?.value || '';
         const redirectTo = redirectInput?.value || '/dashboard';
-        
+
         // Valider les champs
         const isEmailValid = validateEmail(email);
         const isPasswordValid = validatePassword(password);
-        
+
         if (!isEmailValid || !isPasswordValid) {
           return;
         }
-        
+
         // Désactiver le bouton et montrer l'état de chargement
         if (submitButton) {
           submitButton.disabled = true;
@@ -207,26 +201,26 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
             Connexion en cours...
           `;
         }
-        
+
         try {
           console.log('🔄 Tentative de connexion avec les données:', { email, redirectTo });
-          
+
           // Utiliser la route API simplifiée
           const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password, redirectTo })
+            body: JSON.stringify({ email, password, redirectTo }),
           });
-          
-          console.log('📝 Réponse reçue:', { 
-            status: response.status, 
+
+          console.log('📝 Réponse reçue:', {
+            status: response.status,
             redirected: response.redirected,
             url: response.url,
-            headers: Object.fromEntries([...response.headers])
+            headers: Object.fromEntries([...response.headers]),
           });
-          
+
           if (response.redirected) {
             console.log('🔄 Redirection vers:', response.url);
             // Utiliser setTimeout pour s'assurer que les cookies sont bien définis avant la redirection
@@ -238,13 +232,13 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
             // Gérer la réponse JSON
             const data = await response.json();
             console.log('✅ Connexion réussie, données reçues:', data);
-            
+
             // Définir les cookies côté client
             if (data.cookies) {
               document.cookie = `sb-access-token=${data.cookies.accessToken}; Path=/; HttpOnly; Max-Age=${60 * 60 * 24 * 7}`;
               document.cookie = `sb-refresh-token=${data.cookies.refreshToken}; Path=/; HttpOnly; Max-Age=${60 * 60 * 24 * 7}`;
             }
-            
+
             // Rediriger vers l'URL spécifiée
             if (data.redirectTo) {
               console.log('🔄 Redirection vers:', data.redirectTo);
@@ -258,7 +252,7 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
         } catch (error) {
           console.error('❌ Exception lors de la connexion:', error);
           window.location.href = `/login?error=auth_error&redirect=${encodeURIComponent(redirectTo)}`;
-          
+
           // Réactiver le bouton en cas d'erreur
           if (submitButton) {
             submitButton.disabled = false;
@@ -276,23 +270,29 @@ const redirectTo = Astro.url.searchParams.get('redirect') || '/dashboard';
     height: 2.75rem;
     transition: all 0.2s ease-in-out;
   }
-  
+
   input:focus {
     box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
   }
-  
+
   /* Animation pour les notifications d'erreur */
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  
-  [role="alert"] {
+
+  [role='alert'] {
     animation: fadeIn 0.3s ease-out forwards;
   }
-  
+
   /* Assurer que les icônes sont visibles */
   .absolute svg {
     display: inline-block;
   }
-</style> 
+</style>

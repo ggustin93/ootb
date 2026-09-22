@@ -1,18 +1,17 @@
 /**
  * E2E Test: Badge Consistency
- * 
+ *
  * This test validates badge consistency across all pages:
  * - Homepage badge display (plural forms)
  * - Category page filtering and badge verification
  * - Filter button consistency
- * 
+ *
  * Tested by Claude Code on 2025-08-17
  */
 
 import { test, expect } from '@playwright/test';
 
 test.describe('Badge Consistency', () => {
-  
   test('Badges display correct plural forms on homepage and category pages', async ({ page }) => {
     // Step 1: Navigate to homepage
     await test.step('Navigate to homepage', async () => {
@@ -34,11 +33,13 @@ test.describe('Badge Consistency', () => {
     await test.step('Filter content by podcasts', async () => {
       // Navigate to podcasts category page (with trailing slash)
       await page.goto('http://localhost:4322/category/podcast/');
-      
+
       // Verify we're on podcasts page
       await expect(page).toHaveURL(/\/category\/podcast\/$/);
       await expect(page.getByRole('heading', { name: 'Nos PODCASTS' })).toBeVisible();
-      await expect(page.getByText('Écoutez nos discussions enrichissantes sur les enjeux de l\'éducation moderne')).toBeVisible();
+      await expect(
+        page.getByText("Écoutez nos discussions enrichissantes sur les enjeux de l'éducation moderne")
+      ).toBeVisible();
     });
 
     // Step 4: Verify only podcasts are displayed
@@ -46,22 +47,22 @@ test.describe('Badge Consistency', () => {
       // Check that all articles have "Podcasts" badge
       const articles = page.locator('article');
       const articleCount = await articles.count();
-      
+
       // Verify we have multiple podcast articles
       expect(articleCount).toBeGreaterThan(3);
-      
+
       // Check that each article has the "Podcasts" badge - use exact matching to avoid "Écouter les podcasts" link
       for (let i = 0; i < Math.min(articleCount, 5); i++) {
         await expect(articles.nth(i).getByText('Podcasts', { exact: true })).toBeVisible();
       }
-      
+
       // Verify that article titles are present (content-agnostic check)
       // Instead of checking specific titles, verify articles have heading content
       const firstArticleHeading = articles.first().locator('h2, h3').first();
       await expect(firstArticleHeading).toBeVisible();
-      
+
       // Check that podcast-specific elements are present
-      await expect(page.getByRole('heading', { name: 'Éducation : mode d\'emploi' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: "Éducation : mode d'emploi" })).toBeVisible();
       await expect(page.getByRole('link', { name: 'Écoutez sur Spotify' })).toBeVisible();
       await expect(page.getByRole('link', { name: 'Apple Podcasts' })).toBeVisible();
     });
@@ -83,7 +84,7 @@ test.describe('Badge Consistency', () => {
     await test.step('Verify badge icons are correct', async () => {
       // Go to homepage first
       await page.goto('http://localhost:4322');
-      
+
       // Test that fiches have correct file-text icon (not school icon)
       // This would require more specific icon testing which is complex in Playwright
       // For now, we can verify the component structure

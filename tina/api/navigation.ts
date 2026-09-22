@@ -42,9 +42,9 @@ export default {
   getNavigation: async (): Promise<NavigationData | null> => {
     return readNavigationFile();
   },
-  
+
   // Mettre à jour les données de navigation
   updateNavigation: async (data: NavigationData): Promise<boolean> => {
     return writeNavigationFile(data);
-  }
-}; 
+  },
+};

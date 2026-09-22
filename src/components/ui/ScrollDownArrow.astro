@@ -1,34 +1,34 @@
 ---
 /**
  * Composant ScrollDownArrow - Flèche de défilement élégante
- * 
+ *
  * Usage:
  * <ScrollDownArrow targetId="section-id" label="Découvrir" />
  */
 
- interface Props {
+interface Props {
   /**
    * ID de l'élément cible vers lequel défiler
    */
   targetId: string;
-  
+
   /**
    * Texte à afficher au-dessus de la flèche (optionnel)
    * @default "Découvrir"
    */
   label?: string;
-  
+
   /**
    * Position verticale de la flèche (optionnel)
    * @default "bottom-[20%] md:bottom-[25%]"
    */
   position?: string;
-  
+
   /**
    * Classes CSS supplémentaires (optionnel)
    */
   class?: string;
-  
+
   /**
    * Si true, masque la flèche sur mobile
    * @default true
@@ -36,43 +36,41 @@
   hideOnMobile?: boolean;
 }
 
-const { 
-  targetId, 
-  label = "Découvrir", 
-  position = "bottom-[15%] md:bottom-[25%]",
-  class: className = "",
-  hideOnMobile = true
+const {
+  targetId,
+  label = 'Découvrir',
+  position = 'bottom-[15%] md:bottom-[25%]',
+  class: className = '',
+  hideOnMobile = true,
 } = Astro.props;
 ---
 
-<div 
-  id="scroll-down-arrow" 
+<div
+  id="scroll-down-arrow"
   class:list={[
-    "absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center z-40 cursor-pointer hover:scale-105 transition-all duration-300",
-    hideOnMobile ? "hidden md:flex" : "flex",
+    'absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center z-40 cursor-pointer hover:scale-105 transition-all duration-300',
+    hideOnMobile ? 'hidden md:flex' : 'flex',
     position,
-    className
+    className,
   ]}
 >
   <div class="relative">
-    <p class="font-handwritten text-white text-2xl md:text-3xl mb-3 whitespace-nowrap transform -rotate-3 drop-shadow-md px-4 py-1 bg-white/10 backdrop-blur-sm rounded-full">
+    <p
+      class="font-handwritten text-white text-2xl md:text-3xl mb-3 whitespace-nowrap transform -rotate-3 drop-shadow-md px-4 py-1 bg-white/10 backdrop-blur-sm rounded-full"
+    >
       {label}
     </p>
   </div>
   <div class="arrow-container">
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      fill="none" 
-      viewBox="0 0 24 24" 
-      stroke-width="2.5" 
-      stroke="currentColor" 
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2.5"
+      stroke="currentColor"
       class="w-8 h-8 md:w-10 md:h-10 text-white hover:text-[--ootb-yellow] transition-colors duration-300 drop-shadow-md"
     >
-      <path 
-        stroke-linecap="round" 
-        stroke-linejoin="round" 
-        d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
-      />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"></path>
     </svg>
   </div>
 </div>
@@ -117,7 +115,7 @@ const {
   // Fonction de scroll
   const handleClick = () => {
     const targetElement = document.getElementById(targetId);
-    
+
     if (targetElement) {
       const headerOffset = 100;
       const elementPosition = targetElement.getBoundingClientRect().top;
@@ -125,14 +123,14 @@ const {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     } else {
       const defaultScrollDistance = window.innerHeight * 0.8;
       const currentPosition = window.pageYOffset;
       window.scrollTo({
         top: currentPosition + defaultScrollDistance,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   };

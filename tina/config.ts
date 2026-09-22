@@ -1,49 +1,47 @@
-import { defineConfig } from "tinacms";
-import { postsCollection } from "./postsCollection";
-import { homepageCollection } from "./homepageCollection";
-import { termsCollection, privacyCollection } from "./legalCollection";
-import { blogCollection } from "./blogCollection";
-import { appelProjetCollection } from "./appelProjetCollection";
-import { navigationCollection } from "./navigationCollection";
-import { aboutCollection } from "./aboutCollection";
-import { erasmusCollection } from "./erasmusCollection";
-import { contactCollection } from "./contactCollection";
-import { siteSettingsCollection } from "./siteSettingsCollection";
-import { festivalCollection } from "./festivalCollection";
+import { defineConfig } from 'tinacms';
+import type { MediaUploadOptions } from 'tinacms';
+import { postsCollection } from './postsCollection';
+import { homepageCollection } from './homepageCollection';
+import { termsCollection, privacyCollection } from './legalCollection';
+import { blogCollection } from './blogCollection';
+import { appelProjetCollection } from './appelProjetCollection';
+import { navigationCollection } from './navigationCollection';
+import { aboutCollection } from './aboutCollection';
+import { erasmusCollection } from './erasmusCollection';
+import { contactCollection } from './contactCollection';
+import { siteSettingsCollection } from './siteSettingsCollection';
+import { festivalCollection } from './festivalCollection';
 
 // Branche éditée par Tina, résolue dynamiquement selon le déploiement :
 // - sur Netlify, HEAD = la branche du déploiement (ex. "staging" pour staging--site.netlify.app)
 // - en production (branche main), HEAD = "main" → comportement inchangé
 // - TINA_BRANCH permet de forcer une branche en local / CI
-const branch =
-  process.env.TINA_BRANCH ||
-  process.env.HEAD ||
-  "main";
+const branch = process.env.TINA_BRANCH || process.env.HEAD || 'main';
 
 export default defineConfig({
   branch,
   clientId: process.env.TINA_CLIENT_ID,
   token: process.env.TINA_TOKEN,
-  
+
   build: {
-    outputFolder: "admin",
+    outputFolder: 'admin',
     // "public" (et non "dist") pour que l'admin soit servi par `astro dev` à /admin
     // en local. En build, l'ordre `tinacms build && astro build` recopie public/admin → dist/admin.
-    publicFolder: "public",
+    publicFolder: 'public',
   },
 
   media: {
     loadCustomStore: async () => {
-      const pack = await import("next-tinacms-cloudinary");
-      const { compressImage } = await import("./media/compressImage");
-      const { ensureUploadable } = await import("./media/uploadGuard");
+      const pack = await import('next-tinacms-cloudinary');
+      const { compressImage } = await import('./media/compressImage');
+      const { ensureUploadable } = await import('./media/uploadGuard');
 
       const Base = pack.TinaCloudCloudinaryMediaStore;
 
       // Sous-classe : on compresse les images trop lourdes AVANT l'envoi, puis
       // on délègue tout le reste (list/delete/preview...) au store d'origine.
       return class CompressingCloudinaryMediaStore extends Base {
-        async persist(media: any[]) {
+        async persist(media: MediaUploadOptions[]) {
           const processed = await Promise.all(
             media.map(async (item) => {
               if (item?.file) {
@@ -101,5 +99,5 @@ export default defineConfig({
     authProvider: 'github',
     autoCommit: true,
     autoMerge: false, // jamais de merge auto : les éditions staging ne remontent pas vers main
-  }
+  },
 });

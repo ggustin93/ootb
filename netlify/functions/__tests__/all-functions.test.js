@@ -37,8 +37,8 @@ function testEnvVarIsolation() {
   // 3 fonctions, 3 projets NocoDB différents
   const functions = {
     'pedagogical-sheet': { project: 'pzafxqd4lr77r0v', table: 'mur92i1x276ldbg' },
-    'contact':           { project: 'pn7128r4idyluf0', table: 'mza30wqm38wsmib' },
-    'newsletter':        { project: 'p41z6qweidro6nu', table: 'm6hnpjey4laav0z' },
+    contact: { project: 'pn7128r4idyluf0', table: 'mza30wqm38wsmib' },
+    newsletter: { project: 'p41z6qweidro6nu', table: 'm6hnpjey4laav0z' },
   };
 
   const entries = Object.entries(functions);
@@ -46,10 +46,8 @@ function testEnvVarIsolation() {
     for (let j = i + 1; j < entries.length; j++) {
       const [nameA, idsA] = entries[i];
       const [nameB, idsB] = entries[j];
-      assert(idsA.project !== idsB.project,
-        `${nameA} et ${nameB} ont des project IDs différents`);
-      assert(idsA.table !== idsB.table,
-        `${nameA} et ${nameB} ont des table IDs différents`);
+      assert(idsA.project !== idsB.project, `${nameA} et ${nameB} ont des project IDs différents`);
+      assert(idsA.table !== idsB.table, `${nameA} et ${nameB} ont des table IDs différents`);
     }
   }
 }
@@ -65,14 +63,24 @@ async function testPedagogicalSheet() {
   const res = await pedagogicalHandler({
     httpMethod: 'POST',
     body: JSON.stringify({
-      Title: 'Test', Description: 'Desc',
-      TypeEnseignement: ['Ordinaire'], Section: ['Primaire'],
-      Destinataire: 'Test', Themes: [],
-      Objectifs: 'Obj', Competences: 'Comp',
-      prenom: 'A', nom: 'B', email: 'a@b.com',
-      telephone: '', ecole: 'E',
-      Declinaisons: '', Conseils: '', Liens: '', LiensVIDEO: ''
-    })
+      Title: 'Test',
+      Description: 'Desc',
+      TypeEnseignement: ['Ordinaire'],
+      Section: ['Primaire'],
+      Destinataire: 'Test',
+      Themes: [],
+      Objectifs: 'Obj',
+      Competences: 'Comp',
+      prenom: 'A',
+      nom: 'B',
+      email: 'a@b.com',
+      telephone: '',
+      ecole: 'E',
+      Declinaisons: '',
+      Conseils: '',
+      Liens: '',
+      LiensVIDEO: '',
+    }),
   });
   const body = JSON.parse(res.body);
   assert(res.statusCode === 200, 'POST → 200');
@@ -103,8 +111,8 @@ async function testContactForm() {
       name: 'Sophie Test',
       email: 'sophie@test.com',
       subject: 'Test sujet',
-      message: 'Test message'
-    })
+      message: 'Test message',
+    }),
   });
   const body = JSON.parse(res.body);
   assert(res.statusCode === 200, 'POST → 200');
@@ -140,8 +148,8 @@ async function testNewsletter() {
     body: JSON.stringify({
       email: 'test@example.com',
       source: 'test',
-      privacyAccepted: true
-    })
+      privacyAccepted: true,
+    }),
   });
   const body = JSON.parse(res.body);
   assert(res.statusCode === 200, 'POST → 200');
@@ -151,14 +159,14 @@ async function testNewsletter() {
   // 4b. POST sans email → 400
   const r400 = await newsletterHandler({
     httpMethod: 'POST',
-    body: JSON.stringify({ source: 'test' })
+    body: JSON.stringify({ source: 'test' }),
   });
   assert(r400.statusCode === 400, 'POST sans email → 400');
 
   // 4c. GET → diagnostic mode test
   const resGet = await newsletterHandler({
     httpMethod: 'GET',
-    rawUrl: 'https://example.com/api/submit-newsletter'
+    rawUrl: 'https://example.com/api/submit-newsletter',
   });
   const bodyGet = JSON.parse(resGet.body);
   assert(resGet.statusCode === 200, 'GET (diagnostic) → 200');
@@ -180,15 +188,15 @@ function testContactDataFormatting() {
     name: 'Sophie Dupont',
     email: 'sophie@example.com',
     subject: 'Question sur le festival',
-    message: 'Bonjour, je voudrais savoir...'
+    message: 'Bonjour, je voudrais savoir...',
   };
 
   // Logique du handler (lignes 188-193)
   const formatted = {
-    Objet: input.subject || "Contact depuis le site web",
+    Objet: input.subject || 'Contact depuis le site web',
     Message: input.message,
     Auteur: input.email,
-    Statut: "En attente de réponse"
+    Statut: 'En attente de réponse',
   };
 
   assert(formatted.Objet === 'Question sur le festival', 'subject → Objet');
@@ -197,8 +205,8 @@ function testContactDataFormatting() {
   assert(!('Nom' in formatted), '"name" non mappé → NocoDB (champ ignoré)');
 
   // Subject vide → fallback
-  assert((undefined || "Contact depuis le site web") === 'Contact depuis le site web',
-    'Subject vide → fallback');
+  const emptySubject = undefined;
+  assert((emptySubject || 'Contact depuis le site web') === 'Contact depuis le site web', 'Subject vide → fallback');
 }
 
 // ═══════════════════════════════════════════
@@ -214,16 +222,20 @@ function testNewsletterDataFormatting() {
   const formatted = {
     Email: input.email,
     "Date d'inscription": '2026-03-25 13:00:00+01:00', // générée côté serveur
-    "Politique de confidentialité acceptée": input.privacyAccepted === true
+    'Politique de confidentialité acceptée': input.privacyAccepted === true,
   };
 
   assert(formatted.Email === 'test@example.com', 'email → Email');
   assert("Date d'inscription" in formatted, "Date d'inscription auto-générée côté serveur");
-  assert(formatted["Politique de confidentialité acceptée"] === true, 'privacyAccepted → Politique de confidentialité acceptée');
+  assert(
+    formatted['Politique de confidentialité acceptée'] === true,
+    'privacyAccepted → Politique de confidentialité acceptée'
+  );
   assert(!('Source' in formatted), 'Source absente du schéma');
   assert(!('Statut' in formatted), 'Statut absent du schéma');
   // === true (strict) : la string "false" ne doit pas passer comme true
-  assert((false === true) === false, 'privacyAccepted strict: "false" string → false');
+  const privacyString = 'false';
+  assert((privacyString === true) === false, 'privacyAccepted strict: "false" string → false');
 }
 
 // ═══════════════════════════════════════════
@@ -239,9 +251,8 @@ function testContactClientServerMapping() {
   const clientFields = ['name', 'email', 'subject', 'message'];
   const serverReads = ['email', 'subject', 'message'];
 
-  const unused = clientFields.filter(f => !serverReads.includes(f));
-  assert(unused.length === 1 && unused[0] === 'name',
-    `Seul "name" non utilisé côté serveur (${unused.join(', ')})`);
+  const unused = clientFields.filter((f) => !serverReads.includes(f));
+  assert(unused.length === 1 && unused[0] === 'name', `Seul "name" non utilisé côté serveur (${unused.join(', ')})`);
 }
 
 // ═══════════════════════════════════════════
@@ -261,8 +272,10 @@ function testPedagogicalTableIdResolution() {
   assert(resolve({}) === TABLE_ID, 'Aucune env var → hardcoded TABLE_ID');
   assert(resolve({ NOCODB_BASE_ID: TABLE_ID }) === TABLE_ID, 'NOCODB_BASE_ID → TABLE_ID');
   assert(resolve({ NOCODB_FICHES_TABLE_ID: TABLE_ID }) === TABLE_ID, 'NOCODB_FICHES_TABLE_ID → TABLE_ID');
-  assert(resolve({ NOCODB_FICHES_TABLE_ID: 'x', NOCODB_BASE_ID: 'y' }) === 'x',
-    'FICHES_TABLE_ID prioritaire sur BASE_ID');
+  assert(
+    resolve({ NOCODB_FICHES_TABLE_ID: 'x', NOCODB_BASE_ID: 'y' }) === 'x',
+    'FICHES_TABLE_ID prioritaire sur BASE_ID'
+  );
 
   // Le bug original
   const oldLogic = VIEW_ID; // process.env.NOCODB_TABLE_ID si défini

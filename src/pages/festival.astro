@@ -20,7 +20,17 @@ export const prerender = true;
 import festivalContent from '~/content/festival/tina/index.json';
 
 // Extraction des données du fichier JSON
-const { metadata, hero, about, gallery, stats, themes: themeData, accessibility, partenaires: partenaireData, eduspark } = festivalContent;
+const {
+  metadata,
+  hero,
+  about,
+  gallery,
+  stats,
+  themes: themeData,
+  accessibility,
+  partenaires: partenaireData,
+  eduspark,
+} = festivalContent;
 
 // Paramètres de la bannière programme (gérés dans la page Festival)
 const { programLink, ticketing } = festivalContent;
@@ -31,6 +41,9 @@ import { findImage } from '~/utils/images';
 // Résolution des images pour le hero section
 const heroLogo = await findImage(hero.logo);
 const heroBackground = await findImage(hero.heroImage);
+if (!heroLogo || !heroBackground) {
+  throw new Error('festival.astro: hero.logo ou hero.heroImage introuvable');
+}
 
 // Utiliser directement les données statiques au lieu d'appeler getEventsByDay()
 const eventsByDay = eventsData as EventsByDay;
@@ -44,8 +57,7 @@ const eventsByDay = eventsData as EventsByDay;
     location={hero.location}
     description={hero.description}
     ticketingConfig={ticketing}
-  >
-  </FestivalHeroSection>
+  />
 
   <!-- Cartes d'activités adaptées pour mobile - Utilisation unique -->
   <div id="features" class="relative z-20 mt-8 sm:mt-0 sm:-mt-40">
@@ -72,8 +84,13 @@ const eventsByDay = eventsData as EventsByDay;
       <div class="grid md:grid-cols-2 gap-16 items-center mb-8 md:mb-16">
         <!-- Vidéo à gauche -->
         <div class="relative aspect-video">
-          <div class="absolute -inset-4 bg-black rounded-[2rem] border-2 border-[--ootb-orange] shadow-[0_0_20px_rgba(228,69,30,0.3)]"></div>
-          <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform-gpu hover:scale-[1.02] transition-transform duration-500">
+          <div
+            class="absolute -inset-4 bg-black rounded-[2rem] border-2 border-[--ootb-orange] shadow-[0_0_20px_rgba(228,69,30,0.3)]"
+          >
+          </div>
+          <div
+            class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform-gpu hover:scale-[1.02] transition-transform duration-500"
+          >
             <YouTubePlayer
               videoId={about.videoId}
               title={about.videoTitle}
@@ -81,18 +98,17 @@ const eventsByDay = eventsData as EventsByDay;
               controls={true}
             />
             <!-- Effet de reflet -->
-            <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-20 bg-gradient-to-t from-white/20 to-transparent blur-lg transform-gpu"></div>
+            <div
+              class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-20 bg-gradient-to-t from-white/20 to-transparent blur-lg transform-gpu"
+            >
+            </div>
           </div>
         </div>
 
         <!-- Texte à droite -->
         <div class="space-y-6">
           <div class="max-w-xl">
-            {about.paragraphs.map((paragraph: string) => (
-              <p class="text-lg text-gray-600 mb-6">
-                {paragraph}
-              </p>
-            ))}
+            {about.paragraphs.map((paragraph: string) => <p class="text-lg text-gray-600 mb-6">{paragraph}</p>)}
           </div>
         </div>
       </div>
@@ -102,46 +118,52 @@ const eventsByDay = eventsData as EventsByDay;
   <!-- Galerie photos des éditions précédentes -->
   <section id="gallery" class="bg-white relative overflow-hidden pt-0 pb-4 md:pt-0 md:pb-8 -mt-4 md:mt-0">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-0 md:py-8">
-        <div class="text-center mb-6 md:mb-12">
-          <SectionDivider variant="orange" class="mb-4 md:mb-6">
-            <Icon name="tabler:camera" class="w-5 h-5" />
-            <span>Rétrospective</span>
-          </SectionDivider>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mt-0 mb-2 md:mb-6 text-sky-900">{gallery.title}</h2>
-          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-4 md:mb-8">
-            {gallery.description}
-          </p>
-        </div>
+      <div class="text-center mb-6 md:mb-12">
+        <SectionDivider variant="orange" class="mb-4 md:mb-6">
+          <Icon name="tabler:camera" class="w-5 h-5" />
+          <span>Rétrospective</span>
+        </SectionDivider>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mt-0 mb-2 md:mb-6 text-sky-900">
+          {gallery.title}
+        </h2>
+        <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-4 md:mb-8">
+          {gallery.description}
+        </p>
+      </div>
 
-        <!-- Carousel de photos -->
-        <div class="w-full max-w-3xl mx-auto">
-          <Carousel photos={gallery.photos} />
-        </div>
+      <!-- Carousel de photos -->
+      <div class="w-full max-w-3xl mx-auto">
+        <Carousel photos={gallery.photos} />
+      </div>
 
-        <!-- Stats sur une ligne avec style amélioré -->
-        <div class="relative py-12 md:py-16 bg-[--ootb-turquoise] rounded-3xl overflow-hidden shadow-xl mt-6 md:mt-16">
-          <!-- Éléments décoratifs -->
-          <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-            <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2"></div>
+      <!-- Stats sur une ligne avec style amélioré -->
+      <div class="relative py-12 md:py-16 bg-[--ootb-turquoise] rounded-3xl overflow-hidden shadow-xl mt-6 md:mt-16">
+        <!-- Éléments décoratifs -->
+        <div class="absolute inset-0 overflow-hidden">
+          <div
+            class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"
+          >
           </div>
+          <div
+            class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2"
+          >
+          </div>
+        </div>
 
-          <div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-6xl mx-auto">
-            {stats.map((stat) => (
+        <div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-6xl mx-auto">
+          {
+            stats.map((stat) => (
               <div class="text-center transform hover:-translate-y-1 transition-all duration-300">
                 <div class="mb-4">
                   <Icon name={stat.icon} class="w-8 h-8 text-white/90 mx-auto" />
                 </div>
-                <div class="text-4xl md:text-5xl font-bold text-white mb-3">
-                  {stat.number}
-                </div>
-                <div class="text-xl md:text-2xl lg:text-3xl text-white/90 font-handwritten">
-                  {stat.label}
-                </div>
+                <div class="text-4xl md:text-5xl font-bold text-white mb-3">{stat.number}</div>
+                <div class="text-xl md:text-2xl lg:text-3xl text-white/90 font-handwritten">{stat.label}</div>
               </div>
-            ))}
-          </div>
+            ))
+          }
         </div>
+      </div>
     </div>
   </section>
 
@@ -149,29 +171,41 @@ const eventsByDay = eventsData as EventsByDay;
   {eduspark && <EduSparkSection {...eduspark} />}
 
   <!-- Programme du festival -->
-  <section id="programme" class="pt-16 md:pt-24 pb-8 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden">
+  <section
+    id="programme"
+    class="pt-16 md:pt-24 pb-8 bg-[color-mix(in_srgb,var(--ootb-orange)_5%,white)] relative overflow-hidden"
+  >
     <!-- Éléments décoratifs -->
     <div class="absolute inset-0">
-      <div class="absolute top-0 left-0 w-96 h-96 bg-[--ootb-orange]/5 rounded-full blur-3xl transform -translate-x-1/3 -translate-y-1/3"></div>
-      <div class="absolute bottom-0 right-0 w-80 h-80 bg-[--ootb-orange]/5 rounded-full blur-2xl transform translate-x-1/4 translate-y-1/4"></div>
+      <div
+        class="absolute top-0 left-0 w-96 h-96 bg-[--ootb-orange]/5 rounded-full blur-3xl transform -translate-x-1/3 -translate-y-1/3"
+      >
+      </div>
+      <div
+        class="absolute bottom-0 right-0 w-80 h-80 bg-[--ootb-orange]/5 rounded-full blur-2xl transform translate-x-1/4 translate-y-1/4"
+      >
+      </div>
     </div>
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="text-center mb-8 md:mb-16 relative z-10">
-          <SectionDivider variant="orange" class="mb-4 md:mb-6">
-            <Icon name="tabler:calendar" class="w-5 h-5" />
-            <span>Planning</span>
-          </SectionDivider>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-2 md:mb-6 text-sky-900 tracking-tight">{programLink.title}</h2>
-          
-          <!-- Description principale avec largeur étendue -->
-          <div class="max-w-3xl mx-auto mb-6 md:mb-8">
-            <p class="text-lg md:text-xl text-gray-600 font-light tracking-wide leading-relaxed mb-6">
-              {programLink.description}
-            </p>
-            
-            {/* Bloc de liens programme avec style amélioré */}
-            {programLink && programLink.enabled && (
+      <div class="text-center mb-8 md:mb-16 relative z-10">
+        <SectionDivider variant="orange" class="mb-4 md:mb-6">
+          <Icon name="tabler:calendar" class="w-5 h-5" />
+          <span>Planning</span>
+        </SectionDivider>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-body font-bold mb-2 md:mb-6 text-sky-900 tracking-tight">
+          {programLink.title}
+        </h2>
+
+        <!-- Description principale avec largeur étendue -->
+        <div class="max-w-3xl mx-auto mb-6 md:mb-8">
+          <p class="text-lg md:text-xl text-gray-600 font-light tracking-wide leading-relaxed mb-6">
+            {programLink.description}
+          </p>
+
+          {/* Bloc de liens programme avec style amélioré */}
+          {
+            programLink && programLink.enabled && (
               <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
                 <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mb-3">
                   {programLink.familyPdf && programLink.familyPdf.enabled && (
@@ -185,7 +219,7 @@ const eventsByDay = eventsData as EventsByDay;
                       {programLink.familyPdf.text}
                     </a>
                   )}
-                  
+
                   {programLink.ebookPdf && programLink.ebookPdf.enabled && (
                     <a
                       href={programLink.ebookPdf.url}
@@ -198,78 +232,77 @@ const eventsByDay = eventsData as EventsByDay;
                     </a>
                   )}
                 </div>
-                <p class="text-sm text-gray-600 text-center">
-                  ou explorez les événements ci-dessous ↓
-                </p>
+                <p class="text-sm text-gray-600 text-center">ou explorez les événements ci-dessous ↓</p>
               </div>
-            )}
-          </div>
+            )
+          }
         </div>
+      </div>
 
-        <div class="bg-white rounded-[32px] shadow-xl p-4 md:p-8 mb-16 relative z-10">
-          <style>
-            /* Style personnalisé pour les boutons du DayFilter */
-            :global(.day-filter-button) {
-              @apply border-2 border-gray-100 text-gray-600 px-6 py-3 rounded-xl
+      <div class="bg-white rounded-[32px] shadow-xl p-4 md:p-8 mb-16 relative z-10">
+        <style>
+          /* Style personnalisé pour les boutons du DayFilter */
+          :global(.day-filter-button) {
+            @apply border-2 border-gray-100 text-gray-600 px-6 py-3 rounded-xl
                 hover:border-[#e4451e]/40 hover:text-[#e4451e] 
                 transition-all duration-300 bg-white/80
                 flex items-center gap-2 cursor-pointer;
-            }
-            :global(.day-filter-button.active) {
-              @apply border-[#e4451e] text-[#e4451e] bg-white 
+          }
+          :global(.day-filter-button.active) {
+            @apply border-[#e4451e] text-[#e4451e] bg-white 
                 font-medium shadow-sm ring-2 ring-[#e4451e]/10 ring-offset-2;
-            }
-            :global(.day-filter-button:hover) {
-              @apply shadow-md bg-white transform -translate-y-[2px];
-            }
-            :global(.day-filter-button::before) {
-              content: '';
-              @apply w-2 h-2 rounded-full bg-current opacity-0 transition-opacity duration-300;
-            }
-            :global(.day-filter-button:hover::before) {
-              @apply opacity-50;
-            }
-            :global(.day-filter-button.active::before) {
-              @apply opacity-100;
-            }
+          }
+          :global(.day-filter-button:hover) {
+            @apply shadow-md bg-white transform -translate-y-[2px];
+          }
+          :global(.day-filter-button::before) {
+            content: '';
+            @apply w-2 h-2 rounded-full bg-current opacity-0 transition-opacity duration-300;
+          }
+          :global(.day-filter-button:hover::before) {
+            @apply opacity-50;
+          }
+          :global(.day-filter-button.active::before) {
+            @apply opacity-100;
+          }
 
-            /* Style pour la pagination */
-            :global(.pagination-button) {
-              @apply px-4 py-2 border border-gray-200 rounded-lg text-gray-600
+          /* Style pour la pagination */
+          :global(.pagination-button) {
+            @apply px-4 py-2 border border-gray-200 rounded-lg text-gray-600
                 hover:border-[#e4451e]/40 hover:text-[#e4451e] 
                 transition-all duration-300
                 flex items-center gap-2;
-            }
-            :global(.pagination-button:disabled) {
-              @apply opacity-50 cursor-not-allowed hover:border-gray-200 hover:text-gray-600;
-            }
-            :global(.pagination-info) {
-              @apply text-sm text-gray-500 font-medium;
-            }
+          }
+          :global(.pagination-button:disabled) {
+            @apply opacity-50 cursor-not-allowed hover:border-gray-200 hover:text-gray-600;
+          }
+          :global(.pagination-info) {
+            @apply text-sm text-gray-500 font-medium;
+          }
 
-            /* Réduction de la taille des images */
-            :global(.event-image) {
-              @apply w-24 h-24 rounded-xl object-cover;
-            }
+          /* Réduction de la taille des images */
+          :global(.event-image) {
+            @apply w-24 h-24 rounded-xl object-cover;
+          }
 
-            /* Système typographique harmonisé */
-            p:not(.hero-text) {
-              color: #5d7186; /* Gris bleuté plus doux */
-              @apply tracking-wide font-normal;
-            }
+          /* Système typographique harmonisé */
+          p:not(.hero-text) {
+            color: #5d7186; /* Gris bleuté plus doux */
+            @apply tracking-wide font-normal;
+          }
 
-            .hero-text {
-              @apply text-white font-light tracking-wide;
-            }
+          .hero-text {
+            @apply text-white font-light tracking-wide;
+          }
 
-            h3 {
-              @apply tracking-tight;
-              color: #34495e;
-              transition: color 0.3s ease;
-            }
-          </style>
-          <DayFilter events={eventsByDay} />
-        </div>
+          h3 {
+            @apply tracking-tight;
+            color: #34495e;
+            transition: color 0.3s ease;
+          }
+        </style>
+        <DayFilter events={eventsByDay} />
+      </div>
     </div>
   </section>
 
@@ -303,27 +336,31 @@ const eventsByDay = eventsData as EventsByDay;
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
-        {themeData.liste.map((theme) => (
-          <div class="relative bg-[color-mix(in_srgb,var(--ootb-orange)_2%,white)] p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1 border border-[#e4451e]/5 overflow-hidden">
-            <!-- Effet de brillance sur le hover -->
-            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000"></div>
-            <div class="relative z-10">
-              <div class="mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                <div class="w-14 h-14 bg-gradient-to-br from-[#e4451e] to-[#ff6b47] rounded-xl flex items-center justify-center relative shadow-lg">
-                  <div class="absolute inset-0 bg-[#e4451e] rounded-xl opacity-20 animate-pulse"></div>
-                  <Icon name={theme.icon} class="w-7 h-7 text-white relative z-10" />
+        {
+          themeData.liste.map((theme) => (
+            <div class="relative bg-[color-mix(in_srgb,var(--ootb-orange)_2%,white)] p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1 border border-[#e4451e]/5 overflow-hidden">
+              {/* Effet de brillance sur le hover */}
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000" />
+              <div class="relative z-10">
+                <div class="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                  <div class="w-14 h-14 bg-gradient-to-br from-[#e4451e] to-[#ff6b47] rounded-xl flex items-center justify-center relative shadow-lg">
+                    <div class="absolute inset-0 bg-[#e4451e] rounded-xl opacity-20 animate-pulse" />
+                    <Icon name={theme.icon} class="w-7 h-7 text-white relative z-10" />
+                  </div>
                 </div>
+                <h3 class="text-2xl font-bold text-gray-600 mb-4 group-hover:text-[#e4451e] transition-colors tracking-tight">
+                  {theme.title}
+                </h3>
+                <p class="text-[#4a5568] leading-relaxed font-normal tracking-wide">{theme.description}</p>
               </div>
-              <h3 class="text-2xl font-bold text-gray-600 mb-4 group-hover:text-[#e4451e] transition-colors tracking-tight">{theme.title}</h3>
-              <p class="text-[#4a5568] leading-relaxed font-normal tracking-wide">{theme.description}</p>
+
+              {/* Effets décoratifs */}
+              <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#e4451e]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div class="absolute -bottom-2 -right-2 w-32 h-32 bg-[#e4451e]/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#e4451e]/10 to-transparent rounded-bl-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
             </div>
-            
-            <!-- Effets décoratifs -->
-            <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#e4451e]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="absolute -bottom-2 -right-2 w-32 h-32 bg-[#e4451e]/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#e4451e]/10 to-transparent rounded-bl-full transform scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </section>
@@ -343,41 +380,43 @@ const eventsByDay = eventsData as EventsByDay;
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {accessibility.sections.map((section) => (
-          <div class="bg-gray-50 p-6 rounded-2xl text-center">
-            <div class="mb-4 flex justify-center">
-              <Icon name={section.icon} class="w-8 h-8 text-[--ootb-orange]" />
-            </div>
-            <h3 class="text-2xl font-bold mb-4">{section.title}</h3>
-            {section.lieu && section.adresse && section.mapLink && (
-              <a 
-                href={section.mapLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="group block p-3 mb-4 bg-white rounded-xl border border-gray-100 hover:border-[#e4451e]/30 hover:shadow-md transition-all duration-300"
-              >
-                <p class="text-[#2D4356] flex items-center justify-center gap-2 mb-1 font-medium">
-                  <Icon name="tabler:map-2" class="w-5 h-5 text-[#e4451e]" />
-                  {section.lieu}
-                </p>
-                <p class="text-[#435B71] text-sm">{section.adresse}</p>
-                <div class="transform translate-y-0 group-hover:translate-y-0 transition-transform duration-300">
-                  <p class="text-[#e4451e] text-sm mt-2 flex items-center justify-center gap-1 font-medium">
-                    <Icon name="tabler:navigation" class="w-4 h-4" />
-                    Ouvrir dans Maps
+        {
+          accessibility.sections.map((section) => (
+            <div class="bg-gray-50 p-6 rounded-2xl text-center">
+              <div class="mb-4 flex justify-center">
+                <Icon name={section.icon} class="w-8 h-8 text-[--ootb-orange]" />
+              </div>
+              <h3 class="text-2xl font-bold mb-4">{section.title}</h3>
+              {section.lieu && section.adresse && section.mapLink && (
+                <a
+                  href={section.mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group block p-3 mb-4 bg-white rounded-xl border border-gray-100 hover:border-[#e4451e]/30 hover:shadow-md transition-all duration-300"
+                >
+                  <p class="text-[#2D4356] flex items-center justify-center gap-2 mb-1 font-medium">
+                    <Icon name="tabler:map-2" class="w-5 h-5 text-[#e4451e]" />
+                    {section.lieu}
                   </p>
-                </div>
-              </a>
-            )}
-            <ul class="space-y-2 text-gray-600">
-              {section.infos.map((info) => (
-                <li class="flex items-center justify-center gap-2">
-                  <Icon name={info.icon} class="w-5 h-5" /> {info.text}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+                  <p class="text-[#435B71] text-sm">{section.adresse}</p>
+                  <div class="transform translate-y-0 group-hover:translate-y-0 transition-transform duration-300">
+                    <p class="text-[#e4451e] text-sm mt-2 flex items-center justify-center gap-1 font-medium">
+                      <Icon name="tabler:navigation" class="w-4 h-4" />
+                      Ouvrir dans Maps
+                    </p>
+                  </div>
+                </a>
+              )}
+              <ul class="space-y-2 text-gray-600">
+                {section.infos.map((info) => (
+                  <li class="flex items-center justify-center gap-2">
+                    <Icon name={info.icon} class="w-5 h-5" /> {info.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
       </div>
 
       <!-- Contact et assistance -->
@@ -385,9 +424,9 @@ const eventsByDay = eventsData as EventsByDay;
         <p class="text-gray-600 mb-4">
           {accessibility.contact.text}
         </p>
-        <Button 
-          variant="primary" 
-          href={`mailto:${accessibility.contact.email}`} 
+        <Button
+          variant="primary"
+          href={`mailto:${accessibility.contact.email}`}
           class="inline-flex items-center gap-2 w-full sm:w-auto text-sm sm:text-base px-4 py-3 justify-center break-all sm:break-normal"
         >
           <Icon name="tabler:mail" class="w-5 h-5 flex-shrink-0" />
@@ -414,18 +453,29 @@ const eventsByDay = eventsData as EventsByDay;
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {partenaireData.liste.map((partenaire) => (
-          <div class="group bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-            <div class="aspect-[4/3] relative flex items-center justify-center p-4">
-              <div class="absolute inset-0 bg-gradient-to-br from-[#e4451e]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-              {partenaire.url ? (
-                <a 
-                  href={partenaire.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-center w-full h-full"
-                  aria-label={`Visiter le site de ${partenaire.nom || 'ce partenaire'}`}
-                >
+        {
+          partenaireData.liste.map((partenaire) => (
+            <div class="group bg-white/80 backdrop-blur-sm rounded-xl border border-gray-100 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div class="aspect-[4/3] relative flex items-center justify-center p-4">
+                <div class="absolute inset-0 bg-gradient-to-br from-[#e4451e]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                {partenaire.url ? (
+                  <a
+                    href={partenaire.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center justify-center w-full h-full"
+                    aria-label={`Visiter le site de ${partenaire.nom || 'ce partenaire'}`}
+                  >
+                    <Image
+                      src={partenaire.logo}
+                      alt={`Logo ${partenaire.nom || 'partenaire'}`}
+                      class="max-h-full w-auto object-contain relative z-10"
+                      widths={[150, 300]}
+                      sizes="(max-width: 768px) 150px, 300px"
+                      loading="lazy"
+                    />
+                  </a>
+                ) : (
                   <Image
                     src={partenaire.logo}
                     alt={`Logo ${partenaire.nom || 'partenaire'}`}
@@ -434,20 +484,11 @@ const eventsByDay = eventsData as EventsByDay;
                     sizes="(max-width: 768px) 150px, 300px"
                     loading="lazy"
                   />
-                </a>
-              ) : (
-                <Image
-                  src={partenaire.logo}
-                  alt={`Logo ${partenaire.nom || 'partenaire'}`}
-                  class="max-h-full w-auto object-contain relative z-10"
-                  widths={[150, 300]}
-                  sizes="(max-width: 768px) 150px, 300px"
-                  loading="lazy"
-                />
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </section>
@@ -488,15 +529,18 @@ const eventsByDay = eventsData as EventsByDay;
 
 <script>
   // Garder uniquement la logique d'animation au scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate-fade-in-up');
-      }
-    });
-  }, { threshold: 0.1 });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up');
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
 
-  document.querySelectorAll('section').forEach(section => {
+  document.querySelectorAll('section').forEach((section) => {
     observer.observe(section);
   });
 
@@ -508,8 +552,8 @@ const eventsByDay = eventsData as EventsByDay;
   document.addEventListener('dayChange', ((event: DayChangeEvent) => {
     const selectedDay = event.detail;
     const items = document.querySelectorAll('[data-day]');
-    
-    items.forEach(item => {
+
+    items.forEach((item) => {
       if (item.getAttribute('data-day') === selectedDay) {
         item.classList.remove('hidden');
       } else {
@@ -517,4 +561,4 @@ const eventsByDay = eventsData as EventsByDay;
       }
     });
   }) as EventListener);
-</script> 
+</script>

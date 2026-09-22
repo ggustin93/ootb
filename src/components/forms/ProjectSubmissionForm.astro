@@ -1,9 +1,8 @@
 ---
-import { Icon } from 'astro-icon/components';
 import Button from '~/components/ui/Button.astro';
 import appelProjetData from '~/content/appel_projet/index.json';
 
-const { personal, project } = appelProjetData.formulaire;
+const { project } = appelProjetData.formulaire;
 const { teachingTypes, sections } = project;
 
 // Vérifier si le token API est présent et non vide
@@ -13,12 +12,12 @@ console.log(`Mode détecté côté serveur: ${isTokenValid ? 'PRODUCTION' : 'TES
 
 // Public cible
 const publicCible = [
-  "Jeunes enfants",
-  "Parents et enfants",
-  "Parents",
-  "Professeurs, parents et enfants",
-  "Professeurs",
-  "Professionnels"
+  'Jeunes enfants',
+  'Parents et enfants',
+  'Parents',
+  'Professeurs, parents et enfants',
+  'Professeurs',
+  'Professionnels',
 ];
 ---
 
@@ -31,78 +30,100 @@ const publicCible = [
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="form-group">
-        <input type="text" id="prenom" name="prenom" required minlength="2" 
-               class="w-full p-4 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all" 
-               placeholder="Prénom" />
-        <div class="error-message hidden mt-1 text-xs text-rose-500">
-          Veuillez entrer un prénom valide
-        </div>
+        <input
+          type="text"
+          id="prenom"
+          name="prenom"
+          required
+          minlength="2"
+          class="w-full p-4 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all"
+          placeholder="Prénom"
+        />
+        <div class="error-message hidden mt-1 text-xs text-rose-500">Veuillez entrer un prénom valide</div>
       </div>
 
       <div class="form-group">
-        <input type="text" id="nom" name="nom" required minlength="2" 
-               class="w-full p-4 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all" 
-               placeholder="Nom" />
-        <div class="error-message hidden mt-1 text-xs text-rose-500">
-          Veuillez entrer un nom valide
-        </div>
+        <input
+          type="text"
+          id="nom"
+          name="nom"
+          required
+          minlength="2"
+          class="w-full p-4 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all"
+          placeholder="Nom"
+        />
+        <div class="error-message hidden mt-1 text-xs text-rose-500">Veuillez entrer un nom valide</div>
       </div>
 
       <div class="form-group">
-        <input type="text" id="ecole" name="ecole" required minlength="2" 
-               class="w-full p-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition-all" 
-               placeholder="École" />
-        <div class="error-message hidden mt-1 text-xs text-rose-500">
-          Veuillez entrer le nom de votre école
-        </div>
+        <input
+          type="text"
+          id="ecole"
+          name="ecole"
+          required
+          minlength="2"
+          class="w-full p-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition-all"
+          placeholder="École"
+        />
+        <div class="error-message hidden mt-1 text-xs text-rose-500">Veuillez entrer le nom de votre école</div>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
       <div class="form-group">
-        <input type="email" id="email" name="email" required 
-               class="w-full p-4 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all" 
-               placeholder="Email" />
-        <div class="error-message hidden mt-1 text-xs text-rose-500">
-          Veuillez entrer une adresse email valide
-        </div>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full p-4 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all"
+          placeholder="Email"
+        />
+        <div class="error-message hidden mt-1 text-xs text-rose-500">Veuillez entrer une adresse email valide</div>
       </div>
 
       <div class="form-group">
-        <input type="tel" id="telephone" name="telephone" 
-               class="w-full p-4 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all" 
-               placeholder="Téléphone" />
-        <p class="mt-1 text-xs text-gray-500">
-          Optionnel
-        </p>
+        <input
+          type="tel"
+          id="telephone"
+          name="telephone"
+          class="w-full p-4 border border-teal-200 rounded-lg focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all"
+          placeholder="Téléphone"
+        />
+        <p class="mt-1 text-xs text-gray-500">Optionnel</p>
       </div>
     </div>
   </section>
 
   <!-- Informations du projet -->
   <section class="form-section mt-16">
-    <h3 class="section-title text-lime-500 text-2xl font-medium mb-8">
-      Décrivez votre projet:
-    </h3>
+    <h3 class="section-title text-lime-500 text-2xl font-medium mb-8">Décrivez votre projet:</h3>
 
     <div class="space-y-8">
       <div class="form-group">
-        <label for="titre" class="block text-gray-700 mb-2 font-medium">
-          Titre de votre projet*
-        </label>
-        <input type="text" id="titre" name="Title" required minlength="5" 
-               class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all" 
-               placeholder="Quels est le titre du projet ? (80 caractères max.)" />
+        <label for="titre" class="block text-gray-700 mb-2 font-medium"> Titre de votre projet* </label>
+        <input
+          type="text"
+          id="titre"
+          name="Title"
+          required
+          minlength="5"
+          class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+          placeholder="Quels est le titre du projet ? (80 caractères max.)"
+        />
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
           Veuillez entrer un titre de projet valide (5 caractères minimum)
         </p>
       </div>
 
       <div class="form-group">
-        <label for="objectifs" class="block text-gray-700 mb-2 font-medium">
-          Objectifs du projet*
-        </label>
-        <textarea id="objectifs" name="Objectifs" rows="8" required minlength="10"
+        <label for="objectifs" class="block text-gray-700 mb-2 font-medium"> Objectifs du projet* </label>
+        <textarea
+          id="objectifs"
+          name="Objectifs"
+          rows="8"
+          required
+          minlength="10"
           class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
           placeholder="Quels sont les objectifs du projet ?"></textarea>
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
@@ -115,7 +136,7 @@ const publicCible = [
         <h4 class="text-xl font-medium text-gray-800 mb-6">
           À qui s'adresse votre projet ? (Plusieurs choix possibles)
         </h4>
-        
+
         <div class="space-y-8 pl-4 border-l-4 border-blue-200">
           <div class="form-group">
             <label class="block text-gray-700 mb-3 font-medium flex items-center">
@@ -123,30 +144,39 @@ const publicCible = [
               Type d'enseignement *
             </label>
             <div class="flex flex-wrap gap-3">
-              {teachingTypes.map(type => (
-                <label class="inline-flex items-center px-4 py-2 rounded-full border-2 border-blue-300 bg-white hover:bg-blue-50 cursor-pointer transition-all">
-                  <input type="checkbox" name="Type enseignement" value={type.label} class="teaching-type-checkbox hidden" />
-                  <span class="text-blue-500 font-medium">{type.label}</span>
-                </label>
-              ))}
+              {
+                teachingTypes.map((type) => (
+                  <label class="inline-flex items-center px-4 py-2 rounded-full border-2 border-blue-300 bg-white hover:bg-blue-50 cursor-pointer transition-all">
+                    <input
+                      type="checkbox"
+                      name="Type enseignement"
+                      value={type.label}
+                      class="teaching-type-checkbox hidden"
+                    />
+                    <span class="text-blue-500 font-medium">{type.label}</span>
+                  </label>
+                ))
+              }
             </div>
             <p class="mt-1 text-xs text-rose-500" id="type-error" hidden>
               Veuillez sélectionner au moins un type d'enseignement
             </p>
           </div>
-          
+
           <div class="form-group">
             <label class="block text-gray-700 mb-3 font-medium flex items-center">
               <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-md mr-2 text-sm">2</span>
               Section *
             </label>
             <div class="flex flex-wrap gap-3">
-              {sections.map(section => (
-                <label class="inline-flex items-center px-4 py-2 rounded-full border-2 border-blue-300 bg-white hover:bg-blue-50 cursor-pointer transition-all">
-                  <input type="checkbox" name="Section" value={section.label} class="section-checkbox hidden" />
-                  <span class="text-blue-500 font-medium">{section.label}</span>
-                </label>
-              ))}
+              {
+                sections.map((section) => (
+                  <label class="inline-flex items-center px-4 py-2 rounded-full border-2 border-blue-300 bg-white hover:bg-blue-50 cursor-pointer transition-all">
+                    <input type="checkbox" name="Section" value={section.label} class="section-checkbox hidden" />
+                    <span class="text-blue-500 font-medium">{section.label}</span>
+                  </label>
+                ))
+              }
             </div>
             <p class="mt-1 text-xs text-rose-500" id="section-error" hidden>
               Veuillez sélectionner au moins une section
@@ -156,10 +186,13 @@ const publicCible = [
       </div>
 
       <div class="form-group mt-8">
-        <label for="description" class="block text-gray-700 mb-2 font-medium">
-          Description du projet*
-        </label>
-        <textarea id="description" name="Description" rows="6" required minlength="40"
+        <label for="description" class="block text-gray-700 mb-2 font-medium"> Description du projet* </label>
+        <textarea
+          id="description"
+          name="Description"
+          rows="6"
+          required
+          minlength="40"
           class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
           placeholder="Brève présentation de votre projet"></textarea>
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
@@ -168,10 +201,13 @@ const publicCible = [
       </div>
 
       <div class="form-group mt-8">
-        <label for="competences" class="block text-gray-700 mb-2 font-medium">
-          Compétences développées*
-        </label>
-        <textarea id="competences" name="Competences" rows="6" required minlength="10"
+        <label for="competences" class="block text-gray-700 mb-2 font-medium"> Compétences développées* </label>
+        <textarea
+          id="competences"
+          name="Competences"
+          rows="6"
+          required
+          minlength="10"
           class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
           placeholder="Quelles compétences vos projet permet-il de développer ?"></textarea>
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
@@ -180,48 +216,50 @@ const publicCible = [
       </div>
 
       <div class="form-group mt-8">
-        <label for="declinaisons" class="block text-gray-700 mb-2 font-medium">
-          Déclinaisons du projet*
-        </label>
-        <textarea id="declinaisons" name="Déclinaisons" rows="6"
+        <label for="declinaisons" class="block text-gray-700 mb-2 font-medium"> Déclinaisons du projet* </label>
+        <textarea
+          id="declinaisons"
+          name="Déclinaisons"
+          rows="6"
           class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
           placeholder="Quelles sont les déclinaisons possibles du projet ?"></textarea>
       </div>
 
       <div class="form-group mt-8">
-        <label for="conseils" class="block text-gray-700 mb-2 font-medium">
-          Que conseillez-vous ?*
-        </label>
-        <textarea id="conseils" name="Conseils" rows="6"
+        <label for="conseils" class="block text-gray-700 mb-2 font-medium"> Que conseillez-vous ?* </label>
+        <textarea
+          id="conseils"
+          name="Conseils"
+          rows="6"
           class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
           placeholder="Votre conseil en tant que créateur du projet ?"></textarea>
       </div>
 
       <div class="form-group mt-8">
-        <label for="liens" class="block text-gray-700 mb-2 font-medium">
-          Liens utiles
-        </label>
-        <textarea id="liens" name="Liens" rows="5"
+        <label for="liens" class="block text-gray-700 mb-2 font-medium"> Liens utiles </label>
+        <textarea
+          id="liens"
+          name="Liens"
+          rows="5"
           class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
           placeholder="Site web de référence, pages Facebook, comptes sociaux, ..."></textarea>
-   
       </div>
 
       <div class="form-group mt-8">
-        <label for="lien-video" class="block text-gray-700 mb-2 font-medium">
-          Lien vidéo
-        </label>
-        <input type="url" id="lien-video" name="LiensVIDEO" 
-               class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
-               placeholder="Vous avez une vidéo ? Indiquer le lien pour la visionner" />
+        <label for="lien-video" class="block text-gray-700 mb-2 font-medium"> Lien vidéo </label>
+        <input
+          type="url"
+          id="lien-video"
+          name="LiensVIDEO"
+          class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
+          placeholder="Vous avez une vidéo ? Indiquer le lien pour la visionner"
+        />
         <p class="mt-1 text-xs text-gray-500">
           Optionnel - Veuillez entrer une URL valide (ex: https://youtube.com/watch?v=...)
         </p>
       </div>
 
-      <div class="mt-8 text-gray-600">
-        *Champs obligatoires
-      </div>
+      <div class="mt-8 text-gray-600">*Champs obligatoires</div>
 
       <!-- Garder la div cachée pour les champs qui ne sont pas visibles dans l'UI mais nécessaires pour le backend -->
       <div class="hidden">
@@ -230,17 +268,14 @@ const publicCible = [
             <span>Public cible</span>
           </label>
           <div>
-            {publicCible.map((item, index) => (
-              <label>
-                <input 
-                  type="radio" 
-                  name="Destinataire" 
-                  value={item} 
-                  checked={index === 0} 
-                />
-                <span>{item}</span>
-              </label>
-            ))}
+            {
+              publicCible.map((item, index) => (
+                <label>
+                  <input type="radio" name="Destinataire" value={item} checked={index === 0} />
+                  <span>{item}</span>
+                </label>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -248,7 +283,10 @@ const publicCible = [
   </section>
 
   <!-- Message de statut - Uniquement pour les erreurs -->
-  <div id="formStatus" class="my-6 p-6 rounded-xl text-center hidden transition-all duration-300 transform bg-rose-50 text-rose-700 border border-rose-200">
+  <div
+    id="formStatus"
+    class="my-6 p-6 rounded-xl text-center hidden transition-all duration-300 transform bg-rose-50 text-rose-700 border border-rose-200"
+  >
     <div class="flex items-center justify-center gap-3">
       <span id="statusIcon" class="text-2xl">❌</span>
       <span id="statusMessage" class="text-lg font-medium"></span>
@@ -257,20 +295,27 @@ const publicCible = [
 
   <!-- Bouton de soumission -->
   <div class="flex justify-end pt-4">
-    <Button 
-      id="submit-button" 
-      variant="primary" 
-      size="lg" 
-      icon="tabler:send" 
+    <Button
+      id="submit-button"
+      variant="primary"
+      size="lg"
+      icon="tabler:send"
       iconPosition="right"
       type="button"
       class="relative overflow-hidden transition-all duration-300"
     >
       <span id="submit-text" class="relative z-10 transition-opacity duration-300">Envoyer</span>
-      <div id="submit-loader" class="absolute inset-0 flex items-center justify-center bg-blue-600 opacity-0 transition-opacity duration-300">
+      <div
+        id="submit-loader"
+        class="absolute inset-0 flex items-center justify-center bg-blue-600 opacity-0 transition-opacity duration-300"
+      >
         <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
         </svg>
       </div>
     </Button>
@@ -296,12 +341,12 @@ const publicCible = [
   }
 
   /* Modifier les styles pour ne pas afficher l'erreur sur les champs vides */
-  input:invalid:not(:placeholder-shown):not(:focus), 
+  input:invalid:not(:placeholder-shown):not(:focus),
   textarea:invalid:not(:placeholder-shown):not(:focus) {
     @apply border-rose-300 focus:border-rose-500 focus:ring-rose-500/20;
   }
 
-  input:valid:not(:placeholder-shown), 
+  input:valid:not(:placeholder-shown),
   textarea:valid:not(:placeholder-shown) {
     @apply border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500/20;
   }
@@ -313,11 +358,11 @@ const publicCible = [
   }
 
   /* Style pour les boutons de sélection arrondis */
-  input[type="checkbox"]:checked + span {
+  input[type='checkbox']:checked + span {
     @apply font-medium text-blue-700;
   }
-  
-  label:has(input[type="checkbox"]:checked) {
+
+  label:has(input[type='checkbox']:checked) {
     @apply bg-blue-100 border-blue-600 shadow-sm;
     transform: translateY(-1px);
   }
@@ -369,14 +414,20 @@ const publicCible = [
     @apply block text-rose-500 text-xs mt-1;
     animation: fadeIn 0.3s ease-in-out;
   }
-  
+
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* Animation de sélection */
-  label:has(input[type="checkbox"]) {
+  label:has(input[type='checkbox']) {
     transition: all 0.2s ease-in-out;
   }
 
@@ -384,11 +435,11 @@ const publicCible = [
   #submit-button {
     @apply relative overflow-hidden;
   }
-  
+
   #submit-text {
     @apply transition-opacity duration-300;
   }
-  
+
   #submit-loader {
     @apply transition-opacity duration-300;
   }
@@ -397,14 +448,14 @@ const publicCible = [
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     // console.log('🔄 Initialisation du formulaire...');
-    
+
     // Éléments DOM avec types appropriés
     const form = document.getElementById('pedagogical-sheet-form') as HTMLFormElement | null;
     const submitButton = document.getElementById('submit-button') as HTMLButtonElement | null;
     const formStatus = document.getElementById('formStatus');
     const statusIcon = document.getElementById('statusIcon');
     const statusMessage = document.getElementById('statusMessage');
-    
+
     // Vérification de l'existence des éléments avec plus de détails
     // console.log('🔍 Recherche des éléments DOM:');
     // console.log('- Formulaire:', form);
@@ -412,7 +463,7 @@ const publicCible = [
     // console.log('- Zone de statut:', formStatus);
     // console.log('- Icône de statut:', statusIcon);
     // console.log('- Message de statut:', statusMessage);
-    
+
     if (!form || !submitButton || !formStatus || !statusIcon || !statusMessage) {
       console.error('❌ Certains éléments du formulaire sont manquants');
       return;
@@ -422,21 +473,23 @@ const publicCible = [
     const submitButtonElement = submitButton;
     const formStatusElement = formStatus;
     const statusMessageElement = statusMessage;
-    
+
     console.log('✅ Tous les éléments du formulaire ont été trouvés');
-    
+
     // Ajouter des placeholders vides à tous les champs pour que :not(:placeholder-shown) fonctionne
-    const inputFields = formElement.querySelectorAll('input[type="text"], input[type="email"], textarea[required]') as NodeListOf<HTMLInputElement | HTMLTextAreaElement>;
-    inputFields.forEach(field => {
+    const inputFields = formElement.querySelectorAll(
+      'input[type="text"], input[type="email"], textarea[required]'
+    ) as NodeListOf<HTMLInputElement | HTMLTextAreaElement>;
+    inputFields.forEach((field) => {
       if (!field.placeholder) {
-        field.placeholder = " ";
+        field.placeholder = ' ';
       }
     });
-    
+
     // Fonction pour basculer l'affichage des messages d'erreur
     function toggleErrorMessage(element: Element | null, show: boolean) {
       if (!element) return;
-      
+
       if (show) {
         element.classList.add('error-visible');
         element.classList.remove('hidden');
@@ -445,14 +498,14 @@ const publicCible = [
         element.classList.add('hidden');
       }
     }
-    
+
     // Fonction pour activer/désactiver le mode chargement du bouton
     function setButtonLoading(isLoading: boolean) {
       submitButtonElement.disabled = isLoading;
       const submitText = document.getElementById('submit-text');
       const submitLoader = document.getElementById('submit-loader');
       if (!submitText || !submitLoader) return;
-      
+
       if (isLoading) {
         submitText.classList.add('opacity-0');
         submitLoader.classList.add('opacity-100');
@@ -461,95 +514,95 @@ const publicCible = [
         submitLoader.classList.remove('opacity-100');
       }
     }
-    
+
     // Fonction pour afficher uniquement les erreurs
     function showError(message: string) {
       // console.log(`🔔 Affichage du message d'erreur: ${message}`);
-      
+
       // Définir le message
       statusMessageElement.textContent = message;
-      
+
       // Réinitialiser le bouton
       setButtonLoading(false);
-      
+
       // Rendre visible
       formStatusElement.classList.remove('hidden');
-      
+
       // Faire défiler jusqu'au message
       formStatusElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    
+
     // Validation des types d'enseignement
     const teachingTypeCheckboxes = document.querySelectorAll<HTMLInputElement>('.teaching-type-checkbox');
     const typeError = document.getElementById('type-error');
-    
+
     function validateTeachingTypes() {
-      const isValid = Array.from(teachingTypeCheckboxes).some(checkbox => checkbox.checked);
+      const isValid = Array.from(teachingTypeCheckboxes).some((checkbox) => checkbox.checked);
       toggleErrorMessage(typeError, !isValid);
       return isValid;
     }
-    
-    teachingTypeCheckboxes.forEach(checkbox => {
+
+    teachingTypeCheckboxes.forEach((checkbox) => {
       checkbox.addEventListener('change', validateTeachingTypes);
     });
-    
+
     // Validation des sections
     const sectionCheckboxes = document.querySelectorAll<HTMLInputElement>('.section-checkbox');
     const sectionError = document.getElementById('section-error');
-    
+
     function validateSections() {
-      const isValid = Array.from(sectionCheckboxes).some(checkbox => checkbox.checked);
+      const isValid = Array.from(sectionCheckboxes).some((checkbox) => checkbox.checked);
       toggleErrorMessage(sectionError, !isValid);
       return isValid;
     }
-    
-    sectionCheckboxes.forEach(checkbox => {
+
+    sectionCheckboxes.forEach((checkbox) => {
       checkbox.addEventListener('change', validateSections);
     });
-    
+
     // Validation des champs texte
     const requiredInputs = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
       'input[required], textarea[required]'
     );
-    
-    requiredInputs.forEach(input => {
+
+    requiredInputs.forEach((input) => {
       const errorMessage = input.nextElementSibling;
-      
+
       input.addEventListener('blur', () => {
         const isValid = input.validity.valid || input.value === '';
         toggleErrorMessage(errorMessage, !isValid);
       });
-      
+
       input.addEventListener('input', () => {
         if (input.validity.valid) {
           toggleErrorMessage(errorMessage, false);
         }
       });
     });
-    
+
     // Validation des champs optionnels avec format spécifique (URL, etc.)
     const optionalFormattedInputs = document.querySelectorAll<HTMLInputElement>(
       'input[type="url"]:not([required]), input[type="email"]:not([required]), input[type="tel"]:not([required])'
     );
-    
-    optionalFormattedInputs.forEach(input => {
+
+    optionalFormattedInputs.forEach((input) => {
       input.addEventListener('blur', () => {
         // Vérifier uniquement si le champ n'est pas vide
         if (input.value !== '' && !input.validity.valid) {
           // Afficher un message d'erreur personnalisé
-          let errorMessage = "Veuillez entrer une valeur valide";
-          
+          let errorMessage = 'Veuillez entrer une valeur valide';
+
           if (input.type === 'url') {
-            errorMessage = "Veuillez entrer une URL valide (ex: https://exemple.com)";
+            errorMessage = 'Veuillez entrer une URL valide (ex: https://exemple.com)';
           } else if (input.type === 'email') {
-            errorMessage = "Veuillez entrer une adresse email valide";
+            errorMessage = 'Veuillez entrer une adresse email valide';
           } else if (input.type === 'tel') {
-            errorMessage = "Veuillez entrer un numéro de téléphone valide";
+            errorMessage = 'Veuillez entrer un numéro de téléphone valide';
           }
-          
+
           // Ajouter une classe d'erreur au champ
           input.classList.add('border-rose-300');
-          
+
           // Afficher un message d'erreur sous le champ
           const helpText = input.nextElementSibling;
           if (helpText) {
@@ -560,32 +613,32 @@ const publicCible = [
         } else {
           // Réinitialiser le style du champ
           input.classList.remove('border-rose-300');
-          
+
           // Réinitialiser le message d'aide
           const helpText = input.nextElementSibling;
           if (helpText) {
             if (input.type === 'url') {
-              helpText.textContent = "Optionnel - Veuillez entrer une URL valide (ex: https://youtube.com/watch?v=...)";
+              helpText.textContent = 'Optionnel - Veuillez entrer une URL valide (ex: https://youtube.com/watch?v=...)';
             } else if (input.type === 'tel') {
-              helpText.textContent = "Optionnel";
+              helpText.textContent = 'Optionnel';
             }
             helpText.classList.add('text-gray-500');
             helpText.classList.remove('text-rose-500');
           }
         }
       });
-      
+
       // Réinitialiser le style lors de la saisie
       input.addEventListener('input', () => {
         if (input.validity.valid || input.value === '') {
           input.classList.remove('border-rose-300');
-          
+
           const helpText = input.nextElementSibling;
           if (helpText) {
             if (input.type === 'url') {
-              helpText.textContent = "Optionnel - Veuillez entrer une URL valide (ex: https://youtube.com/watch?v=...)";
+              helpText.textContent = 'Optionnel - Veuillez entrer une URL valide (ex: https://youtube.com/watch?v=...)';
             } else if (input.type === 'tel') {
-              helpText.textContent = "Optionnel";
+              helpText.textContent = 'Optionnel';
             }
             helpText.classList.add('text-gray-500');
             helpText.classList.remove('text-rose-500');
@@ -593,23 +646,23 @@ const publicCible = [
         }
       });
     });
-    
+
     // Gestion de la soumission du formulaire
     submitButtonElement.addEventListener('click', async () => {
       // Valider tous les champs
       let isFormValid = true;
-      
-      requiredInputs.forEach(input => {
+
+      requiredInputs.forEach((input) => {
         if (!input.validity.valid && input.value !== '') {
           const errorMessage = input.nextElementSibling;
           toggleErrorMessage(errorMessage, true);
           isFormValid = false;
         }
       });
-      
+
       isFormValid = validateTeachingTypes() && isFormValid;
       isFormValid = validateSections() && isFormValid;
-      
+
       if (!isFormValid) {
         // Faire défiler jusqu'au premier message d'erreur
         const firstError = document.querySelector('.error-visible');
@@ -618,31 +671,31 @@ const publicCible = [
         }
         return false;
       }
-      
+
       // Masquer les messages d'erreur précédents
       formStatusElement.classList.add('hidden');
-      
+
       try {
         // Activer le mode chargement du bouton
         setButtonLoading(true);
-        
+
         // Récupérer la valeur du destinataire sélectionné ou utiliser la valeur par défaut
         const destinataireValue =
-          formElement.querySelector<HTMLInputElement>('input[name="Destinataire"]:checked')?.value || "Non renseigné";
-        
+          formElement.querySelector<HTMLInputElement>('input[name="Destinataire"]:checked')?.value || 'Non renseigné';
+
         // Préparer les données du formulaire au format JSON
         const formData = new FormData(formElement);
-        
+
         // Récupérer les types d'enseignement sélectionnés
-        const teachingTypes = Array.from(
-          formElement.querySelectorAll('input[name="Type enseignement"]:checked')
-        ).map(checkbox => (checkbox as HTMLInputElement).value);
+        const teachingTypes = Array.from(formElement.querySelectorAll('input[name="Type enseignement"]:checked')).map(
+          (checkbox) => (checkbox as HTMLInputElement).value
+        );
 
         // Récupérer les sections sélectionnées
-        const sections = Array.from(
-          formElement.querySelectorAll('input[name="Section"]:checked')
-        ).map(checkbox => (checkbox as HTMLInputElement).value);
-        
+        const sections = Array.from(formElement.querySelectorAll('input[name="Section"]:checked')).map(
+          (checkbox) => (checkbox as HTMLInputElement).value
+        );
+
         // Convertir FormData en objet JSON
         const jsonData = {
           Title: formData.get('Title'),
@@ -661,50 +714,50 @@ const publicCible = [
           Declinaisons: formData.get('Déclinaisons') || '',
           Conseils: formData.get('Conseils') || '',
           Liens: formData.get('Liens') || '',
-          LiensVIDEO: formData.get('LiensVIDEO') || ''
+          LiensVIDEO: formData.get('LiensVIDEO') || '',
         };
-        
+
         // console.log('🚀 Soumission du formulaire à l\'API...');
         // console.log('📝 Données envoyées:', jsonData);
-        
+
         // Détection du mode local
         const isLocalDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        
+
         if (isLocalDevelopment) {
           // console.log('🧪 Mode développement local détecté - Simulation de soumission');
-          
+
           // Simuler un délai de traitement
-          await new Promise(resolve => setTimeout(resolve, 1500));
-          
+          await new Promise((resolve) => setTimeout(resolve, 1500));
+
           // console.log('✅ Simulation de soumission réussie');
-          
+
           // Rediriger directement sans message
           window.location.href = '/merci-soumission';
           return;
         }
-        
+
         // En production, envoyer les données à l'endpoint API
         const response = await fetch('/.netlify/functions/submit-pedagogical-sheet', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(jsonData)
+          body: JSON.stringify(jsonData),
         });
-        
+
         // Traiter la réponse
         const result = await response.json();
-        
+
         if (result.success) {
           // console.log('✅ Soumission réussie:', result);
-          
+
           // Rediriger directement sans message
           window.location.href = '/merci-soumission';
         } else {
           console.error('❌ Erreur lors de la soumission');
           showError(result.message || 'Une erreur est survenue lors de la soumission du formulaire.');
         }
-      } catch (error) {
+      } catch {
         console.error('❌ Erreur lors de la soumission');
         showError('Une erreur est survenue lors de la communication avec le serveur. Veuillez réessayer plus tard.');
       }

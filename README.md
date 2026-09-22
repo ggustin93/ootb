@@ -61,18 +61,21 @@ The frontend uses responsive design patterns and updates content through static 
 ## Tech Stack
 
 ### Core Technologies
+
 - **Framework**: Astro 5.0+ (Static Site Generation)
 - **Styling**: Tailwind CSS (Utility-first CSS)
 - **Language**: TypeScript (Strict mode)
 - **Deployment**: Netlify (CDN & Functions)
 
 ### Content Management
+
 - **Structured Data**: NocoDB (Database API for event data)
 - **Git-based CMS**: TinaCMS (Real-time editing for content pages)
 - **Media Storage**: Cloudinary (Image optimization and delivery)
 - **Newsletter**: Brevo API (Email campaign management and subscriber sync)
 
 ### NocoDB Database Tables
+
 The platform uses three main NocoDB tables for structured content management:
 
 1. **Conferences Table** (`mdf8viczcxywoug`)
@@ -80,7 +83,7 @@ The platform uses three main NocoDB tables for structured content management:
    - 60-minute duration sessions with detailed speaker information
    - Integrates with festival filtering system
 
-2. **Workshops Table** (`maiiy35ahod5nnu`) 
+2. **Workshops Table** (`maiiy35ahod5nnu`)
    - Interactive workshop sessions for hands-on learning
    - Variable duration workshops with practical activities
    - Filtered separately from digital demos for UX clarity
@@ -91,12 +94,14 @@ The platform uses three main NocoDB tables for structured content management:
    - Location and timing information for attendees
 
 ### Newsletter Integration
+
 - **Data Collection**: Subscriber information stored in NocoDB table `m6hnpjey4laav0z`
 - **Brevo Synchronization**: Automatic sync with email campaigns and subscriber management
 - **GDPR Compliance**: Privacy policy acceptance and data processing transparency
 - **Double Opt-in**: Confirmation process for newsletter subscriptions
 
 ### Development Tools
+
 - **Icons**: Tabler Icons via Iconify
 - **Email**: Brevo API (Newsletter integration and campaign management)
 - **Testing**: Playwright (E2E testing)
@@ -222,6 +227,7 @@ BREVO_LIST_ID=your_brevo_list
 ```
 
 **Netlify Setup**:
+
 1. Navigate to Site Settings > Environment variables
 2. Add variables with corresponding production values
 3. Redeploy to apply changes
@@ -229,9 +235,11 @@ BREVO_LIST_ID=your_brevo_list
 ## Performance & Environmental Impact
 
 ### Eco-Design
+
 Site écoconçu et optimisé - Plus écologique que 91% des sites web testés ([EcoGrader Report](https://ecograder.com/report/kdlM0TtLWQa0oT3UWTZlEzJT))
 
 ### Optimization Strategy
+
 - Static generation for reduced server load
 - Image optimization with multiple formats (AVIF, WebP, JPG)
 - CDN distribution for global delivery
@@ -239,6 +247,7 @@ Site écoconçu et optimisé - Plus écologique que 91% des sites web testés ([
 - Optimized bundle sizes
 
 ### Content Processing
+
 The platform processes content in multiple stages:
 
 1. **Data Fetching**: Retrieves structured event data from NocoDB API and editorial content from TinaCMS
@@ -248,6 +257,7 @@ The platform processes content in multiple stages:
 5. **CDN Distribution**: Deploys static assets to Netlify's global edge locations for fast delivery
 
 ### "Nos Contenus" Content System
+
 The platform features a comprehensive content management system for educational resources:
 
 - **Podcasts**: Educational podcast episodes with transcripts and show notes
@@ -261,20 +271,24 @@ Content is managed through TinaCMS for real-time editing and automatically synch
 ## Testing Strategy
 
 ### E2E Test Scenarios (Playwright)
+
 - **Badge Consistency**: Validates content labeling and filter consistency across pages
 - **Navigation & Anchors**: Tests menu navigation, anchor scrolling, and SEO-friendly URLs
 - **Festival Filters**: Comprehensive testing of event type filtering, day filters, and responsive behavior
 
 ### Netlify Functions Tests
+
 - **Unit tests** (`netlify/functions/__tests__/submit-pedagogical-sheet.test.cjs`): Table ID resolution, data formatting, client-server field mapping, error handling. No API token needed.
 - **E2E tests** (`netlify/functions/__tests__/e2e-submit-pedagogical-sheet.js`): Real NocoDB API calls — connectivity, submission via handler, record verification, automatic cleanup. Requires `NOCODB_API_TOKEN` in `.env`.
 
 ### Test Configuration
+
 - **Browsers**: Chrome, Firefox, Safari (desktop only - mobile uses different menu structure)
 - **Test Files**: Organized in `/tests/e2e/scenarios/` with specific test scenarios
 - **CI Integration**: Automated testing with retry logic for stability
 
 ### Quality Assurance
+
 - **Cross-browser testing**: Chrome, Firefox, Safari (desktop only)
 - **E2E Test Coverage**: 10 comprehensive test scenarios covering all critical user paths
 - **Responsive testing**: Mobile and desktop viewports with automated validation
@@ -284,6 +298,7 @@ Content is managed through TinaCMS for real-time editing and automatically synch
 ## Deployment Pipeline
 
 ### Build Process
+
 ```bash
 # Production build with optimizations
 npm run build:netlify
@@ -296,6 +311,7 @@ npm run build:netlify
 ```
 
 ### Continuous Integration
+
 - Branch protection: Main branch requires PR approval
 - Automated testing: E2E tests run on all PRs
 - Security scanning: Regular dependency vulnerability checks
@@ -303,6 +319,7 @@ npm run build:netlify
 ## Contributing
 
 ### Development Workflow
+
 1. Create feature branch from `main`
 2. Implement changes with proper testing
 3. Run quality checks: `npm run check`
@@ -311,6 +328,7 @@ npm run build:netlify
 6. Merge after approval
 
 ### Code Standards
+
 - TypeScript strict mode with proper typing
 - Atomic design principles for components
 - E2E test coverage for critical user paths

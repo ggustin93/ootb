@@ -16,11 +16,11 @@ export function Podcast({ url }: PodcastProps) {
   return (
     <div className="my-8">
       {spotifyId ? (
-        <iframe 
+        <iframe
           src={`https://open.spotify.com/embed/episode/${spotifyId}`}
-          width="100%" 
-          height="232" 
-          frameBorder="0" 
+          width="100%"
+          height="232"
+          frameBorder="0"
           allowFullScreen
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
@@ -33,4 +33,4 @@ export function Podcast({ url }: PodcastProps) {
       )}
     </div>
   );
-} 
+}

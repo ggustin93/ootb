@@ -10,4 +10,4 @@ import '../services/cache-init';
 export function onRequest() {
   // Cette fonction est nécessaire pour que le fichier soit considéré comme un middleware Astro
   return;
-} 
+}

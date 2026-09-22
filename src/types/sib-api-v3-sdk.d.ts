@@ -9,8 +9,8 @@ declare module 'sib-api-v3-sdk' {
   }
 
   export class ContactsApi {
-    addContactToList(listId: number, contactEmails: AddContactToList): Promise<any>;
-    createContact(createContact: CreateContact): Promise<any>;
+    addContactToList(listId: number, contactEmails: AddContactToList): Promise<unknown>;
+    createContact(createContact: CreateContact): Promise<unknown>;
   }
 
   export class AddContactToList {
@@ -20,6 +20,6 @@ declare module 'sib-api-v3-sdk' {
   export class CreateContact {
     email: string;
     listIds?: number[];
-    attributes?: Record<string, any>;
+    attributes?: Record<string, unknown>;
   }
-} 
+}

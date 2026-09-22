@@ -31,7 +31,7 @@ export interface Post {
   tvcomUrl?: string;
   showId?: string;
   podcastId?: string;
-  
+
   // Nouvelle structure média
   media?: {
     type: 'none' | 'podcast' | 'youtube' | 'tv';

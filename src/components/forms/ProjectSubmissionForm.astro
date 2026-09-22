@@ -106,7 +106,7 @@ const publicCible = [
           class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
           placeholder="Quels sont les objectifs du projet ?"></textarea>
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
-          Veuillez décrire les objectifs du projet (10 caractères minimum)
+          Veuillez décrire les objectifs du projet (10 caractères et 3 mots minimum)
         </p>
       </div>
 
@@ -163,7 +163,7 @@ const publicCible = [
           class="peer w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all"
           placeholder="Brève présentation de votre projet"></textarea>
         <p class="mt-1 text-xs text-rose-500 invisible peer-invalid:peer-not-placeholder-shown:visible">
-          Veuillez décrire votre projet (40 caractères minimum)
+          Veuillez décrire votre projet (40 caractères et 3 mots minimum)
         </p>
       </div>
 
@@ -518,6 +518,14 @@ const publicCible = [
       'input[required], textarea[required]'
     );
     
+    // Miroir de la règle serveur (isSpam) : au moins 3 mots, sinon la fiche serait rejetée silencieusement
+    const MIN_WORDS_FIELDS = ['Description', 'Objectifs'];
+    function checkWordCount(input: HTMLInputElement | HTMLTextAreaElement) {
+      if (!MIN_WORDS_FIELDS.includes(input.name)) return;
+      const words = input.value.trim().split(/\s+/).filter(Boolean).length;
+      input.setCustomValidity(input.value.trim() && words < 3 ? 'Veuillez écrire au moins 3 mots.' : '');
+    }
+
     requiredInputs.forEach(input => {
       const errorMessage = input.nextElementSibling;
       
@@ -527,6 +535,7 @@ const publicCible = [
       });
       
       input.addEventListener('input', () => {
+        checkWordCount(input);
         if (input.validity.valid) {
           toggleErrorMessage(errorMessage, false);
         }
@@ -605,8 +614,10 @@ const publicCible = [
       // Valider tous les champs
       let isFormValid = true;
       
+      // Les champs requis vides sont aussi invalides : le serveur les rejetterait sans prévenir
       requiredInputs.forEach(input => {
-        if (!input.validity.valid && input.value !== '') {
+        checkWordCount(input);
+        if (!input.validity.valid) {
           const errorMessage = input.nextElementSibling;
           toggleErrorMessage(errorMessage, true);
           isFormValid = false;
@@ -617,6 +628,8 @@ const publicCible = [
       isFormValid = validateSections() && isFormValid;
       
       if (!isFormValid) {
+        // Bulle native sur le premier champ invalide (utile pour les champs vides)
+        formElement.reportValidity();
         // Faire défiler jusqu'au premier message d'erreur
         const firstError = document.querySelector('.error-visible');
         if (firstError) {

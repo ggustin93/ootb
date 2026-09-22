@@ -123,6 +123,12 @@ function isFakeSuccess(res) {
 async function testPedagogicalAntiSpam() {
   console.log('\n🧪 TEST 2bis: submit-pedagogical-sheet — anti-spam');
 
+  // Avec un token, un vrai envoi renvoie aussi isTestMode=false (et écrirait dans NocoDB)
+  if (process.env.NOCODB_API_TOKEN) {
+    assert(false, 'NOCODB_API_TOKEN doit être absent pour ces tests');
+    return;
+  }
+
   // Via handler
   assert(isFakeSuccess(await postSheet(BOT_SAMPLE)), 'Échantillon réel du bot → faux 200');
   assert(isFakeSuccess(await postSheet({ ...VALID_SHEET, website: 'http://spam.example' })),
@@ -153,8 +159,10 @@ async function testPedagogicalAntiSpam() {
     Title: 5, Description: 40, Objectifs: 10, Competences: 10, prenom: 2, nom: 2, ecole: 2
   };
   for (const [field, min] of Object.entries(minLengths)) {
-    assert(isSpam({ ...VALID_SHEET, [field]: 'x'.repeat(min - 1) }) !== null, `${field} < ${min} → rejeté`);
-    assert(isSpam({ ...VALID_SHEET, [field]: undefined }) !== null, `${field} manquant → rejeté`);
+    // Plusieurs mots pour isoler la règle de longueur de celle du nombre de mots
+    const tooShort = 'a b c d e f g h i j k l m n o p q r s t'.slice(0, min - 1);
+    assert(isSpam({ ...VALID_SHEET, [field]: tooShort }) === `too_short:${field}`, `${field} < ${min} → too_short:${field}`);
+    assert(isSpam({ ...VALID_SHEET, [field]: undefined }) === `too_short:${field}`, `${field} manquant → too_short:${field}`);
   }
 
   assert(isSpam({ ...VALID_SHEET, email: 'pas-un-email' }) === 'invalid_email', 'Email invalide → invalid_email');

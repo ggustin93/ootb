@@ -247,6 +247,12 @@ const publicCible = [
     </div>
   </section>
 
+  <!-- Champ piège anti-spam : hors écran, invisible au clavier et aux lecteurs d'écran. Rempli uniquement par les robots. -->
+  <div class="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+    <label for="website">Site web</label>
+    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+  </div>
+
   <!-- Message de statut - Uniquement pour les erreurs -->
   <div id="formStatus" class="my-6 p-6 rounded-xl text-center hidden transition-all duration-300 transform bg-rose-50 text-rose-700 border border-rose-200">
     <div class="flex items-center justify-center gap-3">
@@ -661,7 +667,8 @@ const publicCible = [
           Declinaisons: formData.get('Déclinaisons') || '',
           Conseils: formData.get('Conseils') || '',
           Liens: formData.get('Liens') || '',
-          LiensVIDEO: formData.get('LiensVIDEO') || ''
+          LiensVIDEO: formData.get('LiensVIDEO') || '',
+          website: formData.get('website') || '' // champ piège anti-spam
         };
         
         // console.log('🚀 Soumission du formulaire à l\'API...');

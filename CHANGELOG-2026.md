@@ -25,6 +25,12 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **`@tinacms/cli` < 2.1.8, `jsonpath-plus` et `dompurify` (via Tina)** — Ils ne concernent que le serveur de dev local ou l'admin, réservé aux éditeurs authentifiés. Mettre à jour la stack Tina est jugé trop risqué pour ce gain.
 - **`astro` < 7.2.8** — Le vecteur exploitable est neutralisé par la mise à jour de `sharp`. La migration vers Astro 7 est reportée.
 
+### Suivi Dependabot
+
+- **Plus aucune alerte critique ouverte** — Sur les 7 alertes critiques du 22 septembre, 3 sont corrigées (`sharp`/`tar`/`fast-xml-parser`, et `swiper` supprimé). Les 4 autres sont fermées dans GitHub avec le motif « risk tolerable » et un commentaire qui renvoie à cette entrée : `astro` (risque neutralisé via `sharp`), `@tinacms/cli`, `jsonpath-plus` et `dompurify` (dev local ou admin Tina uniquement).
+- **Hygiène** — Ne jamais lancer `tinacms dev` sur un réseau public ou partagé.
+- Les alertes de sévérité inférieure (high, moderate, low) restent à traiter au fil de la maintenance préventive.
+
 ---
 
 ## [1.3.2] — 2026-09-22

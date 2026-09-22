@@ -28,6 +28,9 @@ jobs:
       - run: npm run build
         env:
           NOCODB_API_TOKEN: ${{ secrets.NOCODB_API_TOKEN }}
+          # Pas de TINA_SEARCH_TOKEN : la CI ne doit pas réindexer la recherche TinaCloud
+          TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
       # - run: npm test
 
   check:

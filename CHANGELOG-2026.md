@@ -5,7 +5,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
-## [1.3.0] — Non publié (en attente)
+## [1.3.1] — 2026-09-22
 
 ### Anti-spam du formulaire « Appel à projets » (#21)
 
@@ -17,6 +17,17 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Tests** — La suite hors ligne des formulaires passe de 45 à 75 tests. Elle couvre notamment l'échantillon réel du robot, une soumission française réaliste et chacune des règles de refus.
 
 **Fichiers modifiés** : `netlify/functions/submit-pedagogical-sheet.js`, `src/components/forms/ProjectSubmissionForm.astro`, `netlify/functions/__tests__/all-functions.test.js`, `netlify/functions/__tests__/README.md`
+
+### Base NocoDB des fiches pédagogiques
+
+- **Fausses fiches supprimées** — Les 5 fiches générées par le robot et encore présentes dans NocoDB ont été supprimées, avant qu'un build ne les publie. Les 85 fiches restantes ont été vérifiées une à une : toutes sont légitimes.
+- **Nouveau champ « Statut »** (« A valider » par défaut, « Publié ») — C'est le même champ que dans les tables du festival (stands, ateliers, conférences). Les 85 fiches existantes sont passées à « Publié » automatiquement, sans cochage manuel. Toute nouvelle fiche, qu'elle arrive par le formulaire ou par une saisie manuelle, reste en « A valider » jusqu'à validation par l'équipe.
+  - Le site ne filtre pas encore sur ce statut. Le filtre arrive avec #22.
+- **Bouton « Redéployer le site web »** — Nouvelle table « Actions spéciales » dans la base des fiches, avec un bouton « Exécuter » qui relance le build Netlify. C'est le même script que dans la base festival. Il permet de mettre en ligne une fiche validée sans attendre le prochain déploiement.
+
+---
+
+## [1.3.0] — 2026-07-08
 
 ### Ajouté
 

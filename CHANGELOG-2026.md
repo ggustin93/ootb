@@ -15,9 +15,15 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Toutes les fiches récupérées, au-delà de 100** — La récupération est paginée (avec un plafond de sécurité), comme pour les données festival. Avant, elle s'arrêtait aux 100 premières fiches.
 - **Token absent des journaux** — En cas d'échec, le journal n'affiche que le message d'erreur. Avant, il affichait l'objet d'erreur complet, token NocoDB compris.
 - **Vérifié avant déploiement** — Les 85 fiches de NocoDB remontent toutes en « Publié » (lecture seule). Un token invalide fait échouer le script (code de sortie 1) sans toucher aux fichiers.
-- **La vue NocoDB reste non filtrée, volontairement** — La vue lue par le build (« Fiches - Vue table ») est aussi la vue par défaut de l'équipe. Si on la filtrait sur « Publié », les fiches « A valider » y deviendraient invisibles. Le filtre dans le code suffit : le build ne publie que les fiches « Publié », quoi que montre la vue. Pour voir les fiches en attente, l'équipe peut grouper la vue par `Statut` ou créer une vue « À valider ».
+- **La vue NocoDB reste non filtrée, volontairement** — La vue lue par le build (« Fiches - Vue table ») est aussi la vue par défaut de l'équipe. Si on la filtrait sur « Publié », les fiches « A valider » y deviendraient invisibles. Le filtre dans le code suffit : le build ne publie que les fiches « Publié », quoi que montre la vue. Pour voir les fiches en attente, l'équipe dispose de deux nouvelles vues (voir ci-dessous).
 
 **Fichiers modifiés** : `src/scripts/build-fiches-pedagogiques.js`
+
+### Base NocoDB des fiches pédagogiques
+
+- **Vue « Fiches - Vue par statut »** — Toutes les fiches, groupées en « A valider » et « Publié ». Elle donne la vue d'ensemble.
+- **Vue « Fiches - À valider »** — Une file de modération : elle ne montre que les fiches en attente (filtre `Statut = A valider`). L'équipe passe une fiche en « Publié » pour la mettre en ligne, ou la supprime si c'est un spam. Quand la vue est vide, il n'y a plus rien à traiter.
+- **Vue du build inchangée** — « Fiches - Vue table » reste la vue par défaut, sans filtre, et c'est toujours elle que lit le build. Elle contient 85 fiches, toutes « Publié ».
 
 ### CI GitHub au vert (#26)
 

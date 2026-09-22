@@ -18,46 +18,48 @@ const buttons = [
   {
     title: 'Partager sur Facebook',
     icon: 'tabler:brand-facebook',
-    type: 'facebook'
+    type: 'facebook',
   },
   {
     title: 'Partager sur LinkedIn',
     icon: 'tabler:brand-linkedin',
-    type: 'linkedin'
+    type: 'linkedin',
   },
   {
     title: 'Partager sur WhatsApp',
     icon: 'tabler:brand-whatsapp',
-    type: 'whatsapp'
+    type: 'whatsapp',
   },
   {
     title: 'Partager par email',
     icon: 'tabler:mail',
-    type: 'mail'
-  }
+    type: 'mail',
+  },
 ];
 ---
 
 <div class={className}>
-  {buttons.map(button => (
-    <button
-      class:list={[
-        'inline-flex items-center justify-center',
-        'w-10 h-10 rounded-full',
-        contentStates?.isLiveFacebook 
-          ? 'text-[#1877F2]/50 hover:text-[#1877F2] bg-[#1877F2]/5 hover:bg-[#1877F2]/10'
-          : contentStates?.isPodcast
-            ? 'text-[var(--content-podcast)]/50 hover:text-[var(--content-podcast)] bg-[var(--content-podcast)]/5 hover:bg-[var(--content-podcast)]/10'
-            : 'text-[var(--content-actualite)]/50 hover:text-[var(--content-actualite)] bg-[var(--content-actualite)]/5 hover:bg-[var(--content-actualite)]/10',
-        'transition-all duration-300',
-        buttonClass
-      ]}
-      title={button.title}
-      data-aw-social-share={button.type}
-      data-aw-url={url}
-      data-aw-text={text}
-    >
-      <Icon name={button.icon} class="w-5 h-5" />
-    </button>
-  ))}
+  {
+    buttons.map((button) => (
+      <button
+        class:list={[
+          'inline-flex items-center justify-center',
+          'w-10 h-10 rounded-full',
+          contentStates?.isLiveFacebook
+            ? 'text-[#1877F2]/50 hover:text-[#1877F2] bg-[#1877F2]/5 hover:bg-[#1877F2]/10'
+            : contentStates?.isPodcast
+              ? 'text-[var(--content-podcast)]/50 hover:text-[var(--content-podcast)] bg-[var(--content-podcast)]/5 hover:bg-[var(--content-podcast)]/10'
+              : 'text-[var(--content-actualite)]/50 hover:text-[var(--content-actualite)] bg-[var(--content-actualite)]/5 hover:bg-[var(--content-actualite)]/10',
+          'transition-all duration-300',
+          buttonClass,
+        ]}
+        title={button.title}
+        data-aw-social-share={button.type}
+        data-aw-url={url}
+        data-aw-text={text}
+      >
+        <Icon name={button.icon} class="w-5 h-5" />
+      </button>
+    ))
+  }
 </div>

@@ -74,9 +74,7 @@ const {
                   {typeof callToAction2 === 'string' ? (
                     <Fragment set:html={callToAction2} />
                   ) : (
-                    <Button {...callToAction2}>
-                      {callToAction2.text}
-                    </Button>
+                    <Button {...callToAction2}>{callToAction2.text}</Button>
                   )}
                 </div>
               )

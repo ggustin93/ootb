@@ -31,9 +31,9 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { page } = Astro.props as Props;
 const currentPage = page.currentPage ?? 1;
 
-const allTags = await findTags().then(tags => {
+const allTags = await findTags().then((tags) => {
   const uniqueTags = new Map();
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     if (!uniqueTags.has(tag.slug)) {
       uniqueTags.set(tag.slug, tag);
     }
@@ -46,10 +46,10 @@ const initialTags = allTags.slice(0, 15);
 
 // Récupérer TOUS les posts pour la recherche avec mise en cache
 const allPosts = await getCachedPosts(fetchPosts);
-const searchablePosts = allPosts.map(post => ({
+const searchablePosts = allPosts.map((post) => ({
   slug: post.slug,
   title: post.title,
-  category: post.category?.slug
+  category: post.category?.slug,
 }));
 
 const metadata = {
@@ -66,7 +66,6 @@ const metadata = {
 // Extraction des données
 const { hero } = sharedData;
 const { filters, contentSection, search } = hero;
-
 ---
 
 <Layout metadata={metadata}>
@@ -83,7 +82,9 @@ const { filters, contentSection, search } = hero;
         <div class="grid md:grid-cols-12 gap-12 items-center">
           <!-- Mascotte (cachée sur mobile, visible sur desktop) -->
           <div class="hidden md:block relative order-2 md:order-1 md:col-span-5 -mt-8">
-            <div class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300">
+            <div
+              class="relative w-full max-w-[500px] mx-auto transform hover:-rotate-2 transition-transform duration-300"
+            >
               <Image
                 src={ootbLogo}
                 alt="Out of the Books Mascotte"
@@ -100,16 +101,16 @@ const { filters, contentSection, search } = hero;
             <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-6">
               {hero.title}
             </h1>
-            
+
             <p class="text-xl text-white/90 font-light mb-8 max-w-xl mx-auto md:mx-0">
               {hero.description}
             </p>
 
             <!-- Barre de recherche intelligente -->
-            <TagSearch 
-              tags={initialTags} 
+            <TagSearch
+              tags={initialTags}
               posts={searchablePosts}
-              placeholder={search.placeholder} 
+              placeholder={search.placeholder}
               label={search.thematicLabel}
             />
 
@@ -125,25 +126,25 @@ const { filters, contentSection, search } = hero;
 
             <!-- Filtres principaux avec optimisation mobile - garder le texte -->
             <div class="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start mb-4">
-              <CategoryButton 
+              <CategoryButton
                 href="/blog"
                 icon={CONTENT_TYPES.all.icon}
                 label={CONTENT_TYPES.all.shortLabel}
                 isActive={true}
-                withAnchor={true}
               />
 
-              {Object.entries(CONTENT_TYPES)
-                .filter(([key]) => key !== 'all' && key !== 'premium')
-                .map(([key, config]) => (
-                  <CategoryButton 
-                    href={`/category/${key}`}
-                    icon={config.icon}
-                    label={config.shortLabel}
-                    color={config.color}
-                    withAnchor={true}
-                  />
-                ))}
+              {
+                Object.entries(CONTENT_TYPES)
+                  .filter(([key]) => key !== 'all' && key !== 'premium')
+                  .map(([key, config]) => (
+                    <CategoryButton
+                      href={`/category/${key}`}
+                      icon={config.icon}
+                      label={config.shortLabel}
+                      color={config.color}
+                    />
+                  ))
+              }
             </div>
           </div>
         </div>
@@ -151,8 +152,8 @@ const { filters, contentSection, search } = hero;
     </div>
   </GradientHeroSection>
 
-  <ScrollDownArrow 
-    targetId="blog-filters" 
+  <ScrollDownArrow
+    targetId="blog-filters"
     label="Voir les contenus"
     position="left-[20%] bottom-[20%]"
     class="text-white hidden md:flex"
@@ -186,7 +187,7 @@ const { filters, contentSection, search } = hero;
   details[open] > div {
     animation: slideDown 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   @keyframes slideDown {
     from {
       opacity: 0;
@@ -208,7 +209,8 @@ const { filters, contentSection, search } = hero;
   }
 
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
@@ -217,7 +219,8 @@ const { filters, contentSection, search } = hero;
   }
 
   @keyframes float-delayed {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
@@ -239,7 +242,9 @@ const { filters, contentSection, search } = hero;
   }
 
   /* Transitions douces */
-  a, button, input {
+  a,
+  button,
+  input {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -272,7 +277,7 @@ const { filters, contentSection, search } = hero;
   // Fonction directement inspirée de ScrollDownArrow.astro
   function scrollToElement(elementId: string) {
     const targetElement = document.getElementById(elementId);
-    
+
     if (targetElement) {
       const headerOffset = 100;
       const elementPosition = targetElement.getBoundingClientRect().top;
@@ -280,7 +285,7 @@ const { filters, contentSection, search } = hero;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     } else {
       // Fallback comme dans ScrollDownArrow si l'élément n'est pas trouvé
@@ -288,7 +293,7 @@ const { filters, contentSection, search } = hero;
       const currentPosition = window.pageYOffset;
       window.scrollTo({
         top: currentPosition + defaultScrollDistance,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
@@ -301,7 +306,7 @@ const { filters, contentSection, search } = hero;
   function handleAnchorClick(e: Event) {
     const target = e.currentTarget as HTMLAnchorElement;
     const href = target.getAttribute('href');
-    
+
     if (href?.includes('/category/premium')) {
       // Si on clique sur le lien premium, on stocke l'info pour le défilement après redirection
       localStorage.setItem('scrollToPremium', 'true');
@@ -320,8 +325,10 @@ const { filters, contentSection, search } = hero;
     }
 
     // Ajout des écouteurs d'événements sur les liens
-    document.querySelectorAll('a[href*="#blog-filters"], a[href*="#blog-content"], a[href*="/category/premium"]').forEach(link => {
-      link.addEventListener('click', handleAnchorClick);
-    });
+    document
+      .querySelectorAll('a[href*="#blog-filters"], a[href*="#blog-content"], a[href*="/category/premium"]')
+      .forEach((link) => {
+        link.addEventListener('click', handleAnchorClick);
+      });
   });
 </script>

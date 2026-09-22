@@ -6,7 +6,7 @@ import Button from '~/components/ui/Button.astro';
 import PartnerGrid from '~/components/blog/PartnerGrid.astro';
 import TinaRichText from '~/components/ui/TinaRichText.astro';
 import blogData from '~/content/blog/blog.json';
-import { CATEGORY_PROSE_CLASS } from '~/utils/tinaRichText';
+import { CATEGORY_PROSE_CLASS, type TinaNode, type TinaRichTextContent } from '~/utils/tinaRichText';
 
 interface Props {
   type: keyof typeof CONTENT_TYPES;
@@ -41,8 +41,9 @@ interface QRCode {
   caption: string;
 }
 
-// Type pour la description (peut être string, array, ou objet rich text)
-type DescriptionData = string | string[] | any;
+// Type pour la description (peut être string, array de paragraphes, ou objet rich text)
+// Arrays are always rendered as plain paragraphs, so rich-text node arrays are excluded.
+type DescriptionData = string | string[] | Exclude<TinaRichTextContent, TinaNode[]>;
 
 // Type pour les partenaires
 interface Partner {
@@ -67,7 +68,6 @@ const categoryInfos = blogData.categoryInfo as Record<string, CategoryInfoData>;
 const config = categoryInfos[type];
 
 if (!config) return null;
-
 ---
 
 {
@@ -75,8 +75,7 @@ if (!config) return null;
     <div class="bg-gradient-to-br from-amber-50 to-transparent p-4 sm:p-8 rounded-2xl mb-12">
       <div class="max-w-3xl mx-auto">
         {Array.isArray(config.description) ? (
-          <p class="text-gray-700 text-base sm:text-lg mb-4 sm:mb-6">{config.description[0]}
-          </p>
+          <p class="text-gray-700 text-base sm:text-lg mb-4 sm:mb-6">{config.description[0]}</p>
         ) : typeof config.description === 'string' ? (
           <p class="text-gray-700 text-base sm:text-lg mb-4 sm:mb-6">{config.description.split('\n\n')[0]}</p>
         ) : (
@@ -153,14 +152,13 @@ if (!config) return null;
               <p class="mb-3 text-sm sm:text-base text-gray-600 text-center lg:text-left">{paragraph}</p>
             ))
           ) : typeof config.description === 'string' ? (
-            config.description.split('\n\n').map((paragraph: string) => (
-              <p class="mb-3 text-sm sm:text-base text-gray-600 text-center lg:text-left">{paragraph}</p>
-            ))
+            config.description
+              .split('\n\n')
+              .map((paragraph: string) => (
+                <p class="mb-3 text-sm sm:text-base text-gray-600 text-center lg:text-left">{paragraph}</p>
+              ))
           ) : (
-            <TinaRichText
-              content={config.description}
-              class={`${CATEGORY_PROSE_CLASS} text-center lg:text-left`}
-            />
+            <TinaRichText content={config.description} class={`${CATEGORY_PROSE_CLASS} text-center lg:text-left`} />
           )}
           {config.links.length > 0 && (
             <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 text-sm mt-4">

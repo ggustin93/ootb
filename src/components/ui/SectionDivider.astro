@@ -1,7 +1,7 @@
 ---
 interface Props {
-    variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow' | 'turquoise' | 'blue' | 'white';
-    class?: string;
+  variant?: 'primary' | 'secondary' | 'success' | 'sky' | 'orange' | 'yellow' | 'turquoise' | 'blue' | 'white';
+  class?: string;
 }
 
 const { variant = 'primary', class: className } = Astro.props;
@@ -43,16 +43,12 @@ const variants = {
   white: `
     text-white
     border-white
-  `
+  `,
 } as const;
 ---
 
-<div class:list={[
-  'relative inline-flex items-center',
-  'group',
-  className
-]}>
-  <span 
+<div class:list={['relative inline-flex items-center', 'group', className]}>
+  <span
     class:list={[
       'relative px-6 py-2',
       'text-lg tracking-wide uppercase',
@@ -64,7 +60,7 @@ const variants = {
       'transition-all duration-300 ease-out',
       'hover:border-opacity-100 hover:pl-8',
       'hover:scale-[1.02] origin-bottom-left',
-      variants[variant]
+      variants[variant],
     ]}
   >
     <slot />

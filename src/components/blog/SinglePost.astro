@@ -19,7 +19,7 @@ import { Icon } from 'astro-icon/components';
 
 // Types
 interface Props {
-  post: Post & {
+  post: Omit<Post, 'image'> & {
     image: ImageMetadata | string;
     expert?: string;
     duration?: string;
@@ -70,24 +70,29 @@ const { post, url } = Astro.props;
 const blogLink = typeof getBlogPermalink === 'function' ? getBlogPermalink() : '/blog';
 
 // Configuration du type de contenu
-const contentType = typeof post.category === 'string' ? post.category : (post.category?.slug || 'actualite');
+const contentType = typeof post.category === 'string' ? post.category : post.category?.slug || 'actualite';
 const contentConfigRaw = CONTENT_TYPES[contentType as keyof typeof CONTENT_TYPES];
 
 // Image par défaut si aucune n'est spécifiée
 const defaultImage = '~/assets/images/ootb-logo.svg';
 
 // Vérifier si l'image est l'image par défaut
-const isDefaultImage = !post.image || post.image === defaultImage || 
-                      (typeof post.image === 'string' && post.image.includes('ootb-logo'));
+const isDefaultImage =
+  !post.image || post.image === defaultImage || (typeof post.image === 'string' && post.image.includes('ootb-logo'));
 
 // Adapter le contentConfig pour qu'il corresponde à l'interface attendue par PostHeader
 const contentConfig = {
   icon: contentConfigRaw.icon,
   label: contentConfigRaw.label,
-  variant: (contentType === 'fiche' ? 'fiche' : 
-           contentType === 'tv' ? 'emission' :
-           contentType) as 'festival' | 'podcast' | 'emission' | 'appel' | 'live' | 'actualite' | 'fiche',
-  color: contentConfigRaw.color
+  variant: (contentType === 'fiche' ? 'fiche' : contentType === 'tv' ? 'emission' : contentType) as
+    | 'festival'
+    | 'podcast'
+    | 'emission'
+    | 'appel'
+    | 'live'
+    | 'actualite'
+    | 'fiche',
+  color: contentConfigRaw.color,
 };
 
 // Récupérer les URLs et IDs (compatibilité avec ancienne et nouvelle structure)
@@ -99,12 +104,17 @@ const mediaInfo = {
   smartlinkUrl: post.media?.smartlinkUrl,
   videoUrl: post.media?.videoUrl || post.videoUrl,
   tvcomUrl: post.media?.tvcomUrl || post.tvcomUrl,
-  type: post.media?.type || (
-    contentType === 'podcast' ? 'podcast' :
-    post.podcastUrl ? 'podcast' : 
-    post.videoUrl ? 'youtube' : 
-    post.tvcomUrl ? 'tv' : 'none'
-  )
+  type:
+    post.media?.type ||
+    (contentType === 'podcast'
+      ? 'podcast'
+      : post.podcastUrl
+        ? 'podcast'
+        : post.videoUrl
+          ? 'youtube'
+          : post.tvcomUrl
+            ? 'tv'
+            : 'none'),
 };
 
 // États du contenu
@@ -118,7 +128,7 @@ const contentStates = {
   hasDuration: Boolean(post.duration),
   hasSubtitle: Boolean(post.subtitle),
   hasTags: Boolean(post.tags?.length),
-  hasPedagogicalInfo: Boolean(post.pedagogicalSheet)
+  hasPedagogicalInfo: Boolean(post.pedagogicalSheet),
 };
 
 // Gérer l'image à afficher
@@ -128,34 +138,33 @@ const displayImage = post.image || defaultImage;
 const styles = {
   contentColor: contentConfig.color,
   heading: {
-    base: "text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading",
-    color: contentStates.isLiveFacebook 
-      ? "text-[#1877F2]" 
-      : contentStates.isPodcast 
-        ? "text-[var(--ootb-violet)]" 
+    base: 'text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading',
+    color: contentStates.isLiveFacebook
+      ? 'text-[#1877F2]'
+      : contentStates.isPodcast
+        ? 'text-[var(--ootb-violet)]'
         : contentType === 'tv'
-          ? "text-[var(--content-tv)]"
-          : `text-[${contentConfig.color}]`
+          ? 'text-[var(--content-tv)]'
+          : `text-[${contentConfig.color}]`,
   },
   prose: {
-    base: "prose prose-lg lg:prose-xl dark:prose-invert max-w-none",
+    base: 'prose prose-lg lg:prose-xl dark:prose-invert max-w-none',
     headings: [
-      "prose-h2:font-body prose-h3:font-handwritten",
-      "prose-h2:text-[color:var(--content-color)]",
-      "prose-h3:text-gray-600 dark:prose-h3:text-gray-400"
-    ].join(" ")
+      'prose-h2:font-body prose-h3:font-handwritten',
+      'prose-h2:text-[color:var(--content-color)]',
+      'prose-h3:text-gray-600 dark:prose-h3:text-gray-400',
+    ].join(' '),
   },
-  badgeClass: "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+  badgeClass: 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200',
 };
 
 // Classes pour le wrapper média
 const mediaWrapperClasses = [
-  "rounded-lg overflow-hidden relative aspect-video mb-8",
-  contentStates.isLiveFacebook && "ring-4 ring-[#1877F2]/20",
-  contentStates.isPodcast && "ring-4 ring-[var(--ootb-violet)]/20",
-  contentType === 'tv' && "ring-4 ring-[var(--ootb-green)]/20"
+  'rounded-lg overflow-hidden relative aspect-video mb-8',
+  contentStates.isLiveFacebook && 'ring-4 ring-[#1877F2]/20',
+  contentStates.isPodcast && 'ring-4 ring-[var(--ootb-violet)]/20',
+  contentType === 'tv' && 'ring-4 ring-[var(--ootb-green)]/20',
 ];
-
 ---
 
 <section class="py-4 sm:py-8 mx-auto max-w-6xl px-4 sm:px-6">
@@ -176,151 +185,165 @@ const mediaWrapperClasses = [
       {/* Contenu principal */}
       <main class="max-w-4xl mx-auto space-y-8">
         {/* Description (sauf pour les fiches pédagogiques) */}
-        {post.description && !contentStates.isPedagogicalSheet && (
-          <PostDescription
-            description={post.description}
-            contentStates={contentStates}
-          />
-        )}
+        {
+          post.description && !contentStates.isPedagogicalSheet && (
+            <PostDescription description={post.description} contentStates={contentStates} />
+          )
+        }
 
         {/* Fiche pédagogique */}
-        {contentStates.isPedagogicalSheet && post.pedagogicalSheet && (
-          <PedagogicalSheet sheet={post.pedagogicalSheet} tags={post.tags} />
-        )}
+        {
+          contentStates.isPedagogicalSheet && post.pedagogicalSheet && (
+            <PedagogicalSheet sheet={post.pedagogicalSheet} tags={post.tags} />
+          )
+        }
 
         {/* Média - Podcast */}
-        {contentStates.isPodcast && (
-          <div class="mb-8">
-            {/* Afficher le player uniquement si iframeCode est présent */}
-            {mediaInfo.iframeCode ? (
-              <PodcastPlayer 
-                podcastUrl={mediaInfo.podcastUrl}
-                showId={mediaInfo.showId}
-                podcastId={mediaInfo.podcastId}
-                iframeCode={mediaInfo.iframeCode}
-                smartlinkUrl={mediaInfo.smartlinkUrl}
-              />
-            ) : (
-              <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 text-center">
-                <p class="text-gray-600 dark:text-gray-400 font-medium">
-                  Aucun lecteur de podcast disponible
-                </p>
-                <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">
-                  Veuillez ajouter un code iframe dans le champ "iframeCode" pour afficher le lecteur de podcast.
-                </p>
-              </div>
-            )}
-          </div>
-        )}
+        {
+          contentStates.isPodcast && (
+            <div class="mb-8">
+              {/* Afficher le player uniquement si iframeCode est présent */}
+              {mediaInfo.iframeCode ? (
+                <PodcastPlayer
+                  podcastUrl={mediaInfo.podcastUrl}
+                  showId={mediaInfo.showId}
+                  podcastId={mediaInfo.podcastId}
+                  iframeCode={mediaInfo.iframeCode}
+                  smartlinkUrl={mediaInfo.smartlinkUrl}
+                />
+              ) : (
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 text-center">
+                  <p class="text-gray-600 dark:text-gray-400 font-medium">Aucun lecteur de podcast disponible</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                    Veuillez ajouter un code iframe dans le champ "iframeCode" pour afficher le lecteur de podcast.
+                  </p>
+                </div>
+              )}
+            </div>
+          )
+        }
 
         {/* Média - Vidéo YouTube */}
-        {(contentStates.isVideo && mediaInfo.videoUrl) ? (
-          <div class:list={[...mediaWrapperClasses, "group", "shadow-lg"]}>
-            <VideoPlayer 
-              videoUrl={mediaInfo.videoUrl}
-              title={post.title}
-            />
-          </div>
-        ) : (
-          // Ne montrer l'image que si:
-          // 1. C'est une image fournie explicitement (pas l'image par défaut) OU
-          // 2. C'est un contenu TV qui devrait avoir une image OU
-          // 3. C'est un contenu d'actualité (où les images sont pertinentes)
-          // ET pas pour les podcasts qui ont leur propre affichage
-          (post.image && !isDefaultImage && !contentStates.isPodcast) || 
-          (contentStates.isTvContent && mediaInfo.tvcomUrl) || 
-          (contentType === 'actualite' && post.image && !isDefaultImage && !contentStates.isPodcast)
-        ) && (
-          <div class:list={[...mediaWrapperClasses, "group", 
-            contentType !== 'actualite' && "shadow-lg",
-            contentType === 'actualite' && "max-w-fit mx-auto mt-4 mb-8"
-          ]}>
-            <FeaturedImage 
-              image={displayImage}
-              title={post.title}
-            />
-            {/* Overlay sombre et bouton TV Com */}
-            {contentStates.isTvContent && mediaInfo.tvcomUrl && (
-              <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60 group-hover:from-black/50 group-hover:to-black/70 transition-all duration-300">
-                <Button
-                  variant="outline-tv"
-                  href={mediaInfo.tvcomUrl}
-                  icon="tabler:device-tv"
-                  size="lg"
-                  target="_blank"
-                  class="group/btn hover:scale-105 transition-transform duration-300 shadow-lg"
-                >
-                  Voir l'émission sur TV Com
-                </Button>
+        {
+          contentStates.isVideo && mediaInfo.videoUrl ? (
+            <div class:list={[...mediaWrapperClasses, 'group', 'shadow-lg']}>
+              <VideoPlayer videoUrl={mediaInfo.videoUrl} title={post.title} />
+            </div>
+          ) : (
+            // Ne montrer l'image que si:
+            // 1. C'est une image fournie explicitement (pas l'image par défaut) OU
+            // 2. C'est un contenu TV qui devrait avoir une image OU
+            // 3. C'est un contenu d'actualité (où les images sont pertinentes)
+            // ET pas pour les podcasts qui ont leur propre affichage
+            ((post.image && !isDefaultImage && !contentStates.isPodcast) ||
+              (contentStates.isTvContent && mediaInfo.tvcomUrl) ||
+              (contentType === 'actualite' && post.image && !isDefaultImage && !contentStates.isPodcast)) && (
+              <div
+                class:list={[
+                  ...mediaWrapperClasses,
+                  'group',
+                  contentType !== 'actualite' && 'shadow-lg',
+                  contentType === 'actualite' && 'max-w-fit mx-auto mt-4 mb-8',
+                ]}
+              >
+                <FeaturedImage image={displayImage} title={post.title} />
+                {/* Overlay sombre et bouton TV Com */}
+                {contentStates.isTvContent && mediaInfo.tvcomUrl && (
+                  <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60 group-hover:from-black/50 group-hover:to-black/70 transition-all duration-300">
+                    <Button
+                      variant="outline-tv"
+                      href={mediaInfo.tvcomUrl}
+                      icon="tabler:device-tv"
+                      size="lg"
+                      target="_blank"
+                      class="group/btn hover:scale-105 transition-transform duration-300 shadow-lg"
+                    >
+                      Voir l'émission sur TV Com
+                    </Button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        )}
+            )
+          )
+        }
 
         {/* Fond par défaut si aucune image n'est fournie et pas de média spécifique */}
-        {(!post.image || isDefaultImage) && !contentStates.isPodcast && !contentStates.isVideo && !mediaInfo.videoUrl && !contentStates.isPedagogicalSheet && (
-          <div class:list={[...mediaWrapperClasses, "group", "shadow-lg"]}>
-            <div 
-              class:list={[
-                'w-full h-full flex items-center justify-center aspect-video',
-                {
-                  'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]': contentType === 'actualite',
-                  'bg-[color-mix(in_srgb,var(--content-live)_30%,white)]': contentType === 'live',
-                  'bg-[color-mix(in_srgb,var(--content-fiche)_30%,white)]': contentType === 'fiche',
-                  'bg-[color-mix(in_srgb,var(--content-podcast)_30%,white)]': contentType === 'podcast',
-                  'bg-[color-mix(in_srgb,var(--content-tv)_30%,white)]': contentType === 'tv',
-                  'bg-[color-mix(in_srgb,var(--content-premium)_30%,white)]': contentType === 'premium',
-                  'bg-gray-200': contentType !== 'actualite' && contentType !== 'live' && 
-                                contentType !== 'fiche' && contentType !== 'podcast' && 
-                                contentType !== 'tv' && contentType !== 'premium'
-                }
-              ]}
-            >
-              <Icon 
-                name={contentConfigRaw.icon} 
-                class:list={[
-                  'w-24 h-24 opacity-90',
-                  {
-                    'text-[var(--content-actualite)]': contentType === 'actualite',
-                    'text-[var(--content-live)]': contentType === 'live',
-                    'text-[var(--content-fiche)]': contentType === 'fiche',
-                    'text-[var(--content-podcast)]': contentType === 'podcast',
-                    'text-[var(--content-tv)]': contentType === 'tv',
-                    'text-[var(--content-premium)]': contentType === 'premium',
-                    'text-gray-700': contentType !== 'actualite' && contentType !== 'live' && 
-                                    contentType !== 'fiche' && contentType !== 'podcast' && 
-                                    contentType !== 'tv' && contentType !== 'premium'
-                  }
-                ]}
-              />
-            </div>
-            {/* Overlay sombre et bouton TV Com pour les émissions TV */}
-            {contentStates.isTvContent && mediaInfo.tvcomUrl && (
-              <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60 group-hover:from-black/50 group-hover:to-black/70 transition-all duration-300">
-                <Button
-                  variant="outline-tv"
-                  href={mediaInfo.tvcomUrl}
-                  icon="tabler:device-tv"
-                  size="lg"
-                  target="_blank"
-                  class="group/btn hover:scale-105 transition-transform duration-300 shadow-lg"
+        {
+          (!post.image || isDefaultImage) &&
+            !contentStates.isPodcast &&
+            !contentStates.isVideo &&
+            !mediaInfo.videoUrl &&
+            !contentStates.isPedagogicalSheet && (
+              <div class:list={[...mediaWrapperClasses, 'group', 'shadow-lg']}>
+                <div
+                  class:list={[
+                    'w-full h-full flex items-center justify-center aspect-video',
+                    {
+                      'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]': contentType === 'actualite',
+                      'bg-[color-mix(in_srgb,var(--content-live)_30%,white)]': contentType === 'live',
+                      'bg-[color-mix(in_srgb,var(--content-fiche)_30%,white)]': contentType === 'fiche',
+                      'bg-[color-mix(in_srgb,var(--content-podcast)_30%,white)]': contentType === 'podcast',
+                      'bg-[color-mix(in_srgb,var(--content-tv)_30%,white)]': contentType === 'tv',
+                      'bg-[color-mix(in_srgb,var(--content-premium)_30%,white)]': contentType === 'premium',
+                      'bg-gray-200':
+                        contentType !== 'actualite' &&
+                        contentType !== 'live' &&
+                        contentType !== 'fiche' &&
+                        contentType !== 'podcast' &&
+                        contentType !== 'tv' &&
+                        contentType !== 'premium',
+                    },
+                  ]}
                 >
-                  Voir l'émission sur TV Com
-                </Button>
+                  <Icon
+                    name={contentConfigRaw.icon}
+                    class:list={[
+                      'w-24 h-24 opacity-90',
+                      {
+                        'text-[var(--content-actualite)]': contentType === 'actualite',
+                        'text-[var(--content-live)]': contentType === 'live',
+                        'text-[var(--content-fiche)]': contentType === 'fiche',
+                        'text-[var(--content-podcast)]': contentType === 'podcast',
+                        'text-[var(--content-tv)]': contentType === 'tv',
+                        'text-[var(--content-premium)]': contentType === 'premium',
+                        'text-gray-700':
+                          contentType !== 'actualite' &&
+                          contentType !== 'live' &&
+                          contentType !== 'fiche' &&
+                          contentType !== 'podcast' &&
+                          contentType !== 'tv' &&
+                          contentType !== 'premium',
+                      },
+                    ]}
+                  />
+                </div>
+                {/* Overlay sombre et bouton TV Com pour les émissions TV */}
+                {contentStates.isTvContent && mediaInfo.tvcomUrl && (
+                  <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-black/40 to-black/60 group-hover:from-black/50 group-hover:to-black/70 transition-all duration-300">
+                    <Button
+                      variant="outline-tv"
+                      href={mediaInfo.tvcomUrl}
+                      icon="tabler:device-tv"
+                      size="lg"
+                      target="_blank"
+                      class="group/btn hover:scale-105 transition-transform duration-300 shadow-lg"
+                    >
+                      Voir l'émission sur TV Com
+                    </Button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        )}
+            )
+        }
 
         {/* Video Player for TV content with YouTube video */}
-        {(contentStates.isTvContent && mediaInfo.videoUrl) && (
-          <div class:list={[...mediaWrapperClasses, "mb-0 p-0"]}>
-            <VideoPlayer 
-              videoUrl={mediaInfo.videoUrl}
-              title={post.title}
-            />
-          </div>
-        )}
+        {
+          contentStates.isTvContent && mediaInfo.videoUrl && (
+            <div class:list={[...mediaWrapperClasses, 'mb-0 p-0']}>
+              <VideoPlayer videoUrl={mediaInfo.videoUrl} title={post.title} />
+            </div>
+          )
+        }
 
         {/* Contenu de l'article */}
         <div class:list={[styles.prose.base, styles.prose.headings]}>
@@ -341,11 +364,11 @@ const mediaWrapperClasses = [
   </article>
 </section>
 
-<style>  
+<style>
   .aspect-video {
     aspect-ratio: 16/9;
   }
-  
+
   /* Assurer que les images d'actualité ne dépassent pas leurs dimensions d'origine */
   .max-w-fit img {
     max-width: 100%;

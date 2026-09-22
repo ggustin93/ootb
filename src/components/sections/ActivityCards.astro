@@ -11,22 +11,22 @@ const { id, class: className = '' } = Astro.props;
 const activities = [
   {
     title: 'Conférences',
-    description: '40+ conférences inspirantes sur l\'innovation pédagogique',
+    description: "40+ conférences inspirantes sur l'innovation pédagogique",
     icon: 'tabler:presentation',
-    color: 'bg-gradient-to-br from-[#e4451e] to-[#ff6b47]'
+    color: 'bg-gradient-to-br from-[#e4451e] to-[#ff6b47]',
   },
   {
     title: 'Ateliers',
     description: '20+ ateliers pratiques pour expérimenter de nouvelles approches',
     icon: 'tabler:tool',
-    color: 'bg-gradient-to-br from-[#2d7d90] to-[#6ab29e]'
+    color: 'bg-gradient-to-br from-[#2d7d90] to-[#6ab29e]',
   },
   {
     title: 'Stands',
     description: 'Rencontrez des éditeurs, des associations et des innovateurs',
     icon: 'tabler:building-store',
-    color: 'bg-gradient-to-br from-[#34495e] to-[#587693]'
-  }
+    color: 'bg-gradient-to-br from-[#34495e] to-[#587693]',
+  },
 ];
 ---
 
@@ -34,43 +34,53 @@ const activities = [
   <div class="max-w-6xl mx-auto">
     <!-- Version mobile: cartes empilées -->
     <div class="grid gap-6 md:hidden">
-      {activities.map((activity, index) => (
-        <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 festival-card drop-in" style={`animation-delay: ${index * 200}ms`}>
-          <div class="flex items-start gap-4">
-            <div class={`w-14 h-14 ${activity.color} rounded-xl flex items-center justify-center shadow-lg`}>
-              <Icon name={activity.icon} class="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h3 class="text-2xl font-handwritten text-gray-800 mb-2">{activity.title}</h3>
-              <p class="text-gray-600">{activity.description}</p>
+      {
+        activities.map((activity, index) => (
+          <div
+            class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 festival-card drop-in"
+            style={`animation-delay: ${index * 200}ms`}
+          >
+            <div class="flex items-start gap-4">
+              <div class={`w-14 h-14 ${activity.color} rounded-xl flex items-center justify-center shadow-lg`}>
+                <Icon name={activity.icon} class="w-7 h-7 text-white" />
+              </div>
+              <div>
+                <h3 class="text-2xl font-handwritten text-gray-800 mb-2">{activity.title}</h3>
+                <p class="text-gray-600">{activity.description}</p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
-    
+
     <!-- Version desktop: cartes avec chevauchement -->
     <div class="hidden md:grid md:grid-cols-3 md:gap-6">
-      {activities.map((activity, index) => (
-        <div class="transform hover:scale-105 transition-all duration-300 festival-card drop-in" style={`animation-delay: ${index * 200}ms`}>
-          <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 h-full">
-            <div class="flex flex-col items-center text-center">
-              <div class={`w-16 h-16 ${activity.color} rounded-xl flex items-center justify-center shadow-lg mb-4`}>
-                <Icon name={activity.icon} class="w-8 h-8 text-white" />
+      {
+        activities.map((activity, index) => (
+          <div
+            class="transform hover:scale-105 transition-all duration-300 festival-card drop-in"
+            style={`animation-delay: ${index * 200}ms`}
+          >
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 h-full">
+              <div class="flex flex-col items-center text-center">
+                <div class={`w-16 h-16 ${activity.color} rounded-xl flex items-center justify-center shadow-lg mb-4`}>
+                  <Icon name={activity.icon} class="w-8 h-8 text-white" />
+                </div>
+                <h3 class="text-2xl font-handwritten text-gray-800 mb-2">{activity.title}</h3>
+                <p class="text-gray-600">{activity.description}</p>
               </div>
-              <h3 class="text-2xl font-handwritten text-gray-800 mb-2">{activity.title}</h3>
-              <p class="text-gray-600">{activity.description}</p>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </div>
 
 <style>
   .festival-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     opacity: 0;

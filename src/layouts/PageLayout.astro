@@ -17,11 +17,11 @@ const { metadata, currentPage = 'default' } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
-   <slot name="announcement">
+  <slot name="announcement">
     <Announcement currentPage={currentPage} />
-  </slot> 
+  </slot>
   <slot name="header">
-    <Header 
+    <Header
       links={headerData.links}
       actions={headerData.actions}
       mobileLinks={headerData.mobileLinks}

@@ -13,9 +13,8 @@ const variants = {
   appel: 'bg-[var(--ootb-blue)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)]',
   live: 'bg-[#1877F2] text-white hover:bg-[color-mix(in_srgb,#1877F2_90%,black)]',
   actualite: 'bg-gray-700 text-white hover:bg-gray-800',
-  fiche: 'bg-[var(--ootb-blue)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)]'
+  fiche: 'bg-[var(--ootb-blue)] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)]',
 };
-
 ---
 
 <span
@@ -28,10 +27,10 @@ const variants = {
     'whitespace-nowrap',
     'px-7 py-3',
     variants[variant],
-    className
+    className,
   ]}
 >
   <span class="transform skew-x-[12deg] flex items-center gap-2">
     <slot />
   </span>
-</span> 
+</span>

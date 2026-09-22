@@ -9,25 +9,29 @@ export class EventRenderer {
 
   renderEventCard(eventData) {
     const { event, eventImage } = eventData;
-    
+
     // Créer l'élément principal avec les mêmes classes que EventCard.astro
     const eventCard = document.createElement('div');
-    eventCard.className = 'event-card bg-white shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row group transition-all duration-300 hover:shadow-2xl';
+    eventCard.className =
+      'event-card bg-white shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row group transition-all duration-300 hover:shadow-2xl';
     eventCard.setAttribute('data-type', event.type || '');
     eventCard.setAttribute('data-day', event.day || '');
     eventCard.setAttribute('data-time', event.time || '');
 
     // Générer un slug à partir du titre pour les liens
-    const slug = event.title ? event.title.toLowerCase()
-      .replace(/[àáâãäå]/g, 'a')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/[òóôõö]/g, 'o')
-      .replace(/[ùúûü]/g, 'u')
-      .replace(/[ç]/g, 'c')
-      .replace(/[^a-z0-9]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '') : '';
+    const slug = event.title
+      ? event.title
+          .toLowerCase()
+          .replace(/[àáâãäå]/g, 'a')
+          .replace(/[èéêë]/g, 'e')
+          .replace(/[ìíîï]/g, 'i')
+          .replace(/[òóôõö]/g, 'o')
+          .replace(/[ùúûü]/g, 'u')
+          .replace(/[ç]/g, 'c')
+          .replace(/[^a-z0-9]/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-|-$/g, '')
+      : '';
 
     // Image de l'événement (même structure que EventCard.astro)
     let imageHtml = '';
@@ -59,23 +63,31 @@ export class EventRenderer {
         <div>
           <div class="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-500 mb-2 md:mb-3">
             ${event.type ? `<span class="font-medium text-primary-500">${event.type}</span>` : ''}
-            ${event.day && event.time && event.time !== 'À définir' ? `
+            ${
+              event.day && event.time && event.time !== 'À définir'
+                ? `
               <span class="flex items-center">
                 <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 10.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 ${event.day} - ${event.time}
               </span>
-            ` : ''}
+            `
+                : ''
+            }
           </div>
           
           <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-2 hover:text-primary-600 leading-tight">
             <a href="/festival/events/${slug}/">${event.title || ''}</a>
           </h3>
           
-          ${event.description ? `
+          ${
+            event.description
+              ? `
             <p class="text-gray-600 text-sm md:text-base line-clamp-3 mb-3 md:mb-4">${event.description}</p>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
         
         <div class="mt-auto">
@@ -107,19 +119,19 @@ export class EventRenderer {
     const renderBatch = () => {
       const batchSize = 5; // Rendre 5 événements à la fois
       const batchEnd = Math.min(startIndex + batchSize, eventsData.length);
-      
+
       for (let i = startIndex; i < batchEnd; i++) {
         const eventCard = this.renderEventCard(eventsData[i]);
         this.container.appendChild(eventCard);
       }
-      
+
       startIndex = batchEnd;
-      
+
       if (startIndex < eventsData.length) {
         requestAnimationFrame(renderBatch);
       }
     };
-    
+
     requestAnimationFrame(renderBatch);
   }
 
@@ -128,4 +140,4 @@ export class EventRenderer {
       this.container.innerHTML = '';
     }
   }
-} 
+}

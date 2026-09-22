@@ -2,12 +2,26 @@
 import { Icon } from 'astro-icon/components';
 
 interface Props {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'blue' | 'outline-blue' | 'premium-primary' | 'premium-secondary' | 'card' | 'outline-podcast' | 'outline-tv';
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'outline'
+    | 'ghost'
+    | 'link'
+    | 'blue'
+    | 'outline-blue'
+    | 'premium-primary'
+    | 'premium-secondary'
+    | 'card'
+    | 'outline-podcast'
+    | 'outline-tv';
   size?: 'sm' | 'md' | 'lg';
   icon?: string;
   iconPosition?: 'left' | 'right';
   href?: string;
   target?: string;
+  rel?: string;
   class?: string;
   fullWidth?: boolean;
   disabled?: boolean;
@@ -23,36 +37,43 @@ const {
   iconPosition = 'left',
   href,
   target,
+  rel,
   class: className,
   fullWidth = false,
   disabled = false,
   color,
   type = 'button',
   id = '',
-  ...rest
 } = Astro.props;
 
 // Tailles
 const sizes = {
   sm: 'px-4 py-2 text-sm',
   md: 'px-6 py-3 text-base',
-  lg: 'px-8 py-4 text-lg'
+  lg: 'px-8 py-4 text-lg',
 };
 
 // Variantes de base
 const variants = {
   primary: 'bg-white text-[--ootb-turquoise] hover:bg-[--ootb-turquoise] hover:text-white shadow-lg hover:shadow-xl',
+  // No dedicated style: renders with base styles only.
+  tertiary: '',
   secondary: 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm border border-white/10 hover:border-white/20',
-  outline: 'bg-transparent border-2 border-[--ootb-turquoise] text-[--ootb-turquoise] hover:bg-[--ootb-turquoise] hover:text-white',
+  outline:
+    'bg-transparent border-2 border-[--ootb-turquoise] text-[--ootb-turquoise] hover:bg-[--ootb-turquoise] hover:text-white',
   ghost: 'bg-transparent text-current hover:bg-current/10',
   link: 'bg-transparent text-current hover:underline p-0',
   blue: 'bg-[--ootb-blue] text-white hover:bg-[color-mix(in_srgb,var(--ootb-blue)_90%,black)] shadow-lg hover:shadow-xl',
-  'outline-blue': 'bg-white border-2 border-[--ootb-blue] text-[--ootb-blue] hover:bg-[--ootb-blue] hover:text-white shadow-lg hover:shadow-xl',
-  'outline-podcast': 'bg-white border-2 border-[--ootb-violet] text-[--ootb-violet] hover:bg-[--ootb-violet] hover:text-white shadow-lg hover:shadow-xl',
-  'outline-tv': 'bg-white border-2 border-[--ootb-green] text-[--ootb-green] hover:bg-[--ootb-green] hover:text-white shadow-lg hover:shadow-xl',
-  'premium-primary': 'bg-[var(--ootb-yellow)] hover:bg-[color-mix(in_srgb,var(--ootb-yellow)_90%,black)] text-[#2A6B62]',
+  'outline-blue':
+    'bg-white border-2 border-[--ootb-blue] text-[--ootb-blue] hover:bg-[--ootb-blue] hover:text-white shadow-lg hover:shadow-xl',
+  'outline-podcast':
+    'bg-white border-2 border-[--ootb-violet] text-[--ootb-violet] hover:bg-[--ootb-violet] hover:text-white shadow-lg hover:shadow-xl',
+  'outline-tv':
+    'bg-white border-2 border-[--ootb-green] text-[--ootb-green] hover:bg-[--ootb-green] hover:text-white shadow-lg hover:shadow-xl',
+  'premium-primary':
+    'bg-[var(--ootb-yellow)] hover:bg-[color-mix(in_srgb,var(--ootb-yellow)_90%,black)] text-[#2A6B62]',
   'premium-secondary': 'bg-white/20 hover:bg-white/30 text-white font-medium',
-  'card': 'w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full font-medium transition-all duration-300 group/button'
+  card: 'w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full font-medium transition-all duration-300 group/button',
 };
 
 // États communs
@@ -60,6 +81,7 @@ const states = 'transition-all duration-300 focus:outline-none focus:ring-2 focu
 const focusRings = {
   primary: 'focus:ring-[--ootb-turquoise]',
   secondary: 'focus:ring-white/50',
+  tertiary: '',
   outline: 'focus:ring-[--ootb-turquoise]',
   ghost: 'focus:ring-current',
   link: 'focus:ring-current',
@@ -69,7 +91,7 @@ const focusRings = {
   'outline-tv': 'focus:ring-[--ootb-green]',
   'premium-primary': 'focus:ring-[--ootb-yellow]',
   'premium-secondary': 'focus:ring-white/50',
-  'card': ''
+  card: '',
 };
 
 // Styles de base
@@ -89,16 +111,21 @@ const buttonClass = [
   disabled && disabledStyles,
   variant !== 'link' && variant !== 'card' && 'hover:-translate-y-0.5',
   color && `text-[${color}]`,
-  className
-].filter(Boolean).join(' ');
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
 
 // Classes d'icônes
-const getIconClasses = (position: 'left' | 'right') => [
-  'w-5 h-5 transition-transform duration-300',
-  position === 'right' ? 'group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5',
-  variant === 'link' && position === 'right' && 'ml-1 -mr-1',
-  variant === 'link' && position === 'left' && '-ml-1 mr-1'
-].filter(Boolean).join(' ');
+const getIconClasses = (position: 'left' | 'right') =>
+  [
+    'w-5 h-5 transition-transform duration-300',
+    position === 'right' ? 'group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5',
+    variant === 'link' && position === 'right' && 'ml-1 -mr-1',
+    variant === 'link' && position === 'left' && '-ml-1 mr-1',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
 const Element = href ? 'a' : 'button';
 ---
@@ -106,19 +133,16 @@ const Element = href ? 'a' : 'button';
 <Element
   href={href}
   target={target}
+  rel={rel}
   class:list={[buttonClass, 'group']}
   disabled={disabled}
   {...disabled && { 'aria-disabled': true }}
   type={type}
   id={id}
 >
-  {icon && iconPosition === 'left' && (
-    <Icon name={icon} class={getIconClasses('left')} />
-  )}
+  {icon && iconPosition === 'left' && <Icon name={icon} class={getIconClasses('left')} />}
   <slot />
-  {icon && iconPosition === 'right' && (
-    <Icon name={icon} class={getIconClasses('right')} />
-  )}
+  {icon && iconPosition === 'right' && <Icon name={icon} class={getIconClasses('right')} />}
 </Element>
 
 <style>

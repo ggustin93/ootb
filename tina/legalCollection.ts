@@ -1,10 +1,10 @@
-import type { Collection } from "tinacms";
+import type { Collection } from 'tinacms';
 
 export const termsCollection: Collection = {
-  label: "📜 Mentions légales et CGV",
-  name: "terms",
-  path: "src/pages",
-  format: "md",
+  label: '📜 Mentions légales et CGV',
+  name: 'terms',
+  path: 'src/pages',
+  format: 'md',
   ui: {
     allowedActions: {
       create: false,
@@ -12,39 +12,39 @@ export const termsCollection: Collection = {
     },
   },
   match: {
-    include: "terms",
+    include: 'terms',
   },
   fields: [
     {
-      type: "string",
-      name: "title",
-      label: "Titre de la page",
+      type: 'string',
+      name: 'title',
+      label: 'Titre de la page',
       required: true,
     },
     {
-      type: "string",
-      name: "layout",
-      label: "Layout",
+      type: 'string',
+      name: 'layout',
+      label: 'Layout',
       required: true,
       ui: {
-        component: "hidden",
+        component: 'hidden',
       },
     },
     {
-      type: "rich-text",
-      name: "body",
-      label: "Contenu",
-      description: "Contenu principal de la page des mentions légales",
+      type: 'rich-text',
+      name: 'body',
+      label: 'Contenu',
+      description: 'Contenu principal de la page des mentions légales',
       isBody: true,
     },
   ],
 };
 
 export const privacyCollection: Collection = {
-  label: "🔒 Politique de confidentialité",
-  name: "privacy",
-  path: "src/pages",
-  format: "md",
+  label: '🔒 Politique de confidentialité',
+  name: 'privacy',
+  path: 'src/pages',
+  format: 'md',
   ui: {
     allowedActions: {
       create: false,
@@ -52,30 +52,30 @@ export const privacyCollection: Collection = {
     },
   },
   match: {
-    include: "privacy",
+    include: 'privacy',
   },
   fields: [
     {
-      type: "string",
-      name: "title",
-      label: "Titre de la page",
+      type: 'string',
+      name: 'title',
+      label: 'Titre de la page',
       required: true,
     },
     {
-      type: "string",
-      name: "layout",
-      label: "Layout",
+      type: 'string',
+      name: 'layout',
+      label: 'Layout',
       required: true,
       ui: {
-        component: "hidden",
+        component: 'hidden',
       },
     },
     {
-      type: "rich-text",
-      name: "body",
-      label: "Contenu",
-      description: "Contenu principal de la politique de confidentialité",
+      type: 'rich-text',
+      name: 'body',
+      label: 'Contenu',
+      description: 'Contenu principal de la politique de confidentialité',
       isBody: true,
     },
   ],
-}; 
+};

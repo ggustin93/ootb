@@ -17,7 +17,7 @@ const defaultImage = '~/assets/images/ootb-logo.svg';
 // Déterminer le type de carte en fonction de la catégorie
 const getCardType = (category?: { slug?: string; title?: string }) => {
   if (!category?.slug) return 'default';
-  
+
   switch (category.slug) {
     case 'podcast':
       return 'podcast';
@@ -42,7 +42,7 @@ const formatMeta = (post: Post) => {
     return {
       ...meta,
       isLive: true,
-      platform: 'facebook'
+      platform: 'facebook',
     };
   }
 

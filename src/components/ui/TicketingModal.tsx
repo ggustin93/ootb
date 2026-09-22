@@ -2,33 +2,33 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Icon } from '@iconify/react';
 import { richTextToHtml, type TinaRichTextContent } from '~/utils/tinaRichText';
 
+/** Ticketing texts/links edited in TinaCMS (all fields optional there). */
+export interface TicketingConfig {
+  modalText?: TinaRichTextContent | string;
+  ifpcButtonLabel?: string;
+  ifpcButtonUrl?: string;
+  weezeventButtonLabel?: string;
+  weezeventButtonUrl?: string;
+}
+
 interface TicketingModalProps {
   id: string;
   isOpen: boolean;
   onClose: () => void;
-  ticketingConfig?: {
-    modalText: TinaRichTextContent | string;
-    ifpcButtonLabel: string;
-    ifpcButtonUrl: string;
-    weezeventButtonLabel: string;
-    weezeventButtonUrl: string;
-  };
+  ticketingConfig?: TicketingConfig;
 }
 
 const DEFAULT_CONFIG = {
-  modalText: "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.", // Default as string
-  ifpcButtonLabel: "Billetterie IFPC",
-  ifpcButtonUrl: "https://ifpc-fwb.be",
-  weezeventButtonLabel: "Billetterie générale",
-  weezeventButtonUrl: "https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF"
+  modalText:
+    "Le Festival Out of the Books est en attente de la reconnaissance de l'IFPC. Si vous êtes enseignant-e, nous vous invitons à consulter cette page ultérieurement. Merci pour votre compréhension.\n\nSinon, utilisez notre billetterie générale Weezevent en cliquant ci-dessous.", // Default as string
+  ifpcButtonLabel: 'Billetterie IFPC',
+  ifpcButtonUrl: 'https://ifpc-fwb.be',
+  weezeventButtonLabel: 'Billetterie générale',
+  weezeventButtonUrl:
+    'https://widget.weezevent.com/ticket/E1310259/?code=56689&locale=fr-FR&width_auto=1&color_primary=00AEEF',
 };
 
-export default function TicketingModal({ 
-  id, 
-  isOpen, 
-  onClose, 
-  ticketingConfig = DEFAULT_CONFIG
-}: TicketingModalProps) {
+export default function TicketingModal({ id, isOpen, onClose, ticketingConfig = DEFAULT_CONFIG }: TicketingModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function TicketingModal({
     const handleNavigationClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a[href]') as HTMLAnchorElement;
-      
+
       if (link && isOpen) {
         const href = link.getAttribute('href');
         // Close modal if navigating to a different page (not just anchors)
@@ -134,20 +134,14 @@ export default function TicketingModal({
           {/* Header */}
           <div className="flex justify-between items-start mb-6">
             <h2 className="text-2xl font-medium text-gray-900">Réserver mes tickets</h2>
-            <button
-              type="button"
-              className="text-gray-400 hover:text-gray-500 transition-colors"
-              onClick={onClose}
-            >
+            <button type="button" className="text-gray-400 hover:text-gray-500 transition-colors" onClick={onClose}>
               <span className="sr-only">Fermer</span>
               <Icon icon="tabler:x" className="w-6 h-6" />
             </button>
           </div>
 
           {/* Content */}
-          <div className="mb-8 prose prose-base max-w-none text-gray-600 leading-relaxed">
-            {modalTextContent}
-          </div>
+          <div className="mb-8 prose prose-base max-w-none text-gray-600 leading-relaxed">{modalTextContent}</div>
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4">

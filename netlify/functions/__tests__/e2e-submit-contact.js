@@ -40,7 +40,7 @@ const testFormData = {
   name: 'Test-E2E Automatisé',
   email: 'e2e-contact@outofthebooks.test',
   subject: `${TEST_PREFIX} Message de test automatisé`,
-  message: `${TEST_PREFIX} Ce message a été créé par un test e2e et sera supprimé immédiatement.`
+  message: `${TEST_PREFIX} Ce message a été créé par un test e2e et sera supprimé immédiatement.`,
 };
 
 // ─── Helpers ──────────────────────────────────────────
@@ -60,17 +60,17 @@ function assert(condition, label) {
 function initApi() {
   return new Api({
     baseURL: NOCODB_BASE_URL,
-    headers: { 'xc-token': NOCODB_API_TOKEN }
+    headers: { 'xc-token': NOCODB_API_TOKEN },
   });
 }
 
 async function cleanupTestRecords(api) {
   console.log('\n🧹 Nettoyage des enregistrements de test...');
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID,
-      { where: `(Objet,like,${TEST_PREFIX})`, limit: 50 }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      where: `(Objet,like,${TEST_PREFIX})`,
+      limit: 50,
+    });
     const testRecords = response.list || [];
     if (testRecords.length === 0) {
       console.log('  Aucun enregistrement de test à supprimer.');
@@ -101,10 +101,10 @@ async function testPrerequisites() {
 async function testApiConnectivity(api) {
   console.log('\n🧪 TEST B: Connectivité API NocoDB (table Contact)');
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID,
-      { limit: 1, offset: 0 }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      limit: 1,
+      offset: 0,
+    });
     assert(response !== null && response !== undefined, 'API répond');
     assert(typeof response.list !== 'undefined', 'Réponse contient une liste');
     console.log(`  📊 Table contient ${response.pageInfo?.totalRows ?? '?'} enregistrements`);
@@ -125,7 +125,7 @@ async function testHandlerSubmission() {
 
   const event = {
     httpMethod: 'POST',
-    body: JSON.stringify(testFormData)
+    body: JSON.stringify(testFormData),
   };
 
   const response = await handler(event);
@@ -145,10 +145,10 @@ async function testHandlerSubmission() {
 async function testRecordExists(api) {
   console.log('\n🧪 TEST D: Vérification en base NocoDB');
   try {
-    const response = await api.dbTableRow.list(
-      NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID,
-      { where: `(Objet,like,${TEST_PREFIX})`, limit: 10 }
-    );
+    const response = await api.dbTableRow.list(NOCODB_ORG_ID, NOCODB_PROJECT_ID, NOCODB_TABLE_ID, {
+      where: `(Objet,like,${TEST_PREFIX})`,
+      limit: 10,
+    });
     const found = response.list || [];
     assert(found.length > 0, `Enregistrement trouvé en base (${found.length})`);
 
@@ -186,7 +186,7 @@ async function run() {
 
     const ok = await testHandlerSubmission();
     if (ok) {
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 1000));
       await testRecordExists(api);
     }
   } finally {
@@ -200,5 +200,8 @@ async function run() {
   process.exit(failed > 0 ? 1 : 0);
 }
 
-const timeout = setTimeout(() => { console.error('\n🛑 TIMEOUT'); process.exit(2); }, TIMEOUT_MS);
+const timeout = setTimeout(() => {
+  console.error('\n🛑 TIMEOUT');
+  process.exit(2);
+}, TIMEOUT_MS);
 run().finally(() => clearTimeout(timeout));

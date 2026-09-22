@@ -51,7 +51,7 @@ const NavigationEditor: React.FC = () => {
         const data = await navigationApi.getNavigation();
         setNavigation(data);
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError('Erreur lors du chargement de la navigation');
         setLoading(false);
       }
@@ -65,7 +65,7 @@ const NavigationEditor: React.FC = () => {
     try {
       await navigationApi.updateNavigation(values);
       alert('Navigation mise à jour avec succès !');
-    } catch (err) {
+    } catch {
       alert('Erreur lors de la mise à jour de la navigation');
     }
   };
@@ -77,10 +77,7 @@ const NavigationEditor: React.FC = () => {
   return (
     <div className="tina-navigation-editor">
       <h1>Éditeur de Navigation</h1>
-      <Form
-        onSubmit={handleSubmit}
-        initialValues={navigation}
-      >
+      <Form onSubmit={handleSubmit} initialValues={navigation}>
         {/* Onglets pour Header et Footer */}
         <div className="tabs">
           <div className="tab-header">
@@ -90,24 +87,32 @@ const NavigationEditor: React.FC = () => {
             {/* Liens principaux */}
             <h3>Liens principaux</h3>
             <Field name="header.links" component="group-list" label="Liens principaux">
-              {({ input, meta, field }) => (
+              {({ input }) => (
                 <div>
                   {input.value.map((link: NavigationLink, index: number) => (
                     <div key={index} className="link-item">
                       <Field name={`header.links[${index}].text`} component="text" label="Texte" />
                       <Field name={`header.links[${index}].href`} component="text" label="Lien" />
-                      
+
                       {/* Sous-liens */}
                       {link.links && (
                         <div className="sublinks">
                           <h4>Sous-liens</h4>
                           <Field name={`header.links[${index}].links`} component="group-list" label="Sous-liens">
-                            {({ input: subInput, meta: subMeta, field: subField }) => (
+                            {({ input: subInput }) => (
                               <div>
                                 {subInput.value.map((sublink: NavigationLink, subIndex: number) => (
                                   <div key={subIndex} className="sublink-item">
-                                    <Field name={`header.links[${index}].links[${subIndex}].text`} component="text" label="Texte" />
-                                    <Field name={`header.links[${index}].links[${subIndex}].href`} component="text" label="Lien" />
+                                    <Field
+                                      name={`header.links[${index}].links[${subIndex}].text`}
+                                      component="text"
+                                      label="Texte"
+                                    />
+                                    <Field
+                                      name={`header.links[${index}].links[${subIndex}].href`}
+                                      component="text"
+                                      label="Lien"
+                                    />
                                   </div>
                                 ))}
                               </div>
@@ -165,4 +170,4 @@ const NavigationEditor: React.FC = () => {
   );
 };
 
-export default NavigationEditor; 
+export default NavigationEditor;

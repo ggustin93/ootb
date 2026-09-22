@@ -33,4 +33,4 @@ type ContentTypeConfig = {
 // Vérification du type
 export type ContentType = keyof typeof CONTENT_TYPES;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _typeCheck: Record<ContentType, ContentTypeConfig> = CONTENT_TYPES; 
+const _typeCheck: Record<ContentType, ContentTypeConfig> = CONTENT_TYPES;

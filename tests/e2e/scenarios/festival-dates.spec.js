@@ -18,7 +18,6 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Festival 2026 Dates Centralization', () => {
-
   test('Festival hero displays 2026 dates from TinaCMS', async ({ page }) => {
     await page.goto('/festival/');
 
@@ -57,7 +56,10 @@ test.describe('Festival 2026 Dates Centralization', () => {
     await programmeSection.scrollIntoViewIfNeeded();
 
     // Locate and click Mercredi filter button
-    const mercrediButton = page.locator('button').filter({ hasText: /Mercredi.*30\/09/ }).first();
+    const mercrediButton = page
+      .locator('button')
+      .filter({ hasText: /Mercredi.*30\/09/ })
+      .first();
     await mercrediButton.waitFor({ state: 'visible' });
     await mercrediButton.click();
 
@@ -67,10 +69,11 @@ test.describe('Festival 2026 Dates Centralization', () => {
 
     // Verify button has some indication of being selected
     // Use soft assertion to handle different implementation patterns
-    const hasActiveClass = await mercrediButton.evaluate(el =>
-      el.classList.contains('active') ||
-      el.getAttribute('aria-pressed') === 'true' ||
-      el.getAttribute('data-active') === 'true'
+    const hasActiveClass = await mercrediButton.evaluate(
+      (el) =>
+        el.classList.contains('active') ||
+        el.getAttribute('aria-pressed') === 'true' ||
+        el.getAttribute('data-active') === 'true'
     );
     expect(hasActiveClass).toBeTruthy();
   });
@@ -103,5 +106,4 @@ test.describe('Festival 2026 Dates Centralization', () => {
     const yearText = page.getByText('2026');
     await expect(yearText.first()).toBeVisible();
   });
-
 });

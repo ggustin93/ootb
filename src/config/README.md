@@ -7,18 +7,18 @@ Fichiers MDX/MD dans `src/content/post/` :
 ```yaml
 ---
 title: "Titre de l'article"
-description: "Description (meta + aperçus)"
+description: 'Description (meta + aperçus)'
 publishDate: 2024-03-21
 published: true
-category: live          # actualite | fiche | live | podcast | tv | premium
-image: "URL image"
-videoUrl: "https://youtu.be/XXXX"  # Optionnel
+category: live # actualite | fiche | live | podcast | tv | premium
+image: 'URL image'
+videoUrl: 'https://youtu.be/XXXX' # Optionnel
 tags: [tag1, tag2]
-expert: "Nom Expert"    # Optionnel
-duration: "1h30"        # Optionnel
-metadata:               # Optionnel, SEO
-  title: "Titre SEO"
-  description: "Description SEO"
+expert: 'Nom Expert' # Optionnel
+duration: '1h30' # Optionnel
+metadata: # Optionnel, SEO
+  title: 'Titre SEO'
+  description: 'Description SEO'
 ---
 ```
 
@@ -43,6 +43,8 @@ Styles et icônes définis dans `src/config/content-types.ts` :
 
 ### Ajout d'un nouveau type de contenu
 
+<!-- snippet partiel, pas du TS valide -->
+<!-- prettier-ignore -->
 ```typescript
 // 1. src/types.ts
 export type PostCategory = '...' | 'nouveau-type';

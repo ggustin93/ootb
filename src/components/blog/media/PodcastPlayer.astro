@@ -13,44 +13,39 @@ interface Props {
   podcastId?: string;
 }
 
-const { iframeCode, smartlinkUrl, podcastUrl } = Astro.props;
+const { iframeCode, smartlinkUrl } = Astro.props;
 
 // Déterminer la méthode à utiliser
 const hasIframeCode = !!iframeCode;
 const hasSmartlink = !!smartlinkUrl;
-const useLegacyMethod = !hasIframeCode && !!podcastUrl;
-
 ---
 
 <div class="space-y-6">
   {/* Player Ausha - Afficher l'iframe si disponible */}
   <div class="ausha-podcast-player">
-    {hasIframeCode ? (
-      <Fragment set:html={iframeCode} />
-    ) : (
-      <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
-        <p class="text-gray-600 dark:text-gray-400">
-          Aucun lecteur de podcast disponible
-        </p>
-        <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">
-          Pour afficher le lecteur, ajoutez le code iframe d'Ausha dans le champ "iframeCode"
-        </p>
-      </div>
-    )}
+    {
+      hasIframeCode ? (
+        <Fragment set:html={iframeCode} />
+      ) : (
+        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
+          <p class="text-gray-600 dark:text-gray-400">Aucun lecteur de podcast disponible</p>
+          <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">
+            Pour afficher le lecteur, ajoutez le code iframe d'Ausha dans le champ "iframeCode"
+          </p>
+        </div>
+      )
+    }
   </div>
 
   {/* Smart Button - Afficher le bouton smartlink si disponible */}
-  {hasSmartlink && (
-    <div class="flex justify-center">
-      <Button
-        variant="outline-podcast"
-        href={smartlinkUrl}
-        target="_blank"
-        class="group"
-      >
-        <Icon name="tabler:headphones" class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110" />
-        Écouter sur votre plateforme préférée
-      </Button>
-    </div>
-  )}
+  {
+    hasSmartlink && (
+      <div class="flex justify-center">
+        <Button variant="outline-podcast" href={smartlinkUrl} target="_blank" class="group">
+          <Icon name="tabler:headphones" class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110" />
+          Écouter sur votre plateforme préférée
+        </Button>
+      </div>
+    )
+  }
 </div>

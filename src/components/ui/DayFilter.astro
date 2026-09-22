@@ -20,24 +20,22 @@ const { events, initialFilters } = Astro.props;
 let serverFilteredEvents = events;
 if (initialFilters?.types?.length || initialFilters?.days?.length) {
   serverFilteredEvents = {};
-  
+
   for (const [day, dayEvents] of Object.entries(events)) {
     let filteredDayEvents = dayEvents;
-    
+
     // Filtrer par type si spécifié
     if (initialFilters.types?.length) {
-      filteredDayEvents = filteredDayEvents.filter(event => 
-        initialFilters.types!.includes(event.type)
-      );
+      filteredDayEvents = filteredDayEvents.filter((event) => initialFilters.types!.includes(event.type));
     }
-    
+
     // Filtrer par jour si spécifié
     if (initialFilters.days?.length) {
       if (!initialFilters.days.includes(day)) {
         continue; // Skip ce jour entièrement
       }
     }
-    
+
     if (filteredDayEvents.length > 0) {
       serverFilteredEvents[day] = filteredDayEvents;
     }
@@ -52,12 +50,12 @@ const isDigitalDemo = (event: FestivalEvent) => event.type === 'Ateliers' && eve
 
 // Compter le nombre d'événements par type
 const eventCounts: Record<string, number> = {
-  'all': allEventsFlat.length,
-  'programme': allEventsFlat.filter(evt => evt.type === 'Conférences' || evt.type === 'Ateliers').length,
-  'Conférences': allEventsFlat.filter(evt => evt.type === 'Conférences').length,
-  'Ateliers': allEventsFlat.filter(evt => evt.type === 'Ateliers' && !isDigitalDemo(evt)).length,
-  'Démos numériques': allEventsFlat.filter(evt => isDigitalDemo(evt)).length,
-  'Stands': allEventsFlat.filter(evt => evt.type === 'Stands').length,
+  all: allEventsFlat.length,
+  programme: allEventsFlat.filter((evt) => evt.type === 'Conférences' || evt.type === 'Ateliers').length,
+  Conférences: allEventsFlat.filter((evt) => evt.type === 'Conférences').length,
+  Ateliers: allEventsFlat.filter((evt) => evt.type === 'Ateliers' && !isDigitalDemo(evt)).length,
+  'Démos numériques': allEventsFlat.filter((evt) => isDigitalDemo(evt)).length,
+  Stands: allEventsFlat.filter((evt) => evt.type === 'Stands').length,
 };
 
 // Compter les événements par jour
@@ -70,7 +68,7 @@ for (const day of days) {
 export const ITEMS_PER_PAGE = 10;
 
 // Prepare event data for client-side rendering
-const eventsDataForClient = allEventsFlat.map(event => ({
+const eventsDataForClient = allEventsFlat.map((event) => ({
   event: {
     id: event.id,
     title: event.title,
@@ -88,10 +86,10 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     target: event.target,
     level: event.level,
     teachingType: event.teachingType,
-    theme: event.theme
+    theme: event.theme,
   },
   eventImage: event.image || null,
-  speakerImage: event.speakerImage || null
+  speakerImage: event.speakerImage || null,
 }));
 ---
 
@@ -112,39 +110,39 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     <div class="sm:hidden space-y-4">
       <!-- Sélecteur de jour -->
       <div class="w-full">
-        <label for="mobile-day-selector" class="block text-sm font-medium text-gray-700 mb-1">
-          Jour
-        </label>
+        <label for="mobile-day-selector" class="block text-sm font-medium text-gray-700 mb-1"> Jour </label>
         <div class="relative">
-          <select 
-            id="mobile-day-selector" 
+          <select
+            id="mobile-day-selector"
             class="w-full py-3 px-4 rounded-xl font-medium border border-[#e4451e]/20 bg-white text-[#e4451e] focus:outline-none focus:ring-2 focus:ring-[#e4451e]/30 appearance-none"
           >
             <option value="all">Tous les jours du festival</option>
-            {days.map((day) => (
-              <option value={day}>{day} ({dayDates[day]})</option>
-            ))}
+            {
+              days.map((day) => (
+                <option value={day}>
+                  {day} ({dayDates[day]})
+                </option>
+              ))
+            }
           </select>
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#e4451e]">
             <Icon name="tabler:chevron-down" class="w-5 h-5" />
           </div>
         </div>
       </div>
-      
+
       <!-- Sélecteur de type -->
       <div class="w-full">
         <label for="mobile-type-selector" class="block text-sm font-medium text-gray-700 mb-1">
           Type d'événement
         </label>
         <div class="relative">
-          <select 
-            id="mobile-type-selector" 
+          <select
+            id="mobile-type-selector"
             class="w-full py-3 px-4 rounded-xl font-medium border border-[#e4451e]/20 bg-white text-[#e4451e] focus:outline-none focus:ring-2 focus:ring-[#e4451e]/30 appearance-none"
           >
             <option value="all">Tous les types</option>
-            {eventTypes.map((type) => (
-              <option value={type}>{type}</option>
-            ))}
+            {eventTypes.map((type) => <option value={type}>{type}</option>)}
           </select>
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[#e4451e]">
             <Icon name="tabler:chevron-down" class="w-5 h-5" />
@@ -162,9 +160,9 @@ const eventsDataForClient = allEventsFlat.map(event => ({
             <!-- Option "Tous les jours" -->
             <button
               class:list={[
-                "day-filter-button min-w-[140px] py-2 md:py-3 px-3 md:px-4 rounded-xl font-medium transition-all duration-300",
-                "flex flex-col items-center justify-center border border-[#e4451e]/20",
-                "active bg-[#e4451e] text-white shadow-md"
+                'day-filter-button min-w-[140px] py-2 md:py-3 px-3 md:px-4 rounded-xl font-medium transition-all duration-300',
+                'flex flex-col items-center justify-center border border-[#e4451e]/20',
+                'active bg-[#e4451e] text-white shadow-md',
               ]}
               data-day="all"
               data-state="active"
@@ -175,26 +173,26 @@ const eventsDataForClient = allEventsFlat.map(event => ({
               <span class="text-lg mt-1 font-semibold text-current">Tous les jours</span>
             </button>
 
-            {days.map((day) => (
-              <button
-                class:list={[
-                  "day-filter-button min-w-[140px] py-2 md:py-3 px-3 md:px-4 rounded-xl font-medium transition-all duration-300",
-                  "flex flex-col items-center justify-center border border-[#e4451e]/20",
-                  "bg-white text-[#e4451e] hover:bg-[#e4451e]/5 hover:border-[#e4451e]/40 hover:shadow-sm"
-                ]}
-                data-day={day}
-                data-state="inactive"
-                type="button"
-                aria-label={`Afficher uniquement les événements du ${day} ${dayDates[day]}`}
-              >
-                <span class="text-sm text-current opacity-75">{day}</span>
-                <span class="text-lg font-semibold text-current">{dayDates[day]}</span>
-              </button>
-            ))}
+            {
+              days.map((day) => (
+                <button
+                  class:list={[
+                    'day-filter-button min-w-[140px] py-2 md:py-3 px-3 md:px-4 rounded-xl font-medium transition-all duration-300',
+                    'flex flex-col items-center justify-center border border-[#e4451e]/20',
+                    'bg-white text-[#e4451e] hover:bg-[#e4451e]/5 hover:border-[#e4451e]/40 hover:shadow-sm',
+                  ]}
+                  data-day={day}
+                  data-state="inactive"
+                  type="button"
+                  aria-label={`Afficher uniquement les événements du ${day} ${dayDates[day]}`}
+                >
+                  <span class="text-sm text-current opacity-75">{day}</span>
+                  <span class="text-lg font-semibold text-current">{dayDates[day]}</span>
+                </button>
+              ))
+            }
           </div>
         </div>
-        
-
       </div>
     </div>
 
@@ -203,10 +201,10 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       <!-- Bouton "Tous les types" -->
       <button
         class:list={[
-          "all-filter-button group px-3 md:px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300",
-          "flex items-center gap-1.5 flex-1 sm:flex-none justify-center",
-          "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
-          "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
+          'all-filter-button group px-3 md:px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300',
+          'flex items-center gap-1.5 flex-1 sm:flex-none justify-center',
+          'bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5',
+          'data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white',
         ]}
         id="all-types-button"
         data-state="active"
@@ -215,55 +213,70 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       >
         <Icon name="tabler:layout-grid" class="w-4 h-4 md:w-5 md:h-5" />
         <span>Tous les types</span>
-        <span class="ml-1 px-2 py-0.5 text-xs rounded-full bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white group-data-[state=active]:text-[#e4451e]">
+        <span
+          class="ml-1 px-2 py-0.5 text-xs rounded-full bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white group-data-[state=active]:text-[#e4451e]"
+        >
           {eventCounts.all}
         </span>
       </button>
 
-      {eventTypes.map((type) => (
-        <button
-          class:list={[
-            "type-filter-button group px-3 md:px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300",
-            "flex items-center gap-1.5 flex-1 sm:flex-none justify-center",
-            "bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5",
-            "data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white"
-          ]}
-          data-type={type}
-          data-state="inactive"
-          type="button"
-          aria-label={`Afficher uniquement les ${type}`}
-        >
-          <Icon name={type === 'Conférences' ? 'tabler:presentation' : type === 'Ateliers' ? 'tabler:tool' : type === 'Démos numériques' ? 'tabler:device-desktop' : 'tabler:building-store'} class="w-4 h-4 md:w-5 md:h-5" />
-          <span>{type}</span>
-          <span class="ml-1 px-2 py-0.5 text-xs rounded-full bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white group-data-[state=active]:text-[#e4451e]">
-            {eventCounts[type]}
-          </span>
-        </button>
-      ))}
+      {
+        eventTypes.map((type) => (
+          <button
+            class:list={[
+              'type-filter-button group px-3 md:px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300',
+              'flex items-center gap-1.5 flex-1 sm:flex-none justify-center',
+              'bg-white border border-[#e4451e]/20 text-[#e4451e] hover:bg-[#e4451e]/5',
+              'data-[state=active]:bg-[#e4451e] data-[state=active]:border-[#e4451e] data-[state=active]:text-white',
+            ]}
+            data-type={type}
+            data-state="inactive"
+            type="button"
+            aria-label={`Afficher uniquement les ${type}`}
+          >
+            <Icon
+              name={
+                type === 'Conférences'
+                  ? 'tabler:presentation'
+                  : type === 'Ateliers'
+                    ? 'tabler:tool'
+                    : type === 'Démos numériques'
+                      ? 'tabler:device-desktop'
+                      : 'tabler:building-store'
+              }
+              class="w-4 h-4 md:w-5 md:h-5"
+            />
+            <span>{type}</span>
+            <span class="ml-1 px-2 py-0.5 text-xs rounded-full bg-[#e4451e]/10 text-[#e4451e] group-data-[state=active]:bg-white group-data-[state=active]:text-[#e4451e]">
+              {eventCounts[type]}
+            </span>
+          </button>
+        ))
+      }
     </div>
   </div>
 
   <!-- Navigation desktop uniquement -->
   <div class="hidden sm:flex items-center justify-center gap-4 mb-6">
-    <button 
-      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm transition-all duration-300" 
-      id="prev-page" 
+    <button
+      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm transition-all duration-300"
+      id="prev-page"
       disabled
       aria-label="Page précédente"
     >
       <Icon name="tabler:chevron-left" class="w-6 h-6" />
       <span class="sr-only">Page précédente</span>
     </button>
-    
+
     <div class="flex items-center gap-2 mx-4">
       <span class="pagination-info text-sm text-gray-500">
         Page <span id="current-page">1</span> sur <span id="total-pages">3</span>
       </span>
       <span class="text-sm text-gray-400 hidden md:inline" id="events-count"></span>
     </div>
-    
-    <button 
-      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm transition-all duration-300" 
+
+    <button
+      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm transition-all duration-300"
       id="next-page"
       aria-label="Page suivante"
     >
@@ -288,8 +301,8 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       <Icon name="tabler:calendar-off" class="w-16 h-16 mx-auto text-gray-400 mb-4" />
       <h3 class="text-xl font-semibold text-gray-700 mb-2">Aucun événement trouvé</h3>
       <p class="text-gray-500">
-        Aucun événement ne correspond à vos critères de filtrage.
-        Essayez de modifier vos filtres pour voir plus d'événements.
+        Aucun événement ne correspond à vos critères de filtrage. Essayez de modifier vos filtres pour voir plus
+        d'événements.
       </p>
     </div>
   </div>
@@ -297,55 +310,55 @@ const eventsDataForClient = allEventsFlat.map(event => ({
   <!-- Navigation mobile en bas -->
   <div class="sm:hidden flex flex-col items-center gap-4 pt-6 border-t border-gray-200">
     <div class="flex items-center gap-4">
-        <button 
-          class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
-          id="prev-page-mobile" 
-          disabled
-          aria-label="Page précédente"
-        >
-          <Icon name="tabler:chevron-left" class="w-6 h-6" />
-          <span class="sr-only">Page précédente</span>
-        </button>
-        
-        <span class="pagination-info text-sm text-gray-500 min-w-[100px] text-center">
-          Page <span id="current-page-mobile">1</span> sur <span id="total-pages-mobile">3</span>
-        </span>
-        
-        <button 
-          class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
-          id="next-page-mobile"
-          aria-label="Page suivante"
-        >
-          <Icon name="tabler:chevron-right" class="w-6 h-6" />
-          <span class="sr-only">Page suivante</span>
-        </button>
+      <button
+        class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm"
+        id="prev-page-mobile"
+        disabled
+        aria-label="Page précédente"
+      >
+        <Icon name="tabler:chevron-left" class="w-6 h-6" />
+        <span class="sr-only">Page précédente</span>
+      </button>
+
+      <span class="pagination-info text-sm text-gray-500 min-w-[100px] text-center">
+        Page <span id="current-page-mobile">1</span> sur <span id="total-pages-mobile">3</span>
+      </span>
+
+      <button
+        class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm"
+        id="next-page-mobile"
+        aria-label="Page suivante"
+      >
+        <Icon name="tabler:chevron-right" class="w-6 h-6" />
+        <span class="sr-only">Page suivante</span>
+      </button>
     </div>
   </div>
 
   <!-- Navigation en bas pour desktop -->
   <div class="hidden sm:flex justify-center items-center gap-4 pt-6 border-t border-gray-200">
-      <button 
-      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
-        id="prev-page-bottom" 
-        disabled
-        aria-label="Page précédente"
-      >
+    <button
+      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm"
+      id="prev-page-bottom"
+      disabled
+      aria-label="Page précédente"
+    >
       <Icon name="tabler:chevron-left" class="w-6 h-6" />
-        <span class="sr-only">Page précédente</span>
-      </button>
-      
+      <span class="sr-only">Page précédente</span>
+    </button>
+
     <span class="pagination-info text-sm text-gray-500 min-w-[100px] text-center">
-        Page <span id="current-page-bottom">1</span> sur <span id="total-pages-bottom">3</span>
-      </span>
-      
-      <button 
-      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm" 
-        id="next-page-bottom"
-        aria-label="Page suivante"
-      >
+      Page <span id="current-page-bottom">1</span> sur <span id="total-pages-bottom">3</span>
+    </span>
+
+    <button
+      class="pagination-button flex items-center justify-center w-12 h-12 rounded-full text-gray-500 hover:text-[#e4451e] disabled:opacity-30 disabled:hover:text-gray-500 bg-white shadow-sm"
+      id="next-page-bottom"
+      aria-label="Page suivante"
+    >
       <Icon name="tabler:chevron-right" class="w-6 h-6" />
-        <span class="sr-only">Page suivante</span>
-      </button>
+      <span class="sr-only">Page suivante</span>
+    </button>
   </div>
 </div>
 
@@ -354,17 +367,17 @@ const eventsDataForClient = allEventsFlat.map(event => ({
   .day-filter-loading #events-container {
     display: none !important;
   }
-  
+
   .day-filter-loading #events-loader {
     display: flex !important;
   }
 
   /* Styles pour les boutons actifs */
-  .day-filter-button[data-state="active"] {
+  .day-filter-button[data-state='active'] {
     @apply bg-[#e4451e] text-white shadow-md;
   }
-  
-  .day-filter-button[data-state="inactive"] {
+
+  .day-filter-button[data-state='inactive'] {
     @apply bg-white text-[#e4451e];
   }
 
@@ -372,7 +385,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
   #active-filters-title {
     text-shadow: 0 1px 2px rgba(228, 69, 30, 0.1);
   }
-  
+
   /* Style amélioré pour les boutons de pagination */
   .pagination-button {
     transition: all 0.3s ease;
@@ -380,7 +393,9 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
   .pagination-button:hover:not(:disabled) {
     transform: scale(1.05);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 </style>
 
@@ -404,7 +419,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       if (!titleElement) return;
 
       let title = '';
-      
+
       // Helper function to get correct article and agreement for event types
       const getTypeWithArticle = (type) => {
         switch (type) {
@@ -423,7 +438,8 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
       // Déterminer si tous les jours/types sont effectivement sélectionnés
       const allDaysSelected = this.isAllDaysActive || this.activeDays.length === 3;
-      const allTypesSelected = (this.isAllTypesActive && this.activeTypes.length === 0) || this.activeTypes.length === 3;
+      const allTypesSelected =
+        (this.isAllTypesActive && this.activeTypes.length === 0) || this.activeTypes.length === 3;
 
       if (allDaysSelected && allTypesSelected) {
         title = 'Tous les événements';
@@ -441,14 +457,24 @@ const eventsDataForClient = allEventsFlat.map(event => ({
         }
       } else {
         // Both days and types are filtered
-        const dayText = this.activeDays.length === 1 ? this.activeDays[0] : 
-                       this.activeDays.length === 3 ? 'tous les jours' : `${this.activeDays.join(' & ')}`;
-        const typeText = this.activeTypes.length === 1 ? this.activeTypes[0] : 
-                        this.activeTypes.length === 3 ? 'tous types' : `${this.activeTypes.join(' & ')}`;
-        
+        const dayText =
+          this.activeDays.length === 1
+            ? this.activeDays[0]
+            : this.activeDays.length === 3
+              ? 'tous les jours'
+              : `${this.activeDays.join(' & ')}`;
+        const typeText =
+          this.activeTypes.length === 1
+            ? this.activeTypes[0]
+            : this.activeTypes.length === 3
+              ? 'tous types'
+              : `${this.activeTypes.join(' & ')}`;
+
         // Si on a une sélection très large, simplifier
-        if ((this.activeDays.length === 3 && this.activeTypes.length >= 2) || 
-            (this.activeDays.length >= 2 && this.activeTypes.length === 3)) {
+        if (
+          (this.activeDays.length === 3 && this.activeTypes.length >= 2) ||
+          (this.activeDays.length >= 2 && this.activeTypes.length === 3)
+        ) {
           title = 'Tous les événements';
         } else {
           title = `${typeText} - ${dayText}`;
@@ -461,32 +487,32 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     updateEventCounts(allEventsData) {
       const dayFilteredEvents = this.isAllDaysActive
         ? allEventsData
-        : allEventsData.filter(eventData => {
+        : allEventsData.filter((eventData) => {
             const event = eventData.event;
             // For Stands, if any day is selected, they are included.
             if (event.type === 'Stands' && this.activeDays.length > 0) return true;
             // For other types, check if the event's day is in the active days list.
-            return this.activeDays.some(activeDay => this.normalizeDay(activeDay) === this.normalizeDay(event.day));
+            return this.activeDays.some((activeDay) => this.normalizeDay(activeDay) === this.normalizeDay(event.day));
           });
 
       const counts = {
         all: dayFilteredEvents.length,
-        Conférences: dayFilteredEvents.filter(eventData => eventData.event.type === 'Conférences').length,
-        Ateliers: dayFilteredEvents.filter(eventData => {
+        Conférences: dayFilteredEvents.filter((eventData) => eventData.event.type === 'Conférences').length,
+        Ateliers: dayFilteredEvents.filter((eventData) => {
           const event = eventData.event;
           return event.type === 'Ateliers' && event.location !== 'Village numérique';
         }).length,
-        'Démos numériques': dayFilteredEvents.filter(eventData => {
+        'Démos numériques': dayFilteredEvents.filter((eventData) => {
           const event = eventData.event;
           return event.type === 'Ateliers' && event.location === 'Village numérique';
         }).length,
-        Stands: dayFilteredEvents.filter(eventData => eventData.event.type === 'Stands').length
+        Stands: dayFilteredEvents.filter((eventData) => eventData.event.type === 'Stands').length,
       };
 
-      document.querySelectorAll('.type-filter-button, #all-types-button').forEach(button => {
+      document.querySelectorAll('.type-filter-button, #all-types-button').forEach((button) => {
         const type = button.dataset.type;
         const countBadge = button.querySelector('span:last-child');
-        
+
         if (countBadge) {
           if (button.id === 'all-types-button') {
             countBadge.textContent = counts.all;
@@ -541,20 +567,20 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
     updatePaginationUI() {
       const totalPages = this.getTotalPages();
-      
-      document.querySelectorAll('#current-page, #current-page-mobile, #current-page-bottom').forEach(el => {
+
+      document.querySelectorAll('#current-page, #current-page-mobile, #current-page-bottom').forEach((el) => {
         el.textContent = this.currentPage.toString();
       });
-      
-      document.querySelectorAll('#total-pages, #total-pages-mobile, #total-pages-bottom').forEach(el => {
+
+      document.querySelectorAll('#total-pages, #total-pages-mobile, #total-pages-bottom').forEach((el) => {
         el.textContent = totalPages.toString();
       });
-      
-      document.querySelectorAll('#prev-page, #prev-page-mobile, #prev-page-bottom').forEach(button => {
+
+      document.querySelectorAll('#prev-page, #prev-page-mobile, #prev-page-bottom').forEach((button) => {
         button.disabled = this.currentPage === 1;
       });
-      
-      document.querySelectorAll('#next-page, #next-page-mobile, #next-page-bottom').forEach(button => {
+
+      document.querySelectorAll('#next-page, #next-page-mobile, #next-page-bottom').forEach((button) => {
         button.disabled = this.currentPage === totalPages || this.filteredEvents.length === 0;
       });
     }
@@ -572,20 +598,20 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     // Normalise une URL en s'assurant qu'elle commence par un protocole
     normalizeUrl(url) {
       if (!url) return '';
-      
+
       // Supprimer les espaces en début et fin
       url = url.trim();
-      
+
       // Si l'URL contient plusieurs URLs (avec tiret ou virgule), prendre la première
       if (url.includes(' - ') || url.includes(',')) {
         url = url.split(/\s*[,-]\s*/)[0].trim();
       }
-      
+
       // Vérifier si l'URL commence déjà par http:// ou https://
       if (url.match(/^https?:\/\//i)) {
         return url;
       }
-      
+
       // Ajouter https:// au début
       return `https://${url}`;
     }
@@ -611,40 +637,42 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           icon: 'tabler:confetti',
           color: 'var(--content-premium)',
           bgClass: 'bg-[color-mix(in_srgb,var(--content-premium)_30%,white)]',
-          textClass: 'text-[var(--content-premium)]'
+          textClass: 'text-[var(--content-premium)]',
         },
         'Live Facebook': {
           icon: 'tabler:broadcast',
           color: 'var(--content-live)',
           bgClass: 'bg-[color-mix(in_srgb,var(--content-live)_30%,white)]',
-          textClass: 'text-[var(--content-live)]'
+          textClass: 'text-[var(--content-live)]',
         },
-        'Conférences': {
+        Conférences: {
           icon: 'tabler:presentation',
           color: 'var(--content-actualite)',
           bgClass: 'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]',
-          textClass: 'text-[var(--content-actualite)]'
+          textClass: 'text-[var(--content-actualite)]',
         },
-        'Ateliers': {
+        Ateliers: {
           icon: 'tabler:tool',
           color: 'var(--content-podcast)',
           bgClass: 'bg-[color-mix(in_srgb,var(--content-podcast)_30%,white)]',
-          textClass: 'text-[var(--content-podcast)]'
+          textClass: 'text-[var(--content-podcast)]',
         },
-        'Stands': {
+        Stands: {
           icon: 'tabler:building-store',
           color: 'var(--content-tv)',
           bgClass: 'bg-[color-mix(in_srgb,var(--content-tv)_30%,white)]',
-          textClass: 'text-[var(--content-tv)]'
-        }
+          textClass: 'text-[var(--content-tv)]',
+        },
       };
 
-      return eventTypeConfig[eventType] || {
-        icon: 'tabler:calendar-event',
-        color: 'var(--content-actualite)',
-        bgClass: 'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]',
-        textClass: 'text-[var(--content-actualite)]'
-      };
+      return (
+        eventTypeConfig[eventType] || {
+          icon: 'tabler:calendar-event',
+          color: 'var(--content-actualite)',
+          bgClass: 'bg-[color-mix(in_srgb,var(--content-actualite)_30%,white)]',
+          textClass: 'text-[var(--content-actualite)]',
+        }
+      );
     }
 
     // Génère les icônes SVG (identiques à celles d'EventCard.astro)
@@ -666,14 +694,17 @@ const eventsDataForClient = allEventsFlat.map(event => ({
         'tabler:school': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 10v6M2 10l10-5 10 5-10 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12v5c3 0 5.5-1 8-3v-2z"/></svg>`,
         'tabler:book': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
         'tabler:device-laptop': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16V8a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16V8a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2z"/></svg>`,
-        'tabler:device-desktop': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19h18M5 19V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v12M9 21v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>`
+        'tabler:device-desktop': `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19h18M5 19V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v12M9 21v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>`,
       };
-      return icons[iconName] || `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>`;
+      return (
+        icons[iconName] ||
+        `<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>`
+      );
     }
 
     renderEventCard(eventData) {
       const { event, eventImage, speakerImage } = eventData;
-      
+
       // Normaliser les données
       const normalizedUrl = event.url ? this.normalizeUrl(event.url) : '';
       const normalizedDay = this.normalizeDay(event.day);
@@ -684,13 +715,14 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
       // Créer l'élément principal
       const eventCard = document.createElement('div');
-      eventCard.className = 'event-card group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300';
+      eventCard.className =
+        'event-card group bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300';
       eventCard.setAttribute('data-type', eventType);
       eventCard.setAttribute('data-day', normalizedDay || '');
       eventCard.setAttribute('data-time', event.time || '');
       eventCard.setAttribute('data-status', status);
       eventCard.setAttribute('data-location', event.location || '');
-      
+
       if (status === 'A valider') {
         eventCard.style.opacity = '0.7';
       }
@@ -701,7 +733,9 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           <!-- Image à gauche (sur desktop) ou en haut (sur mobile) -->
           <div class="md:w-1/3 relative overflow-hidden md:rounded-l-xl p-6 border-b md:border-b-0 md:border-r border-gray-100">
             <div class="h-56 md:max-h-[800px] flex items-center justify-center">
-              ${eventImage ? `
+              ${
+                eventImage
+                  ? `
                 <img 
                   src="${eventImage}" 
                   alt="${event.title || ''}"
@@ -710,111 +744,167 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                   width="400"
                   height="225"
                 />
-              ` : `
+              `
+                  : `
                 <div class="w-full h-full flex items-center justify-center rounded-lg" style="background-color: ${eventType === 'Conférences' ? '#fff5f2' : eventType === 'Ateliers' ? '#f0f7ff' : '#f0fff4'}">
                   ${this.generateIcon(config.icon, 'w-24 h-24')}
                 </div>
-              `}
+              `
+              }
             </div>
             
             <!-- Badge "DÉMO NUMERIQUE" si c'est une démo -->
-            ${isDigitalDemo ? `
+            ${
+              isDigitalDemo
+                ? `
               <div class="absolute top-3 right-3 inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm bg-purple-100 text-purple-800 border border-purple-200">
                 ${this.generateIcon('tabler:device-desktop', 'w-3.5 h-3.5')}
                 Démo numérique
               </div>
-            ` : ''}
+            `
+                : ''
+            }
             
             <!-- Badge du type d'événement (visible uniquement sur mobile, mais pas pour les démos) -->
-            ${!isDigitalDemo ? `
+            ${
+              !isDigitalDemo
+                ? `
               <div class="absolute top-3 right-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm shadow-sm"
                    style="
-                     background-color: ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.15)' : 
-                                        eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.15)' : 
-                                        'rgba(22, 163, 74, 0.15)'};
-                     color: ${eventType === 'Conférences' ? '#e4451e' : 
-                             eventType === 'Ateliers' ? '#2563eb' : 
-                             '#16a34a'};
-                     border: 1px solid ${eventType === 'Conférences' ? 'rgba(228, 69, 30, 0.3)' : 
-                                        eventType === 'Ateliers' ? 'rgba(37, 99, 235, 0.3)' : 
-                                        'rgba(22, 163, 74, 0.3)'};
+                     background-color: ${
+                       eventType === 'Conférences'
+                         ? 'rgba(228, 69, 30, 0.15)'
+                         : eventType === 'Ateliers'
+                           ? 'rgba(37, 99, 235, 0.15)'
+                           : 'rgba(22, 163, 74, 0.15)'
+                     };
+                     color: ${
+                       eventType === 'Conférences' ? '#e4451e' : eventType === 'Ateliers' ? '#2563eb' : '#16a34a'
+                     };
+                     border: 1px solid ${
+                       eventType === 'Conférences'
+                         ? 'rgba(228, 69, 30, 0.3)'
+                         : eventType === 'Ateliers'
+                           ? 'rgba(37, 99, 235, 0.3)'
+                           : 'rgba(22, 163, 74, 0.3)'
+                     };
                    "
               >
                 ${this.generateIcon(config.icon, 'w-3.5 h-3.5')}
                 ${eventType}
               </div>
-            ` : ''}
+            `
+                : ''
+            }
           </div>
 
           <!-- Contenu à droite (sur desktop) ou en bas (sur mobile) -->
           <div class="md:w-2/3 p-4 md:p-6 flex flex-col">
             <div class="flex-grow">
               <!-- Bannière de statut si "A valider" -->
-              ${status === 'A valider' ? `
+              ${
+                status === 'A valider'
+                  ? `
                 <div class="mb-2 text-sm font-medium py-1 px-2 rounded bg-yellow-50 text-yellow-700 border border-yellow-200 inline-flex items-center">
                   ${this.generateIcon('tabler:alert-triangle', 'w-4 h-4 mr-1')}
                   En attente de validation
                 </div>
-              ` : ''}
+              `
+                  : ''
+              }
 
               <!-- En-tête avec heure, lieu et expert - Version desktop -->
               <div class="hidden md:flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-500 mb-2 md:mb-3">
-                ${normalizedDay && eventType !== 'Stands' ? `
+                ${
+                  normalizedDay && eventType !== 'Stands'
+                    ? `
                   <div class="flex items-center">
                     ${this.generateIcon('tabler:calendar', 'w-4 h-4 mr-1')}
                     <span>${normalizedDay}</span>
                   </div>
-                ` : ''}
-                ${event.time ? `
+                `
+                    : ''
+                }
+                ${
+                  event.time
+                    ? `
                   <div class="flex items-center">
                     ${this.generateIcon('tabler:clock', 'w-4 h-4 mr-1')}
                     <span>${eventType === 'Stands' ? 'Tous les jours' : event.time}${event.endTime && event.endTime !== event.time ? ` - ${event.endTime}` : ''}</span>
                   </div>
-                ` : ''}
-                ${event.location ? `
+                `
+                    : ''
+                }
+                ${
+                  event.location
+                    ? `
                   <div class="flex items-center">
                     ${this.generateIcon('tabler:map-pin', 'w-4 h-4 mr-1')}
                     <span>${event.location}</span>
                   </div>
-                ` : ''}
-                ${eventType !== 'Stands' && event.speaker ? `
+                `
+                    : ''
+                }
+                ${
+                  eventType !== 'Stands' && event.speaker
+                    ? `
                   <div class="flex items-center">
                     ${this.generateIcon('tabler:user', 'w-4 h-4 mr-1')}
                     <span class="font-medium text-gray-500">${event.speaker}</span>
                   </div>
-                ` : ''}
-                ${eventType === 'Stands' ? `
+                `
+                    : ''
+                }
+                ${
+                  eventType === 'Stands'
+                    ? `
                   <div class="flex items-center">
                     ${this.generateIcon('tabler:tag', 'w-4 h-4 mr-1')}
                     <span class="font-medium text-gray-500">${event.theme || 'À définir'}</span>
                   </div>
-                ` : ''}
+                `
+                    : ''
+                }
               </div>
 
               <!-- En-tête simplifié pour mobile -->
               <div class="flex md:hidden flex-wrap items-center gap-2 text-sm text-gray-500 mb-2">
-                ${status === 'A valider' ? `
+                ${
+                  status === 'A valider'
+                    ? `
                   <div class="text-xs font-medium py-0.5 px-1.5 rounded bg-yellow-50 text-yellow-700 border border-yellow-200 inline-flex items-center">
                     ${this.generateIcon('tabler:alert-triangle', 'w-3 h-3 mr-0.5')}
                     En attente
                   </div>
-                ` : ''}
-                ${normalizedDay && eventType !== 'Stands' ? `
+                `
+                    : ''
+                }
+                ${
+                  normalizedDay && eventType !== 'Stands'
+                    ? `
                   <div class="flex items-center">
                     ${this.generateIcon('tabler:calendar', 'w-4 h-4 mr-1')}
                     <span>${normalizedDay}</span>
                   </div>
-                ` : ''}
-                ${event.time ? `
+                `
+                    : ''
+                }
+                ${
+                  event.time
+                    ? `
                   <div class="flex items-center">
                     ${this.generateIcon('tabler:clock', 'w-4 h-4 mr-1')}
                     <span>${eventType === 'Stands' ? 'Tous les jours' : event.time}</span>
                   </div>
-                ` : ''}
+                `
+                    : ''
+                }
               </div>
 
               <!-- Photo du conférencier (uniquement pour les conférences) -->
-              ${eventType === 'Conférences' && event.speaker ? `
+              ${
+                eventType === 'Conférences' && event.speaker
+                  ? `
                 <div class="mb-3 hidden md:flex items-center">
                   <div class="w-20 h-20 rounded-full overflow-hidden mr-3 flex-shrink-0 bg-white border border-gray-200 p-0">
                     <img
@@ -831,7 +921,9 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                     <p class="italic">Conférencier</p>
                   </div>
                 </div>
-              ` : ''}
+              `
+                  : ''
+              }
 
               <!-- Titre -->
               <h3 class="text-xl md:text-2xl font-bold text-sky-900 group-hover:text-[#e4451e] transition-colors mb-2 md:mb-3">
@@ -841,7 +933,9 @@ const eventsDataForClient = allEventsFlat.map(event => ({
               <!-- Description avec accordéon pour les textes longs - Version desktop -->
               <div class="description-container relative hidden md:block">
                 <p class="text-gray-600 mb-2 md:mb-4 description-text line-clamp-4 pr-16">${event.description || ''}</p>
-                ${event.description && event.description.length > 280 ? `
+                ${
+                  event.description && event.description.length > 280
+                    ? `
                   <button 
                     class="text-[#e4451e] text-sm font-medium flex items-center gap-1.5 description-toggle hover:bg-[#e4451e]/10 transition-all duration-300 absolute bottom-0 right-0 px-2 py-1 rounded-md"
                     aria-expanded="false"
@@ -855,29 +949,43 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                       ${this.generateIcon('tabler:chevron-up', 'w-4 h-4 ml-1 transition-transform duration-300')}
                     </span>
                   </button>
-                ` : ''}
+                `
+                    : ''
+                }
               </div>
 
               <!-- Informations supplémentaires - Version desktop -->
               <div class="hidden md:grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 mb-3">
-                ${event.target ? `
+                ${
+                  event.target
+                    ? `
                   <div class="flex items-start text-sm text-gray-600">
                     ${this.generateIcon('tabler:users', 'w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
                     <span><span class="font-medium">Public:</span> ${event.target}</span>
                   </div>
-                ` : ''}
-                ${event.level ? `
+                `
+                    : ''
+                }
+                ${
+                  event.level
+                    ? `
                   <div class="flex items-start text-sm text-gray-600">
                     ${this.generateIcon('tabler:school', 'w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
                     <span><span class="font-medium">Niveau:</span> ${event.level}</span>
                   </div>
-                ` : ''}
-                ${event.teachingType ? `
+                `
+                    : ''
+                }
+                ${
+                  event.teachingType
+                    ? `
                   <div class="flex items-start text-sm text-gray-600">
                     ${this.generateIcon('tabler:book', 'w-4 h-4 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
                     <span><span class="font-medium">Type:</span> ${event.teachingType}</span>
                   </div>
-                ` : ''}
+                `
+                    : ''
+                }
               </div>
 
               <!-- Bouton "Voir les détails" pour mobile -->
@@ -902,28 +1010,42 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                 
                 <!-- Informations sur le lieu et l'intervenant -->
                 <div class="flex flex-col gap-3 text-base">
-                  ${event.location ? `
+                  ${
+                    event.location
+                      ? `
                     <div class="flex items-start gap-2">
                       ${this.generateIcon('tabler:map-pin', 'w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5')}
                       <span class="text-gray-600">${event.location}</span>
                     </div>
-                  ` : ''}
-                  ${eventType !== 'Stands' && event.speaker ? `
+                  `
+                      : ''
+                  }
+                  ${
+                    eventType !== 'Stands' && event.speaker
+                      ? `
                     <div class="flex items-start gap-2">
                       ${this.generateIcon('tabler:user', 'w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5')}
                       <span class="text-gray-600 font-medium">${event.speaker}</span>
                     </div>
-                  ` : ''}
-                  ${eventType === 'Stands' ? `
+                  `
+                      : ''
+                  }
+                  ${
+                    eventType === 'Stands'
+                      ? `
                     <div class="flex items-start gap-2">
                       ${this.generateIcon('tabler:tag', 'w-5 h-5 text-[#e4451e] flex-shrink-0 mt-0.5')}
                       <span class="text-gray-600 font-medium">${event.theme || 'À définir'}</span>
                     </div>
-                  ` : ''}
+                  `
+                      : ''
+                  }
                 </div>
 
                 <!-- Photo du conférencier pour mobile -->
-                ${eventType === 'Conférences' && event.speaker ? `
+                ${
+                  eventType === 'Conférences' && event.speaker
+                    ? `
                   <div class="flex items-center mt-4">
                     <div class="w-16 h-16 rounded-full overflow-hidden mr-3 flex-shrink-0 bg-white border border-gray-200 p-0">
                       <img
@@ -940,32 +1062,48 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                       <p class="italic">Conférencier</p>
                     </div>
                   </div>
-                ` : ''}
+                `
+                    : ''
+                }
 
                 <!-- Informations supplémentaires pour mobile -->
                 <div class="grid grid-cols-1 gap-3">
-                  ${event.target ? `
+                  ${
+                    event.target
+                      ? `
                     <div class="flex items-start text-base text-gray-600">
                       ${this.generateIcon('tabler:users', 'w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
                       <span><span class="font-medium">Public:</span> ${event.target}</span>
                     </div>
-                  ` : ''}
-                  ${event.level ? `
+                  `
+                      : ''
+                  }
+                  ${
+                    event.level
+                      ? `
                     <div class="flex items-start text-base text-gray-600">
                       ${this.generateIcon('tabler:school', 'w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
                       <span><span class="font-medium">Niveau:</span> ${event.level}</span>
                     </div>
-                  ` : ''}
-                  ${event.teachingType ? `
+                  `
+                      : ''
+                  }
+                  ${
+                    event.teachingType
+                      ? `
                     <div class="flex items-start text-base text-gray-600">
                       ${this.generateIcon('tabler:book', 'w-5 h-5 mr-2 text-[#e4451e] flex-shrink-0 mt-0.5')}
                       <span><span class="font-medium">Type:</span> ${event.teachingType}</span>
                     </div>
-                  ` : ''}
+                  `
+                      : ''
+                  }
                 </div>
                 
                 <!-- Lien vers le site web dans les détails pour mobile -->
-                ${normalizedUrl ? `
+                ${
+                  normalizedUrl
+                    ? `
                   <div class="flex items-center mt-4 pt-2 border-t border-gray-100">
                     <a 
                       href="${normalizedUrl}" 
@@ -977,13 +1115,17 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                       Visiter le site web
                     </a>
                   </div>
-                ` : ''}
+                `
+                    : ''
+                }
               </div>
             </div>
 
             <div class="mt-auto flex flex-wrap items-center justify-between gap-2">
               <!-- Lien vers le site web pour desktop -->
-              ${normalizedUrl ? `
+              ${
+                normalizedUrl
+                  ? `
                 <div class="hidden md:block w-full mt-4 pt-3 border-t border-gray-100">
                   <a 
                     href="${normalizedUrl}" 
@@ -995,7 +1137,9 @@ const eventsDataForClient = allEventsFlat.map(event => ({
                     Visiter le site web
                   </a>
                 </div>
-              ` : ''}
+              `
+                  : ''
+              }
             </div>
           </div>
         </div>
@@ -1016,14 +1160,14 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       const renderBatch = () => {
         const batchSize = 5;
         const batchEnd = Math.min(startIndex + batchSize, eventsData.length);
-        
+
         for (let i = startIndex; i < batchEnd; i++) {
           const eventCard = this.renderEventCard(eventsData[i]);
           this.container.appendChild(eventCard);
         }
-        
+
         startIndex = batchEnd;
-        
+
         if (startIndex < eventsData.length) {
           requestAnimationFrame(renderBatch);
         } else {
@@ -1031,7 +1175,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           this.attachEventListeners();
         }
       };
-      
+
       requestAnimationFrame(renderBatch);
     }
 
@@ -1039,7 +1183,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       if (!this.container) return;
 
       // Gestionnaires pour les boutons de description (desktop)
-      this.container.querySelectorAll('.description-toggle').forEach(button => {
+      this.container.querySelectorAll('.description-toggle').forEach((button) => {
         button.addEventListener('click', (e) => {
           e.preventDefault();
           const descriptionText = button.parentElement.querySelector('.description-text');
@@ -1062,7 +1206,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
       });
 
       // Gestionnaires pour les boutons de détails (mobile)
-      this.container.querySelectorAll('.js-toggle-details').forEach(button => {
+      this.container.querySelectorAll('.js-toggle-details').forEach((button) => {
         button.addEventListener('click', (e) => {
           e.preventDefault();
           const card = button.closest('.event-card');
@@ -1070,7 +1214,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           const showText = button.querySelector('.js-show-text');
           const hideText = button.querySelector('.js-hide-text');
           const icon = button.querySelector('.js-toggle-icon');
-          
+
           if (details.classList.contains('hidden')) {
             details.classList.remove('hidden');
             showText.classList.add('hidden');
@@ -1102,12 +1246,12 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
   function updateDisplay() {
     // Filter events
-    const filteredEvents = allEventsData.filter(eventData => {
+    const filteredEvents = allEventsData.filter((eventData) => {
       const event = eventData.event;
-      
+
       // Déterminer si c'est une démo numérique
       const isDigitalDemo = event.type === 'Ateliers' && event.location === 'Village numérique';
-      
+
       let typeMatch = false;
       if (eventFilters.isAllTypesActive) {
         typeMatch = true;
@@ -1127,37 +1271,41 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           typeMatch = eventFilters.activeTypes.includes(event.type);
         }
       }
-      
-      const dayMatch = eventFilters.isAllDaysActive || 
-        (event.day && eventFilters.activeDays.some(day => eventFilters.normalizeDay(day) === eventFilters.normalizeDay(event.day))) ||
-        (event.type === 'Stands');
-      
+
+      const dayMatch =
+        eventFilters.isAllDaysActive ||
+        (event.day &&
+          eventFilters.activeDays.some(
+            (day) => eventFilters.normalizeDay(day) === eventFilters.normalizeDay(event.day)
+          )) ||
+        event.type === 'Stands';
+
       return dayMatch && typeMatch;
     });
 
     // Sort events
     const sortedEvents = [...filteredEvents].sort((a, b) => {
-      const dayOrder = { 'Mercredi': 1, 'Jeudi': 2, 'Vendredi': 3 };
-      
+      const dayOrder = { Mercredi: 1, Jeudi: 2, Vendredi: 3 };
+
       const aType = a.event.type;
       const bType = b.event.type;
-      
+
       if (aType === 'Stands' && bType !== 'Stands') return 1;
       if (aType !== 'Stands' && bType === 'Stands') return -1;
 
       const aDay = a.event.day || 'Mercredi';
       const bDay = b.event.day || 'Mercredi';
-      
+
       if (aDay !== bDay) {
         return (dayOrder[aDay] || 0) - (dayOrder[bDay] || 0);
       }
 
       const aTime = a.event.time || '';
       const bTime = b.event.time || '';
-      
+
       if (aTime !== 'À définir' && bTime === 'À définir') return -1;
       if (aTime === 'À définir' && bTime !== 'À définir') return 1;
-      
+
       if (aTime !== 'À définir' && bTime !== 'À définir' && aTime !== 'Tous les jours' && bTime !== 'Tous les jours') {
         return aTime.localeCompare(bTime);
       }
@@ -1186,7 +1334,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     if (sortedEvents.length === 0) {
       document.getElementById('no-events-message')?.classList.remove('hidden');
       eventsContainer?.classList.add('hidden');
-        } else {
+    } else {
       document.getElementById('no-events-message')?.classList.add('hidden');
       eventsContainer?.classList.remove('hidden');
     }
@@ -1194,7 +1342,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
   function initializeFilters() {
     const wrapper = document.getElementById('day-filter-wrapper');
-    
+
     // Reset filters
     eventFilters.isAllDaysActive = true;
     eventFilters.isAllTypesActive = true;
@@ -1203,20 +1351,20 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     eventPagination.resetPage();
 
     // Reset button states
-    document.querySelectorAll('.day-filter-button').forEach(btn => {
+    document.querySelectorAll('.day-filter-button').forEach((btn) => {
       const day = btn.dataset.day;
       if (day === 'all') {
         btn.dataset.state = 'active';
         btn.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
         btn.classList.remove('bg-white', 'text-[#e4451e]');
-        } else {
+      } else {
         btn.dataset.state = 'inactive';
         btn.classList.add('bg-white', 'text-[#e4451e]');
         btn.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
       }
     });
 
-    document.querySelectorAll('.type-filter-button, #all-types-button').forEach(btn => {
+    document.querySelectorAll('.type-filter-button, #all-types-button').forEach((btn) => {
       const countBadge = btn.querySelector('span:last-child');
 
       if (btn.id === 'all-types-button') {
@@ -1240,7 +1388,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     setTimeout(() => {
       eventFilters.updateEventCounts(allEventsData);
       updateDisplay();
-      
+
       // Hide loader and show content
       if (wrapper) {
         wrapper.classList.remove('day-filter-loading');
@@ -1256,16 +1404,16 @@ const eventsDataForClient = allEventsFlat.map(event => ({
 
   function attachEventListeners() {
     // Day filter buttons - Support pour sélection multiple
-    document.querySelectorAll('.day-filter-button').forEach(button => {
+    document.querySelectorAll('.day-filter-button').forEach((button) => {
       button.addEventListener('click', () => {
         const clickedDay = button.dataset.day;
-        
+
         if (clickedDay === 'all') {
           // Activer "Tous les jours" et désactiver les autres
           eventFilters.isAllDaysActive = true;
           eventFilters.activeDays = [];
-          
-          document.querySelectorAll('.day-filter-button').forEach(btn => {
+
+          document.querySelectorAll('.day-filter-button').forEach((btn) => {
             if (btn.dataset.day === 'all') {
               btn.dataset.state = 'active';
               btn.classList.add('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
@@ -1282,7 +1430,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
           allButton.dataset.state = 'inactive';
           allButton.classList.add('bg-white', 'text-[#e4451e]');
           allButton.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-          
+
           // Toggle le jour sélectionné
           const isCurrentlyActive = button.dataset.state === 'active';
           if (isCurrentlyActive) {
@@ -1290,7 +1438,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
             button.dataset.state = 'inactive';
             button.classList.add('bg-white', 'text-[#e4451e]');
             button.classList.remove('active', 'bg-[#e4451e]', 'text-white', 'shadow-md');
-            eventFilters.activeDays = eventFilters.activeDays.filter(day => day !== clickedDay);
+            eventFilters.activeDays = eventFilters.activeDays.filter((day) => day !== clickedDay);
           } else {
             // Activer ce jour
             button.dataset.state = 'active';
@@ -1300,7 +1448,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
               eventFilters.activeDays.push(clickedDay);
             }
           }
-          
+
           // Si aucun jour n'est sélectionné, réactiver "Tous les jours"
           if (eventFilters.activeDays.length === 0) {
             eventFilters.isAllDaysActive = true;
@@ -1321,7 +1469,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     });
 
     // Type filter buttons
-    document.querySelectorAll('.type-filter-button, #all-types-button').forEach(button => {
+    document.querySelectorAll('.type-filter-button, #all-types-button').forEach((button) => {
       button.addEventListener('click', () => {
         const clickedType = button.dataset.type;
         const isAllButton = button.id === 'all-types-button';
@@ -1332,7 +1480,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
         } else {
           eventFilters.isAllTypesActive = false;
           if (eventFilters.activeTypes.includes(clickedType)) {
-            eventFilters.activeTypes = eventFilters.activeTypes.filter(t => t !== clickedType);
+            eventFilters.activeTypes = eventFilters.activeTypes.filter((t) => t !== clickedType);
           } else {
             eventFilters.activeTypes.push(clickedType);
           }
@@ -1344,7 +1492,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
         }
 
         // Update button states
-        document.querySelectorAll('.type-filter-button, #all-types-button').forEach(btn => {
+        document.querySelectorAll('.type-filter-button, #all-types-button').forEach((btn) => {
           const type = btn.dataset.type;
           const countBadge = btn.querySelector('span:last-child');
 
@@ -1354,7 +1502,10 @@ const eventsDataForClient = allEventsFlat.map(event => ({
               btn.dataset.state = 'active';
               btn.classList.add('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
               if (countBadge) {
-                countBadge.classList.add('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+                countBadge.classList.add(
+                  'group-data-[state=active]:bg-white',
+                  'group-data-[state=active]:text-[#e4451e]'
+                );
                 countBadge.classList.remove('bg-[#e4451e]/10', 'text-[#e4451e]');
               }
             } else {
@@ -1362,7 +1513,10 @@ const eventsDataForClient = allEventsFlat.map(event => ({
               btn.classList.remove('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
               if (countBadge) {
                 countBadge.classList.add('bg-[#e4451e]/10', 'text-[#e4451e]');
-                countBadge.classList.remove('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+                countBadge.classList.remove(
+                  'group-data-[state=active]:bg-white',
+                  'group-data-[state=active]:text-[#e4451e]'
+                );
               }
             }
           } else {
@@ -1372,13 +1526,19 @@ const eventsDataForClient = allEventsFlat.map(event => ({
               btn.classList.remove('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
               if (countBadge) {
                 countBadge.classList.add('bg-[#e4451e]/10', 'text-[#e4451e]');
-                countBadge.classList.remove('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+                countBadge.classList.remove(
+                  'group-data-[state=active]:bg-white',
+                  'group-data-[state=active]:text-[#e4451e]'
+                );
               }
             } else if (eventFilters.activeTypes.includes(type)) {
               btn.dataset.state = 'active';
               btn.classList.add('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
               if (countBadge) {
-                countBadge.classList.add('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+                countBadge.classList.add(
+                  'group-data-[state=active]:bg-white',
+                  'group-data-[state=active]:text-[#e4451e]'
+                );
                 countBadge.classList.remove('bg-[#e4451e]/10', 'text-[#e4451e]');
               }
             } else {
@@ -1386,7 +1546,10 @@ const eventsDataForClient = allEventsFlat.map(event => ({
               btn.classList.remove('data-[state=active]:bg-[#e4451e]', 'data-[state=active]:text-white');
               if (countBadge) {
                 countBadge.classList.add('bg-[#e4451e]/10', 'text-[#e4451e]');
-                countBadge.classList.remove('group-data-[state=active]:bg-white', 'group-data-[state=active]:text-[#e4451e]');
+                countBadge.classList.remove(
+                  'group-data-[state=active]:bg-white',
+                  'group-data-[state=active]:text-[#e4451e]'
+                );
               }
             }
           }
@@ -1398,7 +1561,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     });
 
     // Pagination buttons
-    document.querySelectorAll('.pagination-button').forEach(button => {
+    document.querySelectorAll('.pagination-button').forEach((button) => {
       button.addEventListener('click', () => {
         const action = button.id.startsWith('prev') ? 'prev' : 'next';
         if (action === 'prev') {
@@ -1409,7 +1572,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
         updateDisplay();
       });
     });
-    
+
     // Mobile selectors
     const mobileDaySelector = document.getElementById('mobile-day-selector');
     const mobileTypeSelector = document.getElementById('mobile-type-selector');
@@ -1441,7 +1604,7 @@ const eventsDataForClient = allEventsFlat.map(event => ({
     attachEventListeners();
     initializeFilters();
   });
-  
+
   document.addEventListener('DOMContentLoaded', () => {
     if (!document.body.classList.contains('astro-transition')) {
       attachEventListeners();

@@ -1,6 +1,6 @@
 import { getPermalink, getBlogPermalink } from './utils/permalinks';
 import navigationData from './content/navigation/index.json';
-import type { AstroGlobal } from 'astro';
+import type { CallToAction } from './types';
 import defaultNavigationData from '~/content/navigation/index.json';
 
 // Types pour la navigation
@@ -18,11 +18,19 @@ interface NavigationGroup {
   links: NavigationLink[];
 }
 
+// Boutons d'action du header (un bouton par mode, choisi dans Header.astro)
+interface HeaderAction {
+  mode?: 'festival' | 'community' | 'custom';
+  festivalButton?: CallToAction;
+  communityButton?: CallToAction;
+  customButton?: CallToAction;
+}
+
 // Fonction pour traiter les liens et appliquer les fonctions de permalien
 function processLinks(links: NavigationLink[]): NavigationLink[] {
-  return links.map(link => {
+  return links.map((link) => {
     const processedLink = { ...link };
-    
+
     // Traiter l'attribut href
     if (link.href) {
       if (link.href === '/blog') {
@@ -31,36 +39,45 @@ function processLinks(links: NavigationLink[]): NavigationLink[] {
         processedLink.href = getPermalink(link.href);
       }
     }
-    
+
     // Traiter les sous-liens récursivement si présents
     if (link.links && Array.isArray(link.links)) {
       processedLink.links = processLinks(link.links);
     }
-    
+
     return processedLink;
   });
 }
 
 // Traiter les données de navigation
-const processedHeaderLinks = navigationData.header.links ? processLinks(navigationData.header.links as NavigationLink[]) : [];
-const processedHeaderMobileLinks = navigationData.header.mobileLinks ? 
-  navigationData.header.mobileLinks.map(group => ({
-    ...group,
-    links: group.links ? processLinks(group.links as NavigationLink[]) : []
-  })) : [];
-const processedHeaderActions = navigationData.header.actions ? processLinks(navigationData.header.actions as NavigationLink[]) : [];
+const processedHeaderLinks = navigationData.header.links
+  ? processLinks(navigationData.header.links as NavigationLink[])
+  : [];
+const processedHeaderMobileLinks: NavigationGroup[] = navigationData.header.mobileLinks
+  ? navigationData.header.mobileLinks.map((group) => ({
+      ...group,
+      links: group.links ? processLinks(group.links as NavigationLink[]) : [],
+    }))
+  : [];
+const processedHeaderActions = navigationData.header.actions
+  ? (navigationData.header.actions as HeaderAction[]).map((action) => ({ ...action }))
+  : [];
 
-const processedFooterLinks = navigationData.footer.links ? 
-  navigationData.footer.links.map(group => ({
-    ...group,
-    links: group.links ? processLinks(group.links as NavigationLink[]) : []
-  })) : [];
-const processedFooterMobileLinks = navigationData.footer.mobileLinks ? 
-  navigationData.footer.mobileLinks.map(group => ({
-    ...group,
-    links: group.links ? processLinks(group.links as NavigationLink[]) : []
-  })) : [];
-const processedLegalLinks = navigationData.footer.legalLinks ? processLinks(navigationData.footer.legalLinks as NavigationLink[]) : [];
+const processedFooterLinks: NavigationGroup[] = navigationData.footer.links
+  ? navigationData.footer.links.map((group) => ({
+      ...group,
+      links: group.links ? processLinks(group.links as NavigationLink[]) : [],
+    }))
+  : [];
+const processedFooterMobileLinks: NavigationGroup[] = navigationData.footer.mobileLinks
+  ? navigationData.footer.mobileLinks.map((group) => ({
+      ...group,
+      links: group.links ? processLinks(group.links as NavigationLink[]) : [],
+    }))
+  : [];
+const processedLegalLinks = navigationData.footer.legalLinks
+  ? processLinks(navigationData.footer.legalLinks as NavigationLink[])
+  : [];
 
 // Exporter les données traitées
 export const headerData = {
@@ -79,9 +96,11 @@ export const footerData = {
     text: 'Site écoconçu et optimisé',
     icon: 'tabler:leaf',
     details: 'Plus écologique que 90% des sites web testés',
-    href: 'https://ecograder.com/report/TrgEqfROsdPhDzYeM8WhdI7y'
+    href: 'https://ecograder.com/report/TrgEqfROsdPhDzYeM8WhdI7y',
   },
-  footerDescription: navigationData.footer.footerDescription || "Out of the Books connecte et inspire les acteurs du changement éducatif en Francophonie. Notre festival et Nos contenus créent des espaces d'échange pour réinventer l'éducation.",
+  footerDescription:
+    navigationData.footer.footerDescription ||
+    "Out of the Books connecte et inspire les acteurs du changement éducatif en Francophonie. Notre festival et Nos contenus créent des espaces d'échange pour réinventer l'éducation.",
 };
 
 export interface Link {
@@ -134,7 +153,7 @@ const getNavigation = async (): Promise<NavigationProps> => {
     } else {
       throw new Error('Failed to fetch navigation data');
     }
-  } catch (error) {
+  } catch {
     // En cas d'erreur, utiliser les données par défaut
     navigationData = defaultNavigationData;
   }
@@ -153,12 +172,14 @@ const getNavigation = async (): Promise<NavigationProps> => {
       legalLinks: navigationData.footer.legalLinks || [],
       socialLinks: navigationData.footer.socialLinks || [],
       footNote: navigationData.footer.footNote || `Out of the Books ASBL © ${new Date().getFullYear()}`,
-      footerDescription: navigationData.footer.footerDescription || "Out of the Books connecte et inspire les acteurs du changement éducatif en Francophonie. Notre festival et Nos contenus créent des espaces d'échange pour réinventer l'éducation.",
+      footerDescription:
+        navigationData.footer.footerDescription ||
+        "Out of the Books connecte et inspire les acteurs du changement éducatif en Francophonie. Notre festival et Nos contenus créent des espaces d'échange pour réinventer l'éducation.",
       ecoDesignBadge: navigationData.footer.ecoDesignBadge || {
-        text: "Site écoconçu et optimisé",
-        icon: "tabler:leaf",
-        details: "Plus écologique que 90% des sites web testés",
-        href: "https://ecograder.com"
+        text: 'Site écoconçu et optimisé',
+        icon: 'tabler:leaf',
+        details: 'Plus écologique que 90% des sites web testés',
+        href: 'https://ecograder.com',
       },
     },
   };

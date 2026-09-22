@@ -49,20 +49,20 @@ const fileExistsWithCache = (filePath: string): boolean => {
   if (fileExistsCache.has(filePath)) {
     return fileExistsCache.get(filePath)!;
   }
-  
+
   // Vérifier l'existence du fichier
   const exists = fs.existsSync(filePath);
-  
+
   // Mettre en cache le résultat
   fileExistsCache.set(filePath, exists);
-  
+
   return exists;
 };
 
 // Fonction pour vider le cache des vérifications d'existence de fichiers
 const clearFileExistsCache = (): void => {
   fileExistsCache.clear();
-  console.log('🧹 Cache des vérifications d\'existence de fichiers vidé');
+  console.log("🧹 Cache des vérifications d'existence de fichiers vidé");
 };
 
 // Vider le cache toutes les 5 minutes pour éviter les problèmes de stale cache
@@ -75,7 +75,7 @@ export const resetImageProcessingSession = (): void => {
   imagesProcessedInSession = false;
   // Ne pas vider le cache des chemins d'images résolus pour optimiser les performances
   // Ne pas vider le cache des URLs problématiques pour optimiser les performances
-  console.log('🔄 Session de traitement d\'images réinitialisée');
+  console.log("🔄 Session de traitement d'images réinitialisée");
 };
 
 /**
@@ -88,37 +88,37 @@ export const isProblematicUrl = (url: string): boolean => {
   if (problematicUrlCache.has(url)) {
     return problematicUrlCache.get(url)!;
   }
-  
+
   // Cas 1: Format CSV de NocoDB - nom_fichier.extension(url...)
   if (url.match(/\.(jpg|jpeg|png|webp|gif|svg)\(/i)) {
     console.log(`⚠️ URL problématique (format CSV): ${url}`);
     problematicUrlCache.set(url, true);
     return true;
   }
-  
+
   // Cas 2: URL sans extension d'image valide
   const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(url);
-  
+
   // Les URLs S3 signées sont considérées comme valides même sans extension visible
   if (url.includes('X-Amz-Signature=')) {
     console.log(`✅ URL S3 signée valide: ${url}`);
     problematicUrlCache.set(url, false);
     return false;
   }
-  
+
   // Cas 3: URL sans extension mais avec "image" dans le chemin
   if (!hasImageExtension && (url.includes('/image/') || url.includes('/images/'))) {
     console.log(`✅ URL sans extension mais avec "image" dans le chemin, considérée valide: ${url}`);
     problematicUrlCache.set(url, false);
     return false;
   }
-  
+
   if (!hasImageExtension) {
     console.log(`⚠️ URL problématique (sans extension): ${url}`);
     problematicUrlCache.set(url, true);
     return true;
   }
-  
+
   // URL valide
   problematicUrlCache.set(url, false);
   return false;
@@ -131,24 +131,24 @@ export const isProblematicUrl = (url: string): boolean => {
  */
 export const isValidImage = (img?: string): boolean => {
   if (!img) return false;
-  
+
   // Vérifier si l'image a déjà été vérifiée
   if (validImageCache.has(img)) {
     return validImageCache.get(img)!;
   }
-  
+
   // Vérifier si l'URL est problématique
   if (isProblematicUrl(img)) {
     validImageCache.set(img, false);
     return false;
   }
-  
+
   // Les URLs S3 signées sont considérées comme valides même sans extension visible
   if (img.includes('X-Amz-Signature=')) {
     validImageCache.set(img, true);
     return true;
   }
-  
+
   // Pour les autres URLs, vérifier l'extension
   const hasImageExtension = /\.(jpg|jpeg|png|webp|gif|svg)($|\?)/i.test(img);
   validImageCache.set(img, hasImageExtension);
@@ -162,21 +162,21 @@ export const createImageDirectories = async (): Promise<void> => {
   try {
     // Créer le répertoire principal des images s'il n'existe pas
     await fsPromises.mkdir('src/assets/images/events', { recursive: true });
-    
+
     // Créer les sous-répertoires pour chaque type d'événement
     await fsPromises.mkdir('src/assets/images/events/conferences', { recursive: true });
     await fsPromises.mkdir('src/assets/images/events/ateliers', { recursive: true });
     await fsPromises.mkdir('src/assets/images/events/stands', { recursive: true });
-    
+
     // Créer le répertoire pour les images de conférenciers
     await fsPromises.mkdir('src/assets/images/events/speakers', { recursive: true });
-    
+
     // Créer le répertoire pour les logs
     await fsPromises.mkdir('src/assets/images/events/logs', { recursive: true });
-    
-    console.log('✅ Répertoires d\'images créés avec succès');
+
+    console.log("✅ Répertoires d'images créés avec succès");
   } catch (error) {
-    console.error('❌ Erreur lors de la création des répertoires d\'images:', error);
+    console.error("❌ Erreur lors de la création des répertoires d'images:", error);
   }
 };
 
@@ -207,7 +207,7 @@ export const isImageAlreadyDownloaded = (
       // Fallback
       subdir = eventType;
     }
-    
+
     // ⚠️ CORRECTION : Extraire le préfixe de base de façon uniforme
     let basePrefix;
     if (eventType === 'conferences') {
@@ -219,47 +219,47 @@ export const isImageAlreadyDownloaded = (
     } else {
       // Convertir le type en string pour éviter l'erreur "toLowerCase n'existe pas sur le type 'never'"
       const typeStr = String(eventType).toLowerCase();
-      basePrefix = typeStr.endsWith('s') 
-        ? typeStr.slice(0, -1) 
-        : typeStr;
+      basePrefix = typeStr.endsWith('s') ? typeStr.slice(0, -1) : typeStr;
     }
-    
+
     // Log pour le débogage
-    console.log(`🔍 Recherche d'images pour l'événement ID: ${eventId}, Type: ${eventType}, Sous-répertoire: ${subdir}`);
-    
+    console.log(
+      `🔍 Recherche d'images pour l'événement ID: ${eventId}, Type: ${eventType}, Sous-répertoire: ${subdir}`
+    );
+
     // Préparer les noms de fichiers possibles en fonction du type d'image
     const possibleFilenames = [];
-    
+
     if (isSpeakerImage) {
       // Pour les images de conférenciers
-      possibleFilenames.push(`speaker-${eventId}.webp`);  // Format standard: speaker-123.webp
-      
+      possibleFilenames.push(`speaker-${eventId}.webp`); // Format standard: speaker-123.webp
+
       // Essayer d'extraire l'ID numérique pour les formats simplifiés
       const idMatch = eventId.match(/(\d+)/);
       if (idMatch && idMatch[1]) {
-        possibleFilenames.push(`speaker-${idMatch[1]}.webp`);  // Format simplifié: speaker-123.webp
+        possibleFilenames.push(`speaker-${idMatch[1]}.webp`); // Format simplifié: speaker-123.webp
       }
-      
+
       // Formats legacy pour compatibilité
-      possibleFilenames.push(`speaker-${basePrefix}-${eventId}.webp`);  // Format avec type: speaker-conference-123.webp
+      possibleFilenames.push(`speaker-${basePrefix}-${eventId}.webp`); // Format avec type: speaker-conference-123.webp
     } else {
       // Pour les images d'événements normaux
-      possibleFilenames.push(`${basePrefix}-${eventId}.webp`);         // Format standard: atelier-123.webp, stand-123.webp
-      possibleFilenames.push(`event-${basePrefix}-${eventId}.webp`);   // Format avec préfixe event: event-atelier-123.webp
-      
-      // POUR LA COMPATIBILITÉ UNIQUEMENT: 
+      possibleFilenames.push(`${basePrefix}-${eventId}.webp`); // Format standard: atelier-123.webp, stand-123.webp
+      possibleFilenames.push(`event-${basePrefix}-${eventId}.webp`); // Format avec préfixe event: event-atelier-123.webp
+
+      // POUR LA COMPATIBILITÉ UNIQUEMENT:
       // Ajouter des formats legacy pour s'assurer qu'on trouve bien les images existantes
       possibleFilenames.push(`${basePrefix}-${basePrefix}-${eventId}.webp`); // Format redondant
-      
+
       // Essayer d'extraire l'ID numérique pour les formats simplifiés
       const idMatch = eventId.match(/(\d+)/);
       if (idMatch && idMatch[1]) {
-        possibleFilenames.push(`${basePrefix}-${idMatch[1]}.webp`);  // Format simplifié: atelier-123.webp
+        possibleFilenames.push(`${basePrefix}-${idMatch[1]}.webp`); // Format simplifié: atelier-123.webp
       }
-  
+
       // Pour les stands, vérifier aussi les anciennes variantes avec jours (pour rétrocompatibilité)
       if (eventType === 'stands') {
-        ['Mercredi', 'Jeudi', 'Vendredi'].forEach(day => {
+        ['Mercredi', 'Jeudi', 'Vendredi'].forEach((day) => {
           // Anciens formats avec jour pour compatibilité uniquement
           possibleFilenames.push(`${basePrefix}-${eventId}-${day}.webp`);
           possibleFilenames.push(`event-${basePrefix}-${eventId}-${day}.webp`);
@@ -268,9 +268,9 @@ export const isImageAlreadyDownloaded = (
         });
       }
     }
-    
+
     console.log(`📋 Noms de fichiers à vérifier: ${possibleFilenames.join(', ')}`);
-    
+
     // Vérifier si l'une des variantes existe
     for (const filename of possibleFilenames) {
       const filePath = path.join(BASE_IMAGE_DIR, subdir, filename);
@@ -279,75 +279,75 @@ export const isImageAlreadyDownloaded = (
       if (fileExistsWithCache(filePath)) {
         console.log(`✅ Image existante trouvée: ${filePath}`);
         return `~/assets/images/events/${subdir}/${filename}`;
-      } 
+      }
       // Réduire les logs pour améliorer les performances
       // else {
       //   console.log(`❌ Fichier non trouvé: ${filePath}`);
       // }
     }
-    
+
     // Vérifier également les extensions jpg, png, etc. (pour les images non converties en WebP)
     const extensions = ['.jpg', '.jpeg', '.png', '.gif'];
     for (const ext of extensions) {
       // FORMATS STANDARDS UNIQUEMENT
       const baseFilename = `${basePrefix}-${eventId}${ext}`;
       const eventFilename = `event-${basePrefix}-${eventId}${ext}`;
-      
+
       // POUR LA COMPATIBILITÉ UNIQUEMENT
       const duplicatePrefix = `${basePrefix}-${basePrefix}-${eventId}${ext}`; // Format redondant: atelier-atelier-123.jpg
-      
+
       const basePath = path.join(BASE_IMAGE_DIR, subdir, baseFilename);
       const eventPath = path.join(BASE_IMAGE_DIR, subdir, eventFilename);
       const duplicatePath = path.join(BASE_IMAGE_DIR, subdir, duplicatePrefix);
-      
+
       if (fs.existsSync(basePath)) {
         console.log(`✅ Image existante trouvée (non WebP): ${basePath}`);
         return `~/assets/images/events/${subdir}/${baseFilename}`;
       }
-      
+
       if (fs.existsSync(eventPath)) {
         console.log(`✅ Image existante trouvée (non WebP): ${eventPath}`);
         return `~/assets/images/events/${subdir}/${eventFilename}`;
       }
-      
+
       // Vérifier aussi les formats redondants (pour compatibilité)
       if (fs.existsSync(duplicatePath)) {
         console.log(`✅ Image existante trouvée (ancien format): ${duplicatePath}`);
         return `~/assets/images/events/${subdir}/${duplicatePrefix}`;
       }
-      
+
       // Pour les stands, vérifier également les variantes avec les jours
       if (eventType === 'stands') {
-        ['Mercredi', 'Jeudi', 'Vendredi'].forEach(day => {
+        ['Mercredi', 'Jeudi', 'Vendredi'].forEach((day) => {
           // FORMATS STANDARDS
           const dayBaseFilename = `${basePrefix}-${eventId}-${day}${ext}`;
           const dayEventFilename = `event-${basePrefix}-${eventId}-${day}${ext}`;
-          
+
           // FORMATS REDONDANTS (pour compatibilité)
           const dayDuplicateFilename = `${basePrefix}-${basePrefix}-${eventId}-${day}${ext}`;
           const dayDuplicateDoubleDayFilename = `${basePrefix}-${basePrefix}-${eventId}-${day}-${day}${ext}`;
-          
+
           const dayBasePath = path.join(BASE_IMAGE_DIR, subdir, dayBaseFilename);
           const dayEventPath = path.join(BASE_IMAGE_DIR, subdir, dayEventFilename);
           const dayDuplicatePath = path.join(BASE_IMAGE_DIR, subdir, dayDuplicateFilename);
           const dayDuplicateDoubleDayPath = path.join(BASE_IMAGE_DIR, subdir, dayDuplicateDoubleDayFilename);
-          
+
           if (fs.existsSync(dayBasePath)) {
             console.log(`✅ Image existante trouvée (non WebP): ${dayBasePath}`);
             return `~/assets/images/events/${subdir}/${dayBaseFilename}`;
           }
-          
+
           if (fs.existsSync(dayEventPath)) {
             console.log(`✅ Image existante trouvée (non WebP): ${dayEventPath}`);
             return `~/assets/images/events/${subdir}/${dayEventFilename}`;
           }
-          
+
           // Vérifier formats redondants
           if (fs.existsSync(dayDuplicatePath)) {
             console.log(`✅ Image existante trouvée (ancien format): ${dayDuplicatePath}`);
             return `~/assets/images/events/${subdir}/${dayDuplicateFilename}`;
           }
-          
+
           if (fs.existsSync(dayDuplicateDoubleDayPath)) {
             console.log(`✅ Image existante trouvée (ancien format double jour): ${dayDuplicateDoubleDayPath}`);
             return `~/assets/images/events/${subdir}/${dayDuplicateDoubleDayFilename}`;
@@ -355,10 +355,10 @@ export const isImageAlreadyDownloaded = (
         });
       }
     }
-    
+
     return null;
   } catch (error) {
-    console.error('❌ Erreur lors de la vérification de l\'image:', error);
+    console.error("❌ Erreur lors de la vérification de l'image:", error);
     return null;
   }
 };
@@ -372,34 +372,34 @@ export const validateImageBuffer = async (buffer: Buffer): Promise<boolean> => {
   try {
     // Vérifier si le buffer est vide
     if (!buffer || buffer.length === 0) {
-      console.error('❌ Buffer d\'image vide');
+      console.error("❌ Buffer d'image vide");
       return false;
     }
-    
+
     // Vérifier si le buffer est trop petit (moins de 100 octets)
     if (buffer.length < 100) {
       console.error(`❌ Buffer d'image trop petit: ${buffer.length} octets`);
       return false;
     }
-    
+
     // Essayer d'obtenir les métadonnées de l'image avec sharp
     const metadata = await sharp(buffer).metadata();
-    
+
     // Vérifier que l'image a des dimensions valides
     if (!metadata.width || !metadata.height) {
       console.error('❌ Image sans dimensions valides');
       return false;
     }
-    
+
     // Vérifier que l'image a un format reconnu
     if (!metadata.format) {
-      console.error('❌ Format d\'image non reconnu');
+      console.error("❌ Format d'image non reconnu");
       return false;
     }
-    
+
     return true;
   } catch (error) {
-    console.error('❌ Erreur lors de la validation de l\'image:', error);
+    console.error("❌ Erreur lors de la validation de l'image:", error);
     return false;
   }
 };
@@ -425,16 +425,16 @@ export const downloadImage = async (
   try {
     // Vérifier que l'URL est valide
     if (!imageUrl || typeof imageUrl !== 'string') {
-      console.error('❌ URL d\'image invalide:', imageUrl);
+      console.error("❌ URL d'image invalide:", imageUrl);
       await logProblematicImage(`URL: ${String(imageUrl)}`, "URL d'image invalide", {
         id: eventId,
         type: eventType,
         title: eventTitle,
-        day: eventDay
+        day: eventDay,
       });
       return null;
     }
-    
+
     // Vérifier si l'URL est déjà en cache
     if (imageUrlCache.has(imageUrl)) {
       const cachedPath = imageUrlCache.get(imageUrl);
@@ -446,8 +446,11 @@ export const downloadImage = async (
 
     // Normaliser le type d'événement pour le chemin du fichier
     // Convertir le type en minuscules et supprimer les accents
-    const normalizedType = eventType.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    
+    const normalizedType = eventType
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
     // ⚠️ CORRECTION : S'assurer que le sous-répertoire correspond exactement aux répertoires créés par createImageDirectories
     // Cette étape est cruciale pour éviter les problèmes de chemin
     let subdir;
@@ -463,10 +466,10 @@ export const downloadImage = async (
       // Fallback, ne devrait pas se produire avec les types normaux
       subdir = normalizedType;
     }
-    
+
     // Créer les répertoires nécessaires
     await createImageDirectories();
-    
+
     // Extraire le préfixe de base pour le nom de fichier (sans redondance !)
     // ⚠️ CORRECTION : S'assurer d'obtenir un préfixe sans pluriel et uniforme
     let basePrefix;
@@ -479,27 +482,25 @@ export const downloadImage = async (
     } else {
       // Convertir le type en string pour éviter l'erreur "toLowerCase n'existe pas sur le type 'never'"
       const typeStr = String(normalizedType).toLowerCase();
-      basePrefix = typeStr.endsWith('s') 
-        ? typeStr.slice(0, -1) 
-        : typeStr;
+      basePrefix = typeStr.endsWith('s') ? typeStr.slice(0, -1) : typeStr;
     }
-    
+
     // Vérifier si l'image a déjà été téléchargée
     const existingImage = isImageAlreadyDownloaded(eventId, normalizedType, isSpeakerImage);
     if (existingImage) {
       console.log(`✅ Image déjà téléchargée: ${existingImage}`);
       return existingImage;
     }
-    
+
     // Extraire l'extension de fichier de l'URL
     let fileExt = '.jpg'; // Extension par défaut
-    
+
     // Essayer d'extraire l'extension de l'URL
     const urlExtMatch = imageUrl.match(/\.([a-zA-Z0-9]+)($|\?)/);
     if (urlExtMatch && ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(urlExtMatch[1].toLowerCase())) {
       fileExt = `.${urlExtMatch[1].toLowerCase()}`;
     }
-    
+
     // LOGS DÉTAILLÉS
     console.log('------------------------------');
     console.log(`🧩 Génération du nom de fichier pour:`);
@@ -510,7 +511,7 @@ export const downloadImage = async (
     console.log(`   - Extension: ${fileExt}`);
     console.log(`   - Sous-répertoire: ${subdir}`);
     console.log('------------------------------');
-    
+
     // Format uniforme pour tous les types d'événements, sans distinction de jour
     // ⚠️ CORRECTION : Garantir un nom de fichier sans redondance
     let filename;
@@ -525,15 +526,13 @@ export const downloadImage = async (
         // Fallback au format standard pour les conférenciers
         filename = `speaker-${eventId}${fileExt}`;
       }
-      
+
       console.log(`📝 Nom de fichier de conférencier généré: ${filename} (ID: ${eventId})`);
     } else {
       // Pour les images d'événements normaux
       // Vérifier si l'ID contient déjà le préfixe pour éviter la redondance
-      const idWithoutPrefix = eventId.startsWith(`${basePrefix}-`) 
-        ? eventId 
-        : `${basePrefix}-${eventId}`;
-      
+      const idWithoutPrefix = eventId.startsWith(`${basePrefix}-`) ? eventId : `${basePrefix}-${eventId}`;
+
       // Extraire l'ID numérique si possible
       const idMatch = idWithoutPrefix.match(new RegExp(`${basePrefix}-(\\d+)`));
       if (idMatch && idMatch[1]) {
@@ -543,28 +542,28 @@ export const downloadImage = async (
         // Fallback au format standard
         filename = idWithoutPrefix + fileExt;
       }
-      
+
       console.log(`📝 Nom de fichier d'événement généré: ${filename} (type: ${eventType}, ID: ${eventId})`);
     }
-    
+
     // Log pour débogage
     console.log(`📝 Nom de fichier généré: ${filename} (type: ${eventType}, ID: ${eventId})`);
-    
+
     // Chemin complet du fichier
     const filePath = path.join(BASE_IMAGE_DIR, subdir, filename);
     console.log(`📂 Chemin complet du fichier: ${filePath}`);
-    
+
     // Télécharger l'image
     console.log(`🔄 Téléchargement de l'image: ${imageUrl} (${eventType}, ID: ${eventId})`);
-    
+
     // Faire une requête HTTP pour obtenir l'image
     const response = await fetch(imageUrl);
-    
+
     // Vérifier que la requête a réussi
     if (!response.ok) {
       throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
     }
-    
+
     // Vérifier le Content-Type pour s'assurer qu'il s'agit bien d'une image
     const contentType = response.headers.get('content-type');
     if (contentType && !contentType.startsWith('image/')) {
@@ -573,36 +572,36 @@ export const downloadImage = async (
         id: eventId,
         type: eventType,
         title: eventTitle,
-        day: eventDay
+        day: eventDay,
       });
       return null;
     }
-    
+
     // Obtenir le buffer de l'image
     const buffer = Buffer.from(await response.arrayBuffer());
-    
+
     // Vérifier que l'image est valide
     const isValid = await validateImageBuffer(buffer);
     if (!isValid) {
       console.error(`❌ Image invalide: ${imageUrl}`);
-      await logProblematicImage(imageUrl, "Image invalide après téléchargement", {
+      await logProblematicImage(imageUrl, 'Image invalide après téléchargement', {
         id: eventId,
         type: eventType,
         title: eventTitle,
-        day: eventDay
+        day: eventDay,
       });
       return null;
     }
-    
+
     // Optimiser l'image avant de la sauvegarder
     try {
       // Déterminer les dimensions maximales en fonction du type d'image
       const maxWidth = isSpeakerImage ? 128 : 600;
       const maxHeight = isSpeakerImage ? 128 : 450;
-      
+
       // Obtenir les métadonnées de l'image
       const metadata = await sharp(buffer).metadata();
-      
+
       // Vérifier les dimensions extrêmes
       if (metadata.width && metadata.height) {
         // Images trop petites (moins de 10px dans une dimension)
@@ -612,10 +611,10 @@ export const downloadImage = async (
             id: eventId,
             type: eventType,
             title: eventTitle,
-            day: eventDay
+            day: eventDay,
           });
         }
-        
+
         // Images trop grandes (plus de 4000px dans une dimension)
         if (metadata.width > 4000 || metadata.height > 4000) {
           console.warn(`⚠️ Image très grande: ${imageUrl} (${metadata.width}x${metadata.height})`);
@@ -623,26 +622,28 @@ export const downloadImage = async (
             id: eventId,
             type: eventType,
             title: eventTitle,
-            day: eventDay
+            day: eventDay,
           });
         }
-        
+
         // Images avec ratio extrême (très allongées)
         const ratio = Math.max(metadata.width / metadata.height, metadata.height / metadata.width);
         if (ratio > 3) {
-          console.warn(`⚠️ Image avec ratio extrême: ${imageUrl} (${metadata.width}x${metadata.height}, ratio: ${ratio.toFixed(2)})`);
+          console.warn(
+            `⚠️ Image avec ratio extrême: ${imageUrl} (${metadata.width}x${metadata.height}, ratio: ${ratio.toFixed(2)})`
+          );
           await logProblematicImage(imageUrl, `Image avec ratio extrême: ${ratio.toFixed(2)}`, {
             id: eventId,
             type: eventType,
             title: eventTitle,
-            day: eventDay
+            day: eventDay,
           });
         }
       }
-      
+
       // Redimensionner l'image si nécessaire
       let resizedImage = sharp(buffer);
-      
+
       if (metadata.width && metadata.height) {
         // Calculer les nouvelles dimensions en préservant le ratio
         const ratio = Math.min(
@@ -650,61 +651,66 @@ export const downloadImage = async (
           maxHeight / metadata.height,
           1 // Ne pas agrandir les petites images
         );
-        
+
         const newWidth = Math.round(metadata.width * ratio);
         const newHeight = Math.round(metadata.height * ratio);
-        
+
         // Redimensionner l'image seulement si nécessaire
         if (ratio < 1) {
-          console.log(`🔄 Redimensionnement de l'image: ${imageUrl} (${metadata.width}x${metadata.height} -> ${newWidth}x${newHeight})`);
+          console.log(
+            `🔄 Redimensionnement de l'image: ${imageUrl} (${metadata.width}x${metadata.height} -> ${newWidth}x${newHeight})`
+          );
           resizedImage = resizedImage.resize(newWidth, newHeight);
         }
       }
-      
+
       // Convertir en WebP pour une meilleure compatibilité avec Astro
       const webpFilePath = filePath.replace(/\.[^.]+$/, '.webp');
-      
+
       // Définir la qualité en fonction du type d'image
       const quality = isSpeakerImage ? 80 : 75; // Qualité plus basse pour les images normales
-      
+
       // Sauvegarder l'image optimisée avec des options de compression améliorées
       await resizedImage
-        .webp({ 
-          quality, 
-          effort: 4,       // Niveau d'effort de compression (0-6, 6 étant le plus lent mais le plus efficace)
+        .webp({
+          quality,
+          effort: 4, // Niveau d'effort de compression (0-6, 6 étant le plus lent mais le plus efficace)
           lossless: false, // Compression avec perte pour réduire la taille
-          nearLossless: false
+          nearLossless: false,
         })
         .toFile(webpFilePath);
-      
+
       console.log(`✅ Image téléchargée et optimisée: ${webpFilePath}`);
-      
+
       // Chemin relatif pour l'import dans Astro
       const resultPath = `~/assets/images/events/${subdir}/${path.basename(webpFilePath)}`;
-      
+
       // Mettre en cache le résultat
       imageUrlCache.set(imageUrl, resultPath);
-      
+
       return resultPath;
     } catch (optimizeError) {
-      console.error(`⚠️ Erreur lors de l'optimisation de l'image, sauvegarde de l'original:`, formatError(optimizeError));
+      console.error(
+        `⚠️ Erreur lors de l'optimisation de l'image, sauvegarde de l'original:`,
+        formatError(optimizeError)
+      );
       await logProblematicImage(imageUrl, `Erreur d'optimisation: ${formatError(optimizeError)}`, {
         id: eventId,
         type: eventType,
         title: eventTitle,
-        day: eventDay
+        day: eventDay,
       });
-      
+
       // En cas d'erreur d'optimisation, sauvegarder l'image originale
       await fsPromises.writeFile(filePath, buffer);
       console.log(`✅ Image originale sauvegardée: ${filePath}`);
-      
+
       // Chemin relatif pour l'import dans Astro
       const resultPath = `~/assets/images/events/${subdir}/${filename}`;
-      
+
       // Mettre en cache le résultat
       imageUrlCache.set(imageUrl, resultPath);
-      
+
       return resultPath;
     }
   } catch (error: unknown) {
@@ -713,7 +719,7 @@ export const downloadImage = async (
       id: eventId,
       type: eventType,
       title: eventTitle,
-      day: eventDay
+      day: eventDay,
     });
     return null;
   }
@@ -734,17 +740,17 @@ export const cleanupCorruptedImage = async (
     // Déterminer le sous-répertoire en fonction du type d'événement
     const subDir = isSpeakerImage ? 'speakers' : eventType.toLowerCase();
     const targetDir = path.join(BASE_IMAGE_DIR, subDir);
-    
+
     // Préfixe pour les images de conférenciers
     const prefix = isSpeakerImage ? 'speaker-' : '';
-    
+
     // Vérifier les extensions courantes
     const extensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg'];
-    
+
     for (const ext of extensions) {
       const fileName = `${prefix}${eventId}${ext}`;
       const filePath = path.join(targetDir, fileName);
-      
+
       if (fs.existsSync(filePath)) {
         console.log(`🗑️ Suppression de l'image corrompue: ${filePath}`);
         await fsPromises.unlink(filePath);
@@ -763,22 +769,22 @@ export const cleanupCorruptedImage = async (
 export const processEventImages = async (events: Event[]): Promise<Event[]> => {
   // Créer les répertoires nécessaires
   await createImageDirectories();
-  
+
   // Vérifier si les images ont déjà été traitées dans cette session
   const skipDownloads = imagesProcessedInSession;
   if (skipDownloads) {
     console.log('ℹ️ Images déjà traitées dans cette session, téléchargements ignorés');
   }
-  
+
   // NOTE: Nous ne normalisons plus automatiquement les noms à chaque traitement
   // car les nouvelles images seront toujours créées avec le bon format.
   // La fonction normalizeImageFilenames reste disponible pour la migration initiale.
-  
+
   // Traiter chaque événement
   const processedEvents = await Promise.all(
     events.map(async (event) => {
       const eventCopy = { ...event } as ProcessedEvent;
-      
+
       // Traiter l'image principale de l'événement
       if (event.image && typeof event.image === 'string' && isValidImage(event.image)) {
         try {
@@ -797,7 +803,7 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
               const typeStr = String(event.type);
               basePrefix = typeStr.toLowerCase();
             }
-            
+
             // Vérifier si l'image existe déjà en utilisant le cache
             const existingImagePath = getImagePath(event.id, basePrefix, false);
             if (existingImagePath) {
@@ -810,7 +816,7 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
             if (existingImagePath) {
               eventCopy.image = existingImagePath;
               eventCopy.imageDownloaded = true;
-            } 
+            }
             // Télécharger l'image seulement si nécessaire et si on ne saute pas les téléchargements
             else if (!skipDownloads) {
               const downloadedImagePath = await downloadImage(
@@ -821,11 +827,11 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
                 event.title,
                 event.day
               );
-              
+
               if (downloadedImagePath) {
                 eventCopy.image = downloadedImagePath;
                 eventCopy.imageDownloaded = true;
-                
+
                 // Mettre à jour le cache avec le nouveau chemin
                 const cacheKey = `${event.id}-${event.type}-false`;
                 resolvedImagePathsCache.set(cacheKey, downloadedImagePath);
@@ -836,7 +842,7 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
           console.error(`❌ Erreur lors du traitement de l'image pour l'événement ${event.id}:`, formatError(error));
         }
       }
-      
+
       // Traiter l'image du conférencier si présente
       if (event.speakerImage && typeof event.speakerImage === 'string' && isValidImage(event.speakerImage)) {
         try {
@@ -854,7 +860,7 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
             if (existingImagePath) {
               eventCopy.speakerImage = existingImagePath;
               eventCopy.speakerImageDownloaded = true;
-            } 
+            }
             // Télécharger l'image seulement si nécessaire et si on ne saute pas les téléchargements
             else if (!skipDownloads) {
               const downloadedImagePath = await downloadImage(
@@ -865,11 +871,11 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
                 event.title,
                 event.day
               );
-              
+
               if (downloadedImagePath) {
                 eventCopy.speakerImage = downloadedImagePath;
                 eventCopy.speakerImageDownloaded = true;
-                
+
                 // Mettre à jour le cache avec le nouveau chemin
                 const cacheKey = `${event.id}-${event.type}-true`;
                 resolvedImagePathsCache.set(cacheKey, downloadedImagePath);
@@ -877,18 +883,21 @@ export const processEventImages = async (events: Event[]): Promise<Event[]> => {
             }
           }
         } catch (error) {
-          console.error(`❌ Erreur lors du traitement de l'image du conférencier pour l'événement ${event.id}:`, formatError(error));
+          console.error(
+            `❌ Erreur lors du traitement de l'image du conférencier pour l'événement ${event.id}:`,
+            formatError(error)
+          );
         }
       }
-      
+
       return eventCopy;
     })
   );
-  
+
   // Marquer les images comme traitées pour cette session
   imagesProcessedInSession = true;
   console.log('✅ Images traitées et mises en cache pour cette session');
-  
+
   return processedEvents;
 };
 
@@ -907,28 +916,25 @@ const formatError = (error: unknown): string => {
  * @param _isSpeakerImage Indique s'il s'agit d'une image de conférencier (non utilisé)
  * @returns true si l'image est valide, false sinon
  */
-export const optimizeExistingImage = async (
-  imagePath: string,
-  _isSpeakerImage: boolean = false
-): Promise<boolean> => {
+export const optimizeExistingImage = async (imagePath: string, _isSpeakerImage: boolean = false): Promise<boolean> => {
   try {
     // Vérifier si le fichier existe
     if (!fs.existsSync(imagePath)) {
       console.error(`❌ Image non trouvée: ${imagePath}`);
       return false;
     }
-    
+
     // Vérifier la taille du fichier
     const stats = await fsPromises.stat(imagePath);
     if (stats.size === 0) {
       console.error(`❌ Fichier image vide: ${imagePath}`);
-      await logProblematicImage(imagePath, "Fichier image vide (0 octets)", {
+      await logProblematicImage(imagePath, 'Fichier image vide (0 octets)', {
         id: '',
         type: '',
         title: '',
-        day: ''
+        day: '',
       });
-      
+
       // Supprimer le fichier vide
       try {
         await fsPromises.unlink(imagePath);
@@ -936,40 +942,40 @@ export const optimizeExistingImage = async (
       } catch (deleteError) {
         console.error(`❌ Erreur lors de la suppression du fichier vide: ${imagePath}`, formatError(deleteError));
       }
-      
+
       return false;
     }
-    
+
     if (stats.size < 100) {
       console.warn(`⚠️ Fichier image très petit: ${imagePath} (${stats.size} octets)`);
       await logProblematicImage(imagePath, `Fichier image très petit (${stats.size} octets)`, {
         id: '',
         type: '',
         title: '',
-        day: ''
+        day: '',
       });
     }
-    
+
     // Lire le fichier
     const buffer = await fsPromises.readFile(imagePath);
-    
+
     // Vérifier que l'image est valide
     const isValid = await validateImageBuffer(buffer);
     if (!isValid) {
       console.error(`❌ Image invalide: ${imagePath}`);
       // Journaliser l'image problématique
-      await logProblematicImage(imagePath, "Image invalide", {
+      await logProblematicImage(imagePath, 'Image invalide', {
         id: '',
         type: '',
         title: '',
-        day: ''
+        day: '',
       });
       return false;
     }
-    
+
     // Obtenir les métadonnées de l'image pour vérification
     const metadata = await sharp(buffer).metadata();
-    
+
     // Vérifier les dimensions extrêmes (trop grandes ou trop petites)
     if (metadata.width && metadata.height) {
       // Images trop petites (moins de 10px dans une dimension)
@@ -979,10 +985,10 @@ export const optimizeExistingImage = async (
           id: '',
           type: '',
           title: '',
-          day: ''
+          day: '',
         });
       }
-      
+
       // Images trop grandes (plus de 4000px dans une dimension)
       if (metadata.width > 4000 || metadata.height > 4000) {
         console.warn(`⚠️ Image très grande: ${imagePath} (${metadata.width}x${metadata.height})`);
@@ -990,23 +996,25 @@ export const optimizeExistingImage = async (
           id: '',
           type: '',
           title: '',
-          day: ''
+          day: '',
         });
       }
-      
+
       // Images avec ratio extrême (très allongées)
       const ratio = Math.max(metadata.width / metadata.height, metadata.height / metadata.width);
       if (ratio > 3) {
-        console.warn(`⚠️ Image avec ratio extrême: ${imagePath} (${metadata.width}x${metadata.height}, ratio: ${ratio.toFixed(2)})`);
+        console.warn(
+          `⚠️ Image avec ratio extrême: ${imagePath} (${metadata.width}x${metadata.height}, ratio: ${ratio.toFixed(2)})`
+        );
         await logProblematicImage(imagePath, `Image avec ratio extrême: ${ratio.toFixed(2)}`, {
           id: '',
           type: '',
           title: '',
-          day: ''
+          day: '',
         });
       }
     }
-    
+
     // console.log(`✅ Image vérifiée avec succès: ${imagePath}`);
     return true;
   } catch (error: unknown) {
@@ -1016,7 +1024,7 @@ export const optimizeExistingImage = async (
       id: '',
       type: '',
       title: '',
-      day: ''
+      day: '',
     });
     return false;
   }
@@ -1031,47 +1039,47 @@ export const cleanupLogs = async (): Promise<void> => {
   try {
     const logDir = path.join(BASE_IMAGE_DIR, 'logs');
     const logFile = path.join(logDir, 'problematic-images.log');
-    
+
     // Vérifier si le fichier de log existe
     if (!fs.existsSync(logFile)) {
       console.log('ℹ️ Aucun fichier de log à nettoyer');
       return;
     }
-    
+
     // Lire le contenu du fichier de log
     const logContent = await fsPromises.readFile(logFile, 'utf-8');
-    const logEntries = logContent.split('\n\n').filter(entry => entry.trim() !== '');
-    
+    const logEntries = logContent.split('\n\n').filter((entry) => entry.trim() !== '');
+
     // Si le nombre d'entrées est inférieur à la limite, pas besoin de nettoyer
     if (logEntries.length <= MAX_LOG_ENTRIES) {
       console.log(`ℹ️ Le fichier de log contient ${logEntries.length} entrées, pas besoin de nettoyage`);
       return;
     }
-    
+
     console.log(`🧹 Nettoyage du fichier de log (${logEntries.length} entrées -> ${MAX_LOG_ENTRIES} entrées)`);
-    
+
     // Filtrer les entrées pour ne garder que les plus récentes
     const recentEntries = logEntries
-      .filter(entry => {
+      .filter((entry) => {
         // Extraire la date de l'entrée
         const timestampMatch = entry.match(/\[(.*?)\]/);
         if (!timestampMatch) return true; // Garder les entrées sans timestamp
-        
+
         const timestamp = new Date(timestampMatch[1]);
         const now = new Date();
         const ageInDays = (now.getTime() - timestamp.getTime()) / (1000 * 60 * 60 * 24);
-        
+
         // Garder les entrées de moins de MAX_LOG_AGE_DAYS jours
         return ageInDays <= MAX_LOG_AGE_DAYS;
       })
       .slice(-MAX_LOG_ENTRIES); // Ne garder que les MAX_LOG_ENTRIES plus récentes
-    
+
     // Réécrire le fichier de log avec les entrées filtrées
     const newLogContent = '# Images problématiques\n\n' + recentEntries.join('\n\n') + '\n\n';
     await fsPromises.writeFile(logFile, newLogContent);
-    
+
     console.log(`✅ Fichier de log nettoyé (${recentEntries.length} entrées conservées)`);
-    
+
     // Mettre à jour le rapport HTML
     await updateProblematicImagesReport();
   } catch (error) {
@@ -1086,11 +1094,11 @@ export const cleanupLogs = async (): Promise<void> => {
  * @param eventInfo Informations supplémentaires sur l'événement associé
  */
 export const logProblematicImage = async (
-  imagePath: string, 
+  imagePath: string,
   reason: string,
-  eventInfo?: { 
-    id?: string; 
-    title?: string; 
+  eventInfo?: {
+    id?: string;
+    title?: string;
     type?: string;
     day?: string;
   }
@@ -1098,21 +1106,21 @@ export const logProblematicImage = async (
   try {
     const logDir = path.join(BASE_IMAGE_DIR, 'logs');
     const logFile = path.join(logDir, 'problematic-images.log');
-    
+
     // Créer le répertoire de logs s'il n'existe pas
     if (!fs.existsSync(logDir)) {
       await fsPromises.mkdir(logDir, { recursive: true });
     }
-    
+
     // Créer le fichier de log s'il n'existe pas
     if (!fs.existsSync(logFile)) {
       await fsPromises.writeFile(logFile, '# Images problématiques\n\n');
     }
-    
+
     // Ajouter l'entrée au fichier de log
     const timestamp = new Date().toISOString();
     let logEntry = `[${timestamp}] ${imagePath} - ${reason}`;
-    
+
     // Ajouter les informations sur l'événement si disponibles
     if (eventInfo) {
       logEntry += '\nInfos événement:';
@@ -1121,12 +1129,12 @@ export const logProblematicImage = async (
       if (eventInfo.type) logEntry += `\n  - Type: ${eventInfo.type}`;
       if (eventInfo.day) logEntry += `\n  - Jour: ${eventInfo.day}`;
     }
-    
+
     logEntry += '\n\n';
-    
+
     await fsPromises.appendFile(logFile, logEntry);
     console.log(`📝 Image problématique journalisée: ${imagePath}`);
-    
+
     // Nettoyer les logs si nécessaire (une fois sur 10 pour éviter de le faire trop souvent)
     if (Math.random() < 0.1) {
       await cleanupLogs();
@@ -1147,20 +1155,22 @@ export const updateProblematicImagesReport = async (): Promise<void> => {
     // Vérifier si une mise à jour est nécessaire (éviter les mises à jour trop fréquentes)
     const now = Date.now();
     if (now - lastReportUpdate < REPORT_UPDATE_INTERVAL) {
-      console.log(`⏱️ Mise à jour du rapport ignorée (dernière mise à jour il y a ${Math.floor((now - lastReportUpdate) / 1000)}s)`);
+      console.log(
+        `⏱️ Mise à jour du rapport ignorée (dernière mise à jour il y a ${Math.floor((now - lastReportUpdate) / 1000)}s)`
+      );
       return;
     }
-    
+
     // Lire le fichier de log
     const logPath = path.join(BASE_IMAGE_DIR, 'logs', 'problematic-images.log');
     if (!fs.existsSync(logPath)) {
-      console.log('⚠️ Aucun fichier de log trouvé, création d\'un rapport vide');
+      console.log("⚠️ Aucun fichier de log trouvé, création d'un rapport vide");
       return;
     }
-    
+
     const logContent = await fsPromises.readFile(logPath, 'utf-8');
-    const logEntries = logContent.split('\n\n').filter(entry => entry.trim() !== '');
-    
+    const logEntries = logContent.split('\n\n').filter((entry) => entry.trim() !== '');
+
     // Créer le contenu HTML
     const htmlContent = `
     <!DOCTYPE html>
@@ -1225,17 +1235,18 @@ export const updateProblematicImagesReport = async (): Promise<void> => {
         <p><strong>Nombre total d'images problématiques :</strong> ${logEntries.length}</p>
         <p><strong>Dernière mise à jour :</strong> ${new Date().toLocaleString('fr-FR')}</p>
       </div>
-      ${logEntries.map(entry => {
-        // Extraire les informations de l'entrée
-        const urlMatch = entry.match(/\[.*?\] (.*?) -/);
-        const reasonMatch = entry.match(/- (.*?)(\n|$)/);
-        const infoMatch = entry.match(/Infos événement:([\s\S]*?)(\n\n|$)/);
-        
-        const url = urlMatch ? urlMatch[1] : 'URL inconnue';
-        const reason = reasonMatch ? reasonMatch[1] : 'Raison inconnue';
-        const info = infoMatch ? infoMatch[1].trim() : '';
-        
-        return `
+      ${logEntries
+        .map((entry) => {
+          // Extraire les informations de l'entrée
+          const urlMatch = entry.match(/\[.*?\] (.*?) -/);
+          const reasonMatch = entry.match(/- (.*?)(\n|$)/);
+          const infoMatch = entry.match(/Infos événement:([\s\S]*?)(\n\n|$)/);
+
+          const url = urlMatch ? urlMatch[1] : 'URL inconnue';
+          const reason = reasonMatch ? reasonMatch[1] : 'Raison inconnue';
+          const info = infoMatch ? infoMatch[1].trim() : '';
+
+          return `
         <div class="entry">
           <h3>${reason}</h3>
           <p class="url">${url}</p>
@@ -1244,18 +1255,19 @@ export const updateProblematicImagesReport = async (): Promise<void> => {
           </div>
         </div>
         `;
-      }).join('')}
+        })
+        .join('')}
     </body>
     </html>
     `;
-    
+
     // Écrire le fichier HTML
     const reportPath = path.join(BASE_IMAGE_DIR, 'logs', 'problematic-images-report.html');
     await fsPromises.writeFile(reportPath, htmlContent);
-    
+
     // Mettre à jour le timestamp de la dernière mise à jour
     lastReportUpdate = now;
-    
+
     console.log(`✅ Rapport HTML généré: ${reportPath}`);
   } catch (error) {
     console.error('❌ Erreur lors de la génération du rapport HTML:', error);
@@ -1267,31 +1279,31 @@ export const updateProblematicImagesReport = async (): Promise<void> => {
  */
 export const optimizeAllExistingImages = async (): Promise<void> => {
   try {
-    console.log('🔄 Début de l\'optimisation des images existantes...');
-    
+    console.log("🔄 Début de l'optimisation des images existantes...");
+
     // NOTE: Nous ne normalisons plus automatiquement les noms à chaque optimisation
     // Cette normalisation peut être exécutée manuellement via le script de migration
     // ou une commande dédiée si nécessaire.
-    
+
     // Répertoires des différents types d'événements
     const eventDirs = [
       path.join(BASE_IMAGE_DIR, 'conferences'),
       path.join(BASE_IMAGE_DIR, 'ateliers'),
-      path.join(BASE_IMAGE_DIR, 'stands')
+      path.join(BASE_IMAGE_DIR, 'stands'),
     ];
-    
+
     // Récupérer tous les fichiers d'images
     let optimizedCount = 0;
-    
+
     for (const eventDir of eventDirs) {
       try {
         const files = await fsPromises.readdir(eventDir);
-        
+
         for (const file of files) {
           if (file.endsWith('.jpg') || file.endsWith('.jpeg') || file.endsWith('.png') || file.endsWith('.webp')) {
             const filePath = path.join(eventDir, file);
             const success = await optimizeExistingImage(filePath);
-            
+
             if (success) {
               optimizedCount++;
             }
@@ -1306,7 +1318,7 @@ export const optimizeAllExistingImages = async (): Promise<void> => {
         }
       }
     }
-    
+
     console.log(`✅ Optimisation des images existantes terminée. ${optimizedCount} images optimisées.`);
   } catch (error) {
     console.error("❌ Erreur lors de l'optimisation des images existantes:", error);
@@ -1320,33 +1332,33 @@ export const optimizeAllExistingImages = async (): Promise<void> => {
 export const normalizeImageFilenames = async (): Promise<number> => {
   try {
     console.log("🔄 Début de la normalisation des noms de fichiers d'images...");
-    
+
     // Créer les répertoires nécessaires
     await createImageDirectories();
-    
+
     // Types d'événements
     const eventTypes = ['conferences', 'ateliers', 'stands'];
     let renamedCount = 0;
     const standsMap = new Map(); // Pour regrouper les fichiers des stands par ID
-    
+
     // Parcourir tous les types d'événements
     for (const type of eventTypes) {
       const typeDir = path.join(BASE_IMAGE_DIR, type);
-      
+
       // Vérifier si le répertoire existe
       if (!fs.existsSync(typeDir)) {
         console.log(`⚠️ Le répertoire ${typeDir} n'existe pas, création...`);
         await fsPromises.mkdir(typeDir, { recursive: true });
         continue;
       }
-      
+
       // Lire tous les fichiers du répertoire
       const files = await fsPromises.readdir(typeDir);
       console.log(`📂 Traitement de ${files.length} fichiers dans ${typeDir}`);
-      
+
       // Extraire le préfixe du type d'événement (atelier, conference, stand)
       const basePrefix = type.slice(0, -1); // 'conference', 'atelier', 'stand'
-      
+
       // Pour les stands, d'abord regrouper tous les fichiers par ID de stand
       if (type === 'stands') {
         for (const file of files) {
@@ -1354,22 +1366,22 @@ export const normalizeImageFilenames = async (): Promise<number> => {
           if (!file.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
             continue;
           }
-          
+
           // Extraire l'ID du stand du nom de fichier
           let standId = '';
           const idMatch = file.match(new RegExp(`${basePrefix}(-${basePrefix})?-(\\d+)`));
-          
+
           if (idMatch && idMatch[2]) {
             standId = idMatch[2];
-            
+
             // Si c'est la première fois qu'on voit ce stand, l'ajouter à la map
             if (!standsMap.has(standId)) {
               standsMap.set(standId, {
                 files: [],
-                sizes: []
+                sizes: [],
               });
             }
-            
+
             // Ajouter ce fichier à la liste des fichiers pour ce stand
             const filePath = path.join(typeDir, file);
             const stats = await fsPromises.stat(filePath);
@@ -1377,48 +1389,48 @@ export const normalizeImageFilenames = async (): Promise<number> => {
             standsMap.get(standId).sizes.push(stats.size);
           }
         }
-        
+
         // Maintenant, pour chaque stand, ne garder que le plus grand fichier
         for (const [standId, data] of standsMap.entries()) {
           // S'il n'y a qu'un seul fichier, le renommer directement
           if (data.files.length === 1) {
             const oldName = data.files[0];
             const newName = `${basePrefix}-${standId}.webp`;
-            
+
             // Si le nom est déjà correct, passer au suivant
             if (oldName === newName) {
               continue;
             }
-            
+
             const oldPath = path.join(typeDir, oldName);
             const newPath = path.join(typeDir, newName);
-            
+
             console.log(`🔄 Renommage de ${oldName} en ${newName}`);
             await fsPromises.rename(oldPath, newPath);
             renamedCount++;
-          } 
+          }
           // S'il y a plusieurs fichiers, garder le plus grand
           else if (data.files.length > 1) {
             // Trouver l'index du plus grand fichier
             const maxSizeIndex = data.sizes.indexOf(Math.max(...data.sizes));
             const bestFile = data.files[maxSizeIndex];
             const newName = `${basePrefix}-${standId}.webp`;
-            
+
             // Renommer le meilleur fichier
             const bestFilePath = path.join(typeDir, bestFile);
             const newPath = path.join(typeDir, newName);
-            
+
             // S'il existe déjà un fichier avec le nouveau nom et que ce n'est pas le meilleur
             if (fs.existsSync(newPath) && bestFile !== newName) {
               await fsPromises.unlink(newPath); // Supprimer l'ancien
             }
-            
+
             if (bestFile !== newName) {
               console.log(`🔄 Renommage de ${bestFile} (plus grand) en ${newName}`);
               await fsPromises.rename(bestFilePath, newPath);
               renamedCount++;
             }
-            
+
             // Supprimer tous les autres fichiers
             for (let i = 0; i < data.files.length; i++) {
               if (i !== maxSizeIndex) {
@@ -1429,7 +1441,7 @@ export const normalizeImageFilenames = async (): Promise<number> => {
             }
           }
         }
-      } 
+      }
       // Pour les ateliers et conférences, correction simple des redondances
       else {
         // Traiter chaque fichier
@@ -1438,9 +1450,9 @@ export const normalizeImageFilenames = async (): Promise<number> => {
           if (!file.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
             continue;
           }
-          
+
           let newFilename = file;
-          
+
           // 1. Corriger les redondances de type (atelier-atelier-XX -> atelier-XX)
           const redundantPrefix = `${basePrefix}-${basePrefix}-`;
           if (file.startsWith(redundantPrefix)) {
@@ -1455,24 +1467,24 @@ export const normalizeImageFilenames = async (): Promise<number> => {
             }
             console.log(`👉 Correction de redondance de type: ${file} -> ${newFilename}`);
           }
-          
+
           // Si le nom n'a pas changé, passer au fichier suivant
           if (file === newFilename) {
             continue;
           }
-          
+
           // Renommer le fichier
           const oldPath = path.join(typeDir, file);
           const newPath = path.join(typeDir, newFilename);
-          
+
           // Vérifier si le nouveau fichier existe déjà
           if (fs.existsSync(newPath)) {
             console.warn(`⚠️ Le fichier ${newFilename} existe déjà, comparaison des tailles...`);
-            
+
             // Comparer les tailles des fichiers
             const oldStats = await fsPromises.stat(oldPath);
             const newStats = await fsPromises.stat(newPath);
-            
+
             if (oldStats.size > newStats.size) {
               // L'ancien fichier est plus grand, le garder et remplacer le nouveau
               console.log(`🔄 Remplacement de ${newFilename} par ${file} (plus grand)`);
@@ -1493,11 +1505,11 @@ export const normalizeImageFilenames = async (): Promise<number> => {
         }
       }
     }
-    
+
     console.log(`✅ Normalisation des noms de fichiers terminée. ${renamedCount} fichiers renommés.`);
     return renamedCount;
   } catch (error: unknown) {
-    console.error("❌ Erreur lors de la normalisation des noms de fichiers:", formatError(error));
+    console.error('❌ Erreur lors de la normalisation des noms de fichiers:', formatError(error));
     return 0;
   }
 };
@@ -1509,24 +1521,20 @@ export const normalizeImageFilenames = async (): Promise<number> => {
  * @param isSpeakerImage Indique s'il s'agit d'une image de conférencier
  * @returns Le chemin de l'image ou null si non trouvée
  */
-export const getImagePath = (
-  eventId: string,
-  eventType: string,
-  isSpeakerImage: boolean = false
-): string | null => {
+export const getImagePath = (eventId: string, eventType: string, isSpeakerImage: boolean = false): string | null => {
   // Créer une clé unique pour le cache
   const cacheKey = `${eventId}-${eventType}-${isSpeakerImage}`;
-  
+
   // Vérifier si le chemin est déjà en cache
   if (resolvedImagePathsCache.has(cacheKey)) {
     return resolvedImagePathsCache.get(cacheKey) || null;
   }
-  
+
   // Résoudre le chemin
   const imagePath = isImageAlreadyDownloaded(eventId, eventType, isSpeakerImage);
-  
+
   // Mettre en cache le résultat (même si null)
   resolvedImagePathsCache.set(cacheKey, imagePath || '');
-  
+
   return imagePath;
-}; 
+};

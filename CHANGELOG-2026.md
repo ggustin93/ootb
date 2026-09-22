@@ -52,6 +52,16 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **`.gitignore`** — Ignore `.claude/settings.local.json` (réglages locaux par utilisateur) et `*.mov` (binaires/tutoriels hors dépôt).
 - Schéma Tina `eduspark` (`tina/festivalCollection.ts`) réduit à `{ enabled, image, ctaUrl }` (retrait des champs texte `eyebrow`/`title`/`description`/`ctaText` devenus inutiles) ; `tina/tina-lock.json` régénéré.
 
+### Qualité du code : contrôle qualité au vert (#24)
+
+- **`npm run check` passe à nouveau (0 erreur)** — Le contrôle qualité exécuté avant chaque livraison était en échec depuis longtemps : 90 erreurs de types, 140 erreurs ESLint et 417 fichiers mal formatés. Il redevient un vrai filet de sécurité : toute nouvelle erreur saute aux yeux au lieu de se perdre dans le bruit.
+- **Erreurs corrigées à la source, sans les masquer** — Les propriétés des composants correspondent maintenant aux données qu'ils reçoivent réellement (images Cloudinary, en-tête, cartes, héro du festival, événements NocoDB…). Aucune erreur n'est réduite au silence (`any`, `@ts-ignore` ou `eslint-disable`).
+- **Formatage automatique cohérent** — Le code suit désormais une seule convention Prettier. Le contenu généré ou édité via TinaCMS (`src/content/`, `tina-lock.json`) est exclu du formatage, pour que les builds et les éditions CMS ne produisent pas de modifications parasites.
+- **Code mort supprimé** — Trois fichiers que plus rien n'importait sont supprimés (`PhotoGallery.astro`, `lib/posts.ts`, `LandingLayout.astro`). Deux d'entre eux importaient des fichiers inexistants. Un doublon d'animations dans `tailwind.config.js`, qui écrasait silencieusement la première définition, est aussi supprimé.
+- **Petites corrections visibles** — Le bouton de don de la section « Nous soutenir » ouvre désormais le lien externe de façon sécurisée (`rel="noopener noreferrer"`, que le bouton ignorait auparavant).
+- **Aucune régression** — Le build produit les mêmes 379 pages qu'avant, avec des animations CSS identiques. Tous les tests hors ligne passent.
+- **Point ouvert** — La page `dashboard` a toujours été indexable par les moteurs de recherche : son réglage « noindex » n'était jamais pris en compte. Il reste à décider si elle doit être masquée.
+
 **Fichiers ajoutés** : `src/pages/erasmus-plus.astro`, `src/content/erasmus-plus/index.json`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/utils/tinaRichText.ts`, `src/utils/renderMissionHtml.ts`, `src/components/ui/TinaRichText.astro`, `src/utils/__tests__/tinaRichText.test.js`, `tina/erasmusCollection.ts`, `public/images/erasmus/` (cats-family, cofinance-union-europeenne, randers-statsskole), `.claude/skills/tinacms-ootb/`
 
 **Fichiers modifiés** : `src/components/widgets/Header.astro`, `src/components/blog/CategoryInfo.astro`, `src/components/ui/TicketingModal.tsx`, `src/components/ui/TicketingButton.tsx`, `src/components/sections/FestivalHeroSection.astro`, `src/components/sections/EduSparkSection.astro`, `src/pages/festival.astro`, `src/utils/blog.ts`, `src/content/about/index.json`, `src/content/navigation/index.json`, `src/content/festival/tina/index.json`, `src/pages/a-propos.astro`, `tina/aboutCollection.ts`, `tina/navigationCollection.ts`, `tina/festivalCollection.ts`, `tina/config.ts`, `tina/tina-lock.json`, `package.json`, `.gitignore`

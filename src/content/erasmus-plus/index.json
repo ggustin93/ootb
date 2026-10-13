@@ -36,7 +36,10 @@
       "description": "Située à Randers, au Danemark, Randers Statsskole est une école secondaire accueillant environ 800 élèves âgés de 16 à 19 ans dans un programme de trois ans.\n\nL'établissement propose un enseignement général académique couvrant les sciences humaines, les sciences sociales et les sciences naturelles, avec pour objectif de préparer les élèves à l'enseignement supérieur.\n\nDepuis plusieurs années, l'école s'investit activement dans l'intégration de l'intelligence artificielle dans l'éducation. Elle explore notamment comment ces outils peuvent soutenir les pratiques pédagogiques et les apprentissages des élèves de manière responsable, critique et éclairée.",
       "lien": "https://randersstatsskole.dk/",
       "liens": [
-        { "label": "Site", "url": "https://randersstatsskole.dk/" }
+        {
+          "label": "Site",
+          "url": "https://randersstatsskole.dk/"
+        }
       ]
     },
     {
@@ -45,9 +48,18 @@
       "description": "Fondée en 2003 par François Petit, Cat's Family développe et édite des jeux pédagogiques visant à faciliter les apprentissages, notamment en mathématiques et en français.\n\nDepuis sa création, la structure a conçu de nombreux jeux éducatifs, accompagnés de manuels pour les enseignants, ainsi qu'une plateforme numérique dédiée. Ces outils ont été testés auprès de plus de 15 000 élèves et plus de 200 000 jeux ont été diffusés en Europe.\n\nCat's Family est aujourd'hui reconnue comme une référence dans le domaine du jeu éducatif, notamment auprès des écoles, des orthophonistes et des familles d'enfants présentant des troubles d'apprentissage (dyslexie, dyscalculie…). Partenaire fidèle du Festival Out of the Books, Cat's Family partage une vision commune : rendre les apprentissages plus accessibles, plus concrets et plus engageants.",
       "lien": "http://www.catsfamily.net",
       "liens": [
-        { "label": "Site", "url": "http://www.catsfamily.net" },
-        { "label": "Plateforme", "url": "http://www.catsfamily.club" },
-        { "label": "Boutique", "url": "http://www.catsfamily.fr" }
+        {
+          "label": "Site",
+          "url": "http://www.catsfamily.net"
+        },
+        {
+          "label": "Plateforme",
+          "url": "http://www.catsfamily.club"
+        },
+        {
+          "label": "Boutique",
+          "url": "http://www.catsfamily.fr"
+        }
       ]
     }
   ],
@@ -61,44 +73,100 @@
         "videosPublie": true,
         "fichesPublie": true,
         "podcasts": [
-          { "titre": "Podcast — à compléter", "cover": "", "url": "#" },
-          { "titre": "Podcast — à compléter", "cover": "", "url": "#" },
-          { "titre": "Podcast — à compléter", "cover": "", "url": "#" },
-          { "titre": "Podcast — à compléter", "cover": "", "url": "#" }
+          {
+            "titre": "Podcast — à compléter",
+            "cover": "",
+            "url": "#"
+          },
+          {
+            "titre": "Podcast — à compléter",
+            "cover": "",
+            "url": "#"
+          },
+          {
+            "titre": "Podcast — à compléter",
+            "cover": "",
+            "url": "#"
+          },
+          {
+            "titre": "Podcast — à compléter",
+            "cover": "",
+            "url": "#"
+          }
         ],
         "videos": [
-          { "titre": "Vidéo — à compléter", "url": "#", "miniature": "" },
-          { "titre": "Vidéo — à compléter", "url": "#", "miniature": "" },
-          { "titre": "Vidéo — à compléter", "url": "#", "miniature": "" },
-          { "titre": "Vidéo — à compléter", "url": "#", "miniature": "" }
+          {
+            "titre": "Vidéo — à compléter",
+            "url": "#https://youtu.be/Mne-ziyMvec",
+            "miniature": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1791873927/g6j797ml6sl2kw5f6b0y.png"
+          },
+          {
+            "titre": "Vidéo — à compléter",
+            "url": "#",
+            "miniature": ""
+          },
+          {
+            "titre": "Vidéo — à compléter",
+            "url": "#",
+            "miniature": ""
+          },
+          {
+            "titre": "Vidéo — à compléter",
+            "url": "#",
+            "miniature": ""
+          }
         ],
         "fichesCategories": [
           {
             "categorie": "Catégorie — à compléter",
             "fiches": [
-              { "titre": "Fiche — à compléter", "lienPdf": "#" },
-              { "titre": "Fiche — à compléter", "lienPdf": "#" }
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              },
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              }
             ]
           },
           {
             "categorie": "Catégorie — à compléter",
             "fiches": [
-              { "titre": "Fiche — à compléter", "lienPdf": "#" },
-              { "titre": "Fiche — à compléter", "lienPdf": "#" }
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              },
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              }
             ]
           },
           {
             "categorie": "Catégorie — à compléter",
             "fiches": [
-              { "titre": "Fiche — à compléter", "lienPdf": "#" },
-              { "titre": "Fiche — à compléter", "lienPdf": "#" }
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              },
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              }
             ]
           },
           {
             "categorie": "Catégorie — à compléter",
             "fiches": [
-              { "titre": "Fiche — à compléter", "lienPdf": "#" },
-              { "titre": "Fiche — à compléter", "lienPdf": "#" }
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              },
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              }
             ]
           }
         ]
@@ -109,44 +177,100 @@
         "videosPublie": true,
         "fichesPublie": true,
         "podcasts": [
-          { "titre": "Podcast — à compléter", "cover": "", "url": "#" },
-          { "titre": "Podcast — à compléter", "cover": "", "url": "#" },
-          { "titre": "Podcast — à compléter", "cover": "", "url": "#" },
-          { "titre": "Podcast — à compléter", "cover": "", "url": "#" }
+          {
+            "titre": "Podcast — à compléter",
+            "cover": "",
+            "url": "#"
+          },
+          {
+            "titre": "Podcast — à compléter",
+            "cover": "",
+            "url": "#"
+          },
+          {
+            "titre": "Podcast — à compléter",
+            "cover": "",
+            "url": "#"
+          },
+          {
+            "titre": "Podcast — à compléter",
+            "cover": "",
+            "url": "#"
+          }
         ],
         "videos": [
-          { "titre": "Vidéo — à compléter", "url": "#", "miniature": "" },
-          { "titre": "Vidéo — à compléter", "url": "#", "miniature": "" },
-          { "titre": "Vidéo — à compléter", "url": "#", "miniature": "" },
-          { "titre": "Vidéo — à compléter", "url": "#", "miniature": "" }
+          {
+            "titre": "Vidéo — à compléter",
+            "url": "#",
+            "miniature": ""
+          },
+          {
+            "titre": "Vidéo — à compléter",
+            "url": "#",
+            "miniature": ""
+          },
+          {
+            "titre": "Vidéo — à compléter",
+            "url": "#",
+            "miniature": ""
+          },
+          {
+            "titre": "Vidéo — à compléter",
+            "url": "#",
+            "miniature": ""
+          }
         ],
         "fichesCategories": [
           {
             "categorie": "Catégorie — à compléter",
             "fiches": [
-              { "titre": "Fiche — à compléter", "lienPdf": "#" },
-              { "titre": "Fiche — à compléter", "lienPdf": "#" }
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              },
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              }
             ]
           },
           {
             "categorie": "Catégorie — à compléter",
             "fiches": [
-              { "titre": "Fiche — à compléter", "lienPdf": "#" },
-              { "titre": "Fiche — à compléter", "lienPdf": "#" }
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              },
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              }
             ]
           },
           {
             "categorie": "Catégorie — à compléter",
             "fiches": [
-              { "titre": "Fiche — à compléter", "lienPdf": "#" },
-              { "titre": "Fiche — à compléter", "lienPdf": "#" }
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              },
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              }
             ]
           },
           {
             "categorie": "Catégorie — à compléter",
             "fiches": [
-              { "titre": "Fiche — à compléter", "lienPdf": "#" },
-              { "titre": "Fiche — à compléter", "lienPdf": "#" }
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              },
+              {
+                "titre": "Fiche — à compléter",
+                "lienPdf": "#"
+              }
             ]
           }
         ]

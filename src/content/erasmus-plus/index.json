@@ -74,9 +74,9 @@
         "fichesPublie": true,
         "podcasts": [
           {
-            "titre": "Podcast — à compléter",
-            "cover": "",
-            "url": "#"
+            "titre": "Alix Van Zeebroeck: Les enjeux éducatifs liés à l'usage de l'IA à l'école - The Educational Challenges of Using AI in Schools",
+            "cover": "https://res.cloudinary.com/dza0sg4uf/image/upload/v1791874551/gapmhj2pb2xk787ytte1.png",
+            "url": "#https://smartlink.ausha.co/education-mode-d-emploi/alix-van-zeebroeck-les-enjeux-educatifs-lies-a-l-usage-de-l-ia-a-l-ecole"
           },
           {
             "titre": "Podcast — à compléter",

@@ -130,6 +130,17 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
         }
       </nav>
 
+      <div class="px-4 pb-4">
+        <button
+          id="logout"
+          type="button"
+          class="flex w-full items-center px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+        >
+          <Icon name="tabler:logout" class="w-5 h-5 mr-3 text-gray-500" />
+          Se déconnecter
+        </button>
+      </div>
+
       <div class="p-4 bg-gray-50 border-t border-gray-200" aria-label="Contact">
         <p class="text-xs text-gray-600 mb-2">Besoin d'aide ?</p>
         <div class="flex flex-col space-y-2 text-sm">
@@ -356,25 +367,26 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
           </summary>
           <p class="acc-intro">Un site sobre, pensé pour consommer peu, et comment le garder ainsi.</p>
 
-          {/* Mesure du 23/10/2026 (CO2.js, modèle SWD v4, celui de Website Carbon) — à rafraîchir de temps en temps */}
-          <div class="flex flex-col sm:flex-row gap-4 p-4 mb-4 bg-white rounded-xl border border-gray-200">
-            <div
-              class="flex-shrink-0 self-start w-16 h-16 rounded-xl bg-green-700 text-white flex items-center justify-center text-3xl font-bold"
-              aria-hidden="true"
+          {/* Source : websitecarbon.com, test du 25/03/2026 — à rafraîchir de temps en temps */}
+          <div class="p-4 mb-4 bg-white rounded-xl border border-gray-200 text-sm text-gray-700">
+            <p>
+              Page d'accueil : note <strong>A</strong> sur Website Carbon, environ 0,04 g de CO₂ par visite (test du 25 mars
+              2026). Une estimation indicative : les pages plus riches, comme celle du festival, pèsent davantage.
+            </p>
+            <p class="mt-1">
+              Déjà en place : le site est généré à l'avance (Astro) et les images sont optimisées automatiquement
+              (Cloudinary).
+            </p>
+            <a
+              href="https://www.websitecarbon.com/website/outofthebooks-com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 mt-2 text-[var(--ootb-blue)] underline hover:no-underline"
             >
-              A
-            </div>
-            <div class="text-sm text-gray-700">
-              <p class="tool-title">Note A pour l'empreinte carbone (méthode Website Carbon)</p>
-              <p>
-                Environ <strong>0,06 g de CO₂ par visite</strong> de la page d'accueil. Elle pèse 377 Ko, plus de cinq fois
-                moins qu'une page web moyenne (environ 2 Mo).
-              </p>
-              <p class="text-xs text-gray-600 mt-1">
-                Mesuré le 23 octobre 2026. Le site est généré à l'avance (Astro) et les images sont optimisées
-                automatiquement (Cloudinary).
-              </p>
-            </div>
+              Voir ou relancer la mesure
+              <Icon name="tabler:external-link" class="w-4 h-4" />
+              <span class="sr-only">{newTab}</span>
+            </a>
           </div>
 
           <h3 class="tool-title mb-2">Pourquoi c'est important</h3>
@@ -546,6 +558,15 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
   document.getElementById('open-sidebar')?.addEventListener('click', () => setSidebar(true));
   document.getElementById('close-sidebar')?.addEventListener('click', () => setSidebar(false));
   overlay?.addEventListener('click', () => setSidebar(false));
+
+  // Basic Auth n'a pas de vraie déconnexion : une requête avec de faux identifiants remplace ceux
+  // mémorisés par le navigateur (Chrome, Firefox, Edge). Safari peut exiger de fermer le navigateur.
+  document.getElementById('logout')?.addEventListener('click', () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/dashboard/', true, 'logout', 'logout');
+    xhr.onloadend = () => window.location.assign('/');
+    xhr.send();
+  });
 
   // Un lien du menu ouvre la section visée (et referme le menu sur mobile)
   sidebar?.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]').forEach((link) => {

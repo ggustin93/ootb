@@ -24,9 +24,9 @@ test.describe('Navigation and Anchor Scrolling', () => {
       ];
 
       for (const { path, title } of urls) {
-        await page.goto(`http://localhost:4322${path}`);
+        await page.goto(path);
         await expect(page).toHaveTitle(title);
-        await expect(page).toHaveURL(`http://localhost:4322${path}`);
+        await expect(page).toHaveURL(path);
       }
     });
   });
@@ -34,7 +34,7 @@ test.describe('Navigation and Anchor Scrolling', () => {
   test('Menu navigation with anchor scrolling works correctly', async ({ page }) => {
     await test.step('Navigate to homepage and test À propos menu', async () => {
       // Go to homepage
-      await page.goto('http://localhost:4322');
+      await page.goto('/');
       await expect(page).toHaveTitle(/Plateforme collaborative pour l'éducation \| Out of the Books/);
 
       // Open the "À propos" menu dropdown
@@ -67,7 +67,7 @@ test.describe('Navigation and Anchor Scrolling', () => {
 
     await test.step('Test partenaires anchor navigation', async () => {
       // Navigate to partenaires section
-      await page.goto('http://localhost:4322/a-propos/#partenaires/');
+      await page.goto('/a-propos/#partenaires/');
 
       // Verify URL and content - use section divider text for specificity
       await expect(page).toHaveURL(/\/a-propos\/#partenaires\/$/);
@@ -83,10 +83,10 @@ test.describe('Navigation and Anchor Scrolling', () => {
 
     await test.step('Test navigation back to homepage via logo', async () => {
       // Click on the logo to go back to homepage
-      await page.getByRole('link', { name: 'Out of the Books' }).first().click();
+      await page.getByRole('link', { name: 'Out of the Books', exact: true }).first().click();
 
       // Verify we're back on homepage - check title tag instead
-      await expect(page).toHaveURL('http://localhost:4322/');
+      await expect(page).toHaveURL('/');
       await expect(page).toHaveTitle(/Out of the Books/);
       await expect(page.getByText('Actualités du moment')).toBeVisible();
     });
@@ -98,8 +98,8 @@ test.describe('Navigation and Anchor Scrolling', () => {
       const categoryPaths = ['/category/podcast/', '/category/tv/', '/category/fiche/', '/category/actualite/'];
 
       for (const path of categoryPaths) {
-        await page.goto(`http://localhost:4322${path}`);
-        await expect(page).toHaveURL(`http://localhost:4322${path}`);
+        await page.goto(path);
+        await expect(page).toHaveURL(path);
         // Verify the page loads correctly
         await expect(page.locator('main')).toBeVisible();
       }
@@ -110,9 +110,9 @@ test.describe('Navigation and Anchor Scrolling', () => {
       const anchorPaths = ['/a-propos/#equipe/', '/a-propos/#partenaires/', '/festival/#programme/'];
 
       for (const path of anchorPaths) {
-        await page.goto(`http://localhost:4322${path}`);
+        await page.goto(path);
         // Simply verify URL is correct and page loads
-        await expect(page).toHaveURL(`http://localhost:4322${path}`);
+        await expect(page).toHaveURL(path);
         await expect(page.locator('main')).toBeVisible();
         console.log(`Successfully navigated to ${path}`);
       }

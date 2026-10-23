@@ -439,6 +439,20 @@ The `.cursor/rules` file captures:
 - Known challenges
 - Tool usage patterns
 
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in the GitHub Issues of `ggustin93/ootb` (`gh` CLI). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The 5 default labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. Plus type (`spec` / `ticket`) and MoSCoW priority (`must-have`, `should-have`, `could-have`, `wont-have-now`), and ticket size (`size:xs` to `size:xl`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context layout: one `CONTEXT.md` and `docs/adr/` at the repo root, both created lazily. See `docs/agents/domain.md`.
+
 ---
 
 _This document serves as the primary context for AI assistants working on this project. It should be updated as the project evolves._

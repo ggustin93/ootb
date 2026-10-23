@@ -113,6 +113,16 @@
 # PROTECTION DASHBOARD (AUTHENTIFICATION)
 # =====================================
 
+# Portail admin : protégé par netlify/edge-functions/portal-auth.ts (Basic Auth, PORTAL_PASSWORD).
+# /ootb = ancien point d'entrée, conservé comme raccourci.
+[[redirects]]
+  from = "/ootb"
+  to = "/dashboard/"
+  status = 301
+  force = true
+
+# Ancienne protection Supabase (inactive) :
+
 # Désactivé temporairement pour la démo
 # [[redirects]]
 #   from = "/dashboard"

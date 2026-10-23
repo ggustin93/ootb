@@ -15,7 +15,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Festival Page Filters', () => {
   test('Festival page navigation and basic functionality', async ({ page }) => {
     await test.step('Navigate to festival page', async () => {
-      await page.goto('http://localhost:4322/festival/');
+      await page.goto('/festival/');
       await expect(page).toHaveTitle(/Festival.*Out of the Books/);
       // Use a more specific heading check - look for main Festival heading
       await expect(page.getByRole('heading', { name: 'Out of the Books Festival' })).toBeVisible();
@@ -23,7 +23,7 @@ test.describe('Festival Page Filters', () => {
 
     await test.step('Navigate to programme section', async () => {
       // Scroll to programme section
-      await page.goto('http://localhost:4322/festival/#programme/');
+      await page.goto('/festival/#programme/');
 
       // Wait for the programme section to load
       await page.waitForTimeout(2000);
@@ -56,7 +56,7 @@ test.describe('Festival Page Filters', () => {
 
   test('Event type filtering works correctly', async ({ page }) => {
     await test.step('Setup festival page', async () => {
-      await page.goto('http://localhost:4322/festival/#programme/');
+      await page.goto('/festival/#programme/');
       await page.waitForTimeout(2000);
       await expect(page.getByText('Tous les événements')).toBeVisible();
     });
@@ -131,7 +131,7 @@ test.describe('Festival Page Filters', () => {
 
   test('Day filtering integration works correctly', async ({ page }) => {
     await test.step('Setup festival page', async () => {
-      await page.goto('http://localhost:4322/festival/#programme/');
+      await page.goto('/festival/#programme/');
       await page.waitForTimeout(2000);
       await expect(page.getByText('Tous les événements')).toBeVisible();
     });
@@ -157,7 +157,7 @@ test.describe('Festival Page Filters', () => {
 
   test('Filter reset functionality works correctly', async ({ page }) => {
     await test.step('Setup festival page', async () => {
-      await page.goto('http://localhost:4322/festival/#programme/');
+      await page.goto('/festival/#programme/');
       await page.waitForTimeout(2000);
       await expect(page.getByText('Tous les événements')).toBeVisible();
     });
@@ -197,7 +197,7 @@ test.describe('Festival Page Filters', () => {
 
   test('Responsive behavior of filters works correctly', async ({ page }) => {
     await test.step('Setup festival page', async () => {
-      await page.goto('http://localhost:4322/festival/#programme/');
+      await page.goto('/festival/#programme/');
       await page.waitForTimeout(2000);
       await expect(page.getByText('Tous les événements')).toBeVisible();
     });

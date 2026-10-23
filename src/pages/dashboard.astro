@@ -22,7 +22,6 @@ const contactInfo = {
   phone: '0494 87 89 36',
   phoneTel: '+32494878936',
   whatsapp: 'https://wa.me/32494878936',
-  calendar: 'https://cal.com/pwablo',
   github: 'https://github.com/ggustin93/ootb',
 };
 
@@ -148,28 +147,16 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
             <Icon name="tabler:phone" class="w-5 h-5 mr-3 text-gray-500" />
             {contactInfo.phone}
           </a>
-          <div class="flex space-x-2">
-            <a
-              href={contactInfo.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-              title="WhatsApp"
-              class="flex-1 flex justify-center px-3 py-2 rounded-lg bg-white hover:bg-gray-100"
-            >
-              <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-gray-500" />
-            </a>
-            <a
-              href={contactInfo.calendar}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Prendre rendez-vous"
-              title="Prendre rendez-vous"
-              class="flex-1 flex justify-center px-3 py-2 rounded-lg bg-white hover:bg-gray-100"
-            >
-              <Icon name="tabler:calendar" class="w-5 h-5 text-gray-500" />
-            </a>
-          </div>
+          <a
+            href={contactInfo.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center px-3 py-2 text-gray-700 rounded-lg bg-white hover:bg-gray-100"
+          >
+            <Icon name="tabler:brand-whatsapp" class="w-5 h-5 mr-3 text-gray-500" />
+            WhatsApp
+            <span class="sr-only">{newTab}</span>
+          </a>
         </div>
       </div>
     </aside>
@@ -367,7 +354,46 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
             <h2 class="acc-title">Éco-responsabilité</h2>
             <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
           </summary>
-          <p class="acc-intro">Bonnes pratiques pour des images légères.</p>
+          <p class="acc-intro">Un site sobre, pensé pour consommer peu, et comment le garder ainsi.</p>
+
+          {/* Mesure du 23/10/2026 (CO2.js, modèle SWD v4, celui de Website Carbon) — à rafraîchir de temps en temps */}
+          <div class="flex flex-col sm:flex-row gap-4 p-4 mb-4 bg-white rounded-xl border border-gray-200">
+            <div
+              class="flex-shrink-0 self-start w-16 h-16 rounded-xl bg-green-700 text-white flex items-center justify-center text-3xl font-bold"
+              aria-hidden="true"
+            >
+              A
+            </div>
+            <div class="text-sm text-gray-700">
+              <p class="tool-title">Note A pour l'empreinte carbone (méthode Website Carbon)</p>
+              <p>
+                Environ <strong>0,06 g de CO₂ par visite</strong> de la page d'accueil. Elle pèse 377 Ko, plus de cinq fois
+                moins qu'une page web moyenne (environ 2 Mo).
+              </p>
+              <p class="text-xs text-gray-600 mt-1">
+                Mesuré le 23 octobre 2026. Le site est généré à l'avance (Astro) et les images sont optimisées
+                automatiquement (Cloudinary).
+              </p>
+            </div>
+          </div>
+
+          <h3 class="tool-title mb-2">Pourquoi c'est important</h3>
+          <ul class="text-sm text-gray-700 space-y-2 mb-4">
+            <li class="flex gap-2">
+              <Icon name="tabler:bolt" class="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ootb-green)]" />
+              Pour vos visiteurs : le site s'ouvre vite, même sur un vieux téléphone ou une connexion faible.
+            </li>
+            <li class="flex gap-2">
+              <Icon name="tabler:search" class="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ootb-green)]" />
+              Pour Google : un site rapide est mieux classé dans les résultats de recherche.
+            </li>
+            <li class="flex gap-2">
+              <Icon name="tabler:leaf" class="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ootb-green)]" />
+              Pour la planète : moins de données transférées, donc moins d'énergie, en cohérence avec vos valeurs.
+            </li>
+          </ul>
+
+          <h3 class="tool-title mb-2">Ce que vous pouvez faire</h3>
           <ul class="text-sm text-gray-700 space-y-2 mb-4">
             <li class="flex gap-2">
               <Icon name="tabler:check" class="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ootb-green)]" />

@@ -368,25 +368,34 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
           <p class="acc-intro">Un site sobre, pensé pour consommer peu, et comment le garder ainsi.</p>
 
           {/* Source : websitecarbon.com, test du 25/03/2026 — à rafraîchir de temps en temps */}
-          <div class="p-4 mb-4 bg-white rounded-xl border border-gray-200 text-sm text-gray-700">
-            <p>
-              Page d'accueil : note <strong>A</strong> sur Website Carbon, environ 0,04 g de CO₂ par visite (test du 25 mars
-              2026). Une estimation indicative : les pages plus riches, comme celle du festival, pèsent davantage.
-            </p>
-            <p class="mt-1">
-              Déjà en place : le site est généré à l'avance (Astro) et les images sont optimisées automatiquement
-              (Cloudinary).
-            </p>
-            <a
-              href="https://www.websitecarbon.com/website/outofthebooks-com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 mt-2 text-[var(--ootb-blue)] underline hover:no-underline"
+          <div class="flex flex-col sm:flex-row gap-4 p-4 mb-4 bg-white rounded-xl border border-gray-200">
+            <div
+              class="flex-shrink-0 self-start w-16 h-16 rounded-xl bg-green-700 text-white flex items-center justify-center text-3xl font-bold"
+              aria-hidden="true"
             >
-              Voir ou relancer la mesure
-              <Icon name="tabler:external-link" class="w-4 h-4" />
-              <span class="sr-only">{newTab}</span>
-            </a>
+              A
+            </div>
+            <div class="text-sm text-gray-700">
+              <p class="tool-title">Note A pour l'empreinte carbone (Website Carbon)</p>
+              <p>
+                Environ <strong>0,04 g de CO₂ par visite</strong> de la page d'accueil : plus sobre que
+                <strong>93 % des pages web</strong> dans le monde.
+              </p>
+              <p class="text-xs text-gray-600 mt-1">
+                Mesuré le 25 mars 2026. Le site est généré à l'avance (Astro) et les images sont optimisées
+                automatiquement (Cloudinary).
+              </p>
+              <a
+                href="https://www.websitecarbon.com/website/outofthebooks-com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 mt-2 text-[var(--ootb-blue)] underline hover:no-underline"
+              >
+                Voir le résultat
+                <Icon name="tabler:external-link" class="w-4 h-4" />
+                <span class="sr-only">{newTab}</span>
+              </a>
+            </div>
           </div>
 
           <h3 class="tool-title mb-2">Pourquoi c'est important</h3>

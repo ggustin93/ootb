@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Icon } from '@iconify/react';
+import { Icon, addCollection, type IconifyJSON } from '@iconify/react';
 import TicketingModal, { type TicketingConfig } from './TicketingModal';
 
 interface TicketingButtonProps {
@@ -9,6 +9,8 @@ interface TicketingButtonProps {
   className?: string;
   _openOnLoad?: boolean;
   ticketingConfig?: TicketingConfig; // <-- Add ticketingConfig prop
+  /** Icônes pré-chargées (bouton + modale), pour éviter leur téléchargement à l'exécution */
+  icons?: IconifyJSON;
 }
 
 export default function TicketingButton({
@@ -18,7 +20,9 @@ export default function TicketingButton({
   className = '',
   _openOnLoad = false,
   ticketingConfig, // <-- Destructure ticketingConfig
+  icons,
 }: TicketingButtonProps) {
+  if (icons) addCollection(icons);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {

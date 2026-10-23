@@ -3,6 +3,8 @@ import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
 import GradientHeroSection from './GradientHeroSection.astro';
 import TicketingButton from '../ui/TicketingButton';
+import { getIcons } from '@iconify/utils';
+import tablerIcons from '@iconify-json/tabler/icons.json';
 import ScrollDownArrow from '~/components/ui/ScrollDownArrow.astro';
 import type { ImageMetadata } from 'astro';
 import type { TicketingConfig } from '../ui/TicketingModal';
@@ -64,6 +66,12 @@ const {
   imageBackgroundColor = '--ootb-orange',
   ticketingConfig,
 } = Astro.props;
+
+// Icônes du bouton billetterie et de sa modale, embarquées au build :
+// sans elles, @iconify/react les télécharge à l'exécution (3 requêtes externes).
+const ticketIcon = buttons.find((b) => b.href === '#tickets')?.icon.replace('tabler:', '');
+const ticketingIcons =
+  getIcons(tablerIcons, ['x', 'school', 'ticket', ...(ticketIcon ? [ticketIcon] : [])]) ?? undefined;
 
 // Removed siteSettings usage
 
@@ -128,6 +136,7 @@ const getIconSize = (size: 'sm' | 'md' | 'lg') => {
                       label={label}
                       variant={variant}
                       ticketingConfig={ticketingConfig}
+                      icons={ticketingIcons}
                       client:load
                       _openOnLoad={Astro.url.hash === '#tickets'}
                       className="w-full sm:w-auto"

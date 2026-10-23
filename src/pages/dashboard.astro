@@ -19,14 +19,15 @@ interface Tool {
 
 const contactInfo = {
   email: 'hello@pwablo.be',
-  phone: '+32 456 61 72 60',
-  whatsapp: 'https://wa.me/32456617260',
+  phone: '0494 87 89 36',
+  phoneTel: '+32494878936',
+  whatsapp: 'https://wa.me/32494878936',
   calendar: 'https://cal.com/pwablo',
   github: 'https://github.com/ggustin93/ootb',
 };
 
 const umamiUrl = 'https://cloud.umami.is/share/VJBTDMq2NAlUVkDO/outofthebooks.netlify.app';
-const netlifyDeploysUrl = 'https://app.netlify.com/projects/outofthebooks/deploys';
+
 const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995a27d85380809142f0e1a369d9cc?pvs=4';
 
 const contentTools: Tool[] = [
@@ -141,7 +142,7 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
             {contactInfo.email}
           </a>
           <a
-            href={`tel:${contactInfo.phone}`}
+            href={`tel:${contactInfo.phoneTel}`}
             class="flex items-center px-3 py-2 text-gray-700 rounded-lg bg-white hover:bg-gray-100"
           >
             <Icon name="tabler:phone" class="w-5 h-5 mr-3 text-gray-500" />
@@ -190,7 +191,7 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
         <p class="text-gray-600 mb-8">Tous les outils pour gérer le site d'Out of the Books.</p>
 
         {/* Modifier le site */}
-        <details id="contenu" class="group/acc mb-8" open>
+        <details id="contenu" class="group/acc mb-8">
           <summary class="acc-summary">
             <Icon name="tabler:edit-circle" class="w-6 h-6 text-[var(--ootb-orange)]" />
             <h2 class="acc-title">Modifier le site</h2>
@@ -250,16 +251,17 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
             <div>
               <p>
                 <strong>Bon à savoir :</strong> les changements faits dans la base de données (NocoDB) n'apparaissent pas
-                tout de suite sur le site. Pour les publier, lancez une mise à jour du site (déploiement Netlify) : « Trigger
-                deploy ». Les changements faits dans l'éditeur de pages (TinaCMS) se publient seuls en quelques minutes.
+                tout de suite sur le site. Pour les publier, cliquez sur <strong>« Redéployer le site web »</strong> dans
+                NocoDB (table « Actions spéciales ») : le site est à jour quelques minutes plus tard. Les changements faits
+                dans l'éditeur de pages (TinaCMS) se publient seuls.
               </p>
               <a
-                href={netlifyDeploysUrl}
+                href={contentTools[1].url}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-1 mt-2 font-semibold underline hover:no-underline"
               >
-                Lancer la mise à jour du site
+                Ouvrir NocoDB
                 <Icon name="tabler:external-link" class="w-4 h-4" />
                 <span class="sr-only">{newTab}</span>
               </a>
@@ -268,7 +270,7 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
         </details>
 
         {/* Statistiques */}
-        <details id="analytics" class="group/acc mb-8" open>
+        <details id="analytics" class="group/acc mb-8">
           <summary class="acc-summary">
             <Icon name="tabler:chart-dots" class="w-6 h-6 text-[var(--ootb-green)]" />
             <h2 class="acc-title">Statistiques</h2>

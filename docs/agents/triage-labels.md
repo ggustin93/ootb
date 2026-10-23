@@ -18,21 +18,21 @@ Edit the right-hand column to match whatever vocabulary you actually use.
 
 Every issue carries exactly one type label.
 
-| Label    | Meaning                                                                                         |
-| -------- | ----------------------------------------------------------------------------------------------- |
-| `spec`   | Describes what to build and why (problem, scope, acceptance criteria). Produced by `/to-spec`.   |
+| Label    | Meaning                                                                                                          |
+| -------- | ---------------------------------------------------------------------------------------------------------------- |
+| `spec`   | Describes what to build and why (problem, scope, acceptance criteria). Produced by `/to-spec`.                   |
 | `ticket` | One implementable slice of work, usually linked to a parent spec (`Part of #<spec>`). Produced by `/to-tickets`. |
 
 ## Priority labels (MoSCoW)
 
 Every issue that is not `wontfix` carries exactly one priority label.
 
-| Label           | Meaning                                                  |
-| --------------- | -------------------------------------------------------- |
-| `must-have`     | Required: the release or fix is not done without it      |
-| `should-have`   | Important, but a workaround exists; do after must-haves  |
-| `could-have`    | Nice to have; only if time allows                        |
-| `wont-have-now` | Explicitly out of scope for now; revisit later           |
+| Label           | Meaning                                                 |
+| --------------- | ------------------------------------------------------- |
+| `must-have`     | Required: the release or fix is not done without it     |
+| `should-have`   | Important, but a workaround exists; do after must-haves |
+| `could-have`    | Nice to have; only if time allows                       |
+| `wont-have-now` | Explicitly out of scope for now; revisit later          |
 
 `wont-have-now` means "not now", while `wontfix` means "never".
 

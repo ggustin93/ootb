@@ -42,7 +42,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 - Contrôle qualité (`npm run check`) et tests utilitaires (26/26) au vert, CI GitHub au vert.
 - Sur l'environnement de test (staging) : accès refusé sans mot de passe ou avec un mauvais, accès accordé avec le bon, déconnexion fonctionnelle (Chrome), aucune image cassée sur l'accueil et la page festival.
-- Les tests de navigation automatisés (Playwright) donnent le même résultat qu'avant : 6 réussis, 9 obsolètes à mettre à jour. Rien n'a régressé.
+- Tests de navigation automatisés (Playwright) : 15/15 réussis. Les 9 qui échouaient ne venaient pas d'un défaut du site : ils visaient une adresse locale codée en dur, et l'un d'eux supposait un contenu précis en page d'accueil. Ils sont corrigés.
 
 ---
 

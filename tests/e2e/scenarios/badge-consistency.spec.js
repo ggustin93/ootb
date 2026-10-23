@@ -15,24 +15,29 @@ test.describe('Badge Consistency', () => {
   test('Badges display correct plural forms on homepage and category pages', async ({ page }) => {
     // Step 1: Navigate to homepage
     await test.step('Navigate to homepage', async () => {
-      await page.goto('http://localhost:4322');
+      await page.goto('/');
       await expect(page).toHaveTitle(/Plateforme collaborative pour l'éducation \| Out of the Books/);
       await expect(page.getByText('Actualités du moment')).toBeVisible();
     });
 
     // Step 2: Verify badge consistency on homepage
     await test.step('Verify consistent badges on homepage', async () => {
-      // Check that badges display plural forms correctly - use first occurrence
-      // Note: Only check badges that are guaranteed to be present
-      await expect(page.locator('article').getByText('Podcasts').first()).toBeVisible(); // Not "Podcast"
-      await expect(page.locator('article').getByText('Émissions TV').first()).toBeVisible(); // Not "Émission"
-      // Actualités badge is optional - it depends on homepage content rotation
+      // The "À l'affiche" trio is the 3 latest posts, so the badge set depends on content.
+      // Assert: at least one plural badge is shown, and no singular badge leaks through.
+      const pluralLabels = ['Podcasts', 'Émissions TV', 'Lives', 'Actualités', 'Fiches'];
+      const pluralBadges = pluralLabels
+        .map((label) => page.locator('article').getByText(label, { exact: true }))
+        .reduce((union, badge) => union.or(badge))
+        .first();
+      await expect(pluralBadges).toBeVisible();
+      await expect(page.locator('article').getByText('Podcast', { exact: true })).toHaveCount(0);
+      await expect(page.locator('article').getByText('Émission', { exact: true })).toHaveCount(0);
     });
 
     // Step 3: Filter by podcasts
     await test.step('Filter content by podcasts', async () => {
       // Navigate to podcasts category page (with trailing slash)
-      await page.goto('http://localhost:4322/category/podcast/');
+      await page.goto('/category/podcast/');
 
       // Verify we're on podcasts page
       await expect(page).toHaveURL(/\/category\/podcast\/$/);
@@ -83,7 +88,7 @@ test.describe('Badge Consistency', () => {
   test('Badge icons are consistent across components', async ({ page }) => {
     await test.step('Verify badge icons are correct', async () => {
       // Go to homepage first
-      await page.goto('http://localhost:4322');
+      await page.goto('/');
 
       // Test that fiches have correct file-text icon (not school icon)
       // This would require more specific icon testing which is complex in Playwright

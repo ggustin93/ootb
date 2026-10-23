@@ -5,6 +5,47 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.4.0] — 2026-10-23
+
+### Espace administrateur mieux protégé (#34)
+
+- **Un vrai mot de passe, vérifié par le serveur** — Avant, le mot de passe de l'espace administrateur était écrit dans le code de la page, et quelqu'un d'un peu technique pouvait le retrouver et lire la page sans le connaître. Désormais, c'est l'hébergeur (Netlify) qui vérifie le mot de passe avant d'envoyer la page (authentification côté serveur). Sans le bon mot de passe, rien n'est affiché.
+- **Nouveau mot de passe** — Il vous est transmis séparément. L'ancien ne fonctionne plus.
+- **Connexion** — Votre navigateur ouvre une petite fenêtre : saisissez n'importe quel identifiant et le mot de passe. Si rien ne s'affiche (certains navigateurs intégrés), une page d'aide en français explique quoi faire.
+- **Déconnexion** — Nouveau bouton « Se déconnecter » dans le menu. Il fonctionne dans Chrome, Firefox et Edge. Dans Safari, il faut fermer complètement le navigateur.
+- **L'ancienne adresse `/ootb` fonctionne toujours** — Elle renvoie directement vers le tableau de bord.
+- **La page n'apparaît pas dans Google** (`noindex`).
+
+### Tableau de bord plus clair
+
+- **« Modifier le site » réunit vos deux outils**, avec ce que chacun permet de faire :
+  - **Éditeur de pages (TinaCMS)** : textes, images et menus des pages, articles.
+  - **Base de données (NocoDB)** : programme du festival, fiches pédagogiques, messages reçus par les formulaires.
+  - Un tableau « Je veux… → Allez dans… » indique quel outil ouvrir selon la tâche.
+- **Rappel pour NocoDB** — Les changements faits dans NocoDB apparaissent sur le site après un clic sur « Redéployer le site web » (table « Actions spéciales »).
+- **Statistiques de visite visibles directement** dans le tableau de bord (Umami), avec un lien pour les ouvrir dans un nouvel onglet.
+- **Éco-responsabilité** — Le résultat Website Carbon de la page d'accueil (note A, environ 0,04 g de CO₂ par visite, plus sobre que 93 % des pages web), pourquoi c'est important et les bons gestes pour les images.
+- **Plus lisible** — Titres plus petits et mieux hiérarchisés, sections repliées par défaut, utilisables au clavier, et textes raccourcis.
+- **Retirés** — Google Search Console (pas utilisé), la prise de rendez-vous Cal.com et un bloc de contact en double.
+- **Nouveau numéro de téléphone** pour le support : 0494 87 89 36.
+
+**Fichiers modifiés** : `src/pages/dashboard.astro`, `netlify/edge-functions/portal-auth.ts` (nouveau), `netlify.toml`, `src/pages/ootb.astro` (supprimé)
+
+### Site public un peu plus léger (aucun changement visible)
+
+- **Billetterie du festival** — Les icônes du bouton et de la fenêtre de billetterie sont maintenant intégrées au site. Avant, elles étaient téléchargées à chaque visite auprès de trois services externes. Cela fait 3 requêtes en moins par visite, et l'adresse IP des visiteurs n'est plus envoyée à ces services.
+- **Logos allégés** — Le grand logo Out of the Books passe de 37 à 26 Ko, et le fond nuageux de 20 à 14 Ko. Le rendu a été vérifié au pixel près.
+
+**Fichiers modifiés** : `src/components/sections/FestivalHeroSection.astro`, `src/components/ui/TicketingButton.tsx`, `src/assets/images/ootb-logo.svg`, `src/assets/images/clouds_bg.svg`
+
+### Vérifications
+
+- Contrôle qualité (`npm run check`) et tests utilitaires (26/26) au vert, CI GitHub au vert.
+- Sur l'environnement de test (staging) : accès refusé sans mot de passe ou avec un mauvais, accès accordé avec le bon, déconnexion fonctionnelle (Chrome), aucune image cassée sur l'accueil et la page festival.
+- Les tests de navigation automatisés (Playwright) donnent le même résultat qu'avant : 6 réussis, 9 obsolètes à mettre à jour. Rien n'a régressé.
+
+---
+
 ## [1.3.3] — 2026-09-22
 
 ### Sécurité : dépendances critiques (#31)

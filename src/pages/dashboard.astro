@@ -1,764 +1,443 @@
 ---
-// Suppression de getStaticPaths qui cause des problèmes en mode dev
-// export function getStaticPaths() {...}
-
 import Layout from '~/layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import CustomStyles from '~/components/CustomStyles.astro';
 import { Image } from 'astro:assets';
 import logoHeader from '~/assets/images/ootb-logo-header.svg';
 
-interface Credentials {
-  username?: string;
-  notes?: string;
-}
-
 interface Tool {
   title: string;
-  description: string;
+  /** Ce que l'outil permet de faire, en une phrase. */
+  purpose: string;
   url: string;
   icon: string;
-  credentials?: Credentials;
-  notes?: string;
+  /** Qui se connecte (email affiché en monospace). */
+  login?: string;
+  note?: string;
+  essential?: boolean;
 }
 
-interface ToolCategory {
-  category: string;
-  icon: string;
-  description: string;
-  items: Tool[];
-}
-
-// Informations de contact
 const contactInfo = {
-  website: 'https://pwablo.be',
+  email: 'hello@pwablo.be',
   phone: '+32 456 61 72 60',
   whatsapp: 'https://wa.me/32456617260',
   calendar: 'https://cal.com/pwablo',
   github: 'https://github.com/ggustin93/ootb',
 };
 
-// Configuration des outils
-const tools: ToolCategory[] = [
+const umamiUrl = 'https://cloud.umami.is/share/VJBTDMq2NAlUVkDO/outofthebooks.netlify.app';
+const netlifyDeploysUrl = 'https://app.netlify.com/projects/outofthebooks/deploys';
+const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995a27d85380809142f0e1a369d9cc?pvs=4';
+
+const contentTools: Tool[] = [
   {
-    category: 'Édition',
-    icon: 'tabler:edit-circle',
-    description: 'Outils pour gérer le contenu du site',
-    items: [
-      {
-        title: 'TinaCMS',
-        description: 'Système de gestion des contenus internes [Essentiel]',
-        url: '/admin',
-        icon: 'tabler:edit',
-        credentials: {
-          username: 'alexia@festivaloutofthebooks.com',
-          notes: "Connexion à l'interface d'édition (accès sur invitation)",
-        },
-      },
-    ],
+    title: 'Éditeur de pages (TinaCMS)',
+    purpose:
+      'Textes, images et menus des pages : accueil, festival, à propos, contact, articles, Erasmus+, mentions légales.',
+    url: '/admin',
+    icon: 'tabler:edit',
+    login: 'alexia@festivaloutofthebooks.com',
+    note: 'Accès sur invitation',
+    essential: true,
   },
   {
-    category: 'Données',
+    title: 'Base de données (NocoDB)',
+    purpose:
+      'Programme du festival (ateliers, conférences, stands), fiches pédagogiques, messages reçus par les formulaires.',
+    url: import.meta.env.NOCODB_BASE_URL || 'https://app.nocodb.com',
     icon: 'tabler:database',
-    description: 'Gestion des bases de données',
-    items: [
-      {
-        title: 'NocoDB',
-        description: 'Système de gestion des contenus externes [Essentiel]',
-        url: import.meta.env.NOCODB_BASE_URL || 'https://app.nocodb.com',
-        icon: 'tabler:database',
-        credentials: {
-          username: "Toute l'équipe",
-          notes: 'Accès à la base de données (connexion via email)',
-        },
-      },
-    ],
-  },
-  {
-    category: 'Analytics',
-    icon: 'tabler:chart-dots',
-    description: 'Suivi des performances et statistiques',
-    items: [
-      {
-        title: 'Umami Analytics',
-        description: 'Statistiques de visite du site [Recommandé]',
-        url: 'https://cloud.umami.is/share/VJBTDMq2NAlUVkDO/outofthebooks.netlify.app',
-        icon: 'tabler:chart-bar',
-        credentials: {
-          username: 'Statistiques publiques',
-          notes: 'Compte admin : hello@pwablo.be (accès ou transfert sur demande)',
-        },
-      },
-    ],
-  },
-  {
-    category: 'Infrastructure',
-    icon: 'tabler:server',
-    description: "Gestion de l'hébergement et des domaines",
-    items: [
-      {
-        title: 'OVH',
-        description: 'Gestion du nom de domaine et des emails [À connaître si besoin]',
-        url: 'https://www.ovh.com/manager/',
-        icon: 'tabler:server',
-        credentials: {
-          username: '3121-0412-77/guillaume',
-          notes: 'Compte auxiliaire pour gérer DNS et emails',
-        },
-      },
-      {
-        title: 'Netlify',
-        description: 'Hébergement et déploiement [Optionnel]',
-        url: 'https://app.netlify.com/',
-        icon: 'tabler:cloud',
-        credentials: {
-          username: 'guillaume.gustin.9@gmail.com',
-          notes: 'Accès ou transfert sur demande',
-        },
-      },
-      {
-        title: 'Cloudinary',
-        description: 'Gestion et optimisation des médias [Optionnel]',
-        url: 'https://cloudinary.com/console/',
-        icon: 'tabler:photo',
-        credentials: {
-          username: 'hello@pwablo.be',
-          notes: 'Accès ou transfert sur demande',
-        },
-      },
-    ],
+    login: "Toute l'équipe",
+    note: 'Connexion par email',
+    essential: true,
   },
 ];
 
-// Lien vers la documentation Notion
-const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995a27d85380809142f0e1a369d9cc?pvs=4';
+const tasks: { want: string; where: 'tina' | 'nocodb' }[] = [
+  { want: "Modifier un texte ou une image d'une page", where: 'tina' },
+  { want: 'Écrire ou corriger un article', where: 'tina' },
+  { want: 'Changer le menu ou les liens du pied de page', where: 'tina' },
+  { want: 'Modifier le programme du festival', where: 'nocodb' },
+  { want: 'Publier ou retirer une fiche pédagogique', where: 'nocodb' },
+  { want: 'Lire les messages de contact, les inscrits newsletter, les fiches proposées', where: 'nocodb' },
+];
+const toolLabel = { tina: 'Éditeur de pages (TinaCMS)', nocodb: 'Base de données (NocoDB)' };
+
+const hostingTools: Tool[] = [
+  {
+    title: 'OVH',
+    purpose: 'Nom de domaine et adresses email.',
+    url: 'https://www.ovh.com/manager/',
+    icon: 'tabler:world',
+    login: '3121-0412-77/guillaume',
+    note: 'Compte auxiliaire (DNS et emails)',
+  },
+  {
+    title: 'Netlify',
+    purpose: 'Hébergement du site et mises à jour (déploiements).',
+    url: 'https://app.netlify.com/',
+    icon: 'tabler:cloud',
+    login: 'guillaume.gustin.9@gmail.com',
+    note: 'Accès ou transfert sur demande',
+  },
+  {
+    title: 'Cloudinary',
+    purpose: 'Stockage et optimisation des images.',
+    url: 'https://cloudinary.com/console/',
+    icon: 'tabler:photo',
+    login: 'hello@pwablo.be',
+    note: 'Accès ou transfert sur demande',
+  },
+];
+
+const sections = [
+  { id: 'contenu', label: 'Modifier le site', icon: 'tabler:edit-circle' },
+  { id: 'analytics', label: 'Statistiques', icon: 'tabler:chart-dots' },
+  { id: 'hebergement', label: 'Hébergement et comptes', icon: 'tabler:server' },
+  { id: 'aide', label: 'Aide', icon: 'tabler:help-circle' },
+  { id: 'eco', label: 'Éco-responsabilité', icon: 'tabler:leaf' },
+  { id: 'code', label: 'Code source', icon: 'tabler:brand-github' },
+];
+
+const newTab = '(s’ouvre dans un nouvel onglet)';
 ---
 
 <Layout metadata={{ title: 'Tableau de bord - Out of the Books', robots: { index: false, follow: false } }}>
   <!-- Accès protégé côté serveur (netlify/edge-functions/portal-auth.ts) -->
-  <div id="dashboard-content">
-    <CustomStyles />
-    <div class="flex flex-col md:flex-row h-screen bg-gray-50">
-      {/* Menu latéral - caché par défaut sur mobile */}
-      <aside
-        class="md:w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col fixed inset-y-0 left-0 z-30 transform md:relative md:translate-x-0 transition duration-300 ease-in-out w-72 -translate-x-full"
-        id="sidebar"
-      >
-        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+  <CustomStyles />
+  <div class="flex flex-col md:flex-row h-screen bg-gray-50">
+    <aside
+      id="sidebar"
+      class="md:w-64 bg-white border-r border-gray-200 overflow-y-auto flex flex-col fixed inset-y-0 left-0 z-30 transform md:relative md:translate-x-0 transition duration-300 ease-in-out w-64 -translate-x-full"
+    >
+      <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+        <Image src={logoHeader} alt="Out of the Books" class="h-8 w-auto" />
+        <button id="close-sidebar" class="md:hidden text-gray-600 hover:text-gray-900" aria-label="Fermer le menu">
+          <Icon name="tabler:x" class="w-6 h-6" />
+        </button>
+      </div>
+
+      <nav class="flex-1 p-4 space-y-1" aria-label="Sections du tableau de bord">
+        {
+          sections.map((s) => (
+            <a
+              href={`#${s.id}`}
+              class="flex items-center px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus-visible:ring-2 focus-visible:ring-[var(--ootb-blue)]"
+            >
+              <Icon name={s.icon} class="w-5 h-5 mr-3 text-gray-500" />
+              {s.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="p-4 bg-gray-50 border-t border-gray-200" aria-label="Contact">
+        <p class="text-xs text-gray-600 mb-2">Besoin d'aide ?</p>
+        <div class="flex flex-col space-y-2 text-sm">
+          <a
+            href={`mailto:${contactInfo.email}`}
+            class="flex items-center px-3 py-2 text-gray-700 rounded-lg bg-white hover:bg-gray-100"
+          >
+            <Icon name="tabler:mail" class="w-5 h-5 mr-3 text-gray-500" />
+            {contactInfo.email}
+          </a>
+          <a
+            href={`tel:${contactInfo.phone}`}
+            class="flex items-center px-3 py-2 text-gray-700 rounded-lg bg-white hover:bg-gray-100"
+          >
+            <Icon name="tabler:phone" class="w-5 h-5 mr-3 text-gray-500" />
+            {contactInfo.phone}
+          </a>
+          <div class="flex space-x-2">
+            <a
+              href={contactInfo.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              title="WhatsApp"
+              class="flex-1 flex justify-center px-3 py-2 rounded-lg bg-white hover:bg-gray-100"
+            >
+              <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-gray-500" />
+            </a>
+            <a
+              href={contactInfo.calendar}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Prendre rendez-vous"
+              title="Prendre rendez-vous"
+              class="flex-1 flex justify-center px-3 py-2 rounded-lg bg-white hover:bg-gray-100"
+            >
+              <Icon name="tabler:calendar" class="w-5 h-5 text-gray-500" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
+
+    <main class="flex-1 overflow-y-auto">
+      <div class="sticky top-0 z-10 md:hidden bg-white border-b border-gray-200 shadow-sm">
+        <div class="flex items-center justify-between p-4">
           <Image src={logoHeader} alt="Out of the Books" class="h-8 w-auto" />
-          <button class="md:hidden text-gray-500 hover:text-gray-700" id="close-sidebar">
-            <Icon name="tabler:x" class="w-6 h-6" />
+          <button id="open-sidebar" class="text-gray-600 hover:text-gray-900" aria-label="Ouvrir le menu">
+            <Icon name="tabler:menu-2" class="w-6 h-6" />
           </button>
         </div>
+      </div>
 
-        {/* Navigation principale */}
-        <nav class="flex-1 p-4 space-y-1">
-          {/* Lien Summary */}
-          <a
-            href="#summary"
-            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-            title="Vue d'ensemble"
-          >
-            <Icon name="tabler:layout-dashboard" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
-            Accueil
-          </a>
+      <div class="max-w-4xl mx-auto p-4 md:p-8">
+        <h1 class="dashboard-title font-handwritten font-bold text-[var(--ootb-blue)] mb-2">Tableau de bord</h1>
+        <p class="text-gray-600 mb-8">Tous les outils pour gérer le site d'Out of the Books.</p>
 
-          {/* Séparateur */}
-          <div class="my-4 border-t border-gray-200"></div>
+        {/* Modifier le site */}
+        <details id="contenu" class="group/acc mb-8" open>
+          <summary class="acc-summary">
+            <Icon name="tabler:edit-circle" class="w-6 h-6 text-[var(--ootb-orange)]" />
+            <h2 class="acc-title">Modifier le site</h2>
+            <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
+          </summary>
+          <p class="acc-intro">
+            Deux outils : l'un pour les textes des pages, l'autre pour le programme et les fiches.
+          </p>
 
-          {/* Catégories */}
-          {
-            tools.map((category) => (
-              <a
-                href={`#${category.category.toLowerCase()}`}
-                class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-                title={category.description}
-              >
-                <Icon name={category.icon} class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
-                {category.category}
-              </a>
-            ))
-          }
-
-          {/* Séparateur */}
-          <div class="my-4 border-t border-gray-200"></div>
-
-          {/* FAQ */}
-          <a
-            href="#faq"
-            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-            title="Questions fréquentes"
-          >
-            <Icon name="tabler:help-circle" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-primary-600" />
-            Aide & FAQ
-          </a>
-
-          {/* Recommandations écologiques */}
-          <a
-            href="#eco"
-            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-            title="Bonnes pratiques écologiques"
-          >
-            <Icon name="tabler:leaf" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-[var(--ootb-green)]" />
-            Éco-responsabilité
-          </a>
-
-          {/* GitHub */}
-          <a
-            href="#github"
-            class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 group"
-            title="Code source"
-          >
-            <Icon name="tabler:brand-github" class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-800" />
-            Code
-          </a>
-        </nav>
-
-        {/* Contact (en bas) */}
-        <div class="p-4 bg-gray-50 border-t border-gray-200">
-          <div class="flex flex-col space-y-2">
-            <p class="text-xs text-gray-500 mb-1">Besoin d'aide ?</p>
-            <a
-              href={`mailto:hello@pwablo.be`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
-            >
-              <Icon name="tabler:mail" class="w-5 h-5 mr-3 text-gray-400" />
-              hello@pwablo.be
-            </a>
-            <a
-              href={`tel:${contactInfo.phone}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
-            >
-              <Icon name="tabler:phone" class="w-5 h-5 mr-3 text-gray-400" />
-              {contactInfo.phone}
-            </a>
-            <div class="flex space-x-2">
-              <a
-                href={contactInfo.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex-1 flex items-center justify-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
-                title="Contacter par WhatsApp"
-              >
-                <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-gray-400" />
-              </a>
-              <a
-                href={contactInfo.calendar}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex-1 flex items-center justify-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 bg-white"
-                title="Prendre rendez-vous"
-              >
-                <Icon name="tabler:calendar" class="w-5 h-5 text-gray-400" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* Overlay pour mobile - affiché quand le menu est ouvert */}
-      <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
-
-      {/* Contenu principal */}
-      <main class="flex-1 overflow-y-auto">
-        {/* Header mobile */}
-        <div class="sticky top-0 z-10 md:hidden bg-white border-b border-gray-200 shadow-sm">
-          <div class="flex items-center justify-between p-4">
-            <Image src={logoHeader} alt="Out of the Books" class="h-8 w-auto" />
-            <button id="open-sidebar" class="text-gray-500 hover:text-gray-700">
-              <Icon name="tabler:menu-2" class="w-6 h-6" />
-            </button>
-          </div>
-        </div>
-
-        <div class="max-w-4xl mx-auto p-4 md:p-8">
-          {/* Summary - Titre simple */}
-          <section id="summary" class="mb-12">
-            <h1 class="dashboard-title font-handwritten font-bold text-[var(--ootb-blue)] mb-6">Tableau de bord</h1>
-            <p class="text-gray-600 mb-8">
-              Bienvenue sur le tableau de bord d'administration. Utilisez les outils ci-dessous pour gérer votre site
-              web.
-            </p>
-          </section>
-
-          {/* Sections des outils */}
-          {
-            tools.map((category) => (
-              <section id={category.category.toLowerCase()} class="mb-12 section-content">
-                <div
-                  class="flex items-center justify-between mb-6 cursor-pointer accordion-header"
-                  data-target={category.category.toLowerCase()}
+          <div class="grid gap-4 md:grid-cols-2 mb-6">
+            {
+              contentTools.map((tool) => (
+                <a
+                  href={tool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="tool-card flex flex-col gap-2 p-4 bg-white rounded-xl border border-gray-200 hover:border-[var(--ootb-blue)] hover:shadow-md transition-all duration-200"
                 >
                   <div class="flex items-center gap-2">
-                    <Icon name={category.icon} class="w-6 h-6 text-primary-600" />
-                    <h2 class="text-xl font-semibold text-gray-900">{category.category}</h2>
+                    <Icon name={tool.icon} class="w-5 h-5 text-[var(--ootb-blue)]" />
+                    <h3 class="tool-title">{tool.title}</h3>
+                    <Icon name="tabler:external-link" class="w-4 h-4 text-gray-500" />
+                    <span class="sr-only">{newTab}</span>
                   </div>
-                  <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
-                </div>
-
-                <div class="accordion-content hidden" id={`content-${category.category.toLowerCase()}`}>
-                  <p class="text-gray-600 mb-6">
-                    {category.category === 'Édition' &&
-                      "Accédez aux outils d'édition pour modifier le contenu de votre site web. Ces interfaces vous permettent de mettre à jour les textes, images et autres éléments sans connaissances techniques."}
-
-                    {category.category === 'Infrastructure' &&
-                      "Gérez l'hébergement, les noms de domaine et les paramètres techniques de votre site. Ces outils vous donnent accès aux configurations serveur et aux réglages DNS."}
-
-                    {category.category === 'Données' &&
-                      "Consultez et modifiez les bases de données qui alimentent votre site. Ces interfaces vous permettent de gérer les formulaires du festival ainsi que les formulaires de la newsletter, de contact,  de l'appel à projet pour les fiches pédagogiques."}
-
-                    {category.category === 'Analytics' &&
-                      'Suivez les performances et le trafic de votre site web. Ces outils vous donnent accès aux statistiques de visite et aux pages les plus consultées.'}
+                  <p class="text-sm text-gray-700">{tool.purpose}</p>
+                  <p class="text-xs text-gray-600 mt-auto">
+                    <span class={tool.login?.includes('@') ? 'font-mono' : 'font-medium'}>{tool.login}</span>
+                    {tool.note && ` · ${tool.note}`}
                   </p>
+                </a>
+              ))
+            }
+          </div>
 
-                  <div class="grid grid-cols-1 gap-4">
-                    {category.items
-                      .sort((a, b) => {
-                        // Tri par importance: Essentiel > Recommandé > Optionnel
-                        const getImportance = (desc: string) => {
-                          if (desc.includes('[Essentiel]')) return 1;
-                          if (desc.includes('[Recommandé]')) return 2;
-                          return 3;
-                        };
-                        return getImportance(a.description) - getImportance(b.description);
-                      })
-                      .map((tool) => (
-                        <div class="group relative bg-white rounded-xl border border-gray-200 hover:border-primary-200 hover:shadow-md transition-all duration-200">
-                          <a
-                            href={tool.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="block p-4 rounded-xl group/link"
-                            onclick="window.open(this.href, '_blank', 'noopener,noreferrer'); return false;"
-                          >
-                            <div class="flex items-center gap-4">
-                              <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-2 rounded-lg group-hover:scale-110 transition-transform duration-200">
-                                <Icon name={tool.icon} class="w-5 h-5 text-primary-600" />
-                              </div>
-                              <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-2">
-                                  <h3 class="tool-title truncate group-hover:text-primary-600 transition-colors">
-                                    {tool.title}
-                                  </h3>
-                                  <Icon
-                                    name="tabler:external-link"
-                                    class="w-5 h-5 text-primary-600 opacity-100 group-hover/link:scale-110 transition-all duration-200"
-                                  />
-                                  {tool.description.includes('[Essentiel]') && (
-                                    <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full">
-                                      Essentiel
-                                    </span>
-                                  )}
-                                  {tool.description.includes('[Recommandé]') && (
-                                    <span class="px-1.5 py-0.5 text-xs bg-[var(--ootb-blue)] text-white rounded-full">
-                                      Recommandé
-                                    </span>
-                                  )}
-                                  {(tool.description.includes('[Optionnel]') ||
-                                    tool.description.includes('[À connaître')) && (
-                                    <span class="px-1.5 py-0.5 text-xs bg-gray-100 text-gray-500 rounded-full">
-                                      Optionnel
-                                    </span>
-                                  )}
-                                </div>
-                                <p class="text-sm text-gray-600 truncate">{tool.description.split('[')[0]}</p>
-                              </div>
-                            </div>
-                          </a>
+          <table class="w-full text-sm bg-white rounded-xl border border-gray-200 overflow-hidden mb-4">
+            <caption class="sr-only">Quel outil utiliser selon ce que vous voulez faire</caption>
+            <thead class="bg-gray-50 text-left text-gray-700">
+              <tr>
+                <th scope="col" class="px-4 py-2 font-semibold">Je veux…</th>
+                <th scope="col" class="px-4 py-2 font-semibold">Allez dans…</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              {
+                tasks.map((t) => (
+                  <tr>
+                    <td class="px-4 py-2 text-gray-800">{t.want}</td>
+                    <td class="px-4 py-2 text-gray-700 whitespace-nowrap">{toolLabel[t.where]}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
 
-                          {/* Encadré des informations d'accès - avec icône de personne responsable */}
-                          {tool.credentials && (
-                            <div class="mt-2 p-3 bg-blue-50 rounded-b-lg text-sm border-t border-blue-100">
-                              <div class="flex items-start gap-2 mb-2">
-                                {tool.title === 'Umami Analytics' ? (
-                                  <Icon name="tabler:eye" class="w-4 h-4 text-blue-600" />
-                                ) : (
-                                  <Icon name="tabler:user-shield" class="w-4 h-4 text-blue-600" />
-                                )}
-                                <span class={tool.credentials.username?.includes('@') ? 'font-mono' : 'font-medium'}>
-                                  {tool.credentials.username}
-                                </span>
-                              </div>
-                              {tool.credentials.notes && (
-                                <p class="text-blue-700 text-xs mt-1 pl-6">{tool.credentials.notes}</p>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              </section>
-            ))
-          }
-
-          {/* Section FAQ simplifiée */}
-          <section id="faq" class="mb-12 section-content">
-            <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="faq">
-              <div class="flex items-center gap-2">
-                <Icon name="tabler:help-circle" class="w-6 h-6 text-primary-600" />
-                <h2 class="text-xl font-semibold text-gray-900">Aide & FAQ</h2>
-              </div>
-              <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
-            </div>
-
-            <div class="accordion-content hidden" id="content-faq">
-              <p class="text-gray-600 mb-6">
-                Retrouvez ici toute la documentation et les réponses aux questions fréquentes sur l'utilisation de votre
-                site web. Cette ressource est régulièrement mise à jour pour vous aider à tirer le meilleur parti de
-                votre plateforme.
+          <div role="note" class="flex gap-3 p-4 rounded-xl bg-amber-50 text-amber-900 text-sm">
+            <Icon name="tabler:info-circle" class="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <div>
+              <p>
+                <strong>Bon à savoir :</strong> les changements faits dans la base de données (NocoDB) n'apparaissent pas
+                tout de suite sur le site. Pour les publier, lancez une mise à jour du site (déploiement Netlify) : « Trigger
+                deploy ». Les changements faits dans l'éditeur de pages (TinaCMS) se publient seuls en quelques minutes.
               </p>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden p-6">
-                  <div class="flex flex-col gap-4">
-                    <div>
-                      <h3 class="font-handwritten text-3xl mb-2 text-[var(--ootb-blue)]">Documentation complète</h3>
-                      <p class="text-gray-600 text-sm">
-                        Toutes les informations sur l'utilisation du site sont disponibles dans notre espace Notion.
-                      </p>
-                    </div>
-                    <a
-                      href={notionUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center px-4 py-2 bg-[var(--ootb-blue)] text-white rounded-lg hover:opacity-90 transition-colors self-start"
-                    >
-                      <Icon name="tabler:brand-notion" class="w-5 h-5 mr-2" />
-                      Voir la FAQ Notion
-                    </a>
-                  </div>
-                </div>
-
-                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden p-6">
-                  <h3 class="font-handwritten text-3xl mb-4 text-[var(--ootb-violet)]">Contact direct</h3>
-                  <div class="space-y-3">
-                    <a
-                      href={`mailto:hello@pwablo.be`}
-                      class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Icon name="tabler:mail" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                      <span>hello@pwablo.be</span>
-                    </a>
-                    <a
-                      href={`tel:${contactInfo.phone}`}
-                      class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Icon name="tabler:phone" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                      <span>{contactInfo.phone}</span>
-                    </a>
-                    <a
-                      href={contactInfo.whatsapp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]"
-                    >
-                      <Icon name="tabler:brand-whatsapp" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                      <span>WhatsApp</span>
-                    </a>
-                    <a
-                      href={contactInfo.calendar}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="flex items-center gap-3 text-gray-700 hover:text-[var(--ootb-violet)]"
-                    >
-                      <Icon name="tabler:calendar" class="w-5 h-5 text-[var(--ootb-violet)]" />
-                      <span>Prendre rendez-vous</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <a
+                href={netlifyDeploysUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 mt-2 font-semibold underline hover:no-underline"
+              >
+                Lancer la mise à jour du site
+                <Icon name="tabler:external-link" class="w-4 h-4" />
+                <span class="sr-only">{newTab}</span>
+              </a>
             </div>
-          </section>
+          </div>
+        </details>
 
-          {/* Section Eco-responsabilité */}
-          <section id="eco" class="mb-12 section-content">
-            <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="eco">
-              <div class="flex items-center gap-2">
-                <Icon name="tabler:leaf" class="w-6 h-6 text-[var(--ootb-green)]" />
-                <h2 class="text-xl font-semibold text-gray-900">Éco-responsabilité</h2>
-              </div>
-              <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
-            </div>
+        {/* Statistiques */}
+        <details id="analytics" class="group/acc mb-8" open>
+          <summary class="acc-summary">
+            <Icon name="tabler:chart-dots" class="w-6 h-6 text-[var(--ootb-green)]" />
+            <h2 class="acc-title">Statistiques</h2>
+            <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
+          </summary>
+          <p class="acc-intro">Combien de personnes visitent le site, et quelles pages (Umami).</p>
+          <iframe
+            src={umamiUrl}
+            loading="lazy"
+            title="Statistiques de visite du site (Umami)"
+            class="w-full h-[480px] md:h-[640px] rounded-xl border border-gray-200 bg-white"></iframe>
+          <div class="flex flex-wrap justify-between gap-2 mt-2 text-xs text-gray-600">
+            <span>Rien ne s'affiche ? Utilisez le lien.</span>
+            <a
+              href={umamiUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 text-sm font-semibold text-[var(--ootb-blue)] underline hover:no-underline"
+            >
+              Ouvrir dans un nouvel onglet
+              <Icon name="tabler:external-link" class="w-4 h-4" />
+            </a>
+          </div>
+          <p class="text-xs text-gray-600 mt-1">
+            Compte admin Umami : hello@pwablo.be (accès ou transfert sur demande).
+          </p>
+        </details>
 
-            <div class="accordion-content hidden" id="content-eco">
-              <p class="text-gray-600 mb-4">
-                Pour maintenir un excellent score écologique sur votre site, gardez ces conseils à l'esprit lorsque vous
-                ajoutez du contenu. Même si Astro et Cloudinary optimisent déjà en partie vos images, ces bonnes
-                pratiques restent importantes :
-              </p>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div class="bg-gray-50 p-4 rounded-lg">
-                  <h4 class="font-medium text-[var(--ootb-green)] mb-2 flex items-center gap-2">
-                    <Icon name="tabler:photo" class="w-5 h-5" />
-                    Optimisation d'images
-                  </h4>
-                  <ul class="text-sm text-gray-600 space-y-2">
-                    <li class="flex items-start gap-2">
-                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                      <span>Préparer les images avec des dimensions adaptées avant de les téléverser (max 1200px)</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                      <span>Privilégier les formats modernes (AVIF, WebP) quand disponibles</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                      <span>Compresser les images avant téléversement pour de meilleures performances</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div class="bg-gray-50 p-4 rounded-lg">
-                  <h4 class="font-medium text-[var(--ootb-green)] mb-2 flex items-center gap-2">
-                    <Icon name="tabler:code" class="w-5 h-5" />
-                    Pourquoi c'est important
-                  </h4>
-                  <ul class="text-sm text-gray-600 space-y-2">
-                    <li class="flex items-start gap-2">
-                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                      <span>Temps de chargement plus rapides pour vos visiteurs</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                      <span>Meilleur référencement sur Google (Core Web Vitals)</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                      <Icon name="tabler:check" class="w-4 h-4 text-[var(--ootb-green)] mt-0.5 flex-shrink-0" />
-                      <span>Réduction de l'empreinte carbone du site web</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="bg-yellow-50 p-4 rounded-lg mb-4 text-sm">
-                <div class="flex items-start gap-2">
-                  <Icon name="tabler:info-circle" class="w-5 h-5 text-[var(--ootb-orange)] flex-shrink-0" />
-                  <div>
-                    <p class="mb-2">
-                      <span class="font-medium">Bon à savoir :</span> La partie technique de votre site est déjà bien optimisée,
-                      avec d'excellents scores sur <a
-                        href="https://pagespeed.web.dev/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-[var(--ootb-blue)] underline hover:opacity-80">Lighthouse</a
-                      > et <a
-                        href="https://ecograder.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-[var(--ootb-green)] underline hover:opacity-80">Ecograder</a
-                      >.
-                    </p>
-                    <p>
-                      Votre site utilise Astro (génération statique) et Cloudinary (optimisation d'images) pour garantir
-                      des performances optimales. Ces optimisations techniques vous aident à maintenir un bon score
-                      écologique, mais les images que vous ajoutez via l'éditeur de contenu bénéficieront également de
-                      vos optimisations manuelles.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <h4 class="font-medium text-gray-700 mb-2">Outils recommandés :</h4>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+        {/* Hébergement et comptes */}
+        <details id="hebergement" class="group/acc mb-8">
+          <summary class="acc-summary">
+            <Icon name="tabler:server" class="w-6 h-6 text-[var(--ootb-blue)]" />
+            <h2 class="acc-title">Hébergement et comptes</h2>
+            <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
+          </summary>
+          <p class="acc-intro">Nom de domaine, hébergement et images. Rarement utile au quotidien.</p>
+          <div class="grid gap-3">
+            {
+              hostingTools.map((tool) => (
                 <a
-                  href="https://squoosh.app/"
+                  href={tool.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="flex items-center justify-between gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 group"
+                  class="flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200 hover:border-[var(--ootb-blue)] transition-colors"
                 >
-                  <div class="flex items-center gap-2">
-                    <Icon name="tabler:photo" class="w-4 h-4 text-[var(--ootb-orange)]" />
-                    <span>Squoosh (compression)</span>
-                  </div>
-                  <span
-                    class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full group-hover:bg-opacity-20"
-                    >Essentiel</span
-                  >
-                </a>
-                <a
-                  href="https://www.iloveimg.com/resize-image"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-between gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 group"
-                >
-                  <div class="flex items-center gap-2">
-                    <Icon name="tabler:resize" class="w-4 h-4 text-[var(--ootb-turquoise)]" />
-                    <span>iLoveIMG (redimensionnement)</span>
-                  </div>
-                  <span
-                    class="px-1.5 py-0.5 text-xs bg-[var(--ootb-green)] text-white rounded-full group-hover:bg-opacity-20"
-                    >Essentiel</span
-                  >
-                </a>
-              </div>
-            </div>
-          </section>
-
-          {/* Section GitHub */}
-          <section id="github" class="mb-12 section-content">
-            <div class="flex items-center justify-between mb-6 cursor-pointer accordion-header" data-target="github">
-              <div class="flex items-center gap-2">
-                <Icon name="tabler:code" class="w-6 h-6 text-gray-800" />
-                <h2 class="text-xl font-semibold text-gray-900">Code source</h2>
-              </div>
-              <Icon name="tabler:chevron-down" class="w-5 h-5 text-gray-400 accordion-icon transition-transform" />
-            </div>
-
-            <div class="accordion-content hidden" id="content-github">
-              <p class="text-gray-600 mb-4">
-                Le code source complet du site est disponible sur GitHub. Il s'agit d'un projet Astro avec TailwindCSS
-                et TinaCMS qui utilise des technologies modernes et performantes :
-              </p>
-
-              <ul class="text-sm text-gray-600 space-y-2 mb-6">
-                <li class="flex items-start gap-2">
-                  <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
-                  <span><strong>Framework Astro</strong> : Génération de site statique ultra-performant</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
-                  <span><strong>TailwindCSS</strong> : Design responsive et optimisé</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
-                  <span><strong>TinaCMS</strong> : Interface d'édition de contenu intuitive</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <Icon name="tabler:check" class="w-4 h-4 text-gray-800 mt-0.5 flex-shrink-0" />
-                  <span
-                    ><strong>JavaScript & TypeScript</strong> : Approche pragmatique avec un code simple et accessible</span
-                  >
-                </li>
-              </ul>
-
-              <div class="bg-yellow-50 p-4 rounded-lg mb-6 text-sm">
-                <div class="flex items-start gap-2">
-                  <Icon name="tabler:info-circle" class="w-5 h-5 text-[var(--ootb-orange)] flex-shrink-0" />
-                  <div>
-                    <p class="mb-2">
-                      <span class="font-medium">Note importante :</span> Même si le code source est disponible, le développeur
-                      initial (pwablo) reste entièrement disponible pour toute assistance, modification ou évolution du site.
-                      N'hésitez pas à le contacter pour tout besoin technique.
-                    </p>
-                    <p>
-                      La codebase a été conçue pour être facilement compréhensible, avec une structure claire et des
-                      commentaires pertinents. Tout développeur familier avec Astro ou les frameworks JS modernes peut
-                      reprendre le projet sans difficulté.
+                  <Icon name={tool.icon} class="w-5 h-5 mt-0.5 text-gray-500" />
+                  <div class="min-w-0">
+                    <h3 class="tool-title inline-flex items-center gap-1">
+                      {tool.title}
+                      <Icon name="tabler:external-link" class="w-4 h-4 text-gray-500" />
+                      <span class="sr-only">{newTab}</span>
+                    </h3>
+                    <p class="text-sm text-gray-700">{tool.purpose}</p>
+                    <p class="text-xs text-gray-600">
+                      <span class="font-mono">{tool.login}</span> · {tool.note}
                     </p>
                   </div>
-                </div>
-              </div>
+                </a>
+              ))
+            }
+          </div>
+        </details>
 
-              <div class="flex flex-col sm:flex-row gap-4">
-                <a
-                  href={contactInfo.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:opacity-90 transition-colors"
-                >
-                  <Icon name="tabler:brand-github" class="w-5 h-5 mr-2" />
-                  Voir le repository GitHub
-                </a>
-                <a
-                  href="https://docs.astro.build/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center px-4 py-2 bg-[var(--ootb-orange)] text-white rounded-lg hover:opacity-90 transition-colors"
-                >
-                  <Icon name="tabler:book" class="w-5 h-5 mr-2" />
-                  Documentation Astro
-                </a>
-              </div>
-            </div>
-          </section>
-        </div>
-      </main>
-    </div>
+        {/* Aide */}
+        <details id="aide" class="group/acc mb-8">
+          <summary class="acc-summary">
+            <Icon name="tabler:help-circle" class="w-6 h-6 text-[var(--ootb-violet)]" />
+            <h2 class="acc-title">Aide</h2>
+            <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
+          </summary>
+          <p class="acc-intro">Documentation et contact.</p>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+            <p class="text-sm text-gray-700 flex-1">
+              Guides pas à pas et réponses aux questions fréquentes. Pour le reste : {contactInfo.email} ou
+              {contactInfo.phone}.
+            </p>
+            <a
+              href={notionUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-4 py-2 bg-[var(--ootb-blue)] text-white text-sm font-semibold rounded-lg hover:opacity-90 self-start"
+            >
+              <Icon name="tabler:brand-notion" class="w-5 h-5 mr-2" />
+              Voir la FAQ
+              <span class="sr-only">{newTab}</span>
+            </a>
+          </div>
+        </details>
+
+        {/* Éco-responsabilité */}
+        <details id="eco" class="group/acc mb-8">
+          <summary class="acc-summary">
+            <Icon name="tabler:leaf" class="w-6 h-6 text-[var(--ootb-green)]" />
+            <h2 class="acc-title">Éco-responsabilité</h2>
+            <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
+          </summary>
+          <p class="acc-intro">Bonnes pratiques pour des images légères.</p>
+          <ul class="text-sm text-gray-700 space-y-2 mb-4">
+            <li class="flex gap-2">
+              <Icon name="tabler:check" class="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ootb-green)]" />
+              Redimensionner les images avant de les ajouter (1200 px de large maximum).
+            </li>
+            <li class="flex gap-2">
+              <Icon name="tabler:check" class="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ootb-green)]" />
+              Les compresser : le site charge plus vite et consomme moins.
+            </li>
+            <li class="flex gap-2">
+              <Icon name="tabler:check" class="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--ootb-green)]" />
+              Préférer les formats modernes (WebP, AVIF) quand c'est possible.
+            </li>
+          </ul>
+          <div class="flex flex-wrap gap-3 text-sm">
+            <a
+              href="https://squoosh.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-3 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-100"
+              >Squoosh (compression)<span class="sr-only">{newTab}</span></a
+            >
+            <a
+              href="https://www.iloveimg.com/resize-image"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-3 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-100"
+              >iLoveIMG (redimensionnement)<span class="sr-only">{newTab}</span></a
+            >
+          </div>
+        </details>
+
+        {/* Code source */}
+        <details id="code" class="group/acc mb-8">
+          <summary class="acc-summary">
+            <Icon name="tabler:brand-github" class="w-6 h-6 text-gray-800" />
+            <h2 class="acc-title">Code source</h2>
+            <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
+          </summary>
+          <p class="acc-intro">Le code du site, si un autre développeur reprend.</p>
+          <p class="text-sm text-gray-700 mb-4">
+            Site Astro + TinaCMS, documenté pour être repris facilement. Le développeur initial (pwablo) reste
+            disponible pour toute évolution.
+          </p>
+          <a
+            href={contactInfo.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-4 py-2 bg-gray-800 text-white text-sm font-semibold rounded-lg hover:opacity-90"
+          >
+            <Icon name="tabler:brand-github" class="w-5 h-5 mr-2" />
+            Voir le code sur GitHub
+            <span class="sr-only">{newTab}</span>
+          </a>
+        </details>
+      </div>
+    </main>
   </div>
 </Layout>
 
 <style>
-  .credentials-info {
-    transition: all 0.2s ease-in-out;
-  }
-
-  .password-field {
-    letter-spacing: 0.2em;
-  }
-
-  /* Effet de hover sur les cartes */
-  .group:hover .group-hover\:shadow-md {
-    box-shadow:
-      0 4px 6px -1px rgb(0 0 0 / 0.1),
-      0 2px 4px -2px rgb(0 0 0 / 0.1);
-  }
-
-  /* Animation pour l'accordéon */
-  .accordion-icon {
-    transition: transform 0.2s ease;
-  }
-
-  .accordion-header[aria-expanded='true'] .accordion-icon {
-    transform: rotate(180deg);
-  }
-
-  .accordion-content {
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-  }
-
-  /* Textes h3 avec la police manuscrite */
-  h3 {
-    font-size: 1.5rem;
-    line-height: 1.3;
-  }
-
-  /* Couleurs OOTB pour différentes sections */
-  .accordion-header[data-target='édition'] .text-primary-600,
-  .accordion-header[data-target='édition'][aria-expanded='true'] .text-gray-400 {
-    color: var(--ootb-orange);
-  }
-
-  .accordion-header[data-target='infrastructure'] .text-primary-600,
-  .accordion-header[data-target='infrastructure'][aria-expanded='true'] .text-gray-400 {
-    color: var(--ootb-blue);
-  }
-
-  .accordion-header[data-target='données'] .text-primary-600,
-  .accordion-header[data-target='données'][aria-expanded='true'] .text-gray-400 {
-    color: var(--ootb-turquoise);
-  }
-
-  .accordion-header[data-target='analytics'] .text-primary-600,
-  .accordion-header[data-target='analytics'][aria-expanded='true'] .text-gray-400 {
-    color: var(--ootb-green);
-  }
-
-  .accordion-header[data-target='faq'] .text-primary-600,
-  .accordion-header[data-target='faq'][aria-expanded='true'] .text-gray-400 {
-    color: var(--ootb-violet);
-  }
-
-  .accordion-header[data-target='eco'] .text-primary-600,
-  .accordion-header[data-target='eco'][aria-expanded='true'] .text-gray-400 {
-    color: var(--ootb-green);
-  }
-
-  /* Hiérarchie du tableau de bord : h1 > h2 (sections, 20px) > h3 (outils, 16px).
-     Neutralise localement la règle globale h1/h3 du site public (CustomStyles). */
+  /* Hiérarchie : h1 (30→36px) > h2 sections (18→20px) > h3 outils (16px).
+     Neutralise localement les règles globales h1/h3 du site public (CustomStyles). */
   .dashboard-title {
-    font-size: 2.25rem;
+    font-size: 1.875rem;
     letter-spacing: normal;
+  }
+
+  @media (min-width: 768px) {
+    .dashboard-title {
+      font-size: 2.25rem;
+    }
   }
 
   .tool-title {
@@ -768,202 +447,84 @@ const notionUrl = 'https://pwablo-be.notion.site/Out-of-the-books-ASBL-FAQ-1b995
     font-weight: 600;
     letter-spacing: normal;
     line-height: 1.5;
+    color: rgb(17 24 39);
   }
 
-  /* Styles pour le menu mobile */
-  #sidebar {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    will-change: transform;
+  .acc-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    list-style: none;
+    border-radius: 0.5rem;
   }
 
-  @media (max-width: 768px) {
-    /* Amélioration du rendu sur mobile */
-    .grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
+  .acc-summary::-webkit-details-marker {
+    display: none;
+  }
 
-    h2.text-xl {
-      font-size: 1.35rem;
-    }
+  .acc-summary:focus-visible {
+    outline: 2px solid var(--ootb-blue);
+    outline-offset: 4px;
+  }
 
-    h3.text-3xl {
-      font-size: 1.75rem;
-    }
+  .acc-title {
+    flex: 1;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    color: rgb(17 24 39);
+  }
 
-    /* Adapter la taille des cartes sur mobile */
-    .rounded-xl {
-      padding: 0.75rem;
+  @media (min-width: 768px) {
+    .acc-title {
+      font-size: 1.25rem;
     }
   }
 
-  /* Animation pour le menu */
-  .transform {
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+  .acc-chevron {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: rgb(107 114 128);
+    transition: transform 0.2s ease;
+  }
+
+  .acc-intro {
+    font-size: 0.875rem;
+    color: rgb(75 85 99);
+    margin-bottom: 1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .acc-chevron,
+    #sidebar {
+      transition: none;
+    }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Gestion du menu mobile
-    initializeMobileMenu();
-  });
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
 
-  // Fonction pour initialiser le menu mobile
-  function initializeMobileMenu() {
-    const openSidebarBtn = document.getElementById('open-sidebar');
-    const closeSidebarBtn = document.getElementById('close-sidebar');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    const menuLinks = sidebar?.querySelectorAll('a');
-
-    // Ouvre le menu latéral
-    openSidebarBtn?.addEventListener('click', () => {
-      sidebar?.classList.remove('-translate-x-full');
-      overlay?.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
-    });
-
-    // Ferme le menu latéral
-    const closeSidebar = () => {
-      sidebar?.classList.add('-translate-x-full');
-      overlay?.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
-    };
-
-    closeSidebarBtn?.addEventListener('click', closeSidebar);
-    overlay?.addEventListener('click', closeSidebar);
-
-    // Ferme le menu sur mobile quand un lien est cliqué
-    menuLinks?.forEach((link) => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth < 768) {
-          // 768px correspond à la breakpoint md de Tailwind
-          closeSidebar();
-        }
-      });
-    });
-
-    // Ajuste l'état du menu lors du redimensionnement
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768) {
-        sidebar?.classList.remove('-translate-x-full');
-        document.body.classList.remove('overflow-hidden');
-      } else if (!overlay?.classList.contains('hidden')) {
-        // Si l'overlay est visible (menu ouvert) et qu'on passe en mode desktop
-        closeSidebar();
-      }
-    });
+  function setSidebar(open: boolean): void {
+    sidebar?.classList.toggle('-translate-x-full', !open);
+    overlay?.classList.toggle('hidden', !open);
+    document.body.classList.toggle('overflow-hidden', open);
   }
 
-  // Gestion des accordéons
-  document.querySelectorAll('.accordion-header').forEach((header) => {
-    header.setAttribute('aria-expanded', 'false');
+  document.getElementById('open-sidebar')?.addEventListener('click', () => setSidebar(true));
+  document.getElementById('close-sidebar')?.addEventListener('click', () => setSidebar(false));
+  overlay?.addEventListener('click', () => setSidebar(false));
 
-    header.addEventListener('click', () => {
-      const target = header.getAttribute('data-target');
-      const content = document.getElementById(`content-${target}`);
-
-      if (content) {
-        const isExpanded = header.getAttribute('aria-expanded') === 'true';
-
-        // Fermer tous les autres accordéons
-        document.querySelectorAll('.accordion-header').forEach((h) => {
-          if (h !== header) {
-            h.setAttribute('aria-expanded', 'false');
-            const otherTarget = h.getAttribute('data-target');
-            const otherContent = document.getElementById(`content-${otherTarget}`);
-            if (otherContent) {
-              otherContent.classList.add('hidden');
-            }
-          }
-        });
-
-        // Basculer l'état de l'accordéon actuel
-        header.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
-        content.classList.toggle('hidden');
-      }
+  // Un lien du menu ouvre la section visée (et referme le menu sur mobile)
+  sidebar?.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const target = document.getElementById(link.hash.slice(1));
+      if (target instanceof HTMLDetailsElement) target.open = true;
+      if (window.innerWidth < 768) setSidebar(false);
     });
-  });
-
-  // Navigation par sections avec ouverture de l'accordéon correspondant
-  document.querySelectorAll('nav a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (this: HTMLAnchorElement, e: Event) {
-      e.preventDefault();
-
-      const targetId = this.getAttribute('href')?.substring(1);
-      const targetElement = document.getElementById(targetId || '');
-
-      if (targetElement) {
-        // Faire défiler jusqu'à la section
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-
-        // Ouvrir l'accordéon correspondant
-        const header = targetElement.querySelector('.accordion-header');
-        const content = document.getElementById(`content-${targetId}`);
-
-        if (header && content) {
-          // Fermer tous les accordéons
-          document.querySelectorAll('.accordion-header').forEach((h) => {
-            h.setAttribute('aria-expanded', 'false');
-            const otherTarget = h.getAttribute('data-target');
-            const otherContent = document.getElementById(`content-${otherTarget}`);
-
-            if (otherTarget === targetId) {
-              h.setAttribute('aria-expanded', 'true');
-              otherContent?.classList.remove('hidden');
-            } else {
-              otherContent?.classList.add('hidden');
-            }
-          });
-        }
-
-        // Mettre en évidence la section active
-        document.querySelectorAll('nav a').forEach((a) => {
-          a.classList.remove('bg-gray-100', 'text-primary-600');
-        });
-        this.classList.add('bg-gray-100', 'text-primary-600');
-      }
-    });
-  });
-
-  // Détecter la section visible au défilement
-  window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    let currentSection = '';
-
-    sections.forEach((section) => {
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      const sectionHeight = section.clientHeight;
-
-      if (window.scrollY >= sectionTop - 200 && window.scrollY < sectionTop + sectionHeight - 200) {
-        currentSection = section.getAttribute('id') || '';
-      }
-    });
-
-    // Mettre à jour la navigation
-    document.querySelectorAll('nav a').forEach((a) => {
-      a.classList.remove('bg-gray-100', 'text-primary-600');
-
-      const href = a.getAttribute('href');
-      if (href === `#${currentSection}`) {
-        a.classList.add('bg-gray-100', 'text-primary-600');
-      }
-    });
-  });
-
-  // Script pour afficher les informations de l'utilisateur si disponibles
-  document.addEventListener('DOMContentLoaded', () => {
-    // Dans un environnement réel, les headers X-User-* seraient définis par le middleware
-    // et seraient accessibles via du SSR ou une requête spécifique
-    // Pour tester en statique, vous pouvez décommenter cette partie
-    // Ce code sera ignoré en production car les headers ne seront pas présents
-    /*
-    const userElements = document.querySelectorAll('.user-email');
-    userElements.forEach(el => {
-      el.textContent = "utilisateur@exemple.com";
-    });
-    */
   });
 </script>

@@ -44,7 +44,7 @@ function cloudinaryToTina(file) {
 }
 
 // Contexte de développement LOCAL uniquement (jamais un déploiement public).
-// `netlify dev` expose CONTEXT="dev" ; NODE_ENV="development" en local.
+// `netlify dev` expose CONTEXT="dev" (NODE_ENV ignoré : réglable par erreur sur Netlify).
 // Les déploiements (production, deploy-preview, branch-deploy/staging) passent
 // tous par la vraie vérification TinaCloud ci-dessous.
 function isLocalDev() {

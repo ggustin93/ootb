@@ -1,9 +1,37 @@
 {
   "Mercredi": [
     {
+      "id": "atelier-365",
+      "title": "Famille Zombie ? Parlons sommeil ! ",
+      "description": "Quand le manque de sommeil s’invite dans la famille, les soirées peuvent vite devenir difficiles : endormissements compliqués, réveils nocturnes, fatigue accumulée, irritabilité, tensions autour du coucher… petits et grands peuvent rapidement passer en “mode famille zombie”. Cet atelier propose de mieux comprendre le sommeil de l’enfant et ses besoins spécifiques, d’identifier les facteurs qui perturbent les nuits, et de sortir de la spirale de l’épuisement. Sans culpabilité ni recettes miracles, il offre des repères concrets et des pistes adaptées au quotidien pour apaiser les soirées et retrouver progressivement des nuits plus sereines pour toute la famille. ",
+      "type": "Ateliers",
+      "day": "Mercredi",
+      "time": "10:00",
+      "endTime": "11:00",
+      "location": "Café-papote (1er étage)",
+      "speaker": "Nathalie Velu",
+      "organization": "",
+      "image": "/images/events/ateliers/atelier-365.webp",
+      "speakerImage": null,
+      "tags": [
+        "Parents",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Parents",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://liguedesfamilles.be/",
+      "contact": {
+        "email": "n.velu@liguedesfamilles.be",
+        "phone": "0479/49.32.02  "
+      },
+      "status": "Publié"
+    },
+    {
       "id": "conference-663",
       "title": "Apprendre à mobiliser les compétences transparentes...",
-      "description": "De nombreuses compétences sont attendues à l'école, à la maison et en société, mais ne sont pas enseignée ni explicitées. Dans cette conférence nous allons plonger au coeur de ces compétences \"transparentes\". Des pistes de réflexion et d'action seront proposer  pour un doux mélange entre éclairages théoriques et outils pratiques. L'objectif est de vous amener à développer une pratique quotidienne, à l'école ou à la maison, qui cultive toutes ces compétences transversales de manière explicite !",
+      "description": "De nombreuses compétences sont attendues à l'école, à la maison et en société, mais ne sont pas enseignées ni explicitées. Dans cette conférence nous allons plonger au coeur de ces compétences \"transparentes\". Des pistes de réflexion et d'action seront proposées  pour un doux mélange entre éclairages théoriques et outils pratiques. L'objectif est de vous amener à développer une pratique quotidienne, à l'école ou à la maison, qui cultive toutes ces compétences transversales de manière explicite !",
       "type": "Conférences",
       "day": "Mercredi",
       "time": "10:00",
@@ -53,6 +81,34 @@
       "contact": {
         "email": "info@atzeo.com",
         "phone": "+320472371242"
+      },
+      "status": "Publié"
+    },
+    {
+      "id": "atelier-364",
+      "title": "Parent TDAH, parent à bout",
+      "description": "Lorsque le TDAH est présent au sein de la famille, chez l’enfant, le parent ou les deux, le quotidien peut rapidement devenir plus complexe. Difficultés d’organisation, charge mentale importante, émotions intenses, tensions répétées autour des devoirs ou des tâches quotidiennes : ces défis peuvent progressivement mener à un sentiment d’épuisement et d’incompréhension. Cet atelier propose de mieux comprendre les réalités spécifiques des familles concernées, de sortir de la culpabilité et de découvrir des stratégies concrètes pour retrouver davantage de sérénité. Un temps pour prendre du recul, partager des expériences et repartir avec des outils adaptés à la réalité du terrain.",
+      "type": "Ateliers",
+      "day": "Mercredi",
+      "time": "14:00",
+      "endTime": "15:00",
+      "location": "Café-papote (1er étage)",
+      "speaker": "Nathalie Velu",
+      "organization": "",
+      "image": "/images/events/ateliers/atelier-364.webp",
+      "speakerImage": null,
+      "tags": [
+        "Parents",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Parents",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://liguedesfamilles.be/",
+      "contact": {
+        "email": "n.velu@liguedesfamilles.be",
+        "phone": "0479/49.32.02  "
       },
       "status": "Publié"
     },
@@ -113,13 +169,41 @@
       "status": "Publié"
     },
     {
+      "id": "atelier-366",
+      "title": "Famille hypersensible : apprivoiser l’intensité",
+      "description": "Émotions vécues avec intensité, grande réactivité aux ambiances, besoin de calme difficile à concilier avec le rythme familial, sentiment d’être rapidement submergé : lorsque l’hypersensibilité est présente chez l’enfant, le parent, ou les deux, le quotidien peut parfois sembler plus exigeant. Les incompréhensions, les débordements émotionnels ou la fatigue liée à une forte stimulation peuvent fragiliser l’équilibre familial.\n\nCet atelier propose de mieux comprendre le fonctionnement de l’hypersensibilité, d’identifier ses forces autant que ses défis, et de découvrir des pistes concrètes pour mieux accueillir les émotions, poser des limites sécurisantes et préserver les ressources de chacun. Un temps d’échange bienveillant pour prendre du recul, partager des expériences et repartir avec des outils favorisant une vie familiale plus apaisée et harmonieuse.",
+      "type": "Ateliers",
+      "day": "Mercredi",
+      "time": "15:00",
+      "endTime": "16:00",
+      "location": "Café-papote (1er étage)",
+      "speaker": "Nathalie Velu",
+      "organization": "",
+      "image": "/images/events/ateliers/atelier-366.webp",
+      "speakerImage": null,
+      "tags": [
+        "Parents",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Parents",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://liguedesfamilles.be/",
+      "contact": {
+        "email": "n.velu@liguedesfamilles.be",
+        "phone": "0479/49.32.02  "
+      },
+      "status": "Publié"
+    },
+    {
       "id": "conference-640",
       "title": "Devoirs: mode d'emploi pour les parents.",
       "description": "Conférence interactive destinée aux parents, enseignants et enfants du primaire et du secondaire. Comment aborder le temps des devoirs sans stress ni conflits ? Nous explorerons les émotions des enfants et des adultes, la roue des apprentissages et les différentes stratégies possibles. Des outils concrets et directement applicables seront proposés pour chaque étape du temps des devoirs, afin de favoriser un climat serein et motivant.",
       "type": "Conférences",
       "day": "Mercredi",
-      "time": "15:30",
-      "endTime": "16:30",
+      "time": "15:45",
+      "endTime": "16:45",
       "location": "Albert Einstein",
       "speaker": "Aurore et Stéphanie Leblicq et Masse",
       "organization": "",
@@ -146,8 +230,8 @@
       "description": "Dans le contexte actuel : conflits mondiaux, omniprésence des écrans, risques de (cyber--harcèlement,... il est important d'aborder de manière systématique l'éducation à la Paix et aux Valeurs avec les enfants afin de les aider à développer leurs compétences psycho-émotionnelles et les valeurs de coopération. Toutes ces techniques et  le développement de la réflexivité chez les enfants permet d'aider les élèves à se sentir bien dans leur peau pour développer leur potentiel grâce aux apprentissages.",
       "type": "Conférences",
       "day": "Mercredi",
-      "time": "15:30",
-      "endTime": "16:30",
+      "time": "15:45",
+      "endTime": "16:45",
       "location": "Nelson Mandela",
       "speaker": "Christine Jaminon",
       "organization": "",
@@ -379,36 +463,6 @@
       "shared": true
     },
     {
-      "id": "stand-1375",
-      "title": "Art & Fun, la rencontre des talents",
-      "description": "Art & Fun propose des ateliers créatifs autour des artistes de l'art moderne dans votre école.  Nous venons avec tout le matériel vous parler d'artistes comme Picasso, van Gogh, Folon, Magritte ou encore Niki de St Phalle, Matisse ou Arcimboldo. Après une introduction artistique très ludique les enfants créent leur oeuvre en s'en inspirant.",
-      "type": "Stands",
-      "day": "Mercredi",
-      "time": "Tous les jours",
-      "endTime": "",
-      "location": "À définir",
-      "speaker": "Celine Pijcke",
-      "organization": "",
-      "image": "/images/events/stands/stand-1375.webp",
-      "speakerImage": null,
-      "tags": [
-        "Professeurs, parents et enfants",
-        "Maternelle-primaire et secondaire",
-        "Enseignement ordinaire et spécialisé"
-      ],
-      "target": "Professeurs, parents et enfants",
-      "level": "Maternelle-primaire et secondaire",
-      "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "www.artandfun.be",
-      "contact": {
-        "email": "celine@",
-        "phone": "0032477435449"
-      },
-      "status": "Publié",
-      "theme": "",
-      "shared": true
-    },
-    {
       "id": "stand-1376",
       "title": "Atzéo Editions & De Mortagne Editions",
       "description": "LA FIERTE D'ENSEIGNER et LE BONHEUR D'APPRENDRE\nAtzéo et ses auteurs proposent uniquement des outils au service d'apprentissages de qualité et d'une gestion de classe efficace.\nDe Mortagne, maison d'édition québécoise, livre aux parents et aux enseignants des boites à outils et des récits à raconter aux enfants à propos des troubles. \nBienvenue à chacune et chacun. ",
@@ -441,7 +495,7 @@
     {
       "id": "stand-1377",
       "title": "GBGT Groupement belge des GraphoThérapeutes asbl",
-      "description": "Votre enfant ou adolescent rencontre des difficultés dans l’écriture (illisibilité, douleur, dégoût, lenteur, …); en tant qu’instituteur, professeur, directeur ou encore parent vous vous sentez démunis face à des enfants/ados qui rencontrent ces mêmes difficultés ? \nNous sommes impatients de vous rencontrer et d’échanger avec vous sur toutes questions relatives aux difficultés dans l’écriture, pouvoir vous donner quelques réponses à vos questions, vous orienter vers des professionnels de l'écriture, vous donner quelques pistes pour des aides adéquates, ... et éventuellement vous orienter vers des professionnels de l’écriture.\nBienvenue sur notre stand !",
+      "description": "Votre enfant ou adolescent rencontre des difficultés dans l’écriture (illisibilité, douleur, dégoût, lenteur, …); en tant qu’instituteur, professeur, directeur, logopède, ... ou encore parent vous vous sentez démunis face à des enfants/ados qui rencontrent ces mêmes difficultés ? Nous sommes impatients de vous rencontrer et d’échanger avec vous sur toutes questions relatives aux difficultés dans l’écriture, pouvoir vous donner quelques réponses à vos questions, vous transmettre quelques pistes pour des aides adéquates, ... et éventuellement vous orienter vers des professionnels de l'écriture. Bienvenue sur notre stand !",
       "type": "Stands",
       "day": "Mercredi",
       "time": "Tous les jours",
@@ -549,7 +603,7 @@
       "target": "Professeurs, parents et enfants",
       "level": "Maternelle-primaire et secondaire",
       "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "",
+      "url": "https://www.toutlemondelit.be/",
       "contact": {
         "email": "toutlemondelit@adeb.be",
         "phone": "0473467298"
@@ -643,36 +697,6 @@
       "contact": {
         "email": "celine.vandenbussche@ifpc-fwb.be",
         "phone": "0498768863"
-      },
-      "status": "Publié",
-      "theme": "",
-      "shared": true
-    },
-    {
-      "id": "stand-1385",
-      "title": "Kit Siméo",
-      "description": "Vous souhaitez explorer des outils pédagogiques interactifs pour préparer les jeunes de 11 à 14 ans à faire des choix d’orientation scolaire ? Découvrez le Kit Siméo. Cette mallette pédagogique comprend une bande dessinée, le jeu Métiers Secrets, deux carnets pédagogiques et un carnet personnel. ",
-      "type": "Stands",
-      "day": "Mercredi",
-      "time": "Tous les jours",
-      "endTime": "",
-      "location": "À définir",
-      "speaker": "Fabienne Effinier",
-      "organization": "",
-      "image": "/images/events/stands/stand-1385.webp",
-      "speakerImage": null,
-      "tags": [
-        "Professeurs, parents et enfants",
-        "Primaire et secondaire",
-        "Enseignement ordinaire et spécialisé"
-      ],
-      "target": "Professeurs, parents et enfants",
-      "level": "Primaire et secondaire",
-      "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "https://portail.siep.be/publication",
-      "contact": {
-        "email": "Fabienne.effinier@siep.be",
-        "phone": "0472-793081"
       },
       "status": "Publié",
       "theme": "",
@@ -823,36 +847,6 @@
       "contact": {
         "email": "virginie.goethals@resonanceasbl.be",
         "phone": "0478/641 657"
-      },
-      "status": "Publié",
-      "theme": "",
-      "shared": true
-    },
-    {
-      "id": "stand-1392",
-      "title": "GAI SAVOIR",
-      "description": "Le Gai Savoir propose du matériel scolaire, édite et diffuse des outils pédagogiques tels que les éditions Gai Savoir, la Planète des alphas, MDI, Nathan, SED, SEDRAP,...  à destination des professionnels de l'éducation.",
-      "type": "Stands",
-      "day": "Mercredi",
-      "time": "Tous les jours",
-      "endTime": "",
-      "location": "À définir",
-      "speaker": "ROLAND CORS",
-      "organization": "",
-      "image": "/images/events/stands/stand-1392.webp",
-      "speakerImage": null,
-      "tags": [
-        "Professionnels",
-        "Primaire et secondaire",
-        "Enseignement ordinaire et spécialisé"
-      ],
-      "target": "Professionnels",
-      "level": "Primaire et secondaire",
-      "teachingType": "Enseignement ordinaire et spécialisé",
-      "url": "www.gaisavoir.be",
-      "contact": {
-        "email": "roland@gaisavoir.be",
-        "phone": "0495/304642"
       },
       "status": "Publié",
       "theme": "",
@@ -1877,6 +1871,636 @@
       "status": "Publié",
       "theme": "",
       "shared": true
+    },
+    {
+      "id": "stand-1438",
+      "title": "Citoyenneté et Participation - Des outils participatifs pour les jeunes",
+      "description": "Un stand pour découvrir les animations immersives et participatives sur le fonctionnement de la justice, la liberté d’expression, les stéréotypes et préjugés, la démocratie, l’autoritarisme, l’interculturalité décoloniale, la mobilisation citoyenne.\n\nEt des jeux sur la fast fashion, le gaspillage des ressources, les taxes et impôts et le commerce équitable. ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Deborah Melo",
+      "organization": "",
+      "image": "/images/events/stands/stand-1438.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://citoyennete-participation.be/",
+      "contact": {
+        "email": "melo@citoyennete-participation.be",
+        "phone": "0491976442"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1439",
+      "title": "Journaliste",
+      "description": "Un endroit où les parents peuvent souffler, rire, échanger et repartir avec des idées concrètes pour le quotidien. Passez nous dire bonjour, participez à nos animations et découvrez l'univers de Maison Slash !",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Vanille Dujardin",
+      "organization": "",
+      "image": "/images/events/stands/stand-1439.webp",
+      "speakerImage": null,
+      "tags": [
+        "Parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://maisonslash.be/fr",
+      "contact": {
+        "email": "vanille.dujardin@maisonslash.be",
+        "phone": "0468377788"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1440",
+      "title": "L’outil indispensable aux enseignants de maternelle ",
+      "description": "KiddyClass est une plateforme numérique belge dédiée exclusivement à l'enseignement maternel. Conçue par une enseignante maternelle et un informaticien, elle accompagne les enseignants dans leur quotidien grâce à un journal de classe intelligent, un suivi pédagogique complet et des outils d'IA qui réduisent la charge administrative et font gagner un temps précieux.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "KiddyClass - Delphine et Olivier  Braeckman",
+      "organization": "",
+      "image": "/images/events/stands/stand-1440.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.kiddyclass.be",
+      "contact": {
+        "email": "info@kiddyclass.be",
+        "phone": "0479871846"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1441",
+      "title": "CanaPlay",
+      "description": "CanaPlay est une marque belge de mobilier ludique et modulable pour les enfants de tous les âges. \n\nMoitié meuble, moitié jouet : des canapés qui deviennent cabanes, refuges ou parcours d'équilibre, des poufs multifonctions et des arcs-en-ciel de motricité — tout un univers qui se transforme au gré de l'imagination.\n\nConçu par une maman en partenariat avec des professionnels de la petite enfance, chaque module a été pensé dans le détail : portes-boucliers, dossiers transformables, matériaux OEKO-TEX, mousse à haute densité, housses lavables en machine, avec protections imperméables incluses.\n\nPour les familles : un mobilier qui grandit avec l'enfant et qui stimule le jeu libre plutôt que les écrans.\n\nPour les professionnels : un support de motricité libre et de jeu autonome, compatible avec les approches Montessori, adapté aux structures d'accueil, écoles, cabinets de psychomotricité et espaces inclusifs - y compris pour les enfants neuro-atypiques ou porteurs d'un handicap léger.\n\nNoté 4,9/5 sur Google, validé par La Maison des Maternelles et disponible chez Nature & Découvertes. \n\nVenez tester, découvrir et construire.\nÀ vos marques : rêvez, créez, jouez !",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Aurélie Collart",
+      "organization": "",
+      "image": "/images/events/stands/stand-1441.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.canaplay.shop",
+      "contact": {
+        "email": "info@canaplay.shop",
+        "phone": "0498624557"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1442",
+      "title": "Foire du livre de Bruxelles /Fondation Battieuw-Schmidt ",
+      "description": "La Foire du livre de Bruxelles propose du 17 au 21 mars 2027 un programme scolaire et professionnel pour les enseignants, un square Educa avec en plus un volet scientifique dédié aux enseignants et un Village des Familles avec diverses animations.\n\nLa Fondation Battieuw-Schmidt, partenaire, propose un concours pour des projets de lecture, un prix de littérature de jeunesse, une revue professionnelle  Lu et partagé et des expositions thématiques et locatives d'illustrations pour la jeunesse",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Luc  Battieuw",
+      "organization": "",
+      "image": "/images/events/stands/stand-1442.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.fdl.be ; www.fonds-image-texte-jeunesse.org",
+      "contact": {
+        "email": "jeunesse.pro@foiredulivredebruxelles.be",
+        "phone": "0479785075"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1443",
+      "title": "Le Kit Siméo du SIEP",
+      "description": "Le Kit Siméo du SIEP propose des outils ludiques pour sensibiliser, en début de secondaire, à la découverte de soi, des métiers et des formations.\n",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Fabienne  Effinier",
+      "organization": "",
+      "image": "/images/events/stands/stand-1443.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://portail.siep.be/publication",
+      "contact": {
+        "email": "fabienne.effinier@siep.be",
+        "phone": "0472/44.57.82 "
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1444",
+      "title": "RTBF action éducative ",
+      "description": "Dans chaque émission, chaque chronique, chaque podcast ou documentaire de la RTBF, il y a une opportunité : celle de penser et de comprendre le monde dans sa complexité. La mission éducative de la RTBF prend forme dans l’ensemble de son offre de contenus et associe l’éditorial à différents dispositifs et opérations de terrain, en bénéficiant de collaborations avec l’enseignement ou le secteur de l’éducation permanente. Sciences, Histoire, Nouvelles technologies, Education aux médias, Actualités et enjeux de société..., l'action éducative de la RTBF s'adresse à tous ceux qui croient en l’ouverture sur le monde.  ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Louise Monaux",
+      "organization": "",
+      "image": "/images/events/stands/stand-1444.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.rtbf.be ",
+      "contact": {
+        "email": "lou@rtbf.be",
+        "phone": "+32 474 89 84 96"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1445",
+      "title": "Les Auberges de Jeunesse",
+      "description": "Les Auberges de Jeunesse accueillent les classes pour des séjours \néducatifs où les apprentissages prennent vie. Venez échanger avec nous \npour découvrir toutes nos ressources ! ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Mathilde Defalque",
+      "organization": "",
+      "image": "/images/events/stands/stand-1445.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://lesaubergesdejeunesse.be/",
+      "contact": {
+        "email": "mad@lesaubergesdejeunesse.be",
+        "phone": "0472/44.57.82 "
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1449",
+      "title": "Philéas & Autobule",
+      "description": "Philéas & Autobule est une maison d'édition belge fondée en 2006. Elle publie une revue trimestrielle d’initiation à la démarche philosophique et citoyenne destinée aux enfants de 8 à 13 ans. Les numéros sont construits autour d’un thème, abordé philosophiquement et qui accompagne le questionnement de l’enfant, sans imposer les réponses des adultes !\nPhiléas & Autobule publie également une collection d'albums pour un éveil philosophique à partir de 5 ans. ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Cassandra Chazel",
+      "organization": "",
+      "image": "/images/events/stands/stand-1449.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "www.phileasetautobule.com",
+      "contact": {
+        "email": "info@phileasetautobule.com",
+        "phone": "0492269745"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1450",
+      "title": "Marmottons/ P'tit Bunny ",
+      "description": "Les Éditions Marmottons...\nDes albums jeunesse pour éveiller la pensée, nourrir l'imaginaire et susciter la discussion.\nÀ travers des thématiques porteuses de sens, nos livres invitent les enfants à explorer le monde avec humour, curiosité et sensibilité.\nChaque album s’accompagne de bonus ludiques — chansons, histoires audio et pistes d’approfondissement — pour prolonger l’expérience au-delà de la lecture.\nProposition de lectures animées et de rencontres sur le chemin du livre dans les classes. \n\nP'tit Bunny : des livres bilingues français-anglais pleins de tendresse, accompagnés d’une adorable petite peluche. \nAvec Ptit Bunny, on part à la rencontre des enfants, des familles et des enseignants : \n• Découverte de l'anglais \n• Lectures animées dans les écoles et les bibliothèques\n• Formations en éveil aux langues ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Auriane/Claire de pierpont/Duchâteau",
+      "organization": "",
+      "image": "/images/events/stands/stand-1450.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.editionsmarmottons.com/ ;  https://www.ptitbunnyplanet.com/",
+      "contact": {
+        "email": "ptitbunnyplanet@gmail.com",
+        "phone": "0499736358"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1451",
+      "title": "Séjours scolaires en Wallonie et à Bruxelles",
+      "description": "Réseau d'hébergements, de séjours et d'activités, dynamique et convivial, tourné vers la nature et la découverte du patrimoine régional, Kaleo porte une attention particulière à la jeunesse mais accueille des clients de tout âge, en mettant l’accent sur le tourisme comme pratique collective (familles, groupe), épanouissante et accessible à tous. \nL'asbl propose des séjours scolaires en pension complète ou en autonomie totale,  construits avec des partenaires et adaptés aux Maternelles, Primaires ou Secondaires.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Gwenaëlle Hoste",
+      "organization": "",
+      "image": "/images/events/stands/stand-1451.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.kaleo-asbl.be",
+      "contact": {
+        "email": "g.hoste@akleo-asbl.be",
+        "phone": "0479505244"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1452",
+      "title": "Facilitez-vous l'éveil aux langues en classe !",
+      "description": "Vous êtes enseignant(e) en maternelles ou en P1P2 ? Vous devez dès lors dispenser 50 min d'éveil aux langues obligatoire/sem. Comment faire ? Que faire ? Quels contenus choisir ? Comment se faciliter la tâche quand on ne parle soi-même pas d'autres langues ou qu'on ne ne se sent pas à l'aise ? Découvrez TRADANIMEVEIL et toutes ses ressources prêtes à l'emploi. Concret, joyeux et efficace. Adopté dans plus d'une école sur 4 en FWB. Agréé MANOLO et subvention gratuité.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Véronique VAN DEN ABEELE",
+      "organization": "",
+      "image": "/images/events/stands/stand-1452.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle et primaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "www.tradanim.be",
+      "contact": {
+        "email": "direction@tradanim.be",
+        "phone": "+32475941641"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1453",
+      "title": "Un jeu dans ma classe, financez vos projets grâce aux jeux de société",
+      "description": "Votre école\ncherche à financer\ndes projets ?\nUne action de\nfinancement qui\na du sens\nSortie scolaire, ludothèque, spectacle,\naménagement de cour, matériel pédagogique ...\nChaque année, de nombreux établissements\norganisent des actions pour récolter des fonds.\nEt si cette action était cohérente avec votre mission\néducative ?\n[Un Jeu] Dans Ma Classe propose aux écoles de\nvendre des jeux de société sélectionnés pour leur\nqualité ludique et éducative.\nLes familles découvrent des jeux de qualité.\nL'école bénéficie d'une marge sur les ventes.\nLes élèves développent leurs compétences et\nparticipent à un projet fédérateur.\nUne opération de financement\nqui crée du lien plutôt que de\nsimplement vendre un produit.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Thibaut Quintens",
+      "organization": "",
+      "image": "/images/events/stands/stand-1453.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.unjeudansmaclasse.com",
+      "contact": {
+        "email": "info@unjeudansmaclasse.com",
+        "phone": "0485864829"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1454",
+      "title": "Typ10 - Apprendre à taper au clavier",
+      "description": "Voulez-vous rendre la dactylographie accessible à chaque enfant ?\nAvec Typ10, vous pouvez enseigner la dactylographie en 10 leçons ludiques.\n\nOn vous offre :\n-\tUne méthode inclusive et structurée qui mobilise plusieurs canaux d’apprentissage.\n-\tDes outils différenciés pour fournir aux enfants un soutien adapté à leurs besoins.\n-\tUn programme de formation pour optimiser les approches pédagogiques des enseignants et des thérapeutes. \n\nAujourd’hui, plus de 3000 professionnels ont déjà été formés.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Ruth Houben",
+      "organization": "",
+      "image": "/images/events/stands/stand-1454.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professionnels",
+        "Primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professionnels",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://typ10.com/fr/home-francais",
+      "contact": {
+        "email": "ruth.houben@c-explore.com",
+        "phone": "0484/564140"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1455",
+      "title": "Maison d'éditions belge - romans, album, tout carton",
+      "description": "Notre conviction profonde est qu’un beau livre est un formidable outil pour ouvrir les enfants et les ados à des valeurs qui nous tiennent à cœur : le respect (de soi, de l’autre, de l’environnement), l’ouverture d’esprit, l’entraide et le dialogue.\n\nNous voulons susciter à la fois la réflexion et l’émotion. Éveiller l’esprit critique à travers la lecture-plaisir. Transmettre des messages et l’envie de lire.\n\nNotre petite équipe passionnée sélectionne soigneusement les livres pour les idées qu’ils transmettent – des livres qui montrent une société inclusive, des livres engagés sur des thèmes de société –, et pour leur capacité à toucher à travers une belle histoire ou de belles illustrations.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Alice Editions",
+      "organization": "",
+      "image": "/images/events/stands/stand-1455.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.alice-editions.be",
+      "contact": {
+        "email": "sophie@alice-editions.be",
+        "phone": "0497544798"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1456",
+      "title": "Éditions Plantyn : Des ressources pour apprendre et avancer ensemble",
+      "description": "Des ressources à découvrir. Des idées à partager.\n\nPlantyn est une maison d’édition éducative belge, partenaire de celles et ceux qui font vivre l’enseignement au quotidien. \n\nNous accompagnons les enseignants, les écoles, les élèves et les parents avec des méthodes et des solutions d’apprentissage adaptées à leurs besoins. Notre ambition : contribuer à un enseignement fort qui permet à chacun de développer son potentiel.\n\nAu Salon Out of the Books, venez découvrir notre univers et notre large éventail de ressources pédagogiques pour le primaire, le secondaire et le parascolaire.\n\nFeuilletez nos collections, découvrez nos nouveautés et surtout, prenez le temps d’échanger avec notre équipe. Que vous soyez à la recherche d’outils pour votre classe, de solutions pour votre école ou de ressources pour accompagner votre enfant, nous sommes là pour vous écouter, répondre à vos questions et vous guider.\n\nVous êtes enseignant ? Une petite surprise vous attend également : participez à notre concours sur le stand !\n\nVenez rencontrer Plantyn. Parce qu’on avance mieux quand on avance ensemble.\n",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Morgane Vermeirre",
+      "organization": "",
+      "image": "/images/events/stands/stand-1456.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Primaire et secondaire",
+        "Enseignement ordinaire"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Primaire et secondaire",
+      "teachingType": "Enseignement ordinaire",
+      "url": "https://www.plantyn.com/fr-BE/home",
+      "contact": {
+        "email": "morganevermeirre@hotmail.com",
+        "phone": "0499698088"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1457",
+      "title": "L'école des loisirs",
+      "description": "Bienvenue à l’école des loisirs, éditeur d’histoires qui ouvrent en grand le cœur et l'esprit des enfants !\nNotre projet est celui de l’émancipation de chacun par l’éducation, le plaisir et la culture, quel que soit son âge, son parcours, son lieu de vie, que l’on soit déjà lecteur ou en devenir.\nC’est ce chemin que le groupe l’école des loisirs propose de parcourir ensemble : enfants, parents, familles, enseignants, soignants, médiateurs du livre et professionnels de l’enfance.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Chloé Peurey",
+      "organization": "",
+      "image": "/images/events/stands/stand-1457.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.ecoledesloisirs.fr/",
+      "contact": {
+        "email": "cpeurey@ecoledesloisirs.com",
+        "phone": "0473231527"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1459",
+      "title": "Fournitures scolaires ",
+      "description": "Venez découvrir et tester les produits Maped, Maped Kidy Learn et Maped Kidy Learn Concentration. \nMaped est une entreprise familiale française spécialisée dans les fournitures scolaires, de bureau et de loisirs créatifs, fondée en 1947 à Annecy. A travers ses gammes de produits innovants, accessibles et responsables, Maped s'est donné pour mission de favoriser l'apprentissage et la créativité des enfants. \nA vos côtés pour qu'enseigner reste votre priorité ! ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Erika Bekaert",
+      "organization": "",
+      "image": "/images/events/stands/stand-1459.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.maped.com et www.viroux.com",
+      "contact": {
+        "email": "erika.bekaert@maped.info",
+        "phone": "0472060201"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1460",
+      "title": "Koesio, connexion maximale",
+      "description": "Koesio, au service de l’école numérique\nKoesio accompagne les écoles dans leur transformation numérique, avec une expertise particulière dans les écrans interactifs et les solutions collaboratives pour la classe\nNous accompagnons également les établissements dans leurs besoins d’informatique, de téléphonie, d’impression, de numérisation et de gestion documentaire, pour répondre à l’ensemble de leurs enjeux numériques et de communication\nNotre objectif : mettre la technologie au service de la pédagogie et du quotidien des écoles, simplement et efficacement\nKoesio Connexion maximale",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Jacques Besonhé",
+      "organization": "",
+      "image": "/images/events/stands/stand-1460.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.koesio.be",
+      "contact": {
+        "email": "jacques.besonhe.ext@koesio.com",
+        "phone": "0475521425"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1461",
+      "title": "Maped+Viroux",
+      "description": "Viroux accompagne les écoles et les professionnels de l’éducation dans leurs projets au quotidien. Fournitures scolaires, matériel pédagogique et créatif, mobilier et équipement : nous sélectionnons des solutions adaptées aux réalités du terrain.\n\nEntreprise familiale belge, nous plaçons la proximité, le conseil et le service au cœur de notre métier, avec une ambition simple : faciliter le quotidien des équipes éducatives et contribuer à créer des environnements où les enfants ont envie d’apprendre, de découvrir et de créer.",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Valerie Viroux",
+      "organization": "",
+      "image": "/images/events/stands/stand-1461.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs",
+        "Maternelle et primaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs",
+      "level": "Maternelle et primaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "www.viroux.com",
+      "contact": {
+        "email": "valerie@viroux.be",
+        "phone": "0473922731"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
+    },
+    {
+      "id": "stand-1462",
+      "title": "La Lecture confortable ",
+      "description": "Les éditions ZTL-ZéTooLu ont créé la charte Lecture confortable en 2017 et publient des ouvrages spécialisés en littérature accessible pour les lecteurs DysFFérents, les primo-lecteurs, les allophones. Le catalogue d'une vingtaine de titres se compose d'albums, cahiers, romans junior et romans pour ados/adultes. Basée en France, la maison est tenue par trois femmes : Sandra notre édystrice et fondatrice, Lucie notre soutien administratif et Liza notre responsable commerciale et culturelle. ",
+      "type": "Stands",
+      "day": "Mercredi",
+      "time": "Tous les jours",
+      "endTime": "",
+      "location": "À définir",
+      "speaker": "Liza Todorovic",
+      "organization": "",
+      "image": "/images/events/stands/stand-1462.webp",
+      "speakerImage": null,
+      "tags": [
+        "Professeurs, parents et enfants",
+        "Maternelle-primaire et secondaire",
+        "Enseignement ordinaire et spécialisé"
+      ],
+      "target": "Professeurs, parents et enfants",
+      "level": "Maternelle-primaire et secondaire",
+      "teachingType": "Enseignement ordinaire et spécialisé",
+      "url": "https://www.ztl-editions.fr/",
+      "contact": {
+        "email": "communication@ztl-editions.fr",
+        "phone": "0604180211"
+      },
+      "status": "Publié",
+      "theme": "",
+      "shared": true
     }
   ],
   "Jeudi": [
@@ -2001,7 +2625,7 @@
       "time": "10:15",
       "endTime": "11:15",
       "location": "Benjamin Franklin",
-      "speaker": "Brieuc Tollenaere",
+      "speaker": "Philippe  Vanstippen",
       "organization": "",
       "image": "/images/events/conferences/conference-651.webp",
       "speakerImage": "/images/events/conferences/speaker-conference-651.webp",
@@ -2138,8 +2762,8 @@
       "description": "- Présentation et initiation au Misp ( Massage In School Program) qui existe dans une trentaine de pays depuis plus de 20 ans et qui apporte tous ses bienfaits pédagogiques comme sociaux dans les classes de maternelle et primaire (concentration, apprentissages, ambiance de classe, lutte contre le harcèlement,...)\n- Présentation et initiation à la méthode Ammassado : interaction de l'Intelligence Emotionnelle et des techniques psychocorporelles dans la gestion du stress et des émotions pour de meilleurs apprentissages en secondaire.",
       "type": "Ateliers",
       "day": "Jeudi",
-      "time": "12:15",
-      "endTime": "13:15",
+      "time": "12:30",
+      "endTime": "13:30",
       "location": "Espace atelier",
       "speaker": "Roxane Geerinckx",
       "organization": "",
@@ -2218,8 +2842,8 @@
     },
     {
       "id": "conference-667",
-      "title": "AI: From Cheating to a Learning Culture",
-      "description": "A look at how schools can develop and implement AI responsibly: digital readiness, AI literacy, clear assessment practices, and organizational frameworks for safe use. The teacher’s shifting role between analog and digital work. AI as support for planning, differentiation, and creative preparation. For students: a think‑first mindset and AI as a thoughtful study companion. \n\n ",
+      "title": "L’IA : de la triche à une culture de l’apprentissage",
+      "description": "Un regard sur la manière dont les écoles peuvent développer et intégrer l’intelligence artificielle de façon responsable : préparation au numérique, maîtrise de l’IA, pratiques d’évaluation claires et cadres organisationnels garantissant un usage sûr et réfléchi.\n\nL’évolution du rôle de l’enseignant, entre pratiques analogiques et numériques. L’IA comme outil de soutien pour la planification, la différenciation pédagogique et la préparation créative des activités.\n\nPour les élèves : développer le réflexe de penser d’abord par soi-même et apprendre à utiliser l’IA comme un compagnon d’apprentissage, de manière réfléchie et critique.\n\n ",
       "type": "Conférences",
       "day": "Jeudi",
       "time": "12:45",
@@ -2250,8 +2874,8 @@
       "description": "Venez découvrir les jeux Conju Cat's sur la conjugaison et Grammi Cat's sur la grammaire (4 jeux). Différentes règles sont proposées pour les niveaux primaire et secondaire : conjugaison, classes grammaticales, fonctions grammaticales, construction de phrases... La version numérique sera également présentée.",
       "type": "Ateliers",
       "day": "Jeudi",
-      "time": "13:30",
-      "endTime": "14:30",
+      "time": "13:45",
+      "endTime": "14:45",
       "location": "Espace atelier",
       "speaker": "François Petit",
       "organization": "",
@@ -2309,7 +2933,7 @@
       "time": "14:00",
       "endTime": "15:00",
       "location": "Albert Einstein",
-      "speaker": "VIRAGES VIRAGES",
+      "speaker": "Delphine de Laminne",
       "organization": "",
       "image": "/images/events/conferences/conference-660.webp",
       "speakerImage": "/images/events/conferences/speaker-conference-660.webp",
@@ -2362,8 +2986,8 @@
       "description": "Vous êtes prof de langues et vous entendez parler de l'IA partout… mais concrètement, qu'est-ce que ça change pour votre classe ?\nDans cet atelier 100 % pratique. Vous repartirez avec des ressources audio créées par vous, adaptées au niveau de vos élèves, prêtes à l'emploi.\nVous découvrirez aussi ce qu'il est vraiment possible de faire grâce à l’IA dans le cadre de vos cours de langues modernes, FLE et FLA.\nParce que l'IA ne remplace pas le prof de langues — elle lui donne des superpouvoirs.\n",
       "type": "Ateliers",
       "day": "Jeudi",
-      "time": "14:45",
-      "endTime": "15:45",
+      "time": "15:00",
+      "endTime": "16:00",
       "location": "Espace atelier",
       "speaker": "Isabelle Fievet",
       "organization": "",
@@ -2840,8 +3464,8 @@
       "description": "Classes chargées, hétérogénéité croissante, besoins éducatifs particuliers : l’inclusion est un défi quotidien. Cet atelier propose d’explorer comment les IA génératives peuvent soutenir concrètement la différenciation sans céder au solutionnisme technologique. À partir d’exemples disciplinaires variés (DYS, niveaux de difficulté, élèves allophones, CUA), vous repartirez avec des pistes directement transférables dans vos pratiques de classe.\n",
       "type": "Ateliers",
       "day": "Vendredi",
-      "time": "13:30",
-      "endTime": "14:30",
+      "time": "13:45",
+      "endTime": "14:45",
       "location": "Espace atelier",
       "speaker": "Mickaël  BERTRAND",
       "organization": "",
@@ -2952,8 +3576,8 @@
       "description": "Comment rebooster l’estime de soi des élèves au regard d’ateliers autour des intelligences multiples.\nDécouverte des Octofuns et des Multibrios pour les primaires.\nComment transférer l’atelier en secondaire.\nAtelier pratique.\nEnvoi du pwp théorique par la suite.",
       "type": "Ateliers",
       "day": "Vendredi",
-      "time": "14:45",
-      "endTime": "15:45",
+      "time": "15:00",
+      "endTime": "16:00",
       "location": "Espace atelier",
       "speaker": "Christelle Rasez",
       "organization": "",

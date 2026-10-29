@@ -10,9 +10,10 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 ### Mises à jour de sécurité
 
 - **Médiathèque de l'éditeur** — La brique qui vérifie l'identité des éditrices avant un envoi ou une suppression d'image (`@tinacms/auth`) est à jour. Elle s'assure désormais que la personne connectée appartient bien à votre projet. Rien ne change dans votre façon de travailler.
+- **Suppression d'images réparée** — Le bouton « Supprimer » de la médiathèque n'effaçait pas réellement l'image chez Cloudinary. C'est corrigé, et une suppression qui échoue est désormais signalée au lieu de passer inaperçue.
 - **Formulaires du site** — La brique qui transmet les envois à la base de données (`axios`, via NocoDB) passe à sa dernière version corrigée.
 
-**Fichiers modifiés** : `netlify/functions/cloudinary-media.mjs`, `package.json`, `package-lock.json`
+**Fichiers modifiés** : `netlify/functions/cloudinary-media.mjs`, `netlify.toml`, `package.json`, `package-lock.json`
 
 ---
 

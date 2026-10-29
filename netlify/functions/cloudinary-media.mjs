@@ -221,9 +221,11 @@ async function uploadMedia(event) {
 
 // DELETE: Delete media
 async function deleteMedia(path) {
-  // Le store appelle /api/cloudinary/<encodeURIComponent(id)> (ex. "dossier%2Fimage") ;
+  // Le store appelle /api/cloudinary/media/<encodeURIComponent(id)> (ex. "media/dossier%2Fimage") ;
   // selon la réécriture Netlify, le chemin reçu peut aussi être celui de la fonction.
-  const publicId = decodeURIComponent(path.replace(/^.*?\/(?:api\/cloudinary|functions\/cloudinary-media)\/?/, ''));
+  const publicId = decodeURIComponent(
+    path.replace(/^.*?\/(?:api\/cloudinary|functions\/cloudinary-media)\/(?:media\/)?/, '')
+  );
 
   if (!publicId) {
     return {

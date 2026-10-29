@@ -5,6 +5,19 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.4.1] — 2026-10-29
+
+### Accès au site rétabli et surveillance automatique du certificat (#35)
+
+- **Le site est de nouveau accessible via outofthebooks.com** — Depuis le 26 octobre, les navigateurs bloquaient l'adresse, car la « carte d'identité » du site (le certificat SSL, celui du petit cadenas) avait expiré. Le site lui-même n'a jamais été hors ligne : il restait accessible via `outofthebooks.netlify.app`. Le certificat est renouvelé (valable jusqu'au 27 janvier 2027) et se renouvellera de nouveau automatiquement.
+- **Cause** — Fin septembre, la vérification du nom de domaine entre l'hébergeur (Netlify) et OVH a échoué ponctuellement, et Netlify n'a pas retenté le renouvellement. La configuration chez OVH est correcte : rien à changer de votre côté.
+- **Nouvelle alerte quotidienne** — Le certificat est maintenant vérifié chaque jour, automatiquement (une « GitHub Action »). En cas de souci, je reçois un e-mail environ trois semaines avant l'échéance, bien avant que le problème se voie. L'alerte s'adapte d'elle-même aux certificats plus courts prévus à partir de 2027.
+- **Vérifié** — Aucun signe d'intrusion : le DNS, les certificats émis et les derniers déploiements sont conformes. Le site et ses données sont intacts.
+
+**Fichiers modifiés** : `.github/workflows/ssl-check.yml` (nouveau)
+
+---
+
 ## [1.4.0] — 2026-10-23
 
 ### Espace administrateur mieux protégé (#34)

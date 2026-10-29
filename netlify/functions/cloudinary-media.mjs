@@ -49,8 +49,7 @@ function cloudinaryToTina(file) {
 // tous par la vraie vérification TinaCloud ci-dessous.
 function isLocalDev() {
   const context = process.env.CONTEXT || '';
-  const nodeEnv = process.env.NODE_ENV || '';
-  return context === 'dev' || nodeEnv === 'development';
+  return context === 'dev';
 }
 
 // Vérifie que la requête provient d'un éditeur authentifié TinaCloud.

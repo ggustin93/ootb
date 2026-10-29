@@ -339,7 +339,7 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
             <h2 class="acc-title">Aide</h2>
             <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
           </summary>
-          <p class="acc-intro">Documentation et contact.</p>
+          <p class="acc-intro">Documentation, contact et suivi des interventions.</p>
           <div class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
             <p class="text-sm text-gray-700 flex-1">
               Guides pas à pas et réponses aux questions fréquentes. Pour le reste : {contactInfo.email} ou
@@ -353,6 +353,23 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
             >
               <Icon name="tabler:brand-notion" class="w-5 h-5 mr-2" />
               Voir la FAQ
+              <span class="sr-only">{newTab}</span>
+            </a>
+          </div>
+          <div
+            class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 mt-4 bg-white rounded-xl border border-gray-200"
+          >
+            <p class="text-sm text-gray-700 flex-1">
+              Ce qui a été corrigé et amélioré sur le site, intervention par intervention.
+            </p>
+            <a
+              href={`${contactInfo.github}/blob/main/CHANGELOG-2026.md`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-4 py-2 bg-[var(--ootb-blue)] text-white text-sm font-semibold rounded-lg hover:opacity-90 self-start"
+            >
+              <Icon name="tabler:list-check" class="w-5 h-5 mr-2" />
+              Journal des interventions
               <span class="sr-only">{newTab}</span>
             </a>
           </div>

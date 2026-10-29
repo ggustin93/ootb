@@ -13,7 +13,11 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Suppression d'images réparée** — Le bouton « Supprimer » de la médiathèque n'effaçait pas réellement l'image chez Cloudinary. C'est corrigé.
 - **Formulaires du site** — La brique qui transmet les envois à la base de données (`axios`, via NocoDB) passe à sa dernière version corrigée.
 
-**Fichiers modifiés** : `netlify/functions/cloudinary-media.mjs`, `netlify.toml`, `package.json`, `package-lock.json`
+### Tableau de bord
+
+- **Journal des interventions dans votre tableau de bord** — Un nouveau bouton (rubrique « Aide ») ouvre ce journal, pour suivre ce qui a été corrigé et amélioré.
+
+**Fichiers modifiés** : `netlify/functions/cloudinary-media.mjs`, `netlify.toml`, `src/pages/dashboard.astro`, `package.json`, `package-lock.json`
 
 ---
 

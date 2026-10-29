@@ -1,0 +1,27 @@
+# Alerte d'expiration du certificat SSL (cf. panne du 26/10/2026 : renouvellement Netlify en échec silencieux).
+# Échoue (→ e-mail GitHub) si le certificat est invalide/mauvais domaine, ou s'il reste < 25 % de sa durée de vie
+# (~22 j pour 90 j, ~16 j pour 64 j, ~11 j pour 45 j : toujours après le renouvellement normal de Netlify).
+# ponytail: GitHub désactive les workflows programmés d'un dépôt public après 60 j sans activité, sans prévenir ;
+# ajouter un 2e moniteur externe (Red Sift Certificates Lite, Better Stack) si le dépôt doit rester calme longtemps.
+name: SSL expiry check
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check outofthebooks.com certificate
+        env:
+          HOST: outofthebooks.com
+        run: |
+          set -euo pipefail
+          cert=$(openssl s_client -connect "$HOST:443" -servername "$HOST" \
+            -verify_return_error -verify_hostname "$HOST" </dev/null 2>/dev/null | openssl x509)
+          dates=$(openssl x509 -noout -startdate -enddate <<<"$cert" | cut -d= -f2)
+          read -r start end < <(python3 -c 'import ssl,sys; print(*(int(ssl.cert_time_to_seconds(l.strip())) for l in sys.stdin))' <<<"$dates")
+          echo "Jours restants : $(( (end - $(date +%s)) / 86400 )) (alerte sous $(( (end - start) / 4 / 86400 )))"
+          openssl x509 -noout -checkend $(( (end - start) / 4 )) <<<"$cert"

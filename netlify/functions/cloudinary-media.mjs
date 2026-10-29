@@ -88,7 +88,9 @@ async function checkAuth(event) {
       return false;
     }
 
-    const user = await isAuthorized(req);
+    // Depuis @tinacms/auth 1.1.4, le token doit appartenir à NOTRE projet TinaCloud :
+    // sans clientID attendu, isAuthorized refuse tout (fail-closed).
+    const user = await isAuthorized(req, process.env.TINA_CLIENT_ID);
     const verified = !!(user && user.verified);
     console.log('[Auth] TinaCloud verified:', verified);
     return verified;

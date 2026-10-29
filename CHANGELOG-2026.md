@@ -5,6 +5,17 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.4.2] — 2026-10-29
+
+### Mises à jour de sécurité
+
+- **Médiathèque de l'éditeur** — La brique qui vérifie l'identité des éditrices avant un envoi ou une suppression d'image (`@tinacms/auth`) est à jour. Elle s'assure désormais que la personne connectée appartient bien à votre projet. Rien ne change dans votre façon de travailler.
+- **Formulaires du site** — La brique qui transmet les envois à la base de données (`axios`, via NocoDB) passe à sa dernière version corrigée.
+
+**Fichiers modifiés** : `netlify/functions/cloudinary-media.mjs`, `package.json`, `package-lock.json`
+
+---
+
 ## [1.4.1] — 2026-10-29
 
 ### Accès au site rétabli et surveillance automatique du certificat (#35)

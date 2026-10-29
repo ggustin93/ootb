@@ -1,0 +1,73 @@
+---
+// Journal des interventions, affiché dans le portail (protégé par portal-auth.ts : /dashboard/*).
+// Source unique : CHANGELOG-2026.md (aussi lisible sur GitHub pour un développeur).
+import Layout from '~/layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import CustomStyles from '~/components/CustomStyles.astro';
+import * as changelog from '../../../CHANGELOG-2026.md';
+
+const dateFr = new Intl.DateTimeFormat('fr-BE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+// Retire l'en-tête du fichier (titre + note de format, jusqu'au premier <hr>),
+// les lignes « Fichiers modifiés » et les numéros de PR, utiles aux développeurs seulement.
+// « [1.4.2] — 2026-10-29 » devient « 29 octobre 2026 · version 1.4.2 ».
+const html = (await changelog.compiledContent())
+  .replace(/^[\s\S]*?<hr\s*\/?>/, '')
+  .replace(/<p><strong>Fichiers modifiés<\/strong>[\s\S]*?<\/p>/g, '')
+  .replace(/ \(#\d+\)/g, '')
+  .replace(
+    /\[(\d+\.\d+\.\d+)\] — (\d{4}-\d{2}-\d{2})/g,
+    (_, version, date) => `${dateFr.format(new Date(date))} · version ${version}`
+  );
+---
+
+<Layout metadata={{ title: 'Journal des interventions - Out of the Books', robots: { index: false, follow: false } }}>
+  <CustomStyles />
+  <main class="min-h-screen bg-gray-50 px-4 py-8">
+    <div class="max-w-3xl mx-auto">
+      <a href="/dashboard/" class="inline-flex items-center text-sm text-gray-700 hover:text-[var(--ootb-blue)] mb-6">
+        <Icon name="tabler:arrow-left" class="w-4 h-4 mr-1" />
+        Retour au tableau de bord
+      </a>
+      <h1 class="font-handwritten font-bold text-3xl md:text-4xl text-[var(--ootb-blue)] mb-2">
+        Journal des interventions
+      </h1>
+      <p class="text-sm md:text-base text-gray-600 mb-6 md:mb-8">
+        Historique des interventions réalisées sur le site, de la plus récente à la plus ancienne.
+      </p>
+      <article
+        class="journal prose prose-sm max-w-none prose-code:before:content-none prose-code:after:content-none bg-white rounded-xl border border-gray-200 p-4 md:p-6"
+        set:html={html}
+      />
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* Le contenu vient de set:html : styles :global, limités à .journal.
+     Neutralise les titres globaux du site public (h2 2xl→3xl, h3 en Caveat). */
+  .journal :global(h2) {
+    font-size: 1.125rem;
+    color: #0779a0; /* --ootb-blue assombri : 4,9:1 sur blanc (WCAG AA), contre 3,7:1 */
+    margin-top: 2rem;
+  }
+
+  .journal :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .journal :global(h3) {
+    font-family: inherit;
+    font-variation-settings: normal;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    color: var(--ootb-violet);
+  }
+
+  @media (min-width: 768px) {
+    .journal :global(h2) {
+      font-size: 1.25rem;
+    }
+  }
+</style>

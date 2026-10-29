@@ -44,13 +44,12 @@ function cloudinaryToTina(file) {
 }
 
 // Contexte de développement LOCAL uniquement (jamais un déploiement public).
-// `netlify dev` expose CONTEXT="dev" ; NODE_ENV="development" en local.
+// `netlify dev` expose CONTEXT="dev" (NODE_ENV ignoré : réglable par erreur sur Netlify).
 // Les déploiements (production, deploy-preview, branch-deploy/staging) passent
 // tous par la vraie vérification TinaCloud ci-dessous.
 function isLocalDev() {
   const context = process.env.CONTEXT || '';
-  const nodeEnv = process.env.NODE_ENV || '';
-  return context === 'dev' || nodeEnv === 'development';
+  return context === 'dev';
 }
 
 // Vérifie que la requête provient d'un éditeur authentifié TinaCloud.
@@ -88,7 +87,9 @@ async function checkAuth(event) {
       return false;
     }
 
-    const user = await isAuthorized(req);
+    // Depuis @tinacms/auth 1.1.4, le token doit appartenir à NOTRE projet TinaCloud :
+    // sans clientID attendu, isAuthorized refuse tout (fail-closed).
+    const user = await isAuthorized(req, process.env.TINA_CLIENT_ID);
     const verified = !!(user && user.verified);
     console.log('[Auth] TinaCloud verified:', verified);
     return verified;
@@ -219,9 +220,11 @@ async function uploadMedia(event) {
 
 // DELETE: Delete media
 async function deleteMedia(path) {
-  const pathParts = path.split('/').filter(Boolean);
-  // Remove 'api' and 'cloudinary' from path to get public_id
-  const publicId = pathParts.slice(2).join('/');
+  // Le store appelle /api/cloudinary/media/<encodeURIComponent(id)> (ex. "media/dossier%2Fimage") ;
+  // selon la réécriture Netlify, le chemin reçu peut aussi être celui de la fonction.
+  const publicId = decodeURIComponent(
+    path.replace(/^.*?\/(?:api\/cloudinary|functions\/cloudinary-media)\/(?:media\/)?/, '')
+  );
 
   if (!publicId) {
     return {
@@ -231,11 +234,13 @@ async function deleteMedia(path) {
     };
   }
 
-  console.log('[Delete] ID:', publicId);
+  console.log('[Delete] path:', path, '→ ID:', publicId);
   const result = await cloudinary.uploader.destroy(publicId);
+  console.log('[Delete] Résultat:', result.result);
 
   return {
-    statusCode: 200,
+    // Cloudinary répond { result: 'not found' } sans erreur : ne pas le faire passer pour un succès.
+    statusCode: result.result === 'ok' ? 200 : 404,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ result, public_id: publicId }),
   };

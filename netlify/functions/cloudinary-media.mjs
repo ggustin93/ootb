@@ -221,9 +221,9 @@ async function uploadMedia(event) {
 
 // DELETE: Delete media
 async function deleteMedia(path) {
-  const pathParts = path.split('/').filter(Boolean);
-  // Remove 'api' and 'cloudinary' from path to get public_id
-  const publicId = pathParts.slice(2).join('/');
+  // Le store appelle /api/cloudinary/<encodeURIComponent(id)> (ex. "dossier%2Fimage") ;
+  // selon la réécriture Netlify, le chemin reçu peut aussi être celui de la fonction.
+  const publicId = decodeURIComponent(path.replace(/^.*?\/(?:api\/cloudinary|functions\/cloudinary-media)\/?/, ''));
 
   if (!publicId) {
     return {
@@ -235,9 +235,11 @@ async function deleteMedia(path) {
 
   console.log('[Delete] ID:', publicId);
   const result = await cloudinary.uploader.destroy(publicId);
+  console.log('[Delete] Résultat:', result.result);
 
   return {
-    statusCode: 200,
+    // Cloudinary répond { result: 'not found' } sans erreur : ne pas le faire passer pour un succès.
+    statusCode: result.result === 'ok' ? 200 : 404,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ result, public_id: publicId }),
   };

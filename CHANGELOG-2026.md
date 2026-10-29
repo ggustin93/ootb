@@ -15,7 +15,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ### Tableau de bord
 
-- **Journal des interventions dans votre tableau de bord** — Ce journal est désormais consultable directement dans votre tableau de bord (rubrique « Hébergement et maintenance »), pour suivre ce qui a été corrigé et amélioré.
+- **Journal des interventions dans votre tableau de bord** — L'historique des interventions est désormais accessible depuis votre tableau de bord (rubrique « Hébergement et maintenance »).
 
 **Fichiers modifiés** : `netlify/functions/cloudinary-media.mjs`, `netlify.toml`, `src/pages/dashboard.astro`, `src/pages/dashboard/journal.astro` (nouveau), `package.json`, `package-lock.json`
 

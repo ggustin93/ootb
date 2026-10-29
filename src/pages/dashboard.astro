@@ -313,9 +313,7 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
               <Icon name="tabler:list-check" class="w-5 h-5 mt-0.5 text-gray-500" />
               <div class="min-w-0">
                 <h3 class="tool-title">Journal des interventions</h3>
-                <p class="text-sm text-gray-700">
-                  Ce qui a été corrigé et amélioré sur le site, intervention par intervention.
-                </p>
+                <p class="text-sm text-gray-700">Historique des interventions réalisées sur le site.</p>
               </div>
             </a>
             {
@@ -354,7 +352,9 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
           <p class="acc-intro">Documentation et contact.</p>
           <div class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
             <p class="text-sm text-gray-700 flex-1">
-              Guides pas à pas et réponses aux questions fréquentes. Pour le reste : {contactInfo.email} ou
+              Réponses aux questions déjà posées, complétées au fil de vos demandes. Pour toute autre question : {
+                contactInfo.email
+              } ou
               {contactInfo.phone}.
             </p>
             <a

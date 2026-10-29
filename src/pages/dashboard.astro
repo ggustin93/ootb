@@ -92,7 +92,7 @@ const hostingTools: Tool[] = [
 const sections = [
   { id: 'contenu', label: 'Modifier le site', icon: 'tabler:edit-circle' },
   { id: 'analytics', label: 'Statistiques', icon: 'tabler:chart-dots' },
-  { id: 'hebergement', label: 'Hébergement et comptes', icon: 'tabler:server' },
+  { id: 'hebergement', label: 'Hébergement et maintenance', icon: 'tabler:server' },
   { id: 'aide', label: 'Aide', icon: 'tabler:help-circle' },
   { id: 'eco', label: 'Éco-responsabilité', icon: 'tabler:leaf' },
   { id: 'code', label: 'Code source', icon: 'tabler:brand-github' },
@@ -297,15 +297,27 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
           </p>
         </details>
 
-        {/* Hébergement et comptes */}
+        {/* Hébergement et maintenance */}
         <details id="hebergement" class="group/acc mb-8">
           <summary class="acc-summary">
             <Icon name="tabler:server" class="w-6 h-6 text-[var(--ootb-blue)]" />
-            <h2 class="acc-title">Hébergement et comptes</h2>
+            <h2 class="acc-title">Hébergement et maintenance</h2>
             <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
           </summary>
-          <p class="acc-intro">Nom de domaine, hébergement et images. Rarement utile au quotidien.</p>
+          <p class="acc-intro">Suivi des interventions, nom de domaine, hébergement et images.</p>
           <div class="grid gap-3">
+            <a
+              href="/dashboard/journal/"
+              class="flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200 hover:border-[var(--ootb-blue)] transition-colors"
+            >
+              <Icon name="tabler:list-check" class="w-5 h-5 mt-0.5 text-gray-500" />
+              <div class="min-w-0">
+                <h3 class="tool-title">Journal des interventions</h3>
+                <p class="text-sm text-gray-700">
+                  Ce qui a été corrigé et amélioré sur le site, intervention par intervention.
+                </p>
+              </div>
+            </a>
             {
               hostingTools.map((tool) => (
                 <a
@@ -339,7 +351,7 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
             <h2 class="acc-title">Aide</h2>
             <Icon name="tabler:chevron-down" class="acc-chevron group-open/acc:rotate-180" />
           </summary>
-          <p class="acc-intro">Documentation, contact et suivi des interventions.</p>
+          <p class="acc-intro">Documentation et contact.</p>
           <div class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
             <p class="text-sm text-gray-700 flex-1">
               Guides pas à pas et réponses aux questions fréquentes. Pour le reste : {contactInfo.email} ou
@@ -353,23 +365,6 @@ const newTab = '(s’ouvre dans un nouvel onglet)';
             >
               <Icon name="tabler:brand-notion" class="w-5 h-5 mr-2" />
               Voir la FAQ
-              <span class="sr-only">{newTab}</span>
-            </a>
-          </div>
-          <div
-            class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 mt-4 bg-white rounded-xl border border-gray-200"
-          >
-            <p class="text-sm text-gray-700 flex-1">
-              Ce qui a été corrigé et amélioré sur le site, intervention par intervention.
-            </p>
-            <a
-              href={`${contactInfo.github}/blob/main/CHANGELOG-2026.md`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center px-4 py-2 bg-[var(--ootb-blue)] text-white text-sm font-semibold rounded-lg hover:opacity-90 self-start"
-            >
-              <Icon name="tabler:list-check" class="w-5 h-5 mr-2" />
-              Journal des interventions
               <span class="sr-only">{newTab}</span>
             </a>
           </div>

@@ -32,13 +32,42 @@ const html = (await changelog.compiledContent())
       <h1 class="font-handwritten font-bold text-3xl md:text-4xl text-[var(--ootb-blue)] mb-2">
         Journal des interventions
       </h1>
-      <p class="text-gray-600 mb-8">
+      <p class="text-sm md:text-base text-gray-600 mb-6 md:mb-8">
         Ce qui a été corrigé et amélioré sur le site, de la plus récente à la plus ancienne.
       </p>
       <article
-        class="prose prose-sm md:prose-base max-w-none prose-code:before:content-none prose-code:after:content-none bg-white rounded-xl border border-gray-200 p-6"
+        class="journal prose prose-sm max-w-none prose-code:before:content-none prose-code:after:content-none bg-white rounded-xl border border-gray-200 p-4 md:p-6"
         set:html={html}
       />
     </div>
   </main>
 </Layout>
+
+<style>
+  /* Le contenu vient de set:html : styles :global, limités à .journal.
+     Neutralise les titres globaux du site public (h2 2xl→3xl, h3 en Caveat). */
+  .journal :global(h2) {
+    font-size: 1.125rem;
+    color: #0779a0; /* --ootb-blue assombri : 4,9:1 sur blanc (WCAG AA), contre 3,7:1 */
+    margin-top: 2rem;
+  }
+
+  .journal :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .journal :global(h3) {
+    font-family: inherit;
+    font-variation-settings: normal;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    color: var(--ootb-violet);
+  }
+
+  @media (min-width: 768px) {
+    .journal :global(h2) {
+      font-size: 1.25rem;
+    }
+  }
+</style>

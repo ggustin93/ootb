@@ -160,7 +160,7 @@
 # API: Cloudinary media handler pour TinaCMS
 [[redirects]]
   from = "/api/cloudinary/*"
-  to = "/.netlify/functions/cloudinary-media"
+  to = "/.netlify/functions/cloudinary-media/:splat"  # :splat transmet l'id du média (DELETE)
   status = 200
   force = true
 

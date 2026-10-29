@@ -233,7 +233,7 @@ async function deleteMedia(path) {
     };
   }
 
-  console.log('[Delete] ID:', publicId);
+  console.log('[Delete] path:', path, '→ ID:', publicId);
   const result = await cloudinary.uploader.destroy(publicId);
   console.log('[Delete] Résultat:', result.result);
 

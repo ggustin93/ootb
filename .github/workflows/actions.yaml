@@ -30,7 +30,18 @@ jobs:
           NOCODB_API_TOKEN: ${{ secrets.NOCODB_API_TOKEN }}
           TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-      # - run: npm test
+      - name: E2E Playwright (chromium)
+        if: matrix.node-version == 22
+        run: npx playwright install --with-deps chromium && npx playwright test --project=chromium
+      - name: Rapport Playwright
+        if: failure() && matrix.node-version == 22
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            tests/playwright-report/
+            tests/test-results/
+          retention-days: 7
 
   check:
     runs-on: ubuntu-latest
@@ -43,3 +54,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm run test:utils
+      - run: npm run test:media
+      - run: node netlify/functions/__tests__/all-functions.test.js

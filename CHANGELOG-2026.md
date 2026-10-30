@@ -5,6 +5,22 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.4.3] — 2026-10-30
+
+### Éditeur de pages mieux protégé (#41)
+
+- **Protection supplémentaire de l'éditeur** — Une règle de sécurité ajoutée à l'éditeur de pages (TinaCMS) l'empêche d'afficher un site extérieur dans sa fenêtre d'aperçu (« Content Security Policy »). Elle complète l'éditeur en attendant sa prochaine mise à jour majeure, qui est prévue.
+- **Rien ne change pour vous** — Connexion, articles, podcasts, images, aperçu et enregistrement fonctionnent comme avant. Tout a été testé sur la version de test avant la mise en ligne.
+- **Le site public n'est pas concerné** — La règle ne s'applique qu'à l'éditeur.
+
+### Contrôles automatiques
+
+- **Mentions légales et politique de confidentialité** — Les modifier depuis l'éditeur ne déclenche plus d'alerte dans les contrôles automatiques du site.
+
+**Fichiers modifiés** : `netlify.toml`, `.prettierignore`
+
+---
+
 ## [1.4.2] — 2026-10-29
 
 ### Mises à jour de sécurité

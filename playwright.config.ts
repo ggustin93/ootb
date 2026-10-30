@@ -89,7 +89,8 @@ export default defineConfig({
   webServer: {
     // `npm start` = Astro seul (sans TinaCMS) : les tests e2e ciblent le front,
     // pas l'admin Tina, et n'ont pas besoin des tokens TinaCloud.
-    command: 'npm start',
+    // CI : sert le build statique (dist/) comme en production ; local : dev server.
+    command: process.env.CI ? 'npx astro preview --port 4322' : 'npm start',
     url: 'http://localhost:4322',
     reuseExistingServer: !process.env.CI,
   },

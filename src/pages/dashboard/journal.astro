@@ -4,28 +4,20 @@
 import Layout from '~/layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import CustomStyles from '~/components/CustomStyles.astro';
+import { toClientChangelog } from '~/utils/clientChangelog.js';
 import * as changelog from '../../../CHANGELOG-2026.md';
 
-const dateFr = new Intl.DateTimeFormat('fr-BE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
-
-// Retire l'en-tête du fichier (titre + note de format, jusqu'au premier <hr>),
-// les lignes « Fichiers modifiés » et les numéros de PR, utiles aux développeurs seulement.
-// « [1.4.2] — 2026-10-29 » devient « 29 octobre 2026 · version 1.4.2 ».
-const html = (await changelog.compiledContent())
-  .replace(/^[\s\S]*?<hr\s*\/?>/, '')
-  .replace(/<p><strong>Fichiers modifiés<\/strong>[\s\S]*?<\/p>/g, '')
-  .replace(/ \(#\d+\)/g, '')
-  .replace(
-    /\[(\d+\.\d+\.\d+)\] — (\d{4}-\d{2}-\d{2})/g,
-    (_, version, date) => `${dateFr.format(new Date(date))} · version ${version}`
-  );
+const html = toClientChangelog(await changelog.compiledContent());
 ---
 
 <Layout metadata={{ title: 'Journal des interventions - Out of the Books', robots: { index: false, follow: false } }}>
   <CustomStyles />
   <main class="min-h-screen bg-gray-50 px-4 py-8">
     <div class="max-w-3xl mx-auto">
-      <a href="/dashboard/" class="inline-flex items-center text-sm text-gray-700 hover:text-[var(--ootb-blue)] mb-6">
+      <a
+        href="/dashboard/"
+        class="inline-flex items-center text-sm text-gray-700 hover:text-[var(--ootb-blue-text)] mb-6"
+      >
         <Icon name="tabler:arrow-left" class="w-4 h-4 mr-1" />
         Retour au tableau de bord
       </a>
@@ -48,7 +40,7 @@ const html = (await changelog.compiledContent())
      Neutralise les titres globaux du site public (h2 2xl→3xl, h3 en Caveat). */
   .journal :global(h2) {
     font-size: 1.125rem;
-    color: #0779a0; /* --ootb-blue assombri : 4,9:1 sur blanc (WCAG AA), contre 3,7:1 */
+    color: var(--ootb-blue-text);
     margin-top: 2rem;
   }
 

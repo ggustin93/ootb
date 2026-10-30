@@ -1,12 +1,12 @@
 ---
-title: Mentions légales
-layout: ~/layouts/MarkdownLayout.astro
 robots:
   index: false
   follow: false
+title: Mentions légales
+layout: ~/layouts/MarkdownLayout.astro
 ---
 
-_Dernière mise à jour_: 5 mars 2025
+*Dernière mise à jour*: 5 mars 2025
 
 ## Éditeur
 
@@ -48,7 +48,7 @@ Les présentes mentions légales sont régies par le droit belge. En cas de diff
 
 ## Crédits
 
-Le site [outofthebooks.com](https://outofthebooks.com) a été créé par Guillaume Gustin, opérant sous l'activité [Pwablo](https://pwablo.be) et [guillaumegustin.com](https://guillaumegustin.com), via la coopérative Smart. Pour toute question technique liée au développement initial du site, vous pouvez le contacter à l'adresse [hello@pwablo.be](mailto:hello@pwablo.be).
+Le site [outofthebooks.com](https://outofthebooks.com) a été créé par Guillaume Gustin, opérant sous l'activité [Pwablo](https://pwablo.be), via la coopérative Smart. Pour toute question technique liée au développement initial du site, vous pouvez le contacter à l'adresse [hello@pwablo.be](mailto:hello@pwablo.be).
 
 L'ajout de contenu dans le CMS est géré par OUT OF THE BOOKS ASBL. Pour toute question liée à l'ajout de contenu, veuillez contacter [alexia@festivalootb.com](mailto:alexia@festivalootb.com).
 
@@ -56,12 +56,12 @@ L'ajout de contenu dans le CMS est géré par OUT OF THE BOOKS ASBL. Pour toute 
 
 Ce site utilise les ressources tierces suivantes :
 
-- [AstroWind](https://github.com/onwidget/astrowind) - Template Astro qui a servi de squelette initial et a été fortement personnalisé et adapté pour les besoins spécifiques de ce site
-- [Tabler Icons](https://tabler-icons.io/) - Icônes open-source gratuites
-- Des images provenant de [Unsplash](https://unsplash.com/) sous licence gratuite
-- Polices de caractères :
-  - Bebas Neue
-  - Raleway Variable
-  - Caveat Variable
+* [AstroWind](https://github.com/onwidget/astrowind) - Template Astro qui a servi de squelette initial et a été fortement personnalisé et adapté pour les besoins spécifiques de ce site
+* [Tabler Icons](https://tabler-icons.io/) - Icônes open-source gratuites
+* Des images provenant de [Unsplash](https://unsplash.com/) sous licence gratuite
+* Polices de caractères :
+  * Bebas Neue
+  * Raleway Variable
+  * Caveat Variable
 
 Nous remercions les créateurs de ces ressources qui nous permettent d'améliorer l'expérience utilisateur de notre site.

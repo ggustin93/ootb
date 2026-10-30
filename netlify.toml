@@ -52,6 +52,13 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Bloque GHSA-x34j-47hf-4xg7 (aperçu Tina chargeant un site externe) en attendant Tina 3.
+# Ne JAMAIS ajouter Cross-Origin-Opener-Policy sur /admin : casse la connexion des clientes.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    Content-Security-Policy = "frame-src 'self'"
+
 # =====================================
 # OPTIMISATION DE PERFORMANCE
 # =====================================

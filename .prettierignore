@@ -6,3 +6,6 @@ node_modules
 src/content/
 tina/tina-lock.json
 tina/__generated__/
+# Pages légales éditées via TinaCMS (tina/legalCollection.ts)
+src/pages/terms.md
+src/pages/privacy.md

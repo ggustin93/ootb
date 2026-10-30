@@ -67,142 +67,100 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 **Fichiers modifiés** : `src/components/sections/FestivalHeroSection.astro`, `src/components/ui/TicketingButton.tsx`, `src/assets/images/ootb-logo.svg`, `src/assets/images/clouds_bg.svg`
 
-### Vérifications
+### Vérifié
 
-- Contrôle qualité (`npm run check`) et tests utilitaires (26/26) au vert, CI GitHub au vert.
-- Sur l'environnement de test (staging) : accès refusé sans mot de passe ou avec un mauvais, accès accordé avec le bon, déconnexion fonctionnelle (Chrome), aucune image cassée sur l'accueil et la page festival.
-- Tests de navigation automatisés (Playwright) : 15/15 réussis. Les 9 qui échouaient ne venaient pas d'un défaut du site : ils visaient une adresse locale codée en dur, et l'un d'eux supposait un contenu précis en page d'accueil. Ils sont corrigés.
+- **Testé avant la mise en ligne** — Sur l'environnement de test : accès refusé sans le bon mot de passe, accès accordé avec, déconnexion fonctionnelle, aucune image cassée sur l'accueil et la page festival. Les contrôles automatiques du site sont au vert.
 
 ---
 
 ## [1.3.3] — 2026-09-22
 
-### Sécurité : dépendances critiques (#31)
+### Mises à jour de sécurité
 
-- **`sharp` 0.35.4 partout** — Le build télécharge les photos envoyées via les formulaires publics du festival et les décode avec `sharp`. Avant 0.35.4, `sharp` embarquait une libheif vulnérable : un AVIF piégé pouvait exécuter du code pendant le build Netlify, là où se trouvent les tokens NocoDB et TinaCloud. C'est aussi le vecteur de l'alerte Astro « RCE through AVIF image optimization ». `sharp` passe en `^0.35.4`, et un `overrides` force la même version pour Astro, `astro-compress` et `ipx`.
-- **`tar` 7.5.22 et `fast-xml-parser` 5.11.1** — Versions corrigées, obtenues par un rafraîchissement du lockfile dans les plages de versions existantes.
-- **`swiper` supprimé** — Il n'était utilisé nulle part.
-- **CI : Node 18 retiré de la matrice de build** — `sharp` 0.35 exige Node ≥ 20.9. Node 18 était déjà exclu par le champ `engines` du projet, et Netlify utilise Node 22.
-- **TinaCMS inchangé** — `@tinacms/cli` 1.12.6, `tinacms` 2.10.1 et `@tinacms/graphql` 1.6.3 restent identiques, tout comme `tina/tina-lock.json`. Aucun override ne touche l'arbre de Tina, et le bloc `resolutions` n'a pas bougé.
-  - Seul effet indirect : `sharp` 0.35.4 exige `semver` ^7.8.5. La copie partagée passe de 7.7.3 à 7.8.5, et l'arbre de Tina l'utilise aussi (via `better-sqlite3` › `prebuild-install` › `node-abi`, un outil d'installation). C'est une mise à jour mineure, et aucune version de paquet Tina ne change.
-- **Vérifié** — `npm run check`, les tests utilitaires et les 75 tests des fonctions Netlify passent. `npm run build` passe : les 158 images du festival sont régénérées avec `sharp` 0.35 et vérifiées visuellement.
-  - Limite connue : deux sources restent en image de remplacement, un fichier EPS (stand 1451) et un logo ICO (conférence 640). Le comportement est identique avec l'ancien `sharp` 0.34.5, donc ce n'est pas une régression.
+- **Traitement des images à jour** — La brique qui prépare les photos envoyées via les formulaires du festival (la librairie « sharp ») passe à sa version corrigée. Sa version précédente commençait à être ciblée par des attaques connues. Les 158 images du festival ont été régénérées et vérifiées une à une.
+- **Autres briques techniques mises à jour** — Plusieurs composants utilisés lors de la construction du site passent à leur version corrigée, et un composant inutilisé est supprimé.
+- **L'éditeur de pages (TinaCMS) reste inchangé** — Sa mise à jour complète, plus lourde, est prévue dans le cadre de la maintenance préventive. Les points restants ne concernent que l'éditeur, réservé aux personnes connectées.
 
 **Fichiers modifiés** : `package.json`, `package-lock.json`, `.github/workflows/actions.yaml`
-
-### Risques acceptés (hors ticket)
-
-- **`@tinacms/cli` < 2.1.8, `jsonpath-plus` et `dompurify` (via Tina)** — Ils ne concernent que le serveur de dev local ou l'admin, réservé aux éditeurs authentifiés. Mettre à jour la stack Tina est jugé trop risqué pour ce gain.
-- **`astro` < 7.2.8** — Le vecteur exploitable est neutralisé par la mise à jour de `sharp`. La migration vers Astro 7 est reportée.
-
-### Suivi Dependabot
-
-- **Plus aucune alerte critique ouverte** — Sur les 7 alertes critiques du 22 septembre, 3 sont corrigées (`sharp`/`tar`/`fast-xml-parser`, et `swiper` supprimé). Les 4 autres sont fermées dans GitHub avec le motif « risk tolerable » et un commentaire qui renvoie à cette entrée : `astro` (risque neutralisé via `sharp`), `@tinacms/cli`, `jsonpath-plus` et `dompurify` (dev local ou admin Tina uniquement).
-- **Hygiène** — Ne jamais lancer `tinacms dev` sur un réseau public ou partagé.
-- Les alertes de sévérité inférieure (high, moderate, low) restent à traiter au fil de la maintenance préventive.
 
 ---
 
 ## [1.3.2] — 2026-09-22
 
-### Modération des fiches et build fiable (#22)
+### Fiches pédagogiques : validation avant publication
 
-- **Seules les fiches « Publié » sont en ligne** — Le build ne publie que les fiches au statut « Publié » dans NocoDB, comme les données festival en production. Un spam qui passerait l'anti-spam reste en « A valider » et n'apparaît jamais sur le site. Pour publier une fiche, l'équipe passe son statut à « Publié », puis clique sur « Redéployer le site web ».
-  - Limite connue : repasser en « A valider » une fiche déjà en ligne ne la retire pas du site lors d'un build Netlify. Son fichier est versionné dans le dépôt : il faut le supprimer à la main.
-- **Plus aucune fiche effacée en cas de panne NocoDB** — Si NocoDB ne répond pas ou refuse le token, le build s'arrête avec une erreur, avant toute modification des fichiers. Il s'arrête aussi si aucune fiche « Publié » ne remonte (vue mal filtrée, par exemple). Avant, il recevait une liste vide et pouvait supprimer toutes les fiches publiées.
-- **Toutes les fiches récupérées, au-delà de 100** — La récupération est paginée (avec un plafond de sécurité), comme pour les données festival. Avant, elle s'arrêtait aux 100 premières fiches.
-- **Token absent des journaux** — En cas d'échec, le journal n'affiche que le message d'erreur. Avant, il affichait l'objet d'erreur complet, token NocoDB compris.
-- **Vérifié avant déploiement** — Les 85 fiches de NocoDB remontent toutes en « Publié » (lecture seule). Un token invalide fait échouer le script (code de sortie 1) sans toucher aux fichiers.
-- **La vue NocoDB reste non filtrée, volontairement** — La vue lue par le build (« Fiches - Vue table ») est aussi la vue par défaut de l'équipe. Si on la filtrait sur « Publié », les fiches « A valider » y deviendraient invisibles. Le filtre dans le code suffit : le build ne publie que les fiches « Publié », quoi que montre la vue. Pour voir les fiches en attente, l'équipe dispose de deux nouvelles vues (voir ci-dessous).
+- **Seules les fiches « Publié » sont en ligne** — Une fiche reçue reste en « A valider » et n'apparaît pas sur le site. Pour la publier, l'équipe passe son statut à « Publié » dans NocoDB, puis clique sur « Redéployer le site web ».
+  - À savoir : repasser en « A valider » une fiche déjà en ligne ne la retire pas du site. Pour la retirer, il suffit de me prévenir.
+- **Aucune fiche perdue en cas de panne** — Si la base de données ne répond pas, la mise à jour du site s'arrête sans rien modifier. Avant, une panne pouvait faire disparaître toutes les fiches du site.
+- **Toutes les fiches récupérées** — Le site récupère désormais toutes les fiches, au-delà des 100 premières.
+- **Journaux plus discrets** — En cas d'erreur, les journaux techniques n'affichent plus que le message utile, sans aucun identifiant de connexion.
 
-**Fichiers modifiés** : `src/scripts/build-fiches-pedagogiques.js`
+### Nouvelles vues dans NocoDB
 
-### Base NocoDB des fiches pédagogiques
+- **« Fiches - Vue par statut »** — Toutes les fiches, groupées en « A valider » et « Publié ».
+- **« Fiches - À valider »** — La file de modération : uniquement les fiches en attente. Vide = rien à traiter.
+- **« Fiches - Vue table »** — Inchangée, c'est toujours la vue par défaut.
 
-- **Vue « Fiches - Vue par statut »** — Toutes les fiches, groupées en « A valider » et « Publié ». Elle donne la vue d'ensemble.
-- **Vue « Fiches - À valider »** — Une file de modération : elle ne montre que les fiches en attente (filtre `Statut = A valider`). L'équipe passe une fiche en « Publié » pour la mettre en ligne, ou la supprime si c'est un spam. Quand la vue est vide, il n'y a plus rien à traiter.
-- **Vue du build inchangée** — « Fiches - Vue table » reste la vue par défaut, sans filtre, et c'est toujours elle que lit le build. Elle contient 85 fiches, toutes « Publié ».
+### Contrôles automatiques au vert
 
-### CI GitHub au vert (#26)
+- Les contrôles automatiques qui accompagnent chaque mise à jour du site (intégration continue) passent à nouveau.
 
-- **Premier passage au vert sur `main`** — Les deux jobs échouaient, pour deux raisons :
-  - `check` : la correction du contrôle qualité (#24) n'avait jamais été fusionnée. Elle l'est maintenant.
-  - `build` : il n'avait accès ni à NocoDB ni à TinaCloud. Les secrets `NOCODB_API_TOKEN`, `TINA_CLIENT_ID` et `TINA_TOKEN` sont désormais configurés dans GitHub et transmis au build.
-- **Pas de réindexation de la recherche TinaCloud en CI** — La CI lance `tinacms build --skip-search-index`. Le build Netlify ne change pas.
-
-**Fichiers modifiés** : `.github/workflows/actions.yaml`
+**Fichiers modifiés** : `src/scripts/build-fiches-pedagogiques.js`, `.github/workflows/actions.yaml`
 
 ---
 
 ## [1.3.1] — 2026-09-22
 
-### Anti-spam du formulaire « Appel à projets » (#21)
+### Anti-spam du formulaire « Appel à projets »
 
-- **Les fausses fiches n'arrivent plus dans NocoDB** — Le serveur vérifie chaque envoi avant de l'enregistrer. Il écarte les envois trop volumineux ou mal formés, les champs manquants ou trop courts, les emails invalides, les publics cibles inconnus et les textes de moins de 3 mots. Le robot actuel envoie des chaînes aléatoires sans espaces : il est désormais bloqué.
-- **Champ piège invisible** — Le formulaire contient un champ caché que seuls les robots remplissent. Il reste inaccessible au clavier et aux lecteurs d'écran.
-- **Aucun signal pour le robot** — Un envoi refusé reçoit la même confirmation qu'un vrai envoi. Le robot ne peut donc pas s'adapter.
-- **Rien ne change pour les enseignants, et aucune fiche perdue** — Pas de captcha ni d'étape en plus. Le formulaire applique les mêmes règles que le serveur avant l'envoi (champs obligatoires remplis, au moins 3 mots dans « Description » et « Objectifs »). En cas d'oubli, l'enseignant voit un message d'erreur au lieu d'une confirmation trompeuse.
-- **Journaux conformes au RGPD** — Chaque refus est journalisé avec un code de raison (`spam rejected: <raison>`), sans aucune donnée personnelle. Les journaux existants (mode test, erreurs NocoDB) n'affichent plus les données soumises.
-- **Tests** — La suite hors ligne des formulaires passe de 45 à 75 tests. Elle couvre notamment l'échantillon réel du robot, une soumission française réaliste et chacune des règles de refus.
-
-**Fichiers modifiés** : `netlify/functions/submit-pedagogical-sheet.js`, `src/components/forms/ProjectSubmissionForm.astro`, `netlify/functions/__tests__/all-functions.test.js`, `netlify/functions/__tests__/README.md`
+- **Les fausses fiches n'arrivent plus dans NocoDB** — Le site vérifie chaque envoi avant de l'enregistrer (validation côté serveur) et écarte tout ce qui est incohérent : textes au hasard, adresse e-mail invalide, champs manquants ou trop courts.
+- **Un champ piège invisible** — Seuls les robots le remplissent (un « honeypot »). Il reste invisible pour les visiteurs, au clavier comme avec un lecteur d'écran.
+- **Rien ne change pour les enseignants** — Ni captcha, ni étape en plus. En cas d'oubli dans le formulaire, l'enseignant voit un message clair.
+- **Respect de la vie privée** — Les envois refusés sont consignés sans aucune donnée personnelle (RGPD).
 
 ### Base NocoDB des fiches pédagogiques
 
-- **Fausses fiches supprimées** — Les 5 fiches générées par le robot et encore présentes dans NocoDB ont été supprimées, avant qu'un build ne les publie. Les 85 fiches restantes ont été vérifiées une à une : toutes sont légitimes.
-- **Nouveau champ « Statut »** (« A valider » par défaut, « Publié ») — C'est le même champ que dans les tables du festival (stands, ateliers, conférences). Les 85 fiches existantes sont passées à « Publié » automatiquement, sans cochage manuel. Toute nouvelle fiche, qu'elle arrive par le formulaire ou par une saisie manuelle, reste en « A valider » jusqu'à validation par l'équipe.
-  - Le site ne filtre pas encore sur ce statut. Le filtre arrive avec #22.
-- **Bouton « Redéployer le site web »** — Nouvelle table « Actions spéciales » dans la base des fiches, avec un bouton « Exécuter » qui relance le build Netlify. C'est le même script que dans la base festival. Il permet de mettre en ligne une fiche validée sans attendre le prochain déploiement.
+- **Fausses fiches supprimées** — Les 5 fiches créées par le robot sont supprimées. Les 85 fiches restantes ont été vérifiées une à une.
+- **Nouveau champ « Statut »** (« A valider » ou « Publié ») — Le même que pour le festival. Les 85 fiches existantes sont passées en « Publié ».
+- **Bouton « Redéployer le site web »** — Dans la table « Actions spéciales », comme pour le festival : il met en ligne une fiche validée sans attendre.
+
+**Fichiers modifiés** : `netlify/functions/submit-pedagogical-sheet.js`, `src/components/forms/ProjectSubmissionForm.astro`, `netlify/functions/__tests__/all-functions.test.js`, `netlify/functions/__tests__/README.md`
 
 ---
 
 ## [1.3.0] — 2026-07-08
 
-### Ajouté
+### Nouveautés
 
-- **Page dédiée « Projet Erasmus+ »** (`/erasmus-plus/`) — Nouvelle page complète remplaçant l'ancien lien vers l'article MDX. Structure éditable de bout en bout via TinaCMS : héro, section « Le projet » (thématiques + objectifs), « Nos partenaires », « Ressources » (organisées en volets à onglets : podcasts et vidéos), et « Carnet de bord ». Nouvelle collection Tina `erasmusPlus` (création/suppression désactivées, page unique).
-- **Miniatures vidéo automatiques** — Nouvel utilitaire `src/utils/erasmusMedia.ts` : un rédacteur colle simplement un lien YouTube (formats `watch`, `youtu.be`, `embed`, `shorts`, `live` pris en charge) et la miniature s'affiche automatiquement, sans upload d'image. Override manuel possible ; fallback générique (dégradé + icône) pour les liens non-YouTube.
-- **Composant `MediaCard.astro`** — Carte média unifiée pour la page Erasmus+ : dimensions identiques pour podcasts et vidéos, vignette 16:9 ; le type de média reste distingué par l'icône, la couleur d'accent encode le volet.
-- **Section « Conseil d'Administration »** (page À propos) — Nouvelle section `#conseil-administration` listant les membres (photo, nom, fonction optionnelle, lien LinkedIn), entièrement éditable via TinaCMS (`aboutCollection`).
-- **Icônes dans les menus déroulants** — Champ `icon` optionnel ajouté aux liens de navigation (`navigationCollection`), rendu dans `Header.astro` (menus desktop et méga-menu mobile). Icônes Tabler associées : Billetterie, Podcasts, Émissions TV, Live Facebook, Fiches pédagogiques, Projet Erasmus+, Nous soutenir.
-- **Environnement bac à sable TinaCMS (`staging`)** — La branche éditée par Tina est désormais résolue dynamiquement selon le déploiement (`process.env.TINA_BRANCH || process.env.HEAD || "main"`), permettant un bac à sable `staging--outofthebooks.netlify.app/admin` où les éditeurs testent le CMS et prévisualisent le contenu non publié sans impacter la production. `gitProvider.autoMerge` passé à `false` (les éditions staging ne remontent jamais automatiquement vers `main`). Production inchangée (`HEAD=main` → `branch="main"`). Modèle retenu : deux environnements indépendants — édition directe en production, bac à sable jetable côté staging (réinitialisable depuis `main`).
-- **Podcasts Erasmus+ via Ausha (smartlink)** — Le champ d'écoute des podcasts (volets « Ressources ») accepte un smartlink Ausha (_Ausha › Partager › Smartlink_) : l'éditeur colle l'URL, la carte renvoie vers « Écouter ». L'identité du workspace Ausha étant portée par le smartlink, un workspace dédié Erasmus+ fonctionne sans configuration. Les podcasts en attente affichent « Bientôt disponible » plutôt qu'un lien mort.
-- **Codage couleur par volet (page Erasmus+)** — Chaque volet porte sa couleur de marque (Intelligence artificielle = bleu, Ludopédagogie = violet), propagée via une variable CSS `--volet` aux cartes thématiques, aux partenaires (bordure latérale + chip « Volet · … »), aux onglets de ressources et aux cartes média — un fil visuel projet → partenaires → ressources.
-- **Tests unitaires rich-text Tina** — `npm run test:utils` (`node --test`) : conversion AST → HTML (`richTextToHtml`), détection des placeholders CMS corrompus (`isBrokenCmsPlaceholder`), contrat JSON des missions dans `about/index.json`.
-- **Affiche partenaire EduSpark (page Festival)** — Nouvelle affiche cliquable au format portrait (4:5), sans texte redondant avec les infos festival, insérée entre la Rétrospective et le Programme. Double fond de marque (bande turquoise claire + bloc orange légèrement incliné) pour l'ancrer visuellement sur desktop comme sur mobile ; renvoie vers le programme EduSpark de Plantyn. Éditable via TinaCMS (activation, visuel, lien).
+- **Page « Projet Erasmus+ »** (`/erasmus-plus/`) — Une page complète remplace l'ancien article : présentation du projet et de ses deux volets, partenaires, ressources (podcasts et vidéos) et carnet de bord. Tout est modifiable dans l'éditeur de pages (TinaCMS).
+- **Miniatures vidéo automatiques** — Il suffit de coller un lien YouTube : la miniature s'affiche seule, sans envoyer d'image.
+- **Podcasts via Ausha** — Il suffit de coller le lien de partage Ausha (« smartlink »). Un podcast pas encore publié affiche « Bientôt disponible » plutôt qu'un lien mort.
+- **Une couleur par volet** — Intelligence artificielle en bleu, ludopédagogie en violet, de la présentation du projet jusqu'aux ressources.
+- **Section « Conseil d'administration »** (page À propos) — Photo, nom, fonction et lien LinkedIn de chaque membre, modifiables dans l'éditeur.
+- **Icônes dans les menus** — Billetterie, podcasts, émissions, fiches pédagogiques, Erasmus+ et « Nous soutenir » ont désormais leur icône.
+- **Environnement de test pour l'éditeur** — Une copie du site (`staging`) permet d'essayer l'éditeur et de prévisualiser un contenu sans toucher au site en ligne.
+- **Affiche partenaire EduSpark** (page Festival) — Une affiche cliquable, placée sous la rétrospective, renvoie vers le programme EduSpark.
 
-### Corrigé
+### Corrections
 
-- **Page À propos — section « Nos Missions » affichait `[object Object]`** — Remplacement de `<TinaMarkdown>` (React/tinacms) par un rendu build-time (`TinaRichText.astro` + `richTextToHtml`) sur les pages Astro statiques ; restauration du contenu missions corrompu en JSON (chaînes littérales `"[object Object]"` sauvegardées par Tina) ; garde-fou `isBrokenCmsPlaceholder()` pour ne plus afficher ces placeholders.
+- **Page À propos** — La section « Nos missions » affichait « [object Object] » à la place du texte. Le contenu est restauré, et un garde-fou empêche ce problème de revenir.
 
-### Modifié
+### Améliorations
 
-- **Liens « Projet Erasmus+ » mis à jour** — Toutes les occurrences de navigation pointent désormais vers `/erasmus-plus/` au lieu de l'ancien article MDX `/4_actualites/un-projet-erasmus-pour-innover-ensemble-en-ducation-mdx/`.
-- **Menu « Qui sommes-nous »** — Ajout du lien « Conseil d'administration » (ancre `/a-propos/#conseil-administration`).
-- **Titres de sections À propos paramétrables** — Les titres des sections Missions, Valeurs et de la liste d'actions deviennent éditables via TinaCMS (`missionsTitle`, `valeursTitle`, `actionsTitle`).
-- **Page Erasmus+ — rythme des sections & hiérarchie de titres** — « Nos partenaires » reçoit un fond légèrement teinté (convention de `a-propos.astro`) pour la distinguer de « Le projet » ; ajout de vrais titres `<h2>` de section (« Le projet en deux volets », « Deux partenaires européens »), noms de partenaires passés en `<h3>` (hiérarchie correcte pour l'accessibilité et le SEO) ; léger effet de survol sur les cartes.
-- **Interrupteurs « Publier » du CMS plus clairs** — Les descriptions des bascules (section, podcasts, vidéos, fiches) reformulées en langage rassurant (« Désactivé, le contenu reste enregistré et réaffichable à tout moment ») en remplacement de l'ancien « ⚠️ … masqués (même s'il en reste) ».
-- **Trio « À l'affiche » (accueil) sans fiches pédagogiques** — Le trio de contenus mis en avant sur la page d'accueil n'affiche plus les fiches pédagogiques (réservées à leur rubrique dédiée) et met en avant les autres formats (actualités, podcasts, émissions…). Le plafond de 2 contenus par catégorie reste inchangé.
-- **EduSpark repositionné et allégé** — L'ancienne bannière EduSpark (image + texte redondant avec les dates/lieu du festival) devient une affiche visuelle unique, déplacée sous la Rétrospective.
+- **Liens « Projet Erasmus+ »** — Tous pointent désormais vers la nouvelle page.
+- **Menu « Qui sommes-nous »** — Nouveau lien « Conseil d'administration ».
+- **Titres de la page À propos modifiables** dans l'éditeur.
+- **Page Erasmus+ plus lisible** — Sections mieux séparées et titres mieux hiérarchisés (accessibilité et référencement).
+- **Interrupteurs « Publier » de l'éditeur plus clairs** — « Désactivé, le contenu reste enregistré et réaffichable à tout moment ».
+- **Accueil** — Le trio « À l'affiche » ne montre plus les fiches pédagogiques, qui ont leur propre rubrique.
 
-### Maintenance
+### Qualité du code
 
-- Enregistrement de la collection `erasmusCollection` dans `tina/config.ts` ; régénération de `tina/tina-lock.json` après modification du schéma (collections Erasmus+, About, Navigation).
-- **Skill Claude Code `tinacms-ootb`** — Documentation repo-spécifique des conventions TinaCMS (versions épinglées, régénération obligatoire de `tina-lock.json`, conventions de collections, pièges de rendu d'images) ajoutée sous `.claude/skills/tinacms-ootb/`. Mise à jour : rendu rich-text via `TinaRichText.astro` / `richTextToHtml()` (plus `<TinaMarkdown>` sur pages Astro SSG).
-- **`.gitignore`** — Ignore `.claude/settings.local.json` (réglages locaux par utilisateur) et `*.mov` (binaires/tutoriels hors dépôt).
-- Schéma Tina `eduspark` (`tina/festivalCollection.ts`) réduit à `{ enabled, image, ctaUrl }` (retrait des champs texte `eyebrow`/`title`/`description`/`ctaText` devenus inutiles) ; `tina/tina-lock.json` régénéré.
+- **Contrôle qualité de nouveau au vert** — Plusieurs centaines d'erreurs accumulées sont corrigées à la source, sans être masquées. Toute nouvelle erreur se voit désormais immédiatement.
+- **Code inutilisé supprimé**, et le lien du bouton de don s'ouvre désormais de façon sécurisée.
+- **Aucune régression** — Le site produit les mêmes pages qu'avant.
 
-### Qualité du code : contrôle qualité au vert (#24)
-
-- **`npm run check` passe à nouveau (0 erreur)** — Le contrôle qualité exécuté avant chaque livraison était en échec depuis longtemps : 90 erreurs de types, 140 erreurs ESLint et 417 fichiers mal formatés. Il redevient un vrai filet de sécurité : toute nouvelle erreur saute aux yeux au lieu de se perdre dans le bruit.
-- **Erreurs corrigées à la source, sans les masquer** — Les propriétés des composants correspondent maintenant aux données qu'ils reçoivent réellement (images Cloudinary, en-tête, cartes, héro du festival, événements NocoDB…). Aucune erreur n'est réduite au silence (`any`, `@ts-ignore` ou `eslint-disable`).
-- **Formatage automatique cohérent** — Le code suit désormais une seule convention Prettier. Le contenu généré ou édité via TinaCMS (`src/content/`, `tina-lock.json`) est exclu du formatage, pour que les builds et les éditions CMS ne produisent pas de modifications parasites.
-- **Code mort supprimé** — Trois fichiers que plus rien n'importait sont supprimés (`PhotoGallery.astro`, `lib/posts.ts`, `LandingLayout.astro`). Deux d'entre eux importaient des fichiers inexistants. Un doublon d'animations dans `tailwind.config.js`, qui écrasait silencieusement la première définition, est aussi supprimé.
-- **Petites corrections visibles** — Le bouton de don de la section « Nous soutenir » ouvre désormais le lien externe de façon sécurisée (`rel="noopener noreferrer"`, que le bouton ignorait auparavant).
-- **Aucune régression** — Le build produit les mêmes 379 pages qu'avant, avec des animations CSS identiques. Tous les tests hors ligne passent.
-- **Point ouvert** — La page `dashboard` a toujours été indexable par les moteurs de recherche : son réglage « noindex » n'était jamais pris en compte. Il reste à décider si elle doit être masquée.
-
-**Fichiers ajoutés** : `src/pages/erasmus-plus.astro`, `src/content/erasmus-plus/index.json`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/utils/tinaRichText.ts`, `src/utils/renderMissionHtml.ts`, `src/components/ui/TinaRichText.astro`, `src/utils/__tests__/tinaRichText.test.js`, `tina/erasmusCollection.ts`, `public/images/erasmus/` (cats-family, cofinance-union-europeenne, randers-statsskole), `.claude/skills/tinacms-ootb/`
+**Fichiers ajoutés** : `src/pages/erasmus-plus.astro`, `src/content/erasmus-plus/index.json`, `src/components/erasmus/MediaCard.astro`, `src/utils/erasmusMedia.ts`, `src/utils/tinaRichText.ts`, `src/utils/renderMissionHtml.ts`, `src/components/ui/TinaRichText.astro`, `src/utils/__tests__/tinaRichText.test.js`, `tina/erasmusCollection.ts`, `public/images/erasmus/`, `.claude/skills/tinacms-ootb/`
 
 **Fichiers modifiés** : `src/components/widgets/Header.astro`, `src/components/blog/CategoryInfo.astro`, `src/components/ui/TicketingModal.tsx`, `src/components/ui/TicketingButton.tsx`, `src/components/sections/FestivalHeroSection.astro`, `src/components/sections/EduSparkSection.astro`, `src/pages/festival.astro`, `src/utils/blog.ts`, `src/content/about/index.json`, `src/content/navigation/index.json`, `src/content/festival/tina/index.json`, `src/pages/a-propos.astro`, `tina/aboutCollection.ts`, `tina/navigationCollection.ts`, `tina/festivalCollection.ts`, `tina/config.ts`, `tina/tina-lock.json`, `package.json`, `.gitignore`
 
@@ -210,13 +168,9 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ## [1.2.2] — 2026-04-05
 
-### Corrigé
+### Corrections
 
-- **Désynchronisation du schéma Tina résolue** — Erreur `checkTinaSchema` : "The local Tina schema doesn't match the remote Tina schema". `tina-lock.json` avait été corrigé manuellement (commits `496d990`, `f8f7655`) mais restait incomplet par rapport à ce que TinaCMS génère depuis les fichiers TypeScript. Solution : `npx tinacms dev --no-server` régénère le lockfile complet sans blocage cloud — ajout de ~6,5 KB de définitions de types manquantes.
-
-### Maintenance
-
-- Documentation mise à jour : `CLAUDE.md` et `memory-bank/troubleshoot.md` — méthode correcte de régénération du lockfile (`dev --no-server` plutôt que `build`)
+- **Éditeur de pages de nouveau accessible** — L'éditeur (TinaCMS) refusait de s'ouvrir, car sa description interne du site n'était plus à jour. Elle est régénérée et complète.
 
 **Fichiers modifiés** : `tina/tina-lock.json`
 
@@ -224,15 +178,10 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ## [1.2.1] — 2026-04-05
 
-### Corrigé
+### Corrections
 
-- **Accès administration TinaCMS rétabli** — Le build TinaCMS est désormais résilient aux désynchronisations de schéma GraphQL grâce à `--skip-cloud-checks`, tout en échouant sur les vraies erreurs. L'interface `/admin` se génère à nouveau correctement à chaque déploiement.
-- **Migration complète vers Netlify** — Le site est désormais entièrement hébergé sur Netlify. L'ancien lien Vercel (`outofthebooks.vercel.app`) a été retiré. Lien unique d'administration : `outofthebooks.com/admin`.
-
-### Maintenance
-
-- Suppression des vestiges Vercel (`vercel.json`, `api/cloudinary/[...media].js`) — remplacés par les fonctions Netlify existantes
-- Nettoyage de 7 branches Git mergées (local + remote)
+- **Accès à l'éditeur fiabilisé** — L'éditeur se génère désormais correctement à chaque mise à jour du site.
+- **Hébergement unifié chez Netlify** — L'ancienne adresse Vercel est retirée. Adresse unique de l'éditeur : `outofthebooks.com/admin`.
 
 **Fichiers modifiés** : `package.json`, `vercel.json` (supprimé), `api/cloudinary/[...media].js` (supprimé)
 
@@ -240,32 +189,17 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ## [1.2.0] — 2026-03-25
 
-### Fiabilité des formulaires
+### Formulaires plus fiables
 
-- **Formulaire fiche pédagogique : fiabilité de l'envoi renforcée** — Chaque formulaire dispose désormais de sa propre configuration isolée, ce qui élimine tout risque d'interférence entre les processus. Des journaux de diagnostic ont été ajoutés pour faciliter le suivi côté hébergement.
-- **Fiche pédagogique : prise en charge de l'année 2026** — Les années 2026 à 2029 ont été ajoutées dans l'interface d'administration de la base de données. Les fiches de cette année s'enregistrent normalement. 13 tests de validation confirment le bon fonctionnement.
-- **Formulaire de contact : même isolation de configuration** — Le formulaire de contact bénéficie de la même amélioration que les fiches pédagogiques : configuration propre à chaque formulaire, sans interférence possible.
-- **Newsletter : intégration Brevo stabilisée en production** — La connexion entre le site et Brevo (le service d'envoi d'emails) a été adaptée pour être pleinement compatible avec l'environnement d'hébergement. L'envoi fonctionne de manière fiable en production.
-- **Newsletter : enregistrement du consentement RGPD aligné sur la base** — Suite à une évolution de la structure de la base de données, le code a été mis à jour pour correspondre exactement aux colonnes actuelles. Le consentement "Politique de confidentialité acceptée" est désormais correctement enregistré à chaque inscription.
-- **Newsletter : mise à jour d'une ré-inscription également corrigée** — La mise à jour du consentement lors d'une ré-inscription bénéficie du même alignement.
+- **Fiches pédagogiques et contact** — Chaque formulaire fonctionne désormais de façon indépendante, sans risque d'interférence entre eux.
+- **Fiches de 2026** — Les années 2026 à 2029 sont ajoutées dans la base de données. Les fiches de cette année s'enregistrent normalement.
+- **Newsletter (Brevo)** — L'inscription fonctionne de manière fiable en production, et le consentement « Politique de confidentialité acceptée » est bien enregistré, y compris lors d'une réinscription.
+- **Messages clairs pour les visiteurs** — En cas de difficulté, le visiteur lit « Le service d'inscription est temporairement indisponible. Veuillez réessayer dans quelques minutes. »
+- **Tests automatiques** — Les trois formulaires sont testés automatiquement, y compris dans des conditions réelles.
 
-### Mis à jour
+### Pied de page
 
-- **Badge écoconception (pied de page)** — Lien mis à jour vers Website Carbon, score actualisé : note A, plus propre que 93 % des sites web, 0,04 g CO₂ par visite.
-
-### Amélioré
-
-- **Newsletter : messages d'information clairs pour les visiteurs** — Les messages affichés en cas de difficulté technique ont été réécrits en langage courant. Si le service est momentanément indisponible, le visiteur voit _"Le service d'inscription est temporairement indisponible. Veuillez réessayer dans quelques minutes."_ Les détails techniques restent consignés dans les journaux internes.
-
-### Ajouté
-
-- **Tests automatisés des 3 formulaires** (45 tests au total) — La suite de tests a été mise à jour pour refléter la structure actuelle de la base de données et vérifier le bon enregistrement du consentement RGPD.
-- **Tests de bout en bout avec la vraie base de données** — 3 scripts de test vérifient le cycle complet en conditions réelles : soumission, vérification en base, puis nettoyage automatique des données de test.
-- **Documentation de la suite de tests** — Un guide de démarrage rapide a été rédigé pour les formulaires, avec la référence des identifiants de base de données et un tableau d'aide au diagnostic.
-
-### Maintenance
-
-- Nettoyage de la structure du projet : suppression de fichiers de configuration inutilisés et de documentation obsolète.
+- **Badge d'écoconception mis à jour** — Note A sur Website Carbon, plus sobre que 93 % des sites web (0,04 g de CO₂ par visite).
 
 **Fichiers modifiés** : `netlify/functions/submit-newsletter.js`, `netlify/functions/submit-pedagogical-sheet.js`, `netlify/functions/submit-contact.js`, `netlify/functions/__tests__/all-functions.test.js`, `netlify/functions/__tests__/e2e-submit-newsletter.js`, `README.md`, `CHANGELOG-2026.md`
 
@@ -273,10 +207,10 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ## [1.1.0] — 2026-03-18
 
-### Corrigé
+### Corrections
 
-- **Bug récurrent de date "Bulle d'R"** : correction du script `build-fiches-pedagogiques.js` qui réattribuait `publishDate: new Date()` à la fiche "Bulle d'R" à chaque build. La date d'origine (août 2025) est désormais collectée et préservée avant la suppression/recréation des fichiers.
-- **Algorithme d'affichage Homepage** : vérification et confirmation de l'algorithme de diversité dans `src/utils/blog.ts` — les 3 dernières publications respectent un plafond souple de 2 contenus max par type (podcast, actualité, etc.)
+- **Date de la fiche « Bulle d'R »** — Elle changeait à chaque mise à jour du site. Sa date d'origine (août 2025) est désormais conservée.
+- **Accueil** — Vérifié : les 3 dernières publications mélangent bien les types de contenus (pas plus de 2 du même type).
 
 **Fichiers modifiés** : `src/scripts/build-fiches-pedagogiques.js`, `src/utils/blog.ts`
 
@@ -284,111 +218,56 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ## [1.0.1] — 2026-03-17
 
-### Corrigé
+### Corrections
 
-- **Build cassé (HOTFIX)** : remplacement de l'icône invalide `tabler:moojo` (causant le crash Astro) par `tabler:heart` dans la section Premium de `src/content/homepage/index.json`
-- **Perte de données TinaCMS** : restauration des champs `color` dans les 7 contentTypes de `src/content/blog/blog.json`, supprimés involontairement par un commit automatique du CMS
-- **Script de build Netlify** : correction pour gérer les avertissements TinaCMS sans bloquer le déploiement
-- **Libellés section Premium** : mise à jour dans `src/content/navigation/index.json` pour refléter le nouveau positionnement "Nous soutenir"
+- **Site de nouveau en ligne** — Une icône invalide saisie dans l'éditeur bloquait la mise à jour du site. Elle est remplacée.
+- **Couleurs des catégories restaurées** — Elles avaient été effacées par une sauvegarde automatique de l'éditeur.
+- **Section « Nous soutenir »** — Le menu reflète le nouveau nom (anciennement « Contenu Premium »).
 
-### Ajouté
+### Prévention
 
-- **Protection du schéma Tina** : champ `color` caché ajouté dans `tina/blogCollection.ts` pour empêcher toute suppression future des couleurs de catégories par le CMS
-- **Icônes réseaux sociaux** : ajout de `tabler:brand-linkedin` et `tabler:brand-instagram` dans les 4 menus déroulants d'icônes de `tina/homepageCollection.ts`
-- **Documentation incident** : ajout de `claudedocs/reponse-alexia-17-03-2026.md` détaillant l'incident et la résolution
-
-### Amélioré
-
-- **UX Éditeur TinaCMS** : remplacement des champs texte libre pour les icônes par des menus déroulants sécurisés dans `tina/homepageCollection.ts`, empêchant définitivement l'erreur "icône invalide"
-- **Navigation** : renommage de "Contenu Premium" en "Nous soutenir" dans le menu principal et la page dédiée
-
-### Maintenance
-
-- Condensation de la documentation pour plus de clarté
-- Réorganisation et extension du `.gitignore`
+- **Choix d'icônes sécurisé** — Dans l'éditeur, les icônes se choisissent désormais dans une liste (dont LinkedIn et Instagram) au lieu d'être saisies à la main. L'erreur ne peut plus se reproduire.
+- **Couleurs des catégories protégées** — L'éditeur ne peut plus les effacer.
 
 **Fichiers modifiés** : `tina/blogCollection.ts`, `tina/homepageCollection.ts`, `src/content/blog/blog.json`, `src/content/homepage/index.json`, `src/content/navigation/index.json`, `.gitignore`, `CHANGELOG-2026.md`
-
-### Contenu éditorial (TinaCMS)
-
-- Mises à jour de contenu via le CMS (14 modifications) : section "Nous soutenir" (crowdfunding MyMoojo), ajout et modification d'articles (podcasts, actualités), mise à jour des événements du festival
 
 ---
 
 ## [1.0.0] — 2026-01-26
 
-### Ajouté
+### Médiathèque et hébergement
 
-- **Handler Cloudinary pour Netlify Functions** : gestion complète des médias TinaCMS via `api/cloudinary/[...media].js` (route catch-all conforme à la doc TinaCMS)
-- **Configuration Vercel** : ajout de `vercel.json` pour le framework Astro et les routes API
-
-### Corrigé
-
-- **Handler Cloudinary** : réécriture avec l'API Web Standard (`Request`/`Response`) pour compatibilité Vercel + Astro dans `netlify/functions/cloudinary-media.mjs`
-- **Boucle de redirection admin** : suppression du fichier `public/_redirects` causant une boucle infinie sur `/admin`
-- **Accès Cloudinary en preview** : autorisation de l'accès sur les previews de déploiement Netlify
-- **Compatibilité Node.js** : restriction aux versions 18, 20 et 22 dans `package.json` (engines)
-- **Playwright sur CI** : désactivation de l'installation automatique de Playwright sur Vercel/Netlify (environnement CI)
-- **Logs diagnostic** : ajout de logs pour déboguer les problèmes d'upload Cloudinary
-
-### Maintenance
-
-- Suppression du support de Node.js 18 (conservation de v20 et v22 uniquement)
-
-**Fichiers modifiés** : `api/cloudinary/[...media].js`, `api/cloudinary/media.js`, `astro.config.ts`, `netlify.toml`, `netlify/functions/cloudinary-media.mjs`, `package.json`, `public/_redirects`, `vercel.json`
+- **Médiathèque de l'éditeur** — L'envoi d'images (Cloudinary) fonctionne depuis l'éditeur, y compris sur les versions de test.
+- **Accès à l'éditeur rétabli** — Une redirection en boucle empêchait d'ouvrir `/admin`. C'est corrigé.
+- **Versions techniques à jour** — Le site fonctionne sur les versions de Node.js 20 et 22.
 
 ### Contenu éditorial (TinaCMS)
 
-- Mise à jour de contenu via le CMS (1 modification)
+- De nombreuses mises à jour de contenu via l'éditeur fin janvier (articles, événements, pages).
+
+**Fichiers modifiés** : `api/cloudinary/[...media].js`, `api/cloudinary/media.js`, `astro.config.ts`, `netlify.toml`, `netlify/functions/cloudinary-media.mjs`, `package.json`, `public/_redirects`, `vercel.json`
 
 ---
 
 ## [0.9.0] — 2026-01-21
 
-### Ajouté
+### Dates du festival centralisées
 
-- **Dates du festival centralisées depuis TinaCMS** : les éditeurs saisissent les dates dans `src/content/festival/tina/index.json`, les noms de jours et l'année sont calculés automatiquement via `src/config/festival.ts` (Festival 2026 : 30 sept - 2 oct)
-- **Tests E2E dates du festival** : ajout de `tests/e2e/scenarios/festival-dates.spec.js` pour vérifier l'affichage correct des dates
-
-### Corrigé
-
-- **Affichage dates TinaCMS** : correction de l'affichage complet des dates dans l'interface d'édition via `tina/festivalCollection.ts`
-- **Description des dates** : simplification des descriptions de champs dans le schéma Tina
-
-### Maintenance
-
-- Nettoyage de la configuration Playwright : suppression du doublon `playwright.config.js`, conservation du `.ts` uniquement
-- Ajout d'un script `postinstall` dans `package.json` pour l'installation automatique des navigateurs de test
-- Correction des violations du mode strict Playwright et tests de badges (`badge-consistency.spec.js`) rendus indépendants du contenu
+- **Une seule saisie** — Les dates du festival se saisissent une fois dans l'éditeur. Les noms des jours et l'année s'affichent automatiquement partout sur le site (Festival 2026 : du 30 septembre au 2 octobre).
+- **Affichage des dates corrigé** dans l'éditeur.
+- **Tests automatiques** — L'affichage des dates est vérifié automatiquement.
 
 **Fichiers modifiés** : `src/config/festival.ts`, `src/content/festival/tina/index.json`, `tina/festivalCollection.ts`, `playwright.config.ts`, `package.json`, `tests/e2e/scenarios/festival-dates.spec.js`, `tests/e2e/scenarios/badge-consistency.spec.js`
-
-### Contenu éditorial (TinaCMS)
-
-- Mises à jour de contenu via le CMS (3 modifications)
-
----
-
-## Contenu éditorial (TinaCMS)
-
-Les mises à jour de contenu réalisées via le CMS sont regroupées ci-dessous par date.
-
-| Date       | Modifications | Description                                           |
-| ---------- | :-----------: | ----------------------------------------------------- |
-| 2026-01-22 |      14       | Mises à jour massives de contenu (articles, pages)    |
-| 2026-01-27 |      10       | Mises à jour de contenu (articles, événements)        |
-| 2026-01-29 |      14       | Mises à jour de contenu (articles, événements, pages) |
 
 ---
 
 ## [0.8.0] — 2026-01-01
 
-### Maintenance (effectuée fin décembre 2025)
+### Maintenance (fin décembre 2025)
 
-- Migration de l'infrastructure vers Ubuntu 24.04 suite à la fin du support de la version précédente
-- Mise à jour de Node.js et des dépendances critiques pour garantir la stabilité et la sécurité
-- Restructuration du support et de la maintenance (packs prédéfinis) pour 2026
+- Mise à jour du serveur et des briques techniques essentielles, pour la stabilité et la sécurité du site.
+- Mise en place des formules de support et de maintenance pour 2026.
 
 ---
 
-_Ce fichier couvre les modifications depuis le 1er janvier 2026. Pour l'historique antérieur, consultez le dépôt Git._
+_Ce fichier couvre les modifications depuis le 1er janvier 2026._

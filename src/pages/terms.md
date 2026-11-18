@@ -2,7 +2,7 @@
 robots:
   index: false
   follow: false
-title: Mentions légales
+title: Mentions légales (test Tina 3)
 layout: ~/layouts/MarkdownLayout.astro
 ---
 

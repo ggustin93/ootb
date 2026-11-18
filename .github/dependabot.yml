@@ -1,0 +1,17 @@
+# Alerte mensuelle : évite d'être pris de court par une mise à jour obligatoire
+# (TinaCloud a exigé tinacms 3.12 en novembre 2026).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+    allow:
+      - dependency-name: 'tinacms'
+      - dependency-name: '@tinacms/*'
+      - dependency-name: 'next-tinacms-cloudinary'
+      - dependency-name: '@playwright/test'
+    groups:
+      tina:
+        patterns: ['tinacms', '@tinacms/*', 'next-tinacms-cloudinary']

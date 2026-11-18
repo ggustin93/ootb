@@ -5,6 +5,22 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.5.0] — 2026-11-18
+
+### Connexion à l'éditeur de pages rétablie
+
+- **Vous pouvez de nouveau vous connecter à l'éditeur** — L'éditeur de pages (TinaCMS) est passé à sa version 3, la plus récente. La connexion, la modification des pages et des articles, la médiathèque et l'enregistrement fonctionnent de nouveau.
+- **Cause** — En novembre, le service qui gère la connexion à l'éditeur (TinaCloud) a changé de système d'identification. Ce nouveau système n'accepte plus les anciennes versions de l'éditeur. Le site lui-même n'a jamais été hors ligne.
+- **Votre contenu est intact** — Pages, articles et images sont enregistrés en dehors de ce service : rien n'a été perdu ni modifié.
+- **Ce que vous avez à faire** — Un e-mail de TinaCloud arrive sur l'adresse que vous utilisez pour vous connecter : il vous invite à définir un nouveau mot de passe. Si vous utilisiez la double vérification à la connexion (« authentification à deux facteurs »), elle est à activer de nouveau. Si vous vous connectez avec un compte GitHub, rien ne change.
+- **Si le bouton de connexion tourne sans s'arrêter** — Rechargez la page, puis réessayez dans une fenêtre de navigation privée. Si cela persiste, écrivez-moi.
+- **Mise à jour majeure annoncée le 30 octobre : c'est fait** — L'éditeur bénéficie aussi des derniers correctifs de sécurité publiés par son fabricant.
+- **Le site public n'est pas concerné** — Rien ne change pour vos visiteurs.
+
+**Fichiers modifiés** : `package.json`, `package-lock.json`, `tina/tina-lock.json`, `.github/workflows/actions.yaml`, `README.md`
+
+---
+
 ## [1.4.3] — 2026-10-30
 
 ### Éditeur de pages mieux protégé (#41)

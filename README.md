@@ -336,8 +336,8 @@ npm run build:netlify
 
 ### Continuous Integration
 
-- **CI (GitHub Actions)**: on every PR to `main`, build on Node 20 and 22, `npm run check`, the offline unit suites, and Playwright E2E (Chromium) against the built site
-- **Branch protection**: `main` requires a PR and passing `build (20)`, `build (22)` and `check`; no force-push or deletion. The TinaCMS app commits content edits directly to `main`.
+- **CI (GitHub Actions)**: on every PR to `main`, build on Node 22, `npm run check`, the offline unit suites, and Playwright E2E (Chromium) against the built site
+- **Branch protection**: `main` requires a PR and passing `build (22)` and `check`; no force-push or deletion. The TinaCMS app commits content edits directly to `main`.
 - **Security**: Dependabot alerts and GitGuardian secret scanning on PRs
 - **Monitoring**: a daily workflow (`ssl-check.yml`) fails, and emails the owner, if the HTTPS certificate is invalid or close to expiry
 

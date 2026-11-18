@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": "^20.3.0 || ^22.0.0"
+    "node": "^22.0.0"
   },
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
@@ -66,7 +66,7 @@
     "@tabler/icons-react": "^3.26.0",
     "@tanstack/react-query": "^5.62.11",
     "@tinacms/auth": "^1.1.5",
-    "@tinacms/cli": "^1.12.6",
+    "@tinacms/cli": "^4.0.5",
     "@types/node-fetch": "^2.6.12",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
@@ -83,7 +83,7 @@
     "lodash.merge": "^4.6.2",
     "lucide-react": "^0.469.0",
     "marked": "^18.0.5",
-    "next-tinacms-cloudinary": "^16.0.1",
+    "next-tinacms-cloudinary": "^27.0.6",
     "nocodb-sdk": "^0.262.1",
     "node-fetch": "^2.7.0",
     "node-poppler": "^8.0.4",
@@ -91,7 +91,7 @@
     "sib-api-v3-sdk": "^8.5.0",
     "slugify": "^1.6.6",
     "tailwindcss-animate": "^1.0.7",
-    "tinacms": "^2.10.1",
+    "tinacms": "^3.15.2",
     "unpic": "^3.22.0"
   },
   "devDependencies": {

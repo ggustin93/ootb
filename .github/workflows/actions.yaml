@@ -14,7 +14,6 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 20
           - 22
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +29,8 @@ jobs:
           NOCODB_API_TOKEN: ${{ secrets.NOCODB_API_TOKEN }}
           TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+          # Compare le schéma Tina à l'index de la branche de la PR, pas à celui de main
+          TINA_BRANCH: ${{ github.head_ref || github.ref_name }}
       - name: E2E Playwright (chromium)
         if: matrix.node-version == 22
         run: npx playwright install --with-deps chromium && npx playwright test --project=chromium

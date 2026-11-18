@@ -1,6 +1,6 @@
 # Operations & Pitfalls — TinaCMS on the Out of the Books repo
 
-> **Version lock — read first.** Pinned stack (confirmed in `node_modules/*/package.json`): `tinacms` **2.10.1**, `@tinacms/cli` **1.12.6**, `@tinacms/schema-tools` **1.10.1**, `@tinacms/graphql` **1.6.3**, `next-tinacms-cloudinary` **16.0.1**. Do **not** assume newer Tina docs/APIs apply. When in doubt, match patterns already present in `tina/*.ts` rather than copying current-docs snippets (which target 3.x). Newer field types / `ui` options / config keys may silently no-op or break the build on this version.
+> **Version lock — read first.** Pinned stack (confirmed in `node_modules/*/package.json`): `tinacms` **3.15.2**, `@tinacms/cli` **4.0.5** (Node 22 only), `@tinacms/schema-tools` **2.11.0**, `@tinacms/graphql` **4.1.0**, `next-tinacms-cloudinary` **27.0.6**. Current tina.io docs (3.x) apply. The schema was written for 2.x, so when in doubt match patterns already present in `tina/*.ts`, and check that a newer field type / `ui` option / config key exists in the installed version before relying on it.
 
 ## 1. THE CRITICAL RULE — `tina-lock.json` regeneration
 
@@ -80,9 +80,9 @@ When you see `GraphQL Schema Mismatch … Field 'xxx' was added to object type '
 - **Forgetting lock regeneration** (§1) — most common and most damaging; passes local dev, breaks production CMS.
 - **Editing NocoDB table/column structure** — events/workshops/stands flow NocoDB → build scripts → JSON → SSG. Renaming/restructuring NocoDB fields breaks the `src/scripts/` mapping and silently empties pages. Tina does not manage that data; treat NocoDB schema as a contract with `src/services/api/nocodb/`.
 - **`public/` image paths don't render through `<Image>`** — actively worked around in `erasmus-plus.astro` (Cloudinary `heroImage` → `<Image>`; `/images/...` logos → plain `<img>`). When content can be a Cloudinary URL OR a `public/` path, render with plain `<img>` or branch on the source.
-- **Rich-text layout limits** — on 2.10.1, `rich-text` is for inline/prose content. Don't use it for structured layout (grids, cards, columns) — model those as typed `object`/`list` fields.
+- **Rich-text layout limits** — `rich-text` is for inline/prose content. Don't use it for structured layout (grids, cards, columns) — model those as typed `object`/`list` fields.
 - **`<TinaMarkdown>` in `.astro` pages** — renders literal `[object Object]` in some environments and pulls tinacms React into SSG pages. Use `<TinaRichText content={...} />` (`~/components/ui/TinaRichText.astro`) or `richTextToHtml()` instead. In React client islands, use `richTextToHtml()` + `dangerouslySetInnerHTML`.
-- **Using a newer Tina API** — `ui.router`, new field types, or config keys from current (3.x) docs may not exist in 2.10.1 / cli 1.12.6. If it's not already used in `tina/*.ts`, verify before relying on it.
+- **Using a newer Tina API** — `ui.router`, new field types, or config keys from the docs may be newer than the installed 3.15.x / cli 4.0.x. If it's not already used in `tina/*.ts`, verify before relying on it.
 - **Media store is Cloudinary, not local** — Tina's image picker uploads to Cloudinary (a Cloudinary URL); legacy/static assets referenced as `/images/...` are hand-authored public paths. Both coexist in the same JSON; account for both when rendering.
 
 ## 5. Review record — `erasmusCollection.ts` `projet` + `partenaires[].liens`
@@ -102,11 +102,11 @@ Notes: lock regeneration must accompany the change (verify via grep, §1). `lien
 - Media / custom store (Cloudinary) — https://tina.io/docs/reference/media/cloudinary/
 - CLI (`dev`, `build`, flags) — https://tina.io/docs/cli-overview/
 
-> When a doc describes a feature, cross-check it against the installed version. If it isn't already used somewhere in `tina/*.ts`, treat it as unverified on 2.10.1.
+> When a doc describes a feature, cross-check it against the installed version. If it isn't already used somewhere in `tina/*.ts`, treat it as unverified on the installed version.
 
 ## 7. Pre-flight checklist (mirror of SKILL.md)
 
-- [ ] Version-check (2.10.1 / cli 1.12.6) — no newer-only APIs.
+- [ ] Version-check (3.15.x / cli 4.0.x) — the API exists in the installed version.
 - [ ] Match conventions: French labels, camelCase names, `ui.itemProps` on lists, `textarea` multiline, locked `allowedActions`.
 - [ ] Field `name` == JSON key (rename → update both `.ts` and `index.json`).
 - [ ] Update `src/content/<collection>/index.json` to stay consistent.

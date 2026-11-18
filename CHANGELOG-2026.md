@@ -5,6 +5,38 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.5.0] — 2026-11-18
+
+### Éditeur de pages mis à jour
+
+- **L'éditeur de pages est à jour** — L'éditeur (TinaCMS) est passé à sa version 3, la plus récente, compatible avec le nouveau système de connexion. La connexion, la modification des pages et des articles, la médiathèque et l'enregistrement ont été vérifiés sur la version de test.
+- **Cause** — En novembre, le service qui gère la connexion à l'éditeur (TinaCloud) a changé de système d'identification. Ce nouveau système n'accepte plus les anciennes versions de l'éditeur. Le site lui-même n'a jamais été hors ligne.
+- **Votre contenu est intact** — Pages, articles et images sont enregistrés en dehors de ce service : rien n'a été perdu ni modifié.
+- **Accès de votre compte** — Il est en cours de rétablissement auprès du service de connexion : je vous préviens dès qu'il est actif. Vous aurez alors à définir un nouveau mot de passe, via un e-mail de TinaCloud envoyé à l'adresse que vous utilisez pour vous connecter. Si vous utilisiez la double vérification à la connexion (« authentification à deux facteurs »), elle est à activer de nouveau. Si vous vous connectez avec un compte GitHub, rien ne change.
+- **En attendant** — Envoyez-moi vos modifications urgentes : je les publie pour vous.
+- **Mise à jour majeure annoncée le 30 octobre : c'est fait** — L'éditeur bénéficie aussi des derniers correctifs de sécurité publiés par son fabricant.
+- **Le site public n'est pas concerné** — Rien ne change pour vos visiteurs.
+
+**Fichiers modifiés** : `package.json`, `package-lock.json`, `tina/tina-lock.json`, `.github/workflows/actions.yaml`, `README.md`
+
+---
+
+## [1.4.3] — 2026-10-30
+
+### Éditeur de pages mieux protégé (#41)
+
+- **Protection supplémentaire de l'éditeur** — Une règle de sécurité ajoutée à l'éditeur de pages (TinaCMS) l'empêche d'afficher un site extérieur dans sa fenêtre d'aperçu (« Content Security Policy »). Elle complète l'éditeur en attendant sa prochaine mise à jour majeure, qui est prévue.
+- **Rien ne change pour vous** — Connexion, articles, podcasts, images, aperçu et enregistrement fonctionnent comme avant. Tout a été testé sur la version de test avant la mise en ligne.
+- **Le site public n'est pas concerné** — La règle ne s'applique qu'à l'éditeur.
+
+### Contrôles automatiques
+
+- **Mentions légales et politique de confidentialité** — Les modifier depuis l'éditeur ne déclenche plus d'alerte dans les contrôles automatiques du site.
+
+**Fichiers modifiés** : `netlify.toml`, `.prettierignore`
+
+---
+
 ## [1.4.2] — 2026-10-29
 
 ### Mises à jour de sécurité

@@ -54,6 +54,17 @@ export default [
     },
   },
   {
-    ignores: ['dist', 'node_modules', '.github', 'types.generated.d.ts', '.astro'],
+    ignores: [
+      'dist',
+      'node_modules',
+      '.github',
+      'types.generated.d.ts',
+      '.astro',
+      // Artefacts locaux ignorés par git : admin Tina construit, fichiers générés, Netlify, notes
+      'public/admin',
+      'tina/__generated__',
+      '.netlify',
+      'memory-bank',
+    ],
   },
 ];

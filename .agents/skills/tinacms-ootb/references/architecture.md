@@ -8,16 +8,16 @@ This site runs an **older, specific** TinaCMS line. Work MUST target these versi
 
 | Package                   | Pinned (`package.json`) | Installed                                       |
 | ------------------------- | ----------------------- | ----------------------------------------------- |
-| `tinacms`                 | `^2.10.1`               | 2.10.1                                          |
-| `@tinacms/cli`            | `^1.12.6`               | 1.12.6                                          |
-| `@tinacms/schema-tools`   | `1.10.1`                | (transitive of tinacms 2.10.1)                  |
-| `@tinacms/graphql`        | `1.6.3`                 | (transitive)                                    |
-| `@tinacms/app`            | `2.3.11`                | 2.3.11                                          |
-| `@tinacms/search`         | `1.1.3`                 | (transitive)                                    |
-| `next-tinacms-cloudinary` | `^16.0.1`               | 16.0.1                                          |
-| `@tinacms/auth`           | `^1.0.11`               | 1.1.1 (used by the Cloudinary Netlify function) |
+| `tinacms`                 | `^3.15.2`               | 3.15.2                                          |
+| `@tinacms/cli`            | `^4.0.5`                | 4.0.5                                           |
+| `@tinacms/schema-tools`   | `2.11.0`                | (transitive of tinacms 3.15.2)                  |
+| `@tinacms/graphql`        | `4.1.0`                 | (transitive)                                    |
+| `@tinacms/app`            | `2.6.0`                 | 2.6.0                                           |
+| `@tinacms/search`         | `1.2.26`                | (transitive)                                    |
+| `next-tinacms-cloudinary` | `^27.0.6`               | 27.0.6                                          |
+| `@tinacms/auth`           | `^1.1.5`                | 1.1.5 (used by the Cloudinary Netlify function) |
 
-Node engine: `^20.3.0 || ^22.0.0`. Netlify builds on Node 22 (`netlify.toml`).
+Node engine: `^22.0.0` (required by `@tinacms/cli` 4). Netlify builds on Node 22 (`netlify.toml`).
 
 **Things that differ in newer TinaCMS — match this repo's exact shape:**
 

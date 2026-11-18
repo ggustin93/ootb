@@ -6,6 +6,10 @@ node_modules
 src/content/
 tina/tina-lock.json
 tina/__generated__/
+# Artefacts locaux ignorés par git
+public/admin/
+.netlify/
+memory-bank/
 # Pages légales éditées via TinaCMS (tina/legalCollection.ts)
 src/pages/terms.md
 src/pages/privacy.md

@@ -10,7 +10,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # ubuntu-latest (26.04) n'est pas encore pris en charge par Playwright 1.57
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         node-version:

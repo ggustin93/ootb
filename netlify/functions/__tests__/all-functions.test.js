@@ -1,5 +1,6 @@
 /**
  * Tests unitaires pour les 3 fonctions Netlify de soumission
+ * (+ le refus d'accès de la médiathèque, cloudinary-media)
  *
  * - submit-pedagogical-sheet: Fiches pédagogiques → NocoDB
  * - submit-contact: Formulaire de contact → NocoDB
@@ -13,6 +14,7 @@
 import { handler as pedagogicalHandler, isSpam } from '../submit-pedagogical-sheet.js';
 import { handler as contactHandler } from '../submit-contact.js';
 import { handler as newsletterHandler } from '../submit-newsletter.js';
+import { handler as mediaHandler } from '../cloudinary-media.mjs';
 
 const JSON_HEADERS = { 'content-type': 'application/json' };
 
@@ -418,6 +420,30 @@ function testPedagogicalTableIdResolution() {
 //  RUNNER
 // ═══════════════════════════════════════════
 
+// ═══════════════════════════════════════════
+//  MÉDIATHÈQUE : REFUS SANS IDENTIFIANTS (fail-closed)
+// ═══════════════════════════════════════════
+
+// Ces chemins répondent avant tout appel réseau : le test reste hors ligne.
+async function testMediaAuthGate() {
+  console.log('\n── Médiathèque : accès refusé sans identifiants ──');
+  const savedContext = process.env.CONTEXT;
+  const savedNodeEnv = process.env.NODE_ENV;
+  delete process.env.CONTEXT;
+  const get = (extra) => mediaHandler({ httpMethod: 'GET', path: '/media', headers: {}, ...extra });
+
+  assert((await get({ queryStringParameters: { clientID: 'x' } })).statusCode === 401, 'sans jeton → 401');
+  assert((await get({ headers: { authorization: 'Bearer x' } })).statusCode === 401, 'sans clientID → 401');
+  process.env.NODE_ENV = 'development';
+  assert((await get({})).statusCode === 401, 'NODE_ENV=development ne suffit pas à ouvrir l’accès → 401');
+  assert((await mediaHandler({ httpMethod: 'OPTIONS', headers: {} })).statusCode === 204, 'OPTIONS (preflight) → 204');
+
+  if (savedContext === undefined) delete process.env.CONTEXT;
+  else process.env.CONTEXT = savedContext;
+  if (savedNodeEnv === undefined) delete process.env.NODE_ENV;
+  else process.env.NODE_ENV = savedNodeEnv;
+}
+
 async function runAllTests() {
   console.log('═══════════════════════════════════════════════');
   console.log('  Tests unitaires — Toutes les fonctions Netlify');
@@ -435,6 +461,7 @@ async function runAllTests() {
   await testPedagogicalAntiSpam();
   await testContactForm();
   await testNewsletter();
+  await testMediaAuthGate();
 
   console.log('\n═══════════════════════════════════════════════');
   console.log(`  Résultat: ${passed} passés, ${failed} échoués`);

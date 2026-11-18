@@ -6,7 +6,7 @@ title: Mentions légales
 layout: ~/layouts/MarkdownLayout.astro
 ---
 
-*Dernière mise à jour*: 5 mars 2025
+*Dernière mise à jour*: 6 mars 2025
 
 ## Éditeur
 

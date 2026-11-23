@@ -1,6 +1,6 @@
 # Rendering — How TinaCMS Content Is Consumed in the Astro Frontend
 
-Reference for editing/building Tina-driven UI. Stack: TinaCMS 3.15.2 / @tinacms/cli 4.0.5, Astro 5 SSG, Tailwind. Tina JSON collections are consumed as **plain static JSON imports at build time** — no Tina runtime/GraphQL client on these pages.
+Reference for editing/building Tina-driven UI. Stack: TinaCMS 3.x (versions in `package.json`), Astro 5 SSG, Tailwind. Tina JSON collections are consumed as **plain static JSON imports at build time** — no Tina runtime/GraphQL client on these pages.
 
 ## 1. Importing Tina content into Astro pages
 

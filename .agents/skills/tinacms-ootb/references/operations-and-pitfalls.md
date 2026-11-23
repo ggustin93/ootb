@@ -1,12 +1,12 @@
 # Operations & Pitfalls — TinaCMS on the Out of the Books repo
 
-> **Version lock — read first.** Pinned stack (confirmed in `node_modules/*/package.json`): `tinacms` **3.15.2**, `@tinacms/cli` **4.0.5** (Node 22 only), `@tinacms/schema-tools` **2.11.0**, `@tinacms/graphql` **4.1.0**, `next-tinacms-cloudinary` **27.0.6**. Current tina.io docs (3.x) apply. The schema was written for 2.x, so when in doubt match patterns already present in `tina/*.ts`, and check that a newer field type / `ui` option / config key exists in the installed version before relying on it.
+> **Version lock — read first.** Pinned stack (confirmed in `node_modules/*/package.json`): TinaCMS 3.x; exact versions are in `package.json`. Current tina.io docs (3.x) apply. The schema was written for 2.x, so when in doubt match patterns already present in `tina/*.ts`, and check that a newer field type / `ui` option / config key exists in the installed version before relying on it.
 
 ## 1. THE CRITICAL RULE — `tina-lock.json` regeneration
 
 **After ANY change to a `tina/*.ts` file — add / remove / rename a field, collection, or type — regenerate and commit `tina/tina-lock.json` in the same change.**
 
-**Why it's non-negotiable** (source: `CLAUDE.md` § "TinaCMS Schema Rule (CRITICAL)" + `memory-bank/troubleshoot.md`):
+**Why it's non-negotiable** (source: `memory-bank/troubleshoot.md`):
 
 - TinaCloud reads `tina/tina-lock.json` **from git** as its schema source of truth. It does **not** re-derive the schema from the TypeScript config.
 - The TinaCloud "Re-sync" button only re-indexes **content**, never the schema.
@@ -82,7 +82,7 @@ When you see `GraphQL Schema Mismatch … Field 'xxx' was added to object type '
 - **`public/` image paths don't render through `<Image>`** — actively worked around in `erasmus-plus.astro` (Cloudinary `heroImage` → `<Image>`; `/images/...` logos → plain `<img>`). When content can be a Cloudinary URL OR a `public/` path, render with plain `<img>` or branch on the source.
 - **Rich-text layout limits** — `rich-text` is for inline/prose content. Don't use it for structured layout (grids, cards, columns) — model those as typed `object`/`list` fields.
 - **`<TinaMarkdown>` in `.astro` pages** — renders literal `[object Object]` in some environments and pulls tinacms React into SSG pages. Use `<TinaRichText content={...} />` (`~/components/ui/TinaRichText.astro`) or `richTextToHtml()` instead. In React client islands, use `richTextToHtml()` + `dangerouslySetInnerHTML`.
-- **Using a newer Tina API** — `ui.router`, new field types, or config keys from the docs may be newer than the installed 3.15.x / cli 4.0.x. If it's not already used in `tina/*.ts`, verify before relying on it.
+- **Using a newer Tina API** — `ui.router`, new field types, or config keys from the docs may be newer than the installed version. If it's not already used in `tina/*.ts`, verify before relying on it.
 - **Media store is Cloudinary, not local** — Tina's image picker uploads to Cloudinary (a Cloudinary URL); legacy/static assets referenced as `/images/...` are hand-authored public paths. Both coexist in the same JSON; account for both when rendering.
 
 ## 5. Review record — `erasmusCollection.ts` `projet` + `partenaires[].liens`
@@ -106,7 +106,7 @@ Notes: lock regeneration must accompany the change (verify via grep, §1). `lien
 
 ## 7. Pre-flight checklist (mirror of SKILL.md)
 
-- [ ] Version-check (3.15.x / cli 4.0.x) — the API exists in the installed version.
+- [ ] Version-check — the API exists in the installed version (`package.json`).
 - [ ] Match conventions: French labels, camelCase names, `ui.itemProps` on lists, `textarea` multiline, locked `allowedActions`.
 - [ ] Field `name` == JSON key (rename → update both `.ts` and `index.json`).
 - [ ] Update `src/content/<collection>/index.json` to stay consistent.
@@ -117,6 +117,33 @@ Notes: lock regeneration must accompany the change (verify via grep, §1). `lien
 - [ ] Commit lock + schema together; push; wait ~35 s; `npx tinacms build` → no mismatch.
 - [ ] New `public/` image field → plain `<img>`, not `<Image>`.
 
+### TinaCloud dashboard: accounts and collaborators
+
+Editors reach the admin through a collaborator entry on the TinaCloud project (Collaborators tab of the project; the organization's Users list only shows the owner).
+
+- **Keep existing collaborators in place.** Adding a removed collaborator back creates a pending invitation that needs a new sign-up, and TinaCloud can pause sign-ups (it did during its November 2026 authentication change).
+- **Test the admin with the owner account**, on staging first: login, save, media list/upload/delete, search, logout. The free plan has two seats, so there is no spare seat for a test account.
+- **Read TinaCloud's changelog before an intervention** (https://tina.io/whats-new/tinacloud): maintenance in progress changes what the dashboard can do.
+- **Deploy status**: `scripts/wait-deploy.sh [sha]` waits for the Netlify deploy of a commit; guessing from asset names is unreliable.
+- When the effect of a dashboard action is undocumented, say so and take the option that leaves accounts untouched.
+
+**Login button spins forever on `/admin`.** The account is signed in to TinaCloud but is not an active collaborator of the project: `POST identity.tinajs.io/oauth/token` answers 403 "this account does not have access to this project", and the collaborator shows "Pending". Accept the invitation with that account:
+
+1. Open the invitation link (`app.tina.io/join/...`, shown next to the pending collaborator) and click "Continue".
+2. The link lands on the sign-up screen even when the account exists, where the address is reported as unavailable. Use "Se connecter" at the bottom, then e-mail and password.
+3. On "Set up Git Authoring", switch to "Act as bot" and continue. The default "Act as self" sends the editor to a GitHub sign-in they have no account for.
+4. Reload `/admin` and log in. Verify the media library answers 200 on `/api/cloudinary/media`.
+
+Verified in production on 2026-11-23 with an e-mail + password editor account.
+
+**Other login gotchas for editors.**
+
+- "Cette adresse e-mail n'est pas disponible" is the sign-up form saying the account already exists. Send editors to the site's `/admin/` address and "Continuer avec l'e-mail"; the invitation link is for the first acceptance only.
+- A shared editor account receives its verification code in one mailbox. The other editor needs that code on a new device: say who receives it, or forward the vendor's e-mails.
+- An editor's sign-up cannot be tested end to end without that mailbox. Check the Collaborators status ("Active") yourself, and do the code step together with the editor.
+- Proof that an editor can save: a "TinaCMS content update" commit by the TinaCloud app on `main` (`gh api repos/<owner>/<repo>/commits`). A successful login alone proves less.
+- Send credentials through a one-time link, one password per tool. Rotate any password that was typed in a chat.
+
 ### Files referenced
 
-`CLAUDE.md` (§ TinaCMS Schema Rule), `memory-bank/troubleshoot.md`, `tina/config.ts`, `tina/erasmusCollection.ts`, `tina/aboutCollection.ts`, `src/content/erasmus-plus/index.json`, `src/pages/erasmus-plus.astro`, `src/pages/a-propos.astro`, `src/components/ui/TinaRichText.astro`, `src/utils/tinaRichText.ts`, `src/components/common/Image.astro`, `package.json`.
+`memory-bank/troubleshoot.md`, `tina/config.ts`, `tina/erasmusCollection.ts`, `tina/aboutCollection.ts`, `src/content/erasmus-plus/index.json`, `src/pages/erasmus-plus.astro`, `src/pages/a-propos.astro`, `src/components/ui/TinaRichText.astro`, `src/utils/tinaRichText.ts`, `src/components/common/Image.astro`, `package.json`.

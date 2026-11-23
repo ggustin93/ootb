@@ -6,18 +6,7 @@
 
 This site runs an **older, specific** TinaCMS line. Work MUST target these versions.
 
-| Package                   | Pinned (`package.json`) | Installed                                       |
-| ------------------------- | ----------------------- | ----------------------------------------------- |
-| `tinacms`                 | `^3.15.2`               | 3.15.2                                          |
-| `@tinacms/cli`            | `^4.0.5`                | 4.0.5                                           |
-| `@tinacms/schema-tools`   | `2.11.0`                | (transitive of tinacms 3.15.2)                  |
-| `@tinacms/graphql`        | `4.1.0`                 | (transitive)                                    |
-| `@tinacms/app`            | `2.6.0`                 | 2.6.0                                           |
-| `@tinacms/search`         | `1.2.26`                | (transitive)                                    |
-| `next-tinacms-cloudinary` | `^27.0.6`               | 27.0.6                                          |
-| `@tinacms/auth`           | `^1.1.5`                | 1.1.5 (used by the Cloudinary Netlify function) |
-
-Node engine: `^22.0.0` (required by `@tinacms/cli` 4). Netlify builds on Node 22 (`netlify.toml`).
+Versions and Node engine: `package.json`, `package-lock.json`, `.nvmrc`. `@tinacms/cli` needs Node 22; Netlify builds on Node 22 (`netlify.toml`).
 
 **Things that differ in newer TinaCMS — match this repo's exact shape:**
 

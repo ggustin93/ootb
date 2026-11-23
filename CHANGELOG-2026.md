@@ -12,8 +12,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **L'éditeur de pages est à jour** — L'éditeur (TinaCMS) est passé à sa version 3, la plus récente, compatible avec le nouveau système de connexion. La connexion, la modification des pages et des articles, la médiathèque et l'enregistrement ont été vérifiés sur la version de test.
 - **Cause** — En novembre, le service qui gère la connexion à l'éditeur (TinaCloud) a changé de système d'identification. Ce nouveau système n'accepte plus les anciennes versions de l'éditeur. Le site lui-même n'a jamais été hors ligne.
 - **Votre contenu est intact** — Pages, articles et images sont enregistrés en dehors de ce service : rien n'a été perdu ni modifié.
-- **Accès de votre compte** — Il est en cours de rétablissement auprès du service de connexion : je vous préviens dès qu'il est actif. Vous aurez alors à définir un nouveau mot de passe, via un e-mail de TinaCloud envoyé à l'adresse que vous utilisez pour vous connecter. Si vous utilisiez la double vérification à la connexion (« authentification à deux facteurs »), elle est à activer de nouveau. Si vous vous connectez avec un compte GitHub, rien ne change.
-- **En attendant** — Envoyez-moi vos modifications urgentes : je les publie pour vous.
+- **Votre accès est rétabli (23 novembre)** — Votre compte est de nouveau actif : la connexion et la médiathèque ont été vérifiées avec lui. Pour vous connecter, ouvrez l'éditeur, saisissez votre adresse e-mail, choisissez « Continuer avec l'e-mail », puis votre mot de passe. Le bouton « GitHub » de cet écran ne concerne pas votre compte. Je vous conseille de remplacer le mot de passe provisoire à la première connexion.
 - **Mise à jour majeure annoncée le 30 octobre : c'est fait** — L'éditeur bénéficie aussi des derniers correctifs de sécurité publiés par son fabricant.
 - **Le site public n'est pas concerné** — Rien ne change pour vos visiteurs.
 

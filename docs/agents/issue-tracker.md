@@ -2,6 +2,22 @@
 
 Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
 
+## Before publishing: this repository is public
+
+Issues, PRs and comments are read outside the team. Every text published here is:
+
+- **Restrained**: what the reader needs to act, nothing else. Working notes stay in the local notes folder.
+- **Solution-oriented**: what was fixed, what works now, what remains. A problem is described by its cause and its fix.
+- **Free of personal and account data**: write "the editors' account"; no names, e-mail addresses, account status or access details.
+
+Run the body through the check before `gh issue create`, `gh issue edit`, `gh pr create` or `gh pr edit`. It refuses e-mail addresses, internal note paths and the terms of the local denylist:
+
+```bash
+node scripts/check-public-text.mjs < body.md
+```
+
+Edits keep their history on GitHub, so a text that fails the check is fixed before it is published, not after.
+
 ## Conventions
 
 - **Create an issue**: `gh issue create --title "..." --body "..."`. Use a heredoc for multi-line bodies.

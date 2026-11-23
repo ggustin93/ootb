@@ -12,13 +12,7 @@ Use this skill whenever touching TinaCMS in this repo: editing `tina/*.ts` colle
 
 This repo runs TinaCMS **3.x** (upgraded from 2.10.1 on 2026-11-18 for the TinaCloud WorkOS login). Current tina.io docs apply, but the schema was written for 2.x: verify a newer API against the installed version before using it. If a feature is not already used somewhere in `tina/*.ts`, treat it as unverified on this version.
 
-| Package                   | Version    |
-| ------------------------- | ---------- |
-| `tinacms`                 | **3.15.2** |
-| `@tinacms/cli`            | **4.0.5**  |
-| `@tinacms/schema-tools`   | **2.11.0** |
-| `@tinacms/graphql`        | **4.1.0**  |
-| `next-tinacms-cloudinary` | **27.0.6** |
+Installed versions: `package.json` and `package-lock.json` (Tina packages are bumped together, monthly Dependabot group).
 
 Rule of thumb: **mirror existing collections** (`tina/erasmusCollection.ts`, `tina/aboutCollection.ts`) rather than inventing config from docs.
 
@@ -87,7 +81,7 @@ See `references/rendering.md` for the import patterns, the `<Image>` decision ta
 
 ## Pre-flight checklist for Tina schema changes
 
-- [ ] Version-check: on `tinacms@3.15.x` / `@tinacms/cli@4.0.x` (Node 22 only) — check a new API exists in the installed version.
+- [ ] Version-check: check a new API exists in the installed version (`package.json`).
 - [ ] Match conventions: French labels, camelCase names, `ui.itemProps` on lists, `textarea` for multiline, locked `allowedActions` on singletons.
 - [ ] Keep field `name` == JSON key (rename = update BOTH `tina/*.ts` and `src/content/<collection>/index.json`).
 - [ ] Update `src/content/<collection>/index.json` to stay consistent (no orphan/missing keys).

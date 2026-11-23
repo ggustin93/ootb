@@ -69,6 +69,8 @@ tina/__generated__/*
 # AI assistant context
 .mcp.json
 CLAUDE.md
+AGENTS.md
+HANDOFF.md
 DEPENDENCIES.md
 memory-bank/
 claudedocs/

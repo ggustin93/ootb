@@ -82,7 +82,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
   - **Éditeur de pages (TinaCMS)** : textes, images et menus des pages, articles.
   - **Base de données (NocoDB)** : programme du festival, fiches pédagogiques, messages reçus par les formulaires.
   - Un tableau « Je veux… → Allez dans… » indique quel outil ouvrir selon la tâche.
-- **Rappel pour NocoDB** — Les changements faits dans NocoDB apparaissent sur le site après un clic sur « Redéployer le site web » (table « Actions spéciales »).
+- **Rappel pour NocoDB** — Les changements faits dans NocoDB apparaissent sur le site après un clic sur « Exécuter », sur la ligne « Redéployer le site web » de la table « Actions spéciales ».
 - **Statistiques de visite visibles directement** dans le tableau de bord (Umami), avec un lien pour les ouvrir dans un nouvel onglet.
 - **Éco-responsabilité** — Le résultat Website Carbon de la page d'accueil (note A, environ 0,04 g de CO₂ par visite, plus sobre que 93 % des pages web), pourquoi c'est important et les bons gestes pour les images.
 - **Plus lisible** — Titres plus petits et mieux hiérarchisés, sections repliées par défaut, utilisables au clavier, et textes raccourcis.
@@ -120,7 +120,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ### Fiches pédagogiques : validation avant publication
 
-- **Seules les fiches « Publié » sont en ligne** — Une fiche reçue reste en « A valider » et n'apparaît pas sur le site. Pour la publier, l'équipe passe son statut à « Publié » dans NocoDB, puis clique sur « Redéployer le site web ».
+- **Seules les fiches « Publié » sont en ligne** — Une fiche reçue reste en « A valider » et n'apparaît pas sur le site. Pour la publier, l'équipe passe son statut à « Publié » dans NocoDB, puis clique sur « Exécuter », sur la ligne « Redéployer le site web » de la table « Actions spéciales ».
   - À savoir : repasser en « A valider » une fiche déjà en ligne ne la retire pas du site. Pour la retirer, il suffit de me prévenir.
 - **Aucune fiche perdue en cas de panne** — Si la base de données ne répond pas, la mise à jour du site s'arrête sans rien modifier. Avant, une panne pouvait faire disparaître toutes les fiches du site.
 - **Toutes les fiches récupérées** — Le site récupère désormais toutes les fiches, au-delà des 100 premières.
@@ -153,7 +153,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 - **Fausses fiches supprimées** — Les 5 fiches créées par le robot sont supprimées. Les 85 fiches restantes ont été vérifiées une à une.
 - **Nouveau champ « Statut »** (« A valider » ou « Publié ») — Le même que pour le festival. Les 85 fiches existantes sont passées en « Publié ».
-- **Bouton « Redéployer le site web »** — Dans la table « Actions spéciales », comme pour le festival : il met en ligne une fiche validée sans attendre.
+- **Action « Redéployer le site web »** — Dans la table « Actions spéciales », comme pour le festival : son bouton « Exécuter » met en ligne une fiche validée sans attendre.
 
 **Fichiers modifiés** : `netlify/functions/submit-pedagogical-sheet.js`, `src/components/forms/ProjectSubmissionForm.astro`, `netlify/functions/__tests__/all-functions.test.js`, `netlify/functions/__tests__/README.md`
 

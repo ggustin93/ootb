@@ -5,6 +5,34 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
 
+## [1.5.1] — 2026-11-27
+
+### Foire aux questions complétée
+
+- **La FAQ du site répond aux questions courantes** — Elle compte 23 fiches, classées par thème : connexion, pages et contenus, festival, fiches pédagogiques, statistiques, dépannage, suivi du site. Vous y accédez depuis le tableau de bord, et les quatre questions les plus demandées sont en tête de page.
+- **Cinq nouvelles fiches** — Ajouter un article, ajouter une image et choisir sa taille, afficher une annonce en haut du site, que vérifier quand une modification n'apparaît pas, que faire après une erreur.
+- **Toutes les fiches relues** — Chaque fiche commence par ce qui vous rassure, puis donne les étapes avec les libellés tels qu'ils s'affichent à l'écran, et dit quoi m'envoyer si ça ne suffit pas. Les informations ont été vérifiées sur le site.
+- **Liens des formulaires du festival** — Les trois liens (Stands, Ateliers, Conférences) y figurent, avec la façon de les retrouver dans NocoDB. Ils restent les mêmes d'une année à l'autre.
+- **Renouvellement des formulaires chaque année** — Une fiche décrit les cinq étapes, avec des captures : sauvegarder, vérifier, vider les tables, mettre à jour les formulaires, redéployer le site.
+- **Page Erasmus+** — Une fiche explique, section par section, ce que chaque réglage change sur la page : ressources pédagogiques à publier quand vous le souhaitez, carnet de bord, partenaires associés à chaque volet.
+
+### Festival 2026 sauvegardé
+
+- **Programme et images à l'abri** — Les tables Stands, Ateliers et Conférences, ainsi que leurs images, sont sauvegardées dans le dossier Google Drive « Sauvegardes NocoDB - Festival ». L'accès à ce dossier est réservé au compte de l'association.
+- **Rien ne change sur le site** — Le programme 2026 reste en ligne. La préparation de l'édition 2027 se fera à la date de votre choix.
+
+### Tableau de bord
+
+- **Redéploiement mieux expliqué** — Le texte nomme le bouton tel qu'il s'affiche dans NocoDB : « Exécuter », sur la ligne « Redéployer le site web » de la table « Actions spéciales ».
+
+### Mises à jour de sécurité
+
+- **Outils de développement à jour** — Deux briques utilisées pour construire et tester le site passent à leur version corrigée. Elles ne s'exécutent pas sur le site public.
+
+**Fichiers modifiés** : `package.json`, `package-lock.json`, `CHANGELOG-2026.md`
+
+---
+
 ## [1.5.0] — 2026-11-18
 
 ### Éditeur de pages mis à jour

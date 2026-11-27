@@ -9,7 +9,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ### Foire aux questions complétée
 
-- **La FAQ du site répond aux questions courantes** — Elle compte 23 fiches, classées par thème : connexion, pages et contenus, festival, fiches pédagogiques, statistiques, dépannage, suivi du site. Vous y accédez depuis le tableau de bord, et les quatre questions les plus demandées sont en tête de page.
+- **La FAQ du site répond aux questions courantes** — Elle compte 23 fiches, classées par thème : connexion, pages et contenus, festival, fiches pédagogiques, statistiques, dépannage, suivi du site. Vous y accédez depuis le tableau de bord.
 - **Cinq nouvelles fiches** — Ajouter un article, ajouter une image et choisir sa taille, afficher une annonce en haut du site, que vérifier quand une modification n'apparaît pas, que faire après une erreur.
 - **Toutes les fiches relues** — Chaque fiche commence par ce qui vous rassure, puis donne les étapes avec les libellés tels qu'ils s'affichent à l'écran, et dit quoi m'envoyer si ça ne suffit pas. Les informations ont été vérifiées sur le site.
 - **Liens des formulaires du festival** — Les trois liens (Stands, Ateliers, Conférences) y figurent, avec la façon de les retrouver dans NocoDB. Ils restent les mêmes d'une année à l'autre.

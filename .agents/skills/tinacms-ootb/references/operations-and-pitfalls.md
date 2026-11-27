@@ -124,7 +124,7 @@ Editors reach the admin through a collaborator entry on the TinaCloud project (C
 - **Keep existing collaborators in place.** Adding a removed collaborator back creates a pending invitation that needs a new sign-up, and TinaCloud can pause sign-ups (it did during its November 2026 authentication change).
 - **Test the admin with the owner account**, on staging first: login, save, media list/upload/delete, search, logout. The free plan has two seats, so there is no spare seat for a test account.
 - **Read TinaCloud's changelog before an intervention** (https://tina.io/whats-new/tinacloud): maintenance in progress changes what the dashboard can do.
-- **Deploy status**: `scripts/wait-deploy.sh [sha]` waits for the Netlify deploy of a commit; guessing from asset names is unreliable.
+- **Deploy status**: `scripts/wait-deploy.sh [sha] [context]` waits for the Netlify deploy of a commit (production by default, `branch-deploy` for staging); guessing from asset names is unreliable.
 - When the effect of a dashboard action is undocumented, say so and take the option that leaves accounts untouched.
 
 **Login button spins forever on `/admin`.** The account is signed in to TinaCloud but is not an active collaborator of the project: `POST identity.tinajs.io/oauth/token` answers 403 "this account does not have access to this project", and the collaborator shows "Pending". Accept the invitation with that account:

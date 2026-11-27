@@ -13,7 +13,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 - **Cinq nouvelles fiches** — Ajouter un article, ajouter une image et choisir sa taille, afficher une annonce en haut du site, que vérifier quand une modification n'apparaît pas, que faire après une erreur.
 - **Toutes les fiches relues** — Chaque fiche commence par ce qui vous rassure, puis donne les étapes avec les libellés tels qu'ils s'affichent à l'écran, et dit quoi m'envoyer si ça ne suffit pas. Les informations ont été vérifiées sur le site.
 - **Liens des formulaires du festival** — Les trois liens (Stands, Ateliers, Conférences) y figurent, avec la façon de les retrouver dans NocoDB. Ils restent les mêmes d'une année à l'autre.
-- **Renouvellement des formulaires chaque année** — Une fiche décrit les cinq étapes, avec des captures : sauvegarder, vérifier, vider les tables, mettre à jour les formulaires, redéployer le site.
+- **Préparer une nouvelle édition du festival** — Une fiche décrit les six étapes, avec des captures : sauvegarder, vérifier, vider les tables, mettre à jour les formulaires, redéployer le site, puis mettre à jour l'annonce, le bouton en haut du site et la page Festival.
 - **Page Erasmus+** — Une fiche explique, section par section, ce que chaque réglage change sur la page : ressources pédagogiques à publier quand vous le souhaitez, carnet de bord, partenaires associés à chaque volet.
 
 ### Festival 2026 sauvegardé
